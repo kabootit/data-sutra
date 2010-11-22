@@ -1,0 +1,19 @@
+customValues:"<html><body><font color='#323A4B'>323A4B<\/font><\/body><\/html>|323A4B
+<html><body><font color='#A1B0CF'>A1B0CF<\/font><\/body><\/html>|A1B0CF
+<html><body><font color='#D1D7E2'>D1D7E2<\/font><\/body><\/html>|D1D7E2
+----|
+<html><body><font color='#000000'>000000<\/font><\/body><\/html>|000000
+<html><body><font color='#0000FF'>0000FF<\/font><\/body><\/html>|0000FF
+<html><body><font color='#996633'>996633<\/font><\/body><\/html>|996633
+<html><body><font color='#00FFFF'>00FFFF<\/font><\/body><\/html>|00FFFF
+<html><body><font color='#00FF00'>00FF00<\/font><\/body><\/html>|00FF00
+<html><body><font color='#FF00FF'>FF00FF<\/font><\/body><\/html>|FF00FF
+<html><body><font color='#FF7F00'>FF7F00<\/font><\/body><\/html>|FF7F00
+<html><body><font color='#7F007F'>7F007F<\/font><\/body><\/html>|7F007F
+<html><body><font color='#FF0000'>FF0000<\/font><\/body><\/html>|FF0000
+<html><body><font color='#FFFF00'>FFFF00<\/font><\/body><\/html>|FFFF00
+<html><body><font color='#000000'>white<\/font><\/body><\/html>|FFFFFF",
+name:"NAV_color",
+separator:" ",
+typeid:34,
+uuid:"d1ee3722-ef61-42ff-b1e7-be8efc5f387d"

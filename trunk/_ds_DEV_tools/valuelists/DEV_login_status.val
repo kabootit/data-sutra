@@ -1,0 +1,7 @@
+addEmptyValue:1,
+customValues:"Login is enabled|0
+Login is disabled|1",
+name:"DEV_login_status",
+separator:" ",
+typeid:34,
+uuid:"ca6c8405-92a4-461b-ab8a-28245370c921"

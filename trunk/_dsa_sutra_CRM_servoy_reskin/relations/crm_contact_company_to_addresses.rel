@@ -1,0 +1,10 @@
+allowCreationRelatedRecords:true,
+foreignDataSource:"db:/sutra_example/addresses",
+items:[
+{foreignColumnName:"company_id",primaryDataProviderID:"company_id",typeid:23,uuid:"bfebfcda-d293-4a73-89a8-bd4fe7286ee0"}
+],
+joinType:1,
+name:"crm_contact_company_to_addresses",
+primaryDataSource:"db:/sutra_example/contacts",
+typeid:22,
+uuid:"39378f0f-f4e6-4ac9-af5b-94552489380a"

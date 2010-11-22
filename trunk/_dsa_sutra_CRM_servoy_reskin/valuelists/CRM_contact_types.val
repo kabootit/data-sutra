@@ -1,0 +1,11 @@
+dataProviderID1:"contact_type_id",
+dataProviderID2:"description",
+dataSource:"db:/sutra_example/contact_types",
+name:"CRM_contact_types",
+returnDataProviders:1,
+separator:" ",
+showDataProviders:2,
+sortOptions:"description asc",
+typeid:34,
+uuid:"f300c95e-d46b-4751-9c46-676be3dd0dc8",
+valueListType:1

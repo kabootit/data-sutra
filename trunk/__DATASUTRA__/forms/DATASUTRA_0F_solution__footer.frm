@@ -1,0 +1,236 @@
+dataSource:"db:/sutra/sutra_solution",
+items:[
+{
+anchors:12,
+formIndex:10500,
+location:"149,21",
+mediaOptions:14,
+name:"btn_dev_help",
+onActionMethodID:"27c1e01f-9681-4099-9c69-fb23ba4783d3",
+rolloverCursor:12,
+showClick:false,
+showFocus:false,
+size:"52,14",
+styleClass:"developerbutton",
+tabSeq:-2,
+text:"Help",
+toolTipText:"Edit help description",
+transparent:true,
+typeid:7,
+uuid:"1cf2f2eb-b3d3-4104-9dc1-e80df68a6aa7",
+verticalAlignment:3
+},
+{
+anchors:12,
+formIndex:10600,
+location:"98,21",
+mediaOptions:14,
+name:"btn_dev_todo",
+onActionMethodID:"27c1e01f-9681-4099-9c69-fb23ba4783d3",
+rolloverCursor:12,
+showClick:false,
+showFocus:false,
+size:"52,14",
+styleClass:"developerbutton",
+tabSeq:-2,
+text:"To Do",
+toolTipText:"Toggle developer to do notes",
+transparent:true,
+typeid:7,
+uuid:"4ab16e98-e90c-4ac0-9181-de5f778755dd",
+verticalAlignment:3
+},
+{
+anchors:14,
+beanClassName:"javax.swing.JLabel",
+beanXML:"<?xml version=\"1.0\" encoding=\"UTF-8\"?> 
+<java version=\"1.5.0_19\" class=\"java.beans.XMLDecoder\"> 
+ <object class=\"javax.swing.JLabel\"> 
+  <void property=\"size\"> 
+   <object class=\"java.awt.Dimension\"> 
+    <int>700<\/int> 
+    <int>16<\/int> 
+   <\/object> 
+  <\/void> 
+  <void property=\"inheritsPopupMenu\"> 
+   <boolean>false<\/boolean> 
+  <\/void> 
+  <void property=\"name\"> 
+   <string>bean_move_it<\/string> 
+  <\/void> 
+  <void property=\"opaque\"> 
+   <boolean>true<\/boolean> 
+  <\/void> 
+  <void property=\"requestFocusEnabled\"> 
+   <boolean>false<\/boolean> 
+  <\/void> 
+ <\/object> 
+<\/java> 
+",
+formIndex:9998,
+location:"0,0",
+name:"bean_move_it",
+size:"700,16",
+typeid:12,
+usesUI:true,
+uuid:"52d44f96-03df-4e41-a1d4-c40ca17f06a9"
+},
+{
+anchors:14,
+formIndex:10000,
+imageMediaID:"25CAAEC9-2DF3-4439-8E14-C1BCFE3A428F",
+location:"0,0",
+mediaOptions:6,
+name:"gfx_footer",
+showClick:false,
+showFocus:false,
+size:"701,16",
+tabSeq:-1,
+typeid:7,
+uuid:"6dcae541-2baf-42b3-80c0-e2da1ed21145"
+},
+{
+anchors:12,
+formIndex:10400,
+imageMediaID:"48F9E441-3D2F-4360-9308-F23C0AA71880",
+location:"150,20",
+mediaOptions:6,
+name:"lbl_dev_help",
+showClick:false,
+showFocus:false,
+size:"50,16",
+tabSeq:-1,
+typeid:7,
+uuid:"707eff23-8a9c-4a06-8f82-e44ef4e1c18a"
+},
+{
+anchors:12,
+formIndex:10700,
+location:"47,21",
+mediaOptions:14,
+name:"btn_dev_specs",
+onActionMethodID:"27c1e01f-9681-4099-9c69-fb23ba4783d3",
+rolloverCursor:12,
+showClick:false,
+showFocus:false,
+size:"52,14",
+styleClass:"developerbutton",
+tabSeq:-2,
+text:"Specs",
+toolTipText:"Toggle developer specification notes",
+transparent:true,
+typeid:7,
+uuid:"7ad0055f-6737-4717-b6a4-703a07c924ce",
+verticalAlignment:3
+},
+{
+anchors:12,
+formIndex:10200,
+imageMediaID:"48F9E441-3D2F-4360-9308-F23C0AA71880",
+location:"48,20",
+mediaOptions:6,
+name:"lbl_dev_specs",
+showClick:false,
+showFocus:false,
+size:"50,16",
+tabSeq:-1,
+typeid:7,
+uuid:"88f855ee-afac-43b6-886a-9867badd56bf"
+},
+{
+height:16,
+partType:5,
+typeid:19,
+uuid:"a79e0353-afd4-4632-8e58-ee3e67d42f5a"
+},
+{
+anchors:12,
+formIndex:10300,
+imageMediaID:"48F9E441-3D2F-4360-9308-F23C0AA71880",
+location:"99,20",
+mediaOptions:6,
+name:"lbl_dev_todo",
+showClick:false,
+showFocus:false,
+size:"50,16",
+tabSeq:-1,
+typeid:7,
+uuid:"b2240c2e-deff-424e-8515-08335369ebc5"
+},
+{
+anchors:6,
+beanClassName:"javax.swing.JLabel",
+beanXML:"<?xml version=\"1.0\" encoding=\"UTF-8\"?> 
+<java version=\"1.5.0_19\" class=\"java.beans.XMLDecoder\"> 
+ <object class=\"javax.swing.JLabel\"> 
+  <void property=\"bounds\"> 
+   <object class=\"java.awt.Rectangle\"> 
+    <int>680<\/int> 
+    <int>0<\/int> 
+    <int>20<\/int> 
+    <int>16<\/int> 
+   <\/object> 
+  <\/void> 
+  <void property=\"inheritsPopupMenu\"> 
+   <boolean>false<\/boolean> 
+  <\/void> 
+  <void property=\"name\"> 
+   <string>bean_resize<\/string> 
+  <\/void> 
+  <void property=\"opaque\"> 
+   <boolean>true<\/boolean> 
+  <\/void> 
+  <void property=\"requestFocusEnabled\"> 
+   <boolean>false<\/boolean> 
+  <\/void> 
+ <\/object> 
+<\/java> 
+",
+formIndex:9999,
+location:"680,0",
+name:"bean_resize",
+size:"20,16",
+typeid:12,
+usesUI:true,
+uuid:"e55cca80-7bd3-42d3-97d5-759861e7308e"
+},
+{
+anchors:14,
+displaysTags:true,
+formIndex:10100,
+location:"310,0",
+mediaOptions:14,
+name:"lbl_status",
+showClick:false,
+showFocus:false,
+size:"370,15",
+styleClass:"solutionlogstatus",
+tabSeq:-1,
+text:"%%globals.DATASUTRA_log_status%%",
+transparent:true,
+typeid:7,
+uuid:"ef79cd25-19e1-47b1-8990-80a20f61dc5a",
+verticalAlignment:3
+}
+],
+name:"DATASUTRA_0F_solution__footer",
+navigatorID:"-1",
+onDeleteAllRecordsCmdMethodID:"-1",
+onDeleteRecordCmdMethodID:"-1",
+onDuplicateRecordCmdMethodID:"-1",
+onFindCmdMethodID:"-1",
+onInvertRecordsCmdMethodID:"-1",
+onNewRecordCmdMethodID:"-1",
+onNextRecordCmdMethodID:"-1",
+onOmitRecordCmdMethodID:"-1",
+onPreviousRecordCmdMethodID:"-1",
+onPrintPreviewCmdMethodID:"-1",
+onSearchCmdMethodID:"-1",
+onShowAllRecordsCmdMethodID:"-1",
+onShowOmittedRecordsCmdMethodID:"-1",
+onSortCmdMethodID:"-1",
+paperPrintScale:100,
+size:"700,16",
+styleName:"_DATASUTRA_",
+typeid:3,
+uuid:"fa2b0bd1-e4c2-4c15-9587-2a57ddf56340"

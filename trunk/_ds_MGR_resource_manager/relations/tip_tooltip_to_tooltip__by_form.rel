@@ -1,0 +1,9 @@
+foreignDataSource:"db:/sutra/sutra_tooltip",
+items:[
+{foreignColumnName:"id_tooltip",operator:5,primaryDataProviderID:"id_tooltip",typeid:23,uuid:"68EB492E-948D-46E8-9814-03151B4D3AE0"},
+{foreignColumnName:"form_name",primaryDataProviderID:"form_name",typeid:23,uuid:"9D800EF9-868E-42E9-AAEE-30342A48CBA3"}
+],
+name:"tip_tooltip_to_tooltip__by_form",
+primaryDataSource:"db:/sutra/sutra_tooltip",
+typeid:22,
+uuid:"5E2D8360-A821-4DE7-9216-6870AA0D1E5D"

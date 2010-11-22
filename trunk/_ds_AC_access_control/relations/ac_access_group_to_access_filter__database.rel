@@ -1,0 +1,11 @@
+allowCreationRelatedRecords:true,
+deleteRelatedRecords:true,
+foreignDataSource:"db:/sutra/sutra_access_filter",
+items:[
+{foreignColumnName:"filter_type",primaryDataProviderID:"globals.CODE_constant_1",typeid:23,uuid:"83f28d54-5f09-4e19-bd02-9e7741dfdbed"},
+{foreignColumnName:"id_group",primaryDataProviderID:"id_group",typeid:23,uuid:"e4bddb91-c13e-4e17-aedf-7624647a1e73"}
+],
+name:"ac_access_group_to_access_filter__database",
+primaryDataSource:"db:/sutra/sutra_access_group",
+typeid:22,
+uuid:"d350c7d1-b59b-415e-bdd8-2566c00d520d"

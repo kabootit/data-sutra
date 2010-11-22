@@ -1,0 +1,12 @@
+dataProviderID1:"contact_id",
+dataProviderID2:"name_first",
+dataProviderID3:"name_last",
+dataSource:"db:/sutra_example/contacts",
+name:"CRM_contacts",
+returnDataProviders:1,
+separator:" ",
+showDataProviders:6,
+sortOptions:"name_first asc, name_last asc",
+typeid:34,
+uuid:"0c7fdc13-5085-479e-9a03-01ff66901f68",
+valueListType:1

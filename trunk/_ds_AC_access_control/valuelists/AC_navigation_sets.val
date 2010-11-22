@@ -1,0 +1,9 @@
+addEmptyValue:1,
+dataProviderID1:"id_group",
+dataProviderID2:"nav_name",
+name:"AC_navigation_sets",
+returnDataProviders:1,
+separator:" ",
+showDataProviders:1,
+typeid:34,
+uuid:"947f7146-da3a-451b-98ab-31d80ffdbbd9"

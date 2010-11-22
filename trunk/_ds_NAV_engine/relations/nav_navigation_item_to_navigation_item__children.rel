@@ -1,0 +1,10 @@
+foreignDataSource:"db:/sutra/sutra_navigation_item",
+items:[
+{foreignColumnName:"node_1",primaryDataProviderID:"node_1",typeid:23,uuid:"1e2d4b75-2919-49ee-870d-12e13f87ff80"},
+{foreignColumnName:"node_2",operator:2,primaryDataProviderID:"node_2",typeid:23,uuid:"2e9f7da2-dd95-4a9e-8f02-2f2929476251"},
+{foreignColumnName:"id_navigation",primaryDataProviderID:"id_navigation",typeid:23,uuid:"4511488c-af06-452a-9713-6ca1c5ed5b35"}
+],
+name:"nav_navigation_item_to_navigation_item__children",
+primaryDataSource:"db:/sutra/sutra_navigation_item",
+typeid:22,
+uuid:"cd2df3d3-5463-422f-aba2-1b68f0c4a261"

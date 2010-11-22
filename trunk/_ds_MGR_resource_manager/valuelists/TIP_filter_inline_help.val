@@ -1,0 +1,10 @@
+addEmptyValue:1,
+dataProviderID1:"inline_help",
+dataSource:"db:/sutra/sutra_tooltip",
+name:"TIP_filter_inline_help",
+returnDataProviders:1,
+separator:" ",
+showDataProviders:1,
+typeid:34,
+uuid:"982A71D6-C0FE-449A-946A-67573033B1EE",
+valueListType:1

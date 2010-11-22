@@ -1,0 +1,12 @@
+addEmptyValue:1,
+dataProviderID1:"company_id",
+dataProviderID2:"company_name",
+dataSource:"db:/sutra_example/companies",
+name:"CRM_companies",
+returnDataProviders:1,
+separator:" ",
+showDataProviders:2,
+sortOptions:"company_name asc",
+typeid:34,
+uuid:"324daa10-5191-4fb8-a1c0-dde11e7321f9",
+valueListType:1

@@ -1,0 +1,11 @@
+dataProviderID1:"product_id",
+dataProviderID2:"product_name",
+dataSource:"db:/sutra_example/products",
+name:"CRM_product_names",
+returnDataProviders:1,
+separator:" ",
+showDataProviders:2,
+sortOptions:"product_name asc",
+typeid:34,
+uuid:"41504b92-77da-44be-99a3-f631864b1502",
+valueListType:1

@@ -1,0 +1,12 @@
+dataSource:"db:/sutra/sutra_list_display_item",
+items:[
+{
+dataProviderIDToAggregate:"display_width",
+name:"total_width_old",
+type:4,
+typeid:40,
+uuid:"4def2e5b-c4f1-4d25-816e-50de9457cbc4"
+}
+],
+typeid:39,
+uuid:"f1afafc1-ac97-4293-bc94-c6cd90e7965c"
