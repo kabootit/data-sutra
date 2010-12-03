@@ -47,11 +47,11 @@ var DATASUTRA_sort = null;
  *
  * @properties={typeid:24,uuid:"3431c36a-d389-49ca-81f5-07e2ae81720e"}
  */
-function _DATASUTRA_close()
+function DATASUTRA_close()
 {
 
 /*
- *	TITLE    :	_DATASUTRA_close
+ *	TITLE    :	DATASUTRA_close
  *			  	
  *	MODULE   :	_DATASUTRA_
  *			  	
@@ -88,8 +88,8 @@ function _DATASUTRA_close()
 	
 		if (logOut == 'Yes') {
 		
-			if (!globals._DATASUTRA_close.inProcess) {
-				globals._DATASUTRA_close.inProcess = true	
+			if (!globals.DATASUTRA_close.inProcess) {
+				globals.DATASUTRA_close.inProcess = true	
 			
 				//working with a validated session
 				if (application.__parent__.solutionPrefs && solutionPrefs.clientInfo && solutionPrefs.clientInfo.logID) {
@@ -173,7 +173,7 @@ function _DATASUTRA_close()
 			else {
 				logoutOK = true
 			}
-		
+			
 			if (logoutOK) {
 				//do session logging
 				var accessLog = databaseManager.getFoundSet(forms[baseForm].controller.getServerName(),'sutra_access_log')
@@ -212,11 +212,16 @@ function _DATASUTRA_close()
 				//when closed from x icon in windowing, will close client
 				application.closeSolution(application.getSolutionName())
 			}
+			
+			//something has gone wrong and we're in developer, allow to quit anyways
+			if (!logoutOK && application.isInDeveloper()) {
+				logoutOK = true
+			}
 		}
 	
 		if (!logoutOK) {
 			//if method gets this far, time to invalidate it
-			globals._DATASUTRA_close.inProcess = null
+			globals.DATASUTRA_close.inProcess = null
 		
 			if (logOut == 'Yes') {
 				//show info that logout canceled
@@ -235,11 +240,11 @@ function _DATASUTRA_close()
  *
  * @properties={typeid:24,uuid:"88e6212c-4262-49fa-b8a6-0b23cceaab7d"}
  */
-function _DATASUTRA_error()
+function DATASUTRA_error()
 {
 
 /*
- *	TITLE    :	_DATASUTRA_error
+ *	TITLE    :	DATASUTRA_error
  *			  	
  *	MODULE   :	_DATASUTRA_
  *			  	
@@ -251,7 +256,7 @@ function _DATASUTRA_error()
  *			  	
  *	REQUIRES :	
  *			  	
- *	USAGE    :	_DATASUTRA_error()
+ *	USAGE    :	DATASUTRA_error()
  *			  	
  *	MODIFIED :	July 16, 2008 -- Troy Elliott, Data Mosaic
  *			  	
@@ -296,11 +301,11 @@ if (error.isServoyException)
  *
  * @properties={typeid:24,uuid:"b3b6d503-9f36-459f-9cbd-256e1d068c77"}
  */
-function _DATASUTRA_open()
+function DATASUTRA_open()
 {
 
 /*
- *	TITLE    :	_DATASUTRA_open
+ *	TITLE    :	DATASUTRA_open
  *			  	
  *	MODULE   :	_DATASUTRA_
  *			  	
@@ -326,12 +331,12 @@ if (application.getApplicationType() == APPLICATION_TYPES.HEADLESS_CLIENT) {
 //normal startup
 else {
 	var navigationList = 'NAV_0L_solution'
-	var prefForm = 'DATASUTRA_0F_solution__error_1F'
+	var prefForm = 'DATASUTRA_0F_solution__blank_4'
 	var baseForm = 'DATASUTRA_0F_solution'
 	var serverName = forms[prefForm].controller.getServerName()
 	
 	//bring in new data if necessary
-	//globals.DATA_import()
+	//globals.DS_data_import()
 	
 	// //PART I: Create large code global to be used elsewhere
 	
@@ -344,8 +349,8 @@ else {
 	/*
 	//	//check for correct version of plugin
 	//if incorrect version, abort
-	if (!globals.PLUGIN_check()) {
-		forms.DATASUTRA_0F_solution__error.controller.show()
+	if (!globals.DS_plugin_check()) {
+		forms.DATASUTRA__error.controller.show()
 	}
 	//continue with method
 	else {*/
@@ -358,13 +363,13 @@ else {
 		(forms[prefForm].license_type != 'Demo') && 
 		!forms.PREF_0F_solution__license.ACTION_validate(true,true)) {
 		
-		forms.DATASUTRA_0F_solution__error.controller.show()
-		forms.PREF_0L_deployment.GO_five()
+		forms.DATASUTRA__error.controller.show()
+		forms.PREF_0L__deployment.GO_five()
 	}
 	//if no engine data, show import/export screen
 	else if (!utils.hasRecords(forms[prefForm].foundset)) {
-		forms.DATASUTRA_0F_solution__error.controller.show()
-		forms.PREF_0L_deployment.GO_three()
+		forms.DATASUTRA__error.controller.show()
+		forms.PREF_0L__deployment.GO_three()
 	}
 	//continue with method
 	else {
@@ -477,8 +482,8 @@ else {
 			
 			//running in client in demo mode, show license entry page
 			if (application.getApplicationType() == 2 && solutionPrefs.config.demoMode) {
-				forms.DATASUTRA_0F_solution__error.controller.show()
-				forms.DATASUTRA_0F_solution__error.elements.tab_main.tabIndex = 3
+				forms.DATASUTRA__error.controller.show()
+				forms.DATASUTRA__error.elements.tab_main.tabIndex = 3
 				
 				return
 			}
@@ -531,13 +536,13 @@ else {
 					}
 		
 		//information about client
-			solutionPrefs.clientInfo = globals.PREF_set_client_info()
+			solutionPrefs.clientInfo = globals.PREF_client_info_set()
 			
 		//default screen attributes
-			solutionPrefs.screenAttrib = globals.PREF_set_screen_attrib()
+			solutionPrefs.screenAttrib = globals.PREF_screen_set()
 			
 		//default sleep value for list
-			solutionPrefs.listSetup = globals.PREF_set_list_attrib()
+			solutionPrefs.listSetup = globals.PREF_list_set()
 			
 		//find settings
 			solutionPrefs.fastFind = {
@@ -551,7 +556,7 @@ else {
 		
 		//get tooltips
 		//TODO: store on client
-			solutionPrefs.i18n = globals.TIP_load_tips()
+			solutionPrefs.i18n = globals.DS_tooltip_load()
 		
 		
 		// //PART V: Get the names of all modules and all forms in this solution
@@ -586,14 +591,14 @@ else {
 		else if (!solutionPrefs.repository.api) {
 			//when in developer, rebuild repositoryPrefs fresh each time
 			if (application.getApplicationType() == APPLICATION_TYPES.SMART_CLIENT && application.isInDeveloper()) {
-				globals.VL_module_names()
+				globals.NAV_meta_module_names()
 				solutionPrefs.repository.allModules = repositoryPrefs.allModules
 				
-				globals.VL_form_names()
+				globals.NAV_meta_form_names()
 				solutionPrefs.repository.allForms = repositoryPrefs.allForms
 				solutionPrefs.repository.allFormsByTable = repositoryPrefs.allFormsByTable
 				
-				globals.VL_relation_names()
+				globals.NAV_meta_relation_names()
 				solutionPrefs.repository.relations = repositoryPrefs.relations
 				
 				//null out temporary global var
@@ -770,10 +775,10 @@ else {
 			forms[baseForm].elements.tab_content_C.addTab(forms.AC_R__login,'')
 			
 			//go to workflow maximized view
-			globals.SPACE_change('btn_space_7',true)
+			globals.DS_space_change('btn_space_7',true)
 			
 			//set up title toolbar
-			solutionPrefs.panel = globals.TOOL_load_panels(null,true)
+			solutionPrefs.panel = globals.DS_panel_load(null,true)
 			
 			//set flag that access and control is disabled
 			solutionPrefs.access = new Object()
@@ -823,7 +828,7 @@ else {
 				navigationPrefs.foundsetPool.nextFreePK = dsUniversalList.getValue(1,1)
 				
 				//build navigationPrefs with all navigation sets available
-				globals.FX_load_navset(true)
+				globals.NAV_navigation_load(true)
 				
 			}
 			//not in developer, use navigation_node
@@ -931,13 +936,13 @@ else {
 			}
 			
 			//go to workflow maximized view
-			globals.SPACE_change('btn_space_7',true)
+			globals.DS_space_change('btn_space_7',true)
 			
 			//	LOAD defaults for password
-			globals.AC_set_password()
+			globals.AC_password_set()
 				
 			//set up title toolbar
-			solutionPrefs.panel = globals.TOOL_load_panels(null,true)
+			solutionPrefs.panel = globals.DS_panel_load(null,true)
 			
 		}
 		
@@ -973,16 +978,16 @@ else {
 			//mac client or >4 developer
 		if (solutionPrefs.clientInfo.typeOS == 'Mac OS X' && !(solutionPrefs.clientInfo.typeServoy == 'developer' && utils.stringToNumber(solutionPrefs.clientInfo.verServoy) < 4)) {
 			forms[baseForm + '__header'].elements.gfx_header.setBorder('MatteBorder,0,0,1,0,#333333')
-			forms.SIDE_sidebar__header.elements.gfx_header.setBorder('MatteBorder,0,0,1,0,#333333')
+			forms.DATASUTRA__sidebar__header.elements.gfx_header.setBorder('MatteBorder,0,0,1,0,#333333')
 		}
 		//set top border on graphic when...
 		else {
 			forms[baseForm + '__header'].elements.gfx_header.setBorder('MatteBorder,1,0,1,0,#333333')
-			forms.SIDE_sidebar__header.elements.gfx_header.setBorder('MatteBorder,1,0,1,0,#333333')
+			forms.DATASUTRA__sidebar__header.elements.gfx_header.setBorder('MatteBorder,1,0,1,0,#333333')
 		}
 			
 		// //PART IX: load up title toolbar
-		globals.TOOLBAR_load()
+		globals.DS_toolbar_load()
 		
 	}
 }
@@ -994,11 +999,11 @@ else {
  *
  * @properties={typeid:24,uuid:"0d123e49-aae2-458f-abb2-daefe014614e"}
  */
-function DATA_import()
+function DS_data_import()
 {
 
 /*
- *	TITLE    :	DATA_import
+ *	TITLE    :	DS_data_import
  *			  	
  *	MODULE   :	_DATASUTRA_
  *			  	
@@ -1335,7 +1340,7 @@ if (results) {
  *
  * @properties={typeid:24,uuid:"8907f601-f8fb-4dd1-a674-6a20a3473796"}
  */
-function DATA_universal_list()
+function DS_data_universal_list()
 {
 
 var fsUniversalList = databaseManager.getFoundSet(forms[solutionPrefs.config.formNameBase].controller.getServerName(),'sutra_universal_list')
@@ -1358,11 +1363,11 @@ for (var i = totalRecs; i < 100000; i++) {
  *
  * @properties={typeid:24,uuid:"48174bfa-d0a4-4e64-935e-b4b73feffa12"}
  */
-function DS_ACTIONS_list()
+function DS_actions(input)
 {
 
 /*
- *	TITLE    :	DS_ACTIONS_list
+ *	TITLE    :	DS_actions
  *			  	
  *	MODULE   :	_DATASUTRA_
  *			  	
@@ -1377,766 +1382,744 @@ function DS_ACTIONS_list()
  *	MODIFIED :	Mar 24, 2008 -- Troy Elliott, Data Mosaic
  *			  	
  */
-
-//check license
-forms.PREF_0F_solution__license.ACTION_validate(true,true)
-
-//name for non-named item
-var noName = '**No name**'
-
-if (application.__parent__.solutionPrefs) {
 	
-	//timed out, throw up error
-	if (solutionPrefs.config.prefs.thatsAllFolks) {
-		forms.PREF_0F_solution__license.ACTION_status()
+	//check license
+	forms.PREF_0F_solution__license.ACTION_validate(true,true)
+	
+	//name for non-named item
+	var noName = '**No name**'
+	
+	if (application.__parent__.solutionPrefs) {
 		
-		plugins.dialogs.showErrorDialog(
-							'Demo expired',
-							'Demo time expired\n' +
-							'Please restart.'
-						)
-	}
-	
-	var baseForm = solutionPrefs.config.formNameBase
-	var fwAction = application.getMethodTriggerElementName()
-	var btnInvisible = 'btn_fw_action_left'
-	var inPref = solutionPrefs.config.prefs.preferenceMode
-	var currentNavItem = solutionPrefs.config.currentFormID
-	
-	//using access and control, need allowed configuration modes
-	if (solutionPrefs.access && solutionPrefs.access.accessControl) {
-		var admin = globals.CODE_copy_object(solutionPrefs.access.allowedAdminPrefs)
-		var user = globals.CODE_copy_object(solutionPrefs.access.allowedUserPrefs)
-	}
-	//no access and control, use default configuration modes
-	else {
-		var navigationSets = new Array()
-		
-		//there is a fw config navigation set
-		if (solutionPrefs.config.fwNavigationID) {
-			//get admin prefs
-			var admin = globals.FX_modes_sub('Admin',solutionPrefs.config.fwNavigationID)
+		//timed out, throw up error
+		if (solutionPrefs.config.prefs.thatsAllFolks) {
+			forms.PREF_0F_solution__license.ACTION_status()
 			
-			//get user prefs
-			var user = globals.FX_modes_sub('User',solutionPrefs.config.fwNavigationID)
+			plugins.dialogs.showErrorDialog(
+								'Demo expired',
+								'Demo time expired\n' +
+								'Please restart.'
+							)
 		}
-	}
-	
-	//help available?
-	if (navigationPrefs.byNavItemID[currentNavItem] && navigationPrefs.byNavItemID[currentNavItem].navigationItem) {
-	//	var helpAvailable = navigationPrefs.byNavItemID[currentNavItem].navigationItem.helpAvailable
 		
-		var helpForm = navigationPrefs.byNavItemID[currentNavItem].navigationItem.helpFormToLoad
-		var helpList = navigationPrefs.byNavItemID[currentNavItem].navigationItem.helpListToLoad
-		var helpDesc = navigationPrefs.byNavItemID[currentNavItem].navigationItem.helpDescription
+		var baseForm = solutionPrefs.config.formNameBase
+		var fwAction = application.getMethodTriggerElementName()
+		var btnInvisible = 'btn_fw_action_left'
+		var inPref = solutionPrefs.config.prefs.preferenceMode
+		var currentNavItem = solutionPrefs.config.currentFormID
 		
-		var helpAvailable = helpForm || helpList || helpDesc
-	}
-	
-	//loop over admin modes
-	for (var i = 0; i < admin.itemName.length ; i++) {
-		//check for design mode
-		if (admin.itemName[i] == 'Design mode') {
-			var designMode = {
-					name	: admin.itemName[i],
-					tooltip	: admin.itemDescription[i]
-				}
+		
+		//called to depress menu
+		if (input instanceof JSEvent) {	
 			
-			admin.itemName.splice(i,1)
-			admin.formName.splice(i,1)
-			admin.navItemID.splice(i,1)
-			admin.itemDescription.splice(i,1)
-			
-			//set counter back one
-			i--
-		}
-	}
-	
-	//loop over user modes
-	for (var i = 0; i < user.itemName.length ; i++) {
-		//remove if present
-			//1- power replace
-			//2- feedback when in a preference
-			//3- lock solution
-			//4- help
-		if (user.itemName[i] == 'Power Replace' || 
-			(inPref && user.itemName[i] == 'Feedback') ||
-			user.itemName[i] == 'Lock session' ||
-			user.itemName[i] == 'Help') {
-			
-			if (user.itemName[i] == 'Lock session') {
-				var lockSession = {
-						name	: user.itemName[i],
-						tooltip	: user.itemDescription[i]
-					}
-			}
-			else if (user.itemName[i] == 'Help' && helpAvailable) {
-				var flagHelp = {
-						name	: user.itemName[i],
-						tooltip	: user.itemDescription[i]
-					}
-			}
-			
-			user.itemName.splice(i,1)
-			user.formName.splice(i,1)
-			user.navItemID.splice(i,1)
-			user.itemDescription.splice(i,1)
-			
-			//set counter back one
-			i--
-		}
-	}
-	
-	//tack on help when not in a preference or devmode
-	if (flagHelp && !inPref && !solutionPrefs.design.statusDesign) {
-		var helpText = (solutionPrefs.config.helpMode) ? 'Leave help' : 'Help'
-		user.itemName.unshift(helpText)
-		user.formName.unshift(null)
-		user.navItemID.unshift(null)
-		user.itemDescription.unshift(flagHelp.tooltip)
-	}
-	//add option to change password if access and control enabled and password changing isn't disabled
-	if (solutionPrefs.access && solutionPrefs.access.accessControl && !solutionPrefs.access.passNoChange) {
-		user.itemName.push('Change password')
-		user.formName.push('AC_P_password')
-		user.navItemID.push(null)
-		user.itemDescription.push('Periodically change your password to ensure security')
-	}
-	//add option to set custom screen size if access and control
-	if (solutionPrefs.access && solutionPrefs.access.accessControl ) {
-		user.itemName.push('Save window metrics')
-		user.formName.push('AC_P_screen')
-		user.navItemID.push(null)
-		user.itemDescription.push('Set the current window size, position, and spaces as your new default')
-	}
-	
-	//create arrays
-	var valueList = new Array()
-	var formList = new Array()
-	var navIDList = new Array()
-	var descList = new Array()
-	var typeList = new Array()
-	
-	//design mode toggle
-	if (!inPref) {
-		//design mode is an option, show it
-		if (designMode) {
-			valueList[valueList.length] = '<html><body><strong>' + ((designMode.name) ? designMode.name : noName) + '</strong></body></html>'
-			formList[formList.length] = ''
-			navIDList[navIDList.length] = ''
-			descList[descList.length] = designMode.tooltip
-			typeList.push(null)
-		}
-		
-		//divider required
-		if (designMode && ((admin.itemName && admin.itemName.length) || (user.itemName && user.itemName.length))) {
-			valueList[valueList.length] = '-'
-			formList[formList.length] = ''
-			navIDList[navIDList.length] = ''
-			descList[descList.length] = ''
-			typeList.push(null)
-		}
-	}
-	
-	//admin screens
-	if (admin.itemName && admin.itemName.length) {
-		for (var i = 0; i < admin.itemName.length; i++) {
-			valueList[valueList.length] = ((admin.itemName[i]) ? admin.itemName[i] : noName)
-			formList[formList.length] = admin.formName[i]
-			navIDList[navIDList.length] = admin.navItemID[i]
-			descList[descList.length] = admin.itemDescription[i]
-			typeList.push('Admin')
-		}
-	}
-	
-/*	//sidebars
-	if (!inPref && solutionPrefs.panel.sidebar && solutionPrefs.panel.sidebar.length) {
-		//there are admin modes, show divider
-		if (admin.itemName && admin.itemName.length) {
-			valueList[valueList.length] = '----'
-			formList[formList.length] = ''
-			navIDList[navIDList.length] = ''
-			descList[descList.length] = ''
-			typeList.push(null)
-		}
-		
-		//punch down all active sidebars
-		for (var i = 0; i < solutionPrefs.panel.sidebar.length; i++) {
-			valueList[valueList.length] = (solutionPrefs.panel.sidebar[i].tabName) ? solutionPrefs.panel.sidebar[i].tabName : noName
-			formList[formList.length] = solutionPrefs.panel.sidebar[i].formName
-			navIDList[navIDList.length] = i + 1
-			descList[descList.length] = solutionPrefs.panel.sidebar[i].description
-			typeList.push('Sidebar')
-		}
-		
-		//there are user modes, show divider
-		if (user.itemName && user.itemName.length) {
-			valueList[valueList.length] = '----'
-			formList[formList.length] = ''
-			navIDList[navIDList.length] = ''
-			descList[descList.length] = ''
-			typeList.push(null)
-		}
-	}
-	//there are admin modes and user modes, show divider
-	else*/ if (admin.itemName && admin.itemName.length && user.itemName && user.itemName.length) {
-		valueList[valueList.length] = '-'
-		formList[formList.length] = ''
-		navIDList[navIDList.length] = ''
-		descList[descList.length] = ''
-		typeList.push(null)
-	}
-	
-	//user screens
-	if (user.itemName && user.itemName.length) {
-		for (var i = 0; i < user.itemName.length; i++) {
-			valueList[valueList.length] = ((user.itemName[i]) ? user.itemName[i] : noName)
-			formList[formList.length] = user.formName[i]
-			navIDList[navIDList.length] = user.navItemID[i]
-			descList[descList.length] = user.itemDescription[i]
-			typeList.push('User')
-		}
-	}
-	
-	//add on exit preference if in one
-	if (inPref) {
-		valueList.push('-','<html><body><font color="#FF2823">Exit configuration</font></body></html>')
-		formList.push(null,null)
-		navIDList.push(null,null)
-		descList.push(null,'Return to workflow')
-		typeList.push(null)
-	}
-	
-	//there are already some values, show divider
-	if (valueList.length) {
-		valueList[valueList.length] = '-'
-		formList[formList.length] = ''
-		navIDList[navIDList.length] = ''
-		descList[descList.length] = ''
-		typeList.push(null)
-	}
-	
-	//lock screen if a/c enabled, it is an option, and not in a preference
-	if (solutionPrefs.access.accessControl && lockSession && !inPref) {
-		valueList.push(lockSession.name)
-		formList.push(null)
-		navIDList.push(null)
-		descList.push(lockSession.tooltip)
-		typeList.push(null)
-	}
-	
-	//logout
-	valueList.push('<html><body><font color="#FF2823">Logout</font></body></html>')
-	formList.push(null)
-	navIDList.push(null)
-	descList.push('Re-open solution as a different user')
-	typeList.push(null)
-	
-	//build menu and set arguments
-	var menu = new Array()
-	var maxLength = 0
-	for ( var j = 0 ; j < valueList.length ; j++ ) {
-		//strip away all html until the centermost text piece remains
-		var htmlTags = new Array(null,null,valueList[j])
-		var htmlTags2 = htmlTags
-		while (typeof htmlTags2 == 'object' && htmlTags2 != null) {
-			htmlTags2 = htmlTags2[2].match(/<([A-Z][A-Z0-9]*)[^>]*>(.*?)<\/\1>/i)
-			if (htmlTags2 != null) {
-				htmlTags = htmlTags2
-			}
-		}
-		
-		//determine left shift amount
-		if (htmlTags[0] != null) {
-			if (htmlTags[2].length > maxLength) {
-				maxLength = htmlTags[2].length
-			}
-		}
-		else {
-			if (valueList[j].length > maxLength) {
-				maxLength = valueList[j].length
-			}
-		}
-		
-		//when...  ...create checkbox menu item if selected
-			//1- in a preference, 
-			//2- design mode active
-			//3- sidebar showing
-		if ((solutionPrefs.config.prefs.preferenceMode && solutionPrefs.config.prefs.paneSelected == navIDList[j]) || 
-			(solutionPrefs.design.statusDesign && designMode && designMode.tooltip == descList[j]) || 
-			(solutionPrefs.screenAttrib.sidebar.status && typeList[j] == 'Sidebar' && forms[baseForm].elements.tab_content_D.tabIndex == navIDList[j])) {
-			
-			menu[j] = plugins.popupmenu.createCheckboxMenuItem(valueList[j] + "", DS_ACTIONS_list_control)
-			menu[j].setSelected(true)
-		}
-		//create a normal menu item
-		else {
-			menu[j] = plugins.popupmenu.createMenuItem(valueList[j] + "", DS_ACTIONS_list_control)
-		}
-		
-		//pass arguments
-		menu[j].setMethodArguments(htmlTags[2],formList[j],navIDList[j],typeList[j])
-		
-		//set tooltip, if there is one
-//		if (descList[j]) {
-//			menu[j].setToolTipText(descList[j])
-//		}
-		
-		//disable dividers
-		if (valueList[j] == '-') {
-			menu[j].setEnabled(false)
-		}
-	}
-	
-	//move "left" button to correct location
-	var currentLocationX = forms[baseForm + '__header'].elements[btnInvisible].getLocationX()
-	var currentLocationY = forms[baseForm + '__header'].elements[btnInvisible].getLocationY()
-	
-	forms[baseForm + '__header'].elements[btnInvisible].setLocation(currentLocationX - maxLength * 5.5, currentLocationY)
-	
-	//pop left popup menu
-	var elem = forms[baseForm + '__header'].elements[btnInvisible]
-	if (elem != null) {
-		plugins.popupmenu.showPopupMenu(elem, menu)
-	}
-	
-	//set invisible btn back to original location
-	forms[baseForm + '__header'].elements[btnInvisible].setLocation(currentLocationX, currentLocationY)
-}	
-}
-
-/**
- *
- * @properties={typeid:24,uuid:"f98ef471-980b-4629-aabe-d7dba7836022"}
- */
-function DS_ACTIONS_list_control()
-{
-
-/*
- *	TITLE    :	DS_ACTIONS_list_control
- *			  	
- *	MODULE   :	_DATASUTRA_
- *			  	
- *	ABOUT    :	
- *			  	
- *	INPUT    :	
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
- *	MODIFIED :	July 16, 2008 -- Troy Elliott, Data Mosaic
- *			  	
- */
-
-if (application.__parent__.solutionPrefs) {
-	
-	var itemClicked = arguments[0]
-	var itemFormName = arguments[1]
-	var itemID = arguments[2]
-	var itemType = arguments[3]
-	var baseForm = solutionPrefs.config.formNameBase
-	
-	//if a sidebar
-	//MEMO: not used; seet SIDE_sidebar__header.TAB_popdown()
-	if (itemType == 'Sidebar') {
-		//MEMO: itemID overloaded with the tab number of the sidepanel
-		
-		//turn sidebar off
-		if (forms[baseForm].elements.tab_content_D.tabIndex == itemID && forms[baseForm].elements.tab_content_D.visible) {
-			globals.SIDEBAR_toggle(false)
-		}
-		//set tab in sidebar
-		else {
-			forms[baseForm].elements.tab_content_D.tabIndex = itemID
-			
-			//if not showing, show sidebar
-			globals.SIDEBAR_toggle(true)
-		}
-		
-
-	}
-	//check for non-standard prefpane logout
-	else if (itemClicked == 'Logout') {
-		application.closeSolution(application.getSolutionName())
-	}
-	//check for non-standard prefpane lock session
-	else if (itemClicked == 'Lock session') {
-		//blank screen out
-		forms[baseForm].elements.gfx_curtain.transparent = false
-		forms[baseForm].elements.gfx_curtain.setImageURL(null)
-		forms[baseForm].elements.gfx_curtain.setBorder('MatteBorder,0,0,100,0,#323A4B')
-		
-		//set location
-		forms[baseForm].elements.gfx_curtain.setLocation(0,0)
-		//set size
-		forms[baseForm].elements.gfx_curtain.setSize(application.getWindowWidth(),application.getWindowHeight())
-		
-		//set text
-		forms[baseForm].elements.gfx_curtain.text = forms[baseForm].solution_name + ' is locked'
-		forms[baseForm].elements.gfx_curtain.toolTipText = 'Click to unlock'
-		
-		//show curtain
-		forms[baseForm].elements.gfx_curtain.enabled = true
-		forms[baseForm].elements.gfx_curtain.visible = true
-		
-		//set flag
-		solutionPrefs.access.lockStatus = true
-	}
-	//check for non-standard prefpane feedback
-	else if (itemClicked == 'Feedback') {
-		//get screensize of window
-		var x = application.getWindowX()
-		var y = application.getWindowY()
-		var width = application.getWindowWidth()
-		var height =  application.getWindowHeight()
-		
-		//make pop-up get out of the way
-		forms[baseForm + '__header'].elements.fld_constant.requestFocus(false)
-		application.sleep(175)
-		
-		//get screenshot
-		var screenShot = (new java.awt.Robot()).createScreenCapture(new java.awt.Rectangle(x,y,width,height))
-		var rawData = new java.io.ByteArrayOutputStream()
-		Packages.javax.imageio.ImageIO.write(screenShot,'png',rawData)
-		globals.DATASUTRA_feedback = rawData.toByteArray()
-		
-		//show popup dialog
-		application.showFormInDialog(forms.DEV_P_feedback,-1,-1,-1,-1,'Submit feedback',false,false,'feedback',true)
-	}
-	//check for non-standard prefpane design mode
-	else if (itemClicked == 'Design mode') {
-		//make sure not in help mode
-		if (solutionPrefs.config.helpMode) {
-			globals.HELP()
-		}
-		
-		solutionPrefs.design.statusDesign = !solutionPrefs.design.statusDesign
-		globals.DEV_mode_toggle()
-	}
-	//check for non-standard prefpane change password
-	else if (itemClicked == 'Change password') {
-		forms.AC_P_password.FORM_fid(solutionPrefs.access.userID)
-	}
-	//check for non-standard prefpane configure screen
-	else if (itemClicked == 'Save window metrics') {
-		forms.AC_P_screen.FORM_on_show(solutionPrefs.access.userID)
-	}
-	//anything that needs to exit design mode (help or preferences)
-	else {
-		//if in design mode, exit it
-			//MEMO: we do this to eliminate using design mode where it shouldn't be used
-		if (solutionPrefs.design.statusDesign) {
-			//we were in design mode
-			var designMode = true
-			
-			//check for where exactly we are
-			var possibleModes = new Array(
-									'buttonaction',
-									'buttonadd',
-									'buttonreport',
-									'navigation',
-									'fastfind',
-									'universallist',
-									'spec',
-									'task',
-									'help',
-									'prototyper'
-								)
-			for (var i = 0; i < possibleModes.length; i++) {
-				if (solutionPrefs.design.modes[possibleModes[i]]) {
-					solutionPrefs.config.prefs.currentMode = possibleModes[i]
-					break
-				}
-			}
-			
-			solutionPrefs.design.statusDesign = false
-			globals.DEV_mode_toggle(true)
-		}
-		
-		//check for non-standard prefpane help
-		if (itemClicked == 'Help' || itemClicked == 'Leave help') {
-			globals.HELP()
-		}
-		//exit from settings mode
-		else if (itemClicked == 'Exit configuration') {
-			//turn on progress indicator
-			globals.CALLBACK_progressbar_start(-273,'Loading new configuration data...','This process will soon only update changed information')
-			
-			//recreate navigationPrefs
-			//with a/c
+			//using access and control, need allowed configuration modes
 			if (solutionPrefs.access && solutionPrefs.access.accessControl) {
-				globals.FX_load_navset(false,solutionPrefs.access.groupID)
+				var admin = globals.CODE_copy_object(solutionPrefs.access.allowedAdminPrefs)
+				var user = globals.CODE_copy_object(solutionPrefs.access.allowedUserPrefs)
 			}
-			//login disabled
+			//no access and control, use default configuration modes
 			else {
-				globals.FX_load_navset(false)
-			}
-			
-			//save information about current config space setup
-			if (solutionPrefs.config.currentFormID && navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID]) {
-				navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].spaceStatus = new Array()
-				navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].spaceStatus.lastSpace = solutionPrefs.config.activeSpace
+				var navigationSets = new Array()
 				
-				for (var i = 1; i <= 14; i++) {
-					navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].spaceStatus.push(forms[baseForm + '__header'].elements['btn_space_' + i].visible)
-				}
-			}
-			
-			//enable nav_chooser, find, and toolbar toggle buttons
-			forms[baseForm + '__header'].elements.btn_navset.enabled = true
-			forms[baseForm + '__header__fastfind'].elements.btn_find.enabled = true
-			forms[baseForm + '__header__fastfind'].elements.find_mid.enabled = true
-			forms[baseForm + '__header__fastfind'].elements.find_end.enabled = true
-			forms[baseForm + '__header__fastfind'].elements.fld_find.enabled = true
-			forms[baseForm + '__header__toolbar'].elements.btn_toolbar_toggle.visible = true
-			
-			//set current form back to workflow
-				//MEMO: may be changed by other stuff below
-			solutionPrefs.config.currentFormName = solutionPrefs.config.prefs.workflowFormName
-			solutionPrefs.config.currentFormID = solutionPrefs.config.prefs.workflowFormID
-			
-			//load navigation set list back in
-			if (forms[baseForm].elements.tab_content_A.tabIndex > 0) {
-				forms[baseForm].elements.tab_content_A.removeTabAt(1)
-			}
-			forms[baseForm].elements.tab_content_A.addTab(forms.NAV_0L_solution,'',null,null,null,null)
-			forms[baseForm].elements.tab_content_A.tabIndex = forms[baseForm].elements.tab_content_A.getMaxTabIndex()
-			
-			//check that last viewed navigation set still ok
-			var foundSet = false
-			for (var i in navigationPrefs.byNavSetID ) {
-				if (i == globals.DATASUTRA_navigation_set && navigationPrefs.byNavSetID[i] != null) {
-					foundSet = true
-				}
-			}
-			
-			//check that last viewed navigation item still ok
-			var foundItem = false
-			if (navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set]) {
-				for (var j = 0; j < navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].itemsByOrder.length && !foundItem; j++) {
-					if (navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].itemsByOrder[j].navigationItem.idNavigationItem == solutionPrefs.config.currentFormID) {
-						foundItem = true
-					}
-				}
-			}
-			
-			//this hack disables our licensing checks until after the navigation item list has redrawn
-			//it is necessary to prevent our unofficial way of getting two threads going in servoy
-			//from backfiring and killing the whole solution
-			if (solutionPrefs.config.prefs.thatsAllFolks) {
-				var baDeeBaDee = true
-				solutionPrefs.config.prefs.thatsAllFolks = null
-			}
-			
-			//last navigation set still present, load at will
-			if (foundSet && foundItem) {
-				globals.NAV_loadset(true)
-				
-				//refire load forms method to bring in previous display
-				globals.FX_load_forms(null,solutionPrefs.config.currentHistoryPosition,null,null,solutionPrefs.config.prefs.workflowSpace)
-			}
-			//find how much has changed
-			else {
-				//get new item to highlight
-				if (navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set]) {
-					if (navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].lastNavItem) {
-						var lastItemID = navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].lastNavItem
-					}
-					//go to first item in the navigation set
-					else if (navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].itemsByOrder.length) {
-						var lastItemID = navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].itemsByOrder[0].navigationItem.idNavigationItem
-					}
-					//there aren't any nav items in this set, load blanks
-					else {
-						
-					}
-				}
-				
-				//there are still items in this set, go to one of them
-				if (foundSet && lastItemID) {
-					globals.NAV_loadset(true,true)
+				//there is a fw config navigation set
+				if (solutionPrefs.config.fwNavigationID) {
+					//get admin prefs
+					var admin = globals.NAV_preference_mode_get('Admin',solutionPrefs.config.fwNavigationID)
 					
-					//refire default load forms method
-					globals.FX_load_forms(lastItemID,null,true)
+					//get user prefs
+					var user = globals.NAV_preference_mode_get('User',solutionPrefs.config.fwNavigationID)
 				}
-				//load blank screen
+			}
+			
+			//help available?
+			if (navigationPrefs.byNavItemID[currentNavItem] && navigationPrefs.byNavItemID[currentNavItem].navigationItem) {
+			//	var helpAvailable = navigationPrefs.byNavItemID[currentNavItem].navigationItem.helpAvailable
+				
+				var helpForm = navigationPrefs.byNavItemID[currentNavItem].navigationItem.helpFormToLoad
+				var helpList = navigationPrefs.byNavItemID[currentNavItem].navigationItem.helpListToLoad
+				var helpDesc = navigationPrefs.byNavItemID[currentNavItem].navigationItem.helpDescription
+				
+				var helpAvailable = helpForm || helpList || helpDesc
+			}
+			
+			//loop over admin modes
+			for (var i = 0; i < admin.itemName.length ; i++) {
+				//check for design mode
+				if (admin.itemName[i] == 'Design mode') {
+					var designMode = {
+							name	: admin.itemName[i],
+							tooltip	: admin.itemDescription[i]
+						}
+					
+					admin.itemName.splice(i,1)
+					admin.formName.splice(i,1)
+					admin.navItemID.splice(i,1)
+					admin.itemDescription.splice(i,1)
+					
+					//set counter back one
+					i--
+				}
+			}
+			
+			//loop over user modes
+			for (var i = 0; i < user.itemName.length ; i++) {
+				//remove if present
+					//1- power replace
+					//2- feedback when in a preference
+					//3- lock solution
+					//4- help
+				if (user.itemName[i] == 'Power Replace' || 
+					(inPref && user.itemName[i] == 'Feedback') ||
+					user.itemName[i] == 'Lock session' ||
+					user.itemName[i] == 'Help') {
+					
+					if (user.itemName[i] == 'Lock session') {
+						var lockSession = {
+								name	: user.itemName[i],
+								tooltip	: user.itemDescription[i]
+							}
+					}
+					else if (user.itemName[i] == 'Help' && helpAvailable) {
+						var flagHelp = {
+								name	: user.itemName[i],
+								tooltip	: user.itemDescription[i]
+							}
+					}
+					
+					user.itemName.splice(i,1)
+					user.formName.splice(i,1)
+					user.navItemID.splice(i,1)
+					user.itemDescription.splice(i,1)
+					
+					//set counter back one
+					i--
+				}
+			}
+			
+			//tack on help when not in a preference or devmode
+			if (flagHelp && !inPref && !solutionPrefs.design.statusDesign) {
+				var helpText = (solutionPrefs.config.helpMode) ? 'Leave help' : 'Help'
+				user.itemName.unshift(helpText)
+				user.formName.unshift(null)
+				user.navItemID.unshift(null)
+				user.itemDescription.unshift(flagHelp.tooltip)
+			}
+			//add option to change password if access and control enabled and password changing isn't disabled
+			if (solutionPrefs.access && solutionPrefs.access.accessControl && !solutionPrefs.access.passNoChange) {
+				user.itemName.push('Change password')
+				user.formName.push('AC_P_password')
+				user.navItemID.push(null)
+				user.itemDescription.push('Periodically change your password to ensure security')
+			}
+			//add option to set custom screen size if access and control
+			if (solutionPrefs.access && solutionPrefs.access.accessControl ) {
+				user.itemName.push('Save window metrics')
+				user.formName.push('AC_P_screen')
+				user.navItemID.push(null)
+				user.itemDescription.push('Set the current window size, position, and spaces as your new default')
+			}
+			
+			//create arrays
+			var valueList = new Array()
+			var formList = new Array()
+			var navIDList = new Array()
+			var descList = new Array()
+			var typeList = new Array()
+			
+			//design mode toggle
+			if (!inPref) {
+				//design mode is an option, show it
+				if (designMode) {
+					valueList[valueList.length] = '<html><body><strong>' + ((designMode.name) ? designMode.name : noName) + '</strong></body></html>'
+					formList[formList.length] = ''
+					navIDList[navIDList.length] = ''
+					descList[descList.length] = designMode.tooltip
+					typeList.push(null)
+				}
+				
+				//divider required
+				if (designMode && ((admin.itemName && admin.itemName.length) || (user.itemName && user.itemName.length))) {
+					valueList[valueList.length] = '-'
+					formList[formList.length] = ''
+					navIDList[navIDList.length] = ''
+					descList[descList.length] = ''
+					typeList.push(null)
+				}
+			}
+			
+			//admin screens
+			if (admin.itemName && admin.itemName.length) {
+				for (var i = 0; i < admin.itemName.length; i++) {
+					valueList[valueList.length] = ((admin.itemName[i]) ? admin.itemName[i] : noName)
+					formList[formList.length] = admin.formName[i]
+					navIDList[navIDList.length] = admin.navItemID[i]
+					descList[descList.length] = admin.itemDescription[i]
+					typeList.push('Admin')
+				}
+			}
+			
+		/*	//sidebars
+			if (!inPref && solutionPrefs.panel.sidebar && solutionPrefs.panel.sidebar.length) {
+				//there are admin modes, show divider
+				if (admin.itemName && admin.itemName.length) {
+					valueList[valueList.length] = '----'
+					formList[formList.length] = ''
+					navIDList[navIDList.length] = ''
+					descList[descList.length] = ''
+					typeList.push(null)
+				}
+				
+				//punch down all active sidebars
+				for (var i = 0; i < solutionPrefs.panel.sidebar.length; i++) {
+					valueList[valueList.length] = (solutionPrefs.panel.sidebar[i].tabName) ? solutionPrefs.panel.sidebar[i].tabName : noName
+					formList[formList.length] = solutionPrefs.panel.sidebar[i].formName
+					navIDList[navIDList.length] = i + 1
+					descList[descList.length] = solutionPrefs.panel.sidebar[i].description
+					typeList.push('Sidebar')
+				}
+				
+				//there are user modes, show divider
+				if (user.itemName && user.itemName.length) {
+					valueList[valueList.length] = '----'
+					formList[formList.length] = ''
+					navIDList[navIDList.length] = ''
+					descList[descList.length] = ''
+					typeList.push(null)
+				}
+			}
+			//there are admin modes and user modes, show divider
+			else*/ if (admin.itemName && admin.itemName.length && user.itemName && user.itemName.length) {
+				valueList[valueList.length] = '-'
+				formList[formList.length] = ''
+				navIDList[navIDList.length] = ''
+				descList[descList.length] = ''
+				typeList.push(null)
+			}
+			
+			//user screens
+			if (user.itemName && user.itemName.length) {
+				for (var i = 0; i < user.itemName.length; i++) {
+					valueList[valueList.length] = ((user.itemName[i]) ? user.itemName[i] : noName)
+					formList[formList.length] = user.formName[i]
+					navIDList[navIDList.length] = user.navItemID[i]
+					descList[descList.length] = user.itemDescription[i]
+					typeList.push('User')
+				}
+			}
+			
+			//add on exit preference if in one
+			if (inPref) {
+				valueList.push('-','<html><body><font color="#FF2823">Exit configuration</font></body></html>')
+				formList.push(null,null)
+				navIDList.push(null,null)
+				descList.push(null,'Return to workflow')
+				typeList.push(null)
+			}
+			
+			//there are already some values, show divider
+			if (valueList.length) {
+				valueList[valueList.length] = '-'
+				formList[formList.length] = ''
+				navIDList[navIDList.length] = ''
+				descList[descList.length] = ''
+				typeList.push(null)
+			}
+			
+			//lock screen if a/c enabled, it is an option, and not in a preference
+			if (solutionPrefs.access.accessControl && lockSession && !inPref) {
+				valueList.push(lockSession.name)
+				formList.push(null)
+				navIDList.push(null)
+				descList.push(lockSession.tooltip)
+				typeList.push(null)
+			}
+			
+			//logout
+			valueList.push('<html><body><font color="#FF2823">Logout</font></body></html>')
+			formList.push(null)
+			navIDList.push(null)
+			descList.push('Re-open solution as a different user')
+			typeList.push(null)
+			
+			//build menu and set arguments
+			var menu = new Array()
+			var maxLength = 0
+			for ( var j = 0 ; j < valueList.length ; j++ ) {
+				//strip away all html until the centermost text piece remains
+				var htmlTags = new Array(null,null,valueList[j])
+				var htmlTags2 = htmlTags
+				while (typeof htmlTags2 == 'object' && htmlTags2 != null) {
+					htmlTags2 = htmlTags2[2].match(/<([A-Z][A-Z0-9]*)[^>]*>(.*?)<\/\1>/i)
+					if (htmlTags2 != null) {
+						htmlTags = htmlTags2
+					}
+				}
+				
+				//determine left shift amount
+				if (htmlTags[0] != null) {
+					if (htmlTags[2].length > maxLength) {
+						maxLength = htmlTags[2].length
+					}
+				}
 				else {
-					globals.DATASUTRA_navigation_set = 0
+					if (valueList[j].length > maxLength) {
+						maxLength = valueList[j].length
+					}
+				}
+				
+				//when...  ...create checkbox menu item if selected
+					//1- in a preference, 
+					//2- design mode active
+					//3- sidebar showing
+				if ((solutionPrefs.config.prefs.preferenceMode && solutionPrefs.config.prefs.paneSelected == navIDList[j]) || 
+					(solutionPrefs.design.statusDesign && designMode && designMode.tooltip == descList[j]) || 
+					(solutionPrefs.screenAttrib.sidebar.status && typeList[j] == 'Sidebar' && forms[baseForm].elements.tab_content_D.tabIndex == navIDList[j])) {
 					
-					globals.NAV_loadset(true,null)
+					menu[j] = plugins.popupmenu.createCheckboxMenuItem(valueList[j] + "", DS_actions)
+					menu[j].setSelected(true)
+				}
+				//create a normal menu item
+				else {
+					menu[j] = plugins.popupmenu.createMenuItem(valueList[j] + "", DS_actions)
+				}
+				
+				//pass arguments
+				menu[j].setMethodArguments(htmlTags[2],formList[j],navIDList[j],typeList[j])
+				
+				//set tooltip, if there is one
+		//		if (descList[j]) {
+		//			menu[j].setToolTipText(descList[j])
+		//		}
+				
+				//disable dividers
+				if (valueList[j] == '-') {
+					menu[j].setEnabled(false)
+				}
+			}
+			
+			//move "left" button to correct location
+			var currentLocationX = forms[baseForm + '__header'].elements[btnInvisible].getLocationX()
+			var currentLocationY = forms[baseForm + '__header'].elements[btnInvisible].getLocationY()
+			
+			forms[baseForm + '__header'].elements[btnInvisible].setLocation(currentLocationX - maxLength * 5.5, currentLocationY)
+			
+			//pop left popup menu
+			var elem = forms[baseForm + '__header'].elements[btnInvisible]
+			if (elem != null) {
+				plugins.popupmenu.showPopupMenu(elem, menu)
+			}
+			
+			//set invisible btn back to original location
+			forms[baseForm + '__header'].elements[btnInvisible].setLocation(currentLocationX, currentLocationY)
+		}
+		//menu shown and item chosen
+		else {
+			
+			var itemClicked = input
+			var itemFormName = arguments[1]
+			var itemID = arguments[2]
+			var itemType = arguments[3]
+			
+			//if a sidebar
+			//MEMO: not used; seet DATASUTRA__sidebar__header.TAB_popdown()
+			if (itemType == 'Sidebar') {
+				//MEMO: itemID overloaded with the tab number of the sidepanel
+				
+				//turn sidebar off
+				if (forms[baseForm].elements.tab_content_D.tabIndex == itemID && forms[baseForm].elements.tab_content_D.visible) {
+					globals.DS_sidebar_toggle(false)
+				}
+				//set tab in sidebar
+				else {
+					forms[baseForm].elements.tab_content_D.tabIndex = itemID
 					
-					//refire default load forms method
-					globals.FX_load_forms(null,null)
-				}
-			}
-			
-			//reload toolbars and sidebars
-			solutionPrefs.panel = globals.TOOL_load_panels()
-			globals.TOOLBAR_load()
-			globals.SIDEBAR_load()
-			
-			//return toolbar window to most recent position and then clear out the stored value
-			if (solutionPrefs.config.prefs.toolbarTabSelected) {
-				//formerly selected tab no longer available
-				if (solutionPrefs.config.prefs.toolbarTabSelected <= forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getMaxTabIndex()) {
-					forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex = solutionPrefs.config.prefs.toolbarTabSelected
-				}
-				solutionPrefs.config.prefs.toolbarTabSelected = null
-			}
-			
-			//return sidebar window to most recent position and then clear out the stored value
-			if (solutionPrefs.config.prefs.sidebarTabSelected) {
-				//formerly selected tab no longer available
-				if (solutionPrefs.config.prefs.sidebarTabSelected <= forms[baseForm].elements.tab_content_D.getMaxTabIndex()) {
-					forms[baseForm].elements.tab_content_D.tabIndex = solutionPrefs.config.prefs.sidebarTabSelected
-				}
-				solutionPrefs.config.prefs.sidebarTabSelected = null
-			}
-			
-			//show sidebar
-			if (solutionPrefs.config.prefs.sidebar) {
-				globals.SIDEBAR_toggle(true,null,true)
-				
-				solutionPrefs.config.prefs.sidebar = null
-			}
-			
-			//reload tooltips
-			solutionPrefs.i18n = globals.TIP_load_tips()
-			
-			//if we were in designMode, go back to it
-			if (solutionPrefs.config.prefs.designMode) {
-				solutionPrefs.design.statusDesign = true
-				
-				if (solutionPrefs.config.prefs.currentMode) {
-					solutionPrefs.design.modes[solutionPrefs.config.prefs.currentMode] = true
+					//if not showing, show sidebar
+					globals.DS_sidebar_toggle(true)
 				}
 				
+		
+			}
+			//check for non-standard prefpane logout
+			else if (itemClicked == 'Logout') {
+				application.closeSolution(application.getSolutionName())
+			}
+			//check for non-standard prefpane lock session
+			else if (itemClicked == 'Lock session') {
+				//blank screen out
+				forms[baseForm].elements.gfx_curtain.transparent = false
+				forms[baseForm].elements.gfx_curtain.setImageURL(null)
+				forms[baseForm].elements.gfx_curtain.setBorder('MatteBorder,0,0,100,0,#323A4B')
+				
+				//set location
+				forms[baseForm].elements.gfx_curtain.setLocation(0,0)
+				//set size
+				forms[baseForm].elements.gfx_curtain.setSize(application.getWindowWidth(),application.getWindowHeight())
+				
+				//set text
+				forms[baseForm].elements.gfx_curtain.text = forms[baseForm].solution_name + ' is locked'
+				forms[baseForm].elements.gfx_curtain.toolTipText = 'Click to unlock'
+				
+				//show curtain
+				forms[baseForm].elements.gfx_curtain.enabled = true
+				forms[baseForm].elements.gfx_curtain.visible = true
+				
+				//set flag
+				solutionPrefs.access.lockStatus = true
+			}
+			//check for non-standard prefpane feedback
+			else if (itemClicked == 'Feedback') {
+				//get screensize of window
+				var x = application.getWindowX()
+				var y = application.getWindowY()
+				var width = application.getWindowWidth()
+				var height =  application.getWindowHeight()
+				
+				//make pop-up get out of the way
+				forms[baseForm + '__header'].elements.fld_constant.requestFocus(false)
+				application.sleep(175)
+				
+				//get screenshot
+				var screenShot = (new java.awt.Robot()).createScreenCapture(new java.awt.Rectangle(x,y,width,height))
+				var rawData = new java.io.ByteArrayOutputStream()
+				Packages.javax.imageio.ImageIO.write(screenShot,'png',rawData)
+				globals.DATASUTRA_feedback = rawData.toByteArray()
+				
+				//show popup dialog
+				application.showFormInDialog(forms.DEV_P_feedback,-1,-1,-1,-1,'Submit feedback',false,false,'feedback',true)
+			}
+			//check for non-standard prefpane design mode
+			else if (itemClicked == 'Design mode') {
+				//make sure not in help mode
+				if (solutionPrefs.config.helpMode) {
+					globals.DS_help()
+				}
+				
+				solutionPrefs.design.statusDesign = !solutionPrefs.design.statusDesign
 				globals.DEV_mode_toggle()
 			}
-			
-			//show normal frameworks action graphic if not in design mode
-			if (!solutionPrefs.design.statusDesign) {
-				forms[baseForm + '__header'].elements.btn_fw_action.visible = true
+			//check for non-standard prefpane change password
+			else if (itemClicked == 'Change password') {
+				forms.AC_P_password.FORM_fid(solutionPrefs.access.userID)
 			}
-			
-			//remove preference related flags
-			//solutionPrefs.config.prefs.preferenceMode = false	//MEMO: moved to FX_load_forms
-			solutionPrefs.config.prefs.workflowSpace = null
-			solutionPrefs.config.prefs.workflowFormName = null
-			solutionPrefs.config.prefs.workflowFormID = null
-			solutionPrefs.config.prefs.preferenceMode = false
-			solutionPrefs.config.prefs.designMode = false
-			
-			//in servoy 4 or greater
-			if (utils.stringToNumber(solutionPrefs.clientInfo.verServoy) >= 4) {
-				//retrigger the shown UL to reload
-				forms.NAV_T_universal_list.DISPLAY_cycle(true)
-				
-				if (navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.withButtons) {
-					forms.NAV_T_universal_list.FORM_on_show(true)
-					forms[baseForm].elements.tab_content_B.tabIndex = 2
-					forms.NAV_T_universal_list.elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.tabNumber
-				}
-				else {
-					forms.NAV_T_universal_list__no_buttons.FORM_on_show(true)
-					forms[baseForm].elements.tab_content_B.tabIndex = 3
-					forms.NAV_T_universal_list__no_buttons.elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.tabNumber
-				}
+			//check for non-standard prefpane configure screen
+			else if (itemClicked == 'Save window metrics') {
+				forms.AC_P_screen.FORM_on_show(solutionPrefs.access.userID)
 			}
-			
-			//re-set progress indicator toolbar (already removed from toolbar area)
-			globals.CALLBACK_progressbar_stop()
-			
-			//turn licensing check back on
-			if (baDeeBaDee) {
-				solutionPrefs.config.prefs.thatsAllFolks = true
-			}
-		}
-		//go to a specific preference
-		else if (itemClicked != '----' && itemClicked != 'Design mode') {
-			//entering a preference for the first time
-			if (!solutionPrefs.config.prefs.preferenceMode) {
-				forms[baseForm].elements.sheetz.visible = false
-				
-				//add preference flag
-				solutionPrefs.config.prefs.preferenceMode = true
-				
-				//save current toolbar tab
-				solutionPrefs.config.prefs.toolbarTabSelected = forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex
-				
-				//save current sidebar tab
-				solutionPrefs.config.prefs.sidebarTabSelected = forms[baseForm].elements.tab_content_D.tabIndex
-				
-				//if sidebar showing, save it and turn off
-				if (solutionPrefs.screenAttrib.sidebar.status) {
-					solutionPrefs.config.prefs.sidebar = true
+			//anything that needs to exit design mode (help or preferences)
+			else {
+				//if in design mode, exit it
+					//MEMO: we do this to eliminate using design mode where it shouldn't be used
+				if (solutionPrefs.design.statusDesign) {
+					//we were in design mode
+					var designMode = true
 					
-					globals.SIDEBAR_toggle(false,null,true)
-					application.updateUI()
-				}
-				
-				
-				//if we were in design mode, save it
-				if (designMode) {
-					solutionPrefs.config.prefs.designMode = true
-				}
-				
-				//save down workflow name, id and selected space
-				solutionPrefs.config.prefs.workflowFormName = solutionPrefs.config.currentFormName
-				solutionPrefs.config.prefs.workflowFormID = 
-				navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].lastNavItem = 
-					solutionPrefs.config.currentFormID
-				solutionPrefs.config.prefs.workflowSpace = solutionPrefs.config.activeSpace
-				
-				//save information about current workflow space setup
-				if (solutionPrefs.config.prefs.workflowFormID && navigationPrefs.byNavItemID[solutionPrefs.config.prefs.workflowFormID]) {
-					navigationPrefs.byNavItemID[solutionPrefs.config.prefs.workflowFormID].spaceStatus = new Array()
-					navigationPrefs.byNavItemID[solutionPrefs.config.prefs.workflowFormID].spaceStatus.lastSpace = solutionPrefs.config.prefs.workflowSpace
+					//check for where exactly we are
+					var possibleModes = new Array(
+											'buttonaction',
+											'buttonadd',
+											'buttonreport',
+											'navigation',
+											'fastfind',
+											'universallist',
+											'spec',
+											'task',
+											'help',
+											'prototyper'
+										)
+					for (var i = 0; i < possibleModes.length; i++) {
+						if (solutionPrefs.design.modes[possibleModes[i]]) {
+							solutionPrefs.config.prefs.currentMode = possibleModes[i]
+							break
+						}
+					}
 					
-					for (var i = 1; i <= 14; i++) {
-						navigationPrefs.byNavItemID[solutionPrefs.config.prefs.workflowFormID].spaceStatus.push(forms[baseForm + '__header'].elements['btn_space_' + i].visible)
+					solutionPrefs.design.statusDesign = false
+					globals.DEV_mode_toggle(true)
+				}
+				
+				//check for non-standard prefpane help
+				if (itemClicked == 'Help' || itemClicked == 'Leave help') {
+					globals.DS_help()
+				}
+				//exit from settings mode
+				else if (itemClicked == 'Exit configuration') {
+					//turn on progress indicator
+					globals.CALLBACK_progressbar_start(-273,'Loading new configuration data...','This process will soon only update changed information')
+					
+					//recreate navigationPrefs
+					//with a/c
+					if (solutionPrefs.access && solutionPrefs.access.accessControl) {
+						globals.NAV_navigation_load(false,solutionPrefs.access.groupID)
+					}
+					//login disabled
+					else {
+						globals.NAV_navigation_load(false)
+					}
+					
+					//save information about current config space setup
+					if (solutionPrefs.config.currentFormID && navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID]) {
+						navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].spaceStatus = new Array()
+						navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].spaceStatus.lastSpace = solutionPrefs.config.activeSpace
+						
+						for (var i = 1; i <= 14; i++) {
+							navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].spaceStatus.push(forms[baseForm + '__header'].elements['btn_space_' + i].visible)
+						}
+					}
+					
+					//enable nav_chooser, find, and toolbar toggle buttons
+					forms[baseForm + '__header'].elements.btn_navset.enabled = true
+					forms[baseForm + '__header__fastfind'].elements.btn_find.enabled = true
+					forms[baseForm + '__header__fastfind'].elements.find_mid.enabled = true
+					forms[baseForm + '__header__fastfind'].elements.find_end.enabled = true
+					forms[baseForm + '__header__fastfind'].elements.fld_find.enabled = true
+					forms[baseForm + '__header__toolbar'].elements.btn_toolbar_toggle.visible = true
+					
+					//set current form back to workflow
+						//MEMO: may be changed by other stuff below
+					solutionPrefs.config.currentFormName = solutionPrefs.config.prefs.workflowFormName
+					solutionPrefs.config.currentFormID = solutionPrefs.config.prefs.workflowFormID
+					
+					//load navigation set list back in
+					if (forms[baseForm].elements.tab_content_A.tabIndex > 0) {
+						forms[baseForm].elements.tab_content_A.removeTabAt(1)
+					}
+					forms[baseForm].elements.tab_content_A.addTab(forms.NAV_0L_solution,'',null,null,null,null)
+					forms[baseForm].elements.tab_content_A.tabIndex = forms[baseForm].elements.tab_content_A.getMaxTabIndex()
+					
+					//check that last viewed navigation set still ok
+					var foundSet = false
+					for (var i in navigationPrefs.byNavSetID ) {
+						if (i == globals.DATASUTRA_navigation_set && navigationPrefs.byNavSetID[i] != null) {
+							foundSet = true
+						}
+					}
+					
+					//check that last viewed navigation item still ok
+					var foundItem = false
+					if (navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set]) {
+						for (var j = 0; j < navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].itemsByOrder.length && !foundItem; j++) {
+							if (navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].itemsByOrder[j].navigationItem.idNavigationItem == solutionPrefs.config.currentFormID) {
+								foundItem = true
+							}
+						}
+					}
+					
+					//this hack disables our licensing checks until after the navigation item list has redrawn
+					//it is necessary to prevent our unofficial way of getting two threads going in servoy
+					//from backfiring and killing the whole solution
+					if (solutionPrefs.config.prefs.thatsAllFolks) {
+						var baDeeBaDee = true
+						solutionPrefs.config.prefs.thatsAllFolks = null
+					}
+					
+					//last navigation set still present, load at will
+					if (foundSet && foundItem) {
+						globals.NAV_navigation_set_load(true)
+						
+						//refire load forms method to bring in previous display
+						globals.NAV_workflow_load(null,solutionPrefs.config.currentHistoryPosition,null,null,solutionPrefs.config.prefs.workflowSpace)
+					}
+					//find how much has changed
+					else {
+						//get new item to highlight
+						if (navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set]) {
+							if (navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].lastNavItem) {
+								var lastItemID = navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].lastNavItem
+							}
+							//go to first item in the navigation set
+							else if (navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].itemsByOrder.length) {
+								var lastItemID = navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].itemsByOrder[0].navigationItem.idNavigationItem
+							}
+							//there aren't any nav items in this set, load blanks
+							else {
+								
+							}
+						}
+						
+						//there are still items in this set, go to one of them
+						if (foundSet && lastItemID) {
+							globals.NAV_navigation_set_load(true,true)
+							
+							//refire default load forms method
+							globals.NAV_workflow_load(lastItemID,null,true)
+						}
+						//load blank screen
+						else {
+							globals.DATASUTRA_navigation_set = 0
+							
+							globals.NAV_navigation_set_load(true,null)
+							
+							//refire default load forms method
+							globals.NAV_workflow_load(null,null)
+						}
+					}
+					
+					//reload toolbars and sidebars
+					solutionPrefs.panel = globals.DS_panel_load()
+					globals.DS_toolbar_load()
+					globals.DS_sidebar_load()
+					
+					//return toolbar window to most recent position and then clear out the stored value
+					if (solutionPrefs.config.prefs.toolbarTabSelected) {
+						//formerly selected tab no longer available
+						if (solutionPrefs.config.prefs.toolbarTabSelected <= forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getMaxTabIndex()) {
+							forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex = solutionPrefs.config.prefs.toolbarTabSelected
+						}
+						solutionPrefs.config.prefs.toolbarTabSelected = null
+					}
+					
+					//return sidebar window to most recent position and then clear out the stored value
+					if (solutionPrefs.config.prefs.sidebarTabSelected) {
+						//formerly selected tab no longer available
+						if (solutionPrefs.config.prefs.sidebarTabSelected <= forms[baseForm].elements.tab_content_D.getMaxTabIndex()) {
+							forms[baseForm].elements.tab_content_D.tabIndex = solutionPrefs.config.prefs.sidebarTabSelected
+						}
+						solutionPrefs.config.prefs.sidebarTabSelected = null
+					}
+					
+					//show sidebar
+					if (solutionPrefs.config.prefs.sidebar) {
+						globals.DS_sidebar_toggle(true,null,true)
+						
+						solutionPrefs.config.prefs.sidebar = null
+					}
+					
+					//reload tooltips
+					solutionPrefs.i18n = globals.DS_tooltip_load()
+					
+					//if we were in designMode, go back to it
+					if (solutionPrefs.config.prefs.designMode) {
+						solutionPrefs.design.statusDesign = true
+						
+						if (solutionPrefs.config.prefs.currentMode) {
+							solutionPrefs.design.modes[solutionPrefs.config.prefs.currentMode] = true
+						}
+						
+						globals.DEV_mode_toggle()
+					}
+					
+					//show normal frameworks action graphic if not in design mode
+					if (!solutionPrefs.design.statusDesign) {
+						forms[baseForm + '__header'].elements.btn_fw_action.visible = true
+					}
+					
+					//remove preference related flags
+					//solutionPrefs.config.prefs.preferenceMode = false	//MEMO: moved to NAV_workflow_load
+					solutionPrefs.config.prefs.workflowSpace = null
+					solutionPrefs.config.prefs.workflowFormName = null
+					solutionPrefs.config.prefs.workflowFormID = null
+					solutionPrefs.config.prefs.preferenceMode = false
+					solutionPrefs.config.prefs.designMode = false
+					
+					//in servoy 4 or greater
+					if (utils.stringToNumber(solutionPrefs.clientInfo.verServoy) >= 4) {
+						//retrigger the shown UL to reload
+						forms.NAV_T_universal_list.DISPLAY_cycle(true)
+						
+						if (navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.withButtons) {
+							forms.NAV_T_universal_list.FORM_on_show(true)
+							forms[baseForm].elements.tab_content_B.tabIndex = 2
+							forms.NAV_T_universal_list.elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.tabNumber
+						}
+						else {
+							forms.NAV_T_universal_list__no_buttons.FORM_on_show(true)
+							forms[baseForm].elements.tab_content_B.tabIndex = 3
+							forms.NAV_T_universal_list__no_buttons.elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.tabNumber
+						}
+					}
+					
+					//re-set progress indicator toolbar (already removed from toolbar area)
+					globals.CALLBACK_progressbar_stop()
+					
+					//turn licensing check back on
+					if (baDeeBaDee) {
+						solutionPrefs.config.prefs.thatsAllFolks = true
 					}
 				}
-				
-				//make sure find graphics are the unselected variety
-				forms[baseForm + '__header__fastfind'].elements.btn_find.setImageURL('media:///find_magnify.png')
-				forms[baseForm + '__header__fastfind'].elements.find_mid.setImageURL('media:///find_middle.png')
-				forms[baseForm + '__header__fastfind'].elements.find_end.setImageURL('media:///find_stop.png')
-				forms[baseForm + '__header'].elements.fld_constant.requestFocus(false)
-				
-				//disable nav_chooser, find, and toolbar cycle button
-				forms[baseForm + '__header'].elements.btn_navset.enabled = false
-				forms[baseForm + '__header__fastfind'].elements.btn_find.enabled = false
-				forms[baseForm + '__header__fastfind'].elements.find_mid.enabled = false
-				forms[baseForm + '__header__fastfind'].elements.find_end.enabled = false
-				forms[baseForm + '__header__fastfind'].elements.fld_find.enabled = false
-				forms[baseForm + '__header__toolbar'].elements.btn_toolbar_toggle.visible = false
-				
-				//hide frameworks action graphic, showing red outline underneath
-				forms[baseForm + '__header'].elements.btn_fw_action.visible = false
-				
-				var prefTab = 'TOOL_config_pane'
-				
-				//add in preference tab
-				forms[baseForm + '__header__toolbar'].elements.tab_toolbar.removeAllTabs()
-				if (forms[prefTab]) {
-					forms[baseForm + '__header__toolbar'].elements.tab_toolbar.addTab(forms[prefTab],null,'Preference',null,null)
+				//go to a specific preference
+				else if (itemClicked != '----' && itemClicked != 'Design mode') {
+					//entering a preference for the first time
+					if (!solutionPrefs.config.prefs.preferenceMode) {
+						forms[baseForm].elements.sheetz.visible = false
+						
+						//add preference flag
+						solutionPrefs.config.prefs.preferenceMode = true
+						
+						//save current toolbar tab
+						solutionPrefs.config.prefs.toolbarTabSelected = forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex
+						
+						//save current sidebar tab
+						solutionPrefs.config.prefs.sidebarTabSelected = forms[baseForm].elements.tab_content_D.tabIndex
+						
+						//if sidebar showing, save it and turn off
+						if (solutionPrefs.screenAttrib.sidebar.status) {
+							solutionPrefs.config.prefs.sidebar = true
+							
+							globals.DS_sidebar_toggle(false,null,true)
+							application.updateUI()
+						}
+						
+						
+						//if we were in design mode, save it
+						if (designMode) {
+							solutionPrefs.config.prefs.designMode = true
+						}
+						
+						//save down workflow name, id and selected space
+						solutionPrefs.config.prefs.workflowFormName = solutionPrefs.config.currentFormName
+						solutionPrefs.config.prefs.workflowFormID = 
+						navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].lastNavItem = 
+							solutionPrefs.config.currentFormID
+						solutionPrefs.config.prefs.workflowSpace = solutionPrefs.config.activeSpace
+						
+						//save information about current workflow space setup
+						if (solutionPrefs.config.prefs.workflowFormID && navigationPrefs.byNavItemID[solutionPrefs.config.prefs.workflowFormID]) {
+							navigationPrefs.byNavItemID[solutionPrefs.config.prefs.workflowFormID].spaceStatus = new Array()
+							navigationPrefs.byNavItemID[solutionPrefs.config.prefs.workflowFormID].spaceStatus.lastSpace = solutionPrefs.config.prefs.workflowSpace
+							
+							for (var i = 1; i <= 14; i++) {
+								navigationPrefs.byNavItemID[solutionPrefs.config.prefs.workflowFormID].spaceStatus.push(forms[baseForm + '__header'].elements['btn_space_' + i].visible)
+							}
+						}
+						
+						//make sure find graphics are the unselected variety
+						forms[baseForm + '__header__fastfind'].elements.btn_find.setImageURL('media:///find_magnify.png')
+						forms[baseForm + '__header__fastfind'].elements.find_mid.setImageURL('media:///find_middle.png')
+						forms[baseForm + '__header__fastfind'].elements.find_end.setImageURL('media:///find_stop.png')
+						forms[baseForm + '__header'].elements.fld_constant.requestFocus(false)
+						
+						//disable nav_chooser, find, and toolbar cycle button
+						forms[baseForm + '__header'].elements.btn_navset.enabled = false
+						forms[baseForm + '__header__fastfind'].elements.btn_find.enabled = false
+						forms[baseForm + '__header__fastfind'].elements.find_mid.enabled = false
+						forms[baseForm + '__header__fastfind'].elements.find_end.enabled = false
+						forms[baseForm + '__header__fastfind'].elements.fld_find.enabled = false
+						forms[baseForm + '__header__toolbar'].elements.btn_toolbar_toggle.visible = false
+						
+						//hide frameworks action graphic, showing red outline underneath
+						forms[baseForm + '__header'].elements.btn_fw_action.visible = false
+						
+						var prefTab = 'TOOL_config_pane'
+						
+						//add in preference tab
+						forms[baseForm + '__header__toolbar'].elements.tab_toolbar.removeAllTabs()
+						if (forms[prefTab]) {
+							forms[baseForm + '__header__toolbar'].elements.tab_toolbar.addTab(forms[prefTab],null,'Preference',null,null)
+						}
+					}
+					
+					//set flag for check of selected preference
+					solutionPrefs.config.prefs.paneSelected = itemID
+					
+					//load selected preference
+					globals.NAV_preference_load(itemClicked,itemID)
+					
+					//change header to display preference selected
+					forms.TOOL_config_pane.elements.lbl_title.text = itemClicked
 				}
 			}
-			
-			//set flag for check of selected preference
-			solutionPrefs.config.prefs.paneSelected = itemID
-			
-			//load selected preference
-			globals.FX_load_preference(itemClicked,itemID)
-			
-			//change header to display preference selected
-			forms.TOOL_config_pane.elements.lbl_title.text = itemClicked
 		}
 	}
-}
-
 
 }
 
@@ -2144,11 +2127,11 @@ if (application.__parent__.solutionPrefs) {
  *
  * @properties={typeid:24,uuid:"3f630f30-79cc-4c9b-b1dd-c0dee4e28dfb"}
  */
-function HELP()
+function DS_help()
 {
 
 /*
- *	TITLE    :	HELP
+ *	TITLE    :	DS_help
  *			  	
  *	MODULE   :	_DATASUTRA_
  *			  	
@@ -2253,118 +2236,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			solutionPrefs.config.helpMode = false
 			
 			//fire load_forms
-			globals.FX_load_forms(null,solutionPrefs.config.currentHistoryPosition)
-		}
-	}
-	else {
-		plugins.dialogs.showWarningDialog('No help','There is no active help screen for this area')
-		solutionPrefs.config.helpMode = false
-	}
-}
-
-}
-
-/**
- *
- * @properties={typeid:24,uuid:"235b4e76-981c-41f5-831e-bdc6b60daee9"}
- */
-function HELP_archive()
-{
-
-/*
- *	TITLE    :	HELP
- *			  	
- *	MODULE   :	_DATASUTRA_
- *			  	
- *	ABOUT    :	activate help mode for the current screen
- *			  	
- *	INPUT    :	
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
- *	MODIFIED :	Mar 2008 -- Troy Elliott, Data Mosaic
- *			  	
- */
-
-if (application.__parent__.solutionPrefs) {
-	var baseForm = solutionPrefs.config.formNameBase
-	var currentNavItem = solutionPrefs.config.currentFormID
-	var helpDesc = navigationPrefs.byNavItemID[currentNavItem].navigationItem.helpDescription
-	var helpForm = navigationPrefs.byNavItemID[currentNavItem].navigationItem.helpFormToLoad
-	var helpList = 'DEV_0F_navigation_item__help'
-	var prefName = 'Inline Help'
-	var helpTextColor = navigationPrefs.byNavItemID[currentNavItem].navigationItem.helpColorText
-	var helpBkgndColor = navigationPrefs.byNavItemID[currentNavItem].navigationItem.helpColorBackground
-	var helpAvailable = helpForm || helpDesc //navigationPrefs.byNavItemID[currentNavItem].navigationItem.helpAvailable
-	var stayInHelp = arguments[0]
-	
-	if (helpAvailable || solutionPrefs.design.statusDesign) {
-		//activate
-		if (!solutionPrefs.config.helpMode || stayInHelp) {
-			//set flag that in helpmode
-			globals.DEV_clear_modes()
-			solutionPrefs.config.helpMode = true
-			
-			//we're in design mode, mark that we are in the help config pane
-			if (solutionPrefs.design.statusDesign) {
-				solutionPrefs.design.modes.help = true
-				solutionPrefs.design.currentMode = 'help'
-			}
-			
-			//replace workflow area with help screen, if defined and available
-			if ((helpForm) ? forms[helpForm] : false) {
-				forms[baseForm].elements.tab_content_C.removeAllTabs()
-				forms[baseForm].elements.tab_content_C.addTab(forms[helpForm],'')
-				forms[baseForm].elements.tab_content_C.tabIndex = forms[baseForm].elements.tab_content_C.getMaxTabIndex()
-			}
-			
-			//set help text
-			globals.DEV_help_description = helpDesc
-			forms[helpList].elements.lbl_record_heading.text = 'Help: ' + navigationPrefs.byNavItemID[currentNavItem].navigationItem.itemName
-			
-			//set colors
-			if (helpTextColor) {
-				forms[helpList].elements.fld_help_description.fgcolor = '#'+helpTextColor
-			}
-			else {
-				forms[helpList].elements.fld_help_description.fgcolor = '#000000'
-			}
-			if (helpBkgndColor) {
-				forms[helpList].elements.color_background.bgcolor = '#'+helpBkgndColor
-			}
-			else {
-				forms[helpList].elements.color_background.bgcolor = '#D1D7E2'
-			}
-			
-			//if not loaded, add tab
-			if (!navigationPrefs.byNavSetName.configPanes.itemsByName[prefName]) {
-				
-				//assign to list tab panel
-				forms[baseForm].elements.tab_content_B.addTab(forms[helpList],'View help',null,null,null,null)
-				forms[baseForm].elements.tab_content_B.tabIndex = forms[baseForm].elements.tab_content_B.getMaxTabIndex()
-				
-				//save status info
-				navigationPrefs.byNavSetName.configPanes.itemsByName[prefName] = new Object()
-				navigationPrefs.byNavSetName.configPanes.itemsByName[prefName].listData = {
-											tabNumber : forms[baseForm].elements.tab_content_B.tabIndex,
-											dateAdded : application.getServerTimeStamp()
-									}
-				
-			}
-			//form already exists, set tab index
-			else {
-				forms[baseForm].elements.tab_content_B.tabIndex = navigationPrefs.byNavSetName.configPanes.itemsByName[prefName].listData.tabNumber
-			}
-		}
-		//deactivate
-		else {
-			//set flag that not in helpmode
-			solutionPrefs.config.helpMode = false
-			
-			//fire load_forms
-			globals.FX_load_forms(null,solutionPrefs.config.currentHistoryPosition)
+			globals.NAV_workflow_load(null,solutionPrefs.config.currentHistoryPosition)
 		}
 	}
 	else {
@@ -2379,11 +2251,11 @@ if (application.__parent__.solutionPrefs) {
  *
  * @properties={typeid:24,uuid:"a77efe4c-7006-4568-b006-c0779bb7b647"}
  */
-function HELP_sidebar()
+function DS_help_sidebar()
 {
 
 /*
- *	TITLE    :	HELP
+ *	TITLE    :	DS_help
  *			  	
  *	MODULE   :	_DATASUTRA_
  *			  	
@@ -2475,7 +2347,7 @@ if (application.__parent__.solutionPrefs) {
 			solutionPrefs.config.helpMode = false
 			
 			//fire load_forms
-			globals.FX_load_forms(null,solutionPrefs.config.currentHistoryPosition)
+			globals.NAV_workflow_load(null,solutionPrefs.config.currentHistoryPosition)
 		}
 	}
 	else {
@@ -2490,11 +2362,11 @@ if (application.__parent__.solutionPrefs) {
  *
  * @properties={typeid:24,uuid:"b3e74e7e-5da7-4752-a6aa-b154b093649f"}
  */
-function NAVSET_list()
+function DS_navigation_set(input)
 {
 
 /*
- *	TITLE    :	NAVSET_list
+ *	TITLE    :	DS_navigation_set
  *			  	
  *	MODULE   :	_DATASUTRA_
  *			  	
@@ -2510,113 +2382,90 @@ function NAVSET_list()
  *			  	
  */
 
-var formName = application.getMethodTriggerFormName()
-var fwNavSet = application.getMethodTriggerElementName()
-
-//validate license
-forms.PREF_0F_solution__license.ACTION_validate(true,true)
-
-//timed out, throw up error
-if (solutionPrefs.config.prefs.thatsAllFolks) {
-	forms.PREF_0F_solution__license.ACTION_status()
+	var formName = application.getMethodTriggerFormName()
+	var fwNavSet = application.getMethodTriggerElementName()
 	
-	plugins.dialogs.showErrorDialog(
-						'Demo expired',
-						'Demo time expired\n' +
-						'Please restart.'
-					)
-}
-
-//get menu list from a value list
-var vlItems = application.getValueListItems('NAV_navigation_set')
-var vlDisplay = vlItems.getColumnAsArray(1)
-var vlReal = vlItems.getColumnAsArray(2)
-
-//build menu
-var menu = new Array()
-for ( var i = 0 ; i < vlDisplay.length ; i++ ) {
-	//create checkbox menu item if selected
-	if (globals.DATASUTRA_navigation_set == vlReal[i]) {
-		menu[i] = plugins.popupmenu.createCheckboxMenuItem(vlDisplay[i] + "", NAVSET_list_control)
-		menu[i].setSelected(true)
-	}
-	//create a normal menu item
-	else {
-		menu[i] = plugins.popupmenu.createMenuItem(vlDisplay[i] + "", NAVSET_list_control)
+	//validate license
+	forms.PREF_0F_solution__license.ACTION_validate(true,true)
+	
+	//timed out, throw up error
+	if (solutionPrefs.config.prefs.thatsAllFolks) {
+		forms.PREF_0F_solution__license.ACTION_status()
+		
+		plugins.dialogs.showErrorDialog(
+							'Demo expired',
+							'Demo time expired\n' +
+							'Please restart.'
+						)
 	}
 	
-	//set arguments
-	menu[i].setMethodArguments(vlReal[i])
+	//get menu list from a value list
+	var vlItems = application.getValueListItems('NAV_navigation_set')
+	var vlDisplay = vlItems.getColumnAsArray(1)
+	var vlReal = vlItems.getColumnAsArray(2)
 	
-	//disable dividers
-	if (vlDisplay[i] == '----') {
-		menu[i].setEnabled(false)
-	}
+	//called to depress menu
+	if (input instanceof JSEvent) {
 	
-}
-
-//pop menu down
-var elem = forms[formName].elements[fwNavSet]
-if (elem != null && menu.length) {
-	plugins.popupmenu.showPopupMenu(elem, menu)
-}
-
-
-}
-
-/**
- *
- * @properties={typeid:24,uuid:"f82228b9-8182-4b66-9ec8-1814d171f819"}
- */
-function NAVSET_list_control()
-{
-
-/*
- *	TITLE    :	NAVSET_list_control
- *			  	
- *	MODULE   :	_DATASUTRA_
- *			  	
- *	ABOUT    :	show navigation sets
- *			  	
- *	INPUT    :	
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
- *	MODIFIED :	June 25, 2008 -- Troy Elliott, Data Mosaic
- *			  	
- */
-
-if (application.__parent__.solutionPrefs && application.__parent__.navigationPrefs) {
-
-	var itemClicked = arguments[0]
-	var oldItem = globals.DATASUTRA_navigation_set
-	
-	if (itemClicked) {
-		//save last selected item when changing navigation sets
-		if (oldItem != itemClicked) {
-			if (oldItem) {
-				navigationPrefs.byNavSetID[oldItem].lastNavItem = solutionPrefs.config.currentFormID
+		//build menu
+		var menu = new Array()
+		for ( var i = 0 ; i < vlDisplay.length ; i++ ) {
+			//create checkbox menu item if selected
+			if (globals.DATASUTRA_navigation_set == vlReal[i]) {
+				menu[i] = plugins.popupmenu.createCheckboxMenuItem(vlDisplay[i] + "", DS_navigation_set)
+				menu[i].setSelected(true)
+			}
+			//create a normal menu item
+			else {
+				menu[i] = plugins.popupmenu.createMenuItem(vlDisplay[i] + "", DS_navigation_set)
 			}
 			
-			globals.DATASUTRA_navigation_set = itemClicked
+			//set arguments
+			menu[i].setMethodArguments(vlReal[i])
 			
-			globals.NAV_loadset()
+			//disable dividers
+			if (vlDisplay[i] == '----') {
+				menu[i].setEnabled(false)
+			}
+			
+		}
+		
+		//pop menu down
+		var elem = forms[formName].elements[fwNavSet]
+		if (elem != null && menu.length) {
+			plugins.popupmenu.showPopupMenu(elem, menu)
+		}
+	
+	}
+	//menu shown and item chosen
+	else if (application.__parent__.solutionPrefs && application.__parent__.navigationPrefs) {
+	
+		var oldItem = globals.DATASUTRA_navigation_set
+		
+		if (input) {
+			//save last selected item when changing navigation sets
+			if (oldItem != input) {
+				if (oldItem) {
+					navigationPrefs.byNavSetID[oldItem].lastNavItem = solutionPrefs.config.currentFormID
+				}
+				
+				globals.DATASUTRA_navigation_set = input
+				
+				globals.NAV_navigation_set_load()
+			}
 		}
 	}
-}
 }
 
 /**
  *
  * @properties={typeid:24,uuid:"9a9bd7c9-df44-4438-a84a-a39224a3ac08"}
  */
-function PLUGIN_check()
+function DS_plugin_check()
 {
 
 /*
- *	TITLE    :	PLUGIN_check
+ *	TITLE    :	DS_plugin_check
  *			  	
  *	MODULE   :	_DATASUTRA_
  *			  	
@@ -2633,14 +2482,14 @@ function PLUGIN_check()
  */
 
 var args = new Array(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4], arguments[5], arguments[6])
-var success = plugins.sutra.executeFunction(globals.PLUGIN_check,args,"00000000-1111-1111-1111-000000000000")
+var success = plugins.sutra.executeFunction(globals.DS_plugin_check,args,"00000000-1111-1111-1111-000000000000")
 
 //check if plugin
 if (success && plugins.sutra) {
 	//check if plugin has Fxion
 	if (plugins.sutra.getVersion) {
 		//check for version of plugin
-		if (plugins.sutra.getVersion() == '3.0.0' && success) {
+		if (plugins.sutra.getVersion() == '3.0.1' && success) {
 			return true
 		}
 		//fail
@@ -2663,11 +2512,11 @@ else {
  *
  * @properties={typeid:24,uuid:"2eb247e4-13ad-4e7e-852d-e112480a5d00"}
  */
-function SIDEBAR_load()
+function DS_sidebar_load()
 {
 
 /*
- *	TITLE    :	SIDEBAR_load
+ *	TITLE    :	DS_sidebar_load
  *			  	
  *	MODULE   :	_DATASUTRA_
  *			  	
@@ -2679,7 +2528,7 @@ function SIDEBAR_load()
  *			  	
  *	REQUIRES :	
  *			  	
- *	USAGE    :	SIDEBAR_load()
+ *	USAGE    :	DS_sidebar_load()
  *			  	
  *	MODIFIED :	September 10, 2009 -- Troy Elliott, Data Mosaic
  *			  	
@@ -2687,14 +2536,14 @@ function SIDEBAR_load()
 
 if (application.__parent__.solutionPrefs) {
 	var baseForm = solutionPrefs.config.formNameBase
-	var sideForm = 'SIDE_sidebar'
+	var sideForm = 'DATASUTRA__sidebar'
 	var sidebars = solutionPrefs.panel.sidebar
 	
 	//remove all tabs from the sidebar
 	forms[sideForm].elements.tab_content.removeAllTabs()
 	
 	//add in help tab (always the first)	
-	forms[sideForm].elements.tab_content.addTab(forms['HELP_0S_documentation'],null,"Help...I'm melting",null,null,null,null,null,1)
+	forms[sideForm].elements.tab_content.addTab(forms['MGR_0S_documentation'],null,"Help...I'm melting",null,null,null,null,null,1)
 	
 	//add in tabs to popdown
 	if (sidebars.length) {
@@ -2766,11 +2615,11 @@ if (application.__parent__.solutionPrefs) {
  * 
  * @properties={typeid:24,uuid:"b2bbd2c2-2b6e-4918-accc-74b3ab9769d6"}
  */
-function SIDEBAR_toggle()
+function DS_sidebar_toggle()
 {
 
 /*
- *	TITLE    :	SIDEBAR_toggle
+ *	TITLE    :	DS_sidebar_toggle
  *			  	
  *	MODULE   :	_DATASUTRA_
  *			  	
@@ -2784,7 +2633,7 @@ function SIDEBAR_toggle()
  *			  	
  *	REQUIRES :	
  *			  	
- *	USAGE    :	SIDEBAR_toggle()
+ *	USAGE    :	DS_sidebar_toggle()
  *			  	
  *	MODIFIED :	September 8, 2009 -- Troy Elliott, Data Mosaic
  *			  	
@@ -2895,12 +2744,12 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		//forms[baseForm + '__header'].elements.lbl_drag.visible = true
 		
 		//if first tab showing (help), enter help mode
-		if (forms.SIDE_sidebar.elements.tab_content.tabIndex == 1) {
-			globals.HELP(true)
+		if (forms.DATASUTRA__sidebar.elements.tab_content.tabIndex == 1) {
+			globals.DS_help(true)
 		}
 		//not on first tab, but in help mode; leave help
 		else if (solutionPrefs.config.helpMode) {
-			globals.HELP(false)
+			globals.DS_help(false)
 		}
 		
 	}
@@ -2943,11 +2792,11 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
  *
  * @properties={typeid:24,uuid:"2f83dc35-1e2c-4f72-a40c-bc8f6c92df3a"}
  */
-function SPACE_change(event)
+function DS_space_change(event)
 {
 	
 /*
- *	TITLE    :	SPACE_change
+ *	TITLE    :	DS_space_change
  *			  	
  *	MODULE   :	_DATASUTRA_
  *			  	
@@ -2962,7 +2811,7 @@ function SPACE_change(event)
  *			  	
  *	REQUIRES :	
  *			  	
- *	USAGE    :	SPACE_change(newSpace, skipCustomMethod, noFlip)
+ *	USAGE    :	DS_space_change(newSpace, skipCustomMethod, noFlip)
  *			  	
  *	MODIFIED :	June 25, 2008 -- Troy Elliott, Data Mosaic
  *			  	
@@ -3530,8 +3379,8 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			//set graphic to be depressed
 			forms[baseForm + '__header'].elements[elem].setImageURL(imageActiveURL)
 			
-			//SPACE_flexible method sets the correct border and turns off dividers if showing
-			globals.SPACE_flexible(true,skipUI)
+			//DS_space_flexible method sets the correct border and turns off dividers if showing
+			globals.DS_space_flexible(true,skipUI)
 			
 			//set background color to be dark again (so dividers show up)
 				forms[baseForm].elements.bean_wrapper_1.background = bkgndDark
@@ -3590,11 +3439,11 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
  *
  * @properties={typeid:24,uuid:"f3690976-7b6c-490a-ab24-c649ab97dc2c"}
  */
-function SPACE_flexible(event)
+function DS_space_flexible(event)
 {
 	
 /*
- *	TITLE    :	SPACE_flexible
+ *	TITLE    :	DS_space_flexible
  *			  	
  *	MODULE   :	_DATASUTRA_
  *			  	
@@ -3992,7 +3841,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		
 		//pseudo-border in header
 		forms[baseForm].elements.tab_header.setBorder(borderEmpty)
-		forms.SIDE_sidebar__header.elements.gfx_flexible.visible = false
+		forms.DATASUTRA__sidebar__header.elements.gfx_flexible.visible = false
 		forms[baseForm].elements.gfx_flexible.visible = false
 		
 		//status of flexible spaces
@@ -4095,7 +3944,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		//pseudo-border in header
 		if (sidebarStatus) {
 			forms[baseForm].elements.tab_header.setBorder('MatteBorder,0,1,0,0,#757575')
-			forms.SIDE_sidebar__header.elements.gfx_flexible.visible = true
+			forms.DATASUTRA__sidebar__header.elements.gfx_flexible.visible = true
 		//	forms[baseForm].elements.gfx_flexible.visible = true
 		}
 		
@@ -4137,11 +3986,11 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
  *
  * @properties={typeid:24,uuid:"0aa82afc-9ecd-4b63-b3af-87d9170abb24"}
  */
-function TOOLBAR_cycle(event)
+function DS_toolbar_cycle(event)
 {
 	
 /*
- *	TITLE    :	TOOLBAR_cycle
+ *	TITLE    :	DS_toolbar_cycle
  *			  	
  *	MODULE   :	_DATASUTRA_
  *			  	
@@ -4154,7 +4003,7 @@ function TOOLBAR_cycle(event)
  *			  	
  *	REQUIRES :	elements listed below
  *			  	
- *	USAGE    :	TOOLBAR_cycle(toolbarName) The name of the toolbar to select
+ *	USAGE    :	DS_toolbar_cycle(toolbarName) The name of the toolbar to select
  *			  	
  *	MODIFIED :	August 20, 2008 -- Troy Elliott, Data Mosaic
  *			  	
@@ -4188,7 +4037,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	
 	var tabShow = arguments[0]
 	var baseForm = (arguments[1]) ? arguments[1] : solutionPrefs.config.formNameBase
-	var popForm = 'TOOL__popdown'
+	var popForm = 'DATASUTRA__toolbar__popdown'
 	
 	var currentTab = forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex
 	var statusTabs = solutionPrefs.panel.toolbar
@@ -4218,7 +4067,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			//get menu list and build menu
 			var menu = new Array()
 			for ( var i = 0 ; i < statusTabs.length ; i++ ) {
-				menu[i] = plugins.popupmenu.createCheckboxMenuItem(statusTabs[i].tabName, globals.TOOLBAR_cycle)
+				menu[i] = plugins.popupmenu.createCheckboxMenuItem(statusTabs[i].tabName, globals.DS_toolbar_cycle)
 				
 				//set menu method arguments
 				menu[i].setMethodArguments(statusTabs[i].tabName)
@@ -4276,7 +4125,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		forms[popForm].elements.tab_toolbar_popdown.tabIndex = popDown.tabIndex
 		
 		if (forms[statusTab.formName].popDown == 'show') {
-			globals.TOOL_popdown(true)
+			globals.DS_toolbar_popdown(true)
 		}
 	}
 	else {
@@ -4290,11 +4139,11 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
  *
  * @properties={typeid:24,uuid:"038f39ac-ede5-4439-b594-217f5ba1d3c5"}
  */
-function TOOLBAR_load()
+function DS_toolbar_load()
 {
 
 /*
- *	TITLE    :	TOOLBAR_load
+ *	TITLE    :	DS_toolbar_load
  *			  	
  *	MODULE   :	_DATASUTRA_
  *			  	
@@ -4306,7 +4155,7 @@ function TOOLBAR_load()
  *			  	
  *	REQUIRES :	
  *			  	
- *	USAGE    :	TOOLBAR_load()
+ *	USAGE    :	DS_toolbar_load()
  *			  	
  *	MODIFIED :	August 20, 2008 -- Troy Elliott, Data Mosaic
  *			  	
@@ -4314,7 +4163,7 @@ function TOOLBAR_load()
 
 if (application.__parent__.solutionPrefs) {
 	var baseForm = solutionPrefs.config.formNameBase
-	var popForm = 'TOOL__popdown'
+	var popForm = 'DATASUTRA__toolbar__popdown'
 	var toolbars = solutionPrefs.panel.toolbar
 	
 	forms[baseForm + '__header__toolbar'].elements.tab_toolbar.visible = false
@@ -4347,7 +4196,7 @@ if (application.__parent__.solutionPrefs) {
 		}
 		
 		//select first tab
-		globals.TOOLBAR_cycle(1)
+		globals.DS_toolbar_cycle(1)
 	}
 	
 	//turn tab panel back on
@@ -4369,11 +4218,11 @@ if (application.__parent__.solutionPrefs) {
  *
  * @properties={typeid:24,uuid:"2f146964-fe02-4774-9868-01a0139722a7"}
  */
-function TOOL_load_panels()
+function DS_panel_load()
 {
 
 /*
- *	TITLE    :	TOOL_load_panels
+ *	TITLE    :	DS_panel_load
  *			  	
  *	MODULE   :	rsrc_TOOL_toolbar
  *			  	
@@ -4386,7 +4235,7 @@ function TOOL_load_panels()
  *			  	
  *	REQUIRES :	
  *			  	
- *	USAGE    :	TOOL_load_panels(groupID, onlyTitle) Create panel object with all allowed toolbars & sidebars
+ *	USAGE    :	DS_panel_load(groupID, onlyTitle) Create panel object with all allowed toolbars & sidebars
  *			  	
  *	MODIFIED :	July 24, 2008 -- Troy Elliott, Data Mosaic
  *			  	
@@ -4411,9 +4260,9 @@ if (onlyTitle) {
 }
 //load everything
 else {
-	var theToolbars = globals.TOOL_load_panels_fx(1,groupID)
+	var theToolbars = globals.DS_panel_load_fx(1,groupID)
 	
-	var theSidebars = globals.TOOL_load_panels_fx(2,groupID)	
+	var theSidebars = globals.DS_panel_load_fx(2,groupID)	
 	
 	//punch back out all our toolbar and sidebar panels
 	return {
@@ -4435,11 +4284,11 @@ else {
  *
  * @properties={typeid:24,uuid:"85957dcb-ced3-4b4a-aa4b-fda4f36e9429"}
  */
-function TOOL_load_panels_fx()
+function DS_panel_load_fx()
 {
 
 /*
- *	TITLE    :	TOOL_load_panels
+ *	TITLE    :	DS_panel_load
  *			  	
  *	MODULE   :	rsrc_TOOL_toolbar
  *			  	
@@ -4452,7 +4301,7 @@ function TOOL_load_panels_fx()
  *			  	
  *	REQUIRES :	
  *			  	
- *	USAGE    :	TOOL_load_panels(groupID, onlyTitle) Create toolbar object with all allowed toolbars
+ *	USAGE    :	DS_panel_load(groupID, onlyTitle) Create toolbar object with all allowed toolbars
  *			  	
  *	MODIFIED :	July 24, 2008 -- Troy Elliott, Data Mosaic
  *			  	
@@ -4562,11 +4411,11 @@ return panel
  *
  * @properties={typeid:24,uuid:"4a6fa8c4-215e-4493-bc6a-b5c74e42161f"}
  */
-function TOOL_popdown()
+function DS_toolbar_popdown()
 {
 	
 /*
- *	TITLE    :	TOOL_popdown
+ *	TITLE    :	DS_toolbar_popdown
  *			  	
  *	MODULE   :	rsrc_TOOL_toolbar
  *			  	
@@ -4578,7 +4427,7 @@ function TOOL_popdown()
  *			  	
  *	REQUIRES :	
  *			  	
- *	USAGE    :	TOOL_popdown(expandStatus)
+ *	USAGE    :	DS_toolbar_popdown(expandStatus)
  *			  	
  *	MODIFIED :	March 8, 2009 -- Troy Elliott, Data Mosaic
  *			  	
@@ -4729,7 +4578,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
  *
  * @properties={typeid:24,uuid:"f87b9e88-2116-4e43-ba20-d27a8b6bbc92"}
  */
-function TOOL_popout()
+function DS_toolbar_popout()
 {
 	
 /*
@@ -4768,7 +4617,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 
 	var expanded = (typeof arguments[0] == 'boolean') ? arguments[0] : null
 	
-	var sideForm = 'SIDE_sidebar'
+	var sideForm = 'DATASUTRA__sidebar'
 	
 	var currentTab = solutionPrefs.panel.sidebar.selectedTab
 	var sidebarTabs = solutionPrefs.panel.sidebar
@@ -4776,10 +4625,10 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	
 	//help, close sidebar and pop the help screen out into non-modal dialog
 	if (solutionPrefs.config.helpMode) {
-		globals.SIDEBAR_toggle(false)
+		globals.DS_sidebar_toggle(false)
 		
 		application.showFormInDialog(
-				forms.HELP_P_documentation,
+				forms.MGR_P_documentation,
 				-1,-1,-1,-1,
 				'Help',
 				true,
@@ -4838,11 +4687,11 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
  *
  * @properties={typeid:24,uuid:"0f1d350b-c5ab-4dba-95cd-3bf67898992e"}
  */
-function TIP_load_tips()
+function DS_tooltip_load()
 {
 
 /*
- *	TITLE    :	TIP_load_tips
+ *	TITLE    :	DS_tooltip_load
  *			  	
  *	MODULE   :	rsrc_TIP_tooltip
  *			  	
@@ -4854,7 +4703,7 @@ function TIP_load_tips()
  *			  	
  *	REQUIRES :	
  *			  	
- *	USAGE    :	TIP_load_tips()
+ *	USAGE    :	DS_tooltip_load()
  *			  	
  *	MODIFIED :	July 9, 2008 -- Troy Elliott, Data Mosaic
  *			  	
@@ -4933,30 +4782,4 @@ for (var i = 0; i < languages.length; i++) {
 
 return L10n
 
-}
-
-/**
- *
- * @properties={typeid:24,uuid:"4eb47047-70ba-4963-a948-beb31e5feb31"}
- */
-function zTEST_rewrite()
-{
-
-var args = new Array(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4], arguments[5], arguments[6])
-var success = plugins.sutra.tryFWMethod(globals.zTEST_rewrite,args,"1")
-
-//successful creation and execution for that iteration
-if (success) {
-	//overwrite plugin call (this method) with unscrambled
-	globals.CODE_method_rewrite(globals.zTEST_rewrite, globals.zTEST_rewrite.ac)
-}
-
-}
-
-/**
- *
- * @properties={typeid:24,uuid:"C0753EB2-B01E-4679-A5BA-522B17FBEBFE"}
- */
-function ztestz() {
-	return true
 }

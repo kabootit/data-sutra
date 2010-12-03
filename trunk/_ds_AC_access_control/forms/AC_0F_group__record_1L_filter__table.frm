@@ -113,7 +113,7 @@ size:"20,23",
 tabSeq:6,
 typeid:4,
 uuid:"f5421c22-cc9c-4a16-bda0-eba3f4a2c028",
-valuelistID:"4f6370be-de55-4992-a24f-57a43c0b25c3"
+valuelistID:"0F6F4FC1-63FC-48E0-9795-3B0F131D7BC1"
 }
 ],
 name:"AC_0F_group__record_1L_filter__table",

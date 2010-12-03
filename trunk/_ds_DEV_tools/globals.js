@@ -363,7 +363,7 @@ function DEV_mode_toggle()
  *	ABOUT    :	hide/show developer related elements on the top level screen
  *			  		return to lastly selected mode
  *			  	
- *	INPUT    :	1- skip the application.updateUI in the SPACE_flexible method to minimize on screen flicker
+ *	INPUT    :	1- skip the application.updateUI in the DS_space_flexible method to minimize on screen flicker
  *			  	
  *	OUTPUT   :	
  *			  	
@@ -437,7 +437,7 @@ if (application.__parent__.solutionPrefs) {
 		
 		//turn on top graphic line on standard header
 		forms[baseForm + '__header'].elements.gfx_header.setBorder('MatteBorder,1,0,1,0,#333333')
-		forms.SIDE_sidebar__header.elements.gfx_header.setBorder('MatteBorder,1,0,1,0,#333333')
+		forms.DATASUTRA__sidebar__header.elements.gfx_header.setBorder('MatteBorder,1,0,1,0,#333333')
 		
 		//top graphic line if needed
 		if (solutionPrefs.clientInfo.typeServoy == 'developer') {
@@ -501,11 +501,11 @@ if (application.__parent__.solutionPrefs) {
 		//reset graphic line on standard header
 		if (solutionPrefs.clientInfo.typeServoy == 'developer') {
 			forms[baseForm + '__header'].elements.gfx_header.setBorder('MatteBorder,1,0,1,0,#333333')
-			forms.SIDE_sidebar__header.elements.gfx_header.setBorder('MatteBorder,1,0,1,0,#333333')
+			forms.DATASUTRA__sidebar__header.elements.gfx_header.setBorder('MatteBorder,1,0,1,0,#333333')
 		}
 		else {
 			forms[baseForm + '__header'].elements.gfx_header.setBorder('MatteBorder,0,0,1,0,#333333')
-			forms.SIDE_sidebar__header.elements.gfx_header.setBorder('MatteBorder,0,0,1,0,#333333')
+			forms.DATASUTRA__sidebar__header.elements.gfx_header.setBorder('MatteBorder,0,0,1,0,#333333')
 		}
 		
 		//remove progress toolbar if it is present
@@ -514,7 +514,7 @@ if (application.__parent__.solutionPrefs) {
 			
 			//set toolbar to previous if it wasn't the last tab
 			if (solutionPrefs.config.lastSelectedToolbar != forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getMaxTabIndex()) {
-				globals.TOOLBAR_cycle(solutionPrefs.config.lastSelectedToolbar)
+				globals.DS_toolbar_cycle(solutionPrefs.config.lastSelectedToolbar)
 			}
 			
 			//show toolbar controls
@@ -965,7 +965,7 @@ if (results) {
 	navigationPrefs.byNavSetName[displayNavSet].itemsByName[record.item_name] = 
 	navigationPrefs.byNavSetName[displayNavSet].itemsByOrder[itemPosn] = 
 	navigationPrefs.byNavItemID[idNavItem] = 
-		globals.FX_load_navset_item(record,true)
+		globals.NAV_navigation_item_load(record,true)
 	
 	//nav item name changed, redraw navitem list
 	if (redraw && redrawRequired) {

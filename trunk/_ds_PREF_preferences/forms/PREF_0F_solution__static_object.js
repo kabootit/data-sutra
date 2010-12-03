@@ -74,7 +74,7 @@ if (input == 'Yes') {
 	
 	/*
 	//navigationPrefs when a/c disabled
-	navigation_node = plugins.serialize.toJSON(globals.FX_load_navset(true,null,true))
+	navigation_node = plugins.serialize.toJSON(globals.NAV_navigation_load(true,null,true))
 	navigation_node_date = application.getServerTimeStamp()
 	databaseManager.saveData()
 	var abc = navigation_node
@@ -153,7 +153,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 var group = arguments[0]
 
 //build virgin navigationPrefs for group
-var navPrefs = globals.FX_load_navset(true,group.id_group,true)
+var navPrefs = globals.NAV_navigation_load(true,group.id_group,true)
 
 //save values down
 if (navPrefs) {
@@ -211,9 +211,9 @@ if (solutionPrefs.clientInfo.typeServoy == 'developer' && utils.stringToNumber(s
 }
 //only get methods from repository in <= 3.5.x or >= 4.x client
 else if (!solutionPrefs.repository.api) {
-	globals.VL_module_names()
-	globals.VL_form_names(true)
-	globals.VL_relation_names()
+	globals.NAV_meta_module_names()
+	globals.NAV_meta_form_names(true)
+	globals.NAV_meta_relation_names()
 }
 
 //repository prefs

@@ -44,7 +44,7 @@ items:[
 {
 containsFormID:"3AFAA45F-2AE3-4EC3-924B-2457837B43A8",
 location:"50,51",
-relationName:"tip_tooltip_to_tooltip",
+relationName:"mgr_tooltip_to_tooltip",
 text:"MGR_0F_tooltip_1L_2F__edit_help",
 typeid:15,
 uuid:"7960C179-5CA2-44C2-8090-084F0C5C2E95"
@@ -52,7 +52,7 @@ uuid:"7960C179-5CA2-44C2-8090-084F0C5C2E95"
 {
 containsFormID:"180E0133-514A-4803-BC4B-D913FE116258",
 location:"19,41",
-relationName:"tip_tooltip_to_tooltip",
+relationName:"mgr_tooltip_to_tooltip",
 text:"MGR_0F_tooltip_1L_2F__edit",
 typeid:15,
 uuid:"FA1DA27A-1425-4DC6-BBDD-33AB8E7A5D78"
@@ -74,7 +74,7 @@ items:[
 {
 containsFormID:"883C65F6-D1E2-4DEB-AC68-163DA22A0687",
 location:"540,51",
-relationName:"tip_tooltip_to_tooltip",
+relationName:"mgr_tooltip_to_tooltip",
 text:"MGR_0F_tooltip_1L_2F__preview_help",
 typeid:15,
 uuid:"710A9B58-8A20-46AD-82DA-B219EC3A436C"
@@ -82,7 +82,7 @@ uuid:"710A9B58-8A20-46AD-82DA-B219EC3A436C"
 {
 containsFormID:"617CAA7B-3C43-4AD8-A549-0DAFC88F494C",
 location:"510,31",
-relationName:"tip_tooltip_to_tooltip",
+relationName:"mgr_tooltip_to_tooltip",
 text:"MGR_0F_tooltip_1L_2F__preview",
 typeid:15,
 uuid:"764B0C10-173E-4327-A098-D9F67E5317DC"

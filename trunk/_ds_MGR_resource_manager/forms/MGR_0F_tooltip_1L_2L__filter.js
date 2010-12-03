@@ -29,44 +29,44 @@ var formName = 'MGR_0F_tooltip_1L_2L'
 //nulling and other clean up required by the calling element
 switch (application.getMethodTriggerElementName()) {
 	//clear out form, element, tooltip, and inline_help options
-	case 'fld_TIP_filter_module':
-		globals.TIP_filter_form = null
+	case 'fld_MGR_tooltip_filter_module':
+		globals.MGR_tooltip_filter_form = null
 		//continue on
 	//clear out element, tooltip, and inline_help options
-	case 'fld_TIP_filter_form':
-		globals.TIP_filter_element = null
+	case 'fld_MGR_tooltip_filter_form':
+		globals.MGR_tooltip_filter_element = null
 		//continue on
 	//clear out tooltip and inline_help options
-	case 'fld_TIP_filter_element':
-		globals.TIP_filter_tooltip = null
-		globals.TIP_filter_inline_help = null
+	case 'fld_MGR_tooltip_filter_element':
+		globals.MGR_tooltip_filter_tooltip = null
+		globals.MGR_tooltip_filter_inline_help = null
 		break
 	//clear out everything except for module and help flags
 	case 'fld_TIP_revisit':
-		globals.TIP_filter_selected = null
-		globals.TIP_filter_tooltip = null
-		globals.TIP_filter_inline_help = null
-		globals.TIP_filter_form = null
-		globals.TIP_filter_element = null
+		globals.MGR_tooltip_filter_selected = null
+		globals.MGR_tooltip_filter_tooltip = null
+		globals.MGR_tooltip_filter_inline_help = null
+		globals.MGR_tooltip_filter_form = null
+		globals.MGR_tooltip_filter_element = null
 		break
 	case 'fld_TIP_tooltip':
 	case 'fld_TIP_inline_help':
-		globals.TIP_filter_module = null
-		globals.TIP_filter_form = null
-		globals.TIP_filter_element = null
+		globals.MGR_tooltip_filter_module = null
+		globals.MGR_tooltip_filter_form = null
+		globals.MGR_tooltip_filter_element = null
 }
 
 
 //find on filtered values
 forms[formName].controller.find()
 	
-	if (globals.TIP_filter_tooltip) {forms[formName].tooltip = '%' + globals.TIP_filter_tooltip + '%'}
-	if (globals.TIP_filter_inline_help) {forms[formName].inline_help = '%' + globals.TIP_filter_inline_help + '%'}
-	if (globals.TIP_filter_module) {forms[formName].module_filter = globals.TIP_filter_module}
-	if (globals.TIP_filter_form) {forms[formName].form_name = globals.TIP_filter_form}
-	if (globals.TIP_filter_element) {forms[formName].element_name = globals.TIP_filter_element}
-	if (typeof globals.TIP_filter_flag_help == 'number') {forms[formName].flag_help = (globals.TIP_filter_flag_help) ? 1 : '^='}
-	if (typeof globals.TIP_filter_flag_revisit == 'number') {forms[formName].flag_revisit = (globals.TIP_filter_flag_revisit) ? 1 : '^='}
+	if (globals.MGR_tooltip_filter_tooltip) {forms[formName].tooltip = '%' + globals.MGR_tooltip_filter_tooltip + '%'}
+	if (globals.MGR_tooltip_filter_inline_help) {forms[formName].inline_help = '%' + globals.MGR_tooltip_filter_inline_help + '%'}
+	if (globals.MGR_tooltip_filter_module) {forms[formName].module_filter = globals.MGR_tooltip_filter_module}
+	if (globals.MGR_tooltip_filter_form) {forms[formName].form_name = globals.MGR_tooltip_filter_form}
+	if (globals.MGR_tooltip_filter_element) {forms[formName].element_name = globals.MGR_tooltip_filter_element}
+	if (typeof globals.MGR_tooltip_filter_flag_help == 'number') {forms[formName].flag_help = (globals.MGR_tooltip_filter_flag_help) ? 1 : '^='}
+	if (typeof globals.MGR_tooltip_filter_flag_revisit == 'number') {forms[formName].flag_revisit = (globals.MGR_tooltip_filter_flag_revisit) ? 1 : '^='}
 
 var results = forms[formName].controller.search()
 
@@ -78,8 +78,8 @@ if (application.getMethodTriggerElementName() == 'fld_TIP_selected') {
 	
 		var record = forms.MGR_0F_tooltip_1L_2L.foundset.getRecord(i)
 		
-		//if globals.TIP_filter_selected, search for 1; else search for null or 0
-		if (((globals.TIP_filter_selected) ? (record.selected == 1) : (record.selected == null || record.selected == 0))) {
+		//if globals.MGR_tooltip_filter_selected, search for 1; else search for null or 0
+		if (((globals.MGR_tooltip_filter_selected) ? (record.selected == 1) : (record.selected == null || record.selected == 0))) {
 			pkArray.push(record.id_tooltip)
 		}
 	
@@ -93,7 +93,7 @@ if (application.getMethodTriggerElementName() == 'fld_TIP_selected') {
 }
 //otherwise null it out
 else {
-	globals.TIP_filter_selected = null
+	globals.MGR_tooltip_filter_selected = null
 }
 
 //sort if there are results
@@ -102,10 +102,10 @@ if (results && !pkArray) {
 }
 
 //set value lists if required
-if (application.getMethodTriggerElementName() == 'fld_TIP_filter_module') {
+if (application.getMethodTriggerElementName() == 'fld_MGR_tooltip_filter_module') {
 	ACTION_vl_forms()
 }
-else if (application.getMethodTriggerElementName() == 'fld_TIP_filter_form') {
+else if (application.getMethodTriggerElementName() == 'fld_MGR_tooltip_filter_form') {
 	ACTION_vl_elements()
 }
 
@@ -140,15 +140,15 @@ function ACTION_filter_elements()
 
 // filter tooltips to selected module, form and element 
 forms.MGR_0F_tooltip_1L.controller.find()
-forms.MGR_0F_tooltip_1L.module_filter 	= globals.TIP_filter_module
-forms.MGR_0F_tooltip_1L.form_name		= globals.TIP_filter_form
-forms.MGR_0F_tooltip_1L.element_name	= globals.TIP_filter_element
+forms.MGR_0F_tooltip_1L.module_filter 	= globals.MGR_tooltip_filter_module
+forms.MGR_0F_tooltip_1L.form_name		= globals.MGR_tooltip_filter_form
+forms.MGR_0F_tooltip_1L.element_name	= globals.MGR_tooltip_filter_element
 forms.MGR_0F_tooltip_1L.controller.search()
 
 // clear filters
-globals.TIP_filter_inline_help	= null
-globals.TIP_filter_tooltip		= null
-globals.TIP_filter_selected		= null
+globals.MGR_tooltip_filter_inline_help	= null
+globals.MGR_tooltip_filter_tooltip		= null
+globals.MGR_tooltip_filter_selected		= null
 }
 
 /**
@@ -178,24 +178,24 @@ function ACTION_filter_flag_help()
  */
 
 // clear filters
-globals.TIP_filter_element		= null
-globals.TIP_filter_tooltip		= null
-globals.TIP_filter_selected		= null
+globals.MGR_tooltip_filter_element		= null
+globals.MGR_tooltip_filter_tooltip		= null
+globals.MGR_tooltip_filter_selected		= null
 
 
 // filter tooltips to selected module, form and element 
 
-if (globals.TIP_filter_flag_help) {
+if (globals.MGR_tooltip_filter_flag_help) {
 	forms.MGR_0F_tooltip_1L.controller.find()
-	forms.MGR_0F_tooltip_1L.flag_help = globals.TIP_filter_flag_help
+	forms.MGR_0F_tooltip_1L.flag_help = globals.MGR_tooltip_filter_flag_help
 	forms.MGR_0F_tooltip_1L.controller.search(false, true)
 }
 else {
 	// filter tooltips to selected module, form and element 
 	forms.MGR_0F_tooltip_1L.controller.find()
-	forms.MGR_0F_tooltip_1L.module_filter 	= globals.TIP_filter_module
-	forms.MGR_0F_tooltip_1L.form_name		= globals.TIP_filter_form
-	forms.MGR_0F_tooltip_1L.element_name	= globals.TIP_filter_element
+	forms.MGR_0F_tooltip_1L.module_filter 	= globals.MGR_tooltip_filter_module
+	forms.MGR_0F_tooltip_1L.form_name		= globals.MGR_tooltip_filter_form
+	forms.MGR_0F_tooltip_1L.element_name	= globals.MGR_tooltip_filter_element
 	forms.MGR_0F_tooltip_1L.controller.search()
 }
 
@@ -234,19 +234,19 @@ function ACTION_filter_inline_help()
 databaseManager.saveData()
 
 forms.MGR_0F_tooltip_1L.controller.find()
-forms.MGR_0F_tooltip_1L.inline_help			= '%' + globals.TIP_filter_inline_help + '%'
+forms.MGR_0F_tooltip_1L.inline_help			= '%' + globals.MGR_tooltip_filter_inline_help + '%'
 forms.MGR_0F_tooltip_1L.controller.search()
 
 
 
 // clear filters
 
-globals.TIP_filter_module		= null
-globals.TIP_filter_form			= null
-globals.TIP_filter_element		= null
-globals.TIP_filter_tooltip		= null
-globals.TIP_filter_flag_help	= null
-globals.TIP_filter_selected		= null
+globals.MGR_tooltip_filter_module		= null
+globals.MGR_tooltip_filter_form			= null
+globals.MGR_tooltip_filter_element		= null
+globals.MGR_tooltip_filter_tooltip		= null
+globals.MGR_tooltip_filter_flag_help	= null
+globals.MGR_tooltip_filter_selected		= null
 }
 
 /**
@@ -286,8 +286,8 @@ for ( var i = 1 ; i <= forms.MGR_0F_tooltip_1L_2L.foundset.getSize() ; i++ ) {
 
 	var record = forms.MGR_0F_tooltip_1L_2L.foundset.getRecord(i)
 	
-	//if globals.TIP_filter_selected, search for 1; else search for null or 0
-	if (((globals.TIP_filter_selected) ? (record.selected == 1) : (record.selected == null || record.selected == 0))) {
+	//if globals.MGR_tooltip_filter_selected, search for 1; else search for null or 0
+	if (((globals.MGR_tooltip_filter_selected) ? (record.selected == 1) : (record.selected == null || record.selected == 0))) {
 		pkArray.push(record.id_tooltip)
 	}
 
@@ -299,12 +299,12 @@ forms.MGR_0F_tooltip_1L_2L.controller.loadRecords(databaseManager.convertToDataS
 
 // clear filters
 
-globals.TIP_filter_module		= null
-globals.TIP_filter_form			= null
-globals.TIP_filter_element		= null
-globals.TIP_filter_tooltip		= null
-globals.TIP_filter_flag_help	= null
-globals.TIP_filter_inline_help	= null
+globals.MGR_tooltip_filter_module		= null
+globals.MGR_tooltip_filter_form			= null
+globals.MGR_tooltip_filter_element		= null
+globals.MGR_tooltip_filter_tooltip		= null
+globals.MGR_tooltip_filter_flag_help	= null
+globals.MGR_tooltip_filter_inline_help	= null
 
 
 }
@@ -340,19 +340,19 @@ function ACTION_filter_tooltip()
 databaseManager.saveData()
 
 forms.MGR_0F_tooltip_1L.controller.find()
-forms.MGR_0F_tooltip_1L.tooltip			=  '%' + globals.TIP_filter_tooltip + '%'
+forms.MGR_0F_tooltip_1L.tooltip			=  '%' + globals.MGR_tooltip_filter_tooltip + '%'
 var results = forms.MGR_0F_tooltip_1L.controller.search()
 
 
 
 // clear filters
 
-globals.TIP_filter_module		= null
-globals.TIP_filter_form			= null
-globals.TIP_filter_element		= null
-globals.TIP_filter_inline_help	= null
-globals.TIP_filter_flag_help	= null
-globals.TIP_filter_selected		= null
+globals.MGR_tooltip_filter_module		= null
+globals.MGR_tooltip_filter_form			= null
+globals.MGR_tooltip_filter_element		= null
+globals.MGR_tooltip_filter_inline_help	= null
+globals.MGR_tooltip_filter_flag_help	= null
+globals.MGR_tooltip_filter_selected		= null
 }
 
 /**
@@ -388,7 +388,7 @@ databaseManager.saveData()
 for ( var i = 1 ; i <= forms.MGR_0F_tooltip_1L_2L.foundset.getSize() ; i++ ) {
 
 	var record = forms.MGR_0F_tooltip_1L_2L.foundset.getRecord(i)
-	record.selected = globals.TIP_select_all
+	record.selected = globals.MGR_tooltip_select_all
 
 }
 
@@ -432,24 +432,24 @@ var sql = 	"select element_name from " +
 var dataset = 	databaseManager.getDataSetByQuery(
 				controller.getServerName(),
 				sql,
-				new Array(globals.TIP_filter_module, globals.TIP_filter_form),
+				new Array(globals.MGR_tooltip_filter_module, globals.MGR_tooltip_filter_form),
 				1000)
 				
-application.setValueListItems( "TIP_element_names_filter", dataset)
+application.setValueListItems( "MGR_tooltip_element_names_filter", dataset)
 
 
 // filter tooltips to selected module and form 
 forms.MGR_0F_tooltip_1L.controller.find()
-forms.MGR_0F_tooltip_1L.module_filter 	= globals.TIP_filter_module
-forms.MGR_0F_tooltip_1L.form_name		= globals.TIP_filter_form
-//forms.MGR_0F_tooltip_1L.flag_help 		= globals.TIP_filter_flag_help
+forms.MGR_0F_tooltip_1L.module_filter 	= globals.MGR_tooltip_filter_module
+forms.MGR_0F_tooltip_1L.form_name		= globals.MGR_tooltip_filter_form
+//forms.MGR_0F_tooltip_1L.flag_help 		= globals.MGR_tooltip_filter_flag_help
 forms.MGR_0F_tooltip_1L.controller.search()
 
 // clear filters
 
-globals.TIP_filter_element		= null
-globals.TIP_filter_inline_help	= null
-globals.TIP_filter_tooltip		= null
+globals.MGR_tooltip_filter_element		= null
+globals.MGR_tooltip_filter_inline_help	= null
+globals.MGR_tooltip_filter_tooltip		= null
 }
 
 /**
@@ -487,25 +487,25 @@ var sql = 	"select form_name from " +
 var dataset = 	databaseManager.getDataSetByQuery(
 				controller.getServerName(),
 				sql,
-				[globals.TIP_filter_module],
+				[globals.MGR_tooltip_filter_module],
 				1000)
 				
-application.setValueListItems( "TIP_form_names_filter", dataset)
+application.setValueListItems( "MGR_tooltip_form_names_filter", dataset)
 
 
 // filter tooltips to selected module
 forms.MGR_0F_tooltip_1L.controller.find()
-forms.MGR_0F_tooltip_1L.module_filter 	= globals.TIP_filter_module
-//forms.MGR_0F_tooltip_1L.flag_help 		= globals.TIP_filter_flag_help
+forms.MGR_0F_tooltip_1L.module_filter 	= globals.MGR_tooltip_filter_module
+//forms.MGR_0F_tooltip_1L.flag_help 		= globals.MGR_tooltip_filter_flag_help
 forms.MGR_0F_tooltip_1L.controller.search()
 
 
 // clear filters
 
-globals.TIP_filter_form			= null
-globals.TIP_filter_element		= null
-globals.TIP_filter_inline_help	= null
-globals.TIP_filter_tooltip		= null
+globals.MGR_tooltip_filter_form			= null
+globals.MGR_tooltip_filter_element		= null
+globals.MGR_tooltip_filter_inline_help	= null
+globals.MGR_tooltip_filter_tooltip		= null
 
 }
 
@@ -537,22 +537,22 @@ function FILTER_clear()
 
 // clear filters
 
-globals.TIP_select_all			= null
-globals.TIP_filter_tooltip		= null
-globals.TIP_filter_inline_help	= null
-globals.TIP_filter_module		= null
-globals.TIP_filter_form			= null
-globals.TIP_filter_element		= null
-globals.TIP_filter_flag_help	= null
-globals.TIP_filter_selected		= null
-globals.TIP_filter_flag_revisit	= null
+globals.MGR_tooltip_select_all			= null
+globals.MGR_tooltip_filter_tooltip		= null
+globals.MGR_tooltip_filter_inline_help	= null
+globals.MGR_tooltip_filter_module		= null
+globals.MGR_tooltip_filter_form			= null
+globals.MGR_tooltip_filter_element		= null
+globals.MGR_tooltip_filter_flag_help	= null
+globals.MGR_tooltip_filter_selected		= null
+globals.MGR_tooltip_filter_flag_revisit	= null
 
 forms.MGR_0F_tooltip_1L.controller.loadAllRecords()
 
 
 // clear value lists
-application.setValueListItems( "TIP_form_names_filter", [])
-application.setValueListItems( "TIP_element_names_filter", [])
+application.setValueListItems( "MGR_tooltip_form_names_filter", [])
+application.setValueListItems( "MGR_tooltip_element_names_filter", [])
 }
 
 /**
@@ -598,5 +598,5 @@ var dataset = 	databaseManager.getDataSetByQuery(
 				null,
 				1000)
 				
-application.setValueListItems( "TIP_module_names_filter", dataset)
+application.setValueListItems( "MGR_tooltip_module_names_filter", dataset)
 }

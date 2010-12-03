@@ -6,5 +6,5 @@ function REC_on_select()
 {
 
 
-globals.HELP_documentation_id = id_documentation
+globals.MGR_help_documentation_id = id_documentation
 }

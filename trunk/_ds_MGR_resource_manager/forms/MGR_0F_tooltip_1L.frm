@@ -73,7 +73,7 @@ items:[
 {
 containsFormID:"AFB0FEE7-7B64-4919-966B-03BD89283310",
 location:"65,110",
-relationName:"tip_tooltip_to_tooltip",
+relationName:"mgr_tooltip_to_tooltip",
 text:"HTML edit",
 typeid:15,
 uuid:"7699B94D-BF45-4FC9-ACD4-4C3FA0A04E9C"

@@ -17,14 +17,14 @@ function REC_on_select()
  *			  	
  *	OUTPUT   :	
  *			  	
- *	REQUIRES :	globals.TMPLT_example
+ *	REQUIRES :	globals.TMPL_example
  *			  	
  *	MODIFIED :	Sept 5, 2007 -- Troy Elliott, Data Mosaic
  *			  	
  */
 
 
-globals.TMPLT_example = id_example
+globals.TMPL_example = id_example
 
 globals.CALLBACK_toolbar_record_navigator_set()
 }

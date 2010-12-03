@@ -146,13 +146,13 @@ if (forms[baseForm].elements.tab_content_A.tabIndex > 0) {
 }
 
 //toolbar and sidebar load
-solutionPrefs.panel = globals.TOOL_load_panels()
-globals.TOOLBAR_load()
-globals.SIDEBAR_load()
+solutionPrefs.panel = globals.DS_panel_load()
+globals.DS_toolbar_load()
+globals.DS_sidebar_load()
 
 //sidebar default to on
 if (solutionPrefs.screenAttrib.sidebar.status) {
-	globals.SIDEBAR_toggle(true,null,true)
+	globals.DS_sidebar_toggle(true,null,true)
 }
 
 if (solutionPrefs.config.prefs.formPreload) {

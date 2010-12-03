@@ -119,7 +119,7 @@ tabSeq:2,
 transparent:true,
 typeid:4,
 uuid:"9675147A-B760-4828-897F-4E4A25E5E1D0",
-valuelistID:"4f6370be-de55-4992-a24f-57a43c0b25c3"
+valuelistID:"0F6F4FC1-63FC-48E0-9795-3B0F131D7BC1"
 },
 {
 height:170,

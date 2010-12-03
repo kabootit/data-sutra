@@ -68,7 +68,7 @@ tabSeq:4,
 toolTipText:"Use type-ahead field",
 typeid:4,
 uuid:"ca639605-11b0-4235-8a5b-6685169759b8",
-valuelistID:"4f6370be-de55-4992-a24f-57a43c0b25c3"
+valuelistID:"0F6F4FC1-63FC-48E0-9795-3B0F131D7BC1"
 },
 {
 anchors:11,
@@ -113,7 +113,7 @@ tabSeq:1,
 toolTipText:"Default",
 typeid:4,
 uuid:"eda9207f-db1b-4941-972b-c97488bc9e9e",
-valuelistID:"4f6370be-de55-4992-a24f-57a43c0b25c3"
+valuelistID:"0F6F4FC1-63FC-48E0-9795-3B0F131D7BC1"
 }
 ],
 name:"NAV_0F_navigation_item_1F_column__fastfind_2L__left",

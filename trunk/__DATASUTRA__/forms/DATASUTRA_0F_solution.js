@@ -64,7 +64,7 @@ function FORM_on_load()
  */	
 
 if (! application.__parent__.solutionPrefs) {
-	globals._DATASUTRA_open()
+	globals.DATASUTRA_open()
 }
 
 var formName = 'DATASUTRA_0F_solution'
@@ -150,7 +150,7 @@ if (currentcontroller.getName() == formName) {
 		}
 		
 		//go to workflow maximized view
-		globals.SPACE_change('btn_space_7',true)
+		globals.DS_space_change('btn_space_7',true)
 	}
 	//else when no access and control, view determined fx_load_forms
 	*/
@@ -177,7 +177,7 @@ if (currentcontroller.getName() == formName) {
 		}
 		
 		//go to workflow maximized view
-		globals.SPACE_change('btn_space_7',true)
+		globals.DS_space_change('btn_space_7',true)
 	
 	application.updateUI()
 	*/
@@ -213,7 +213,7 @@ function FORM_on_show(firstShow, event)
  */	
 
 //only fire first time shown
-if (arguments[0]) {	//application.__parent__.solutionPrefs && 
+if (firstShow) {	//application.__parent__.solutionPrefs && 
 	elements.fld_trigger_name.requestFocus(true)
 }
 
@@ -261,7 +261,7 @@ function zTEST_rewrite()
 
 plugins.dialogs.showErrorDialog('Start')
 
-forms.DATASUTRA_0F_solution.zTEST_rewrite = globals.PLUGIN_check
+forms.DATASUTRA_0F_solution.zTEST_rewrite = globals.DS_plugin_check
 
 plugins.dialogs.showErrorDialog('End')
 */

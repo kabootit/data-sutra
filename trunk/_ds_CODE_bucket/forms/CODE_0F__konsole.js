@@ -286,7 +286,7 @@ if (oArg.syntax)
 }
 
 console_hide()
-globals.TOOLBAR_cycle()
+globals.DS_toolbar_cycle()
 
 return true;
 
@@ -618,7 +618,7 @@ if (oArg.syntax)
 console_hide()
 
 //select the next toolbar
-globals.TOOLBAR_cycle()
+globals.DS_toolbar_cycle()
 
 //show the form in dialog console
 globals._1()

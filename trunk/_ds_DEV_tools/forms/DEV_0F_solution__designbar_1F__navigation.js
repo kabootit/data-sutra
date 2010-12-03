@@ -176,7 +176,7 @@ if (utils.hasRecords(fsNavItems) && solutionPrefs.config.currentFormID) {
 		navPrefs.itemsByName[record.item_name] = 
 		navPrefs.itemsByOrder[j-1] = 
 		navigationPrefs.byNavItemID[record.id_navigation_item] = 
-			globals.FX_load_navset_item(record,true)
+			globals.NAV_navigation_item_load(record,true)
 	}
 	
 	//assign new navPrefs back to navigationPrefs
@@ -390,7 +390,7 @@ if (utils.hasRecords(fsNavItems) && solutionPrefs.config.currentFormID) {
 		navPrefs.itemsByName[record.item_name] = 
 		navPrefs.itemsByOrder[j-1] = 
 		navigationPrefs.byNavItemID[record.id_navigation_item] = 
-			globals.FX_load_navset_item(record,true)
+			globals.NAV_navigation_item_load(record,true)
 	}
 	
 	//assign new navPrefs back to navigationPrefs

@@ -1888,7 +1888,7 @@ function UL_fill_data()
  *			  	
  *	OUTPUT   :	
  *			  	
- *	REQUIRES :	globals.FX_html_list_header_generate()
+ *	REQUIRES :	globals.NAV_universal_list_header_generate()
  *			  	
  *	USAGE    :	UL_fill_data([postRecSelectedHasData, refreshOneRec]) Punches data into dummy records
  *			  	
@@ -2375,7 +2375,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		//don't mess with header if record refresh requested
 		if (!updateRecord) {
 			//output html header
-			globals.FX_html_list_header_generate(rowDisplayFormat)
+			globals.NAV_universal_list_header_generate(rowDisplayFormat)
 		}
 		
 		//change record index away and then back to force a redraw
@@ -2418,7 +2418,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		}
 				
 		//header call
-		globals.FX_html_list_header_generate(rowDisplayFormat)
+		globals.NAV_universal_list_header_generate(rowDisplayFormat)
 	}
 	
 	

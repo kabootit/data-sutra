@@ -107,7 +107,7 @@ switch( arguments[0] ) {
 			forms.MGR_0F_tooltip_1L.controller.deleteAllRecords()
 			
 			//clear global selector
-			globals.TIP_select_all = 0
+			globals.MGR_tooltip_select_all = 0
 		}
 		break
 		
@@ -124,7 +124,7 @@ switch( arguments[0] ) {
 				}
 			}
 			//clear global selector
-			globals.TIP_select_all = 0
+			globals.MGR_tooltip_select_all = 0
 		}
 		break
 		
@@ -373,17 +373,17 @@ function PRINT_TIP_report()
  */
 
 //set today string
-globals.TIP_today = globals.CODE_date_format(new Date())
+globals.MGR_tooltip_today = globals.CODE_date_format(new Date())
 
 application.showFormInDialog(forms.MGR_P__tooltip_select, -1, -1, -1, -1, 'Choose module', false, false,'printTipSimple')
 
-if (globals.TIP_P__module) {
-	var modules = globals.TIP_P__module.split('\n')
+if (globals.MGR_tooltip__module) {
+	var modules = globals.MGR_tooltip__module.split('\n')
 	//get rid of last empty element
 	if (!modules[modules.length - 1]) {
 		modules.pop()
 	}
-	globals.TIP_P__module = null
+	globals.MGR_tooltip__module = null
 }
 
 //modules are selected for reporting
@@ -469,7 +469,7 @@ if (modules && modules.length) {
 		}
 		html += '</table></body></html>'
 		
-		globals.TIP_html = html
+		globals.MGR_tooltip_html = html
 		
 		//show print preview
 		forms.MGR_RPT__tooltip.controller.showPrintPreview()
@@ -512,7 +512,7 @@ function REC_duplicate()
  */
 
 controller.duplicateRecord(false)
-i18n_language = globals.TIP_default_language
+i18n_language = globals.MGR_tooltip_language_default
 
 databaseManager.saveData()
 
@@ -550,7 +550,7 @@ if (foundset && foundset.getSize()) {
 	
 	for (var i = 1; i <= fsCount; i++) {
 		foundset.duplicateRecord(i,false,true)
-		foundset.i18n_language = globals.TIP_default_language
+		foundset.i18n_language = globals.MGR_tooltip_language_default
 	}
 	
 	databaseManager.saveData()

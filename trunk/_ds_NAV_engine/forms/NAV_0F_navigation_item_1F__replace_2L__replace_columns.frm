@@ -16,7 +16,7 @@ toolTipText:"Field contents are replaceable",
 transparent:true,
 typeid:4,
 uuid:"2cd7ec3e-1f95-4df8-bbd3-7a424a557d61",
-valuelistID:"4f6370be-de55-4992-a24f-57a43c0b25c3"
+valuelistID:"0F6F4FC1-63FC-48E0-9795-3B0F131D7BC1"
 },
 {
 borderType:"SpecialMatteBorder,0.0,0.0,1.0,0.0,#000000,#999999,#999999,#999999,0.0,1.0",
@@ -33,7 +33,7 @@ toolTipText:"Field contents can be used when replacing the contents of another f
 transparent:true,
 typeid:4,
 uuid:"4390bb54-8eff-4117-ae3c-5e0a5d71a988",
-valuelistID:"4f6370be-de55-4992-a24f-57a43c0b25c3"
+valuelistID:"0F6F4FC1-63FC-48E0-9795-3B0F131D7BC1"
 },
 {
 borderType:"SpecialMatteBorder,0.0,0.0,1.0,0.0,#000000,#999999,#999999,#999999,0.0,1.0",

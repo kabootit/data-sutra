@@ -132,11 +132,11 @@ var AC_user_selected;
  *
  * @properties={typeid:24,uuid:"aadb2e6d-3508-405d-ad58-3133199c2732"}
  */
-function AC_set_password()
+function AC_password_set()
 {
 
 /*
- *	TITLE    :	globals.AC_set_password
+ *	TITLE    :	globals.AC_password_set
  *			  	
  *	MODULE   :	ds_AC_access_control
  *			  	

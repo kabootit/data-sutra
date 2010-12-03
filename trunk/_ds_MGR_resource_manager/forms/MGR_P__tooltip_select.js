@@ -27,7 +27,7 @@ if (!globals.CODE_hide_form) {
 	globals.CODE_hide_form = 1
 	
 	//clear all globals
-	globals.TIP_P__module = null
+	globals.MGR_tooltip__module = null
 	
 	application.closeFormDialog('printTipSimple')
 }
@@ -57,7 +57,7 @@ function ACTION_ok()
  *			  	
  */
 
-if (globals.TIP_P__module) {
+if (globals.MGR_tooltip__module) {
 	//enable closing the form
 	globals.CODE_hide_form = 1
 	
@@ -98,8 +98,8 @@ function FORM_on_show()
 globals.CODE_hide_form = 0
 
 //clear all globals
-globals.TIP_P__module = null
-globals.TIP_P_all = null
+globals.MGR_tooltip__module = null
+globals.MGR_tooltip__module_all = null
 }
 
 /**
@@ -129,17 +129,17 @@ function TOGGLE_on_off()
  */
 
 //toggle logic
-if (globals.TIP_P_all) {
+if (globals.MGR_tooltip__module_all) {
 	//toggle on
-	var listItems = application.getValueListArray('TIP_modules')
-	globals.TIP_P__module = ''
+	var listItems = application.getValueListArray('MGR_tooltip_modules')
+	globals.MGR_tooltip__module = ''
 	for (var i in listItems) {
-		globals.TIP_P__module += listItems[i] + '\n'
+		globals.MGR_tooltip__module += listItems[i] + '\n'
 	}
 }
 else {
 	//toggle off
-	globals.TIP_P__module = null
+	globals.MGR_tooltip__module = null
 }
 
 }

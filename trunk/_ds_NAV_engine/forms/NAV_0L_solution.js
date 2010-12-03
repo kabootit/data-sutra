@@ -300,7 +300,7 @@ if (arguments[0] && application.__parent__.solutionPrefs && application.__parent
 	elements.lbl_header.text = (displayValue) ? displayValue.toUpperCase() : 'NAVIGATION'
 	
 	//go to selected form; notify load forms routine that this is the first one loaded
-	globals.FX_load_forms(
+	globals.NAV_workflow_load(
 						(navItemID) ? navItemID : navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].itemsByOrder[0].navigationItem.idNavigationItem,
 						null,
 						null,
@@ -446,7 +446,7 @@ function LIST_generate()
  *			  	
  *	OUTPUT   :	html string
  *			  	
- *	REQUIRES :	globals.FX_html_list_header_generate()
+ *	REQUIRES :	globals.NAV_universal_list_header_generate()
  *			  	
  *	USAGE    :	LIST_generate(selectedIndex) Returns a clickable html field 'list view' of navigation item records with the selectedIndex highlighted
  *			  	
@@ -726,7 +726,7 @@ if (application.__parent__.solutionPrefs && application.__parent__.navigationPre
 	
 	//go to selected form
 	if (!skipLoadForms) {
-		globals.FX_load_forms(itemID)
+		globals.NAV_workflow_load(itemID)
 	}
 }
 

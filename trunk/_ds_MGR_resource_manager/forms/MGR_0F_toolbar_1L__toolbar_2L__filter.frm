@@ -3,7 +3,7 @@ items:[
 {
 anchors:11,
 borderType:"EmptyBorder,0,0,0,0",
-dataProviderID:"globals.TOOL_filter_tabname",
+dataProviderID:"globals.MGR_tool_filter_tabname",
 formIndex:10100,
 location:"10,20",
 onActionMethodID:"7AF8FA65-0DA8-4B27-ADD9-216C1AFD8B6F",
@@ -23,7 +23,7 @@ uuid:"6BD0E460-7116-4DA8-A12A-4E6F8D7066F9"
 {
 anchors:11,
 borderType:"EmptyBorder,0,0,0,0",
-dataProviderID:"globals.TOOL_filter_formname",
+dataProviderID:"globals.MGR_tool_filter_formname",
 formIndex:10200,
 location:"130,20",
 onActionMethodID:"7AF8FA65-0DA8-4B27-ADD9-216C1AFD8B6F",
@@ -43,7 +43,7 @@ uuid:"EF8E0771-68BB-4881-88DC-7B77C7B2A483"
 },
 {
 borderType:"EmptyBorder,0,0,0,0",
-dataProviderID:"globals.TOOL_filter_show",
+dataProviderID:"globals.MGR_tool_filter_show",
 displayType:4,
 formIndex:10300,
 horizontalAlignment:0,
@@ -75,7 +75,7 @@ uuid:"F70AE1D0-59BC-4705-BC2E-F7EEEE3707D1"
 },
 {
 borderType:"EmptyBorder,0,0,0,0",
-dataProviderID:"globals.TOOL_filter_popdown",
+dataProviderID:"globals.MGR_tool_filter_popdown",
 displayType:4,
 formIndex:10400,
 horizontalAlignment:0,

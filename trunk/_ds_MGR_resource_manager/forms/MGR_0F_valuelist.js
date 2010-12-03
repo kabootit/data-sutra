@@ -8,7 +8,7 @@ function ACTION_create_valuelists()
 /*
  *	TITLE    :	ACTION_create_valuelists
  *			  	
- *	MODULE   :	rsrc_VL_valuelist
+ *	MODULE   :	rsrc_MGR_valuelist_valuelist
  *			  	
  *	ABOUT    :	hit the repository to create non-existing valuelists
  *			  	
@@ -51,7 +51,7 @@ if (input != "Yes") {
 
 var dbConnection = forms.MGR_0F_valuelist.controller.getServerName()
 var table = forms.MGR_0F_valuelist.controller.getTableName()
-var moduleName = "rsrc_VL_valuelist"
+var moduleName = "rsrc_MGR_valuelist_valuelist"
 
 /*
  * incoming data
@@ -345,7 +345,7 @@ function ACTIONS_list()
 /*
  *	TITLE    :	ACTION_list
  *			  	
- *	MODULE   :	rsrc_VL_valuelist
+ *	MODULE   :	rsrc_MGR_valuelist_valuelist
  *			  	
  *	ABOUT    :	manage valuelist actions
  *			  	
@@ -401,7 +401,7 @@ function ACTIONS_list_control()
 /*
  *	TITLE    :	ACTION_list_control
  *			  	
- *	MODULE   :	rsrc_VL_valuelist
+ *	MODULE   :	rsrc_MGR_valuelist_valuelist
  *			  	
  *	ABOUT    :	manage valuelist actions
  *			  	
@@ -452,7 +452,7 @@ function FILTER_related_1()
 /*
  *	TITLE    :	FILTER_related_1
  *			  	
- *	MODULE   :	rsrc_VL_valuelist
+ *	MODULE   :	rsrc_MGR_valuelist_valuelist
  *			  	
  *	ABOUT    :	
  *			  	
@@ -470,8 +470,8 @@ function FILTER_related_1()
 
 //find value list items
 controller.find()
-valuelist_name = globals.VL_value_list
-relation_1 = globals.VL_value_list_related
+valuelist_name = globals.MGR_valuelist_value_list
+relation_1 = globals.MGR_valuelist_value_list_related
 controller.search()
 
 controller.sort('valuelist_name asc, relation_1 asc, relation_2 asc, order_by asc')
@@ -489,7 +489,7 @@ function FILTER_value_list()
 /*
  *	TITLE    :	FILTER_value_list
  *			  	
- *	MODULE   :	rsrc_VL_valuelist
+ *	MODULE   :	rsrc_MGR_valuelist_valuelist
  *			  	
  *	ABOUT    :	
  *			  	
@@ -507,12 +507,12 @@ function FILTER_value_list()
 
 //find value list items
 controller.find()
-valuelist_name = globals.VL_value_list
+valuelist_name = globals.MGR_valuelist_value_list
 controller.search()
 
 controller.sort('valuelist_name asc, relation_1 asc, relation_2 asc, order_by asc')
 
-globals.VL_value_list_related = null
+globals.MGR_valuelist_value_list_related = null
 
 forms.MGR_0F_valuelist_1L.elements.fld_value_list.requestFocus()
 }
@@ -527,7 +527,7 @@ function FORM_on_load()
 /*
  *	TITLE    :	FORM_on_load
  *			  	
- *	MODULE   :	rsrc_VL_valuelist
+ *	MODULE   :	rsrc_MGR_valuelist_valuelist
  *			  	
  *	ABOUT    :	
  *			  	
@@ -559,7 +559,7 @@ function REC_new()
 /*
  *	TITLE    :	REC_new
  *			  	
- *	MODULE   :	rsrc_VL_valuelist
+ *	MODULE   :	rsrc_MGR_valuelist_valuelist
  *			  	
  *	ABOUT    :	delete a record
  *			  	
@@ -624,7 +624,7 @@ function REC_show_all()
 /*
  *	TITLE    :	REC_show_all
  *			  	
- *	MODULE   :	rsrc_VL_valuelist
+ *	MODULE   :	rsrc_MGR_valuelist_valuelist
  *			  	
  *	ABOUT    :	delete a record
  *			  	
@@ -644,8 +644,8 @@ controller.loadAllRecords()
 
 controller.sort('valuelist_name asc, relation_1 asc, relation_2 asc, order_by asc')
 
-globals.VL_value_list = null
-globals.VL_value_list_related = null
+globals.MGR_valuelist_value_list = null
+globals.MGR_valuelist_value_list_related = null
 }
 
 /**

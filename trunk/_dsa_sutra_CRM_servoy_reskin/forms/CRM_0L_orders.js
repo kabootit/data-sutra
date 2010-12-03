@@ -100,7 +100,7 @@ while (menu[x]) {
 	menu[x].setMethodArguments(menu[x].text)
 	
 	//set check mark
-	if (globals.TMPLT_example_filter == menu[x].text) {
+	if (globals.TMPL_example_filter == menu[x].text) {
 		menu[x].setSelected(true)
 	}
 	else {
@@ -138,7 +138,7 @@ function FILTERS_list_control()
 //filter list by passed variable
 
 var filterValue = arguments[0]
-globals.TMPLT_example_filter = arguments[0]
+globals.TMPL_example_filter = arguments[0]
 
 if (filterValue != "<html><b>All") {
 	

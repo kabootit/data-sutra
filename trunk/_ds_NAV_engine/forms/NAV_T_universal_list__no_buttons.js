@@ -310,16 +310,16 @@ if (application.__parent__.solutionPrefs) {
 //		}
 //	}
 	//create new forms
-	var template = globals.UL_form_to_template(uniList)
-	var myForm = globals.UL_template_to_form(template,newFormName)
+	var template = globals.NAV_universal_list_form_to_template(uniList)
+	var myForm = globals.NAV_universal_list_template_to_form(template,newFormName)
 	
 	//set datasource
 	myForm.serverName = forms[solutionPrefs.config.currentFormName].controller.getServerName()
 	myForm.tableName = forms[solutionPrefs.config.currentFormName].controller.getTableName()
 	
 	//set events
-	myForm.setOnShowMethod(globals.NAV_show_universal_list)
-	myForm.setOnRecordSelectionMethod(globals.NAV_select_universal_list)
+	myForm.setOnShowMethod(globals.NAV_universal_list_show)
+	myForm.setOnRecordSelectionMethod(globals.NAV_universal_list_select)
 	myForm.rowBGColorCalculation = 'globals.NAV_row_background'
 	
 	//get the UL data and set it up
@@ -371,7 +371,7 @@ if (application.__parent__.solutionPrefs) {
 						20						//height
 					)
 		
-		myField.setOnFocusGainedMethod(globals.NAV_select_universal_list__unhilite)
+		myField.setOnFocusGainedMethod(globals.NAV_universal_list_select__unhilite)
 		myField.anchors = SM_ANCHOR.ALL
 		myField.horizontalAlignment = horizAlign
 		myField.styleClass = 'customlist'

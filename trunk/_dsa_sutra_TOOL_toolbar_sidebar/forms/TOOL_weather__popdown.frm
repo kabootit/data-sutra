@@ -90,7 +90,7 @@ uuid:"f233f08f-6f8d-4545-8223-98d0ba3bc95e"
 ],
 name:"TOOL_weather__popdown",
 navigatorID:"-1",
-onLoadMethodID:"3f4d277e-2881-40a1-be39-d376e094ad58",
+onLoadMethodID:"-1",
 paperPrintScale:100,
 scrollbars:36,
 size:"400,130",

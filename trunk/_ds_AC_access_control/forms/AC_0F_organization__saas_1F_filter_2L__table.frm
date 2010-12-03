@@ -27,7 +27,7 @@ size:"20,20",
 tabSeq:6,
 typeid:4,
 uuid:"1b33636c-a6e6-486c-8cc2-eef2354269a3",
-valuelistID:"4f6370be-de55-4992-a24f-57a43c0b25c3"
+valuelistID:"0F6F4FC1-63FC-48E0-9795-3B0F131D7BC1"
 },
 {
 dataProviderID:"filter_type",

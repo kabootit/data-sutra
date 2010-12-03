@@ -3,7 +3,7 @@ items:[
 {
 anchors:11,
 borderType:"EmptyBorder,0,0,0,0",
-dataProviderID:"globals.RPT_filter_menu",
+dataProviderID:"globals.MGR_report_filter_menu",
 formIndex:10200,
 location:"260,10",
 onActionMethodID:"B7332B04-7F30-46E6-BBDB-BFA41C181313",
@@ -44,7 +44,7 @@ uuid:"CF6AD3AE-4D35-4AED-80CC-430E5F319F54"
 },
 {
 borderType:"EmptyBorder,0,0,0,0",
-dataProviderID:"globals.RPT_filter_navitem",
+dataProviderID:"globals.MGR_report_filter_navitem",
 formIndex:10100,
 location:"10,10",
 onActionMethodID:"B7332B04-7F30-46E6-BBDB-BFA41C181313",
@@ -57,7 +57,7 @@ uuid:"D12B7830-FBD4-4BF7-9C8A-8D4FA2D3F2A7"
 },
 {
 borderType:"EmptyBorder,0,0,0,0",
-dataProviderID:"globals.RPT_filter_navid",
+dataProviderID:"globals.MGR_report_filter_navid",
 formIndex:10300,
 location:"155,10",
 onActionMethodID:"B7332B04-7F30-46E6-BBDB-BFA41C181313",

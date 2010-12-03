@@ -341,7 +341,7 @@ databaseManager.saveData()
 
 if ((application.getSolutionName() != 'ds_PREF_preferences') && application.__parent__.solutionPrefs) {
 //TODO: warning!! will overwrite any attributes added later
-	solutionPrefs.listSetup = globals.PREF_set_list_attrib()
+	solutionPrefs.listSetup = globals.PREF_list_set()
 }
 
 

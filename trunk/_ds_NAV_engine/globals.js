@@ -172,11 +172,11 @@ var NAV_universal_selected_tab = '';
  *
  * @properties={typeid:24,uuid:"94b6d117-2046-4255-8994-dfc4477a34f4"}
  */
-function FIND_clear()
+function NAV_find_clear()
 {
 
 /*
- *	TITLE    :	FIND_clear
+ *	TITLE    :	NAV_find_clear
  *			  	
  *	MODULE   :	ds_NAV_engine
  *			  	
@@ -190,7 +190,7 @@ function FIND_clear()
  *			  	
  *	MODIFIED :	Apr 16, 2008 -- Troy Elliott, Data Mosaic
  *			  	
- */	//TODO: firing of these methods is driving me crazy! FIND_focus_lost should NOT need to be called
+ */	//TODO: firing of these methods is driving me crazy! NAV_find_focus_lost should NOT need to be called
 
 
 if (application.__parent__.solutionPrefs) {
@@ -224,7 +224,7 @@ if (application.__parent__.solutionPrefs) {
 		allObject.findName = '<html><strong><em>Show all</em></strong>'
 		allObject.columnName = 'Show all'
 		allObject.columnType = 'SHOWALL'
-		globals.FIND_fields_control(allObject)
+		globals.NAV_find_fields_control(allObject)
 		
 		//re-select selected field (checkmark)
 		if (fastFindEnabled) {
@@ -242,7 +242,7 @@ if (application.__parent__.solutionPrefs) {
 			solutionPrefs.repository.allFormsByTable[serverName][tableName] && 
 			solutionPrefs.repository.allFormsByTable[serverName][tableName][formName]) {
 			
-			//position in code global assured by FIND_fields_control
+			//position in code global assured by NAV_find_fields_control
 			//check if not using separateFoundset
 			if (!solutionPrefs.repository.allFormsByTable[serverName][tableName][formName].useSeparateFoundset) {
 				solutionPrefs.fastFind.currentSearch[serverName][tableName].lastFindField = searchingOn
@@ -263,11 +263,11 @@ if (application.__parent__.solutionPrefs) {
  *
  * @properties={typeid:24,uuid:"c4056e4b-8840-4cca-9ed5-23a08565410a"}
  */
-function FIND_end_normal()
+function NAV_find_end_normal()
 {
 
 /*
- *	TITLE    :	FIND_end_normal
+ *	TITLE    :	NAV_find_end_normal
  *			  	
  *	MODULE   :	ds_NAV_engine
  *			  	
@@ -307,7 +307,7 @@ if (application.__parent__.solutionPrefs) {
 		var findItems = navigationPrefs.byNavItemID[currentNavItem].fastFind.slice(0)
 		var trigger = 0
 		
-		//TODO: not... see FIND_fields for more explanation
+		//TODO: not... see NAV_find_fields for more explanation
 		var dateObject = new Object()
 		dateObject.findName = 'All dates'
 		dateObject.columnName = 'All dates'
@@ -332,7 +332,7 @@ if (application.__parent__.solutionPrefs) {
 				trigger = 1
 			}
 		}
-		FIND_search(findItems[i-1],keyPressed)
+		NAV_find_search(findItems[i-1],keyPressed)
 	}
 	//no finds set up
 	else if (!navigationPrefs.byNavItemID[currentNavItem].fastFind) {
@@ -342,7 +342,7 @@ if (application.__parent__.solutionPrefs) {
 	//no field selected
 	else if (!globals.DATASUTRA_find_field && globals.DATASUTRA_find) {
 		plugins.dialogs.showWarningDialog('Alert', 'No find field selected...choose one.','OK')
-		globals.FIND_fields()
+		globals.NAV_find_fields()
 	}
 }
 }
@@ -351,11 +351,11 @@ if (application.__parent__.solutionPrefs) {
  *
  * @properties={typeid:24,uuid:"7013e286-1a9a-4128-a504-750f84a2a31e"}
  */
-function FIND_fields()
+function NAV_find_fields()
 {
 
 /*
- *	TITLE    :	FIND_fields
+ *	TITLE    :	NAV_find_fields
  *			  	
  *	MODULE   :	ds_NAV_engine
  *			  	
@@ -365,7 +365,7 @@ function FIND_fields()
  *			  	
  *	OUTPUT   :	
  *			  	
- *	REQUIRES :	globals.DATASUTRA_find_field, element named btn_find on formNameBase, FIND_fields_control()
+ *	REQUIRES :	globals.DATASUTRA_find_field, element named btn_find on formNameBase, NAV_find_fields_control()
  *			  	
  *	MODIFIED :	Mar 6, 2008 -- Troy Elliott, Data Mosaic
  *			  	
@@ -466,7 +466,7 @@ if (application.__parent__.solutionPrefs) {
 			else {
 				//there is a fw config navigation set
 				if (solutionPrefs.config.fwNavigationID) {
-					var user = globals.FX_modes_sub('User',solutionPrefs.config.fwNavigationID)
+					var user = globals.NAV_preference_mode_get('User',solutionPrefs.config.fwNavigationID)
 				}
 			}
 		//add on power replace if present && there are replace items set up
@@ -511,12 +511,12 @@ if (application.__parent__.solutionPrefs) {
 				var findField = (findItems[i].relation != 'NONE') ? findItems[i].relation + '.' + findItems[i].columnName : findItems[i].columnName
 				//when a fast find item selected, create checkbox menu item
 				if (globals.DATASUTRA_find_field == findField) {
-					menu[i] = plugins.popupmenu.createCheckboxMenuItem(findItems[i].findName, FIND_fields_control)
+					menu[i] = plugins.popupmenu.createCheckboxMenuItem(findItems[i].findName, NAV_find_fields_control)
 					menu[i].setSelected(true)
 				}
 				//create a normal menu item
 				else {
-					menu[i] = plugins.popupmenu.createMenuItem(findItems[i].findName, FIND_fields_control)
+					menu[i] = plugins.popupmenu.createMenuItem(findItems[i].findName, NAV_find_fields_control)
 				}
 				
 				//pass arguments
@@ -546,11 +546,11 @@ if (application.__parent__.solutionPrefs) {
  *
  * @properties={typeid:24,uuid:"9ef40968-9dd8-4229-94ca-3f38361d3aa0"}
  */
-function FIND_fields_control()
+function NAV_find_fields_control()
 {
 
 /*
- *	TITLE    :	FIND_fields_control
+ *	TITLE    :	NAV_find_fields_control
  *			  	
  *	MODULE   :	ds_NAV_engine
  *			  	
@@ -649,7 +649,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 
 		//show popup dialog
 		application.showFormInDialog(
-					forms.RPLC_P_solution,
+					forms.RPLC_P__replace,
 					-1,-1,-1,-1,
 					'Power Replace',
 					false,
@@ -821,12 +821,12 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		}
 		//show date picker
 		else if (colType == "DATETIME") {
-			forms.DATE_P_solution.FrameworksFastFind = true
+			forms.DATE_P__search.FrameworksFastFind = true
 
-			application.showFormInDialog(forms.DATE_P_solution,-1,-1,-1,-1,"Search",false,false,'datePicker')
+			application.showFormInDialog(forms.DATE_P__search,-1,-1,-1,-1,"Search",false,false,'datePicker')
 
 //			//load form into fastfind tab panel
-//			globals.FIND_set_popdown('DATE_P_solution')
+//			globals.NAV_find_set_popdown('DATE_P__search')
 
 			//set tooltiptext to find field
 			forms[baseForm + '__header__fastfind'].elements.fld_find.toolTipText = 'Searching in "'+findValue.findName+'"'
@@ -855,19 +855,19 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 
 			//more than 500 valuelist items or specified, show typeahead
 			if (vlDisplay.length >= 500 || findValue.typeahead) {
-				forms.NAV_P_solution__find.elements.fld_combobox.visible = false
-				forms.NAV_P_solution__find.elements.fld_typeahead.visible = true
+				forms.NAV_P__find.elements.fld_combobox.visible = false
+				forms.NAV_P__find.elements.fld_typeahead.visible = true
 			}
 			//show combobox
 			else {
-				forms.NAV_P_solution__find.elements.fld_combobox.visible = true
-				forms.NAV_P_solution__find.elements.fld_typeahead.visible = false
+				forms.NAV_P__find.elements.fld_combobox.visible = true
+				forms.NAV_P__find.elements.fld_typeahead.visible = false
 			}
 
 			//show dialog for value to be searched on
 			//var vlValue = plugins.dialogs.showSelectDialog('Valuelist','Choose item from valuelist.',vlDisplay)
 			application.showFormInDialog(
-						forms.NAV_P_solution__find,
+						forms.NAV_P__find,
 						-1,-1,-1,-1,
 						'Valuelist',
 						true,
@@ -904,11 +904,11 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
  *
  * @properties={typeid:24,uuid:"4dc5bfa1-07c3-4684-bb5a-eb81351ff548"}
  */
-function FIND_focus_gained()
+function NAV_find_focus_gained()
 {
 
 /*
- *	TITLE    :	FIND_focus_gained
+ *	TITLE    :	NAV_find_focus_gained
  *			  	
  *	MODULE   :	ds_NAV_engine
  *			  	
@@ -947,11 +947,11 @@ if (application.__parent__.solutionPrefs) {
  *
  * @properties={typeid:24,uuid:"354609c2-827a-4712-ae1d-f78d0f802cc8"}
  */
-function FIND_focus_lost()
+function NAV_find_focus_lost()
 {
 
 /*
- *	TITLE    :	FIND_focus_lost
+ *	TITLE    :	NAV_find_focus_lost
  *			  	
  *	MODULE   :	ds_NAV_engine
  *			  	
@@ -999,11 +999,11 @@ if (application.__parent__.solutionPrefs) {
  *
  * @properties={typeid:24,uuid:"ed5ad8d1-8530-43ff-a244-251d915d370d"}
  */
-function FIND_search()
+function NAV_find_search()
 {
 
 /*
- *	TITLE    :	FIND_search
+ *	TITLE    :	NAV_find_search
  *			  	
  *	MODULE   :	ds_NAV_engine
  *			  	
@@ -1115,8 +1115,8 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		
 		//show date picker
 		if (colType == "DATETIME" && searchValue == null) {
-			forms.DATE_P_solution.FrameworksFastFind = true
-			application.showFormInDialog(forms.DATE_P_solution,-1,-1,-1,-1,"Search",false)
+			forms.DATE_P__search.FrameworksFastFind = true
+			application.showFormInDialog(forms.DATE_P__search,-1,-1,-1,-1,"Search",false)
 		}
 		
 		//if no value to search for, quit
@@ -1160,7 +1160,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 					case 'All dates':
 						for (var i = 0; i < allFinds.length; i++) {
 							if (allFinds[i].columnType == 'DATETIME') { // && allFinds[i].relation == 'NONE') {
-								globals.FIND_search_request(formName,allFinds[i].relation,allFinds[i].columnName,allFinds[i].columnType,searchValue,newRequest,fullFS)
+								globals.NAV_find_search_request(formName,allFinds[i].relation,allFinds[i].columnName,allFinds[i].columnType,searchValue,newRequest,fullFS)
 								newRequest = true
 							}
 						}
@@ -1168,7 +1168,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 					case 'All numbers':
 						for (var i = 0; i < allFinds.length; i++) {
 							if ((allFinds[i].columnType == 'INTEGER' || allFinds[i].columnType == 'NUMBER')) { // && allFinds[i].relation == 'NONE') {
-								globals.FIND_search_request(formName,allFinds[i].relation,allFinds[i].columnName,allFinds[i].columnType,searchValue,newRequest,fullFS)
+								globals.NAV_find_search_request(formName,allFinds[i].relation,allFinds[i].columnName,allFinds[i].columnType,searchValue,newRequest,fullFS)
 								newRequest = true
 							}
 						}
@@ -1176,7 +1176,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 					case 'All text':
 						for (var i = 0; i < allFinds.length; i++) {
 							if (allFinds[i].columnType == 'TEXT') { // && allFinds[i].relation == 'NONE') {
-								var dlgTitle = globals.FIND_search_request(formName,allFinds[i].relation,allFinds[i].columnName,allFinds[i].columnType,searchValue,newRequest,fullFS)
+								var dlgTitle = globals.NAV_find_search_request(formName,allFinds[i].relation,allFinds[i].columnName,allFinds[i].columnType,searchValue,newRequest,fullFS)
 								newRequest = true
 							}
 						}
@@ -1187,7 +1187,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			else {	
 				//add find request
 					//Fx method returns break if this method should stop
-				var dlgTitle = globals.FIND_search_request(formName,relation,colName,colType,searchValue,undefined,fullFS)
+				var dlgTitle = globals.NAV_find_search_request(formName,relation,colName,colType,searchValue,undefined,fullFS)
 				if (dlgTitle == 'break') {
 					return
 				}
@@ -1417,11 +1417,11 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
  *
  * @properties={typeid:24,uuid:"53b1a6e0-0dd4-40c5-af64-348bd5c51e91"}
  */
-function FIND_search_request()
+function NAV_find_search_request()
 {
 
 /*
- *	TITLE    :	FIND_search_request
+ *	TITLE    :	NAV_find_search_request
  *			  	
  *	MODULE   :	ds_NAV_engine
  *			  	
@@ -1579,11 +1579,11 @@ switch (colType) {
  *
  * @properties={typeid:24,uuid:"6b1d334c-4cf2-4d87-afed-342d12a3badb"}
  */
-function FX_display_row_set()
+function NAV_display_row_set()
 {
 
 /*
- *	TITLE    :	FX_display_row_set
+ *	TITLE    :	NAV_display_row_set
  *			  	
  *	MODULE   :	ds_NAV_engine
  *			  	
@@ -1593,7 +1593,7 @@ function FX_display_row_set()
  *			  	
  *	OUTPUT   :	array of objects; properties: rowDisplay, numChars, width, align, format, formatMask, header, fieldName
  *			  	
- *	REQUIRES :	globals.FX_display_row_set_item()
+ *	REQUIRES :	globals.NAV_display_row_set_item()
  *			  	
  *	MODIFIED :	Oct 2007 -- Troy Elliott, Data Mosaic
  *			  	
@@ -1627,7 +1627,7 @@ if (utils.hasRecords(record[rlnDisplayItem])) {
 		
 		var displayColumnItem = record[rlnDisplayItem].getRecord(i)
 		
-		displayAbout.rowDisplay = globals.FX_display_row_set_item(displayColumnItem)
+		displayAbout.rowDisplay = globals.NAV_display_row_set_item(displayColumnItem)
 		displayAbout.width = (displayColumnItem.display_width_percent) ? displayColumnItem.display_width_percent : 20
 		displayAbout.align = displayColumnItem.display_align
 		displayAbout.format = displayColumnItem.display_format
@@ -1651,11 +1651,11 @@ return displayColumnItems
  *
  * @properties={typeid:24,uuid:"7887d6ae-1dfd-4e11-9804-ee9483b3c8bb"}
  */
-function FX_display_row_set_item()
+function NAV_display_row_set_item()
 {
 
 /*
- *	TITLE    :	FX_display_row_set_item
+ *	TITLE    :	NAV_display_row_set_item
  *			  	
  *	MODULE   :	ds_NAV_engine
  *			  	
@@ -1775,11 +1775,11 @@ return displayChunks
  *
  * @properties={typeid:24,uuid:"6eafcfb0-7189-4076-a326-0f3873a05b93"}
  */
-function FX_html_list_header_generate()
+function NAV_universal_list_header_generate()
 {
 
 /*
- *	TITLE    :	FX_html_list_header_generate
+ *	TITLE    :	NAV_universal_list_header_generate
  *			  	
  *	MODULE   :	ds_NAV_engine
  *			  	
@@ -1873,11 +1873,11 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
  *
  * @properties={typeid:24,uuid:"1edbfe8f-effa-4359-ac91-16dac1c6493c"}
  */
-function FX_load_display()
+function NAV_display_load()
 {
 
 /*
- *	TITLE    :	FX_load_display
+ *	TITLE    :	NAV_display_load
  *			  	
  *	MODULE   :	ds_NAV_engine
  *			  	
@@ -1888,7 +1888,7 @@ function FX_load_display()
  *			  	
  *	OUTPUT   :	array of objects; properties: rawDisplay, rowPreview, displayID, displayDefault, and listTitle
  *			  	
- *	REQUIRES :	solutionPrefs, globals.FX_display_row_set()
+ *	REQUIRES :	solutionPrefs, globals.NAV_display_row_set()
  *			  	
  *	MODIFIED :	Oct 17, 2007 -- Troy Elliott, Data Mosaic
  *			  	
@@ -1924,7 +1924,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			var displayItem = record[rlnDisplay].getRecord(i)
 			
 			displayItems[i - 1] = {
-					rawDisplay : globals.FX_display_row_set(displayItem),
+					rawDisplay : globals.NAV_display_row_set(displayItem),
 					rowPreview : displayItem.display_preview,
 					displayID : displayItem.id_list_display,
 					displayDefault : displayItem.display_default,
@@ -1952,11 +1952,11 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
  *
  * @properties={typeid:24,uuid:"0d5046ef-2433-4af0-a927-25f6d45519bd"}
  */
-function FX_load_filters()
+function NAV_navigation_item_filter_load()
 {
 
 /*
- *	TITLE    :	FX_load_filters
+ *	TITLE    :	NAV_navigation_item_filter_load
  *			  	
  *	MODULE   :	ds_NAV_engine
  *			  	
@@ -2017,11 +2017,11 @@ return filterNode
  *
  * @properties={typeid:24,uuid:"e72d1a7a-f93c-4b49-b37b-5a354d864598"}
  */
-function FX_load_find()
+function NAV_find_load()
 {
 
 /*
- *	TITLE    :	FX_load_find
+ *	TITLE    :	NAV_find_load
  *			  	
  *	MODULE   :	ds_NAV_engine
  *			  	
@@ -2085,11 +2085,11 @@ return findItems
  *
  * @properties={typeid:24,uuid:"2d5933a3-fada-458a-abd4-61f9d2c968cc"}
  */
-function FX_load_forms()
+function NAV_workflow_load()
 {
 
 /*
- *	TITLE    :	FX_load_forms
+ *	TITLE    :	NAV_workflow_load
  *			  	
  *	MODULE   :	ds_NAV_engine
  *			  	
@@ -2342,7 +2342,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		//load list window
 
 		//form not yet added, add to lists tab panel
-		if (listTab != 'DATASUTRA_0F_solution__blank_2' && navigationPrefs.byNavItemID[navigationItemID] && !globals.UL_get_status(navigationPrefs.byNavItemID[navigationItemID].listData)) {
+		if (listTab != 'DATASUTRA_0F_solution__blank_2' && navigationPrefs.byNavItemID[navigationItemID] && !globals.NAV_universal_list_get_status(navigationPrefs.byNavItemID[navigationItemID].listData)) {
 			//create new form instances for UL
 			if (navSpecs.useFwList) {
 				//3.5 hacked UL
@@ -2415,8 +2415,8 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 						) {
 						
 						//create new forms
-						var template = globals.UL_form_to_template(uniList)
-						var myForm = globals.UL_template_to_form(template,newFormName)
+						var template = globals.NAV_universal_list_form_to_template(uniList)
+						var myForm = globals.NAV_universal_list_template_to_form(template,newFormName)
 						
 						//set datasource
 						myForm.serverName = serverName
@@ -2429,8 +2429,8 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 						}
 						
 						//set events
-						myForm.setOnShowMethod(globals.NAV_show_universal_list)
-						myForm.setOnRecordSelectionMethod(globals.NAV_select_universal_list)
+						myForm.setOnShowMethod(globals.NAV_universal_list_show)
+						myForm.setOnRecordSelectionMethod(globals.NAV_universal_list_select)
 						myForm.rowBGColorCalculation = 'globals.NAV_row_background'
 //						myForm.getBodyPart().background = '#D1D7E2'
 						
@@ -2483,7 +2483,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 											20						//height
 										)
 							
-							myField.setOnFocusGainedMethod(globals.NAV_select_universal_list__unhilite)
+							myField.setOnFocusGainedMethod(globals.NAV_universal_list_select__unhilite)
 							myField.anchors = SM_ANCHOR.ALL
 							myField.horizontalAlignment = horizAlign
 							myField.styleClass = 'customlist'
@@ -2590,7 +2590,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		
 		//load help window(s) if in help mode
 		if (helpMode) {
-			globals.HELP(true)
+			globals.DS_help(true)
 			
 			//in help preview mode, update the activate/deactivate toggle
 			if (designMode) {
@@ -2676,17 +2676,17 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		
 		//space override specifed; activate (only if different than current one)
 		if (spaceOV && spaceOV != solutionPrefs.config.activeSpace) {
-			globals.SPACE_change('btn_space_'+spacesOK[spaceOV],true)
+			globals.DS_space_change('btn_space_'+spacesOK[spaceOV],true)
 		}
 		//activate default space if there is one, it is different than current space;  do this on first time form loaded and all subsequent times until space changed while on this navItem
 		else if (navSpecs.spaceDefault && spacesOK['space_' + (navSpecs.spaceDefault)] != solutionPrefs.config.activeSpace && (!sessionSpaces || ((sessionSpaces && sessionSpaces.lastSpace && sessionSpaces.lastSpace == spacesOK['space_' + navSpecs.spaceDefault]) ? true : false))) {
-			globals.SPACE_change('btn_space_'+navSpecs.spaceDefault,true)
+			globals.DS_space_change('btn_space_'+navSpecs.spaceDefault,true)
 		}
 		//current space is not allowed for this item, 
 		else if (solutionPrefs.config.activeSpace && !spacesOK[spacesOK[solutionPrefs.config.activeSpace] - 1]) {
 			//activate last space on for this item
 			if (sessionSpaces && sessionSpaces.lastSpace && sessionSpaces.lastSpace != solutionPrefs.config.activeSpace) {
-				globals.SPACE_change('btn_space_'+spacesOK[sessionSpaces.lastSpace],true)
+				globals.DS_space_change('btn_space_'+spacesOK[sessionSpaces.lastSpace],true)
 			}
 			//activate first allowable space
 			else {
@@ -2694,14 +2694,14 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 				for (var i = 0; i < spacesOK.length && !escape; i++) {
 					if (spacesOK[i]) {
 						escape = true
-						globals.SPACE_change('btn_space_' + (i+1),true)
+						globals.DS_space_change('btn_space_' + (i+1),true)
 					}
 				}
 			}
 		}
 		//on first load of solution, go to standard view if none specified
 		else if (firstForm) {
-			globals.SPACE_change('btn_space_1',true,true)
+			globals.DS_space_change('btn_space_1',true,true)
 		}
 		
 		var borderEnabled = 'MatteBorder,0,0,0,1,#333333'
@@ -2785,11 +2785,11 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
  *
  * @properties={typeid:24,uuid:"195b29be-f37f-4d74-8b42-483331b872dd"}
  */
-function FX_load_navset()
+function NAV_navigation_load()
 {
 
 /*
- *	TITLE    :	FX_load_navset
+ *	TITLE    :	NAV_navigation_load
  *			  	
  *	MODULE   :	ds_NAV_engine
  *			  	
@@ -2804,7 +2804,7 @@ function FX_load_navset()
  *			  	
  *	REQUIRES :	solutionPrefs, input 2 when a/c enabled
  *			  	
- *	USAGE    :	FX_load_navset(initialLoad, groupID, returnObject) Instantiates navigationPrefs code global
+ *	USAGE    :	NAV_navigation_load(initialLoad, groupID, returnObject) Instantiates navigationPrefs code global
  *			  	
  *	MODIFIED :	July 16, 2008 -- Troy Elliott, Data Mosaic
  *			  	
@@ -3067,7 +3067,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 				navPrefs.byNavSetName[navSetNames[i]].itemsByName[record.item_name] = 
 				navPrefs.byNavSetName[navSetNames[i]].itemsByOrder[j-1] = 
 				navPrefs.byNavItemID[record.id_navigation_item] = 
-					globals.FX_load_navset_item(record,setExists)
+					globals.NAV_navigation_item_load(record,setExists)
 			}
 			
 			//try to stay on the same navigation item if it is still available
@@ -3119,11 +3119,11 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
  *
  * @properties={typeid:24,uuid:"cde50863-6a16-48bf-bbe8-fd954c21e003"}
  */
-function FX_load_navset_item()
+function NAV_navigation_item_load()
 {
 
 /*
- *	TITLE    :	FX_load_navset_item
+ *	TITLE    :	NAV_navigation_item_load
  *			  	
  *	MODULE   :	ds_NAV_engine
  *			  	
@@ -3261,7 +3261,7 @@ navItemObj._about_ = '[' + record[relationName].nav_name + '] ' + record.item_na
 			//if findValues doesn't exist or is not the same size as the currently active find items
 			//if ((oldNavItemObj && oldNavItemObj.fastFind) ? ((oldNavItemObj && oldNavItemObj.fastFind).length != record[rlnFindActive].getSize()) : true) {
 				//overwrite/create fast find node
-				var findFast = globals.FX_load_find(record)
+				var findFast = globals.NAV_find_load(record)
 				//check to see if there are finds
 				if (findFast.length) {
 					navItemObj.fastFind = findFast
@@ -3277,7 +3277,7 @@ navItemObj._about_ = '[' + record[relationName].nav_name + '] ' + record.item_na
 			//if replaceValues doesn't exist or is not the same size as the currently active replace items
 			//if ((oldNavItemObj && oldNavItemObj.powerReplace) ? (oldNavItemObj && oldNavItemObj.powerReplace.length != record[rlnReplaceActive].getSize()) : true) {
 				//overwrite/create power replace node
-				var replacePower = globals.FX_load_replace(record)
+				var replacePower = globals.NAV_replace_load(record)
 				//check to see if there are replaces
 				if (replacePower.length) {
 					navItemObj.powerReplace = replacePower
@@ -3286,7 +3286,7 @@ navItemObj._about_ = '[' + record[relationName].nav_name + '] ' + record.item_na
 		//}
 		
 //TODO: (not)	FILTER RESTRICTIONS information
-		var restrictFilter = globals.FX_load_filters(record)
+		var restrictFilter = globals.NAV_navigation_item_filter_load(record)
 		
 		//check to see if there are filters
 		if (restrictFilter.length) {
@@ -3333,7 +3333,7 @@ navItemObj._about_ = '[' + record[relationName].nav_name + '] ' + record.item_na
 		//if there are active display
 		if (utils.hasRecords(record[rlnDisplay])) {
 			//overwrite/create displays node
-			navItemObj.universalList.displays = globals.FX_load_display(record)
+			navItemObj.universalList.displays = globals.NAV_display_load(record)
 			
 			//try to stay on the same display
 			if (oldDisplayID && oldDisplayID != navItemObj.universalList.displays.displayID) {
@@ -3551,11 +3551,11 @@ return navItemObj
  *
  * @properties={typeid:24,uuid:"c5bf1fef-c57d-486f-ae80-9e7355fa77c5"}
  */
-function FX_load_preference()
+function NAV_preference_load()
 {
 
 /*
- *	TITLE    :	FX_load_preference
+ *	TITLE    :	NAV_preference_load
  *			  	
  *	MODULE   :	ds_NAV_engine
  *			  	
@@ -3619,10 +3619,10 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		navTab = 'AC_0L_options'
 	}
 	else if (navSpecs.itemName == 'Solution configuration') {
-		navTab = 'PREF_0L_solution_config'
+		navTab = 'PREF_0L__solution_config'
 	}
 	else if (navSpecs.itemName == 'Deployment') {
-		navTab = 'PREF_0L_deployment'
+		navTab = 'PREF_0L__deployment'
 	}
 	else if (navSpecs.itemName == 'Developer tools') {
 		navTab = 'DEV_0L_options'
@@ -3666,7 +3666,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	
 	//load list window
 	//form not yet added, add to lists tab panel
-	if (listTab != 'DATASUTRA_0F_solution__blank_2' && navigationPrefs.byNavItemID[prefNavID] && !globals.UL_get_status(navigationPrefs.byNavItemID[prefNavID].listData)) {
+	if (listTab != 'DATASUTRA_0F_solution__blank_2' && navigationPrefs.byNavItemID[prefNavID] && !globals.NAV_universal_list_get_status(navigationPrefs.byNavItemID[prefNavID].listData)) {
 		//create new form instances for UL
 		if (navSpecs.useFwList) {
 			//3.5 hacked UL
@@ -3726,16 +3726,16 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 				//if form not already defined, define
 				if (!forms[newFormName]) {
 					//create new forms
-					var template = globals.UL_form_to_template(uniList)
-					var myForm = globals.UL_template_to_form(template,newFormName)
+					var template = globals.NAV_universal_list_form_to_template(uniList)
+					var myForm = globals.NAV_universal_list_template_to_form(template,newFormName)
 					
 					//set datasource
 					myForm.serverName = serverName
 					myForm.tableName = tableName
 					
 					//set events
-					myForm.setOnShowMethod(globals.NAV_show_universal_list)
-					myForm.setOnRecordSelectionMethod(globals.NAV_select_universal_list)
+					myForm.setOnShowMethod(globals.NAV_universal_list_show)
+					myForm.setOnRecordSelectionMethod(globals.NAV_universal_list_select)
 					myForm.rowBGColorCalculation = 'globals.NAV_row_background'
 					
 					//get the UL data and set it up
@@ -3787,7 +3787,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 										20						//height
 									)
 						
-						myField.setOnFocusGainedMethod(globals.NAV_select_universal_list__unhilite)		
+						myField.setOnFocusGainedMethod(globals.NAV_universal_list_select__unhilite)		
 						myField.anchors = SM_ANCHOR.ALL
 						myField.horizontalAlignment = horizAlign
 						myField.styleClass = 'customlist'
@@ -3868,7 +3868,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	}
 	
 	//normal workflow load
-	if (navTab != 'AC_0L_options' && navTab != 'PREF_0L_solution_config' && navTab != 'PREF_0L_deployment' && navTab != 'DEV_0L_options') {
+	if (navTab != 'AC_0L_options' && navTab != 'PREF_0L__solution_config' && navTab != 'PREF_0L__deployment' && navTab != 'DEV_0L_options') {
 		//remove main window if new one different than currently displayed one
 		if (forms[baseForm].elements.tab_content_C.tabIndex > 0  && (forms[baseForm].elements.tab_content_C.getTabFormNameAt(1) != mainTab)) {
 			forms[baseForm].elements.tab_content_C.removeTabAt(1)
@@ -3918,13 +3918,13 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	
 	//activate default space if there is one, it is different than current space;  do this on first time form loaded and all subsequent times until space changed while on this navItem
 	if (navSpecs.spaceDefault && spacesOK['space_' + (navSpecs.spaceDefault)] != solutionPrefs.config.activeSpace && (!sessionSpaces || ((sessionSpaces && sessionSpaces.lastSpace && sessionSpaces.lastSpace == spacesOK['space_' + navSpecs.spaceDefault]) ? true : false))) {
-		globals.SPACE_change('btn_space_'+navSpecs.spaceDefault,true)
+		globals.DS_space_change('btn_space_'+navSpecs.spaceDefault,true)
 	}
 	//current space is not allowed for this item, 
 	else if (solutionPrefs.config.activeSpace && !spacesOK[spacesOK[solutionPrefs.config.activeSpace] - 1]) {
 		//activate last space on for this item
 		if (sessionSpaces && sessionSpaces.lastSpace && sessionSpaces.lastSpace != solutionPrefs.config.activeSpace) {
-			globals.SPACE_change('btn_space_'+spacesOK[sessionSpaces.lastSpace],true)
+			globals.DS_space_change('btn_space_'+spacesOK[sessionSpaces.lastSpace],true)
 		}
 		//activate first allowable space
 		else {
@@ -3932,7 +3932,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			for (var i = 0; i < spacesOK.length && !escape; i++) {
 				if (spacesOK[i]) {
 					escape = true
-					globals.SPACE_change('btn_space_' + (i+1),true)
+					globals.DS_space_change('btn_space_' + (i+1),true)
 				}
 			}
 		}
@@ -4012,11 +4012,11 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
  *
  * @properties={typeid:24,uuid:"99b59266-74d8-4630-ab77-07aeb16b7eb0"}
  */
-function FX_load_replace()
+function NAV_replace_load()
 {
 
 /*
- *	TITLE    :	FX_load_replace
+ *	TITLE    :	NAV_replace_load
  *			  	
  *	MODULE   :	ds_NAV_engine
  *			  	
@@ -4067,11 +4067,11 @@ if (fsNavItem) {
  *
  * @properties={typeid:24,uuid:"17b47971-5f9e-4549-83e9-33367936e7da"}
  */
-function FX_modes_sub()
+function NAV_preference_mode_get()
 {
 
 /*
- *	TITLE    :	FX_modes_sub
+ *	TITLE    :	NAV_preference_mode_get
  *			  	
  *	MODULE   :	ds_NAV_engine
  *			  	
@@ -4336,11 +4336,11 @@ else {
  *
  * @properties={typeid:24,uuid:"a93c613f-28fa-4d50-bb58-96817e0a1710"}
  */
-function NAV_loadset()
+function NAV_navigation_set_load()
 {
 
 /*
- *	TITLE    :	NAV_loadset
+ *	TITLE    :	NAV_navigation_set_load
  *			  	
  *	MODULE   :	ds_NAV_engine
  *			  	
@@ -4415,7 +4415,7 @@ else {
  *
  * @properties={typeid:24,uuid:"d16cc6ba-d5f1-4a30-8a22-45f4745f9e6b"}
  */
-function NAV_select_universal_list()
+function NAV_universal_list_select()
 {
 	var formName = solutionPrefs.config.currentFormName
 	var currentNavItem = solutionPrefs.config.currentFormID
@@ -4487,7 +4487,7 @@ function NAV_select_universal_list()
 	}
 	
 	//unhilite the current record (so highlighter spans entire row)
-	globals.NAV_select_universal_list__unhilite()//navigationPrefs.byNavItemID[currentNavItem].listData.withButtons)
+	globals.NAV_universal_list_select__unhilite()//navigationPrefs.byNavItemID[currentNavItem].listData.withButtons)
 	
 	//timed out, throw up error
 	if (solutionPrefs.config.prefs.thatsAllFolks) {
@@ -4505,7 +4505,7 @@ function NAV_select_universal_list()
  *
  * @properties={typeid:24,uuid:"844fefbd-ae30-4c5f-897c-071fe0b21b7d"}
  */
-function NAV_select_universal_list__unhilite()
+function NAV_universal_list_select__unhilite()
 {
 	var withButtons = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.withButtons
 //		arguments[0]
@@ -4524,7 +4524,7 @@ function NAV_select_universal_list__unhilite()
  *
  * @properties={typeid:24,uuid:"92a1010e-b5bc-4c9d-b812-7b17dd01f3ef"}
  */
-function NAV_show_universal_list()
+function NAV_universal_list_show()
 {
 	var formName = 'NAV_T_universal_list'
 	var currentNavItem = solutionPrefs.config.currentFormID
@@ -4550,7 +4550,7 @@ function NAV_show_universal_list()
  *
  * @properties={typeid:24,uuid:"fbe8962d-fe8f-4213-8f07-f16489bef47e"}
  */
-function REC_next()
+function NAV_record_next()
 {
 
 /*
@@ -4684,7 +4684,7 @@ if (application.__parent__.solutionPrefs) {
  *
  * @properties={typeid:24,uuid:"66284292-7255-4d81-a748-7a9af46c394e"}
  */
-function REC_previous()
+function NAV_record_previous()
 {
 
 /*
@@ -4806,7 +4806,7 @@ if (application.__parent__.solutionPrefs) {
  *
  * @properties={typeid:24,uuid:"55b10d40-41ec-4d45-a2d7-61483b7356bc"}
  */
-function UL_form_remove()
+function NAV_universal_list_form_remove()
 {
 //MEMO: need to somehow put this section in a Function of it's own
 //running in Tano...strip out jsevents for now
@@ -4848,7 +4848,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
  *
  * @properties={typeid:24,uuid:"5e54f2d6-4947-4515-b606-b3760eae4c42"}
  */
-function UL_form_to_template()
+function NAV_universal_list_form_to_template()
 {
 //MEMO: need to somehow put this section in a Function of it's own
 //running in Tano...strip out jsevents for now
@@ -4987,11 +4987,11 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
  *
  * @properties={typeid:24,uuid:"7b2b1c49-52d0-40fe-af98-f5b82b1fcd71"}
  */
-function UL_get_status()
+function NAV_universal_list_get_status()
 {
 
 /*
- *	TITLE    :	UL_get_status
+ *	TITLE    :	NAV_universal_list_get_status
  *			  	
  *	MODULE   :	ds_NAV_engine
  *			  	
@@ -5047,11 +5047,11 @@ if (application.__parent__.solutionPrefs && application.__parent__.navigationPre
  *
  * @properties={typeid:24,uuid:"8b972d54-96f1-41d5-874f-a092d1bdf711"}
  */
-function UL_set_scroll()
+function NAV_universal_list_set_scroll()
 {
 
 /*
- *	TITLE    :	UL_set_scroll
+ *	TITLE    :	NAV_universal_list_set_scroll
  *			  	
  *	MODULE   :	ds_NAV_engine
  *			  	
@@ -5162,7 +5162,7 @@ return false
  *
  * @properties={typeid:24,uuid:"12e4ce35-0b21-4501-9f35-1ed56f930375"}
  */
-function UL_template_to_form()
+function NAV_universal_list_template_to_form()
 {
 //MEMO: need to somehow put this section in a Function of it's own
 //running in Tano...strip out jsevents for now
@@ -5185,7 +5185,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		
 		//if a form with the same name exists (it has already been copied), remove it
 		if (forms[newForm]) {
-			globals.UL_form_remove(newForm)
+			globals.NAV_universal_list_form_remove(newForm)
 		}
 		
 		//create me a form
@@ -5384,11 +5384,11 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
  *
  * @properties={typeid:24,uuid:"22395fb1-3b98-4018-8174-0399ac0b46f0"}
  */
-function VL_form_names()
+function NAV_meta_form_names()
 {
 
 /*
- *	TITLE    :	VL_form_names
+ *	TITLE    :	NAV_meta_form_names
  *			  	
  *	MODULE   :	ds_NAV_engine
  *			  	
@@ -5507,11 +5507,11 @@ if (application.__parent__.repositoryPrefs) {
  *
  * @properties={typeid:24,uuid:"872a1317-b6a2-4396-acea-d0cfb0e792f7"}
  */
-function VL_module_names()
+function NAV_meta_module_names()
 {
 
 /*
- *	TITLE    :	VL_module_names
+ *	TITLE    :	NAV_meta_module_names
  *			  	
  *	MODULE   :	ds_NAV_engine
  *			  	
@@ -5523,7 +5523,7 @@ function VL_module_names()
  *			  	
  *	OUTPUT   :	
  *			  	
- *	REQUIRES :	VL_module_names_FX
+ *	REQUIRES :	NAV_meta_module_names_fx
  *			  	
  *	MODIFIED :	Oct 17, 2007 -- Troy Elliott, Data Mosaic
  *			  	
@@ -5542,7 +5542,7 @@ if (! application.__parent__.repositoryPrefs) {
 
 //get currently loaded solution name; start recursion
 var solutionName = application.getSolutionName()
-globals.VL_module_names_FX([solutionName])
+globals.NAV_meta_module_names_fx([solutionName])
 
 //sort array, remove duplicates, attach root_element_id and active_release
 if (repositoryPrefs.allModules.length) {
@@ -5594,11 +5594,11 @@ if (repositoryPrefs.allModules.length) {
  *
  * @properties={typeid:24,uuid:"635361ec-27d9-4c7d-a288-8be88e7ec2ef"}
  */
-function VL_module_names_FX()
+function NAV_meta_module_names_fx()
 {
 
 /*
- *	TITLE    :	VL_module_names_FX
+ *	TITLE    :	NAV_meta_module_names_fx
  *			  	
  *	MODULE   :	ds_NAV_engine
  *			  	
@@ -5659,7 +5659,7 @@ for (var i = 0 ; i < solutionName.length; i++) {
 	repositoryPrefs.allModules.push(solutionName[i])
 	
 	//pass back modules to processoranator
-	globals.VL_module_names_FX(modules)
+	globals.NAV_meta_module_names_fx(modules)
 }
 
 }
@@ -5668,11 +5668,11 @@ for (var i = 0 ; i < solutionName.length; i++) {
  *
  * @properties={typeid:24,uuid:"db373d74-1a67-431f-9947-a830d066b905"}
  */
-function VL_relation_names()
+function NAV_meta_relation_names()
 {
 
 /*
- *	TITLE    :	VL_relation_names
+ *	TITLE    :	NAV_meta_relation_names
  *			  	
  *	MODULE   :	ds_NAV_engine
  *			  	
@@ -5810,7 +5810,7 @@ if (application.__parent__.repositoryPrefs) {
  *
  * @properties={typeid:24,uuid:"0E517B0B-B7D0-4572-B046-EC64DCE5C8DB"}
  */
-function FIND_set_popdown(formName, hide) {
+function NAV_find_popdown_set(formName, hide) {
 	var baseForm = solutionPrefs.config.formNameBase
 	var fastForm = 'NAV__fastfind'
 		

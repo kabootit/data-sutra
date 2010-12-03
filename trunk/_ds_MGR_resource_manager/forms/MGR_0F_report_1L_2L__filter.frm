@@ -2,7 +2,7 @@ dataSource:"db:/sutra/sutra_solution",
 items:[
 {
 borderType:"EmptyBorder,0,0,0,0",
-dataProviderID:"globals.RPT_filter_method",
+dataProviderID:"globals.MGR_report_filter_method",
 formIndex:10300,
 location:"480,20",
 onActionMethodID:"D056C61D-E05C-4B98-A134-559D9861A48F",
@@ -16,7 +16,7 @@ uuid:"0C972051-8462-473B-82AF-FC20A68C7EB4"
 {
 anchors:11,
 borderType:"EmptyBorder,0,0,0,0",
-dataProviderID:"globals.RPT_filter_description",
+dataProviderID:"globals.MGR_report_filter_description",
 formIndex:10200,
 location:"20,20",
 onActionMethodID:"D056C61D-E05C-4B98-A134-559D9861A48F",
@@ -28,7 +28,7 @@ typeid:4,
 uuid:"1078E011-4196-49B1-B19A-DA77EC90126B"
 },
 {
-dataProviderID:"globals.RPT_filter_wrapper",
+dataProviderID:"globals.MGR_report_filter_wrapper",
 displayType:4,
 formIndex:10600,
 horizontalAlignment:0,
@@ -54,7 +54,7 @@ uuid:"28564D50-1784-4B7F-94F9-19EDEB0F2DA2"
 },
 {
 borderType:"EmptyBorder,0,0,0,0",
-dataProviderID:"globals.RPT_filter_module",
+dataProviderID:"globals.MGR_report_filter_module",
 formIndex:10400,
 location:"120,20",
 onActionMethodID:"D056C61D-E05C-4B98-A134-559D9861A48F",
@@ -72,7 +72,7 @@ uuid:"5051C0A3-2DE8-4F36-9608-0C8D60E45928"
 },
 {
 borderType:"EmptyBorder,0,0,0,0",
-dataProviderID:"globals.RPT_filter_form",
+dataProviderID:"globals.MGR_report_filter_form",
 formIndex:10100,
 location:"300,20",
 onActionMethodID:"D056C61D-E05C-4B98-A134-559D9861A48F",

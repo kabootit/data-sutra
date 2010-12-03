@@ -150,7 +150,7 @@ if (solutionPrefs.config.helpMode) {
 }
 //in edit mode, go to preview
 else if (solutionPrefs.design.modes.help) {
-	globals.HELP()
+	globals.DS_help()
 }
 
 PREVIEW_toggle()

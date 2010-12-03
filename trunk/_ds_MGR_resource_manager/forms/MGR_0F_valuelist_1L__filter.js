@@ -8,7 +8,7 @@ function ACTION_filter()
 /*
  *	TITLE    :	ACTION_filter
  *			  	
- *	MODULE   :	rsrc_VL_valuelist
+ *	MODULE   :	rsrc_MGR_valuelist_valuelist
  *			  	
  *	ABOUT    :	do filtering
  *			  	
@@ -35,15 +35,15 @@ forms[formName].controller.find()
 	//only search in selected valuelist
 	forms[formName].valuelist_name = vlName
 		
-	if (globals.VL_filter_valuelist) {forms[formName].valuelist_name = '%' + globals.VL_filter_valuelist + '%'}
-	if (globals.VL_filter_visible) {forms[formName].visible = '%' + globals.VL_filter_visible + '%'}
-	if (globals.VL_filter_saved) {forms[formName].saved = '%' + globals.VL_filter_saved + '%'}
-	if (globals.VL_filter_orderby) {forms[formName].order_by = globals.VL_filter_orderby}
-	if (globals.VL_filter_search_table) {forms[formName].search_table = '%' + globals.VL_filter_search_table + '%'}
-	if (globals.VL_filter_search_field) {forms[formName].search_field = '%' + globals.VL_filter_search_field + '%'}
-	if (globals.VL_filter_relation_1) {forms[formName].relation_1 = '%' + globals.VL_filter_relation_1 + '%'}
-	if (globals.VL_filter_relation_2) {forms[formName].relation_2 = '%' + globals.VL_filter_relation_2 + '%'}
-	if (globals.VL_filter_flag_edit) {forms[formName].flag_edit = globals.VL_filter_flag_edit}
+	if (globals.MGR_valuelist_filter_valuelist) {forms[formName].valuelist_name = '%' + globals.MGR_valuelist_filter_valuelist + '%'}
+	if (globals.MGR_valuelist_filter_visible) {forms[formName].visible = '%' + globals.MGR_valuelist_filter_visible + '%'}
+	if (globals.MGR_valuelist_filter_saved) {forms[formName].saved = '%' + globals.MGR_valuelist_filter_saved + '%'}
+	if (globals.MGR_valuelist_filter_orderby) {forms[formName].order_by = globals.MGR_valuelist_filter_orderby}
+	if (globals.MGR_valuelist_filter_search_table) {forms[formName].search_table = '%' + globals.MGR_valuelist_filter_search_table + '%'}
+	if (globals.MGR_valuelist_filter_search_field) {forms[formName].search_field = '%' + globals.MGR_valuelist_filter_search_field + '%'}
+	if (globals.MGR_valuelist_filter_relation_1) {forms[formName].relation_1 = '%' + globals.MGR_valuelist_filter_relation_1 + '%'}
+	if (globals.MGR_valuelist_filter_relation_2) {forms[formName].relation_2 = '%' + globals.MGR_valuelist_filter_relation_2 + '%'}
+	if (globals.MGR_valuelist_filter_flag_edit) {forms[formName].flag_edit = globals.MGR_valuelist_filter_flag_edit}
 
 var results = forms[formName].controller.search()
 
@@ -70,7 +70,7 @@ function FILTER_clear(recSelect)
 /*
  *	TITLE    :	FILTER_clear
  *			  	
- *	MODULE   :	rsrc_VL_valuelist
+ *	MODULE   :	rsrc_MGR_valuelist_valuelist
  *			  	
  *	ABOUT    :	clear filter globals
  *			  	
@@ -88,15 +88,15 @@ function FILTER_clear(recSelect)
 
 // clear filters
 
-globals.VL_filter_orderby = null
-globals.VL_filter_relation_1 = null
-globals.VL_filter_relation_2 = null
-globals.VL_filter_saved = null
-globals.VL_filter_search_field = null
-globals.VL_filter_search_table = null
-globals.VL_filter_valuelist = null
-globals.VL_filter_visible = null
-globals.VL_filter_flag_edit = null
+globals.MGR_valuelist_filter_orderby = null
+globals.MGR_valuelist_filter_relation_1 = null
+globals.MGR_valuelist_filter_relation_2 = null
+globals.MGR_valuelist_filter_saved = null
+globals.MGR_valuelist_filter_search_field = null
+globals.MGR_valuelist_filter_search_table = null
+globals.MGR_valuelist_filter_valuelist = null
+globals.MGR_valuelist_filter_visible = null
+globals.MGR_valuelist_filter_flag_edit = null
 
 if (recSelect) {
 	forms.MGR_0L_valuelist_1L.REC_on_select()

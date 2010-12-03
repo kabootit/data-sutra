@@ -359,7 +359,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 var userID = arguments[0]
 
 //refresh password prefs
-globals.AC_set_password()
+globals.AC_password_set()
 
 //find correct field
 controller.find()

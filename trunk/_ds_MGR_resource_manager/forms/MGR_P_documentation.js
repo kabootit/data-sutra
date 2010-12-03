@@ -11,7 +11,7 @@ globals.CODE_hide_form = 1
 
 application.closeFormDialog('popoutHelp')
 
-globals.HELP()
+globals.DS_help()
 }
 
 /**

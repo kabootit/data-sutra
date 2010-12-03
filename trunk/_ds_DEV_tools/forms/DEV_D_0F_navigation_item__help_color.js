@@ -63,13 +63,13 @@ if (results) {
 		navigationPrefs.byNavSetName[displayNavSet].itemsByName[record.item_name] = 
 		navigationPrefs.byNavSetName[displayNavSet].itemsByOrder[itemPosn] = 
 		navigationPrefs.byNavItemID[idNavItem] = 
-			globals.FX_load_navset_item(record,true)
+			globals.NAV_navigation_item_load(record,true)
 	}
 }
 
 //if in help preview mode, refire it
 if (solutionPrefs.config.helpMode) {
-	globals.HELP(true)
+	globals.DS_help(true)
 }
 
 

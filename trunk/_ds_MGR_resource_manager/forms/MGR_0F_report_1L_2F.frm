@@ -7,7 +7,7 @@ items:[
 {
 containsFormID:"6FF83413-DEBC-44A2-B873-6A6E43B9BDE5",
 location:"20,31",
-relationName:"rpt_report_to_action_item",
+relationName:"mgr_report_to_action_item",
 text:"MGR_0F_report_1L_2L_action_item",
 typeid:15,
 uuid:"EE437502-5E3C-433E-86BF-AD543F3712F6"

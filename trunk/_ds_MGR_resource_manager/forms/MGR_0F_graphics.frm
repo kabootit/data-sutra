@@ -155,6 +155,6 @@ navigatorID:"-1",
 paperPrintScale:100,
 scrollbars:36,
 size:"640,170",
-styleName:"ds_MAC_leopard",
+styleName:"_DATASUTRA_",
 typeid:3,
 uuid:"6467FFA8-5E27-4EEC-B11C-8239E0F0AD8E"

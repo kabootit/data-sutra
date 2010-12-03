@@ -1176,7 +1176,7 @@ else {
 	navigationPrefs.foundsetPool.nextFreePK = dsUniversalList.getValue(1,1)
 
 	//load navigation sets assigned to the selected group; if there aren't any, give an error
-	if (!globals.FX_load_navset(true,groupID)) {
+	if (!globals.NAV_navigation_load(true,groupID)) {
 		//TURN OFF BUSY
 		globals.CALLBACK_progressbar_stop()
 		plugins.sutra.busyCursor = false
@@ -1189,12 +1189,12 @@ else {
 	}
 
 	//set up user/admin modes
-	//MEMO: must be done after FX_load_navset in order for things to work
+	//MEMO: must be done after NAV_navigation_load in order for things to work
 		if (adminModeValues) {
 			//create array from text string
 			adminModeValues = adminModeValues.split("\n")
 			//create object
-			adminModeValues = globals.FX_modes_sub('Admin',solutionPrefs.config.fwNavigationID,adminModeValues)
+			adminModeValues = globals.NAV_preference_mode_get('Admin',solutionPrefs.config.fwNavigationID,adminModeValues)
 		}
 		else {
 			adminModeValues = {itemName:[],formName:[],navItemID:[],itemDescription:[]}
@@ -1204,7 +1204,7 @@ else {
 			//create array from text string
 			userModeValues = userModeValues.split("\n")
 			//create object
-			userModeValues = globals.FX_modes_sub('User',solutionPrefs.config.fwNavigationID,userModeValues)
+			userModeValues = globals.NAV_preference_mode_get('User',solutionPrefs.config.fwNavigationID,userModeValues)
 		}
 		else {
 			userModeValues = {itemName:[],formName:[],navItemID:[],itemDescription:[]}
@@ -1383,7 +1383,7 @@ else {
 	//		13. load toolbars
 	// // //
 
-	solutionPrefs.panel = globals.TOOL_load_panels(groupID)
+	solutionPrefs.panel = globals.DS_panel_load(groupID)
 
 
 	if (solutionPrefs.config.prefs.formPreload) {
@@ -1492,12 +1492,12 @@ else {
 	plugins.sutra.busyCursor = false	
 
 	//toolbar and sidebar load
-	globals.TOOLBAR_load()
-	globals.SIDEBAR_load()
+	globals.DS_toolbar_load()
+	globals.DS_sidebar_load()
 
 	//sidebar default to on
 	if (solutionPrefs.screenAttrib.sidebar.status) {
-		globals.SIDEBAR_toggle(true,null,true)
+		globals.DS_sidebar_toggle(true,null,true)
 	}
 
 

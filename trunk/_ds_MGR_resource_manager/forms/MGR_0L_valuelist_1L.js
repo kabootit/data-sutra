@@ -4,7 +4,7 @@
  */
 function REC_on_select(event, vlName)
 {
-	globals.VL_valuelist_selected = id_valuelist
+	globals.MGR_valuelist_valuelist_selected = id_valuelist
 	
 	forms.MGR_0F_valuelist_1L__filter.FILTER_clear(false)
 	

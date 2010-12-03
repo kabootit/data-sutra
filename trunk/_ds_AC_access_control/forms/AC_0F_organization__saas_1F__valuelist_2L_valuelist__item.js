@@ -69,7 +69,7 @@ function REC_new() {
 /*
  *	TITLE    :	REC_duplicate
  *			  	
- *	MODULE   :	rsrc_VL_valuelist
+ *	MODULE   :	rsrc_MGR_valuelist_valuelist
  *			  	
  *	ABOUT    :	delete a record
  *			  	

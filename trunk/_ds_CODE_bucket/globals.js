@@ -1451,7 +1451,7 @@ if (application.__parent__.solutionPrefs) {
 		
 		//set toolbar to previous if it wasn't the last tab
 		if (solutionPrefs.config.lastSelectedToolbar != forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getMaxTabIndex()) {
-			globals.TOOLBAR_cycle(solutionPrefs.config.lastSelectedToolbar)
+			globals.DS_toolbar_cycle(solutionPrefs.config.lastSelectedToolbar)
 		}
 		
 		//show toolbar controls
@@ -1644,7 +1644,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		forms[baseForm + '__header'].elements['btn_space_'+complement].visible = false
 		
 		//fire space changer	
-		globals.SPACE_change('btn_space_'+i,true,alwaysFire,skipUI)
+		globals.DS_space_change('btn_space_'+i,true,alwaysFire,skipUI)
 		
 		return true
 	}
@@ -1933,7 +1933,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		
 		//destination toolbar is valid and different than current toolbar, change
 		if (newToolbar != oldToolbar && found) {
-			globals.TOOLBAR_cycle(i + 1)
+			globals.DS_toolbar_cycle(i + 1)
 			
 			return true
 		}
@@ -3505,22 +3505,28 @@ else {
  */
 function CODE_jsevent_remove()
 {
-var item = arguments[0]
+	var item = arguments[0]
 
-if (item &&
-	typeof item.getElementName == 'func' + 'tion' &&
-	typeof item.getFormName == 'func' + 'tion' &&
-	typeof item.getModifiers == 'func' + 'tion' &&
-	typeof item.getSource == 'func' + 'tion' &&
-	typeof item.getTimestamp == 'func' + 'tion' &&
-	typeof item.getType == 'func' + 'tion') {
-	
-	return false
-}
-else {
-	return true
-}
+	if (item instanceof JSEvent) {
+		return false
+	}
+	else {
+		return true
+	}
 
+	//if (item &&
+	//	typeof item.getElementName == 'func' + 'tion' &&
+	//	typeof item.getFormName == 'func' + 'tion' &&
+	//	typeof item.getModifiers == 'func' + 'tion' &&
+	//	typeof item.getSource == 'func' + 'tion' &&
+	//	typeof item.getTimestamp == 'func' + 'tion' &&
+	//	typeof item.getType == 'func' + 'tion') {
+	//	
+	//	return false
+	//}
+	//else {
+	//	return true
+	//}
 }
 
 /**
@@ -5440,7 +5446,7 @@ if (application.__parent__.solutionPrefs && !solutionPrefs.config.lockStatus) {
 	//only run when not in a preference
 	if (!solutionPrefs.config.prefs.preferenceMode) {
 		//offset will probably be different depending on help status
-		var oldToolbar = solutionPrefs.panel.sidebar[forms.SIDE_sidebar.elements.tab_content.tabIndex - 2].tabName
+		var oldToolbar = solutionPrefs.panel.sidebar[forms.DATASUTRA__sidebar.elements.tab_content.tabIndex - 2].tabName
 
 		var allToolbars = solutionPrefs.panel.sidebar
 
@@ -5456,10 +5462,10 @@ if (application.__parent__.solutionPrefs && !solutionPrefs.config.lockStatus) {
 		//destination toolbar is valid and different than current toolbar, change
 		if (newToolbar != oldToolbar && found) {
 			//should this by i or i+1?
-			forms.SIDE_sidebar__header.TAB_popdown(i + 1)
+			forms.DATASUTRA__sidebar__header.TAB_popdown(i + 1)
 
 			if (showSidebar && !solutionPrefs.screenAttrib.sidebar.status) {
-				globals.SIDEBAR_toggle(true)
+				globals.DS_sidebar_toggle(true)
 			}
 
 			return true
@@ -5467,7 +5473,7 @@ if (application.__parent__.solutionPrefs && !solutionPrefs.config.lockStatus) {
 		else {
 
 			if (showSidebar && !solutionPrefs.screenAttrib.sidebar.status) {
-				globals.SIDEBAR_toggle(true)
+				globals.DS_sidebar_toggle(true)
 			}
 
 			return false

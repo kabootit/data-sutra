@@ -107,13 +107,13 @@ function SIDEBAR_expand()
 	var flexOn = solutionPrefs.config.flexibleSpace
 	
 	if (flexOn) {
-		globals.SPACE_flexible(null,true)
+		globals.DS_space_flexible(null,true)
 	}
 	
-	globals.SIDEBAR_toggle(true)
+	globals.DS_sidebar_toggle(true)
 	
 	if (flexOn) {
-		globals.SPACE_flexible(null,true)
+		globals.DS_space_flexible(null,true)
 		application.updateUI()
 		splitToolFind.dividerLocation = divLocation
 	}

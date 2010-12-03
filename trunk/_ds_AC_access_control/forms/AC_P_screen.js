@@ -110,7 +110,7 @@ if (this.reSize) {
 	//turn flag off
 	this.reSize = undefined
 	
-	solutionPrefs.screenAttrib = globals.PREF_set_screen_attrib()
+	solutionPrefs.screenAttrib = globals.PREF_screen_set()
 	
 	//set window size/location
 	application.setWindowSize(solutionPrefs.screenAttrib.initialScreenWidth,solutionPrefs.screenAttrib.initialScreenHeight)
@@ -142,7 +142,7 @@ if (this.reSize) {
 			break
 	}
 	if (spaceNumber) {
-		globals.SPACE_change(spaceNumber,true)
+		globals.DS_space_change(spaceNumber,true)
 	}
 }
 }

@@ -29,11 +29,11 @@ var formName = 'MGR_0F_report_1L_2L'
 //find on filtered values
 forms[formName].controller.find()
 
-	if (globals.RPT_filter_description) {forms[formName].report_description = '%' + globals.RPT_filter_description + '%'}
-	if (globals.RPT_filter_form) {forms[formName].report_form = '%' + globals.RPT_filter_form + '%'}
-	if (globals.RPT_filter_method) {forms[formName].report_method = '%' + globals.RPT_filter_method + '%'}
-	if (globals.RPT_filter_module) {forms[formName].report_module = '%' + globals.RPT_filter_module + '%'}
-	if (globals.RPT_filter_wrapper) {forms[formName].flag_wrapper = globals.RPT_filter_wrapper}
+	if (globals.MGR_report_filter_description) {forms[formName].report_description = '%' + globals.MGR_report_filter_description + '%'}
+	if (globals.MGR_report_filter_form) {forms[formName].report_form = '%' + globals.MGR_report_filter_form + '%'}
+	if (globals.MGR_report_filter_method) {forms[formName].report_method = '%' + globals.MGR_report_filter_method + '%'}
+	if (globals.MGR_report_filter_module) {forms[formName].report_module = '%' + globals.MGR_report_filter_module + '%'}
+	if (globals.MGR_report_filter_wrapper) {forms[formName].flag_wrapper = globals.MGR_report_filter_wrapper}
 
 var results = forms[formName].controller.search()
 
@@ -45,9 +45,9 @@ if (results) {
 
 //	clear filters
 
-globals.RPT_filter_navitem = null
-globals.RPT_filter_navid = null
-globals.RPT_filter_menu = null
+globals.MGR_report_filter_navitem = null
+globals.MGR_report_filter_navid = null
+globals.MGR_report_filter_menu = null
 }
 
 /**
@@ -77,15 +77,15 @@ function FILTER_clear()
  */
 
 // clear filters
-globals.RPT_filter_description = null
-globals.RPT_filter_form = null
-globals.RPT_filter_method = null
-globals.RPT_filter_module = null
-globals.RPT_filter_wrapper = null
+globals.MGR_report_filter_description = null
+globals.MGR_report_filter_form = null
+globals.MGR_report_filter_method = null
+globals.MGR_report_filter_module = null
+globals.MGR_report_filter_wrapper = null
 
-globals.RPT_filter_navitem = null
-globals.RPT_filter_navid = null
-globals.RPT_filter_menu = null
+globals.MGR_report_filter_navitem = null
+globals.MGR_report_filter_navid = null
+globals.MGR_report_filter_menu = null
 
 forms.MGR_0F_report_1L_2L.controller.loadAllRecords()
 

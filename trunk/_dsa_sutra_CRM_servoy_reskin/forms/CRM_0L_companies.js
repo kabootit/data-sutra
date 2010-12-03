@@ -74,7 +74,7 @@ switch (arguments[0]) {
 function FILTERS_list()
 {
 //get menu list from a value list
-var dataset = application.getValueListItems("TMPLT_FILTER_example")
+var dataset = application.getValueListItems("TMPL_FILTER_example")
 var valueList = dataset.getColumnAsArray(1)
 
 valueList.unshift("<html><b>All","---")
@@ -92,7 +92,7 @@ while (menu[x]) {
 	menu[x].setMethodArguments(menu[x].text)
 	
 	//set check mark
-	if (globals.TMPLT_example_filter == menu[x].text) {
+	if (globals.TMPL_example_filter == menu[x].text) {
 		menu[x].setSelected(true)
 	}
 	else {
@@ -129,7 +129,7 @@ function FILTERS_list_control()
 {
 //filter list by passed variable
 
-globals.TMPLT_example_filter = arguments[0]
+globals.TMPL_example_filter = arguments[0]
 
 if (arguments[0] != "<html><b>All") {
 
@@ -137,7 +137,7 @@ if (arguments[0] != "<html><b>All") {
 	var maxReturnedRows = 1000
 	var args = []
 	
-	switch (globals.TMPLT_example_filter) {
+	switch (globals.TMPL_example_filter) {
 			case 'Even':
 				var query = 'SELECT company_id FROM '+controller.getTableName()+' WHERE mod(company_id,2) = 0'
 				var dataset = databaseManager.getDataSetByQuery(server, query, args, maxReturnedRows)

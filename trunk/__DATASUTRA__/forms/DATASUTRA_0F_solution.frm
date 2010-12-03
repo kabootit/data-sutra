@@ -23,9 +23,9 @@ background:"#d1d7e2",
 formIndex:10200,
 items:[
 {
-containsFormID:"aa8809e0-5d77-4699-8650-3cf1df3c596b",
+containsFormID:"22B887DF-383A-4EC1-8C60-7F534BBEE259",
 location:"820,190",
-text:"SIDE_sidebar",
+text:"DATASUTRA__sidebar",
 typeid:15,
 uuid:"c7d54224-39e4-464b-b5ed-215ea4c8a480"
 }
@@ -261,7 +261,7 @@ items:[
 {
 containsFormID:"738A6C95-D321-423E-9036-690C6467BAF6",
 location:"790,30",
-text:"TOOL__popdown",
+text:"DATASUTRA__toolbar__popdown",
 typeid:15,
 uuid:"39C95DB1-CD99-4605-91C6-B9B8EB72E624"
 }

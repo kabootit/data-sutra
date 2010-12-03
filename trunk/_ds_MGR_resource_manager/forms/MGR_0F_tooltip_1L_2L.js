@@ -31,7 +31,7 @@ databaseManager.saveData()
 for ( var i = 1 ; i <= foundset.getSize() ; i++ ) {
 
 	var record = foundset.getRecord(i)
-	record.selected = globals.TIP_select_all
+	record.selected = globals.MGR_tooltip_select_all
 
 }
 
@@ -180,14 +180,14 @@ databaseManager.saveData()
 if (foundset.getSize() && form_name && forms[form_name]) {
 	var allElements = forms[form_name].elements.allnames
 	if (allElements && allElements.length) {
-		application.setValueListItems('TIP_element_names',allElements)
+		application.setValueListItems('MGR_tooltip_element_names',allElements)
 	}
 	else {
-		application.setValueListItems('TIP_element_names',new Array())
+		application.setValueListItems('MGR_tooltip_element_names',new Array())
 	}
 }
 else {
-	application.setValueListItems('TIP_element_names',new Array())
+	application.setValueListItems('MGR_tooltip_element_names',new Array())
 }
 }
 
@@ -258,7 +258,7 @@ else {
 formNames = formNames.sort()
 
 //set valuelist
-application.setValueListItems('TIP_form_names', formNames)
+application.setValueListItems('MGR_tooltip_form_names', formNames)
 
 
 }
@@ -310,7 +310,7 @@ var status =
 //choose 
 if (colName == 'selected') {
 	
-	globals.TIP_select_all = status
+	globals.MGR_tooltip_select_all = status
 	
 	ACTION_select_all()
 }

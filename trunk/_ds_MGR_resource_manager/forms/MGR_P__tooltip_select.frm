@@ -1,7 +1,7 @@
 dataSource:"db:/sutra/sutra_navigation",
 items:[
 {
-dataProviderID:"globals.TIP_P_all",
+dataProviderID:"globals.MGR_tooltip__module_all",
 displayType:4,
 formIndex:10800,
 location:"12,10",
@@ -107,7 +107,7 @@ uuid:"A196E34E-E906-4ED3-9CC8-84A6ADC81B33"
 },
 {
 anchors:15,
-dataProviderID:"globals.TIP_P__module",
+dataProviderID:"globals.MGR_tooltip__module",
 displayType:4,
 formIndex:10600,
 location:"10,45",

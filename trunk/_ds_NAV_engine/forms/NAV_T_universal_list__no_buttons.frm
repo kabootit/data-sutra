@@ -1,4 +1,3 @@
-dataSource:"db:/sutra/sutra_solution",
 items:[
 {
 dataProviderID:"globals.CODE_constant_1",

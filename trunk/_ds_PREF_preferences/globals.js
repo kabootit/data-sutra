@@ -7,11 +7,11 @@ var PREF_license_agreement = '<html><head></head><body>Testing</body></html>';
  *
  * @properties={typeid:24,uuid:"49841ec0-699b-41e2-957d-87d009fa5ef8"}
  */
-function PREF_set_client_info()
+function PREF_client_info_set()
 {
 
 /*
- *	TITLE    :	PREF_set_client_info
+ *	TITLE    :	PREF_client_info_set
  *			  	
  *	MODULE   :	ds_PREF_preferences
  *			  	
@@ -202,11 +202,11 @@ return clientInfo
  *
  * @properties={typeid:24,uuid:"302a91cd-529d-4c1f-8794-9dfa123c82f5"}
  */
-function PREF_set_list_attrib()
+function PREF_list_set()
 {
 
 /*
- *	TITLE    :	PREF_set_list_attrib
+ *	TITLE    :	PREF_list_set
  *			  	
  *	MODULE   :	ds_PREF_preferences
  *			  	
@@ -223,7 +223,7 @@ function PREF_set_list_attrib()
  */
 
 var listSetup = new Object()
-var formName = 'PREF_0L_solution_config'
+var formName = 'PREF_0L__solution_config'
 
 //listSetup.sleepTime = (forms[formName].list_sleep) ? forms[formName].list_sleep : 250
 //listSetup.formName
@@ -250,11 +250,11 @@ return listSetup
  *
  * @properties={typeid:24,uuid:"c20bb860-2153-4ca9-833b-8661f988f513"}
  */
-function PREF_set_screen_attrib()
+function PREF_screen_set()
 {
 
 /*
- *	TITLE    :	PREF_set_screen_attrib
+ *	TITLE    :	PREF_screen_set
  *			  	
  *	MODULE   :	ds_PREF_preferences
  *			  	
@@ -271,7 +271,7 @@ function PREF_set_screen_attrib()
  */
 
 var screenAttrib = new Object()
-var formName = 'PREF_0L_solution_config'
+var formName = 'DATASUTRA_0F_solution__blank_4'
 
 //window/screen
 screenAttrib.screenWidth = application.getScreenWidth() 

@@ -80,7 +80,7 @@ items:[
 {
 containsFormID:"720F5DAA-2377-453E-BAE1-E05541513823",
 location:"10,243",
-relationName:"help_documentation_to_documentation",
+relationName:"mgr_documentation_to_documentation",
 text:"MGR_0F_documentation_1F",
 typeid:15,
 uuid:"4ECFA769-414A-413F-8011-690DA387B306"
@@ -88,7 +88,7 @@ uuid:"4ECFA769-414A-413F-8011-690DA387B306"
 {
 containsFormID:"4A27AB9C-4D05-4475-8580-AA5429AF9F73",
 location:"40,263",
-relationName:"help_documentation_to_documentation__child",
+relationName:"mgr_documentation_to_documentation__child",
 text:"MGR_0F_documentation_1L",
 typeid:15,
 uuid:"9BF5322C-5EEC-4436-96F8-F5A468201F53"

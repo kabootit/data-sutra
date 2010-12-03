@@ -9,7 +9,7 @@ items:[
 {
 containsFormID:"F5F3FF5D-E43B-48BA-9FAF-FF91EF5F96C0",
 location:"310,50",
-relationName:"tool_toolbar__sidebar",
+relationName:"mgr_toolbar__sidebar",
 text:"MGR_0F_toolbar_1L__sidebar_2F",
 typeid:15,
 uuid:"D0B27758-CE33-42C7-8E2F-2A942D7178C6"
@@ -30,7 +30,7 @@ items:[
 {
 containsFormID:"A67D0E7E-650B-4D9D-95F9-EE4DE464496C",
 location:"60,60",
-relationName:"tool_toolbar__sidebar",
+relationName:"mgr_toolbar__sidebar",
 text:"MGR_0F_toolbar_1L__sidebar_2L",
 typeid:15,
 uuid:"F96A8297-A48B-4704-87C8-0248368EFD2B"

@@ -176,7 +176,7 @@ uuid:"F1583305-026F-4221-B5E8-3BBE013319A4"
 },
 {
 anchors:3,
-dataProviderID:"globals.TIP_default_language",
+dataProviderID:"globals.MGR_tooltip_language_default",
 displayType:2,
 editable:false,
 formIndex:10200,

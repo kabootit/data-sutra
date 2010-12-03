@@ -119,7 +119,7 @@ if (record.node_2 > 1) {
 	navigationPrefs.byNavSetName[displayNavSet].itemsByName[record.item_name] = 
 	navigationPrefs.byNavSetName[displayNavSet].itemsByOrder[itemPosn] = 
 	navigationPrefs.byNavItemID[idNavItem] = 
-		globals.FX_load_navset_item(record,smartUpdate)
+		globals.NAV_navigation_item_load(record,smartUpdate)
 }
 //update whole navigation set
 else {
@@ -146,7 +146,7 @@ else {
 		navPrefs.itemsByName[record2.item_name] = 
 		navPrefs.itemsByOrder[j-1] = 
 		navigationPrefs.byNavItemID[record2.id_navigation_item] = 
-			globals.FX_load_navset_item(record2,true)
+			globals.NAV_navigation_item_load(record2,true)
 	}
 	
 	//assign new navPrefs back to navigationPrefs

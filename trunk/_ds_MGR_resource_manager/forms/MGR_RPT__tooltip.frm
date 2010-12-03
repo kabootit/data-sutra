@@ -10,7 +10,7 @@ uuid:"2D912485-E935-45C1-AC38-854AF77C4A2F"
 },
 {
 anchors:9,
-dataProviderID:"globals.TIP_html",
+dataProviderID:"globals.MGR_tooltip_html",
 displayType:8,
 editable:false,
 formIndex:10300,
@@ -33,7 +33,7 @@ showFocus:false,
 size:"260,20",
 styleClass:"whitebold",
 tabSeq:-1,
-text:"Printed: %%globals.TIP_today%%",
+text:"Printed: %%globals.MGR_tooltip_today%%",
 transparent:true,
 typeid:7,
 uuid:"8DBF8B77-245A-4018-B896-50D0F9FE5EFC"

@@ -2,7 +2,7 @@ dataSource:"db:/sutra/sutra_solution",
 items:[
 {
 borderType:"EmptyBorder,0,0,0,0",
-dataProviderID:"globals.VL_filter_flag_edit",
+dataProviderID:"globals.MGR_valuelist_filter_flag_edit",
 displayType:4,
 formIndex:10300,
 horizontalAlignment:0,
@@ -16,7 +16,7 @@ uuid:"06FA578A-C87B-4BDF-892C-DE14273BBF3D"
 {
 anchors:10,
 borderType:"EmptyBorder,0,0,0,0",
-dataProviderID:"globals.VL_filter_search_field",
+dataProviderID:"globals.MGR_valuelist_filter_search_field",
 formIndex:11200,
 location:"410,90",
 name:"fld_filter_search_field",
@@ -38,7 +38,7 @@ uuid:"18E90D2C-B69E-4C1D-8F44-3A915CF1932D"
 {
 anchors:11,
 borderType:"EmptyBorder,0,0,0,0",
-dataProviderID:"globals.VL_filter_visible",
+dataProviderID:"globals.MGR_valuelist_filter_visible",
 formIndex:11100,
 location:"130,20",
 name:"fld_filter_visible",
@@ -55,7 +55,7 @@ uuid:"2C9EA18A-EB60-442A-A06F-6BB931C0637B"
 {
 anchors:11,
 borderType:"EmptyBorder,0,0,0,0",
-dataProviderID:"globals.VL_filter_saved",
+dataProviderID:"globals.MGR_valuelist_filter_saved",
 formIndex:10900,
 location:"250,20",
 name:"fld_filter_saved",
@@ -72,7 +72,7 @@ uuid:"39FCCBAD-13D9-48FF-9A0C-6C378DD6455E"
 {
 anchors:11,
 borderType:"EmptyBorder,0,0,0,0",
-dataProviderID:"globals.VL_filter_relation_1",
+dataProviderID:"globals.MGR_valuelist_filter_relation_1",
 formIndex:10800,
 location:"450,20",
 name:"fld_filter_relation_1",
@@ -95,7 +95,7 @@ uuid:"9C705523-CDD7-451B-9B12-BB15ED800821"
 {
 anchors:11,
 borderType:"EmptyBorder,0,0,0,0",
-dataProviderID:"globals.VL_filter_valuelist",
+dataProviderID:"globals.MGR_valuelist_filter_valuelist",
 formIndex:11000,
 location:"0,70",
 name:"fld_filter_valuelist",
@@ -111,7 +111,7 @@ uuid:"B9575B94-0506-46DD-B001-05E1B3C8D0AC"
 },
 {
 borderType:"EmptyBorder,0,0,0,0",
-dataProviderID:"globals.VL_filter_orderby",
+dataProviderID:"globals.MGR_valuelist_filter_orderby",
 formIndex:11400,
 location:"280,40",
 name:"fld_filter_orderby",
@@ -128,7 +128,7 @@ uuid:"BD167DDA-9F3A-430D-8C41-75738EDE3250"
 {
 anchors:11,
 borderType:"EmptyBorder,0,0,0,0",
-dataProviderID:"globals.VL_filter_relation_2",
+dataProviderID:"globals.MGR_valuelist_filter_relation_2",
 formIndex:11500,
 location:"530,90",
 name:"fld_filter_relation_2",
@@ -162,7 +162,7 @@ uuid:"F493C73B-36D5-4652-B6FC-D3F35D3C676E"
 {
 anchors:11,
 borderType:"EmptyBorder,0,0,0,0",
-dataProviderID:"globals.VL_filter_search_table",
+dataProviderID:"globals.MGR_valuelist_filter_search_table",
 formIndex:11300,
 location:"320,90",
 name:"fld_filter_search",

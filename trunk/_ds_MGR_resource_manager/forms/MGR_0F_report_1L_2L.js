@@ -169,7 +169,7 @@ else {
 formNames = formNames.sort()
 
 //set valuelist
-application.setValueListItems('RPT_form_names', formNames)
+application.setValueListItems('MGR_report_form_names', formNames)
 
 
 }
@@ -205,13 +205,13 @@ databaseManager.saveData()
 if (utils.hasRecords(foundset) && report_form && forms[report_form]) {
 	var allMethods = forms[report_form].allmethods
 	if (allMethods && allMethods.length) {
-		application.setValueListItems('RPT_method_names',allMethods)
+		application.setValueListItems('MGR_report_method_names',allMethods)
 	}
 	else {
-		application.setValueListItems('RPT_method_names',new Array())
+		application.setValueListItems('MGR_report_method_names',new Array())
 	}
 }
 else {
-	application.setValueListItems('RPT_method_names',new Array())
+	application.setValueListItems('MGR_report_method_names',new Array())
 }
 }

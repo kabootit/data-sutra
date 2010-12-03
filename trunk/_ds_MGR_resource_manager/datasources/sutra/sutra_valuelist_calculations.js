@@ -12,7 +12,7 @@ function display_valuelist()
 		html += '.rowSelected  { color: white; text-decoration: none; font-weight: bold; background-image: url("media:///row_selected.png"); }'
 		html += 'td.rowSelected a { color: white; text-decoration: none; }'
 		html += '--></style></head>'
-		if (globals.VL_valuelist_selected == id_valuelist) {
+		if (globals.MGR_valuelist_valuelist_selected == id_valuelist) {
 			html += '<table><tr>'
 			html += '<td class = "rowSelected">' + itemName + '</td>'
 			html += '</tr></table></html>'

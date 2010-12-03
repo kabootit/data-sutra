@@ -24,7 +24,7 @@ function FLD_data_change()
  *			  	
  */
 
-globals.AC_set_password()
+globals.AC_password_set()
 plugins.dialogs.showWarningDialog('Password rule','This new rule will only take effect for new or changed passwords')
 }
 

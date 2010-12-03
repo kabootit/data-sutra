@@ -163,8 +163,8 @@ if (input && input.id_documentation) {
 	var treePath = new Array()
 	treePath.unshift(thisPage.id_documentation)
 	
-	while (utils.hasRecords(thisPage.help_documentation_to_documentation__parent)) {
-		thisPage = thisPage.help_documentation_to_documentation__parent.getRecord(1)
+	while (utils.hasRecords(thisPage.mgr_documentation_to_documentation__parent)) {
+		thisPage = thisPage.mgr_documentation_to_documentation__parent.getRecord(1)
 		treePath.unshift(thisPage.id_documentation)
 	}
 	
@@ -191,10 +191,10 @@ var beanTree = elements.bean_tree.createBinding(controller.getServerName(),contr
 beanTree.setTextDataprovider('title') 
 
 //relation to build tree on
-beanTree.setNRelationName('help_documentation_to_documentation__child') 
+beanTree.setNRelationName('mgr_documentation_to_documentation__child') 
 
 //sorting of children
-beanTree.childSortDataprovider = 'globals.HELP_documentation_sort'
+beanTree.childSortDataprovider = 'globals.MGR_help_documentation_sort'
 
 // Method to trigger when node is selected 
 beanTree.setMethodToCallOnClick(REC_on_select,'id_documentation') 
@@ -411,7 +411,7 @@ switch (input) {
 		//only move out if node level not 0
 		if (recMove.parent_id_documentation != 0) {
 			//find new parent
-			var idParent = recMove['help_documentation_to_documentation__parent'].parent_id_documentation
+			var idParent = recMove['mgr_documentation_to_documentation__parent'].parent_id_documentation
 			
 			//flag to redraw tree
 			if (idParent == 0) {
@@ -439,14 +439,14 @@ switch (input) {
 			}
 			
 			//re-order everybody below current record in new foundset
-			for (var i = recMove['help_documentation_to_documentation__parent'].order_by + 1; i <= fsPeersNew.getSize(); i++) {
+			for (var i = recMove['mgr_documentation_to_documentation__parent'].order_by + 1; i <= fsPeersNew.getSize(); i++) {
 				var recReorder = fsPeersNew.getRecord(i)
 				
 				recReorder.order_by ++
 			}
 			
 			//insert recMove directly below former parent in new foundset
-			recMove.order_by = recMove['help_documentation_to_documentation__parent'].order_by + 1
+			recMove.order_by = recMove['mgr_documentation_to_documentation__parent'].order_by + 1
 			recMove.parent_id_documentation = idParent
 			
 		}

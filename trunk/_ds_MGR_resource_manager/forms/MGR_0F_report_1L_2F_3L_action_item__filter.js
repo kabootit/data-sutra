@@ -25,15 +25,15 @@ function ACTION_filter()
  */
 
 var formName = 'MGR_0F_report_1L_2L'
-var relnName1 = 'rpt_report_to_action_item'
-var relnName2 = 'rpt_action_item_to_navigation_item'
+var relnName1 = 'mgr_report_to_action_item'
+var relnName2 = 'mgr_action_item_to_navigation_item'
 
 //find on filtered values
 forms[formName].controller.find()
 
-	if (globals.RPT_filter_navitem) {forms[formName][relnName1][relnName2].item_name = '%' + globals.RPT_filter_navitem + '%'}
-	if (globals.RPT_filter_navid) {forms[formName][relnName1][relnName2].item_id = globals.RPT_filter_navid}
-	if (globals.RPT_filter_menu) {forms[formName][relnName1].menu_name = '%' + globals.RPT_filter_menu + '%'}
+	if (globals.MGR_report_filter_navitem) {forms[formName][relnName1][relnName2].item_name = '%' + globals.MGR_report_filter_navitem + '%'}
+	if (globals.MGR_report_filter_navid) {forms[formName][relnName1][relnName2].item_id = globals.MGR_report_filter_navid}
+	if (globals.MGR_report_filter_menu) {forms[formName][relnName1].menu_name = '%' + globals.MGR_report_filter_menu + '%'}
 
 var results = forms[formName].controller.search()
 
@@ -44,10 +44,10 @@ if (results) {
 
 
 // clear filters
-globals.RPT_filter_description = null
-globals.RPT_filter_form = null
-globals.RPT_filter_method = null
-globals.RPT_filter_module = null
+globals.MGR_report_filter_description = null
+globals.MGR_report_filter_form = null
+globals.MGR_report_filter_method = null
+globals.MGR_report_filter_module = null
 }
 
 /**
@@ -78,14 +78,14 @@ function FILTER_clear()
 
 // clear filters
 
-globals.RPT_filter_description = null
-globals.RPT_filter_form = null
-globals.RPT_filter_method = null
-globals.RPT_filter_module = null
+globals.MGR_report_filter_description = null
+globals.MGR_report_filter_form = null
+globals.MGR_report_filter_method = null
+globals.MGR_report_filter_module = null
 
-globals.RPT_filter_navitem = null
-globals.RPT_filter_navid = null
-globals.RPT_filter_menu = null
+globals.MGR_report_filter_navitem = null
+globals.MGR_report_filter_navid = null
+globals.MGR_report_filter_menu = null
 
 forms.MGR_0F_report_1L_2L.controller.loadAllRecords()
 

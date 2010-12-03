@@ -31,7 +31,7 @@ var baseForm = solutionPrefs.config.formNameBase
 var formName = forms[baseForm].elements.tab_content_C.getTabFormNameAt(1)
 
 if (formName != form_to_load) {
-	globals.FX_load_forms(id_navigation_item,null)
+	globals.NAV_workflow_load(id_navigation_item,null)
 }
 
 

@@ -1,4 +1,3 @@
-dataSource:"db:/sutra/sutra_solution",
 items:[
 {
 height:20,

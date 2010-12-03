@@ -7,7 +7,7 @@ items:[
 {
 containsFormID:"59D3D6A0-C6B7-465C-96CB-3D555B29C70E",
 location:"20,31",
-relationName:"help_documentation_to_documentation",
+relationName:"mgr_documentation_to_documentation",
 text:"MGR_0F_documentation_1F__edit_2F",
 typeid:15,
 uuid:"8003480C-C853-4EFA-B06A-185098AB5240"

@@ -38,7 +38,7 @@ function NORMAL_start()
 //more advanced
 globals.CALLBACK_progressbar_start(10,'This is 10 percent',"No I'm not, I'm a tooltip")
 
-globals.TMPLT_progressbar = 10
+globals.TMPL_progressbar = 10
 }
 
 /**
@@ -62,5 +62,5 @@ function NORMAL_update()
 
 
 //text
-globals.CALLBACK_progressbar_set(globals.TMPLT_progressbar += 10,'Check out my new value!!!  '+ globals.TMPLT_progressbar)
+globals.CALLBACK_progressbar_set(globals.TMPL_progressbar += 10,'Check out my new value!!!  '+ globals.TMPL_progressbar)
 }

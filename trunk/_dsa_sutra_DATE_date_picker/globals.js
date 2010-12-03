@@ -65,9 +65,9 @@ globals.DATE_date_range_search_form = application.getMethodTriggerFormName()
 globals.DATE_date_range_field_name = application.getMethodTriggerElementName().substr(4)
 
 //make sure the frameworks flag is false
-forms.DATE_P_solution.FrameworksFastFind = false
+forms.DATE_P__search.FrameworksFastFind = false
 
 //show form in dialog
-application.showFormInDialog(forms.DATE_P_solution,-1,-1,-1,-1,"Search",false,false,"datePicker")
+application.showFormInDialog(forms.DATE_P__search,-1,-1,-1,-1,"Search",false,false,"datePicker")
 
 }

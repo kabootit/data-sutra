@@ -52,11 +52,11 @@ var formName = forms[baseForm].elements.tab_content_C.getTabFormNameAt(1)
 if (formName != help_form_to_load) {
 	//in preview
 	if (solutionPrefs.config.helpMode) {
-		globals.HELP()
+		globals.DS_help()
 	}
 	//in edit mode
 	else if (solutionPrefs.design.modes.help) {
-		globals.FX_load_forms(id_navigation_item)
+		globals.NAV_workflow_load(id_navigation_item)
 	}
 }
 
@@ -93,14 +93,14 @@ if (utils.hasRecords(foundset)) {
 		navigationPrefs.byNavSetName[displayNavSet].itemsByName[record.item_name] = 
 		navigationPrefs.byNavSetName[displayNavSet].itemsByOrder[itemPosn] = 
 		navigationPrefs.byNavItemID[idNavItem] = 
-			globals.FX_load_navset_item(record,true)
+			globals.NAV_navigation_item_load(record,true)
 	}
 }
 */
 
 //if in help preview mode, refire it
 if (solutionPrefs.config.helpMode) {
-	globals.HELP(true)
+	globals.DS_help(true)
 }
 
 

@@ -182,14 +182,14 @@ if (!clearHistory) {
 	//choose correct navigation set if different than current one
 	if (globals.DATASUTRA_navigation_set != navigationID) {
 		globals.DATASUTRA_navigation_set = navigationID
-		globals.NAV_loadset(true)
+		globals.NAV_navigation_set_load(true)
 	}
 	
 	//regenerate navigation list
 	forms.NAV_0L_solution.LIST_redraw(navigationItemID,true,true)
 
 	//select correct navigation item
-	globals.FX_load_forms(navigationItemID,historyPosn)
+	globals.NAV_workflow_load(navigationItemID,historyPosn)
 	
 }
 //clear form history

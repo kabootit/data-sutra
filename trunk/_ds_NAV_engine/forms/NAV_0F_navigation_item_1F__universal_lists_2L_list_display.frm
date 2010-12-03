@@ -16,7 +16,7 @@ toolTipText:"Default display",
 transparent:true,
 typeid:4,
 uuid:"0803b3fc-8a1a-4658-93d7-3b7c9341de7f",
-valuelistID:"4f6370be-de55-4992-a24f-57a43c0b25c3"
+valuelistID:"0F6F4FC1-63FC-48E0-9795-3B0F131D7BC1"
 },
 {
 height:42,

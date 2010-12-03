@@ -8,7 +8,7 @@ function REC_delete()
 /*
  *	TITLE    :	REC_delete
  *			  	
- *	MODULE   :	rsrc_VL_valuelist
+ *	MODULE   :	rsrc_MGR_valuelist_valuelist
  *			  	
  *	ABOUT    :	delete a record
  *			  	
@@ -88,7 +88,7 @@ function REC_duplicate()
 /*
  *	TITLE    :	REC_duplicate
  *			  	
- *	MODULE   :	rsrc_VL_valuelist
+ *	MODULE   :	rsrc_MGR_valuelist_valuelist
  *			  	
  *	ABOUT    :	delete a record
  *			  	

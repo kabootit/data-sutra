@@ -30,11 +30,11 @@ var displayNavSet = application.getValueListDisplayValue('NAV_navigation_set',id
 
 //recreate current nav set
 //TODO: rework to be able to rebuild only one navigation item
-globals.FX_load_navset(false,solutionPrefs.access.groupID,false,idNavSet)
+globals.NAV_navigation_load(false,solutionPrefs.access.groupID,false,idNavSet)
 
 //redraw list, selecting new record
 navigationPrefs.byNavSetID[idNavSet].lastNavItem = idNavItem
-globals.NAV_loadset()
+globals.NAV_navigation_set_load()
 
 
 }

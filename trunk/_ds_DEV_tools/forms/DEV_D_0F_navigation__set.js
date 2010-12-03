@@ -75,7 +75,7 @@ else if (this.flagNew) {
 	}
 	
 	//recreate navPrefs
-	globals.FX_load_navset(false,solutionPrefs.access.groupID,false,idNavSet)
+	globals.NAV_navigation_load(false,solutionPrefs.access.groupID,false,idNavSet)
 	
 	//refind sets in frameworks engine, proper
 	forms.NAV_0L_navigation.TOGGLE_config_set(false)
@@ -84,7 +84,7 @@ else if (this.flagNew) {
 	globals.DATASUTRA_navigation_set = idNavSet
 	
 	//redraw list, bring in forms
-	globals.NAV_loadset()
+	globals.NAV_navigation_set_load()
 }
 
 /*
@@ -123,7 +123,7 @@ if (results) {
 		navigationPrefs.byNavSetName[displayNavSet].itemsByName[record.item_name] = 
 		navigationPrefs.byNavSetName[displayNavSet].itemsByOrder[itemPosn] = 
 		navigationPrefs.byNavItemID[idNavItem] = 
-			globals.FX_load_navset_item(record,true)
+			globals.NAV_navigation_item_load(record,true)
 	}
 }
 

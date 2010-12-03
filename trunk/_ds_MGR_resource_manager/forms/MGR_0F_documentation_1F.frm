@@ -7,7 +7,7 @@ items:[
 {
 containsFormID:"E1D844C9-1F73-4E27-9A06-917E2972C7EC",
 location:"80,60",
-relationName:"help_documentation_to_documentation",
+relationName:"mgr_documentation_to_documentation",
 text:"MGR_0F_documentation_1F__edit",
 typeid:15,
 uuid:"6C3DD336-3A8E-46F7-ADE1-30AF9A3E40E1"
@@ -99,7 +99,7 @@ items:[
 {
 containsFormID:"B1FD5C11-8BCF-4776-9F67-0CBCF2B30AE2",
 location:"301,65",
-relationName:"help_documentation_to_documentation",
+relationName:"mgr_documentation_to_documentation",
 text:"MGR_0F_documentation_1F__preview",
 typeid:15,
 uuid:"D6484A16-131B-4618-B9FE-750582CD9DCB"
