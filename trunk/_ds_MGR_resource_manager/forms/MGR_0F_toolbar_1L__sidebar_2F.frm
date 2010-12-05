@@ -61,7 +61,7 @@ tabSeq:7,
 transparent:true,
 typeid:4,
 uuid:"147F324E-14FC-4CC4-81FB-256C4642562B",
-valuelistID:"bf1ae728-7474-4439-a772-474c90e06c6b"
+valuelistID:"FC122FED-3FD2-4630-B2AD-F4ED33B918E5"
 },
 {
 formIndex:12400,
@@ -574,7 +574,7 @@ tabSeq:5,
 transparent:true,
 typeid:4,
 uuid:"F1051B6B-FE9A-4328-BBDD-CDBBE5DECE55",
-valuelistID:"42f1c816-d7ec-41e6-8d07-96d37b34217b"
+valuelistID:"2E970FF4-BDCB-4501-ADAE-60C4CC24B321"
 },
 {
 formIndex:12800,
