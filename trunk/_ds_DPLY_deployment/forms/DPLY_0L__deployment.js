@@ -63,7 +63,7 @@ function GO_four()
  */
 
 //move highlighter
-elements.highlighter.setLocation(0,114)
+elements.highlighter.setLocation(0,89)
 
 //get font string (font,normal/bold/italic/bolditalic,size)
 if (application.__parent__.solutionPrefs && solutionPrefs.clientInfo) {
@@ -88,15 +88,15 @@ else {
 elements.btn_one.setFont(fontUnselect)
 elements.btn_two.setFont(fontUnselect)
 elements.btn_three.setFont(fontUnselect)
-elements.btn_four.setFont(fontUnselect)
-elements.btn_five.setFont(fontSelect)
+elements.btn_four.setFont(fontSelect)
+elements.btn_five.setFont(fontUnselect)
 
 //set color
 elements.btn_one.fgcolor = '#000000'
 elements.btn_two.fgcolor = '#000000'
 elements.btn_three.fgcolor = '#000000'
-elements.btn_four.fgcolor = '#000000'
-elements.btn_five.fgcolor = '#FFFFFF'
+elements.btn_four.fgcolor = '#FFFFFF'
+elements.btn_five.fgcolor = '#000000'
 
 //add/remove tabs in frameworks layout
 if (application.__parent__.solutionPrefs && solutionPrefs.config && solutionPrefs.config.formNameBase) {
@@ -145,7 +145,7 @@ function GO_five()
  */
 
 //move highlighter
-elements.highlighter.setLocation(0,89)
+elements.highlighter.setLocation(0,114)
 
 //get font string (font,normal/bold/italic/bolditalic,size)
 if (application.__parent__.solutionPrefs && solutionPrefs.clientInfo) {
@@ -170,15 +170,15 @@ else {
 elements.btn_one.setFont(fontUnselect)
 elements.btn_two.setFont(fontUnselect)
 elements.btn_three.setFont(fontUnselect)
-elements.btn_four.setFont(fontSelect)
-elements.btn_five.setFont(fontUnselect)
+elements.btn_four.setFont(fontUnselect)
+elements.btn_five.setFont(fontSelect)
 
 //set color
 elements.btn_one.fgcolor = '#000000'
 elements.btn_two.fgcolor = '#000000'
 elements.btn_three.fgcolor = '#000000'
-elements.btn_four.fgcolor = '#FFFFFF'
-elements.btn_five.fgcolor = '#000000'
+elements.btn_four.fgcolor = '#000000'
+elements.btn_five.fgcolor = '#FFFFFF'
 
 //add/remove tabs in frameworks layout
 if (application.__parent__.solutionPrefs && solutionPrefs.config && solutionPrefs.config.formNameBase) {
