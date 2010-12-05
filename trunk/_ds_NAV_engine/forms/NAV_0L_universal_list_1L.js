@@ -122,7 +122,7 @@ if (application.__parent__.solutionPrefs && this.configured) {
 	
 	//timed out, throw up error
 	if (solutionPrefs.config.prefs.thatsAllFolks) {
-		forms.PREF_0F_solution__license.ACTION_status()
+		forms.DPLY_0F_solution__license.ACTION_status()
 		
 		plugins.dialogs.showErrorDialog(
 							'Demo expired',

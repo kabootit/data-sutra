@@ -110,7 +110,7 @@ if (this.reSize) {
 	//turn flag off
 	this.reSize = undefined
 	
-	solutionPrefs.screenAttrib = globals.PREF_screen_set()
+	solutionPrefs.screenAttrib = globals.DS_screen_load()
 	
 	//set window size/location
 	application.setWindowSize(solutionPrefs.screenAttrib.initialScreenWidth,solutionPrefs.screenAttrib.initialScreenHeight)

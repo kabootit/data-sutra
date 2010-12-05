@@ -1,14 +1,4 @@
 /**
- * @properties={typeid:35,uuid:"EF11D57D-7B66-46CE-BCC5-CD22B69F892D",variableType:4}
- */
-var AC_organization_selected = null;
-
-/**
- * @properties={typeid:35,uuid:"60B5CD9C-B8DD-4A39-ACF0-5CB8FC3363CB",variableType:4}
- */
-var AC_staff_selected = null;
-
-/**
  * @properties={typeid:35,uuid:"716299f9-521c-4a7f-b7b3-4e4b40e54f10",variableType:4}
  */
 var AC_configuration = 12;
@@ -99,6 +89,11 @@ var AC_login_user = null;
 var AC_login_uuid = null;
 
 /**
+ * @properties={typeid:35,uuid:"EF11D57D-7B66-46CE-BCC5-CD22B69F892D",variableType:4}
+ */
+var AC_organization_selected = null;
+
+/**
  * @properties={typeid:35,uuid:"f8104528-20b5-4ba0-aadd-dcb2d81c4371",variableType:4}
  */
 var AC_P_flag = 0;
@@ -117,6 +112,11 @@ var AC_password_edit_1 = '';
  * @properties={typeid:35,uuid:"b5f44e2e-b717-4948-a77c-d6000ad67c91"}
  */
 var AC_password_edit_2 = '';
+
+/**
+ * @properties={typeid:35,uuid:"60B5CD9C-B8DD-4A39-ACF0-5CB8FC3363CB",variableType:4}
+ */
+var AC_staff_selected = null;
 
 /**
  * @properties={typeid:35,uuid:"9ee4fdf2-12bc-4f30-ba2b-cbd3b5347df8",variableType:4}

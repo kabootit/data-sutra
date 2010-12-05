@@ -626,7 +626,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 				replaceStored[replaceStored.length] = i
 			}
 		}
-		application.setValueListItems('RPLC_columns',replaceDisplay,replaceStored)
+		application.setValueListItems('NAV_replace_columns',replaceDisplay,replaceStored)
 
 		//set columns available on this form to be used in a replace
 		replaceDisplay = new Array()
@@ -637,7 +637,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 				replaceStored[replaceStored.length] = i
 			}
 		}
-		application.setValueListItems('RPLC_fields',replaceDisplay,replaceStored)
+		application.setValueListItems('NAV_replace_fields',replaceDisplay,replaceStored)
 
 		//set types of replacement
 		var typeDisplay = new Array('Serial number','Column values','Date','Value')
@@ -645,11 +645,11 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		if (!replaceDisplay.length) {
 			typeDisplay.splice(1,1)
 		}
-		application.setValueListItems('RPLC_type',typeDisplay)
+		application.setValueListItems('NAV_replace_type',typeDisplay)
 
 		//show popup dialog
 		application.showFormInDialog(
-					forms.RPLC_P__replace,
+					forms.NAV_P__replace,
 					-1,-1,-1,-1,
 					'Power Replace',
 					false,
@@ -3619,10 +3619,10 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		navTab = 'AC_0L_options'
 	}
 	else if (navSpecs.itemName == 'Solution configuration') {
-		navTab = 'PREF_0L__solution_config'
+		navTab = 'MGR_0L__solution_config'
 	}
 	else if (navSpecs.itemName == 'Deployment') {
-		navTab = 'PREF_0L__deployment'
+		navTab = 'DPLY_0L__deployment'
 	}
 	else if (navSpecs.itemName == 'Developer tools') {
 		navTab = 'DEV_0L_options'
@@ -3868,7 +3868,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	}
 	
 	//normal workflow load
-	if (navTab != 'AC_0L_options' && navTab != 'PREF_0L__solution_config' && navTab != 'PREF_0L__deployment' && navTab != 'DEV_0L_options') {
+	if (navTab != 'AC_0L_options' && navTab != 'MGR_0L__solution_config' && navTab != 'DPLY_0L__deployment' && navTab != 'DEV_0L_options') {
 		//remove main window if new one different than currently displayed one
 		if (forms[baseForm].elements.tab_content_C.tabIndex > 0  && (forms[baseForm].elements.tab_content_C.getTabFormNameAt(1) != mainTab)) {
 			forms[baseForm].elements.tab_content_C.removeTabAt(1)
@@ -4491,7 +4491,7 @@ function NAV_universal_list_select()
 	
 	//timed out, throw up error
 	if (solutionPrefs.config.prefs.thatsAllFolks) {
-		forms.PREF_0F_solution__license.ACTION_status()
+		forms.DPLY_0F_solution__license.ACTION_status()
 		
 		plugins.dialogs.showErrorDialog(
 							'Demo expired',
@@ -5862,3 +5862,38 @@ function NAV_row_background(index, selected, fieldType, fieldName, formName, fie
 		return '#D1D7E2'
 	}
 }
+
+/**
+ * @properties={typeid:35,uuid:"46324019-4a22-4ca6-84dc-9473456360a9"}
+ */
+var RPLC_field_value = '';
+
+/**
+ * @properties={typeid:35,uuid:"7955df03-d512-4ebd-8863-e143cfa3dfba",variableType:93}
+ */
+var RPLC_field_value_date = new Date();
+
+/**
+ * @properties={typeid:35,uuid:"568532a3-3de2-4ea8-8367-043bf1591a3a",variableType:4}
+ */
+var RPLC_field_value_options;
+
+/**
+ * @properties={typeid:35,uuid:"37ec3567-11fd-40eb-b1d3-55f8ff8eac58",variableType:4}
+ */
+var RPLC_replace_field;
+
+/**
+ * @properties={typeid:35,uuid:"c34dbe04-0eb0-4ed8-8a03-9d629a3f7145"}
+ */
+var RPLC_replace_method = '';
+
+/**
+ * @properties={typeid:35,uuid:"bbe906b7-408f-4fcd-9ed8-5c74c480d9a6",variableType:4}
+ */
+var RPLC_step_increment = 1;
+
+/**
+ * @properties={typeid:35,uuid:"d2946431-465e-4771-8e68-046c1ee4e080",variableType:4}
+ */
+var RPLC_step_start = 1;

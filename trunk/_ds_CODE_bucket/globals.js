@@ -19,6 +19,16 @@ var CODE_hide_form = 0;
 var CODE_text = null;
 
 /**
+ * @properties={typeid:35,uuid:"9d94760c-98ad-4b2d-bd75-021a7a87c5d0"}
+ */
+var consoleInput = '';
+
+/**
+ * @properties={typeid:35,uuid:"22fe62e8-0e3c-4d34-84d2-96f15d50543b"}
+ */
+var consoleOutput = '';
+
+/**
  *
  * @properties={typeid:24,uuid:"f329a2ea-8dbe-40fa-a8dd-75a01b623979"}
  */
@@ -2811,7 +2821,7 @@ var origObj = arguments[0]
 
 //if passed an array, create an array
 if (origObj instanceof Array) {
-	var deepCopyObj = new Array()
+	var deepCopyObj = new Array(origObj.length)
 }
 //if passed an object, create an object
 else {
@@ -5482,16 +5492,6 @@ if (application.__parent__.solutionPrefs && !solutionPrefs.config.lockStatus) {
 }
 
 }
-
-/**
- * @properties={typeid:35,uuid:"9d94760c-98ad-4b2d-bd75-021a7a87c5d0"}
- */
-var consoleInput = '';
-
-/**
- * @properties={typeid:35,uuid:"22fe62e8-0e3c-4d34-84d2-96f15d50543b"}
- */
-var consoleOutput = '';
 
 /**
  *
