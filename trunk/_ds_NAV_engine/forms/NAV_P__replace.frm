@@ -48,7 +48,7 @@ uuid:"269448A4-A97B-45A1-9DDC-911DBBC840EB"
 },
 {
 anchors:3,
-dataProviderID:"globals.RPLC_field_value",
+dataProviderID:"globals.NAV_replace_field_value",
 displayType:2,
 editable:false,
 formIndex:12000,
@@ -63,7 +63,7 @@ valuelistID:"4D80F086-29ED-4BA0-9B71-2BFA8F600E40"
 },
 {
 anchors:3,
-dataProviderID:"globals.RPLC_field_value_options",
+dataProviderID:"globals.NAV_replace_field_value_options",
 displayType:2,
 editable:false,
 formIndex:11700,
@@ -79,7 +79,7 @@ valuelistID:"77615F0C-BEA7-47D9-A2AD-81F089C37812"
 },
 {
 anchors:3,
-dataProviderID:"globals.RPLC_step_start",
+dataProviderID:"globals.NAV_replace_step_start",
 formIndex:11100,
 location:"205,104",
 name:"fld_step_start",
@@ -89,7 +89,7 @@ uuid:"37617A53-F99C-46EB-91AF-39A4270ACE14"
 },
 {
 anchors:3,
-dataProviderID:"globals.RPLC_replace_field",
+dataProviderID:"globals.NAV_replace_field",
 displayType:2,
 editable:false,
 formIndex:10900,
@@ -117,7 +117,7 @@ uuid:"51D01EF6-A9CA-4821-81D8-DB565755A404"
 },
 {
 anchors:3,
-dataProviderID:"globals.RPLC_step_increment",
+dataProviderID:"globals.NAV_replace_step_increment",
 formIndex:11300,
 location:"205,129",
 name:"fld_step_increment",
@@ -161,7 +161,7 @@ uuid:"873F06C3-F84B-48E8-9ADF-B9DB4AC2B5C9"
 },
 {
 anchors:3,
-dataProviderID:"globals.RPLC_field_value",
+dataProviderID:"globals.NAV_replace_field_value",
 formIndex:11900,
 location:"205,104",
 name:"fld_field_value__text",
@@ -186,7 +186,7 @@ uuid:"95824E26-26E2-47AF-BBE4-095422935AD0"
 },
 {
 anchors:3,
-dataProviderID:"globals.RPLC_field_value",
+dataProviderID:"globals.NAV_replace_field_value",
 displayType:1,
 formIndex:11500,
 location:"205,131",
@@ -199,7 +199,7 @@ uuid:"9B435498-0067-4831-846D-1BC68B1861FA"
 },
 {
 anchors:3,
-dataProviderID:"globals.RPLC_field_value_date",
+dataProviderID:"globals.NAV_replace_field_value_date",
 displayType:5,
 formIndex:11800,
 format:"MM-dd-yyyy",
@@ -212,7 +212,7 @@ uuid:"B9BBB373-C1CB-4B03-80EA-1BC6BEDEDC40"
 },
 {
 anchors:3,
-dataProviderID:"globals.RPLC_replace_method",
+dataProviderID:"globals.NAV_replace_method",
 displayType:2,
 editable:false,
 formIndex:10500,

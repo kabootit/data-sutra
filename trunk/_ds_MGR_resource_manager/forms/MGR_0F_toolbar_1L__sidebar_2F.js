@@ -54,7 +54,7 @@ else {
 
 formNames = formNames.sort()
 
-application.setValueListItems('TOOL_current_module_forms', formNames)
+application.setValueListItems('MGR_toolbar_current_module_forms_a', formNames)
 
 }
 
@@ -114,7 +114,7 @@ else {
 
 formNames = formNames.sort()
 
-application.setValueListItems('TOOL_current_module_forms_2', formNames)
+application.setValueListItems('MGR_toolbar_current_module_forms_b', formNames)
 
 
 }
@@ -180,7 +180,7 @@ for (var i = 0; i < shownMethods.length; i++) {
 	shownMethodsSaved.push(shownMethods[i] + '()')
 }
 
-application.setValueListItems('TOOL_method_list', shownMethods, shownMethodsSaved)
+application.setValueListItems('MGR_toolbar_method_list', shownMethods, shownMethodsSaved)
 
 
 }
@@ -245,7 +245,7 @@ for (var i = 0; i < shownMethods.length; i++) {
 	shownMethodsSaved.push(shownMethods[i] + '()')
 }
 
-application.setValueListItems('TOOL_method_list', shownMethods, shownMethodsSaved)
+application.setValueListItems('MGR_toolbar_method_list', shownMethods, shownMethodsSaved)
 
 
 }

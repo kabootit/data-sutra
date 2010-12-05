@@ -8,7 +8,7 @@ function ACTION_cancel()
 /*
  *	TITLE    :	ACTION_cancel
  *			  	
- *	MODULE   :	ds_RPLC_find_replace
+ *	MODULE   :	ds_NAV_replace_find_replace
  *			  	
  *	ABOUT    :	close form in dialog without doing anything
  *			  	
@@ -42,7 +42,7 @@ function ACTION_replace()
 /*
  *	TITLE    :	ACTION_replace
  *			  	
- *	MODULE   :	ds_RPLC_find_replace
+ *	MODULE   :	ds_NAV_replace_find_replace
  *			  	
  *	ABOUT    :	performs date search or return to fast find
  *			  	
@@ -65,17 +65,17 @@ if (application.__parent__.solutionPrefs && application.__parent__.navigationPre
 	var thisFoundset = forms[currentNavForm].foundset
 	
 	//get field
-	var aboutField = navigationPrefs.byNavItemID[currentNavItem].powerReplace[globals.RPLC_replace_field]
+	var aboutField = navigationPrefs.byNavItemID[currentNavItem].powerReplace[globals.NAV_replace_field]
 	
 	//do the replacement
-	switch (globals.RPLC_replace_method) {
+	switch (globals.NAV_replace_method) {
 		case 'Serial number':
 			thisFoundset.setSelectedIndex(1)
-			var value = globals.RPLC_step_start
+			var value = globals.NAV_replace_step_start
 			var fsUpdater = databaseManager.getFoundSetUpdater(thisFoundset)
 			while (fsUpdater.next()) {
 				fsUpdater.setColumn(aboutField.columnName,value)
-				value += globals.RPLC_step_increment
+				value += globals.NAV_replace_step_increment
 			}
 			fsUpdater.performUpdate()
 			break
@@ -84,7 +84,7 @@ if (application.__parent__.solutionPrefs && application.__parent__.navigationPre
 			var origIndex = thisFoundset.getSelectedIndex()
 			
 			//what is the template for this replace operation
-			var replaceTemplate = globals.NAV_display_row_set_item({display:globals.RPLC_field_value})
+			var replaceTemplate = globals.NAV_display_row_set_item({display:globals.NAV_replace_field_value})
 			
 			//loop through foundset and replace with formula from above
 			for (var i = 1; i <= thisFoundset.getSize() && replaceTemplate.length; i++) {
@@ -106,13 +106,13 @@ if (application.__parent__.solutionPrefs && application.__parent__.navigationPre
 			
 		case 'Date':
 			var fsUpdater = databaseManager.getFoundSetUpdater(thisFoundset)
-			fsUpdater.setColumn(aboutField.columnName,globals.RPLC_field_value_date)
+			fsUpdater.setColumn(aboutField.columnName,globals.NAV_replace_field_value_date)
 			fsUpdater.performUpdate()
 			break
 			
 		case 'Value':
 			var fsUpdater = databaseManager.getFoundSetUpdater(thisFoundset)
-			fsUpdater.setColumn(aboutField.columnName,globals.RPLC_field_value)
+			fsUpdater.setColumn(aboutField.columnName,globals.NAV_replace_field_value)
 			fsUpdater.performUpdate()
 			break
 			
@@ -122,7 +122,7 @@ if (application.__parent__.solutionPrefs && application.__parent__.navigationPre
 			var vlDisplay = vlItems.getColumnAsArray(1)
 			var vlReal = vlItems.getColumnAsArray(2)
 			for (var i = 0; i < vlDisplay.length && !value; i++) {
-				if (vlDisplay[i] == globals.RPLC_field_value) {
+				if (vlDisplay[i] == globals.NAV_replace_field_value) {
 					var value = vlReal[i]
 				}
 			}
@@ -158,7 +158,7 @@ function FLD_data_change__replace_field()
 /*
  *	TITLE    :	FLD_data_change__replace_field
  *			  	
- *	MODULE   :	ds_RPLC_find_replace
+ *	MODULE   :	ds_NAV_replace_find_replace
  *			  	
  *	ABOUT    :	if a valuelist, add that type to option list
  *			  	
@@ -179,11 +179,11 @@ if (application.__parent__.solutionPrefs && application.__parent__.navigationPre
 	if (values = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].powerReplace) {
 		var valueList
 		//it is a valuelist
-		if (valueList = values[globals.RPLC_replace_field].valuelist) {
+		if (valueList = values[globals.NAV_replace_field].valuelist) {
 			//make this the only replacement method option
 			var typeDisplay = new Array('Valuelist')
 			application.setValueListItems('NAV_replace_type',typeDisplay)
-			globals.RPLC_replace_method = 'Valuelist'
+			globals.NAV_replace_method = 'Valuelist'
 			
 			//get the valuelist items
 			var dataset = application.getValueListItems(valueList)
@@ -193,10 +193,10 @@ if (application.__parent__.solutionPrefs && application.__parent__.navigationPre
 		//it is not a valuelist
 		else {
 			//date field
-			if (values[globals.RPLC_replace_field].columnType == 'DATETIME') {
+			if (values[globals.NAV_replace_field].columnType == 'DATETIME') {
 				var typeDisplay = new Array('Field merge','Date')
-				if (!(globals.RPLC_replace_method == 'Field merge' || globals.RPLC_replace_method == 'Date')) {
-					globals.RPLC_replace_method = null
+				if (!(globals.NAV_replace_method == 'Field merge' || globals.NAV_replace_method == 'Date')) {
+					globals.NAV_replace_method = null
 				}
 			}
 			//non-date field
@@ -205,14 +205,14 @@ if (application.__parent__.solutionPrefs && application.__parent__.navigationPre
 				var colVals = application.getValueListItems('NAV_replace_type').getColumnAsArray(1)
 				if (colVals.length) {
 					var typeDisplay = new Array('Serial number','Field merge','Date','Value')
-					if (!(globals.RPLC_replace_method == 'Serial number' || globals.RPLC_replace_method == 'Field merge' || globals.RPLC_replace_method == 'Date' || globals.RPLC_replace_method == 'Value')) {
-						globals.RPLC_replace_method = null
+					if (!(globals.NAV_replace_method == 'Serial number' || globals.NAV_replace_method == 'Field merge' || globals.NAV_replace_method == 'Date' || globals.NAV_replace_method == 'Value')) {
+						globals.NAV_replace_method = null
 					}
 				}
 				else {
 					var typeDisplay = new Array('Serial number','Date','Value')
-					if (!(globals.RPLC_replace_method == 'Serial number' || globals.RPLC_replace_method == 'Date' || globals.RPLC_replace_method == 'Value')) {
-						globals.RPLC_replace_method = null
+					if (!(globals.NAV_replace_method == 'Serial number' || globals.NAV_replace_method == 'Date' || globals.NAV_replace_method == 'Value')) {
+						globals.NAV_replace_method = null
 					}
 				}
 			}
@@ -238,7 +238,7 @@ function FLD_data_change__replace_method()
 /*
  *	TITLE    :	FLD_data_change__replace_method
  *			  	
- *	MODULE   :	ds_RPLC_find_replace
+ *	MODULE   :	ds_NAV_replace_find_replace
  *			  	
  *	ABOUT    :	show/hide elements
  *			  	
@@ -253,7 +253,7 @@ function FLD_data_change__replace_method()
  */
 
 //tare the global
-globals.RPLC_field_value = null
+globals.NAV_replace_field_value = null
 
 //turn off everything
 elements.lbl_one.visible = false
@@ -268,7 +268,7 @@ elements.fld_field_value__vl.visible = false
 elements.fld_replace_method.enabled = true
 
 //turn on what is needed
-switch (globals.RPLC_replace_method) {
+switch (globals.NAV_replace_method) {
 	case 'Serial number':
 		elements.lbl_one.text = 'Starting value:'
 		elements.lbl_two.text = 'Increment by:'
@@ -317,7 +317,7 @@ function FLD_data_change__value_options()
 /*
  *	TITLE    :	FLD_data_change__value_options
  *			  	
- *	MODULE   :	ds_RPLC_find_replace
+ *	MODULE   :	ds_NAV_replace_find_replace
  *			  	
  *	ABOUT    :	add to replacement text
  *			  	
@@ -336,14 +336,14 @@ if (application.__parent__.solutionPrefs) {
 	
 	var currentNavItem = solutionPrefs.config.currentFormID
 
-	var aboutField = navigationPrefs.byNavItemID[currentNavItem].powerReplace[globals.RPLC_field_value_options]
+	var aboutField = navigationPrefs.byNavItemID[currentNavItem].powerReplace[globals.NAV_replace_field_value_options]
 	
 	
 	var value = '<<'+ aboutField.columnName +'>>'
 	
 	elements.fld_field_value__field.replaceSelectedText(value)
 	
-	globals.RPLC_field_value_options = null
+	globals.NAV_replace_field_value_options = null
 	elements.fld_field_value__field.requestFocus(false)
 }
 }
@@ -358,7 +358,7 @@ function FORM_on_show()
 /*
  *	TITLE    :	FORM_on_show
  *			  	
- *	MODULE   :	ds_RPLC_find_replace
+ *	MODULE   :	ds_NAV_replace_find_replace
  *			  	
  *	ABOUT    :	instantiates default values for date picker
  *			  	
@@ -376,13 +376,13 @@ function FORM_on_show()
 globals.CODE_hide_form = 0
 
 //null out globals
-globals.RPLC_replace_field = null
-globals.RPLC_replace_method = null
-globals.RPLC_step_start = 1
-globals.RPLC_step_increment = 1
-globals.RPLC_field_value_options = null
-globals.RPLC_field_value = null
-globals.RPLC_field_value_date = null
+globals.NAV_replace_field = null
+globals.NAV_replace_method = null
+globals.NAV_replace_step_start = 1
+globals.NAV_replace_step_increment = 1
+globals.NAV_replace_field_value_options = null
+globals.NAV_replace_field_value = null
+globals.NAV_replace_field_value_date = null
 
 FLD_data_change__replace_method()
 }
