@@ -1,6 +1,7 @@
 allowCreationRelatedRecords:true,
 deleteRelatedRecords:true,
 foreignDataSource:"db:/sutra/sutra_navigation_item",
+initialSort:"node_1 asc, node_2 asc",
 items:[
 {foreignColumnName:"id_navigation",primaryDataProviderID:"id_navigation",typeid:23,uuid:"544283b7-35e7-490d-baea-2858cb479141"}
 ],

@@ -22,23 +22,76 @@ function ACTIONS_list()
  *
  */
 
+var navItemRec = forms.NAV_0L_navigation_item_1L.foundset.getSelectedRecord()
+
+//navigation set list
+var fsNavigation = databaseManager.getFoundSet(controller.getServerName(),'sutra_navigation')
+fsNavigation.loadAllRecords()
+fsNavigation.sort('order_by asc')
+
+//popup menu with navigation sets
+var navSets = new Array()
+for ( var i = 0 ; i < fsNavigation.getSize() ; i++ ) {
+	var navRec = fsNavigation.getRecord(i + 1)
+	
+	//add non-config sets and not this set
+	if (!navRec.flag_config && navItemRec.id_navigation != navRec.id_navigation) {
+		navSets[i] = plugins.popupmenu.createMenuItem(navRec.nav_name + "", ACTIONS_list_control)
+		navSets[i].setMethodArguments(4,navRec.id_navigation)
+	}
+}
+
+//navigation item list
+//popup menu with navigation items
+var navItems = new Array()
+for ( var i = 0 ; i < forms.NAV_0L_navigation_item_1L.nav_navigation_to_navigation_item__set.getSize() ; i++ ) {
+	var itemRec = nav_navigation_to_navigation_item__set.getRecord(i + 1)
+	
+	if (itemRec.node_2 == 0 && itemRec.id_navigation_item != navItemRec.id_navigation_item) {
+		navItems.push(plugins.popupmenu.createMenuItem(itemRec.item_name + "", ACTIONS_list_control))
+		navItems[navItems.length - 1].setMethodArguments(3,itemRec.id_navigation_item)
+	}
+}
 
 //get menu list from a value list
 var valueList = [
 		'New main navigation item',
 		'New sub navigation item',
-		'Convert sub item  --> main item',
 	//	'Duplicate navigation item',
+		'----',
+		'sub main sub',
+		'Move to navigation set',
 		'----',
 		'Refresh columns with backend',
 		'----',
 		'Delete record'
 	]
 
+//insert correct conversion depending on what selected
+//this is a sub item
+if (navItemRec.node_2) {
+	valueList.splice(3,1,'Main item <= sub item')
+}
+//this is a main item
+else {
+	valueList.splice(3,1,'Main item => sub item')
+}
+
 //build menu
 var menu = new Array
 for ( var i = 0 ; i < valueList.length ; i++ ) {
-	menu[i] = plugins.popupmenu.createMenuItem(valueList[i] + "", ACTIONS_list_control)
+	//navigation sub to main
+	if (i == 3 && !navItemRec.node_2) {
+		menu[i] = plugins.popupmenu.createMenuItem(valueList[i] + "", navItems)
+	}
+	//to new navigation set
+	else if (i == 4) {
+		menu[i] = plugins.popupmenu.createMenuItem(valueList[i] + "", navSets)
+	}
+	//standard menu
+	else {
+		menu[i] = plugins.popupmenu.createMenuItem(valueList[i] + "", ACTIONS_list_control)
+	}
 }
 
 //set menu method arguments
@@ -109,10 +162,12 @@ function ACTIONS_list_control()
  *	ABOUT:		Contains actual code for actions popup menu item
  *				0: Create new node_1
  *				1: Create new node_2 on selected node_1
- *				2: Move node_2 to node_1
- *				4: Force column refresh (DEBUGGING)
- *				5: Check 100% widths
- *				7: Delete record
+ *				: duplicate record
+ *				3: Move node_1 to node_2
+ *				4: Move node_2 to node_1
+ *				6: Force column refresh (DEBUGGING)
+ *				: Check 100% widths
+ *				8: Delete record
  *
  *	MODIFIED:	Sept 5, 2007 - Troy Elliott, Data Mosaic
  *
@@ -127,22 +182,26 @@ switch (arguments[0]) {
 		REC_new_sub()
 		break
 		
-	case 2: //convert sub to main or back again
-		CHANGE_main_sub_main()
-		break
-		
-	case 3:	//duplicate navigation item
+	case 2:	//duplicate navigation item
 		REC_duplicate()
 		break
 		
-	case 4: //refresh columns
+	case 3: //convert main to sub
+		CHANGE_main_sub_main(arguments[1])
+		break
+		
+	case 4: //convert main to sub
+		CHANGE_navigation_set(arguments[1])
+		break
+		
+	case 6: //refresh columns
 		var answer = plugins.dialogs.showQuestionDialog('Refresh','<html>Refresh column list with backend?<br>(Currently experimental - may hang system)','Yes','No')
 		if (answer == 'Yes') {
 			UPDATE_table_columns()
 		}
 		break
 	
-	case 6:	//delete record
+	case 8:	//delete record
 		REC_delete()
 		break	
 }
@@ -170,17 +229,48 @@ else {
  *
  * @properties={typeid:24,uuid:"a6b31f38-f1f6-46ad-bd60-8fbde29d3e3d"}
  */
-function CHANGE_main_sub_main()
+function CHANGE_main_sub_main(itemID)
 {
 
-var formName = 'NAV_0L_navigation_item_1L'
-var relationName = 'nav_navigation_to_navigation_item__set'
-var recordCurr = forms[formName][relationName].getRecord(forms[formName][relationName].getSelectedIndex())
-
-//if a main, make it a sub of the thing above/below; else make it the last main
-switch (recordCurr.node_2) {
-		case 0:    //main to sub //TODO: which main does it get attached to?
-			
+	var formName = 'NAV_0L_navigation_item_1L'
+		//hint: this is a global relation!
+	var relationName = 'nav_navigation_to_navigation_item__set'
+	
+	var recordCurr = forms.NAV_0L_navigation_item_1L.foundset.getSelectedRecord()
+	
+	//if a main, make it a sub of the thing above/below; else make it the last main
+	switch (recordCurr.node_2) {
+		case 0:    //main to sub
+			//passed in navID to attach to
+			if (itemID) {
+				var fsNavItem = databaseManager.getFoundSet(controller.getServerName(),controller.getTableName())
+				fsNavItem.loadRecords(itemID)
+				
+				var recNavItem = fsNavItem.getRecord(1)
+				
+				if (recNavItem) {
+					//where is the current bottom of stack?
+					var lastNodeTwo = recNavItem.nav_navigation_item_to_navigation_item__children__all.getSize()
+					
+					//hook up all children (skip first record as it is the parent)
+					for (var i = 2; i <= recordCurr.nav_navigation_item_to_navigation_item__children__all.getSize(); i++) {
+						var childRec = recordCurr.nav_navigation_item_to_navigation_item__children__all.getRecord(i)
+						
+						childRec.node_1 = recNavItem.node_1
+						childRec.node_2 = lastNodeTwo + i - 1
+					}
+					
+					//hook up parent
+					recordCurr.node_1 = recNavItem.node_1
+					recordCurr.node_2 = lastNodeTwo
+				}
+			}
+			else {
+				plugins.dialogs.showErrorDialog(
+							'Error',
+							'No navigation set selected'
+						)
+			}
 			break
 			
 		default:   //sub to last main
@@ -189,14 +279,52 @@ switch (recordCurr.node_2) {
 			recordCurr.node_1 = record.node_1 + 1
 			recordCurr.node_2 = 0
 			break
+	}
+	
+	//sort lists
+	forms[formName][relationName].sort('node_1 asc, node_2 asc')
 }
 
-//sort lists
-forms[formName][relationName].sort('node_1 asc, node_2 asc')
-formName = 'NAV_0LA_navigation'
-relationName = 'nav_navigation_to_navigation_item'
-forms[formName][relationName].sort('node_1 asc, node_2 asc')
+/**
+ * @properties={typeid:24,uuid:"25499B27-BB38-4585-8738-056A30FEA29E"}
+ */
+function CHANGE_navigation_set(navID) {
+	var recordCurr = forms.NAV_0L_navigation_item_1L.foundset.getSelectedRecord()
+	
+	//passed in navID to attach to
+	if (navID) {
+		var fsNavigation = databaseManager.getFoundSet(controller.getServerName(),'sutra_navigation')
+		fsNavigation.loadRecords(navID)
+		
+		recNav = fsNavigation.getRecord(1)
+		
+		if (recNav) {
+			//where is the current bottom of stack?
+			var lastNodeOne = recNav.nav_navigation_to_navigation_item__all.getRecord(recNav.nav_navigation_to_navigation_item__all.getSize()).node_1 + 1
 
+			//hook up all children (skip first record as it is the parent)
+			for (var i = 2; i <= recordCurr.nav_navigation_item_to_navigation_item__children__all.getSize(); i++) {
+				var childRec = recordCurr.nav_navigation_item_to_navigation_item__children__all.getRecord(i)
+				
+				childRec.id_navigation = recNav.id_navigation
+				childRec.node_1 = lastNodeOne
+			}
+			
+			//hook up parent
+			recordCurr.id_navigation = recNav.id_navigation
+			recordCurr.node_1 = lastNodeOne
+			
+			//select the navigation set moved to
+			forms.NAV_0L_navigation_1L.foundset.selectRecord(recNav.id_navigation)
+			forms.NAV_0L_navigation_item_1L.foundset.selectRecord(recordCurr.id_navigation_item)
+		}
+	}
+	else {
+		plugins.dialogs.showErrorDialog(
+					'Error',
+					'No navigation set selected'
+				)
+	}
 }
 
 /**
@@ -499,6 +627,17 @@ if (delRec == 'Yes') {
 		//checking for children
 		if (utils.hasRecords(record[relationName])) {
 			var childCheck = true
+			
+			var confirm = plugins.dialogs.showWarningDialog(
+							'Delete item',
+							'This navigation item has children.  They will all be deleted.  Continue?',
+							'Yes',
+							'No'
+						)
+			
+			if (confirm != 'Yes') {
+				return
+			}
 		}
 		
 		//filter relations valid

@@ -1,5 +1,6 @@
 allowCreationRelatedRecords:true,
 foreignDataSource:"db:/sutra/sutra_navigation_item",
+initialSort:"node_1 asc, node_2 asc",
 items:[
 {foreignColumnName:"id_navigation",primaryDataProviderID:"globals.NAV_navigation_selected",typeid:23,uuid:"876d78d4-8a53-48db-99de-408baed20f34"}
 ],
