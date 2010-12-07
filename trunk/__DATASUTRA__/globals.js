@@ -532,7 +532,9 @@ else {
 						//helpMode status
 						helpMode : false,
 						//record navigator status
-						recordNavigatorStatus : true
+						recordNavigatorStatus : true,
+						//external internet access allowed
+						internetAllowed : (forms[prefForm].internet_allow) ? true : false
 					}
 		
 		//information about client
@@ -4808,18 +4810,43 @@ function DS_client_info_load()
  *			  	
  */
 
-//get uuid of client (comes from clients_stats table in repository)
-var uuidServoy = plugins.sutra.getClientID()
-
-//process os and servoy version
-var nameOS = application.getOSName()
-var servoyType = application.getApplicationType()
-
-//tano and higher has special developer check
-if (utils.stringToNumber(application.getVersion()) >= 5 && application.isInDeveloper()) {
-	if (application.isInDeveloper()) {
+	//get uuid of client (comes from clients_stats table in repository)
+	var uuidServoy = plugins.sutra.getClientID()
+	
+	//process os and servoy version
+	var nameOS = application.getOSName()
+	var servoyType = application.getApplicationType()
+	
+	//tano and higher has special developer check
+	if (utils.stringToNumber(application.getVersion()) >= 5 && application.isInDeveloper()) {
+		if (application.isInDeveloper()) {
+			switch (servoyType) {
+					case 2:
+						servoyType = 'developer'
+						break
+					
+					case 4:
+						servoyType = 'headless client'
+						break
+					
+					case 5:
+						servoyType = 'web client'
+						break
+			}
+		}
+	}
+	//4 and below
+	else {
 		switch (servoyType) {
+				case 1:
+					servoyType = 'server'
+					break
+				
 				case 2:
+					servoyType = 'client'
+					break
+				
+				case 3:
 					servoyType = 'developer'
 					break
 				
@@ -4830,153 +4857,133 @@ if (utils.stringToNumber(application.getVersion()) >= 5 && application.isInDevel
 				case 5:
 					servoyType = 'web client'
 					break
+				
+				case 6:
+					servoyType = 'runtime'
+					break	
 		}
 	}
-}
-//4 and below
-else {
-	switch (servoyType) {
-			case 1:
-				servoyType = 'server'
-				break
-			
-			case 2:
-				servoyType = 'client'
-				break
-			
-			case 3:
-				servoyType = 'developer'
-				break
-			
-			case 4:
-				servoyType = 'headless client'
-				break
-			
-			case 5:
-				servoyType = 'web client'
-				break
-			
-			case 6:
-				servoyType = 'runtime'
-				break	
-	}
-}
-
-//test to see if internet connection — has a maximum delay of ~10 seconds
-	//MEMO: ip address used is D.root-servers.net. (aka terp.umd.edu); housed at my alma mater, the University of Maryland
-//if (utils.stringPatternCount(nameOS,'Windows')) {
-//	var ping = application.executeProgram('ping','-n','4','-w','1000','128.8.10.90')
-//	//check if ping successful
-//	if (ping.length && !utils.stringPatternCount(ping, 'Ping request could not find host')) {
-//		var pingPosn = utils.stringPosition(ping,'Received = ',0,1) + 11
-//		var pingResult = utils.stringToNumber(utils.stringMiddle(ping,pingPosn,1))
-//	}
-//	else {
-//		var pingResult = false
-//	}
-//}
-//else {
-//	var ping = application.executeProgram('ping','-c','4','-o','128.8.10.90')
-//	//check if ping successful
-//	if (ping.length) {
-//		var pingPosn = utils.stringPosition(ping,'packets received',0,1) - 2
-//		var pingResult = utils.stringToNumber(utils.stringMiddle(ping,pingPosn,1))
-//	}
-//	else {
-//		var pingResult = false
-//	}
-//}
-var pingResult = false
-
-//get external ip address if connection available
-if (pingResult) {
-	var ipExternal = plugins.http.getPageData('http://whatismyip.com/automation/n09230945.asp')
-}
-if (!ipExternal || ipExternal.indexOf('Error',0) != -1) {
-	ipExternal = 'UNKNOWN'
-}
-
-//time difference between server and client (- means client ahead) (+ means server ahead)
-var clientTime = application.getTimeStamp()
-var serverTime = application.getServerTimeStamp()
-var timeDiff = (serverTime - clientTime) / 1000 //gives offset in seconds
-
-//hack to pop up the popupmenu (instead of down)
-//move "up" button to correct location based on platform and look and feel
-//if not using kunstoff, windows, metal, or mac, menu will pop down
-//
-//if using xp or vista and the default (luna/glass) scheme is used, but servoy is set to use windows classic laf, popups will be incorrect
-
-var lookNFeel = application.getCurrentLookAndFeelName()
-var lineHeight = 0
-var topShift = 0
-var osVer = (plugins.sutra) ? plugins.sutra.getOSVersion() : ''
-
-if (nameOS == 'Mac OS X' && lookNFeel != 'Metal') {
-	if (utils.stringPatternCount(osVer,'10.5') || utils.stringPatternCount(osVer,'10.6')) {
-		lineHeight = 18
-		topShift = 27
-	}
-	else {
-		lineHeight = 16
-		topShift = 22
-	}
-}
-else if (lookNFeel == 'Kunststoff') {
-	lineHeight = 21
-	topShift = 26
-}
-else if (lookNFeel == 'Windows') {
-	var theme = plugins.sutra.getWindowsTheme()
 	
-	//win2k
-	if (utils.stringPatternCount(osVer,'5.0')) {
-		lineHeight = 19
+	//allow to go out on internet for weather toolbar, etc
+	if (solutionPrefs.config.internetAllowed) {
+		//test to see if internet connection — has a maximum delay of ~10 seconds
+			//MEMO: ip address used is D.root-servers.net. (aka terp.umd.edu); housed at my alma mater, the University of Maryland
+		if (utils.stringPatternCount(nameOS,'Windows')) {
+			var ping = application.executeProgram('ping','-n','4','-w','1000','128.8.10.90')
+			//check if ping successful
+			if (ping.length && !utils.stringPatternCount(ping, 'Ping request could not find host')) {
+				var pingPosn = utils.stringPosition(ping,'Received = ',0,1) + 11
+				var pingResult = utils.stringToNumber(utils.stringMiddle(ping,pingPosn,1))
+			}
+			else {
+				var pingResult = false
+			}
+		}
+		else {
+			var ping = application.executeProgram('ping','-c','4','-o','128.8.10.90')
+			//check if ping successful
+			if (ping.length) {
+				var pingPosn = utils.stringPosition(ping,'packets received',0,1) - 2
+				var pingResult = utils.stringToNumber(utils.stringMiddle(ping,pingPosn,1))
+			}
+			else {
+				var pingResult = false
+			}
+		}
+	}
+	else {
+		var pingResult = false
+	}
+	
+	//get external ip address if connection available
+	if (pingResult) {
+		var ipExternal = plugins.http.getPageData('http://whatismyip.com/automation/n09230945.asp')
+	}
+	if (!ipExternal || ipExternal.indexOf('Error',0) != -1) {
+		ipExternal = 'UNKNOWN'
+	}
+	
+	//time difference between server and client (- means client ahead) (+ means server ahead)
+	var clientTime = application.getTimeStamp()
+	var serverTime = application.getServerTimeStamp()
+	var timeDiff = (serverTime - clientTime) / 1000 //gives offset in seconds
+	
+	//hack to pop up the popupmenu (instead of down)
+	//move "up" button to correct location based on platform and look and feel
+	//if not using kunstoff, windows, metal, or mac, menu will pop down
+	//
+	//if using xp or vista and the default (luna/glass) scheme is used, but servoy is set to use windows classic laf, popups will be incorrect
+	
+	var lookNFeel = application.getCurrentLookAndFeelName()
+	var lineHeight = 0
+	var topShift = 0
+	var osVer = (plugins.sutra) ? plugins.sutra.getOSVersion() : ''
+	
+	if (nameOS == 'Mac OS X' && lookNFeel != 'Metal') {
+		if (utils.stringPatternCount(osVer,'10.5') || utils.stringPatternCount(osVer,'10.6')) {
+			lineHeight = 18
+			topShift = 27
+		}
+		else {
+			lineHeight = 16
+			topShift = 22
+		}
+	}
+	else if (lookNFeel == 'Kunststoff') {
+		lineHeight = 21
 		topShift = 26
 	}
-	//winxp
-	else if (utils.stringPatternCount(osVer,'5.1') && theme == 'Luna') {
-		lineHeight = 19
+	else if (lookNFeel == 'Windows') {
+		var theme = plugins.sutra.getWindowsTheme()
+		
+		//win2k
+		if (utils.stringPatternCount(osVer,'5.0')) {
+			lineHeight = 19
+			topShift = 26
+		}
+		//winxp
+		else if (utils.stringPatternCount(osVer,'5.1') && theme == 'Luna') {
+			lineHeight = 19
+			topShift = 22
+		}
+		//vista (6) and windows 7 (6.1)...anything that can do Aero
+		else if (utils.stringToNumber(osVer) > 6 && theme != 'Classic') {
+			lineHeight = 22
+			topShift = 26
+		}
+		//default
+		else {
+			lineHeight = 19
+			topShift = 26
+		}
+	}
+	else if (lookNFeel == 'CDE/Motif') {
+		lineHeight = 21
 		topShift = 22
 	}
-	//vista (6) and windows 7 (6.1)...anything that can do Aero
-	else if (utils.stringToNumber(osVer) > 6 && theme != 'Classic') {
-		lineHeight = 22
-		topShift = 26
-	}
-	//default
-	else {
+	else if (lookNFeel == 'Metal' || lookNFeel == 'SkinLF') {
 		lineHeight = 19
-		topShift = 26
+		topShift = 25
 	}
-}
-else if (lookNFeel == 'CDE/Motif') {
-	lineHeight = 21
-	topShift = 22
-}
-else if (lookNFeel == 'Metal' || lookNFeel == 'SkinLF') {
-	lineHeight = 19
-	topShift = 25
-}
-
-var clientInfo = {
-	servoyUUID		: uuidServoy,
-	typeOS			: nameOS,
-	verOS			: osVer,
-	verJava			: plugins.sutra.getJavaVersion(),
-	typeServoy		: servoyType,
-	verServoy		: application.getVersion(),
-	typeLAF			: lookNFeel,
-	hostName		: application.getHostName(),
-	internalIP		: application.getIPAddress(),
-	externalIP		: ipExternal,
-	printers		: application.getPrinters(),
-	timeOffset		: timeDiff,
-	popupHack		: {lineHeight: lineHeight, topShift : topShift},
-	startTime		: serverTime
-}
-
-return clientInfo
+	
+	var clientInfo = {
+		servoyUUID		: uuidServoy,
+		typeOS			: nameOS,
+		verOS			: osVer,
+		verJava			: plugins.sutra.getJavaVersion(),
+		typeServoy		: servoyType,
+		verServoy		: application.getVersion(),
+		typeLAF			: lookNFeel,
+		hostName		: application.getHostName(),
+		internalIP		: application.getIPAddress(),
+		externalIP		: ipExternal,
+		printers		: application.getPrinters(),
+		timeOffset		: timeDiff,
+		popupHack		: {lineHeight: lineHeight, topShift : topShift},
+		startTime		: serverTime
+	}
+	
+	return clientInfo
 }
 
 /**

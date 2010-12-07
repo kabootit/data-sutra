@@ -26,7 +26,7 @@ function ACTION_refresh()
 
 //solutionPrefs must be valid
 if (application.__parent__.solutionPrefs) {
-	if (solutionPrefs.clientInfo.externalIP == 'UNKNOWN') {
+	if (!solutionPrefs.config.internetAllowed) {
 		globals.TOOL_weather_temp = 'No internet connection'
 	}
 	else if (globals.TOOL_weather_zip && globals.TOOL_weather_scale) {

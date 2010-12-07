@@ -185,7 +185,7 @@ globals.AC_html_blog = html
 //check for auto-quote and internet
 var autoQuote = (blogRecord && blogRecord.quote_auto != null) ? blogRecord.quote_auto : 1
 
-if (autoQuote && application.__parent__.solutionPrefs && solutionPrefs.clientInfo && solutionPrefs.clientInfo.externalIP != 'UNKNOWN') {
+if (autoQuote && application.__parent__.solutionPrefs && solutionPrefs.config && solutionPrefs.config.internetAllowed) {
 	var pageData = plugins.http.getPageData('http://www.quoteworld.org/quote/quote.php?action=quote_of_the_day');
 	var pageItems = pageData.split("'")
 	var qotd = pageItems[1]

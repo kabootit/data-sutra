@@ -51,7 +51,7 @@ showClick:false,
 showFocus:false,
 size:"90,20",
 tabSeq:-1,
-text:"Enable pop-up",
+text:"Allow Internet",
 transparent:true,
 typeid:7,
 uuid:"029CD5E2-D5D9-4A60-B5B1-BC64DFFEAF2C"
@@ -59,7 +59,7 @@ uuid:"029CD5E2-D5D9-4A60-B5B1-BC64DFFEAF2C"
 {
 formIndex:11500,
 horizontalAlignment:4,
-location:"30,1470",
+location:"30,1530",
 mediaOptions:14,
 showClick:false,
 showFocus:false,
@@ -108,7 +108,7 @@ uuid:"08838C5E-EE47-4A12-A817-C98A5124C8B1"
 {
 anchors:11,
 formIndex:17000,
-location:"16,1006",
+location:"16,1066",
 mediaOptions:14,
 showClick:false,
 showFocus:false,
@@ -137,7 +137,7 @@ anchors:3,
 displaysTags:true,
 formIndex:16000,
 horizontalAlignment:2,
-location:"335,1153",
+location:"335,1213",
 mediaOptions:14,
 showClick:false,
 showFocus:false,
@@ -224,7 +224,7 @@ uuid:"1D29435D-1779-4F95-BA24-352638546BF6"
 {
 anchors:11,
 formIndex:11300,
-location:"16,1431",
+location:"16,1491",
 mediaOptions:14,
 showClick:false,
 showFocus:false,
@@ -235,6 +235,20 @@ text:"Row background color",
 transparent:true,
 typeid:7,
 uuid:"215C5E48-B333-429D-ABDA-026F9F138809"
+},
+{
+formIndex:17300,
+horizontalAlignment:4,
+location:"50,1019",
+mediaOptions:14,
+showClick:false,
+showFocus:false,
+size:"90,20",
+tabSeq:-1,
+text:"Enable pop-up",
+transparent:true,
+typeid:7,
+uuid:"23BA01EF-7309-4ECC-9279-9BBA3E017315"
 },
 {
 anchors:3,
@@ -252,7 +266,7 @@ text:"<html>
     
   <\/head>
   <body>
-    The default background color for lists<br><br>Open the _FRAMEWORKS_ 
+    The default background color for lists<br><br>Open the _DATASUTRA_ 
     stylesheet and<br>change the background-color of the<br>form.list styleclass 
     to match
   <\/body>
@@ -277,7 +291,7 @@ uuid:"27EAEFA8-0933-4E98-99F8-07DCFA900E8F"
 {
 formIndex:15800,
 horizontalAlignment:4,
-location:"10,1175",
+location:"10,1235",
 mediaOptions:14,
 showClick:false,
 showFocus:false,
@@ -321,9 +335,9 @@ anchors:3,
 formIndex:19200,
 horizontalAlignment:0,
 imageMediaID:"7A6B9C87-74DA-4FFA-884E-AA40D7E71A48",
-location:"578,574",
+location:"578,584",
 mediaOptions:1,
-name:"help_error_messages",
+name:"help_internet_access",
 onActionMethodID:"6a193823-8789-4ec3-a7bf-45d1238dc5bd",
 rolloverCursor:12,
 rolloverImageMediaID:"54B2691A-4383-4F72-8EAA-07F5A2BFCF9B",
@@ -455,7 +469,7 @@ anchors:3,
 displaysTags:true,
 formIndex:16700,
 horizontalAlignment:2,
-location:"335,1102",
+location:"335,1162",
 mediaOptions:14,
 showClick:false,
 showFocus:false,
@@ -491,7 +505,7 @@ uuid:"4438A7AB-85BC-4B1B-B79D-A8491A4B42BB"
 {
 dataProviderID:"list_maxrecs",
 formIndex:15900,
-location:"150,1175",
+location:"150,1235",
 onDataChangeMethodID:"71E0F7B8-7872-4171-9010-C6794AF95308",
 scrollbars:36,
 size:"80,22",
@@ -568,7 +582,7 @@ anchors:3,
 displaysTags:true,
 formIndex:17100,
 horizontalAlignment:2,
-location:"335,1007",
+location:"335,1067",
 mediaOptions:14,
 showClick:false,
 showFocus:false,
@@ -609,7 +623,7 @@ uuid:"56EA1CA9-13C5-4AB7-864C-449D5E88A3A6"
 {
 anchors:11,
 formIndex:13400,
-location:"16,1322",
+location:"16,1382",
 mediaOptions:14,
 showClick:false,
 showFocus:false,
@@ -681,7 +695,7 @@ uuid:"6333FB91-07C4-4D61-8369-E9E1EBDCA89A"
 {
 formIndex:11400,
 horizontalAlignment:4,
-location:"30,1450",
+location:"30,1510",
 mediaOptions:14,
 showClick:false,
 showFocus:false,
@@ -826,7 +840,7 @@ uuid:"7DAD1F23-C4C7-4071-A0F3-6CCF5CD6EB18"
 {
 anchors:11,
 formIndex:16600,
-location:"16,1086",
+location:"16,1146",
 mediaOptions:14,
 showClick:false,
 showFocus:false,
@@ -984,7 +998,7 @@ uuid:"8DF70573-6AB9-4580-98D7-20779D5BDB6B"
 {
 dataProviderID:"background_row_odd",
 formIndex:11700,
-location:"150,1450",
+location:"150,1510",
 scrollbars:36,
 selectOnEnter:true,
 size:"80,20",
@@ -1009,7 +1023,7 @@ uuid:"8F648AA9-BE2B-4B4C-BDFB-62A1B979C94D"
 {
 formIndex:12600,
 horizontalAlignment:4,
-location:"240,1550",
+location:"240,1610",
 mediaOptions:14,
 showClick:false,
 showFocus:false,
@@ -1023,7 +1037,7 @@ uuid:"922B169C-9C20-4C68-86E4-2ABF26549E49"
 {
 formIndex:16500,
 horizontalAlignment:4,
-location:"50,1109",
+location:"50,1169",
 mediaOptions:14,
 showClick:false,
 showFocus:false,
@@ -1037,7 +1051,7 @@ uuid:"93CD3F49-4760-4AD5-919F-6B4BA052F3A8"
 {
 anchors:11,
 formIndex:13700,
-location:"16,1236",
+location:"16,1296",
 mediaOptions:14,
 showClick:false,
 showFocus:false,
@@ -1053,7 +1067,7 @@ uuid:"977506E3-19EB-434E-A7CA-819C9F36F387"
 dataProviderID:"list_count",
 displayType:4,
 formIndex:12500,
-location:"500,1550",
+location:"500,1610",
 onDataChangeMethodID:"089B2AA5-8AF4-4A49-AA87-87B8F332DE32",
 scrollbars:36,
 selectOnEnter:true,
@@ -1094,7 +1108,7 @@ uuid:"9DE3E89A-1C0F-42F2-ABBC-33666F0F7ED5"
 {
 formIndex:11600,
 horizontalAlignment:4,
-location:"30,1490",
+location:"30,1550",
 mediaOptions:14,
 showClick:false,
 showFocus:false,
@@ -1115,7 +1129,7 @@ showFocus:false,
 size:"180,15",
 styleClass:"heading2",
 tabSeq:-1,
-text:"Error messages",
+text:"Internet access",
 transparent:true,
 typeid:7,
 uuid:"A6DFCB92-E6C5-45D7-8DE8-8D01BB9A429A"
@@ -1142,7 +1156,7 @@ uuid:"A7369B83-B0DC-4FB1-B8F3-CCB783268E23"
 {
 dataProviderID:"list_sleep",
 formIndex:12100,
-location:"150,1548",
+location:"150,1608",
 onDataChangeMethodID:"71E0F7B8-7872-4171-9010-C6794AF95308",
 scrollbars:36,
 selectOnEnter:true,
@@ -1155,7 +1169,7 @@ uuid:"A7F785F1-C413-44DA-8B05-AFFD17DDC57B"
 dataProviderID:"login_disabled",
 displayType:4,
 formIndex:13500,
-location:"150,1259",
+location:"150,1319",
 name:"fld_login_disabled",
 scrollbars:36,
 selectOnEnter:true,
@@ -1175,9 +1189,30 @@ typeid:4,
 uuid:"A97025B2-45DC-4F97-9BBB-F8E67DB38569"
 },
 {
+dataProviderID:"error_popup",
+displayType:4,
+formIndex:17200,
+location:"150,1019",
+name:"fld_error_popupc",
+scrollbars:36,
+selectOnEnter:true,
+size:"20,20",
+toolTipText:"<html>
+  <head>
+
+  <\/head>
+  <body>
+    Show a pop-up when a Servoy error is encountered
+  <\/body>
+<\/html>",
+transparent:true,
+typeid:4,
+uuid:"ACED1D4B-4305-46A4-BA7B-2579C98ABA3F"
+},
+{
 dataProviderID:"background_row_even",
 formIndex:11800,
-location:"150,1470",
+location:"150,1530",
 scrollbars:36,
 selectOnEnter:true,
 size:"80,20",
@@ -1217,7 +1252,7 @@ uuid:"AF8D70DD-8D34-451A-9F25-4DABF6203235"
 {
 formIndex:13600,
 horizontalAlignment:4,
-location:"50,1259",
+location:"50,1319",
 mediaOptions:14,
 showClick:false,
 showFocus:false,
@@ -1231,7 +1266,7 @@ uuid:"B243D4DE-705C-44F5-B954-A1C24DF96EEE"
 {
 formIndex:13300,
 horizontalAlignment:4,
-location:"30,1351",
+location:"30,1411",
 mediaOptions:14,
 showClick:false,
 showFocus:false,
@@ -1341,7 +1376,7 @@ uuid:"BCE42704-735A-4E01-A877-DC94086A4FC9"
 {
 formIndex:12200,
 horizontalAlignment:4,
-location:"10,1550",
+location:"10,1610",
 mediaOptions:14,
 showClick:false,
 showFocus:false,
@@ -1493,7 +1528,7 @@ uuid:"D6C0D997-4663-40F1-A3CF-796D0583A79F"
 dataProviderID:"repository_api",
 displayType:4,
 formIndex:16400,
-location:"150,1109",
+location:"150,1169",
 scrollbars:36,
 selectOnEnter:true,
 size:"20,20",
@@ -1505,7 +1540,7 @@ uuid:"D8F4197D-A648-4AC3-9D13-F32C3DBB1733"
 {
 dataProviderID:"background_row_select",
 formIndex:11900,
-location:"150,1490",
+location:"150,1550",
 scrollbars:36,
 selectOnEnter:true,
 size:"80,20",
@@ -1600,6 +1635,21 @@ typeid:4,
 uuid:"E4E6AEDB-A269-4F0F-ACB9-F6EB01B3D45F"
 },
 {
+anchors:11,
+formIndex:17400,
+location:"16,996",
+mediaOptions:14,
+showClick:false,
+showFocus:false,
+size:"180,15",
+styleClass:"heading2",
+tabSeq:-1,
+text:"Error messages",
+transparent:true,
+typeid:7,
+uuid:"E74ED0EF-24EC-4231-9601-0A49F2B868F5"
+},
+{
 formIndex:13100,
 horizontalAlignment:4,
 location:"350,79",
@@ -1614,11 +1664,11 @@ typeid:7,
 uuid:"EA89F387-5BD4-4E50-A112-5125F02825DA"
 },
 {
-dataProviderID:"error_popup",
+dataProviderID:"internet_allow",
 displayType:4,
 formIndex:17200,
 location:"150,609",
-name:"fld_error_popup",
+name:"fld_internet_allow",
 scrollbars:36,
 selectOnEnter:true,
 size:"20,20",
@@ -1628,7 +1678,7 @@ toolTipText:"<html>
 
   <\/head>
   <body>
-    Show a pop-up when a Servoy error is encountered
+    Allow internet access (for weather toolbar)
   <\/body>
 <\/html>",
 transparent:true,
@@ -1638,7 +1688,7 @@ uuid:"EC5C8218-6B64-4445-B878-AF35A4CB12BC"
 {
 dataProviderID:"config_password",
 formIndex:13200,
-location:"150,1349",
+location:"150,1409",
 scrollbars:36,
 selectOnEnter:true,
 size:"80,22",
@@ -1651,7 +1701,7 @@ dataProviderID:"i18n_default",
 displayType:2,
 editable:false,
 formIndex:16800,
-location:"150,1029",
+location:"150,1089",
 scrollbars:36,
 size:"180,22",
 styleClass:"combobox",
@@ -1678,7 +1728,7 @@ uuid:"F1132272-3EE9-4570-9730-676B336B7FFB"
 {
 anchors:11,
 formIndex:15700,
-location:"16,1151",
+location:"16,1211",
 mediaOptions:14,
 showClick:false,
 showFocus:false,
@@ -1693,7 +1743,7 @@ uuid:"F8E65729-57D5-4E72-8EA0-3C1092C52B27"
 {
 formIndex:16900,
 horizontalAlignment:4,
-location:"30,1029",
+location:"30,1089",
 mediaOptions:14,
 showClick:false,
 showFocus:false,
@@ -1726,7 +1776,7 @@ uuid:"FDE68C72-FBAB-4F75-901C-B01E408CAACD"
 {
 anchors:11,
 formIndex:10100,
-location:"0,1076",
+location:"0,1136",
 mediaOptions:14,
 showClick:false,
 showFocus:false,
