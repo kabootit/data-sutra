@@ -4052,7 +4052,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	}
 	
 	//if passed tab name equal to current tab, set tabShow to be index of it
-	for (var i = 0; i < statusTabs.length ; i++) {
+	for (var i = 0; typeof tabShow != 'number' && i < statusTabs.length ; i++) {
 		if (tabShow == statusTabs[i].tabName) {
 			tabShow = i + 1
 		}
@@ -4174,7 +4174,7 @@ if (application.__parent__.solutionPrefs) {
 	forms[baseForm + '__header__toolbar'].elements.tab_toolbar.removeAllTabs()
 	forms[popForm].elements.tab_toolbar_popdown.removeAllTabs()
 	
-	//add in tabs to viewer and popdown
+	//add in tabs to toolbar and popdown
 	if (toolbars.length) {
 		//loop through array and add tabs
 		for (var i = 0 ; i < toolbars.length ; i++) {
