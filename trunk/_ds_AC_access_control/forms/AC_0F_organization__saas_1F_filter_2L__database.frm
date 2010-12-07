@@ -83,7 +83,7 @@ valuelistID:"71aa423f-4284-4457-8c3b-f655a2bc7b69"
 anchors:3,
 borderType:"SpecialMatteBorder,0.0,0.0,1.0,0.0,#000000,#999999,#999999,#999999,0.0,1.0",
 formIndex:10100,
-imageMediaID:"1C42A811-CB9F-4938-A02B-1AD39282FC44",
+imageMediaID:"878FFF3D-DEBA-4DAD-AD33-48D116C9448E",
 location:"678,30",
 mediaOptions:1,
 onActionMethodID:"118ff602-7fdc-4735-900a-16eb3915b641",

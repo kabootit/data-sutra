@@ -44,7 +44,7 @@ uuid:"65baa7c0-28f4-448a-b93d-df0df2525ecf"
 anchors:11,
 borderType:"EmptyBorder,0,0,0,0",
 formIndex:10000,
-imageMediaID:"80E97CE6-9650-49FA-A957-A10A4FFFA76C",
+imageMediaID:"04E7D8D6-1A41-417F-9663-76C7146E06A9",
 location:"0,0",
 mediaOptions:6,
 showClick:false,
@@ -125,7 +125,7 @@ uuid:"d4026386-1949-4057-b86c-8c1e44a00b82"
 {
 anchors:11,
 formIndex:10200,
-imageMediaID:"24728404-587E-4DFC-9EDA-AD628AC54F2B",
+imageMediaID:"698F2036-794D-4A19-BED4-C6C92C1AAFEB",
 location:"0,16",
 mediaOptions:6,
 name:"highlighter",

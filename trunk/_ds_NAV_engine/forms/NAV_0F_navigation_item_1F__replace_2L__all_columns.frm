@@ -46,7 +46,7 @@ uuid:"a4984451-f4d1-41d0-9f2f-8b545df77a07"
 {
 borderType:"EmptyBorder,0,0,0,0",
 formIndex:10200,
-imageMediaID:"B43AE8A6-B603-416D-8A0E-18E0A65C7EAF",
+imageMediaID:"A67C2500-0F37-4682-A2BF-3033332A0180",
 location:"0,3",
 mediaOptions:14,
 name:"btn_add",

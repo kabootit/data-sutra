@@ -21,7 +21,7 @@ verticalAlignment:3
 {
 formIndex:10600,
 horizontalAlignment:0,
-imageMediaID:"575C6F74-84BA-47F7-BD2D-A6CDC83C571D",
+imageMediaID:"3C2D3E10-0B22-4445-9354-566249474113",
 location:"151,6",
 mediaOptions:14,
 name:"btn_upload",
@@ -43,7 +43,7 @@ uuid:"3478ec7b-e145-4578-ad2c-2600a5fda6a4"
 {
 formIndex:11000,
 horizontalAlignment:0,
-imageMediaID:"B77E5184-2873-4D95-80EF-4DD282647DC7",
+imageMediaID:"92CC151F-1399-4446-8B94-30029D21F379",
 location:"306,6",
 mediaOptions:1,
 onActionMethodID:"945d2598-39bb-4c5e-91c9-2017eba14fa0",
@@ -58,7 +58,7 @@ uuid:"642bc4e0-96b9-45fb-aae7-eafe6963b331"
 {
 formIndex:10400,
 horizontalAlignment:0,
-imageMediaID:"A0568AC8-5445-417A-A565-FCD6751C6BE2",
+imageMediaID:"044BA363-0687-4628-BF6E-A50E1DDE809B",
 location:"86,6",
 mediaOptions:14,
 name:"btn_delete",
@@ -74,7 +74,7 @@ uuid:"819df038-6f71-4812-8c9e-5606f110733a"
 {
 formIndex:10800,
 horizontalAlignment:0,
-imageMediaID:"575C6F74-84BA-47F7-BD2D-A6CDC83C571D",
+imageMediaID:"3C2D3E10-0B22-4445-9354-566249474113",
 location:"216,6",
 mediaOptions:14,
 name:"btn_open",
@@ -90,7 +90,7 @@ uuid:"a8190ab6-596e-4fc9-8795-ee521c822f9f"
 {
 formIndex:10200,
 horizontalAlignment:0,
-imageMediaID:"AE56A804-D9CD-464E-8FC5-CF81345A175C",
+imageMediaID:"927751FC-AB95-4037-816D-1BBA7744F969",
 location:"26,6",
 mediaOptions:14,
 name:"btn_new",
@@ -106,7 +106,7 @@ uuid:"a874b2fb-a562-4f7e-8635-c614dcb06c06"
 {
 anchors:15,
 formIndex:10000,
-imageMediaID:"270D376C-D331-42A5-AB32-EEAEA2C476FF",
+imageMediaID:"7A7765DB-BD4F-4ACF-86B7-D72677CE3518",
 location:"0,0",
 mediaOptions:4,
 name:"gfx_header",

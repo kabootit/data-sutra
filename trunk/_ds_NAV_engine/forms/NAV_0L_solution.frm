@@ -51,7 +51,7 @@ uuid:"2f308240-b9f3-4c6f-8e19-a6b261268087"
 anchors:11,
 borderType:"EmptyBorder,0,0,0,0",
 formIndex:10100,
-imageMediaID:"80E97CE6-9650-49FA-A957-A10A4FFFA76C",
+imageMediaID:"04E7D8D6-1A41-417F-9663-76C7146E06A9",
 location:"0,0",
 mediaOptions:6,
 name:"gfx_subheader",
@@ -65,7 +65,7 @@ uuid:"4f487eee-adf0-4756-a2de-975d21d3df9e"
 {
 anchors:3,
 formIndex:10800,
-imageMediaID:"0A23306E-DDC5-445E-B766-397641C20076",
+imageMediaID:"E1CD88A5-94D5-4659-BA2A-480AFCAF8EDF",
 location:"74,0",
 mediaOptions:10,
 name:"btn_options",
@@ -83,7 +83,7 @@ verticalAlignment:1
 {
 anchors:3,
 formIndex:10500,
-imageMediaID:"251DBC4D-168C-4A76-9DBF-DA22BEE0B930",
+imageMediaID:"48E77B53-BF62-4F7A-A321-108629DCCC6D",
 location:"78,62",
 mediaOptions:1,
 name:"btn_tabs",
@@ -100,7 +100,7 @@ uuid:"bb000da7-1a0c-40e6-8e8a-cc3278183f21"
 },
 {
 formIndex:10600,
-imageMediaID:"5592E64F-C1A2-48FD-BB90-F0AD742B07CB",
+imageMediaID:"4FE43B11-7AC8-4CEF-8F5C-2B4A1C6B1A73",
 location:"4,62",
 mediaOptions:1,
 name:"btn_display",

@@ -22,7 +22,7 @@ verticalAlignment:3
 {
 formIndex:10500,
 horizontalAlignment:0,
-imageMediaID:"E852DF32-515A-4699-AD50-5AF90F84587D",
+imageMediaID:"CAD72DCA-91FE-414D-B172-FCBCEBA29C83",
 location:"17,6",
 mediaOptions:6,
 name:"btn_colors",
@@ -38,7 +38,7 @@ uuid:"4ad6378e-a8e4-48be-8d12-e6ffa52da92d"
 {
 formIndex:10300,
 horizontalAlignment:0,
-imageMediaID:"EF5A2DAD-3BB0-470F-82FA-03DA159CC7D8",
+imageMediaID:"721987FC-48D0-4E56-B377-A193112F8905",
 location:"136,6",
 mediaOptions:14,
 name:"btn_preview",
@@ -117,7 +117,7 @@ verticalAlignment:3
 {
 anchors:15,
 formIndex:10000,
-imageMediaID:"270D376C-D331-42A5-AB32-EEAEA2C476FF",
+imageMediaID:"7A7765DB-BD4F-4ACF-86B7-D72677CE3518",
 location:"0,0",
 mediaOptions:4,
 name:"gfx_header",
@@ -131,7 +131,7 @@ uuid:"c6992506-bb13-4550-8bfc-f931f692bd9c"
 {
 formIndex:10800,
 horizontalAlignment:0,
-imageMediaID:"575C6F74-84BA-47F7-BD2D-A6CDC83C571D",
+imageMediaID:"3C2D3E10-0B22-4445-9354-566249474113",
 location:"77,6",
 mediaOptions:14,
 name:"btn_forms",
@@ -147,7 +147,7 @@ uuid:"cde81062-a7bb-40c6-bb30-f89cc8b2de52"
 {
 formIndex:11200,
 horizontalAlignment:0,
-imageMediaID:"C0482D81-91FA-4838-8D1F-3E1F764EB947",
+imageMediaID:"4EA279F0-4631-403A-A9CC-28D01381DC25",
 location:"32,66",
 mediaOptions:10,
 name:"btn_activate",

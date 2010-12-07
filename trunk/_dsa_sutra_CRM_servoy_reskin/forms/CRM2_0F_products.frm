@@ -346,7 +346,7 @@ uuid:"b176e61d-c4df-4b3b-bb67-93456a851869"
 {
 anchors:11,
 formIndex:10500,
-imageMediaID:"80E97CE6-9650-49FA-A957-A10A4FFFA76C",
+imageMediaID:"04E7D8D6-1A41-417F-9663-76C7146E06A9",
 location:"0,0",
 mediaOptions:6,
 name:"gfx_subheader",

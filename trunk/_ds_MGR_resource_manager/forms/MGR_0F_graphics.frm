@@ -2,7 +2,7 @@ dataSource:"db:/sutra/sutra_graphics",
 items:[
 {
 formIndex:10700,
-imageMediaID:"270D376C-D331-42A5-AB32-EEAEA2C476FF",
+imageMediaID:"7A7765DB-BD4F-4ACF-86B7-D72677CE3518",
 location:"97,322",
 mediaOptions:6,
 showClick:false,
@@ -15,7 +15,7 @@ uuid:"165AD240-EE9C-41BD-B646-B92CEF012F0A"
 },
 {
 formIndex:10500,
-imageMediaID:"4B254510-2DCE-4276-AAAC-B0BA5F8298D0",
+imageMediaID:"03B5A930-599A-4CA3-BA56-0980F8BE6DCB",
 location:"97,257",
 mediaOptions:14,
 showClick:false,
@@ -28,7 +28,7 @@ uuid:"1876A093-E068-472E-A698-CF27265262F2"
 },
 {
 formIndex:10600,
-imageMediaID:"EEB5B4AA-E721-4305-A0F0-940E5FEF6400",
+imageMediaID:"70AB523D-A864-4109-AAA7-9C5F4884BF34",
 location:"500,257",
 mediaOptions:14,
 showClick:false,
@@ -47,7 +47,7 @@ uuid:"8B25F3B7-E52C-4A17-A404-73A0E90BD585"
 },
 {
 formIndex:11000,
-imageMediaID:"27643888-7E7E-4505-A29E-110C0171D9FC",
+imageMediaID:"7711659B-8E30-4CD4-8A13-6337B4860691",
 location:"500,232",
 mediaOptions:1,
 showClick:false,
@@ -60,7 +60,7 @@ uuid:"A25AEC0E-FBB6-4BB5-8EA6-620675FFADA4"
 },
 {
 formIndex:10200,
-imageMediaID:"71CC5C16-3A7A-4F59-A968-743DC1A312CE",
+imageMediaID:"4665ECB3-CC00-4E45-BD1C-26C3DD235A67",
 location:"100,232",
 mediaOptions:6,
 showClick:false,
@@ -73,7 +73,7 @@ uuid:"A46AA561-919E-4B8E-B6DC-A046088F2208"
 },
 {
 formIndex:10300,
-imageMediaID:"BB7DD499-26DE-45BF-B0C0-2F4E99A0A010",
+imageMediaID:"4B791372-AAD8-45DD-9227-A47CD9718BE8",
 location:"503,260",
 mediaOptions:4,
 showClick:false,
@@ -86,7 +86,7 @@ uuid:"B48F8802-1731-4641-9C61-3F6744D1A8AC"
 },
 {
 formIndex:10000,
-imageMediaID:"81955D9C-B2CC-41FC-BEFA-F7AAC93A7E7B",
+imageMediaID:"56889AC0-8521-461C-944A-73DF24B8AAD1",
 location:"57,260",
 mediaOptions:4,
 showClick:false,
@@ -99,7 +99,7 @@ uuid:"B6445256-8EFF-49AD-AAC2-259922CEB065"
 },
 {
 formIndex:10900,
-imageMediaID:"3F2C575B-06ED-49FA-8D2D-9110E3806EB3",
+imageMediaID:"A5769CB4-EBA0-47D9-A179-31203FE4FAB6",
 location:"503,322",
 mediaOptions:1,
 showClick:false,
@@ -112,7 +112,7 @@ uuid:"BFD8A7FD-C819-450A-96BE-7858CFCCC5F6"
 },
 {
 formIndex:10400,
-imageMediaID:"3390CD9C-F323-4365-AAA2-C393BDD3E98E",
+imageMediaID:"32CF59BD-8183-40B8-8049-8F9C0865D25F",
 location:"100,257",
 mediaOptions:4,
 showClick:false,
@@ -125,7 +125,7 @@ uuid:"C86F2FDC-228F-4212-9E7B-D86143B7837F"
 },
 {
 formIndex:10800,
-imageMediaID:"CEFF8BC2-E0EE-4CB0-BC74-62A0CD86E42A",
+imageMediaID:"F6228FFC-32CC-4EF3-A040-BF7857690C48",
 location:"57,322",
 mediaOptions:1,
 showClick:false,
@@ -138,7 +138,7 @@ uuid:"EF3665B4-1D3B-4BEC-837A-DF7D829FA449"
 },
 {
 formIndex:10100,
-imageMediaID:"855EE941-EB05-48AD-A8CD-E82AD88A1A63",
+imageMediaID:"3114E665-4C41-4406-B95F-35D8DF4FDCE0",
 location:"57,232",
 mediaOptions:1,
 showClick:false,

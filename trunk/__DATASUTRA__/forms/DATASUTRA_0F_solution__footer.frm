@@ -78,7 +78,7 @@ uuid:"52d44f96-03df-4e41-a1d4-c40ca17f06a9"
 {
 anchors:14,
 formIndex:10000,
-imageMediaID:"25CAAEC9-2DF3-4439-8E14-C1BCFE3A428F",
+imageMediaID:"61C68475-859F-403A-B1F2-0B53AE6A85BD",
 location:"0,0",
 mediaOptions:6,
 name:"gfx_footer",
@@ -92,7 +92,7 @@ uuid:"6dcae541-2baf-42b3-80c0-e2da1ed21145"
 {
 anchors:12,
 formIndex:10400,
-imageMediaID:"48F9E441-3D2F-4360-9308-F23C0AA71880",
+imageMediaID:"C724499A-1421-423C-83AF-5746A97B40E2",
 location:"150,20",
 mediaOptions:6,
 name:"lbl_dev_help",
@@ -126,7 +126,7 @@ verticalAlignment:3
 {
 anchors:12,
 formIndex:10200,
-imageMediaID:"48F9E441-3D2F-4360-9308-F23C0AA71880",
+imageMediaID:"C724499A-1421-423C-83AF-5746A97B40E2",
 location:"48,20",
 mediaOptions:6,
 name:"lbl_dev_specs",
@@ -146,7 +146,7 @@ uuid:"a79e0353-afd4-4632-8e58-ee3e67d42f5a"
 {
 anchors:12,
 formIndex:10300,
-imageMediaID:"48F9E441-3D2F-4360-9308-F23C0AA71880",
+imageMediaID:"C724499A-1421-423C-83AF-5746A97B40E2",
 location:"99,20",
 mediaOptions:6,
 name:"lbl_dev_todo",

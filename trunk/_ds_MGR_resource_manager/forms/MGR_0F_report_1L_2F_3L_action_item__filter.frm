@@ -24,7 +24,7 @@ uuid:"82D2F6E9-8298-4A1E-AC60-6DA1BA988E09"
 borderType:"EmptyBorder,0,0,0,0",
 formIndex:10000,
 horizontalAlignment:0,
-imageMediaID:"0F8F69A8-CB64-45C2-A8AF-C220A835FF00",
+imageMediaID:"4510CBA6-1F39-45EC-A315-86C8E08E467A",
 location:"645,10",
 mediaOptions:14,
 onActionMethodID:"F7C5D5DF-389C-4ADD-A0BC-B3992C234F3B",

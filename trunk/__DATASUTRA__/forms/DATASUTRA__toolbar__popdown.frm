@@ -2,7 +2,7 @@ items:[
 {
 anchors:7,
 formIndex:10200,
-imageMediaID:"BB7DD499-26DE-45BF-B0C0-2F4E99A0A010",
+imageMediaID:"4B791372-AAD8-45DD-9227-A47CD9718BE8",
 location:"80,0",
 mediaOptions:4,
 showClick:false,
@@ -16,7 +16,7 @@ uuid:"0BBB685B-8B3E-4BDE-BE65-C4F36B1A230F"
 {
 anchors:13,
 formIndex:10500,
-imageMediaID:"81955D9C-B2CC-41FC-BEFA-F7AAC93A7E7B",
+imageMediaID:"56889AC0-8521-461C-944A-73DF24B8AAD1",
 location:"0,0",
 mediaOptions:4,
 showClick:false,
@@ -30,7 +30,7 @@ uuid:"3DBBA722-2AD6-4638-9D81-4500DFD1A2A6"
 {
 anchors:14,
 formIndex:10300,
-imageMediaID:"270D376C-D331-42A5-AB32-EEAEA2C476FF",
+imageMediaID:"7A7765DB-BD4F-4ACF-86B7-D72677CE3518",
 location:"20,30",
 mediaOptions:6,
 showClick:false,
@@ -44,7 +44,7 @@ uuid:"69810540-BA5B-44EE-9C25-4A3A182E8288"
 {
 anchors:12,
 formIndex:10400,
-imageMediaID:"CEFF8BC2-E0EE-4CB0-BC74-62A0CD86E42A",
+imageMediaID:"F6228FFC-32CC-4EF3-A040-BF7857690C48",
 location:"0,30",
 mediaOptions:6,
 showClick:false,
@@ -84,7 +84,7 @@ uuid:"A9C4B2B1-5158-4723-B1F4-EBDEF8FF7FEB"
 {
 anchors:6,
 formIndex:10100,
-imageMediaID:"3F2C575B-06ED-49FA-8D2D-9110E3806EB3",
+imageMediaID:"A5769CB4-EBA0-47D9-A179-31203FE4FAB6",
 location:"80,30",
 mediaOptions:6,
 showClick:false,

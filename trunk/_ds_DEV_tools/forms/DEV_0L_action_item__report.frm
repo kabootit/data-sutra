@@ -17,7 +17,7 @@ uuid:"908e71c8-2821-41a3-8c22-87b76202a504"
 anchors:11,
 borderType:"EmptyBorder,0,0,0,0",
 formIndex:10000,
-imageMediaID:"80E97CE6-9650-49FA-A957-A10A4FFFA76C",
+imageMediaID:"04E7D8D6-1A41-417F-9663-76C7146E06A9",
 location:"0,0",
 mediaOptions:6,
 name:"gfx_subheader",

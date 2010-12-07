@@ -56,6 +56,12 @@ name:"field_name"
 },
 {
 allowNull:true,
+creationOrderIndex:12,
+dataType:4,
+name:"flag_edit"
+},
+{
+allowNull:true,
 creationOrderIndex:8,
 dataType:12,
 length:100,

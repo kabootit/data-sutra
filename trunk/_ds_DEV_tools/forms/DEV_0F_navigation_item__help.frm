@@ -20,7 +20,7 @@ uuid:"45c6f473-23d6-44fe-8c9d-fd38be42a3ec"
 anchors:11,
 borderType:"EmptyBorder,0,0,0,0",
 formIndex:10200,
-imageMediaID:"80E97CE6-9650-49FA-A957-A10A4FFFA76C",
+imageMediaID:"04E7D8D6-1A41-417F-9663-76C7146E06A9",
 location:"0,0",
 mediaOptions:6,
 name:"gfx_subheader",

@@ -134,7 +134,7 @@ valuelistID:"8b1e7d71-26c9-4e1f-b4ad-a9cdb65ba421"
 anchors:3,
 borderType:"SpecialMatteBorder,0.0,0.0,1.0,0.0,#000000,#999999,#999999,#999999,0.0,1.0",
 formIndex:10100,
-imageMediaID:"1C42A811-CB9F-4938-A02B-1AD39282FC44",
+imageMediaID:"878FFF3D-DEBA-4DAD-AD33-48D116C9448E",
 location:"678,30",
 mediaOptions:1,
 onActionMethodID:"e4effa2c-b2d1-4613-a4e2-2d49624f1d11",

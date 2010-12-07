@@ -179,7 +179,7 @@ uuid:"cb0c58df-c5d5-4d46-b024-d043c26eb183"
 {
 borderType:"SpecialMatteBorder,0.0,0.0,1.0,0.0,#000000,#000000,#999999,#000000,0.0,1.0",
 formIndex:11300,
-imageMediaID:"1C42A811-CB9F-4938-A02B-1AD39282FC44",
+imageMediaID:"878FFF3D-DEBA-4DAD-AD33-48D116C9448E",
 location:"780,18",
 mediaOptions:14,
 onActionMethodID:"32ac15fb-c920-4a47-94c5-677e640fdc1c",
@@ -229,7 +229,7 @@ uuid:"ec51fa96-8d31-4799-85d7-e93ae4e7eea2"
 anchors:11,
 borderType:"EmptyBorder,0,0,0,0",
 formIndex:11600,
-imageMediaID:"80E97CE6-9650-49FA-A957-A10A4FFFA76C",
+imageMediaID:"04E7D8D6-1A41-417F-9663-76C7146E06A9",
 location:"0,0",
 mediaOptions:6,
 showClick:false,

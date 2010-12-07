@@ -88,7 +88,7 @@ uuid:"8cafbbf4-b6f2-40ed-8dcc-ffb97fd37c3b"
 anchors:3,
 borderType:"SpecialMatteBorder,0.0,0.0,1.0,0.0,#000000,#999999,#999999,#999999,0.0,1.0",
 formIndex:10100,
-imageMediaID:"1C42A811-CB9F-4938-A02B-1AD39282FC44",
+imageMediaID:"878FFF3D-DEBA-4DAD-AD33-48D116C9448E",
 location:"678,30",
 mediaOptions:1,
 name:"btn_delete",

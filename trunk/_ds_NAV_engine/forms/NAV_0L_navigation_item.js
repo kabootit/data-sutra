@@ -113,7 +113,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	//pop up the popup menu
 	var elem = elements[application.getMethodTriggerElementName()]
 	if (elem != null) {
-	    plugins.popupmenu.showPopupMenu(elem, menu);
+	    plugins.popupmenu.showPopupMenu(elem, menu)
 	}
 }
 //legacy

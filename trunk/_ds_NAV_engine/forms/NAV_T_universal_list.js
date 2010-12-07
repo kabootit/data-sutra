@@ -584,8 +584,8 @@ if (application.__parent__.solutionPrefs) {
 	myForm.tableName = forms[solutionPrefs.config.currentFormName].controller.getTableName()
 	
 	//set events
-	myForm.setOnShowMethod(globals.NAV_universal_list_show)
-	myForm.setOnRecordSelectionMethod(globals.NAV_universal_list_select)
+	myForm.onShow = solutionModel.getGlobalMethod('NAV_universal_list_show')
+	myForm.onRecordSelection = solutionModel.getGlobalMethod('NAV_universal_list_select')
 	myForm.rowBGColorCalculation = 'globals.NAV_row_background'
 	
 	//get the UL data and set it up

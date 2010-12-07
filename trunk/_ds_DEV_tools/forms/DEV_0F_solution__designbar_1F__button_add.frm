@@ -28,7 +28,7 @@ uuid:"3ebd6a38-9904-4ebe-bb93-d4630098785d"
 {
 anchors:15,
 formIndex:10000,
-imageMediaID:"270D376C-D331-42A5-AB32-EEAEA2C476FF",
+imageMediaID:"7A7765DB-BD4F-4ACF-86B7-D72677CE3518",
 location:"0,0",
 mediaOptions:4,
 name:"gfx_header",
@@ -60,7 +60,7 @@ verticalAlignment:3
 {
 formIndex:10400,
 horizontalAlignment:0,
-imageMediaID:"EB2F022A-91C1-475A-8724-A2A35D51C582",
+imageMediaID:"1C53D59B-1B71-45E0-8FA3-9DB9FC1823C4",
 location:"101,6",
 mediaOptions:14,
 onActionMethodID:"bd83f742-6ff1-4ec2-b731-e542f62fd446",
@@ -75,7 +75,7 @@ uuid:"7356ac7f-7ec5-47bd-8c85-970a09d0dcf8"
 {
 formIndex:11600,
 horizontalAlignment:0,
-imageMediaID:"EB2F022A-91C1-475A-8724-A2A35D51C582",
+imageMediaID:"1C53D59B-1B71-45E0-8FA3-9DB9FC1823C4",
 location:"31,6",
 mediaOptions:14,
 onActionMethodID:"7dc9e4d7-73ce-4512-b6a4-4f4a58afdaf8",

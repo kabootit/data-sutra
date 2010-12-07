@@ -1634,6 +1634,7 @@ if (utils.hasRecords(record[rlnDisplayItem])) {
 		displayAbout.formatMask = displayColumnItem.format_mask
 		displayAbout.header = (displayColumnItem.header) ? displayColumnItem.header : 'N/A'
 		displayAbout.fieldName = displayColumnItem.field_name
+		displayAbout.editable = (displayColumnItem.flag_edit) ? true : false
 		
 		displayColumnItems.push(displayAbout)
 	}
@@ -2401,7 +2402,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 					}
 				}
 				
-				//4.1 Solution Model
+				//4.1+ Solution Model
 				else if (utils.stringToNumber(solutionPrefs.clientInfo.verServoy) >= 4) {
 					var uniList = 'NAV_T_universal_list_1L'
 					
@@ -2425,12 +2426,12 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 						//set to use same foundset
 						var origForm = solutionModel.getForm(mainTab)
 						if (origForm.namedFoundSet) {
-							myForm.namedFoundSet =origForm.namedFoundSet
+							myForm.namedFoundSet = origForm.namedFoundSet
 						}
 						
 						//set events
-						myForm.setOnShowMethod(globals.NAV_universal_list_show)
-						myForm.setOnRecordSelectionMethod(globals.NAV_universal_list_select)
+						myForm.onShow = solutionModel.getGlobalMethod('NAV_universal_list_show')
+						myForm.onRecordSelection = solutionModel.getGlobalMethod('NAV_universal_list_select')
 						myForm.rowBGColorCalculation = 'globals.NAV_row_background'
 //						myForm.getBodyPart().background = '#D1D7E2'
 						
@@ -2483,11 +2484,12 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 											20						//height
 										)
 							
-							myField.setOnFocusGainedMethod(globals.NAV_universal_list_select__unhilite)
+							myField.name = application.getUUID().toString()
+							myField.onFocusGained = solutionModel.getGlobalMethod('NAV_universal_list_select__unhilite')
 							myField.anchors = SM_ANCHOR.ALL
 							myField.horizontalAlignment = horizAlign
 							myField.styleClass = 'customlist'
-							myField.editable = false
+							myField.editable = lineItem.editable
 							myField.borderType = 'EmptyBorder,0,0,0,0'
 							myField.margin = '0,4,0,4'
 							myField.scrollbars = 0
@@ -2498,6 +2500,10 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 							}
 							if (fieldVL) {
 								myField.valuelist = solutionModel.getValueList(fieldVL)
+							}
+							
+							if (lineItem.editable) {
+								myField.onRightClick = solutionModel.getGlobalMethod('NAV_universal_list_edit')
 							}
 						}
 						
@@ -2779,6 +2785,36 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		}
 	}
 }
+}
+
+/**
+ * @properties={typeid:24,uuid:"26DA3CF9-9871-41AE-B157-7214B1AD663C"}
+ */
+function NAV_universal_list_edit(input,elem) {
+	//called to depress menu
+	if (input instanceof JSEvent) {
+		var elem = forms[input.getFormName()].elements[input.getElementName()]
+		
+		//build menu
+		var menu = new Array()
+		menu.push(plugins.popupmenu.createMenuItem('Edit...', globals.NAV_universal_list_edit))
+		menu[0].setMethodArguments(null,input)
+		
+		//pop up the popup menu
+		if (elem != null) {
+		    plugins.popupmenu.showPopupMenu(elem, menu)
+		}
+	}
+	else {
+		//enter field for editing
+		if (elem) {
+			input = elem
+			forms[input.getFormName()].elements[input.getElementName()].selectAll()
+			forms[input.getFormName()].elements[input.getElementName()].requestFocus(false)
+			
+//			application.updateUI()
+		}
+	}
 }
 
 /**
@@ -3734,8 +3770,8 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 					myForm.tableName = tableName
 					
 					//set events
-					myForm.setOnShowMethod(globals.NAV_universal_list_show)
-					myForm.setOnRecordSelectionMethod(globals.NAV_universal_list_select)
+					myForm.onShow = solutionModel.getGlobalMethod('NAV_universal_list_show')
+					myForm.onRecordSelection = solutionModel.getGlobalMethod('NAV_universal_list_select')
 					myForm.rowBGColorCalculation = 'globals.NAV_row_background'
 					
 					//get the UL data and set it up
@@ -4487,7 +4523,7 @@ function NAV_universal_list_select()
 	}
 	
 	//unhilite the current record (so highlighter spans entire row)
-	globals.NAV_universal_list_select__unhilite()//navigationPrefs.byNavItemID[currentNavItem].listData.withButtons)
+//	globals.NAV_universal_list_select__unhilite()//navigationPrefs.byNavItemID[currentNavItem].listData.withButtons)
 	
 	//timed out, throw up error
 	if (solutionPrefs.config.prefs.thatsAllFolks) {

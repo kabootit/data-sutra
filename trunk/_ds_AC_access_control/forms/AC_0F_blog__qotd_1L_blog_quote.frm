@@ -49,7 +49,7 @@ uuid:"32c8e8b7-aad7-4f07-920e-2714955fa1cf"
 {
 borderType:"SpecialMatteBorder,0.0,0.0,1.0,0.0,#000000,#999999,#999999,#999999,0.0,1.0",
 formIndex:10400,
-imageMediaID:"1C42A811-CB9F-4938-A02B-1AD39282FC44",
+imageMediaID:"878FFF3D-DEBA-4DAD-AD33-48D116C9448E",
 location:"368,40",
 mediaOptions:1,
 onActionMethodID:"be2eeb49-720e-4452-8d2a-aa82773dcf5f",

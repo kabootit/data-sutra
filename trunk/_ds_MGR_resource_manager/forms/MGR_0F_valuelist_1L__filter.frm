@@ -146,7 +146,7 @@ uuid:"DDA4FB3D-4A8B-43DD-AF0E-CBE6595FAED0"
 borderType:"EmptyBorder,0,0,0,0",
 formIndex:10000,
 horizontalAlignment:0,
-imageMediaID:"0F8F69A8-CB64-45C2-A8AF-C220A835FF00",
+imageMediaID:"4510CBA6-1F39-45EC-A315-86C8E08E467A",
 location:"610,20",
 mediaOptions:14,
 onActionMethodID:"8C799AF1-91A6-497A-9809-E724DED83C21",

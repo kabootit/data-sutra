@@ -161,12 +161,12 @@ uuid:"339849ee-f9e1-40a3-b18d-53a4fce961ed"
 {
 borderType:"EmptyBorder,0,0,0,0",
 formIndex:14000,
-imageMediaID:"09E6D99F-1F1F-4F7E-A738-B88FE3E4A4FE",
+imageMediaID:"98C8EF04-625B-4B0F-B8A8-FCE2C09C4FE3",
 location:"25,274",
 mediaOptions:1,
 onActionMethodID:"60c35e28-4d02-4e79-b418-97632f605ffa",
 rolloverCursor:12,
-rolloverImageMediaID:"47788717-0A3E-42F3-B36C-C51C92ED439F",
+rolloverImageMediaID:"445749F3-276A-4F51-B957-4D8941861FBA",
 showClick:false,
 showFocus:false,
 size:"20,22",
@@ -194,7 +194,7 @@ valuelistID:"4390362c-dbe3-4253-b773-3154b904e198"
 {
 anchors:11,
 formIndex:10300,
-imageMediaID:"80E97CE6-9650-49FA-A957-A10A4FFFA76C",
+imageMediaID:"04E7D8D6-1A41-417F-9663-76C7146E06A9",
 location:"0,0",
 mediaOptions:6,
 name:"gfx_subheader",

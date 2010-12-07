@@ -3,7 +3,7 @@ items:[
 {
 anchors:11,
 formIndex:10200,
-imageMediaID:"9431C0ED-1524-4883-B705-09B8836132F2",
+imageMediaID:"1811396E-6434-4F6C-AEB8-5FBCEF2C0461",
 location:"0,343",
 mediaOptions:6,
 showClick:false,
@@ -22,7 +22,7 @@ uuid:"2fa5caad-c96c-4f14-ad41-ebd8984169c3"
 {
 anchors:11,
 formIndex:10100,
-imageMediaID:"32D04B50-BDDE-4A71-AC2E-9588B2B6D83C",
+imageMediaID:"CE53A863-E2EB-4ECC-A84B-9E7D8DB56674",
 location:"0,35",
 mediaOptions:6,
 showClick:false,

@@ -18,7 +18,7 @@ uuid:"0d3a36d0-ebdf-4fd0-b33c-5aff33e86813"
 },
 {
 formIndex:10800,
-imageMediaID:"B031CF3E-999C-4DD4-8585-B7F428596AAE",
+imageMediaID:"3F517B31-DD18-4A95-9F7E-D88327EF3BBF",
 location:"235,7",
 mediaOptions:10,
 name:"preview_filters",
@@ -36,7 +36,7 @@ uuid:"135b1bff-0428-4100-af61-7bb9303cc744"
 {
 formIndex:11000,
 horizontalAlignment:0,
-imageMediaID:"251DBC4D-168C-4A76-9DBF-DA22BEE0B930",
+imageMediaID:"48E77B53-BF62-4F7A-A321-108629DCCC6D",
 location:"457,7",
 mediaOptions:10,
 name:"preview_tabs",
@@ -68,7 +68,7 @@ uuid:"210783c6-6e1a-43cc-874a-e6076beab2b0"
 },
 {
 formIndex:10900,
-imageMediaID:"B77E5184-2873-4D95-80EF-4DD282647DC7",
+imageMediaID:"92CC151F-1399-4446-8B94-30029D21F379",
 location:"345,7",
 mediaOptions:10,
 name:"preview_reports",
@@ -132,7 +132,7 @@ uuid:"73aec369-1474-40e2-a2a8-4be733e4470b"
 },
 {
 formIndex:10700,
-imageMediaID:"0A23306E-DDC5-445E-B766-397641C20076",
+imageMediaID:"E1CD88A5-94D5-4659-BA2A-480AFCAF8EDF",
 location:"125,7",
 mediaOptions:10,
 name:"preview_actions",
@@ -195,13 +195,13 @@ uuid:"ad0da85f-c8d9-4a02-b447-4f155c41890c"
 {
 anchors:3,
 formIndex:12300,
-imageMediaID:"7A6B9C87-74DA-4FFA-884E-AA40D7E71A48",
+imageMediaID:"0DA15436-09D7-4F3D-AFFA-7D52F54CCD48",
 location:"571,2",
 mediaOptions:1,
 name:"help_buttons",
 onActionMethodID:"6a193823-8789-4ec3-a7bf-45d1238dc5bd",
 rolloverCursor:12,
-rolloverImageMediaID:"54B2691A-4383-4F72-8EAA-07F5A2BFCF9B",
+rolloverImageMediaID:"61FC7BF4-C9DF-46EC-8EEC-FEB5925B282F",
 showClick:false,
 showFocus:false,
 size:"20,20",
@@ -359,7 +359,7 @@ uuid:"ecc3b4a9-7d63-490a-9941-a75777595cde"
 {
 formIndex:10600,
 horizontalAlignment:0,
-imageMediaID:"0CBF238B-3320-45FD-B7D6-B9EE18C0B20C",
+imageMediaID:"61A4C8ED-DCEA-4772-875E-6F2205B96461",
 location:"15,7",
 mediaOptions:10,
 name:"preview_add",

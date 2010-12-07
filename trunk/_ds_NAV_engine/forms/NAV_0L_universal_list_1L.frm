@@ -20,7 +20,7 @@ uuid:"0902cffb-77c4-40b0-a509-d2bd915da804"
 anchors:14,
 formIndex:10000,
 horizontalAlignment:0,
-imageMediaID:"BFD08307-13EF-4A88-A109-50443E95F3F3",
+imageMediaID:"7D351176-BCDA-463E-B6F4-F6F33983DAD8",
 location:"0,60",
 mediaOptions:1,
 name:"lbl_rec_bottom",

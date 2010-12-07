@@ -9,7 +9,7 @@ uuid:"12a64c05-36c0-48a6-8ac0-be787e87640d"
 {
 borderType:"EmptyBorder,0,0,0,0",
 formIndex:11700,
-imageMediaID:"A42C1C71-12C1-4287-92E7-50737E4D2149",
+imageMediaID:"2AD2C4E5-ACD2-4082-94C5-739DF7D29311",
 location:"240,12",
 mediaOptions:1,
 name:"tab_3",
@@ -25,7 +25,7 @@ uuid:"23864684-4e0f-46cf-80c1-34885f182b95"
 {
 borderType:"EmptyBorder,0,0,0,0",
 formIndex:10200,
-imageMediaID:"6E88F0DE-6A47-40EB-B970-04696C13C138",
+imageMediaID:"F54BC596-BF15-42A7-BDD6-CB626C71A397",
 location:"60,12",
 mediaOptions:1,
 name:"tab_1",
@@ -41,7 +41,7 @@ uuid:"30f7e5c7-9e05-4083-a10f-7c5859717838"
 {
 borderType:"EmptyBorder,0,0,0,0",
 formIndex:10300,
-imageMediaID:"26944A6B-AC2A-4D61-8E90-CD86328C201B",
+imageMediaID:"5D7564DE-8E20-4324-8E8B-DB7B047446D2",
 location:"510,12",
 mediaOptions:1,
 name:"tab_6",
@@ -123,7 +123,7 @@ uuid:"80c39851-613d-44dd-96e2-143bfc01d762"
 {
 borderType:"EmptyBorder,0,0,0,0",
 formIndex:11500,
-imageMediaID:"A42C1C71-12C1-4287-92E7-50737E4D2149",
+imageMediaID:"2AD2C4E5-ACD2-4082-94C5-739DF7D29311",
 location:"330,12",
 mediaOptions:1,
 name:"tab_4",
@@ -216,7 +216,7 @@ uuid:"9cc5a5f2-4948-45c1-b036-dacffba899c6"
 {
 borderType:"EmptyBorder,0,0,0,0",
 formIndex:11900,
-imageMediaID:"A42C1C71-12C1-4287-92E7-50737E4D2149",
+imageMediaID:"2AD2C4E5-ACD2-4082-94C5-739DF7D29311",
 location:"420,12",
 mediaOptions:1,
 name:"tab_5",
@@ -232,7 +232,7 @@ uuid:"b078b013-1e51-42f1-895c-275829d69034"
 {
 anchors:11,
 formIndex:10100,
-imageMediaID:"32D04B50-BDDE-4A71-AC2E-9588B2B6D83C",
+imageMediaID:"CE53A863-E2EB-4ECC-A84B-9E7D8DB56674",
 location:"0,32",
 mediaOptions:6,
 showClick:false,
@@ -261,7 +261,7 @@ uuid:"c010b1eb-13c8-4cd9-ae7e-65988946d385"
 {
 borderType:"EmptyBorder,0,0,0,0",
 formIndex:11300,
-imageMediaID:"29F8B5CB-9A7C-413B-A9D0-33C5EDA7F167",
+imageMediaID:"6064C0B9-822B-40F6-86B0-BF5B45B0801C",
 location:"150,12",
 mediaOptions:1,
 name:"tab_2",

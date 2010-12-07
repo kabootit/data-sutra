@@ -38,7 +38,7 @@ valuelistID:"0F6F4FC1-63FC-48E0-9795-3B0F131D7BC1"
 {
 borderType:"SpecialMatteBorder,0.0,0.0,1.0,0.0,#000000,#999999,#999999,#999999,0.0,1.0",
 formIndex:10300,
-imageMediaID:"09E6D99F-1F1F-4F7E-A738-B88FE3E4A4FE",
+imageMediaID:"98C8EF04-625B-4B0F-B8A8-FCE2C09C4FE3",
 location:"475,0",
 mediaOptions:1,
 name:"btn_remove",

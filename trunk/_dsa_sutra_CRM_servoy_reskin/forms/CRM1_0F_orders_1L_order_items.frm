@@ -39,7 +39,7 @@ uuid:"3bd6d2f9-33a0-4793-9a43-ecc8f8c1c750"
 anchors:3,
 borderType:"SpecialMatteBorder,0.0,0.0,1.0,0.0,#000000,#000000,#999999,#000000,0.0,1.0",
 formIndex:15300,
-imageMediaID:"1C42A811-CB9F-4938-A02B-1AD39282FC44",
+imageMediaID:"878FFF3D-DEBA-4DAD-AD33-48D116C9448E",
 location:"640,12",
 mediaOptions:1,
 onActionMethodID:"a6ac93ba-23a6-464c-bfb3-ad2fd9a7fc43",
@@ -55,7 +55,7 @@ uuid:"50e224f8-4c37-4a55-a5ee-cd54510e90f8"
 {
 borderType:"SpecialMatteBorder,0.0,0.0,1.0,0.0,#000000,#000000,#999999,#000000,0.0,1.0",
 formIndex:14900,
-imageMediaID:"09E6D99F-1F1F-4F7E-A738-B88FE3E4A4FE",
+imageMediaID:"98C8EF04-625B-4B0F-B8A8-FCE2C09C4FE3",
 location:"3,12",
 mediaOptions:1,
 onActionMethodID:"6fdd8c88-818b-4543-a637-e7c91f625cc0",

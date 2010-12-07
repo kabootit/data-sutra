@@ -99,7 +99,7 @@ uuid:"59ea1f89-8cf0-433d-a821-c00598f80c54"
 {
 anchors:11,
 formIndex:11400,
-imageMediaID:"32D04B50-BDDE-4A71-AC2E-9588B2B6D83C",
+imageMediaID:"CE53A863-E2EB-4ECC-A84B-9E7D8DB56674",
 location:"0,28",
 mediaOptions:6,
 showClick:false,
@@ -137,7 +137,7 @@ uuid:"7e404535-b857-4bf7-b834-6d5a8e8f2892"
 {
 anchors:14,
 formIndex:11000,
-imageMediaID:"9431C0ED-1524-4883-B705-09B8836132F2",
+imageMediaID:"1811396E-6434-4F6C-AEB8-5FBCEF2C0461",
 location:"0,185",
 mediaOptions:6,
 showClick:false,

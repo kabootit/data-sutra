@@ -9,7 +9,7 @@ uuid:"03693e60-539a-458d-8726-0fe264d7c9ce"
 {
 anchors:15,
 formIndex:10000,
-imageMediaID:"270D376C-D331-42A5-AB32-EEAEA2C476FF",
+imageMediaID:"7A7765DB-BD4F-4ACF-86B7-D72677CE3518",
 location:"0,0",
 mediaOptions:4,
 name:"gfx_header",
@@ -23,7 +23,7 @@ uuid:"494be2a5-69ef-4ddb-9919-4d84b801b775"
 {
 formIndex:10600,
 horizontalAlignment:0,
-imageMediaID:"E6181722-DA91-4D80-8738-3B8B1F000A63",
+imageMediaID:"EF7DD17F-D611-423A-A6AC-9BF642AF2015",
 location:"176,6",
 mediaOptions:14,
 rolloverCursor:12,
@@ -56,7 +56,7 @@ verticalAlignment:3
 {
 formIndex:10400,
 horizontalAlignment:0,
-imageMediaID:"A0568AC8-5445-417A-A565-FCD6751C6BE2",
+imageMediaID:"044BA363-0687-4628-BF6E-A50E1DDE809B",
 location:"86,6",
 mediaOptions:14,
 rolloverCursor:12,
@@ -89,7 +89,7 @@ verticalAlignment:3
 {
 formIndex:10200,
 horizontalAlignment:0,
-imageMediaID:"AE56A804-D9CD-464E-8FC5-CF81345A175C",
+imageMediaID:"927751FC-AB95-4037-816D-1BBA7744F969",
 location:"26,6",
 mediaOptions:14,
 rolloverCursor:12,

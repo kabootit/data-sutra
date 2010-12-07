@@ -120,7 +120,7 @@ uuid:"2846C0BF-C7E6-45EB-B750-75FE18AEE228"
 {
 anchors:3,
 formIndex:9994,
-imageMediaID:"984C4E93-0A5C-4BCB-8651-08BE978CDBA8",
+imageMediaID:"04FF8A9A-C6A3-4B2F-A5A5-A7D90B413FE4",
 location:"177,161",
 mediaOptions:1,
 name:"gfx_tool_right",
@@ -345,7 +345,7 @@ uuid:"9595F737-1576-442A-9A46-6D239AE5561D"
 },
 {
 formIndex:9996,
-imageMediaID:"8FCE1716-856C-451C-8631-36541B828BE6",
+imageMediaID:"C2EC834C-77D4-46B6-95B8-72A64E4784D4",
 location:"147,161",
 mediaOptions:1,
 name:"gfx_tool_left",
@@ -456,7 +456,7 @@ uuid:"D29C2A12-7990-4C40-B5C7-8C42DD4006ED"
 {
 anchors:11,
 formIndex:9995,
-imageMediaID:"EDD0A471-223B-4239-9D2A-32D232B64122",
+imageMediaID:"23292ECB-4279-4F8D-81AD-965B31E2FA3F",
 location:"153,161",
 mediaOptions:6,
 name:"gfx_tool_center",
@@ -495,7 +495,7 @@ uuid:"DC258859-BE1A-48B1-BC29-5A04B5C56ED6"
 {
 anchors:11,
 formIndex:9993,
-imageMediaID:"3390CD9C-F323-4365-AAA2-C393BDD3E98E",
+imageMediaID:"32CF59BD-8183-40B8-8049-8F9C0865D25F",
 location:"117,158",
 mediaOptions:4,
 name:"header_preview",

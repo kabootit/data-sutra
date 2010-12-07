@@ -105,7 +105,7 @@ valuelistID:"F877FD53-BA9E-4AB8-AC4E-6AD7F11AEF8A"
 {
 anchors:11,
 formIndex:10100,
-imageMediaID:"32D04B50-BDDE-4A71-AC2E-9588B2B6D83C",
+imageMediaID:"CE53A863-E2EB-4ECC-A84B-9E7D8DB56674",
 location:"0,28",
 mediaOptions:6,
 showClick:false,
@@ -262,7 +262,7 @@ uuid:"D5857F2A-4B64-49BB-8B25-19F872D4F2F2"
 {
 anchors:14,
 formIndex:10200,
-imageMediaID:"9431C0ED-1524-4883-B705-09B8836132F2",
+imageMediaID:"1811396E-6434-4F6C-AEB8-5FBCEF2C0461",
 location:"0,205",
 mediaOptions:6,
 showClick:false,
