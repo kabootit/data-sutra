@@ -5,37 +5,38 @@
 function FORM_on_load()
 {
 
-
-//Go to static object
-GO_two()
 }
 
 /**
  *
  * @properties={typeid:24,uuid:"d8be63c2-2b4e-4e3b-9a1e-3822efb8b58e"}
  */
-function FORM_on_show()
+function FORM_on_show(firstShow)
 {
-
-
-//return to place where highlighter is
-switch (elements.highlighter.getLocationY()) {
-	case 16:
-		GO_one()
-		break
-	case 39:
+	if (firstShow) {
+		//Go to static object
 		GO_two()
-		break
-	case 64:
-		GO_three()
-		break
-	case 89:
-		GO_four()
-		break
-	case 114:
-		GO_five()
-		break
-}
+	}
+	else {
+		//return to place where highlighter is
+		switch (elements.highlighter.getLocationY()) {
+			case 16:
+				GO_one()
+				break
+			case 39:
+				GO_two()
+				break
+			case 64:
+				GO_three()
+				break
+			case 89:
+				GO_four()
+				break
+			case 114:
+				GO_five()
+				break
+		}
+	}
 }
 
 /**
