@@ -8,7 +8,6 @@ function FORM_on_load()
 //set up split bean
 elements.split_tool_find.leftComponent = elements.tab_toolbar
 elements.split_tool_find.rightComponent = elements.tab_fastfind
-elements.split_tool_find.dividerLocation = screen_width - 580 //application.getWindowWidth(null) - 580
 
 //turn off sidebar drag related stuff
 elements.bean_drag.visible = false
@@ -116,5 +115,19 @@ function SIDEBAR_expand()
 		globals.DS_space_flexible(null,true)
 		application.updateUI()
 		splitToolFind.dividerLocation = divLocation
+	}
+}
+
+/**
+ * Callback method for when form is shown.
+ *
+ * @param {Boolean} firstShow form is shown first time after load
+ * @param {JSEvent} event the event that triggered the action
+ *
+ * @properties={typeid:24,uuid:"5FA02506-8406-4C2A-A0A5-C6179C5FA9BD"}
+ */
+function FORM_on_show(firstShow, event) {
+	if (firstShow) {
+		elements.split_tool_find.dividerLocation = application.getWindowWidth(null) - 580
 	}
 }
