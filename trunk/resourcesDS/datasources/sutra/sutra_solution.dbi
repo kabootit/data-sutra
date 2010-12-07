@@ -111,6 +111,12 @@ name:"initial_splash_screen"
 },
 {
 allowNull:true,
+creationOrderIndex:70,
+dataType:4,
+name:"internet_allow"
+},
+{
+allowNull:true,
 creationOrderIndex:67,
 dataType:12,
 length:512,
