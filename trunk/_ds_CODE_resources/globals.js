@@ -4534,6 +4534,7 @@ function CODE_workspace_data()
 	var vlForm = new Object()
 	var vlReln = new Object()
 	var formsByTable = new Object()
+	formsByTable['No datasource'] = new Object()
 	
 	var workspace = plugins.sutra.getWorkspace().substr(5)
 	var modules = plugins.file.getFolderContents(workspace, null, 2)
@@ -4621,35 +4622,49 @@ function CODE_workspace_data()
 				
 				//add to table view also
 				
-				//add server if not encountered before
-				if (!formsByTable[formInfo.serverName]) {
-					formsByTable[formInfo.serverName] = new Object()
-				}
 				
-				//add table if not encountered before
-				if (!formsByTable[formInfo.serverName][formInfo.tableName]) {
-					formsByTable[formInfo.serverName][formInfo.tableName] = new Object()
-					
-					//punch in pk info
-					var jsTable = databaseManager.getTable(formInfo.serverName,formInfo.tableName)
-					
-					//possible to have db server offline for solutions
-					if (jsTable) {
-						var pkCols = jsTable.getRowIdentifierColumnNames()
-						//MEMO: does not account for multiple primary keys on a table
-						formsByTable[formInfo.serverName][formInfo.tableName].primaryKey = pkCols[0]
+				//this is a form without a table
+				if (!formInfo.serverName && !formInfo.tableName) {
+					//add form
+					if (nonRef) {
+						formsByTable['No datasource'][formInfo.formName] = globals.CODE_copy_object(formInfo)
+					}
+					//only used in developer
+					else {
+						formsByTable['No datasource'][formInfo.formName] = formInfo
 					}
 				}
-				
-				//add form
-				if (nonRef) {
-					formsByTable[formInfo.serverName][formInfo.tableName][formInfo.formName] = globals.CODE_copy_object(formInfo)
-				}
-				//only used in developer
+				//form with a table
 				else {
-					formsByTable[formInfo.serverName][formInfo.tableName][formInfo.formName] = formInfo
+					//add server if not encountered before
+					if (!formsByTable[formInfo.serverName]) {
+						formsByTable[formInfo.serverName] = new Object()
+					}
+					
+					//add table if not encountered before
+					if (!formsByTable[formInfo.serverName][formInfo.tableName]) {
+						formsByTable[formInfo.serverName][formInfo.tableName] = new Object()
+						
+						//punch in pk info
+						var jsTable = databaseManager.getTable(formInfo.serverName,formInfo.tableName)
+						
+						//possible to have db server offline for solutions
+						if (jsTable) {
+							var pkCols = jsTable.getRowIdentifierColumnNames()
+							//MEMO: does not account for multiple primary keys on a table
+							formsByTable[formInfo.serverName][formInfo.tableName].primaryKey = pkCols[0]
+						}
+					}
+					
+					//add form
+					if (nonRef) {
+						formsByTable[formInfo.serverName][formInfo.tableName][formInfo.formName] = globals.CODE_copy_object(formInfo)
+					}
+					//only used in developer
+					else {
+						formsByTable[formInfo.serverName][formInfo.tableName][formInfo.formName] = formInfo
+					}
 				}
-				
 			}
 			
 		}
