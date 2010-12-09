@@ -604,7 +604,7 @@ else {
 				solutionPrefs.repository.relations = repositoryPrefs.relations
 				
 				//null out temporary global var
-				repositoryPrefs = undefined
+				delete repositoryPrefs
 			}
 			//client json is not the same as the server's, pump it down
 			else if (dsRepoChecksum != forms[prefForm].repository_checksum && forms[prefForm].repository_node) {

@@ -5451,6 +5451,7 @@ if (application.__parent__.repositoryPrefs) {
 	var allModules = repositoryPrefs.allModules
 	var formsByModule = repositoryPrefs.allForms
 	var formsByTable = repositoryPrefs.allFormsByTable
+	formsByTable['No datasource'] = new Object()
 	
 	//get all form names
 	for (var i in allModules) {
@@ -5458,33 +5459,86 @@ if (application.__parent__.repositoryPrefs) {
 		
 		var repositoryServer = 'repository_server'
 		var maxReturnedRows = 100000
-		var query = "SELECT a.element_id, " + 
-					"(SELECT b.property_value FROM servoy_element_properties b " + 
-						"WHERE b.content_id = 37 AND b.element_id = a.element_id AND b.revision = a.revision) AS form_name, " + //content_id of 37 is form names
-					"(SELECT b.property_value FROM servoy_element_properties b " +
-						"WHERE b.content_id = 232 AND b.element_id = a.element_id AND b.revision = a.revision) AS separate_foundset, " + //content_id of 232 is useSeparateFoundset
-					"(SELECT b.property_value FROM servoy_element_properties b " +
-						"WHERE b.content_id = 36 AND b.element_id = a.element_id AND b.revision = a.revision) AS server_name, " + //content_id of 36 is serverName
-					"(SELECT b.property_value FROM servoy_element_properties b " +
-						"WHERE b.content_id = 41 AND b.element_id = a.element_id AND b.revision = a.revision) AS table_name, " + //content_id of 41 is tableName
-					"(SELECT b.property_value FROM servoy_element_properties b " +
-						"WHERE b.content_id = 43 AND b.element_id = a.element_id AND b.revision = a.revision) AS form_type, " + //content_id of 43 is type of form
-					"(SELECT b.property_value FROM servoy_element_properties b " +
-						"WHERE b.content_id = 38 AND b.element_id = a.element_id AND b.revision = a.revision) AS form_size " + //content_id of 38 is total size of all body parts
-					"FROM servoy_releases a " + 
-					"WHERE a.root_element_id = ? AND a.release_number = ? AND " + 
-					"(SELECT b.property_value FROM servoy_element_properties b WHERE b.content_id = 37 AND b.element_id = a.element_id AND b.revision = a.revision) IS NOT NULL"
 		var args = [selectedModule.rootElementID,selectedModule.activeRelease]
 		
-		var dataset = databaseManager.getDataSetByQuery(repositoryServer, query, args, maxReturnedRows)
+		//in pre-5 land
+		if (utils.stringToNumber(solutionPrefs.clientInfo.verServoy) < 5) {
+			var query = "SELECT a.element_id, " + 
+						"(SELECT b.property_value FROM servoy_element_properties b " + 
+							"WHERE b.content_id = 37 AND b.element_id = a.element_id AND b.revision = a.revision) AS form_name, " + //content_id of 37 is form names
+						"(SELECT b.property_value FROM servoy_element_properties b " +
+							"WHERE b.content_id = 232 AND b.element_id = a.element_id AND b.revision = a.revision) AS separate_foundset, " + //content_id of 232 is useSeparateFoundset
+						"(SELECT b.property_value FROM servoy_element_properties b " +
+							"WHERE b.content_id = 36 AND b.element_id = a.element_id AND b.revision = a.revision) AS server_name, " + //content_id of 36 is serverName
+						"(SELECT b.property_value FROM servoy_element_properties b " +
+							"WHERE b.content_id = 41 AND b.element_id = a.element_id AND b.revision = a.revision) AS table_name, " + //content_id of 41 is tableName
+						"(SELECT b.property_value FROM servoy_element_properties b " +
+							"WHERE b.content_id = 43 AND b.element_id = a.element_id AND b.revision = a.revision) AS form_type, " + //content_id of 43 is type of form
+						"(SELECT b.property_value FROM servoy_element_properties b " +
+							"WHERE b.content_id = 38 AND b.element_id = a.element_id AND b.revision = a.revision) AS form_size " + //content_id of 38 is total size of all body parts
+						"FROM servoy_releases a " + 
+						"WHERE a.root_element_id = ? AND a.release_number = ? AND " + 
+						"(SELECT b.property_value FROM servoy_element_properties b WHERE b.content_id = 37 AND b.element_id = a.element_id AND b.revision = a.revision) IS NOT NULL"
+			
+			var dataset = databaseManager.getDataSetByQuery(repositoryServer, query, args, maxReturnedRows)
 		
-		var elementIDs = dataset.getColumnAsArray(1)
-		var formNames = dataset.getColumnAsArray(2)
-		var separateFoundset = dataset.getColumnAsArray(3)
-		var serverNames = dataset.getColumnAsArray(4)
-		var tableNames = dataset.getColumnAsArray(5)
-		var formTypes = dataset.getColumnAsArray(6)
-		var formSizes = dataset.getColumnAsArray(7)
+			var elementIDs = dataset.getColumnAsArray(1)
+			var formNames = dataset.getColumnAsArray(2)
+			var separateFoundset = dataset.getColumnAsArray(3)
+			var serverNames = dataset.getColumnAsArray(4)
+			var tableNames = dataset.getColumnAsArray(5)
+			var formTypes = dataset.getColumnAsArray(6)
+			var formSizes = dataset.getColumnAsArray(7)
+		
+		}
+		//post 5
+		else {
+			var query = "SELECT a.element_id, " + 
+						"(SELECT b.property_value FROM servoy_element_properties b " + 
+							"WHERE b.content_id = 37 AND b.element_id = a.element_id AND b.revision = a.revision) AS form_name, " + //content_id of 37 is form names
+						"(SELECT b.property_value FROM servoy_element_properties b " +
+							"WHERE b.content_id = 313 AND b.element_id = a.element_id AND b.revision = a.revision) AS named_foundset, " + //content_id of 313 is namedFoundSet
+						"(SELECT b.property_value FROM servoy_element_properties b " +
+							"WHERE b.content_id = 314 AND b.element_id = a.element_id AND b.revision = a.revision) AS datasource, " + //content_id of 314 is datasource
+						"(SELECT b.property_value FROM servoy_element_properties b " +
+							"WHERE b.content_id = 43 AND b.element_id = a.element_id AND b.revision = a.revision) AS form_type, " + //content_id of 43 is type of form
+						"(SELECT b.property_value FROM servoy_element_properties b " +
+							"WHERE b.content_id = 38 AND b.element_id = a.element_id AND b.revision = a.revision) AS form_size " + //content_id of 38 is total size of all body parts
+						"FROM servoy_releases a " + 
+						"WHERE a.root_element_id = ? AND a.release_number = ? AND " + 
+						"(SELECT b.property_value FROM servoy_element_properties b WHERE b.content_id = 37 AND b.element_id = a.element_id AND b.revision = a.revision) IS NOT NULL"
+			
+			var dataset = databaseManager.getDataSetByQuery(repositoryServer, query, args, maxReturnedRows)
+			
+			var elementIDs = dataset.getColumnAsArray(1)
+			var formNames = dataset.getColumnAsArray(2)
+			var separateFoundset = dataset.getColumnAsArray(3)
+			var datasources = dataset.getColumnAsArray(4)
+			
+			var serverNames = new Array()
+			var tableNames = new Array()
+			for (var z = 0; z < datasources.length; z++) {
+				var sourceItem = datasources[z]
+				if (sourceItem) {
+					sourceItem = sourceItem.split('/')
+					
+					//handle different types of datasources
+					switch (sourceItem[0]) {
+						case 'db:':
+							serverNames.push(sourceItem[1])
+							tableNames.push(sourceItem[2])
+							break
+					}
+				}
+				else {
+					serverNames.push('None')
+					tableNames.push('None')
+				}
+			}
+			
+			var formTypes = dataset.getColumnAsArray(5)
+			var formSizes = dataset.getColumnAsArray(6)
+		}
 		
 		//create module container for all forms
 		var allForms = formsByModule[selectedModule.moduleName] = new Object()
@@ -5496,7 +5550,7 @@ if (application.__parent__.repositoryPrefs) {
 					moduleName : selectedModule.moduleName,
 					formName   : formNames[j],
 					elementID  : elementIDs[j],
-					useSeparateFoundset : ((separateFoundset[j]) ? true : false),
+					useSeparateFoundset : ((separateFoundset[j]) ? true : false),	//TODO: when more foundsets than just 'separate' supported, will need to revisit
 					serverName : serverNames[j],
 					tableName  : tableNames[j],
 					formType  : (formTypes[j]) ? formTypes[j] : 0,
@@ -5505,33 +5559,47 @@ if (application.__parent__.repositoryPrefs) {
 				
 				//add to table view also
 				
-				//add server if not encountered before
-				if (!formsByTable[formInfo.serverName]) {
-					formsByTable[formInfo.serverName] = new Object()
-				}
-				
-				//add table if not encountered before
-				if (!formsByTable[formInfo.serverName][formInfo.tableName]) {
-					formsByTable[formInfo.serverName][formInfo.tableName] = new Object()
-					
-					//punch in pk info
-					var jsTable = databaseManager.getTable(formInfo.serverName,formInfo.tableName)
-					
-					//will not be a table on a form without a datasource
-					if (jsTable) {
-						var pkCols = jsTable.getRowIdentifierColumnNames()
-						//MEMO: does not account for multiple primary keys on a table
-						formsByTable[formInfo.serverName][formInfo.tableName].primaryKey = pkCols[0]
+				//this is a form without a table
+				if (formInfo.serverName == 'None' && formInfo.tableName == 'None') {
+					//add form
+					if (nonRef) {
+						formsByTable['No datasource'][formInfo.formName] = globals.CODE_copy_object(formInfo)
+					}
+					//only used in developer
+					else {
+						formsByTable['No datasource'][formInfo.formName] = formInfo
 					}
 				}
-				
-				//add form
-				if (nonRef) {
-					formsByTable[formInfo.serverName][formInfo.tableName][formInfo.formName] = globals.CODE_copy_object(formInfo)
-				}
-				//only used in developer
+				//form with a table
 				else {
-					formsByTable[formInfo.serverName][formInfo.tableName][formInfo.formName] = formInfo
+					//add server if not encountered before
+					if (!formsByTable[formInfo.serverName]) {
+						formsByTable[formInfo.serverName] = new Object()
+					}
+					
+					//add table if not encountered before
+					if (!formsByTable[formInfo.serverName][formInfo.tableName]) {
+						formsByTable[formInfo.serverName][formInfo.tableName] = new Object()
+						
+						//punch in pk info
+						var jsTable = databaseManager.getTable(formInfo.serverName,formInfo.tableName)
+						
+						//will not be a table on a form without a datasource
+						if (jsTable) {
+							var pkCols = jsTable.getRowIdentifierColumnNames()
+							//MEMO: does not account for multiple primary keys on a table
+							formsByTable[formInfo.serverName][formInfo.tableName].primaryKey = pkCols[0]
+						}
+					}
+					
+					//add form
+					if (nonRef) {
+						formsByTable[formInfo.serverName][formInfo.tableName][formInfo.formName] = globals.CODE_copy_object(formInfo)
+					}
+					//only used in developer
+					else {
+						formsByTable[formInfo.serverName][formInfo.tableName][formInfo.formName] = formInfo
+					}
 				}
 			}
 		}
@@ -5739,7 +5807,11 @@ if (application.__parent__.repositoryPrefs) {
 		
 		var repositoryServer = 'repository_server'
 		var maxReturnedRows = -1
-		var query = "SELECT a.element_id, " +
+		var args = [selectedModule.rootElementID,selectedModule.activeRelease]
+		
+		//in pre-5 land
+		if (utils.stringToNumber(solutionPrefs.clientInfo.verServoy) < 5) {
+			var query = "SELECT a.element_id, " +
 						"(SELECT b.property_value FROM servoy_element_properties b " +
 							"WHERE b.content_id = 142 AND b.element_id = a.element_id AND b.revision = a.revision) AS relation_name, " +
 						"(SELECT b.property_value FROM servoy_element_properties b " +
@@ -5776,23 +5848,114 @@ if (application.__parent__.repositoryPrefs) {
 							"(SELECT b.property_value FROM servoy_element_properties b " +
 								"WHERE b.content_id = 145 AND b.element_id = a.element_id AND b.revision = a.revision) ASC"
 			
-		var args = [selectedModule.rootElementID,selectedModule.activeRelease]
-		
-		var dataset = databaseManager.getDataSetByQuery(repositoryServer, query, args, maxReturnedRows)
-		
-		var elementIDs = dataset.getColumnAsArray(1)
-		var relationNames = dataset.getColumnAsArray(2)
-		var priServers = dataset.getColumnAsArray(3)
-		var priTables = dataset.getColumnAsArray(4)
-		var foreignServers = dataset.getColumnAsArray(5)
-		var foreignTables = dataset.getColumnAsArray(6)
-		var createRelatedRecords = dataset.getColumnAsArray(7)
-		var deleteRelatedRecords = dataset.getColumnAsArray(8)
-		var allowParentDelete = dataset.getColumnAsArray(9)
-		var joinTypes = dataset.getColumnAsArray(10)
-		var existsInDB = dataset.getColumnAsArray(11)
-		var duplicateRelatedRecords = dataset.getColumnAsArray(12)
-		var sortOptions = dataset.getColumnAsArray(13)
+			var dataset = databaseManager.getDataSetByQuery(repositoryServer, query, args, maxReturnedRows)
+			
+			var elementIDs = dataset.getColumnAsArray(1)
+			var relationNames = dataset.getColumnAsArray(2)
+			var priServers = dataset.getColumnAsArray(3)
+			var priTables = dataset.getColumnAsArray(4)
+			var foreignServers = dataset.getColumnAsArray(5)
+			var foreignTables = dataset.getColumnAsArray(6)
+			var createRelatedRecords = dataset.getColumnAsArray(7)
+			var deleteRelatedRecords = dataset.getColumnAsArray(8)
+			var allowParentDelete = dataset.getColumnAsArray(9)
+			var joinTypes = dataset.getColumnAsArray(10)
+			var existsInDB = dataset.getColumnAsArray(11)
+			var duplicateRelatedRecords = dataset.getColumnAsArray(12)
+			var sortOptions = dataset.getColumnAsArray(13)
+		}
+		//post 5
+		else {
+			var query = "SELECT a.element_id, " +
+						"(SELECT b.property_value FROM servoy_element_properties b " +
+							"WHERE b.content_id = 142 AND b.element_id = a.element_id AND b.revision = a.revision) AS relation_name, " +
+						"(SELECT b.property_value FROM servoy_element_properties b " +
+							"WHERE b.content_id = 315 AND b.element_id = a.element_id AND b.revision = a.revision) AS primary_datasource, " +
+						"(SELECT b.property_value FROM servoy_element_properties b " +
+							"WHERE b.content_id = 316 AND b.element_id = a.element_id AND b.revision = a.revision) AS foreign_datasource, " +
+						"(SELECT b.property_value FROM servoy_element_properties b " +
+							"WHERE b.content_id = 148 AND b.element_id = a.element_id AND b.revision = a.revision) AS create_related_records, " +
+						"(SELECT b.property_value FROM servoy_element_properties b " +
+							"WHERE b.content_id = 147 AND b.element_id = a.element_id AND b.revision = a.revision) AS delete_related_records, " +
+						"(SELECT b.property_value FROM servoy_element_properties b " +
+							"WHERE b.content_id = 284 AND b.element_id = a.element_id AND b.revision = a.revision) AS allow_parent_delete, " +
+						"(SELECT b.property_value FROM servoy_element_properties b " +
+							"WHERE b.content_id = 292 AND b.element_id = a.element_id AND b.revision = a.revision) AS join_type, " +
+						"(SELECT b.property_value FROM servoy_element_properties b " +
+							"WHERE b.content_id = 149 AND b.element_id = a.element_id AND b.revision = a.revision) AS keys_in_db, " +
+						"(SELECT b.property_value FROM servoy_element_properties b " +
+							"WHERE b.content_id = 266 AND b.element_id = a.element_id AND b.revision = a.revision) AS duplicate_related_records, " +
+						"(SELECT b.property_value FROM servoy_element_properties b " +
+							"WHERE b.content_id = 267 AND b.element_id = a.element_id AND b.revision = a.revision) AS sort_options " +
+					"FROM servoy_releases a " +
+						"WHERE " +
+								"a.root_element_id = ? AND " +
+								"a.release_number = ? AND " +
+								"(SELECT c.object_type_id FROM servoy_elements c " +
+									"WHERE c.object_type_id = 22 AND c.element_id = a.element_id AND c.revision = a.revision) = 22 " +
+						"ORDER BY " +
+							"(SELECT b.property_value FROM servoy_element_properties b " +
+								"WHERE b.content_id = 143 AND b.element_id = a.element_id AND b.revision = a.revision) ASC, " +
+							"(SELECT b.property_value FROM servoy_element_properties b " +
+								"WHERE b.content_id = 145 AND b.element_id = a.element_id AND b.revision = a.revision) ASC"
+			
+			var dataset = databaseManager.getDataSetByQuery(repositoryServer, query, args, maxReturnedRows)
+			
+			var elementIDs = dataset.getColumnAsArray(1)
+			var relationNames = dataset.getColumnAsArray(2)
+			
+			var priDatasource = dataset.getColumnAsArray(3)
+			var foreignDatasource = dataset.getColumnAsArray(4)
+			
+			var priServers = new Array()
+			var priTables = new Array()
+			var foreignServers = new Array()
+			var foreignTables = new Array()
+			for (var z = 0; z < priDatasource.length; z++) {
+				var priSourceItem = priDatasource[z]
+				var foreignSourceItem = foreignDatasource[z]
+				
+				if (priSourceItem) {
+					priSourceItem = priSourceItem.split('/')
+					
+					//handle different types of datasources
+					switch (priSourceItem[0]) {
+						case 'db:':
+							priServers.push(priSourceItem[1])
+							priTables.push(priSourceItem[2])
+							break
+					}
+				}
+				else {
+					priServers.push('None')
+					priTables.push('None')
+				}
+				
+				if (foreignSourceItem) {
+					foreignSourceItem = foreignSourceItem.split('/')
+					
+					//handle different types of datasources
+					switch (foreignSourceItem[0]) {
+						case 'db:':
+							foreignServers.push(foreignSourceItem[1])
+							foreignTables.push(foreignSourceItem[2])
+							break
+					}
+				}
+				else {
+					foreignServers.push('None')
+					foreignTables.push('None')
+				}
+			}
+			
+			var createRelatedRecords = dataset.getColumnAsArray(5)
+			var deleteRelatedRecords = dataset.getColumnAsArray(6)
+			var allowParentDelete = dataset.getColumnAsArray(7)
+			var joinTypes = dataset.getColumnAsArray(8)
+			var existsInDB = dataset.getColumnAsArray(9)
+			var duplicateRelatedRecords = dataset.getColumnAsArray(10)
+			var sortOptions = dataset.getColumnAsArray(11)
+		}
 		
 		//add each relation with properties to priServer/priTable location
 		for (var j = 0 ; j < relationNames.length ; j++) {

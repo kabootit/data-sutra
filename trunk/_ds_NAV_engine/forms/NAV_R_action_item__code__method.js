@@ -62,6 +62,7 @@ if (application.__parent__.solutionPrefs && forms.NAV_0F_navigation_item_1F__but
 			var methodRevision = dataset.getValue(1,1)
 			
 			// this is where we get the method code (sequence reqd to put long methods in correct order)
+			//TODO: 138 is deprecated; see 312 and 332
 			query = "SELECT property_value FROM servoy_element_properties WHERE content_id = 138 " +
 						"AND element_id = ? AND revision = ? " +
 						"ORDER BY sequence ASC"

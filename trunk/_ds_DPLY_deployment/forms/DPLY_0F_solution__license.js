@@ -506,7 +506,7 @@ if (utils.hasRecords(foundset)) {
 
 //go to first screen if in frameworks and solutionPrefs not defined enough
 if (restart == 'OK' && !solutionPrefs.history && forms.DATASUTRA_0F_solution) {
-	application.__parent__.solutionPrefs = undefined
+	delete application.__parent__.solutionPrefs
 	forms.DATASUTRA_0F_solution.controller.show()
 	forms.DATASUTRA_0F_solution.FORM_on_load()
 	

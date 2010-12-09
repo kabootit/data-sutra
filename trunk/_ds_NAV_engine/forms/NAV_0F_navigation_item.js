@@ -97,7 +97,7 @@ if (tableName && serverName != 'NONE' &&
 	}
 	
 }
-//get all relations for this server/table combo in 3.5 or 4.1 client
+//get all relations for this server/table combo in 3.5 developer or client any version 
 else if (tableName && serverName != 'NONE' && 
 	application.__parent__.solutionPrefs && 
 	!solutionPrefs.repository.api && 

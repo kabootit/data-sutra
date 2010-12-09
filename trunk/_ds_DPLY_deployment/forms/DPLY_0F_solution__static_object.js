@@ -197,6 +197,8 @@ function STATIC_repository()
  */
 
 solutionPrefs.repository = new Object()
+delete application.__parent__.repositoryPrefs
+	
 		
 //running in serclipse using a workspace
 if (solutionPrefs.clientInfo.typeServoy == 'developer' && utils.stringToNumber(solutionPrefs.clientInfo.verServoy) >= 4) {
@@ -225,8 +227,8 @@ if (application.__parent__.repositoryPrefs) {
 	
 	databaseManager.saveData()
 	
-	//null out temporary global var
-	repositoryPrefs = undefined
+	//remove temporary global var
+	delete repositoryPrefs
 }
 
 }
