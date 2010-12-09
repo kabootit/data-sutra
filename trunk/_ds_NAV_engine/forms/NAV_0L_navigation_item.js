@@ -808,7 +808,7 @@ if (delRec == 'Yes') {
 				navigationPrefs.byNavSetName[displayNavSet].itemsByName.splice(itemPosn,1)
 				navigationPrefs.byNavSetName[displayNavSet].itemsByOrder.splice(itemPosn,1)
 			}
-			navigationPrefs.byNavItemID[idNavItem] = undefined
+			delete navigationPrefs.byNavItemID[idNavItem]
 			
 			//there are items remaining
 			if (navigationPrefs.byNavSetID[idNavSet].itemsByOrder.length) {

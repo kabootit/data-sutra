@@ -28,7 +28,7 @@ var baseForm = solutionPrefs.config.formNameBase
 var navigationList = 'NAV_0L_solution'
 
 //reset loginDisabled flag so that previews will show misc and qotd areas
-this.loginDisabled = undefined
+delete this.loginDisabled
 
 //there are navigation records
 if (application.__parent__.navigationPrefs) {

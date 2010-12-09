@@ -135,8 +135,8 @@ else {
 	
 	solutionPrefs.config.helpMode = false
 	
-	solutionPrefs.design.statusLockWorkflow = undefined
-	solutionPrefs.design.statusLockList = undefined
+	delete solutionPrefs.design.statusLockWorkflow
+	delete solutionPrefs.design.statusLockList
 }
 }
 
@@ -938,7 +938,7 @@ if (results) {
 	}
 	//name has changed, clear out old name
 	else {
-		navigationPrefs.byNavSetName[displayNavSet].itemsByName[navigationPrefs.byNavItemID[idNavItem].navigationItem.itemName] = undefined
+		delete navigationPrefs.byNavSetName[displayNavSet].itemsByName[navigationPrefs.byNavItemID[idNavItem].navigationItem.itemName]
 	}
 	
 	

@@ -83,7 +83,7 @@ if (input == "Yes") {
 		//remove from code global
 		if (locale && form_name && element_name && locale[form_name][element_name]) {
 			//delete tip
-			locale[form_name][element_name] = undefined
+			delete locale[form_name][element_name]
 		}
 	}
 	

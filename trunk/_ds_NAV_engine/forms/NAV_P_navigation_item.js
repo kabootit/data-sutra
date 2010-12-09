@@ -89,7 +89,7 @@ else {
 	}
 	//name has changed, clear out old name
 	else {
-		navigationPrefs.byNavSetName[displayNavSet].itemsByName[navigationPrefs.byNavItemID[idNavItem].navigationItem.itemName] = undefined
+		delete navigationPrefs.byNavSetName[displayNavSet].itemsByName[navigationPrefs.byNavItemID[idNavItem].navigationItem.itemName]
 	}
 }
 

@@ -40,7 +40,7 @@ if (this.flagEdit) {
 		navigationPrefs.byNavSetName[nav_name] = navigationPrefs.byNavSetID[idNavSet]
 		
 		//delete the old name
-		navigationPrefs.byNavSetName[oldName] = undefined
+		delete navigationPrefs.byNavSetName[oldName]
 		
 		//rebuild nav set valuelist
 		var navSetNames = new Array()

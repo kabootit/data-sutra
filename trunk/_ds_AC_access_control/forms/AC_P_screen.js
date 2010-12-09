@@ -108,7 +108,7 @@ application.closeFormDialog('accessScreen')
 //resize window
 if (this.reSize) {
 	//turn flag off
-	this.reSize = undefined
+	delete this.reSize
 	
 	solutionPrefs.screenAttrib = globals.DS_screen_load()
 	
