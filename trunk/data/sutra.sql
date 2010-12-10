@@ -15,11 +15,11 @@
 
 
 --
--- Create schema sutra_meta
+-- Create schema sutra_5x_lock_sutra
 --
 
-CREATE DATABASE IF NOT EXISTS sutra_meta;
-USE sutra_meta;
+CREATE DATABASE IF NOT EXISTS sutra_5x_lock_sutra;
+USE sutra_5x_lock_sutra;
 CREATE TABLE `sutra_access_action` (
   `id_action` int(11) NOT NULL,
   `action_id` varchar(50) DEFAULT NULL,
@@ -746,7 +746,8 @@ INSERT INTO `sutra_access_log` VALUES  ('27 seconds',NULL,'2010-04-23 12:26:36',
  ('5 minutes 1 seconds',NULL,'2010-12-05 08:01:50',NULL,4648,'2010-12-05 07:56:48','Mac OS X','developer','5.2.2 ','trojalia.local','192.168.3.1','UNKNOWN','Mac OS X','0.00','C6B67FD5-235E-4C97-A2ED-8DF73A64B812',NULL,NULL,'10.6.5','17.1-b03-307'),
  ('2 minutes 39 seconds',NULL,'2010-12-05 08:11:07',NULL,4649,'2010-12-05 08:08:28','Mac OS X','developer','5.2.2 ','trojalia.local','192.168.3.1','UNKNOWN','Mac OS X','0.00','5E8A32C3-7ED0-44A2-B214-8B29DE666A91',NULL,NULL,'10.6.5','17.1-b03-307'),
  ('7 seconds',NULL,'2010-12-05 09:44:11',NULL,4650,'2010-12-05 09:44:04','Mac OS X','developer','5.2.2 ','trojalia.local','192.168.3.1','UNKNOWN','Mac OS X','0.00','749CF3D8-D131-4EE6-B407-0579CA581FFC',NULL,NULL,'10.6.5','17.1-b03-307'),
- ('51 seconds',NULL,'2010-12-05 09:48:00',NULL,4651,'2010-12-05 09:47:08','Mac OS X','developer','5.2.2 ','trojalia.local','192.168.3.1','UNKNOWN','Mac OS X','0.00','85208B44-A604-4940-BC33-D8323B88EFDD',NULL,NULL,'10.6.5','17.1-b03-307');
+ ('51 seconds',NULL,'2010-12-05 09:48:00',NULL,4651,'2010-12-05 09:47:08','Mac OS X','developer','5.2.2 ','trojalia.local','192.168.3.1','UNKNOWN','Mac OS X','0.00','85208B44-A604-4940-BC33-D8323B88EFDD',NULL,NULL,'10.6.5','17.1-b03-307'),
+ ('2 minutes 16 seconds',NULL,'2010-12-10 08:37:13',NULL,4652,'2010-12-10 08:34:57','Mac OS X','developer','5.2.2 ','trojalia.local','192.168.3.1','UNKNOWN','Mac OS X','0.00','4CD5A55A-E934-4C17-BF31-4EE6636F02E0',NULL,NULL,'10.6.5','17.1-b03-307');
 CREATE TABLE `sutra_access_organization` (
   `id_organization` int(11) NOT NULL,
   `address_2` varchar(50) DEFAULT NULL,
@@ -1062,6 +1063,24 @@ INSERT INTO `sutra_action_item_filter` VALUES  (182,411,'company_industry','Rent
  (250,1358,'amt_discount','1','=','orders','Value',NULL,NULL,NULL),
  (251,1359,'amt_discount','7','=','orders','Value',NULL,NULL,NULL),
  (252,1478,NULL,NULL,'=','companies','Value',NULL,NULL,NULL);
+CREATE TABLE `sutra_batch` (
+  `id_batch` int(11) NOT NULL,
+  `date_modified` datetime DEFAULT NULL,
+  `date_created` datetime DEFAULT NULL,
+  `schedule_name` varchar(255) DEFAULT NULL,
+  `schedule_method` varchar(255) DEFAULT NULL,
+  `schedule_minute` varchar(255) DEFAULT NULL,
+  `schedule_hour` varchar(255) DEFAULT NULL,
+  `schedule_month` varchar(255) DEFAULT NULL,
+  `schedule_date` varchar(255) DEFAULT NULL,
+  `schedule_day` varchar(255) DEFAULT NULL,
+  `method_module` varchar(255) DEFAULT NULL,
+  `method_name` varchar(255) DEFAULT NULL,
+  `flag_enabled` int(11) DEFAULT NULL,
+  `schedule_second` varchar(255) DEFAULT NULL,
+  `method_arguments` mediumtext,
+  PRIMARY KEY (`id_batch`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 CREATE TABLE `sutra_blog` (
   `date_modified` datetime DEFAULT NULL,
   `id_blog` int(11) NOT NULL,
@@ -2632,6 +2651,13 @@ CREATE TABLE `sutra_graphics` (
   PRIMARY KEY (`id_graphics`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 INSERT INTO `sutra_graphics` VALUES  (1,NULL,NULL);
+CREATE TABLE `sutra_i18n` (
+  `message_id` int(11) NOT NULL,
+  `message_key` varchar(150) NOT NULL,
+  `message_language` varchar(5) DEFAULT NULL,
+  `message_value` mediumtext,
+  PRIMARY KEY (`message_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 CREATE TABLE `sutra_list_display` (
   `id_list_display` int(11) NOT NULL,
   `id_navigation_item` int(11) DEFAULT NULL,
@@ -2669,45 +2695,46 @@ CREATE TABLE `sutra_list_display_item` (
   `field_name` varchar(100) DEFAULT NULL,
   `display_width_pixel` int(11) DEFAULT NULL,
   `display_width_percent` int(11) DEFAULT NULL,
+  `flag_edit` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_list_display_item`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-INSERT INTO `sutra_list_display_item` VALUES  (1993,'<<company_name>>',18,959,0,'left',NULL,'Name','','company_name',126,65),
- (1994,'<<is_active>>',8,959,2,'left','CRM_status_order','Status','Valuelist','is_active',56,25),
- (1995,'<<company_id>>',3,959,3,'left',NULL,'ID','','company_id',21,10),
- (1996,'<<company_industry>>',20,960,1,'left','','Industry','Text','company_industry',140,70),
- (1997,'<<creation_date>>',9,960,2,'left','MM-dd-yyyy','Date','Date','creation_date',63,30),
- (1998,'<<company_name>>',12,961,1,'left','substr | 0,7','Comp','Text','company_name',84,40),
- (1999,'<<company_url>>',48,961,2,'left','link | *this','Website','Text','company_url',336,60),
- (2000,'<<company_id>>',NULL,962,1,'left','CRM_companies','Company','Valuelist','company_id',0,100),
- (2001,'<<name_last>>, <<name_first>>',15,963,2,'left','','Name',NULL,'name_last',105,50),
- (2002,'<<email>>',14,963,2,'right','','Email','Text','email',98,50),
- (2003,'<<name_last>>',12,964,1,'left','toUpperCase','Last name','Text','name_last',84,15),
- (2004,'<<name_first>>',10,964,2,'left','toLowerCase','First','Text','name_first',70,10),
- (2005,'<<company_id>>',15,964,3,'left','CRM_companies','Company','Valuelist','',105,20),
- (2006,'<<email>>',18,964,4,'left','link | mailto:*this?subect=From Servoy','E-mail','Text','email',126,25),
- (2007,'<<job_title>>',15,964,5,'left','','Job','Text','job_title',105,20),
- (2008,'<<is_active>>',8,964,6,'right','Active | Inactive','Status','Bool','is_active',56,10),
- (2009,'<<crm_contacts_to_companies.company_name>>',14,965,1,'left',NULL,'Company',NULL,'crm_contacts_to_companies.company_name',98,50),
- (2010,'<<name_last>>',14,965,2,'left','toUpperCase','Last','Text','name_last',98,50),
- (2011,'<<order_id>>',3,966,1,'left',NULL,'ID',NULL,'order_id',21,15),
- (2012,'<<order_number>>',6,966,3,'left','#','Num','Number','order_number',42,20),
- (2013,'<<creation_date>>',8,966,1,'center','MM-dd-yyyy','Date','Date','creation_date',56,30),
- (2014,'<<order_total>>',10,966,4,'right','¤###,###,###.00','Total','Number','order_total',70,35),
- (2015,'<<order_number>>',6,967,1,'left','#','Order #','Number','order_number',42,7),
- (2016,'<<order_total>>',9,967,8,'right','¤###,###.00','Total','Number','order_total',63,10),
- (2017,'<<amt_tax>>',7,967,6,'right','¤###,###.00','Tax','Number','amt_tax',49,10),
- (2018,'<<amt_shipping>>',6,967,7,'right','¤###,###,###,###,###,###.00','Ship','Number','amt_shipping',42,10),
- (2019,'<<crm_orders_to_companies.company_name>>',NULL,967,2,'left',NULL,'Company',NULL,'crm_orders_to_companies.company_name',0,11),
- (2020,'<<crm_orders_to_companies.company_email>>',NULL,967,4,'center',NULL,'E-mail',NULL,'crm_orders_to_companies.company_email',0,20),
- (2021,'<<crm_orders_to_contacts.phone_direct>>',NULL,967,3,'center',NULL,'Phone',NULL,'crm_orders_to_contacts.phone_direct',0,12),
- (2022,'<<modification_date>>',NULL,967,9,'left','MM-dd-yyyy','Closed','Date','modification_date',0,10),
- (2023,'<<paid_date>>',NULL,967,10,'left','MM-dd-yyyy','Paid','Date','paid_date',0,10),
- (2024,'<<product_name>>',28,968,1,'left',NULL,'Products',NULL,'product_name',196,100),
- (2025,'<<product_number>>',10,969,1,'left','###,###','Number','Number','product_number',70,35),
- (2026,'<<is_active>>',10,969,2,'center','Yes | No','Active?','Bool','is_active',70,35),
- (2027,'<<total_sold>>',8,969,3,'right','###,###','# Sold','Number','total_sold',56,30),
- (2092,'<<blog_name>>',NULL,979,1,'left',NULL,'Name',NULL,'blog_name',0,80),
- (2093,'<<total_posts>>',NULL,979,2,'left','###,###,###,###,###,###','Post','Number','total_posts',0,20);
+INSERT INTO `sutra_list_display_item` VALUES  (1993,'<<company_name>>',18,959,0,'left',NULL,'Name','','company_name',126,65,NULL),
+ (1994,'<<is_active>>',8,959,2,'left','CRM_status_order','Status','Valuelist','is_active',56,25,NULL),
+ (1995,'<<company_id>>',3,959,3,'left',NULL,'ID','','company_id',21,10,NULL),
+ (1996,'<<company_industry>>',20,960,1,'left','','Industry','Text','company_industry',140,70,NULL),
+ (1997,'<<creation_date>>',9,960,2,'left','MM-dd-yyyy','Date','Date','creation_date',63,30,NULL),
+ (1998,'<<company_name>>',12,961,1,'left','substr | 0,7','Comp','Text','company_name',84,40,NULL),
+ (1999,'<<company_url>>',48,961,2,'left','link | *this','Website','Text','company_url',336,60,NULL),
+ (2000,'<<company_id>>',NULL,962,1,'left','CRM_companies','Company','Valuelist','company_id',0,100,NULL),
+ (2001,'<<name_last>>, <<name_first>>',15,963,2,'left','','Name',NULL,'name_last',105,50,NULL),
+ (2002,'<<email>>',14,963,2,'right','','Email','Text','email',98,50,NULL),
+ (2003,'<<name_last>>',12,964,1,'left','toUpperCase','Last name','Text','name_last',84,15,NULL),
+ (2004,'<<name_first>>',10,964,2,'left','toLowerCase','First','Text','name_first',70,10,NULL),
+ (2005,'<<company_id>>',15,964,3,'left','CRM_companies','Company','Valuelist','',105,20,NULL),
+ (2006,'<<email>>',18,964,4,'left','link | mailto:*this?subect=From Servoy','E-mail','Text','email',126,25,NULL),
+ (2007,'<<job_title>>',15,964,5,'left','','Job','Text','job_title',105,20,NULL),
+ (2008,'<<is_active>>',8,964,6,'right','Active | Inactive','Status','Bool','is_active',56,10,NULL),
+ (2009,'<<crm_contacts_to_companies.company_name>>',14,965,1,'left',NULL,'Company',NULL,'crm_contacts_to_companies.company_name',98,50,NULL),
+ (2010,'<<name_last>>',14,965,2,'left','toUpperCase','Last','Text','name_last',98,50,NULL),
+ (2011,'<<order_id>>',3,966,1,'left',NULL,'ID',NULL,'order_id',21,15,NULL),
+ (2012,'<<order_number>>',6,966,3,'left','#','Num','Number','order_number',42,20,NULL),
+ (2013,'<<creation_date>>',8,966,1,'center','MM-dd-yyyy','Date','Date','creation_date',56,30,NULL),
+ (2014,'<<order_total>>',10,966,4,'right','¤###,###,###.00','Total','Number','order_total',70,35,NULL),
+ (2015,'<<order_number>>',6,967,1,'left','#','Order #','Number','order_number',42,7,NULL),
+ (2016,'<<order_total>>',9,967,8,'right','¤###,###.00','Total','Number','order_total',63,10,NULL),
+ (2017,'<<amt_tax>>',7,967,6,'right','¤###,###.00','Tax','Number','amt_tax',49,10,NULL),
+ (2018,'<<amt_shipping>>',6,967,7,'right','¤###,###,###,###,###,###.00','Ship','Number','amt_shipping',42,10,NULL),
+ (2019,'<<crm_orders_to_companies.company_name>>',NULL,967,2,'left',NULL,'Company',NULL,'crm_orders_to_companies.company_name',0,11,NULL),
+ (2020,'<<crm_orders_to_companies.company_email>>',NULL,967,4,'center',NULL,'E-mail',NULL,'crm_orders_to_companies.company_email',0,20,NULL),
+ (2021,'<<crm_orders_to_contacts.phone_direct>>',NULL,967,3,'center',NULL,'Phone',NULL,'crm_orders_to_contacts.phone_direct',0,12,NULL),
+ (2022,'<<modification_date>>',NULL,967,9,'left','MM-dd-yyyy','Closed','Date','modification_date',0,10,NULL),
+ (2023,'<<paid_date>>',NULL,967,10,'left','MM-dd-yyyy','Paid','Date','paid_date',0,10,NULL),
+ (2024,'<<product_name>>',28,968,1,'left',NULL,'Products',NULL,'product_name',196,100,NULL),
+ (2025,'<<product_number>>',10,969,1,'left','###,###','Number','Number','product_number',70,35,NULL),
+ (2026,'<<is_active>>',10,969,2,'center','Yes | No','Active?','Bool','is_active',70,35,NULL),
+ (2027,'<<total_sold>>',8,969,3,'right','###,###','# Sold','Number','total_sold',56,30,NULL),
+ (2092,'<<blog_name>>',NULL,979,1,'left',NULL,'Name',NULL,'blog_name',0,80,NULL),
+ (2093,'<<total_posts>>',NULL,979,2,'left','###,###,###,###,###,###','Post','Number','total_posts',0,20,NULL);
 CREATE TABLE `sutra_log` (
   `id_log` int(11) NOT NULL,
   `log_type` varchar(255) DEFAULT NULL,
@@ -3182,7 +3209,7 @@ INSERT INTO `sutra_navigation_item` VALUES  (41,1,'Solution configuration',NULL,
  (826,1,'Developer tools',NULL,NULL,'Useful tools and reports for the Frameworks developer',6,1,'2008-05-15 14:34:45','2010-12-01 06:22:09',NULL,0,NULL,0,0,0,0,NULL,'_ds_DEV_tools',0,0,0,NULL,NULL,NULL,NULL,NULL,NULL,'Admin',NULL,NULL,NULL,'ERROR! Workflow form not present',9,'7\n9',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
  (981,1,'Power Replace',NULL,NULL,'Replace the existing contents of a field in all current records',15,1,'2008-05-21 09:04:38','2010-12-01 06:22:28',NULL,0,NULL,0,0,0,0,NULL,NULL,0,0,0,NULL,NULL,NULL,NULL,NULL,NULL,'User',NULL,NULL,NULL,'ERROR! Workflow form not present',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
  (1115,13,'Callbacks',NULL,NULL,NULL,5,1,'2008-06-27 22:55:45','2008-11-04 00:47:12',NULL,0,NULL,0,0,0,0,NULL,'wf_CRM_mosaic',NULL,0,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'ERROR! Workflow form not present',NULL,'1\n10\n11\n12\n13\n14\n2\n3\n4\n5\n6\n7\n8\n9',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'All text',NULL),
- (1116,13,'Progressbar example','TMPL_progressbar_example',NULL,NULL,5,1,'2008-06-27 22:55:54','2008-11-04 00:47:12',NULL,0,NULL,0,0,0,0,'mosaic_solution','rsrc_TMPL_template',NULL,1,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'id_solution asc',NULL,'1\n10\n11\n12\n13\n14\n2\n3\n4\n5\n6\n7\n8\n9',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'All text',NULL),
+ (1116,13,'Progressbar example','TMPL_progressbar_example',NULL,NULL,5,1,'2008-06-27 22:55:54','2010-12-10 08:37:01',NULL,0,NULL,0,0,0,0,'sutra_solution','rsrc_TMPL_template',NULL,1,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'id_solution asc',NULL,'1\n10\n11\n12\n13\n14\n2\n3\n4\n5\n6\n7\n8\n9',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'All text',NULL),
  (1117,1,'Tooltip registry','MGR_0F_tooltip',NULL,'Manage tooltips throughout your solution',10,1,'2008-07-09 16:55:15','2010-12-01 06:22:19',NULL,0,NULL,0,0,0,0,'sutra_tooltip','_ds_MGR_resource_manager',0,0,0,NULL,NULL,NULL,NULL,NULL,NULL,'Admin',NULL,NULL,NULL,'id_tooltip asc',7,'7',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
  (1118,55,'Customer','CRM2_0F_companies',NULL,NULL,1,1,'2008-07-21 10:55:17','2009-08-18 21:01:23','12',1,'Customers',1,1,1,0,'companies','start_CRM_mosaic',0,0,0,'rsrc_HELP_help','HELP_0F_crm__order_item',NULL,'Customers are the bane of any company\'s existence.  Fortunately in this case, the company is the customer!\n\nBasic information about a company is entered in the top main box, related data in the lower main box.  To the right is the notes field for the company.',0,1,NULL,NULL,NULL,'company_name asc','company_name asc',NULL,'1\n10\n11\n12\n13\n14\n2\n3\n4\n5\n6\n7\n8\n9','Loading Customers...',1,'',0,1,NULL,NULL,'All text',1),
  (1119,55,'Contacts','CRM2_0F_contacts',NULL,NULL,2,1,'2008-07-21 10:55:19','2010-03-07 22:33:14','13',1,'Contacts',1,1,1,0,'contacts','start_CRM_mosaic',0,0,0,'rsrc_HELP_help','',NULL,'Contacts may be assigned to a company or free ranging.  If a new contact is created from this form, it is free ranging and liable to be shot on sight.  To remedy the situation where many contacts ceaselessly roam the face of the earth searching for a company, the preferred method of adding a new contact is to do so from the related data tab of the \'Customers\' navigation item.\n\nHappy Valentine\'s Day!',1,0,NULL,'FF0000','D1D7E2','name_last asc, name_first asc','name_last asc, name_first asc',NULL,'1\n10\n11\n12\n13\n14\n2\n3\n4\n5\n6\n7\n8\n9','Loading Contacts...',1,'',0,1,NULL,NULL,'All text',1),
@@ -3193,7 +3220,7 @@ INSERT INTO `sutra_navigation_item` VALUES  (41,1,'Solution configuration',NULL,
  (1323,1,'Lock session',NULL,NULL,'Keep your data from prying eyes while away from the computer',16,0,'2009-04-03 14:27:09','2010-12-01 06:23:29',NULL,0,NULL,0,0,0,0,NULL,'_ds_DEV_tools',0,0,0,NULL,NULL,NULL,NULL,NULL,NULL,'User',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
  (1326,1,'Help',NULL,NULL,'Toggle inline help for the workflow screen showing',13,1,'2009-04-03 15:18:47','2010-12-01 06:23:20',NULL,0,NULL,0,0,0,0,NULL,NULL,0,0,0,NULL,NULL,NULL,NULL,NULL,NULL,'User',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
  (1338,1,'Documentation','MGR_0F_documentation','MGR_0T_documentation','Create wizards, help, and unit test your solution',5,0,'2009-09-15 06:57:58','2010-12-01 06:23:15',NULL,0,NULL,0,0,0,0,'sutra_documentation','_ds_MGR_resource_manager',0,0,0,NULL,NULL,NULL,NULL,NULL,NULL,'Admin',NULL,NULL,NULL,'id_documentation asc',NULL,'14\n2\n7',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),
- (1340,13,'Fast find override','TMPL_fastfind_override',NULL,NULL,5,1,'2010-02-02 18:47:30','2010-02-02 18:48:50',NULL,0,NULL,0,0,0,0,'sutra_solution','start_TMPL_forms',NULL,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'id_solution asc',NULL,'1\n10\n11\n12\n13\n14\n2\n3\n4\n5\n6\n7\n8\n9',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'All text',0);
+ (1340,13,'Fast find override','TMPL_fastfind_override',NULL,NULL,5,1,'2010-02-02 18:47:30','2010-12-10 08:37:01',NULL,0,NULL,0,0,0,0,'sutra_solution','start_TMPL_forms',NULL,2,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'id_solution asc',NULL,'1\n10\n11\n12\n13\n14\n2\n3\n4\n5\n6\n7\n8\n9',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'All text',0);
 CREATE TABLE `sutra_navigation_item_filter` (
   `id_navigation_item_filter` int(11) NOT NULL,
   `id_navigation_item` int(11) DEFAULT NULL,
@@ -3291,9 +3318,10 @@ CREATE TABLE `sutra_solution` (
   `jasper_directory` varchar(512) DEFAULT NULL,
   `sidebar_status` int(11) DEFAULT NULL,
   `sidebar_size` int(11) DEFAULT NULL,
+  `internet_allow` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_solution`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-INSERT INTO `sutra_solution` VALUES  (1,'Data Sutra','Build great applications',1000,713,NULL,NULL,NULL,1,1,2,22,1,200,'servoy',1,'#',100,NULL,NULL,'M-d-yyyy',0,0,NULL,0,NULL,NULL,'','http://www.data-sutra.com/','1C81F924AAF34DE885DD1174C0A05756','2010-12-03 10:56:53','{\"_relations\":{\"javaClass\":\"org.mozilla.javascript.NativeObject\"},\"_allModules\":{\"_12\":\"_dsa_sutra_TOOL_toolbar_sidebar\",\"_7\":\"_ds_PREF_preferences\",\"_8\":\"_dsa_sutra_CRM_servoy_reskin\",\"_9\":\"_dsa_sutra_DATE_date_picker\",\"_11\":\"_dsa_sutra_TMPL_forms\",\"_10\":\"_dsa_sutra_RPLC_find_replace\",\"javaClass\":\"org.mozilla.javascript.NativeArray\",\"_3\":\"_ds_CODE_bucket\",\"_4\":\"_ds_DEV_tools\",\"_5\":\"_ds_MGR_resource_manager\",\"_6\":\"_ds_NAV_engine\",\"_0\":\"__DATASUTRA__\",\"_1\":\"__datasutra__connector\",\"_2\":\"_ds_AC_access_control\"},\"javaClass\":\"org.mozilla.javascript.NativeObject\",\"_allFormsByTable\":{\"javaClass\":\"org.mozilla.javascript.NativeObject\"},\"_allForms\":{\"javaClass\":\"org.mozilla.javascript.NativeObject\"}}',0,200,225,200,225,200,180,200,200,200,'en',NULL,0,0,NULL,NULL,'',200,200,'<html>\n<head>\n\n<style type=\"text/css\" media=\"screen\">\n<!--\nbody { margin: 0px 0px 0px 0px; background-color: #FFFFFF; }\n.big { font-size: 300%; padding: 0px 10px 0px 10px; }\n.bigorange { font-size: 200%; color: rgb(216, 98, 77); padding: 0px 10px 0px 10px; }\n.orange { font-size: 125%; color: rgb(216, 98, 77); padding: 0px 10px 0px 10px; }\n.mediumbig { font-size: 175%; padding: 0px 10px 0px 10px; }\n.footer { padding: 0px 10px 5px 10px; color: white; text-decoration: none; font-size: 110%; background-color: rgb(216, 98, 77); }\np { font-size: 115%; text-indent: 0cm; padding: 0px 10px 0px 10px; }\np.nonp { font-size: 115%; padding: 0px 10px 0px 10px; margin: 0px 0px 0px 0px;}\n.li { padding: 5px 0px 10px 10px; }\n-->\n</style>\n</head>\n\n<body>\n<p>\n<span class=\'big\'>MOSAIC FRAMEWORKS </span><span class=\'bigorange\'> for SERVOY</span>\n<br>\n<span class=\'mediumbig\'>WHAT SERVOY IS TO SQL, MOSAIC FRAMEWORKS IS TO SERVOY</span>\n</p>\n\n<p><span class=\'orange\'>imagination, flexibility, effectiveness...existing together</span></p>\n\n<p>The Mosaic Frameworks for Servoy is unlike any applications frameworks you have ever encountered. Utilizing the power of the Servoy IDE, we have created a comprehensive platform for greatly accelerating development and deployment of advanced business applications.</p>\n\n<p><span class=\'orange\'>create applications fast</span></p>\n<div class=\"li\">\n<p class=\"nonp\">•&nbsp;&nbsp;Save 100s of hours not developing common solution tasks</p>\n<p class=\"nonp\">•&nbsp;&nbsp;Jump-start your workflow screens with our many templates and examples</p>\n<p class=\"nonp\">•&nbsp;&nbsp;Take advantage of powerful features without coding</p>\n<p class=\"nonp\">•&nbsp;&nbsp;Easily organize large solutions with our solution abstraction model</p>\n<p class=\"nonp\">•&nbsp;&nbsp;Increase user buy-in with an intuitive interface and inline help screens</p>\n<p class=\"nonp\">•&nbsp;&nbsp;Close the gap between specifications and end results with rapid prototyping</p>\n<p class=\"nonp\">•&nbsp;&nbsp;Embrace change with our flexible navigation engine</p>\n</div>\n\n<p class=\'nonp\'><span class=\'orange\'>even small businesses can afford a custom application</span></p>\n\n<p>Created over the course of several years and completely rewritten for Servoy 3.5, the Mosaic Frameworks is a complete solution out of the box. It is only missing one thing‚ your business workflow screens.</p>\n\n<!--\n<p></p>\n<p></p>\n<p></p>\n<p></p>\n<p></p>\n<p></p>\n<p></p>\n<div class=\"footer\">Mosaic Frameworks awaits!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Copyright &copy; 2008</div>\n-->\n\n</body>\n</html>\n',0,'Welcome to Mosaic Frameworks!','<html>\n<head>\n<style type=\"text/css\" media=\"screen\"><!--\nbody { margin: 0px 0px 0px 0px; background-color: #FFFFFF; }\np { padding: 0px 10px 0px 10px; font-weight: bold; font-family: Verdana; font-size: 11pt; vertical-align: middle; color: #323A4B; }\n--></style>\'\n</head>\n<body>\n<p>Developer login:<br>mbolton/rocks<br><br>User login:<br>bill/rocks</p>\n</body>\n</html>','',NULL,NULL,NULL,NULL,NULL,'Demo',NULL,1,0,1,NULL,'',0,220);
+INSERT INTO `sutra_solution` VALUES  (1,'Data Sutra','Build great applications',1000,713,NULL,NULL,NULL,1,1,2,22,1,200,'servoy',1,'#',100,NULL,NULL,'M-d-yyyy',0,0,NULL,0,NULL,NULL,'','http://www.data-sutra.com/',NULL,NULL,NULL,0,200,225,200,225,200,180,200,200,200,'en',NULL,0,0,NULL,NULL,'',200,200,'<html>\n<head>\n\n<style type=\"text/css\" media=\"screen\">\n<!--\nbody { margin: 0px 0px 0px 0px; background-color: #FFFFFF; }\n.big { font-size: 300%; padding: 0px 10px 0px 10px; }\n.bigorange { font-size: 200%; color: rgb(216, 98, 77); padding: 0px 10px 0px 10px; }\n.orange { font-size: 125%; color: rgb(216, 98, 77); padding: 0px 10px 0px 10px; }\n.mediumbig { font-size: 175%; padding: 0px 10px 0px 10px; }\n.footer { padding: 0px 10px 5px 10px; color: white; text-decoration: none; font-size: 110%; background-color: rgb(216, 98, 77); }\np { font-size: 115%; text-indent: 0cm; padding: 0px 10px 0px 10px; }\np.nonp { font-size: 115%; padding: 0px 10px 0px 10px; margin: 0px 0px 0px 0px;}\n.li { padding: 5px 0px 10px 10px; }\n-->\n</style>\n</head>\n\n<body>\n<p>\n<span class=\'big\'>MOSAIC FRAMEWORKS </span><span class=\'bigorange\'> for SERVOY</span>\n<br>\n<span class=\'mediumbig\'>WHAT SERVOY IS TO SQL, MOSAIC FRAMEWORKS IS TO SERVOY</span>\n</p>\n\n<p><span class=\'orange\'>imagination, flexibility, effectiveness...existing together</span></p>\n\n<p>The Mosaic Frameworks for Servoy is unlike any applications frameworks you have ever encountered. Utilizing the power of the Servoy IDE, we have created a comprehensive platform for greatly accelerating development and deployment of advanced business applications.</p>\n\n<p><span class=\'orange\'>create applications fast</span></p>\n<div class=\"li\">\n<p class=\"nonp\">•&nbsp;&nbsp;Save 100s of hours not developing common solution tasks</p>\n<p class=\"nonp\">•&nbsp;&nbsp;Jump-start your workflow screens with our many templates and examples</p>\n<p class=\"nonp\">•&nbsp;&nbsp;Take advantage of powerful features without coding</p>\n<p class=\"nonp\">•&nbsp;&nbsp;Easily organize large solutions with our solution abstraction model</p>\n<p class=\"nonp\">•&nbsp;&nbsp;Increase user buy-in with an intuitive interface and inline help screens</p>\n<p class=\"nonp\">•&nbsp;&nbsp;Close the gap between specifications and end results with rapid prototyping</p>\n<p class=\"nonp\">•&nbsp;&nbsp;Embrace change with our flexible navigation engine</p>\n</div>\n\n<p class=\'nonp\'><span class=\'orange\'>even small businesses can afford a custom application</span></p>\n\n<p>Created over the course of several years and completely rewritten for Servoy 3.5, the Mosaic Frameworks is a complete solution out of the box. It is only missing one thing‚ your business workflow screens.</p>\n\n<!--\n<p></p>\n<p></p>\n<p></p>\n<p></p>\n<p></p>\n<p></p>\n<p></p>\n<div class=\"footer\">Mosaic Frameworks awaits!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Copyright &copy; 2008</div>\n-->\n\n</body>\n</html>\n',0,'Welcome to Mosaic Frameworks!','<html>\n<head>\n<style type=\"text/css\" media=\"screen\"><!--\nbody { margin: 0px 0px 0px 0px; background-color: #FFFFFF; }\np { padding: 0px 10px 0px 10px; font-weight: bold; font-family: Verdana; font-size: 11pt; vertical-align: middle; color: #323A4B; }\n--></style>\'\n</head>\n<body>\n<p>Developer login:<br>mbolton/rocks<br><br>User login:<br>bill/rocks</p>\n</body>\n</html>','',NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,1,NULL,'',0,220,1);
 CREATE TABLE `sutra_specification` (
   `id_specification` int(11) NOT NULL,
   `id_navigation_item` int(11) DEFAULT NULL,
@@ -103638,11 +103666,11 @@ INSERT INTO `sutra_valuelist` VALUES  (3,'f6796b1c-07e4-471d-8448-4bde2d55eae8',
  (16,'ef928d6a-6966-4383-9e5a-848dbcda6023',NULL,'2010-09-05 00:14:19','CRM_ship_method','Truck',NULL,3,NULL,NULL,NULL,NULL,1),
  (27,NULL,'2010-04-30 15:13:42','2010-04-30 15:13:53','CRM_status_order','OPEN','1',1,NULL,NULL,NULL,NULL,0);
 --
--- Create schema sutra_example
+-- Create schema sutra_5x_lock_sutra_example
 --
 
-CREATE DATABASE IF NOT EXISTS sutra_example;
-USE sutra_example;
+CREATE DATABASE IF NOT EXISTS sutra_5x_lock_sutra_example;
+USE sutra_5x_lock_sutra_example;
 CREATE TABLE `address_types` (
   `modification_date` datetime DEFAULT NULL,
   `creation_user` int(11) DEFAULT NULL,
