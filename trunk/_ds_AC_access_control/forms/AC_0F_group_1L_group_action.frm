@@ -50,7 +50,7 @@ uuid:"58449624-d3d8-417c-94a0-c96832acc1ab"
 {
 borderType:"SpecialMatteBorder,0.0,0.0,1.0,0.0,#000000,#999999,#999999,#999999,0.0,1.0",
 formIndex:10100,
-imageMediaID:"878FFF3D-DEBA-4DAD-AD33-48D116C9448E",
+imageMediaID:"16c4d692-c1ea-4200-a078-1150b1da4d5f",
 location:"428,40",
 mediaOptions:1,
 name:"btn_delete",

@@ -9,7 +9,7 @@ uuid:"44027a38-ed4a-4ff8-8226-b61320989581"
 {
 anchors:3,
 formIndex:10800,
-imageMediaID:"3F517B31-DD18-4A95-9F7E-D88327EF3BBF",
+imageMediaID:"ced9994a-ca03-4a96-a205-beebe58649b1",
 location:"74,0",
 mediaOptions:10,
 name:"btn_filter",
@@ -71,13 +71,13 @@ size:"28,22",
 styleClass:"tableview",
 typeid:4,
 uuid:"9ccf0f06-20cc-4b9b-af56-0c18475b6541",
-valuelistID:"0F6F4FC1-63FC-48E0-9795-3B0F131D7BC1"
+valuelistID:"4f6370be-de55-4992-a24f-57a43c0b25c3"
 },
 {
 anchors:11,
 borderType:"EmptyBorder,0,0,0,0",
 formIndex:10000,
-imageMediaID:"04E7D8D6-1A41-417F-9663-76C7146E06A9",
+imageMediaID:"50b57e9b-b95e-4188-bcfb-1f0f0936643d",
 location:"0,0",
 mediaOptions:6,
 name:"gfx_subheader",

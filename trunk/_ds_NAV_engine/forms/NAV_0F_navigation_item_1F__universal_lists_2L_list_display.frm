@@ -16,7 +16,7 @@ toolTipText:"Default display",
 transparent:true,
 typeid:4,
 uuid:"0803b3fc-8a1a-4658-93d7-3b7c9341de7f",
-valuelistID:"0F6F4FC1-63FC-48E0-9795-3B0F131D7BC1"
+valuelistID:"4f6370be-de55-4992-a24f-57a43c0b25c3"
 },
 {
 height:42,
@@ -33,7 +33,7 @@ uuid:"37da422d-d20e-4be9-96c7-29b81eb33f51"
 {
 borderType:"SpecialMatteBorder,0.0,0.0,1.0,0.0,#000000,#999999,#999999,#999999,0.0,1.0",
 formIndex:10300,
-imageMediaID:"878FFF3D-DEBA-4DAD-AD33-48D116C9448E",
+imageMediaID:"16c4d692-c1ea-4200-a078-1150b1da4d5f",
 location:"479,5",
 mediaOptions:1,
 name:"btn_rec_del",
@@ -51,7 +51,7 @@ uuid:"3ee828f3-7e7b-44b0-9b9e-f78a6f4fa784"
 borderType:"EmptyBorder,0,0,0,0",
 formIndex:10500,
 horizontalAlignment:0,
-imageMediaID:"0C15B117-B132-4C3E-8F9A-69B598E9A449",
+imageMediaID:"43c5e924-0a5c-4907-a2b9-b17ba3136728",
 location:"13,29",
 mediaOptions:1,
 name:"btn_up",
@@ -71,7 +71,7 @@ verticalAlignment:0
 borderType:"EmptyBorder,0,0,0,0",
 formIndex:10400,
 horizontalAlignment:0,
-imageMediaID:"ACDE714A-34CE-474D-8E8A-C744A9216062",
+imageMediaID:"0177e2a3-d01c-44c0-b860-cbae1f590bce",
 location:"29,29",
 mediaOptions:1,
 name:"btn_down",

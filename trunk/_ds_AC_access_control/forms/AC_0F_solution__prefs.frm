@@ -3,7 +3,7 @@ items:[
 {
 anchors:11,
 formIndex:10000,
-imageMediaID:"04E7D8D6-1A41-417F-9663-76C7146E06A9",
+imageMediaID:"50b57e9b-b95e-4188-bcfb-1f0f0936643d",
 location:"0,0",
 mediaOptions:6,
 showClick:false,
@@ -16,7 +16,7 @@ uuid:"5e2359cb-e0d3-492e-ac3e-aa88c02adabc"
 {
 borderType:"EmptyBorder,0,0,0,0",
 formIndex:10400,
-imageMediaID:"F54BC596-BF15-42A7-BDD6-CB626C71A397",
+imageMediaID:"9f368917-84dc-422c-84f6-36263cb87ac5",
 location:"110,28",
 mediaOptions:1,
 name:"tab_1",
@@ -38,7 +38,7 @@ uuid:"8907152c-80be-40f5-b3a4-61c638c741ce"
 {
 borderType:"EmptyBorder,0,0,0,0",
 formIndex:11200,
-imageMediaID:"34AAC439-7CB2-4F89-9EA9-06FBBABD49D6",
+imageMediaID:"103d6843-137d-4a23-9dee-d4206760c716",
 location:"200,28",
 mediaOptions:1,
 name:"tab_2",
@@ -54,7 +54,7 @@ uuid:"b121bb7f-ca15-461a-a692-b6b18866e159"
 {
 anchors:11,
 formIndex:10300,
-imageMediaID:"CE53A863-E2EB-4ECC-A84B-9E7D8DB56674",
+imageMediaID:"75106851-5fe4-493b-86db-616ebd8df83b",
 location:"0,48",
 mediaOptions:6,
 showClick:false,

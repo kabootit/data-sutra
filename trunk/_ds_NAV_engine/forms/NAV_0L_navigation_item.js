@@ -625,7 +625,7 @@ if (delRec == 'Yes') {
 	
 	if (record.node_2 == 0) {
 		//checking for children
-		if (utils.hasRecords(record[relationName])) {
+		if (utils.hasRecords(record[relationName]) && record[relationName].getSize() > 1) {
 			var childCheck = true
 			
 			var confirm = plugins.dialogs.showWarningDialog(

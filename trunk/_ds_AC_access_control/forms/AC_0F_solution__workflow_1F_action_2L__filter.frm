@@ -44,7 +44,7 @@ uuid:"9ebf0b2c-ec72-4488-a514-7411accc1cb1"
 borderType:"EmptyBorder,0,0,0,0",
 formIndex:10000,
 horizontalAlignment:0,
-imageMediaID:"4510CBA6-1F39-45EC-A315-86C8E08E467A",
+imageMediaID:"3818c656-4d69-494d-82d4-1cac201b311b",
 location:"610,40",
 mediaOptions:14,
 onActionMethodID:"895acdc7-bf23-49a3-be3f-7a1f72fa1134",

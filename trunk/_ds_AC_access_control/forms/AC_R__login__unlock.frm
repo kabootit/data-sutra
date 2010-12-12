@@ -32,7 +32,7 @@ uuid:"16b2997b-6cff-4135-997b-65e1eba38835"
 {
 anchors:11,
 formIndex:10500,
-imageMediaID:"CE53A863-E2EB-4ECC-A84B-9E7D8DB56674",
+imageMediaID:"75106851-5fe4-493b-86db-616ebd8df83b",
 location:"0,28",
 mediaOptions:6,
 size:"206,6",
@@ -50,7 +50,7 @@ uuid:"55568f75-1d04-44e3-872d-d311c9d45bad"
 {
 anchors:14,
 formIndex:10600,
-imageMediaID:"1811396E-6434-4F6C-AEB8-5FBCEF2C0461",
+imageMediaID:"5100a0f7-e408-4698-b0a3-65059779b12b",
 location:"0,133",
 mediaOptions:6,
 size:"206,17",
@@ -62,7 +62,7 @@ uuid:"88c4fe28-2c23-4949-a1a3-0cf9d77ef4a9"
 {
 anchors:3,
 formIndex:11100,
-imageMediaID:"D875B496-1B6A-46A2-B366-CBE2DC4A8BB0",
+imageMediaID:"c6136955-f707-48ca-8de3-a3ff0daba210",
 location:"174,104",
 mediaOptions:14,
 name:"gfx_capslock",

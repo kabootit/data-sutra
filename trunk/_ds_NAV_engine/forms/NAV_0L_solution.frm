@@ -51,7 +51,7 @@ uuid:"2f308240-b9f3-4c6f-8e19-a6b261268087"
 anchors:11,
 borderType:"EmptyBorder,0,0,0,0",
 formIndex:10100,
-imageMediaID:"04E7D8D6-1A41-417F-9663-76C7146E06A9",
+imageMediaID:"50b57e9b-b95e-4188-bcfb-1f0f0936643d",
 location:"0,0",
 mediaOptions:6,
 name:"gfx_subheader",
@@ -65,7 +65,7 @@ uuid:"4f487eee-adf0-4756-a2de-975d21d3df9e"
 {
 anchors:3,
 formIndex:10800,
-imageMediaID:"E1CD88A5-94D5-4659-BA2A-480AFCAF8EDF",
+imageMediaID:"f27c82c9-3a7e-4b29-9d3d-38857a387710",
 location:"74,0",
 mediaOptions:10,
 name:"btn_options",
@@ -83,7 +83,7 @@ verticalAlignment:1
 {
 anchors:3,
 formIndex:10500,
-imageMediaID:"48E77B53-BF62-4F7A-A321-108629DCCC6D",
+imageMediaID:"da3ae159-9a0c-45f3-a85d-ece94f56c3e8",
 location:"78,62",
 mediaOptions:1,
 name:"btn_tabs",
@@ -100,7 +100,7 @@ uuid:"bb000da7-1a0c-40e6-8e8a-cc3278183f21"
 },
 {
 formIndex:10600,
-imageMediaID:"4FE43B11-7AC8-4CEF-8F5C-2B4A1C6B1A73",
+imageMediaID:"b36abb19-e724-42d1-ba87-ded2b2d8bf44",
 location:"4,62",
 mediaOptions:1,
 name:"btn_display",

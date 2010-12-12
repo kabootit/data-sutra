@@ -3,7 +3,7 @@ items:[
 {
 formIndex:10600,
 horizontalAlignment:0,
-imageMediaID:"B90FAA15-30BA-46F3-981D-AE7E5B2C3C71",
+imageMediaID:"7aa3b51b-9d54-4991-8337-082b4aff2781",
 location:"288,6",
 mediaOptions:14,
 onActionMethodID:"9c310aba-9d11-499d-93e8-771d59454af1",
@@ -19,7 +19,7 @@ uuid:"0d1f7586-7fcc-4e66-99a2-f1b52f2fc164"
 {
 anchors:15,
 formIndex:10000,
-imageMediaID:"7A7765DB-BD4F-4ACF-86B7-D72677CE3518",
+imageMediaID:"bee81edf-7df7-4c06-8fc9-938bebe1a2ba",
 location:"0,0",
 mediaOptions:4,
 name:"gfx_header",
@@ -33,7 +33,7 @@ uuid:"13c9bd55-6be5-4b2f-a37c-89458ccd6a5c"
 {
 formIndex:11000,
 horizontalAlignment:0,
-imageMediaID:"044BA363-0687-4628-BF6E-A50E1DDE809B",
+imageMediaID:"c70b2837-cfc5-444f-9287-9e601d914fb6",
 location:"406,6",
 mediaOptions:14,
 onActionMethodID:"09b38f55-7837-4a2e-b359-a7adc2ccbc27",
@@ -85,7 +85,7 @@ verticalAlignment:3
 {
 formIndex:10200,
 horizontalAlignment:0,
-imageMediaID:"927751FC-AB95-4037-816D-1BBA7744F969",
+imageMediaID:"e974962a-b962-4833-bde0-7c40fa560325",
 location:"106,6",
 mediaOptions:14,
 onActionMethodID:"07bad13c-8f04-43f8-a8d8-73cdd99465f1",
@@ -119,7 +119,7 @@ verticalAlignment:3
 {
 formIndex:11400,
 horizontalAlignment:0,
-imageMediaID:"1C53D59B-1B71-45E0-8FA3-9DB9FC1823C4",
+imageMediaID:"d291c79b-52d5-489b-981b-9ba909ef4bca",
 location:"166,6",
 mediaOptions:14,
 onActionMethodID:"34973f32-e732-43f9-a228-013e74266328",
@@ -152,7 +152,7 @@ verticalAlignment:3
 {
 formIndex:10800,
 horizontalAlignment:0,
-imageMediaID:"8F1C778F-179E-4E09-9578-02BCC780CD0C",
+imageMediaID:"9005e8fd-cc28-4d5b-b6c6-18f4f98206d9",
 location:"348,6",
 mediaOptions:14,
 onActionMethodID:"23bacb8c-303d-4407-a6cf-c6f7ff2c7a33",
@@ -168,7 +168,7 @@ uuid:"854e4ff4-a41f-4291-89f2-a08122f8d4e3"
 {
 formIndex:11200,
 horizontalAlignment:0,
-imageMediaID:"1C53D59B-1B71-45E0-8FA3-9DB9FC1823C4",
+imageMediaID:"d291c79b-52d5-489b-981b-9ba909ef4bca",
 location:"31,6",
 mediaOptions:14,
 name:"btn_activate",
@@ -245,7 +245,7 @@ verticalAlignment:3
 {
 formIndex:10400,
 horizontalAlignment:0,
-imageMediaID:"1C53D59B-1B71-45E0-8FA3-9DB9FC1823C4",
+imageMediaID:"d291c79b-52d5-489b-981b-9ba909ef4bca",
 location:"226,6",
 mediaOptions:14,
 onActionMethodID:"01f0324e-d67f-4c2f-91fd-ff373e094c01",

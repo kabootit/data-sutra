@@ -71,7 +71,7 @@ uuid:"40de899b-52c1-4dfb-9832-3b97c68c4d1a"
 {
 anchors:11,
 formIndex:10100,
-imageMediaID:"CE53A863-E2EB-4ECC-A84B-9E7D8DB56674",
+imageMediaID:"75106851-5fe4-493b-86db-616ebd8df83b",
 location:"0,28",
 mediaOptions:6,
 size:"200,6",
@@ -100,7 +100,7 @@ uuid:"4f94ce93-0475-48a2-b752-26e9ccea586b"
 {
 anchors:14,
 formIndex:10200,
-imageMediaID:"1811396E-6434-4F6C-AEB8-5FBCEF2C0461",
+imageMediaID:"5100a0f7-e408-4698-b0a3-65059779b12b",
 location:"0,133",
 mediaOptions:6,
 size:"200,17",
@@ -123,7 +123,7 @@ uuid:"66dfbe6f-b8ef-453c-aa64-e9124ee85ffd"
 {
 anchors:3,
 formIndex:11100,
-imageMediaID:"D875B496-1B6A-46A2-B366-CBE2DC4A8BB0",
+imageMediaID:"c6136955-f707-48ca-8de3-a3ff0daba210",
 location:"171,106",
 mediaOptions:1,
 name:"gfx_capslock",

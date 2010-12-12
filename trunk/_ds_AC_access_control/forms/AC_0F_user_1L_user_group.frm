@@ -18,7 +18,7 @@ uuid:"0b3e01e5-ffd2-4606-a82e-5aae35065e80"
 {
 borderType:"SpecialMatteBorder,0.0,0.0,1.0,0.0,#000000,#999999,#999999,#999999,0.0,1.0",
 formIndex:10400,
-imageMediaID:"878FFF3D-DEBA-4DAD-AD33-48D116C9448E",
+imageMediaID:"16c4d692-c1ea-4200-a078-1150b1da4d5f",
 location:"428,30",
 mediaOptions:1,
 onActionMethodID:"97b49606-91ee-43b2-b0de-76150f4901de",

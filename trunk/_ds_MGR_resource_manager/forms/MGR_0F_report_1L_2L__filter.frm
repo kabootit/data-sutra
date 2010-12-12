@@ -93,7 +93,7 @@ uuid:"DD40E438-3186-4E2F-8531-84093683B5FA"
 borderType:"EmptyBorder,0,0,0,0",
 formIndex:10000,
 horizontalAlignment:0,
-imageMediaID:"4510CBA6-1F39-45EC-A315-86C8E08E467A",
+imageMediaID:"3818c656-4d69-494d-82d4-1cac201b311b",
 location:"675,21",
 mediaOptions:14,
 onActionMethodID:"A9F835D3-0B0E-4531-9BC0-596CD3AC3A0D",

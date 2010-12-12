@@ -4,7 +4,7 @@ items:[
 anchors:11,
 borderType:"EmptyBorder,0,0,0,0",
 formIndex:10000,
-imageMediaID:"04E7D8D6-1A41-417F-9663-76C7146E06A9",
+imageMediaID:"50b57e9b-b95e-4188-bcfb-1f0f0936643d",
 location:"0,0",
 mediaOptions:6,
 showClick:false,
@@ -92,7 +92,7 @@ uuid:"c7736b21-04fe-4ea2-b1e9-a716e8e392ef"
 {
 anchors:11,
 formIndex:10200,
-imageMediaID:"698F2036-794D-4A19-BED4-C6C92C1AAFEB",
+imageMediaID:"78597604-4889-4704-b951-8c1d720d2b31",
 location:"0,16",
 mediaOptions:6,
 name:"highlighter",

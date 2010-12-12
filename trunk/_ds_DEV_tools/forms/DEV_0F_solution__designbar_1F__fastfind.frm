@@ -22,7 +22,7 @@ verticalAlignment:3
 {
 formIndex:10200,
 horizontalAlignment:0,
-imageMediaID:"927751FC-AB95-4037-816D-1BBA7744F969",
+imageMediaID:"e974962a-b962-4833-bde0-7c40fa560325",
 location:"36,6",
 mediaOptions:14,
 onActionMethodID:"c4739b5a-1c28-455f-ba57-6223f17890e8",
@@ -38,7 +38,7 @@ uuid:"28326565-63ee-449c-a092-0af07e61694f"
 {
 anchors:15,
 formIndex:10000,
-imageMediaID:"7A7765DB-BD4F-4ACF-86B7-D72677CE3518",
+imageMediaID:"bee81edf-7df7-4c06-8fc9-938bebe1a2ba",
 location:"0,0",
 mediaOptions:4,
 name:"gfx_header",
@@ -76,7 +76,7 @@ uuid:"eacd7897-71f6-46b9-903e-f3a2ff31d6aa"
 {
 formIndex:10400,
 horizontalAlignment:0,
-imageMediaID:"1C53D59B-1B71-45E0-8FA3-9DB9FC1823C4",
+imageMediaID:"d291c79b-52d5-489b-981b-9ba909ef4bca",
 location:"106,6",
 mediaOptions:14,
 onActionMethodID:"14442047-4a08-4dd8-b652-d818f0ea842c",

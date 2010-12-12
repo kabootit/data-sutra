@@ -192,7 +192,7 @@ valuelistID:"ea216497-4de3-4aa4-b441-54d3772cdbaa"
 {
 anchors:11,
 formIndex:10100,
-imageMediaID:"CE53A863-E2EB-4ECC-A84B-9E7D8DB56674",
+imageMediaID:"75106851-5fe4-493b-86db-616ebd8df83b",
 location:"0,28",
 mediaOptions:6,
 showClick:false,
@@ -206,13 +206,13 @@ uuid:"c7831a57-f202-4dde-b5b5-69fedf822c30"
 {
 anchors:3,
 formIndex:12600,
-imageMediaID:"0DA15436-09D7-4F3D-AFFA-7D52F54CCD48",
+imageMediaID:"a2e147c1-5027-45cb-abf0-ddf2d8588969",
 location:"295,34",
 mediaOptions:1,
 name:"help_filter_setup",
 onActionMethodID:"6a193823-8789-4ec3-a7bf-45d1238dc5bd",
 rolloverCursor:12,
-rolloverImageMediaID:"61FC7BF4-C9DF-46EC-8EEC-FEB5925B282F",
+rolloverImageMediaID:"887d1bba-05d3-429c-9789-113b96279683",
 showClick:false,
 showFocus:false,
 size:"20,15",
@@ -224,7 +224,7 @@ uuid:"cfa21f24-0a86-4445-9871-b793ccb9331d"
 {
 anchors:14,
 formIndex:10200,
-imageMediaID:"1811396E-6434-4F6C-AEB8-5FBCEF2C0461",
+imageMediaID:"5100a0f7-e408-4698-b0a3-65059779b12b",
 location:"0,218",
 mediaOptions:6,
 name:"lbl_size",

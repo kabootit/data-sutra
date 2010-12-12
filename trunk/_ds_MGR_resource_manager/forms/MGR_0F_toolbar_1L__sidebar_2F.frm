@@ -594,7 +594,7 @@ uuid:"F69E79CA-BF0B-4314-BE55-FD419C4D2D42"
 {
 anchors:15,
 formIndex:10100,
-imageMediaID:"75BE62E4-12BE-4427-B2FD-693D5476308F",
+imageMediaID:"5bee1e8a-1fbd-44b4-a519-9b352d832e78",
 location:"0,438",
 mediaOptions:4,
 name:"gfx_gradient",

@@ -28,7 +28,7 @@ styleClass:"tableview",
 toolTipText:"Enable wrapper (Print selected, foundset, subset)",
 typeid:4,
 uuid:"40EEC335-93E0-493F-B98E-A3544784A8F5",
-valuelistID:"0F6F4FC1-63FC-48E0-9795-3B0F131D7BC1"
+valuelistID:"4f6370be-de55-4992-a24f-57a43c0b25c3"
 },
 {
 borderType:"SpecialMatteBorder,0.0,0.0,1.0,0.0,#000000,#000000,#999999,#000000,0.0,1.0",
@@ -89,7 +89,7 @@ uuid:"BFF0A5FD-780F-4662-A161-0EDA0DF38983"
 {
 borderType:"SpecialMatteBorder,0.0,0.0,1.0,0.0,#000000,#000000,#999999,#000000,0.0,1.0",
 formIndex:10000,
-imageMediaID:"878FFF3D-DEBA-4DAD-AD33-48D116C9448E",
+imageMediaID:"16c4d692-c1ea-4200-a078-1150b1da4d5f",
 location:"680,30",
 mediaOptions:1,
 onActionMethodID:"1D956AD6-A86F-4C69-BBE5-78569E04CC4E",
@@ -104,7 +104,7 @@ uuid:"E16D1AA1-7643-4612-88EA-E885A3EBD560"
 {
 borderType:"SpecialMatteBorder,0.0,0.0,1.0,0.0,#000000,#000000,#999999,#000000,0.0,1.0",
 formIndex:10400,
-imageMediaID:"98C8EF04-625B-4B0F-B8A8-FCE2C09C4FE3",
+imageMediaID:"e838f55d-86d2-4582-9ea2-031a2143dbfa",
 location:"0,30",
 mediaOptions:1,
 onActionMethodID:"C04E918E-DC49-4A44-992F-B4D4D4720A1C",

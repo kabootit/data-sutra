@@ -45,7 +45,7 @@ uuid:"331934f6-7178-40d5-ae22-783f482d6d28"
 },
 {
 formIndex:10500,
-imageMediaID:"2AD2C4E5-ACD2-4082-94C5-739DF7D29311",
+imageMediaID:"2096110b-0a5b-4b37-ac0f-24359a5b7972",
 location:"290,28",
 mediaOptions:1,
 name:"tab_3",
@@ -60,7 +60,7 @@ uuid:"42021ab2-f391-4b21-99ca-17d77b18aff7"
 {
 anchors:11,
 formIndex:10100,
-imageMediaID:"CE53A863-E2EB-4ECC-A84B-9E7D8DB56674",
+imageMediaID:"75106851-5fe4-493b-86db-616ebd8df83b",
 location:"0,48",
 mediaOptions:6,
 showClick:false,
@@ -72,7 +72,7 @@ uuid:"464883c4-121b-4535-85ab-74854a0ec544"
 },
 {
 formIndex:10200,
-imageMediaID:"F54BC596-BF15-42A7-BDD6-CB626C71A397",
+imageMediaID:"9f368917-84dc-422c-84f6-36263cb87ac5",
 location:"110,28",
 mediaOptions:1,
 name:"tab_1",
@@ -86,7 +86,7 @@ uuid:"55be09a3-053b-45c6-8bd1-2a9790d19487"
 },
 {
 formIndex:10400,
-imageMediaID:"5D7564DE-8E20-4324-8E8B-DB7B047446D2",
+imageMediaID:"4211e2dc-b47f-4ef6-9a1d-9becdaf4110f",
 location:"380,28",
 mediaOptions:1,
 name:"tab_4",
@@ -112,7 +112,7 @@ uuid:"6eddb938-afcf-4f0d-b80f-5584a0480d6c"
 },
 {
 formIndex:10300,
-imageMediaID:"6064C0B9-822B-40F6-86B0-BF5B45B0801C",
+imageMediaID:"956d7eff-02b7-494b-bd01-da76e46d3ed1",
 location:"200,28",
 mediaOptions:1,
 name:"tab_2",
@@ -127,7 +127,7 @@ uuid:"74773919-ca4d-4aa4-8241-b01757663816"
 {
 anchors:11,
 formIndex:11100,
-imageMediaID:"04E7D8D6-1A41-417F-9663-76C7146E06A9",
+imageMediaID:"50b57e9b-b95e-4188-bcfb-1f0f0936643d",
 location:"0,0",
 mediaOptions:6,
 showClick:false,

@@ -30,7 +30,7 @@ valuelistID:"8f0bb026-7baf-4688-a27c-0f9edaa949e5"
 {
 anchors:14,
 formIndex:10200,
-imageMediaID:"1811396E-6434-4F6C-AEB8-5FBCEF2C0461",
+imageMediaID:"5100a0f7-e408-4698-b0a3-65059779b12b",
 location:"0,83",
 mediaOptions:6,
 size:"200,17",
@@ -42,7 +42,7 @@ uuid:"4ddab4e1-98a6-4e31-aac2-63f543c0f9f7"
 {
 anchors:11,
 formIndex:10100,
-imageMediaID:"CE53A863-E2EB-4ECC-A84B-9E7D8DB56674",
+imageMediaID:"75106851-5fe4-493b-86db-616ebd8df83b",
 location:"0,28",
 mediaOptions:6,
 showClick:false,

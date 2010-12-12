@@ -60,7 +60,7 @@ uuid:"5C52ED0F-E932-40BB-95FF-FDC3D90EAFF8"
 borderType:"EmptyBorder,0,0,0,0",
 formIndex:10000,
 horizontalAlignment:0,
-imageMediaID:"4510CBA6-1F39-45EC-A315-86C8E08E467A",
+imageMediaID:"3818c656-4d69-494d-82d4-1cac201b311b",
 location:"815,20",
 mediaOptions:14,
 onActionMethodID:"9C9CD99B-4899-4F7B-875D-AED53AB8710F",

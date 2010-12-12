@@ -34,7 +34,7 @@ uuid:"6504cd1e-69a1-4dfa-8462-2fe1829116db"
 anchors:11,
 borderType:"EmptyBorder,0,0,0,0",
 formIndex:10600,
-imageMediaID:"04E7D8D6-1A41-417F-9663-76C7146E06A9",
+imageMediaID:"50b57e9b-b95e-4188-bcfb-1f0f0936643d",
 location:"0,0",
 mediaOptions:6,
 name:"gfx_subheader",

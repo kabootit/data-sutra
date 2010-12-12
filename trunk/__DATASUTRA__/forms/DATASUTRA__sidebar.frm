@@ -43,7 +43,7 @@ uuid:"570F665C-A5CE-4678-BF6E-571E5C227975"
 {
 anchors:15,
 formIndex:10100,
-imageMediaID:"75BE62E4-12BE-4427-B2FD-693D5476308F",
+imageMediaID:"5bee1e8a-1fbd-44b4-a519-9b352d832e78",
 location:"0,44",
 mediaOptions:4,
 name:"gfx_gradient",

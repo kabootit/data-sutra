@@ -55,7 +55,7 @@ uuid:"B7000ADD-2FA4-43CD-A06B-E395DC63BD0D"
 borderType:"EmptyBorder,0,0,0,0",
 formIndex:10000,
 horizontalAlignment:0,
-imageMediaID:"4510CBA6-1F39-45EC-A315-86C8E08E467A",
+imageMediaID:"3818c656-4d69-494d-82d4-1cac201b311b",
 location:"365,20",
 mediaOptions:14,
 onActionMethodID:"28B886B8-EF26-4697-A12A-273A4B55D7CA",

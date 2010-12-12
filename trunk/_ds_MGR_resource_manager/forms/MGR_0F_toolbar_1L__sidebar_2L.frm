@@ -13,7 +13,7 @@ tabSeq:3,
 text:"Show",
 typeid:4,
 uuid:"3CF8E421-2F88-456F-A732-8035EDA349CE",
-valuelistID:"0F6F4FC1-63FC-48E0-9795-3B0F131D7BC1"
+valuelistID:"4f6370be-de55-4992-a24f-57a43c0b25c3"
 },
 {
 height:18,
@@ -54,7 +54,7 @@ tabSeq:4,
 text:"Pop",
 typeid:4,
 uuid:"56FA5C42-E8AC-42DD-AAEE-D3261FD52777",
-valuelistID:"0F6F4FC1-63FC-48E0-9795-3B0F131D7BC1"
+valuelistID:"4f6370be-de55-4992-a24f-57a43c0b25c3"
 },
 {
 anchors:11,
@@ -95,7 +95,7 @@ uuid:"C482C373-9523-40D5-9DD7-C1DB7B87E17A"
 borderType:"EmptyBorder,0,0,0,0",
 formIndex:10400,
 horizontalAlignment:0,
-imageMediaID:"0C15B117-B132-4C3E-8F9A-69B598E9A449",
+imageMediaID:"43c5e924-0a5c-4907-a2b9-b17ba3136728",
 location:"3,130",
 mediaOptions:1,
 name:"btn_up",
@@ -121,7 +121,7 @@ uuid:"E11BEA2C-ACC8-4548-A34D-670067C95A44"
 borderType:"SpecialMatteBorder,0.0,0.0,1.0,0.0,#000000,#000000,#999999,#000000,0.0,1.0",
 formIndex:10800,
 horizontalAlignment:0,
-imageMediaID:"878FFF3D-DEBA-4DAD-AD33-48D116C9448E",
+imageMediaID:"16c4d692-c1ea-4200-a078-1150b1da4d5f",
 location:"370,40",
 mediaOptions:1,
 onActionMethodID:"8900AB9E-1E9E-49BE-B190-F96BD137730E",
@@ -152,7 +152,7 @@ uuid:"EE0C1A55-43DB-4354-BF34-684140D98A8F"
 borderType:"EmptyBorder,0,0,0,0",
 formIndex:10300,
 horizontalAlignment:0,
-imageMediaID:"ACDE714A-34CE-474D-8E8A-C744A9216062",
+imageMediaID:"0177e2a3-d01c-44c0-b860-cbae1f590bce",
 location:"19,130",
 mediaOptions:1,
 name:"btn_down",

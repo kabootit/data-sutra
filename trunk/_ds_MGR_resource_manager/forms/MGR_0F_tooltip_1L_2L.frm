@@ -36,7 +36,7 @@ text:"<html>
 <\/html>",
 typeid:4,
 uuid:"21783E1C-8F3C-4A24-9D30-90F90ACAA5B9",
-valuelistID:"0F6F4FC1-63FC-48E0-9795-3B0F131D7BC1"
+valuelistID:"4f6370be-de55-4992-a24f-57a43c0b25c3"
 },
 {
 displaysTags:true,
@@ -64,7 +64,7 @@ uuid:"2536A9B6-9112-439B-AA3D-2CB67E1F1EEB"
 {
 borderType:"SpecialMatteBorder,0.0,0.0,1.0,0.0,#000000,#000000,#999999,#000000,0.0,1.0",
 formIndex:10000,
-imageMediaID:"878FFF3D-DEBA-4DAD-AD33-48D116C9448E",
+imageMediaID:"16c4d692-c1ea-4200-a078-1150b1da4d5f",
 location:"815,50",
 mediaOptions:1,
 onActionMethodID:"486FBD04-60D5-45FF-9D60-7527464C1ACC",
@@ -126,7 +126,7 @@ size:"26,23",
 styleClass:"tableview",
 typeid:4,
 uuid:"769BABEA-9A41-446F-8877-85CC3035E772",
-valuelistID:"0F6F4FC1-63FC-48E0-9795-3B0F131D7BC1"
+valuelistID:"4f6370be-de55-4992-a24f-57a43c0b25c3"
 },
 {
 anchors:11,
@@ -156,7 +156,7 @@ styleClass:"tableview",
 text:"***",
 typeid:4,
 uuid:"AE0684B9-9B09-4B91-A264-B456EC66BC68",
-valuelistID:"0F6F4FC1-63FC-48E0-9795-3B0F131D7BC1"
+valuelistID:"4f6370be-de55-4992-a24f-57a43c0b25c3"
 },
 {
 anchors:11,

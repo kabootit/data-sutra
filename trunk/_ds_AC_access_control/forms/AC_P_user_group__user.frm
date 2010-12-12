@@ -120,7 +120,7 @@ uuid:"bfe607ef-d8ca-4360-b87b-ea05cf95d3ff"
 {
 anchors:11,
 formIndex:10100,
-imageMediaID:"CE53A863-E2EB-4ECC-A84B-9E7D8DB56674",
+imageMediaID:"75106851-5fe4-493b-86db-616ebd8df83b",
 location:"0,35",
 mediaOptions:6,
 showClick:false,
@@ -139,7 +139,7 @@ uuid:"d63738a0-525e-41f9-8c59-2ae8543affad"
 {
 anchors:11,
 formIndex:10200,
-imageMediaID:"1811396E-6434-4F6C-AEB8-5FBCEF2C0461",
+imageMediaID:"5100a0f7-e408-4698-b0a3-65059779b12b",
 location:"0,283",
 mediaOptions:6,
 showClick:false,

@@ -88,7 +88,7 @@ uuid:"8cafbbf4-b6f2-40ed-8dcc-ffb97fd37c3b"
 anchors:3,
 borderType:"SpecialMatteBorder,0.0,0.0,1.0,0.0,#000000,#999999,#999999,#999999,0.0,1.0",
 formIndex:10100,
-imageMediaID:"878FFF3D-DEBA-4DAD-AD33-48D116C9448E",
+imageMediaID:"16c4d692-c1ea-4200-a078-1150b1da4d5f",
 location:"678,30",
 mediaOptions:1,
 name:"btn_delete",
@@ -113,7 +113,7 @@ size:"20,23",
 tabSeq:6,
 typeid:4,
 uuid:"f5421c22-cc9c-4a16-bda0-eba3f4a2c028",
-valuelistID:"0F6F4FC1-63FC-48E0-9795-3B0F131D7BC1"
+valuelistID:"4f6370be-de55-4992-a24f-57a43c0b25c3"
 }
 ],
 name:"AC_0F_group__record_1L_filter__table",

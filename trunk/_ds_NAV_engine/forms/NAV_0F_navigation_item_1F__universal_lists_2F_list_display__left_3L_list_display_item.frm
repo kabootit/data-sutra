@@ -39,7 +39,7 @@ uuid:"347be634-93f8-4998-8932-44819e04c67a"
 borderType:"EmptyBorder,0,0,0,0",
 formIndex:10900,
 horizontalAlignment:0,
-imageMediaID:"ACDE714A-34CE-474D-8E8A-C744A9216062",
+imageMediaID:"0177e2a3-d01c-44c0-b860-cbae1f590bce",
 location:"29,130",
 mediaOptions:1,
 name:"btn_down",
@@ -73,7 +73,7 @@ uuid:"463c47df-6cff-4f36-a4b2-6c4c77136985"
 {
 borderType:"SpecialMatteBorder,0.0,0.0,1.0,0.0,#000000,#999999,#999999,#999999,0.0,1.0",
 formIndex:11100,
-imageMediaID:"878FFF3D-DEBA-4DAD-AD33-48D116C9448E",
+imageMediaID:"16c4d692-c1ea-4200-a078-1150b1da4d5f",
 location:"668,0",
 mediaOptions:1,
 name:"btn_delete",
@@ -134,7 +134,7 @@ uuid:"8c715a04-dad7-4db2-b690-d78ee9a8f2e2"
 borderType:"EmptyBorder,0,0,0,0",
 formIndex:11000,
 horizontalAlignment:0,
-imageMediaID:"0C15B117-B132-4C3E-8F9A-69B598E9A449",
+imageMediaID:"43c5e924-0a5c-4907-a2b9-b17ba3136728",
 location:"13,130",
 mediaOptions:1,
 name:"btn_up",
@@ -164,7 +164,7 @@ toolTipText:"Editable",
 transparent:true,
 typeid:4,
 uuid:"B34C1979-B35C-491B-99E5-C3EEB94C8FF4",
-valuelistID:"0F6F4FC1-63FC-48E0-9795-3B0F131D7BC1"
+valuelistID:"4f6370be-de55-4992-a24f-57a43c0b25c3"
 },
 {
 anchors:14,

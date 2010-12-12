@@ -28,7 +28,7 @@ uuid:"5F54A740-C499-4621-AA14-68D8BD71DE57"
 {
 displaysTags:true,
 formIndex:10600,
-imageMediaID:"8C576879-5B37-42B0-BEF8-DC47ED0F5E89",
+imageMediaID:"c02fbde8-1e77-461d-8545-41ad52a873b7",
 location:"3,7",
 mediaOptions:14,
 name:"btn_find",
@@ -56,7 +56,7 @@ uuid:"6D7FBB12-6495-4BCB-86B0-F6A95FD3CB24"
 {
 anchors:11,
 formIndex:10700,
-imageMediaID:"0EAE3431-1BC3-4D3D-A028-E6E23DE06766",
+imageMediaID:"3f9ccdc0-4959-4e1a-b7ca-1b92251e55f1",
 location:"30,7",
 mediaOptions:4,
 name:"find_mid",
@@ -71,7 +71,7 @@ uuid:"754E32A8-4F35-4E3D-83E3-F59D1F6384FF"
 {
 anchors:3,
 formIndex:10500,
-imageMediaID:"CAFD7B10-FCFB-4E3D-B8C4-B044C4EA8B4D",
+imageMediaID:"120da8dc-cad5-431c-ab36-8576c29a0a97",
 location:"77,7",
 mediaOptions:14,
 name:"find_end",

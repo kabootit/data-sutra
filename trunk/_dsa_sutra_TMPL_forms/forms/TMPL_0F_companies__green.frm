@@ -256,7 +256,7 @@ uuid:"90afc762-0753-4ed5-9cd1-2f08aab26c0c"
 {
 anchors:11,
 formIndex:10200,
-imageMediaID:"04E7D8D6-1A41-417F-9663-76C7146E06A9",
+imageMediaID:"50b57e9b-b95e-4188-bcfb-1f0f0936643d",
 location:"0,0",
 mediaOptions:6,
 showClick:false,

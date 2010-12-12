@@ -3,7 +3,7 @@ items:[
 {
 anchors:14,
 formIndex:10000,
-imageMediaID:"1811396E-6434-4F6C-AEB8-5FBCEF2C0461",
+imageMediaID:"5100a0f7-e408-4698-b0a3-65059779b12b",
 location:"0,200",
 mediaOptions:6,
 size:"580,17",
