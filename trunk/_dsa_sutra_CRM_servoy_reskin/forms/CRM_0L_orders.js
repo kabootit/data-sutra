@@ -15,7 +15,7 @@ function ACTIONS_list()
 *****/
 
 //get menu list from a value list
-var valueList = ['Change status of order','----','Delete record']
+var valueList = ['Change status of order','-','Delete record']
 
 //build menu
 var menu = new Array

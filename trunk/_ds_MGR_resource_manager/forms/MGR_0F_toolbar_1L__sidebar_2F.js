@@ -160,7 +160,7 @@ var shownMethodsSaved = new Array()
 
 //show/hide divider
 if (formMethods.length && globalMethods.length) {
-	shownMethods.push('----')
+	shownMethods.push('-')
 }
 if (globalMethods.length) {
 	if (shownMethods.length) {
@@ -172,7 +172,7 @@ if (globalMethods.length) {
 }
 
 for (var i = 0; i < shownMethods.length; i++) {
-	if (i == '----') {
+	if (i == '-') {
 		shownMethodsSaved.push(null)
 		continue
 	}
@@ -225,7 +225,7 @@ var shownMethodsSaved = new Array()
 
 //show/hide divider
 if (formMethods.length && globalMethods.length) {
-	shownMethods.push('----')
+	shownMethods.push('-')
 }
 if (globalMethods.length) {
 	if (shownMethods.length) {
@@ -237,7 +237,7 @@ if (globalMethods.length) {
 }
 
 for (var i = 0; i < shownMethods.length; i++) {
-	if (i == '----') {
+	if (i == '-') {
 		shownMethodsSaved.push(null)
 		continue
 	}

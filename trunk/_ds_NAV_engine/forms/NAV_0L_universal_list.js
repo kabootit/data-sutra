@@ -48,7 +48,7 @@ if (valueList.length) {
 		menu[i].setMethodArguments(valueList[i], methodTypes[i], methods[i])
 		
 		//disable dividers
-		if (valueList[i] == '----') {
+		if (valueList[i] == '-') {
 			menu[i].setEnabled(false)
 		}
 		else {
@@ -1091,7 +1091,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		BUTTONS_toggle(currentNavItem)
 	}
 	//frameworks engine data has changed since form first displayed
-	else if (solutionPrefs.config.prefs.frameworksEngine && solutionPrefs.config.prefs.frameworksEngine > navigationPrefs.byNavItemID[currentNavItem].listData.dateAdded) {
+	else if (solutionPrefs.config.prefs.navEngineTouch && solutionPrefs.config.prefs.navEngineTouch > navigationPrefs.byNavItemID[currentNavItem].listData.dateAdded) {
 		//set hide/show on all buttons
 		BUTTONS_toggle(currentNavItem)
 	}
@@ -1257,7 +1257,7 @@ if (allMenus) {
 				}
 				
 				//disable dividers
-				if (menu[menu.length - 1].text == '----') {
+				if (menu[menu.length - 1].text == '-') {
 					menu[menu.length - 1].setEnabled(false)
 				}
 			}
@@ -1567,7 +1567,7 @@ if (valueList.length) {
 		menu[i].setMethodArguments(reportForms[i],reportMethods[i],reportWrappers[i],valueList[i],reportIDs[i])
 		
 		//disable dividers
-		if (valueList[i] == '----') {
+		if (valueList[i] == '-') {
 			menu[i].setEnabled(false)
 		}
 	}
@@ -1771,7 +1771,7 @@ if (valueList.length) {
 		}
 		
 		//disable dividers
-		if (valueList[i] == '----') {
+		if (valueList[i] == '-') {
 			menu[i].setEnabled(false)
 		}
 	}

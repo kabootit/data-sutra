@@ -324,7 +324,7 @@ var relnName = 'nav_navigation_item_to_column'
 var colFormName = 'NAV_0F_navigation_item_1F__universal_lists_2F_list_display__right_3L_column'
 var navItem = forms[formName].id_navigation_item
 
-if (globals.NAV_column_relation != '----') {
+if (globals.NAV_column_relation != '-') {
 	
 	//find all columns based on selected relation/table and navItem
 	forms[colFormName].foundset.clear()

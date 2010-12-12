@@ -41,7 +41,7 @@ switch (triggerElem) {
 }
 
 //actions
-var valueList = ['Create standard sub-menu','Create static value list....','Create dynamic value list','----','Delete all items']
+var valueList = ['Create standard sub-menu','Create static value list....','Create dynamic value list','-','Delete all items']
 
 //dis-allow sub-filters on third level
 if (triggerElem == 'btn_actions_sub2') {
@@ -62,7 +62,7 @@ for ( var i = 0 ; i < valueList.length ; i++ ) {
 	}
 	
 	//disable dividers
-	if (valueList[i] == '----') {
+	if (valueList[i] == '-') {
 		menu[i].setEnabled(false)
 	}
 }

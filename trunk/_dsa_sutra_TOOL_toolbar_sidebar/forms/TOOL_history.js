@@ -120,7 +120,7 @@ if (application.__parent__.solutionPrefs) {
 		
 		//reset history option
 		if (menu.length > 1) {
-			menu.push(plugins.popupmenu.createMenuItem('----', null),plugins.popupmenu.createMenuItem('Clear history', HIX_list_control))
+			menu.push(plugins.popupmenu.createMenuItem('-', null),plugins.popupmenu.createMenuItem('Clear history', HIX_list_control))
 			menu[menu.length - 2].setEnabled(false)
 			menu[menu.length - 1].setMethodArguments(null,null,null,true)
 		}

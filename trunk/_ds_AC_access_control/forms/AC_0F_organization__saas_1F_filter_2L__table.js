@@ -326,7 +326,7 @@ function SET_tables()
 if (foundset.getSize() && filter_database) {
 	var tablesDisplayed = databaseManager.getTableNames(filter_database)
 	var tablesStored = databaseManager.getTableNames(filter_database)
-	//tablesDisplayed.unshift('All servers','----')
+	//tablesDisplayed.unshift('All servers','-')
 	//tablesStored.unshift('null','')
 }
 else {

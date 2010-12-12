@@ -44,7 +44,7 @@ for ( var i = 0 ; i < valueList.length ; i++ ) {
 	menu[i].setMethodArguments(valueList[i])
 	
 	//disable dividers
-	if (valueList[i] == '----') {
+	if (valueList[i] == '-') {
 		menu[i].setEnabled(false)
 	}
 }

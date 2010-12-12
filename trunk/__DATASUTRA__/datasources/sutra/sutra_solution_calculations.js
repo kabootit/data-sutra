@@ -7,10 +7,10 @@ function gray_find_field()
 
 /*
 if (globals.FRAMEWORKS_find_pretty && globals.FRAMEWORKS_find_pretty != '<html><strong><em>Show all</em></strong>') {
-//!globals.FRAMEWORKS_find && globals.FRAMEWORKS_find_field && !(globals.FRAMEWORKS_find_field == '<html><strong><em>Show all</em></strong>' || globals.FRAMEWORKS_find_field == '----')) {
+//!globals.DATASUTRA_find && globals.DATASUTRA_find_field && !(globals.DATASUTRA_find_field == '<html><strong><em>Show all</em></strong>' || globals.DATASUTRA_find_field == '-')) {
 	//only show when no value entered
-	if (!globals.FRAMEWORKS_find) {
-		return 'Searching: ' + globals.FRAMEWORKS_find_pretty
+	if (!globals.DATASUTRA_find) {
+		return 'Searching: ' + globals.DATASUTRA_find_pretty
 	}
 	else {
 		return null

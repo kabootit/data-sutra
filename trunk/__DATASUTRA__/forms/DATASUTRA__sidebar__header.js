@@ -233,7 +233,7 @@ if (application.__parent__.solutionPrefs && solutionPrefs.panel && solutionPrefs
 	/*
 	//help is available
 	if (helpAvailable) {
-		valueList.push('Help','----')
+		valueList.push('Help','-')
 		descList.push('Inline help guide','')
 		argList.push(1,null)
 	}
@@ -272,7 +272,7 @@ if (application.__parent__.solutionPrefs && solutionPrefs.panel && solutionPrefs
 //			}
 			
 			//disable dividers
-			if (valueList[i] == '----') {
+			if (valueList[i] == '-') {
 				menu[i].setEnabled(false)
 			}
 		}

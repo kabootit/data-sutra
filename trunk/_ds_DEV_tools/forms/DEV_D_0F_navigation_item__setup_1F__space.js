@@ -17,7 +17,7 @@ var shownMethods = formMethods
 
 //show/hide divider
 if (formMethods.length && globalMethods.length) {
-	shownMethods.push('----')
+	shownMethods.push('-')
 }
 if (globalMethods.length) {
 	if (shownMethods.length) {

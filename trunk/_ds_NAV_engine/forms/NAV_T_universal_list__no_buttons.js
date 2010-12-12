@@ -514,7 +514,7 @@ if (application.__parent__.solutionPrefs) {
 		BUTTONS_toggle(currentNavItem)
 	}
 	//frameworks engine data has changed since form first displayed
-	else if (solutionPrefs.config.prefs.frameworksEngine && solutionPrefs.config.prefs.frameworksEngine > navigationPrefs.byNavItemID[currentNavItem].listData.dateAdded) {
+	else if (solutionPrefs.config.prefs.navEngineTouch && solutionPrefs.config.prefs.navEngineTouch > navigationPrefs.byNavItemID[currentNavItem].listData.dateAdded) {
 		//set hide/show on all buttons
 		BUTTONS_toggle(currentNavItem)
 	}
@@ -619,7 +619,7 @@ if (valueList.length) {
 		}
 		
 		//disable dividers
-		if (valueList[i] == '----') {
+		if (valueList[i] == '-') {
 			menu[i].setEnabled(false)
 		}
 	}

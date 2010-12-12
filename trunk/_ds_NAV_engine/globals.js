@@ -465,8 +465,8 @@ if (application.__parent__.solutionPrefs) {
 			//no access and control, use default user modes
 			else {
 				//there is a fw config navigation set
-				if (solutionPrefs.config.fwNavigationID) {
-					var user = globals.NAV_preference_mode_get('User',solutionPrefs.config.fwNavigationID)
+				if (solutionPrefs.config.navigationSetID) {
+					var user = globals.NAV_preference_mode_get('User',solutionPrefs.config.navigationSetID)
 				}
 			}
 		//add on power replace if present && there are replace items set up
@@ -659,7 +659,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 				)
 	}
 	//only proceed if 1) filter or 2) dividing line was NOT clicked 
-	else if (!(colType == 'FILTER' || findValue.findName == '----')) {
+	else if (!(colType == 'FILTER' || findValue.findName == '-')) {
 		//set global used for check mark 
 		globals.DATASUTRA_find_field = (findValue.relation != 'NONE') ? findValue.relation + '.' + findValue.columnName : findValue.columnName
 
@@ -2996,7 +2996,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	}
 	
 	//add in hidden frameworks configuration set items
-	navigationSets.push(solutionPrefs.config.fwNavigationID)
+	navigationSets.push(solutionPrefs.config.navigationSetID)
 	navSetNames.push('configPanes')
 	navSetDefault.push(null)
 	
@@ -3288,7 +3288,7 @@ navItemObj._about_ = '[' + record[relationName].nav_name + '] ' + record.item_na
 	}
 	
 	//only add fast find, power replace, and filter restrictions to non-navigation items
-	if (record.id_navigation != solutionPrefs.config.fwNavigationID) {
+	if (record.id_navigation != solutionPrefs.config.navigationSetID) {
 //TODO: (not)	FAST FIND information
 		globals.CODE_ddarray_field = 'findName'
 		

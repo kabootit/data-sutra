@@ -33,9 +33,9 @@ function ACTIONS_list()
 var valueList = [
 		'Rename navigation set',
 		'Duplicate navigation set',
-		'----',
+		'-',
 		'Delete record'
-	] //,'Export framework settings','Import framework settings','----'
+	] //,'Export framework settings','Import framework settings','-'
 
 //build menu
 var menu = new Array
@@ -50,7 +50,7 @@ while (menu[x]) {
 	menu[x].setMethodArguments(x)
 	
 	//disable dividers
-	if (valueList[x] == '----') {
+	if (valueList[x] == '-') {
 		menu[x].setEnabled(false)
 	}
 	

@@ -178,7 +178,7 @@ function EDIT_popdown(input) {
 			
 			menu[i].setMethodArguments(i)
 			
-			if (menu[i].text == '----') {
+			if (menu[i].text == '-') {
 				menu[i].setEnabled(false)
 			}
 		}

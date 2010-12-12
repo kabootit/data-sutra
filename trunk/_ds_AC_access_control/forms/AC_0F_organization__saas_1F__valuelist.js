@@ -38,7 +38,7 @@ while (menu[x]) {
     menu[x].setMethodArguments(x)
 	
 	//disable dividers
-	if (valueList[x] == '----') {
+	if (valueList[x] == '-') {
 		menu[x].setEnabled(false)
 	}
     
@@ -174,7 +174,7 @@ function ACTIONS_list_item()
 var valueList = new Array(
 					'New item',
 					'New sub item',
-					'----',
+					'-',
 					'Delete all...'
 				)
 
@@ -191,7 +191,7 @@ while (menu[x]) {
     menu[x].setMethodArguments(x)
 	
 	//disable dividers
-	if (valueList[x] == '----') {
+	if (valueList[x] == '-') {
 		menu[x].setEnabled(false)
 	}
 	

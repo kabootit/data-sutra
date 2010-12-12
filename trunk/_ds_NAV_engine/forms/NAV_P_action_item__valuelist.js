@@ -175,7 +175,7 @@ var formLoad = forms[formName].form_to_load
 var tableReln = globals.NAV_filter_relation
 
 //check if form_to_load is a valid entry
-if (!forms[formLoad] || tableReln == '----') {
+if (!forms[formLoad] || tableReln == '-') {
 	var aColumnName = new Array()
 }
 else {

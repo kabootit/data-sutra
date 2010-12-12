@@ -285,7 +285,7 @@ function PICK_relation_1(event) {
 			
 			menu[i].setMethodArguments(i)
 			
-			if (menu[i].text == '----') {
+			if (menu[i].text == '-') {
 				menu[i].setEnabled(false)
 			}
 		}

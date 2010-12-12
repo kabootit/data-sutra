@@ -58,12 +58,12 @@ var valueList = [
 		'New main navigation item',
 		'New sub navigation item',
 	//	'Duplicate navigation item',
-		'----',
+		'-',
 		'sub main sub',
 		'Move to navigation set',
-		'----',
+		'-',
 		'Refresh columns with backend',
-		'----',
+		'-',
 		'Delete record'
 	]
 
@@ -101,7 +101,7 @@ while (menu[x]) {
 	menu[x].setMethodArguments(x)
 	
 	//disable dividers
-	if (valueList[x] == '----') {
+	if (valueList[x] == '-') {
 		menu[x].setEnabled(false)
 	}
 	

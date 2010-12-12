@@ -25,7 +25,7 @@ function ACTIONS_list()
  */
 
 //menu items
-var valuelist = new Array('Duplicate','Upload JasperReport to server','----','Delete all...')
+var valuelist = new Array('Duplicate','Upload JasperReport to server','-','Delete all...')
 
 //set up menu with arguments
 var menu = new Array()
@@ -34,7 +34,7 @@ for ( var i = 0 ; i < valuelist.length ; i++ ) {
 	
 	menu[i].setMethodArguments(i)
 	
-	if (menu[i].text == '----' || (i == 1 && !plugins.jasperPluginRMI)) {
+	if (menu[i].text == '-' || (i == 1 && !plugins.jasperPluginRMI)) {
 		menu[i].setEnabled(false)
 	}
 }

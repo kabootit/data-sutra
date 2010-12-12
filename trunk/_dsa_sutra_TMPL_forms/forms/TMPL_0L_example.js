@@ -28,7 +28,7 @@ function ACTIONS_list()
 
 
 //get menu list from a value list
-var valueList = ['Action 1','Action 2','----','Delete record']
+var valueList = ['Action 1','Action 2','-','Delete record']
 
 //build menu
 var menu = new Array

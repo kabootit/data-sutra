@@ -366,7 +366,7 @@ else {
 	    buttons[i].setMethodArguments('button_' + (i + 1))
 		
 		//disable dividers
-		if (vlButtons[i] == '----') {
+		if (vlButtons[i] == '-') {
 			buttons[i].setEnabled(false)
 		}
 	}
@@ -391,7 +391,7 @@ else {
 	    menu[i].setMethodArguments(i + 1)
 		
 		//disable dividers
-		if (valueList[i] == '----') {
+		if (valueList[i] == '-') {
 			menu[i].setEnabled(false)
 		}
 	}

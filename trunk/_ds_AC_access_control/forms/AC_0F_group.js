@@ -374,8 +374,8 @@ function SET_logging()
 
 //menu items
 var menu = new Array(
-	plugins.popupmenu.createMenuItem("Select all", SET_logging_control),
-	plugins.popupmenu.createMenuItem("Select none", SET_logging_control)
+	plugins.popupmenu.createMenuItem('Select all', SET_logging_control),
+	plugins.popupmenu.createMenuItem('Select none', SET_logging_control)
 )
 
 //set arguments
@@ -418,7 +418,7 @@ function SET_logging_control()
 
 switch (arguments[0]) {
 	case 0:
-		var listItems = application.getValueListArray("AC_logging")
+		var listItems = application.getValueListArray('AC_logging')
 		log_items = ""
 		for ( var i in listItems ) {
 			log_items += listItems[i] + "\n"
@@ -461,8 +461,8 @@ function SET_modes_admin()
 
 //menu items
 var menu = new Array(
-	plugins.popupmenu.createMenuItem("Select all", SET_modes_admin_control),
-	plugins.popupmenu.createMenuItem("Select none", SET_modes_admin_control)
+	plugins.popupmenu.createMenuItem('Select all', SET_modes_admin_control),
+	plugins.popupmenu.createMenuItem('Select none', SET_modes_admin_control)
 )
 
 //set arguments
@@ -506,7 +506,7 @@ function SET_modes_admin_control()
 
 switch(arguments[0]) {
 	case 0:
-		var listItems = application.getValueListArray("AC_sutra_modes_admin")
+		var listItems = application.getValueListArray('AC_sutra_modes_admin')
 		modes_admin = ""
 		for ( var i in listItems ) {
 			modes_admin += listItems[i] + "\n"
@@ -550,8 +550,8 @@ function SET_modes_user()
 
 //menu items
 var menu = new Array(
-	plugins.popupmenu.createMenuItem("Select all", SET_modes_user_control),
-	plugins.popupmenu.createMenuItem("Select none", SET_modes_user_control)
+	plugins.popupmenu.createMenuItem('Select all', SET_modes_user_control),
+	plugins.popupmenu.createMenuItem('Select none', SET_modes_user_control)
 )
 
 //set arguments
@@ -594,7 +594,7 @@ function SET_modes_user_control()
 
 switch(arguments[0]) {
 	case 0:
-		var listItems = application.getValueListArray("AC_sutra_modes_user")
+		var listItems = application.getValueListArray('AC_sutra_modes_user')
 		modes_user = ""
 		for ( var i in listItems ) {
 			modes_user += listItems[i] + "\n"
@@ -638,8 +638,8 @@ function SET_toolbars()
 
 //menu items
 var menu = new Array(
-	plugins.popupmenu.createMenuItem("Select all", SET_toolbars_control),
-	plugins.popupmenu.createMenuItem("Select none", SET_toolbars_control)
+	plugins.popupmenu.createMenuItem('Select all', SET_toolbars_control),
+	plugins.popupmenu.createMenuItem('Select none', SET_toolbars_control)
 )
 
 //set arguments
@@ -682,7 +682,7 @@ function SET_toolbars_control()
 
 switch(arguments[0]) {
 	case 0:
-		var listItems = application.getValueListArray("AC_toolbars")
+		var listItems = application.getValueListArray('AC_toolbars')
 		toolbars = ""
 		for ( var i in listItems ) {
 			toolbars += listItems[i] + "\n"

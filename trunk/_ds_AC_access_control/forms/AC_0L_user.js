@@ -28,7 +28,7 @@ function ACTIONS_list()
  */
 
 //get menu list from a value list
-var valueList = ['Set password','Duplicate as new user','----','Delete record']
+var valueList = ['Set password','Duplicate as new user','-','Delete record']
 
 //build menu
 var menu = new Array
@@ -43,7 +43,7 @@ while (menu[x]) {
 	menu[x].setMethodArguments(x)
 	
 	//disable dividers
-	if (valueList[x] == '----') {
+	if (valueList[x] == '-') {
 		menu[x].setEnabled(false)
 	}
 	

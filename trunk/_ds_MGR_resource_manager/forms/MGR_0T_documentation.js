@@ -28,10 +28,10 @@ function ACTIONS_list()
 //get menu list from a value list
 var valueList = [
 		'Duplicate record',
-		'----',
+		'-',
 		'Toggle open',
 		'Toggle closed',
-		'----',
+		'-',
 		'Delete record'
 	]
 
@@ -48,7 +48,7 @@ while (menu[x]) {
 	menu[x].setMethodArguments(x)
 	
 	//disable dividers
-	if (valueList[x] == '----') {
+	if (valueList[x] == '-') {
 		menu[x].setEnabled(false)
 	}
 	

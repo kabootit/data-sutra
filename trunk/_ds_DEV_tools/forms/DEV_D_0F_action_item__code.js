@@ -139,7 +139,7 @@ if (utils.hasRecords(foundset)) {
 	
 	//show/hide divider
 	if (formMethods.length && globalMethods.length) {
-		shownMethods.push('----')
+		shownMethods.push('-')
 	}
 	if (globalMethods.length) {
 		if (shownMethods.length) {
@@ -151,7 +151,7 @@ if (utils.hasRecords(foundset)) {
 	}
 	
 	for (var i = 0; i < shownMethods.length; i++) {
-		if (i == '----') {
+		if (i == '-') {
 			shownMethodsSaved.push(null)
 			continue
 		}

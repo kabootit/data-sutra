@@ -39,7 +39,7 @@ if (bar_item_action && valueList.length) {
 	    menu[i] = plugins.popupmenu.createMenuItem(valueList[i] + "")
 	
 		//disable dividers
-		if (valueList[i] == '----') {
+		if (valueList[i] == '-') {
 			menu[i].setEnabled(false)
 		}
 	}
@@ -308,7 +308,7 @@ for ( var j = 0 ; j < allMenus[menuItem].menuID.length ; j++ ) {
 			menu.push(plugins.popupmenu.createCheckboxMenuItem(allMenus[menuItem].menuItem[j] + ""))	
 		
 			//disable dividers
-			if (menu[menu.length - 1].text == '----') {
+			if (menu[menu.length - 1].text == '-') {
 				menu[menu.length - 1].setEnabled(false)
 			}
 		}
@@ -408,7 +408,7 @@ if (bar_item_report && valueList.length) {
 	    menu[i] = plugins.popupmenu.createMenuItem(valueList[i] + "")
 	
 		//disable dividers
-		if (valueList[i] == '----') {
+		if (valueList[i] == '-') {
 			menu[i].setEnabled(false)
 		}
 	}
@@ -602,7 +602,7 @@ if (bar_item_tab && valueList.length) {
 		}
 		
 		//disable dividers
-		if (valueList[i] == '----') {
+		if (valueList[i] == '-') {
 			menu[i].setEnabled(false)
 		}
 	}

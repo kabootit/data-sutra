@@ -164,7 +164,7 @@ var relnName = 'nav_navigation_item_to_column'
 var colFormName = 'NAV_0F_navigation_item_1F_column__fastfind_2L__right'
 var navItem = forms.NAV_0F_navigation_item.id_navigation_item
 
-if (globals.NAV_find_relation != '----') {
+if (globals.NAV_find_relation != '-') {
 	
 	//find all columns based on selected relation/table and navItem
 	forms[colFormName].foundset.clear()

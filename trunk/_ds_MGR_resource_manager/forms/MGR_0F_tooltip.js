@@ -29,12 +29,12 @@ function ACTION_tooltip_actions()
 var menu = new Array(
 	plugins.popupmenu.createMenuItem("Duplicate", REC_duplicate),
 	plugins.popupmenu.createMenuItem("Create from module...", GET_tips),
-	plugins.popupmenu.createMenuItem("----"),
+	plugins.popupmenu.createMenuItem('-'),
 	plugins.popupmenu.createMenuItem("Show tooltip's form", ACTION_tooltip_actions_control),
-	plugins.popupmenu.createMenuItem("----"),
+	plugins.popupmenu.createMenuItem('-'),
 	plugins.popupmenu.createMenuItem("Delete all...", ACTION_tooltip_actions_control),
 	plugins.popupmenu.createMenuItem("Delete selected...", ACTION_tooltip_actions_control),
-	plugins.popupmenu.createMenuItem("----"),
+	plugins.popupmenu.createMenuItem('-'),
 	plugins.popupmenu.createMenuItem("Print", ACTION_tooltip_actions_control)
 )
 
@@ -42,7 +42,7 @@ var menu = new Array(
 for ( var i = 0 ; i < menu.length ; i++ ) {
 	menu[i].setMethodArguments(i)
 	
-	if (menu[i].text == '----') {
+	if (menu[i].text == '-') {
 		menu[i].setEnabled(false)
 	}
 }

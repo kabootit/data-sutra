@@ -26,7 +26,7 @@ function FORM_on_hide()
 
 
 if (application.__parent__.solutionPrefs) {
-	solutionPrefs.config.prefs.frameworksEngine = application.getServerTimeStamp()
+	solutionPrefs.config.prefs.navEngineTouch = application.getServerTimeStamp()
 }
 }
 
@@ -123,7 +123,7 @@ var columnFilter = relations
 columnFilter.sort()
 
 if (divider) {
-	columnFilter.unshift(tableName,'----')
+	columnFilter.unshift(tableName,'-')
 }
 else {
 	columnFilter.unshift(tableName)
@@ -142,7 +142,7 @@ var shownMethods = formMethods
 
 //show/hide divider
 if (formMethods.length && globalMethods.length) {
-	shownMethods.push('----')
+	shownMethods.push('-')
 }
 if (globalMethods.length) {
 	if (shownMethods.length) {

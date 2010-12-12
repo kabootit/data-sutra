@@ -696,7 +696,7 @@ function SPACE_list()
 var menu = new Array(
 	plugins.popupmenu.createMenuItem("Select all", SPACE_list_control),
 	plugins.popupmenu.createMenuItem("Select none", SPACE_list_control),
-	plugins.popupmenu.createMenuItem("----"),
+	plugins.popupmenu.createMenuItem('-'),
 	plugins.popupmenu.createMenuItem("Select normal views", SPACE_list_control),
 	plugins.popupmenu.createMenuItem("Select flipped views", SPACE_list_control)
 )
@@ -706,7 +706,7 @@ for ( var i = 0 ; i < menu.length ; i++ ) {
 	menu[i].setMethodArguments(i)
 	
 	//disable dividers
-	if (menu[i].getText() == '----') {
+	if (menu[i].getText() == '-') {
 		menu[i].setEnabled(false)
 	}
 }

@@ -366,7 +366,7 @@ var valuelist = new Array(
 					'New item',
 					'New sub item',
 				//	'Create Servoy valuelists from data',
-					'----',
+					'-',
 					'Delete all...'
 				)
 
@@ -377,7 +377,7 @@ for ( var i = 0 ; i < valuelist.length ; i++ ) {
 	
 	menu[i].setMethodArguments(i)
 	
-	if (menu[i].text == '----') {
+	if (menu[i].text == '-') {
 		menu[i].setEnabled(false)
 	}
 }

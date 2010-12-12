@@ -1194,7 +1194,7 @@ else {
 			//create array from text string
 			adminModeValues = adminModeValues.split("\n")
 			//create object
-			adminModeValues = globals.NAV_preference_mode_get('Admin',solutionPrefs.config.fwNavigationID,adminModeValues)
+			adminModeValues = globals.NAV_preference_mode_get('Admin',solutionPrefs.config.navigationSetID,adminModeValues)
 		}
 		else {
 			adminModeValues = {itemName:[],formName:[],navItemID:[],itemDescription:[]}
@@ -1204,7 +1204,7 @@ else {
 			//create array from text string
 			userModeValues = userModeValues.split("\n")
 			//create object
-			userModeValues = globals.NAV_preference_mode_get('User',solutionPrefs.config.fwNavigationID,userModeValues)
+			userModeValues = globals.NAV_preference_mode_get('User',solutionPrefs.config.navigationSetID,userModeValues)
 		}
 		else {
 			userModeValues = {itemName:[],formName:[],navItemID:[],itemDescription:[]}

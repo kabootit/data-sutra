@@ -305,7 +305,7 @@ if (utils.hasRecords(foundset)) {
 	}
 	
 	//none option
-	optionsDisplay.push('None','----')
+	optionsDisplay.push('None','-')
 	optionsStored.push(null,null)
 	
 	//all dates
@@ -327,8 +327,8 @@ if (utils.hasRecords(foundset)) {
 	//tack on stored if needed
 	if (found) {
 		//add divider if last item is not stored
-		if (optionsDisplay[optionsDisplay.length - 1] != '----') {
-			optionsDisplay.push('----')
+		if (optionsDisplay[optionsDisplay.length - 1] != '-') {
+			optionsDisplay.push('-')
 			optionsStored.push(null)
 		}
 		//stored value
@@ -337,7 +337,7 @@ if (utils.hasRecords(foundset)) {
 	}
 	
 	//remove divider if last item is divider
-	if (optionsDisplay[optionsDisplay.length - 1] == '----') {
+	if (optionsDisplay[optionsDisplay.length - 1] == '-') {
 		optionsDisplay.pop()
 		optionsStored.pop()
 	}

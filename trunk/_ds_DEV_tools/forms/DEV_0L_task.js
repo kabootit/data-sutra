@@ -145,7 +145,7 @@ if (typeof input != 'number') {
 		
 		menu[i].setMethodArguments(i)
 		
-		if (menu[i].text == '----') {
+		if (menu[i].text == '-') {
 			menu[i].setEnabled(false)
 		}
 	}

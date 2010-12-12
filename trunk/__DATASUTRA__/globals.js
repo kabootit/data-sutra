@@ -270,15 +270,15 @@ var z = arguments[2]
 plugins.dialogs.showErrorDialog('Global error','Arguments: '+x)
 /*
 var error = arguments[0];
-application.output("Exception Object: " + error)
-application.output("MSG: " + error.getMessage())
+application.output('Exception Object: ' + error)
+application.output('MSG: ' + error.getMessage())
 if (error.isServoyException)
 {
-	application.output("is a ServoyException")
-	application.output("Errorcode: " + error.getErrorCode())
+	application.output('is a ServoyException')
+	application.output('Errorcode: ' + error.getErrorCode())
   if (error.getErrorCode() == ServoyException.SAVE_FAILED)
   {
-	  plugins.dialogs.showErrorDialog( "Error",  "It seems you did not fill in a required field", 'OK');
+	  plugins.dialogs.showErrorDialog( 'Error',  'It seems you did not fill in a required field')
 	  
 	  //Get the failed records after a save
 	  var array = databaseManager.getFailedRecords()
@@ -288,9 +288,9 @@ if (error.isServoyException)
 		  application.output(record.exception);
 		  if (record.exception.isDataException)
 		  {
-			  application.output("SQL: "+record.exception.getSQL())
-			  application.output("SQLState: "+record.exception.getSQLState())
-			  application.output("VendorErrorCode: "+record.exception.getVendorErrorCode())
+			  application.output('SQL: '+record.exception.getSQL())
+			  application.output('SQLState: '+record.exception.getSQLState())
+			  application.output('VendorErrorCode: '+record.exception.getVendorErrorCode())
 		  }
 	  }
   }
@@ -760,7 +760,7 @@ else {
 		navigationSet.flag_config = 1
 		var results = navigationSet.search()
 		if (results) {
-			solutionPrefs.config.fwNavigationID = navigationSet.id_navigation
+			solutionPrefs.config.navigationSetID = navigationSet.id_navigation
 		}
 		
 		//hack to get rid of color flashing issues
@@ -1424,12 +1424,12 @@ function DS_actions(input)
 				var navigationSets = new Array()
 				
 				//there is a fw config navigation set
-				if (solutionPrefs.config.fwNavigationID) {
+				if (solutionPrefs.config.navigationSetID) {
 					//get admin prefs
-					var admin = globals.NAV_preference_mode_get('Admin',solutionPrefs.config.fwNavigationID)
+					var admin = globals.NAV_preference_mode_get('Admin',solutionPrefs.config.navigationSetID)
 					
 					//get user prefs
-					var user = globals.NAV_preference_mode_get('User',solutionPrefs.config.fwNavigationID)
+					var user = globals.NAV_preference_mode_get('User',solutionPrefs.config.navigationSetID)
 				}
 			}
 			
@@ -1564,7 +1564,7 @@ function DS_actions(input)
 			if (!inPref && solutionPrefs.panel.sidebar && solutionPrefs.panel.sidebar.length) {
 				//there are admin modes, show divider
 				if (admin.itemName && admin.itemName.length) {
-					valueList[valueList.length] = '----'
+					valueList[valueList.length] = '-'
 					formList[formList.length] = ''
 					navIDList[navIDList.length] = ''
 					descList[descList.length] = ''
@@ -1582,7 +1582,7 @@ function DS_actions(input)
 				
 				//there are user modes, show divider
 				if (user.itemName && user.itemName.length) {
-					valueList[valueList.length] = '----'
+					valueList[valueList.length] = '-'
 					formList[formList.length] = ''
 					navIDList[navIDList.length] = ''
 					descList[descList.length] = ''
@@ -2039,7 +2039,7 @@ function DS_actions(input)
 					}
 				}
 				//go to a specific preference
-				else if (itemClicked != '----' && itemClicked != 'Design mode') {
+				else if (itemClicked != '-' && itemClicked != 'Design mode') {
 					//entering a preference for the first time
 					if (!solutionPrefs.config.prefs.preferenceMode) {
 						forms[baseForm].elements.sheetz.visible = false
@@ -2426,7 +2426,7 @@ function DS_navigation_set(input)
 			menu[i].setMethodArguments(vlReal[i])
 			
 			//disable dividers
-			if (vlDisplay[i] == '----') {
+			if (vlDisplay[i] == '-') {
 				menu[i].setEnabled(false)
 			}
 			
