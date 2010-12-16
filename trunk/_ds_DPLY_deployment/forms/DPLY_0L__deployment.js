@@ -115,7 +115,7 @@ if (application.__parent__.solutionPrefs && solutionPrefs.config && solutionPref
 }
 //error mode
 else {
-	forms.DATASUTRA__error.elements.tab_main.tabIndex = 5
+	forms.DATASUTRA__error.elements.tab_main.tabIndex = 4
 }
 
 
@@ -197,7 +197,7 @@ if (application.__parent__.solutionPrefs && solutionPrefs.config && solutionPref
 }
 //error mode
 else {
-	forms.DATASUTRA__error.elements.tab_main.tabIndex = 4
+	forms.DATASUTRA__error.elements.tab_main.tabIndex = 5
 }
 
 

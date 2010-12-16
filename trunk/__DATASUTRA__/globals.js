@@ -367,7 +367,7 @@ else {
 		!forms.DPLY_0F_solution__license.ACTION_validate(true,true)) {
 		
 		forms.DATASUTRA__error.controller.show()
-		forms.DPLY_0L__deployment.GO_five()
+		forms.DPLY_0L__deployment.GO_four()
 	}
 	//if no engine data, show import/export screen
 	else if (!utils.hasRecords(forms[prefForm].foundset)) {
