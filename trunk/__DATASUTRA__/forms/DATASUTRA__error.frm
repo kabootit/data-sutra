@@ -187,6 +187,29 @@ typeid:16,
 uuid:"82284708-9da3-491f-ad9c-4ea9a4c8bc74"
 },
 {
+formIndex:13105,
+horizontalAlignment:2,
+location:"287,4",
+mediaOptions:14,
+showClick:false,
+showFocus:false,
+size:"45,11",
+styleClass:"solutionlogstatus",
+tabSeq:-1,
+text:"3.0β",
+toolTipText:"<html>
+  <head>
+
+  <\/head>
+  <body>
+    Data Sutra v3.0β<br>Revision 32<br>Expires July 31, 2011
+  <\/body>
+<\/html>",
+transparent:true,
+typeid:7,
+uuid:"CD0D6FB1-159E-4E30-9AAD-45E2EAD327E1"
+},
+{
 anchors:11,
 formIndex:9995,
 imageMediaID:"cdee18ad-1c0c-42e4-aae8-f6ad18138769",
@@ -308,29 +331,6 @@ toolTipText:"Framework actions",
 transparent:true,
 typeid:7,
 uuid:"e169b86a-38fd-414b-932d-7b24591e21df"
-},
-{
-formIndex:12300,
-horizontalAlignment:2,
-location:"285,4",
-mediaOptions:14,
-showClick:false,
-showFocus:false,
-size:"45,11",
-styleClass:"solutionlogstatus",
-tabSeq:-1,
-text:"3.0",
-toolTipText:"<html>
-  <head>
-
-  <\/head>
-  <body>
-    Data Sutra v3.0<br>Build 01<br>Expires December 31, 2011
-  <\/body>
-<\/html>",
-transparent:true,
-typeid:7,
-uuid:"eb3a6a93-50ef-4a2c-a9b1-05f2d67aa4db"
 },
 {
 anchors:9,

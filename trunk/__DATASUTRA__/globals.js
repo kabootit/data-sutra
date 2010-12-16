@@ -324,6 +324,9 @@ function DATASUTRA_open()
  */
 
 
+//application.setUIProperty('PopupMenu.font',new Packages.java.awt.Font('Verdana',0,12))
+
+
 //headless client
 if (application.getApplicationType() == APPLICATION_TYPES.HEADLESS_CLIENT) {
 	return arguments[0]
@@ -2483,16 +2486,23 @@ function DS_plugin_check()
  *			  	
  */
 
-var args = new Array(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4], arguments[5], arguments[6])
-var success = plugins.sutra.executeFunction(globals.DS_plugin_check,args,"00000000-1111-1111-1111-000000000000")
-
 //check if plugin
-if (success && plugins.sutra) {
-	//check if plugin has Fxion
-	if (plugins.sutra.getVersion) {
-		//check for version of plugin
-		if (plugins.sutra.getVersion() == '3.0.0' && success) {
-			return true
+if (plugins.sutra && plugins.sutra.executeFunction) {
+	var args = new Array(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4], arguments[5], arguments[6])
+	var success = plugins.sutra.executeFunction(globals.DS_plugin_check,args,"00000000-1111-1111-1111-000000000000")
+
+	//check if plugin called correctly
+	if (success) {
+		//check if plugin has Fxion
+		if (plugins.sutra.getVersion) {
+			//check for version of plugin
+			if (plugins.sutra.getVersion() == '3.0.0' && success) {
+				return true
+			}
+			//fail
+			else {
+				return false
+			}
 		}
 		//fail
 		else {
@@ -4394,7 +4404,7 @@ if (utils.hasRecords(fsToolbar)) {
 			
 			//sidebars can have background color and gradient
 			if (panelType == 2) {
-				panel[panel.length - 1].gradient = (record.gradient) ? true : false
+				panel[panel.length - 1].gradient = (record.flag_gradient) ? true : false
 				if (record.background_color) {
 					panel[panel.length - 1].gradientColor = record.background_color
 				}

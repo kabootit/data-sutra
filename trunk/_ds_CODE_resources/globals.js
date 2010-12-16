@@ -1527,7 +1527,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	//check to see that access and control is enabled
 	if (solutionPrefs.access && solutionPrefs.access.groupID) {
 		var actionRegistry = arguments[0]
-		var serverName = forms.CODE_0F_solution.controller.getServerName()
+		var serverName = forms[solutionPrefs.config.formNameBase].controller.getServerName()
 		
 		var allActions = databaseManager.getFoundSet(serverName, 'sutra_access_action')
 		allActions.clear()

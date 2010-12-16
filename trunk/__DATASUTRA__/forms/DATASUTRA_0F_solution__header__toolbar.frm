@@ -3,26 +3,26 @@ items:[
 {
 anchors:11,
 displaysTags:true,
-formIndex:9995,
+formIndex:9992,
 imageMediaID:"42745122-C117-40DE-9FAA-66E68CA491FD",
-location:"190,63",
+location:"6,93",
 mediaOptions:6,
 mnemonic:"",
 showClick:false,
 showFocus:false,
-size:"123,36",
+size:"125,36",
 tabSeq:-1,
 transparent:true,
 typeid:7,
 uuid:"17EC57BA-7F5B-46D4-866A-CBC49DFB5F9B"
 },
 {
-formIndex:9993,
-location:"190,63",
+formIndex:9990,
+location:"30,93",
 mediaOptions:14,
 showClick:false,
 showFocus:false,
-size:"40,34",
+size:"110,34",
 styleClass:"color_secondary",
 tabSeq:-1,
 typeid:7,
@@ -51,7 +51,7 @@ uuid:"4AC25598-D221-4089-A276-6922D51FE663"
 {
 anchors:12,
 borderType:"EmptyBorder,0,0,0,0",
-formIndex:11400,
+formIndex:13107,
 horizontalAlignment:0,
 imageMediaID:"43175899-471b-4f90-bf55-4022d4666738",
 location:"5,10",
@@ -81,7 +81,7 @@ typeid:7,
 uuid:"5968BB18-11FD-4FC9-BFE1-7F7BE5D3AA28"
 },
 {
-formIndex:13000,
+formIndex:13105,
 horizontalAlignment:2,
 location:"3,4",
 mediaOptions:14,
@@ -90,13 +90,13 @@ showFocus:false,
 size:"45,11",
 styleClass:"solutionlogstatus",
 tabSeq:-1,
-text:"3.0 (28)",
+text:"3.0β",
 toolTipText:"<html>
   <head>
 
   <\/head>
   <body>
-    Data Sutra v3.0<br>Revision 28<br>Expires March 31, 2011
+    Data Sutra v3.0β<br>Revision 32<br>Expires July 31, 2011
   <\/body>
 <\/html>",
 transparent:true,
@@ -104,8 +104,24 @@ typeid:7,
 uuid:"5B0D4817-FE49-44CC-8861-5E987FC4A56A"
 },
 {
+anchors:11,
+displaysTags:true,
+formIndex:9987,
+location:"6,3",
+mediaOptions:6,
+mnemonic:"",
+name:"lbl_white_middle",
+showClick:false,
+showFocus:false,
+size:"125,36",
+styleClass:"color_white",
+tabSeq:-1,
+typeid:7,
+uuid:"794A0735-B869-4192-9712-7F6000600B85"
+},
+{
 foreground:"#ff2823",
-formIndex:13100,
+formIndex:13106,
 horizontalAlignment:2,
 location:"3,28",
 mediaOptions:14,
@@ -121,12 +137,13 @@ typeid:7,
 uuid:"A46BAD65-29F1-4A0F-ACB6-EB435E1AD969"
 },
 {
-formIndex:9993,
-location:"240,63",
+background:"#e6e9cf",
+formIndex:9991,
+location:"180,93",
 mediaOptions:14,
 showClick:false,
 showFocus:false,
-size:"40,34",
+size:"110,34",
 styleClass:"color_primary",
 tabSeq:-1,
 typeid:7,
@@ -134,8 +151,7 @@ uuid:"ADC09AC8-59B4-4E33-A1F1-4FD3A422A9F8"
 },
 {
 anchors:11,
-background:"#e6e9cf",
-formIndex:10400,
+formIndex:13102,
 location:"0,3",
 name:"tab_toolbar",
 printable:false,
@@ -147,7 +163,7 @@ uuid:"BB9F3268-8062-45B4-829D-E3D07A0C714B"
 },
 {
 anchors:11,
-formIndex:9995,
+formIndex:9988,
 imageMediaID:"cdee18ad-1c0c-42e4-aae8-f6ad18138769",
 location:"6,3",
 mediaOptions:6,
@@ -162,7 +178,7 @@ uuid:"D55790CB-4C0D-48ED-B2B8-C795F93BA247"
 {
 anchors:6,
 borderType:"EmptyBorder,0,0,0,0",
-formIndex:11100,
+formIndex:13103,
 horizontalAlignment:0,
 imageMediaID:"0bfe958c-6fcb-4233-9192-20241f982ab3",
 location:"114,18",

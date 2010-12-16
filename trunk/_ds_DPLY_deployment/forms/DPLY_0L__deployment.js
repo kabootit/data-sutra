@@ -13,7 +13,7 @@ function FORM_on_load()
  */
 function FORM_on_show(firstShow)
 {
-	if (firstShow) {
+	if (firstShow && !currentcontroller.getName() == 'DATASUTRA__error') {
 		//Go to static object
 		GO_two()
 	}
