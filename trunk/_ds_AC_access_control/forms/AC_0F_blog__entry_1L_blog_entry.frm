@@ -2,6 +2,7 @@ dataSource:"db:/sutra/sutra_blog_entry",
 initialSort:"blog_posted desc",
 items:[
 {
+borderType:"SpecialMatteBorder,0.0,0.0,1.0,0.0,#000000,#999999,#999999,#999999,0.0,1.0",
 dataProviderID:"blog_visible",
 displayType:4,
 formIndex:10100,
@@ -14,7 +15,8 @@ tabSeq:1,
 text:"Show",
 transparent:true,
 typeid:4,
-uuid:"02eaf577-fd75-40e1-aad9-89e3a3799bcc"
+uuid:"02eaf577-fd75-40e1-aad9-89e3a3799bcc",
+valuelistID:"4f6370be-de55-4992-a24f-57a43c0b25c3"
 },
 {
 anchors:11,
