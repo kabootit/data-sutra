@@ -5185,13 +5185,14 @@ function DS_font_fix() {
 	//needed because of the status area text
 	uiDefaults.put("Label.font", fontWindow)
 //	uiDefaults.put("TabbedPane.font", fontDefault)
-//	uiDefaults.put("Panel.font", fontDefault)
+	//needed for tree view bean
+	uiDefaults.put("Panel.font", fontDefault)
 //	uiDefaults.put("TitledBorder.font", fontDefault)
 	//needed for checkboxes
 	uiDefaults.put("List.font", fontDefault)
 //	uiDefaults.put("Table.font", fontDefault)
 	uiDefaults.put("TableHeader.font", fontWindow)
-	uiDefaults.put("Tree.font", fontDefault)
+//	uiDefaults.put("Tree.font", fontDefault)
 //	uiDefaults.put("TextArea.font", fontDefault)
 //	uiDefaults.put("PasswordField.font", fontDefault)
 //	uiDefaults.put("TextField.font", fontDefault)
