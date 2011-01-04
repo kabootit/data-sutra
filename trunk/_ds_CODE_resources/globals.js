@@ -800,7 +800,7 @@ var valueNine = arguments[9]
 //logType parameter passed in, solutionPrefs defined, analytics turned on, and logging for logType
 if (logType && application.__parent__.solutionPrefs && solutionPrefs.analytics && solutionPrefs.analytics.logging[utils.stringReplace(logType,' ','_')]) {
 	//get foundset
-	var formName = currentcontroller.getName()
+	var formName = solutionPrefs.config.formNameBase
 	var fsLog = databaseManager.getFoundSet(forms[formName].controller.getServerName(),'sutra_log')
 	var record = fsLog.getRecord(fsLog.newRecord())
 	
@@ -3824,6 +3824,11 @@ function CODE_record_duplicate()
 	var relationArray = arguments[1]
 	if (arguments[2] instanceof Array) {
 		var overwriteOK = arguments[2]
+		
+		//ensure there are enough items in overwrite
+		for (var i = overwriteOK.length; i <= relationArray.length; i++) {
+			overwriteOK[i] = null
+		}
 	}
 	else {
 		var overwriteOK = new Array()
@@ -5033,10 +5038,12 @@ var tabPanelName = (arguments[1]) ? arguments[1] : 'tab_detail'
 if (forms[formName] && forms[formName].elements[tabPanelName]) {
 	var tabFormName = forms[formName].elements[tabPanelName].getTabFormNameAt(forms[formName].elements[tabPanelName].tabIndex)
 	
-	//if there is a form in this tab position and it has an ACTIONS_list method on it
+	//if there is a form in this tab position and it has an REC_new method on it
 	if (forms[tabFormName] && forms[tabFormName].REC_new) {
-		//call the new record method
-		forms[tabFormName].REC_new()
+		var elem = forms[formName].elements[application.getMethodTriggerElementName()]
+
+		//pass the new record method the element that called it
+		forms[tabFormName].REC_new(elem)
 	}
 }
 }
