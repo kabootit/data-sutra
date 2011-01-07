@@ -5531,3 +5531,62 @@ application.showFormInDialog(forms.CODE_P__konsole, 20, 50, nWidth, nHeight + 20
 
 
 }
+
+/**
+ * @properties={typeid:24,uuid:"05CA6E53-E55F-4F8E-84F3-E436986B9FD5"}
+ */
+function TAB_change_set(input, formParent) {
+	if (!formParent) {
+		var formName = application.getMethodTriggerFormName()
+		var elem = forms[formName].elements[application.getMethodTriggerElementName()]
+		
+		//get parent form
+		var formStack = forms[formName].controller.getFormContext()
+		
+		//this form is included on some other form
+		if (formStack.getMaxRowIndex() > 1) {
+			formParent = formStack.getValue(formStack.getMaxRowIndex()-1,2)
+		}
+	}
+		
+	//check for form variable that sets up tab controllers
+	if (forms[formParent]) {
+		//all tabs
+		var valuelist = forms[formParent].tabSets
+		
+		//selected tab
+		var tabSelected = forms[formParent].elements.tab_sets.tabIndex
+			
+		//called to depress menu
+		if (typeof input != 'number') {
+			//set up menu with arguments
+			var menu = new Array()
+			
+			for ( var i = 0 ; i < valuelist.length ; i++ ) {
+				
+				if (i + 1 == tabSelected) {
+					menu[i] = plugins.popupmenu.createCheckboxMenuItem(valuelist[i],TAB_change_set)
+					menu[i].setMethodArguments(i + 1,formParent)
+					menu[i].setSelected(true)
+				}
+				else {
+					menu[i] = plugins.popupmenu.createMenuItem(valuelist[i],TAB_change_set)
+					menu[i].setMethodArguments(i + 1,formParent)
+				}
+				
+				if (utils.stringPatternCount(menu[i].text,'---')) {
+					menu[i].setEnabled(false)
+				}
+			}
+			
+			//popup
+			if (elem != null) {
+				plugins.popupmenu.showPopupMenu(elem, menu)
+			}
+		}
+		//menu shown and item chosen
+		else {
+			forms[formParent].elements.tab_sets.tabIndex = input
+		}
+	}
+}
