@@ -98,7 +98,14 @@ function ACTION_generate()
  */
 
 if (license_type == 'Purchased') {
-	var licenseKey = LICENSE_real()
+	var licenseKey = LICENSE_purchased()
+	
+	if (!licenseKey) {
+		licenseKey = ''
+	}
+}
+else if (license_type == 'Community') {
+	var licenseKey = LICENSE_community()
 	
 	if (!licenseKey) {
 		licenseKey = ''
@@ -352,7 +359,7 @@ if (utils.hasRecords(foundset)) {
 	
 	//a purchased license
 	if (license_type == 'Purchased') {
-		var licenseKey = LICENSE_real()
+		var licenseKey = LICENSE_purchased()
 		
 		//there is a license key
 		if (license_key) {
@@ -361,7 +368,7 @@ if (utils.hasRecords(foundset)) {
 	}
 	//a community edition license
 	else if (license_type == 'Community') {
-//		var licenseKey = LICENSE_real()
+//		var licenseKey = LICENSE_purchased()
 //		
 //		//there is a license key
 //		if (license_key) {
@@ -582,7 +589,7 @@ if (utils.hasRecords(foundset)) {
 	}
 	//a real license
 	else if (license_type == 'Purchased') {
-		var licenseKey = LICENSE_real()
+		var licenseKey = LICENSE_purchased()
 		
 		//there is a license key
 		if (license_key) {
@@ -878,6 +885,10 @@ if (license_type) {
 	
 	//purchased
 	if (license_type == 'Purchased') {
+		//move key to position below license number
+		elements.lbl_license_key.setLocation(elements.lbl_license_key.getLocationX(),elements.lbl_license_number.getLocationY() + 23)
+		elements.fld_license_key.setLocation(elements.fld_license_key.getLocationX(),elements.fld_license_number.getLocationY() + 23)
+		
 		//show the rest
 		elements.lbl_license_name.visible = true
 		elements.fld_license_name.visible = true
@@ -896,6 +907,28 @@ if (license_type) {
 		if (licenseNames.length) {
 			license_name = licenseNames[0]
 		}
+	}
+	//community
+	else if (license_type == 'Community') {
+		//move key to position where license number usually is
+		elements.lbl_license_key.setLocation(elements.lbl_license_key.getLocationX(),elements.lbl_license_number.getLocationY())
+		elements.fld_license_key.setLocation(elements.fld_license_key.getLocationX(),elements.fld_license_number.getLocationY())
+		
+		//show the rest
+		elements.lbl_license_name.visible = true
+		elements.fld_license_name.visible = true
+		elements.lbl_license_key.visible = true
+		elements.fld_license_key.visible = true
+		
+		//hide license number
+		elements.lbl_license_number.visible = false
+		elements.fld_license_number.visible = false
+		
+		elements.btn_upgrade.visible = true
+		elements.lbl_upgrade.visible = true
+		
+		elements.fld_license_type.setSize(130,23)
+		
 	}
 	//trial
 	else if (license_type == 'Trial') {
@@ -1371,11 +1404,11 @@ return messageDigest5Hash
  *
  * @properties={typeid:24,uuid:"f15f48dd-e0ac-4394-8d6a-0b536f65ae62"}
  */
-function LICENSE_real()
+function LICENSE_purchased()
 {
 
 /*
- *	TITLE    :	LICENSE_real
+ *	TITLE    :	LICENSE_purchased
  *			  	
  *	MODULE   :	_ds_DPLY_deployment
  *			  	
@@ -1389,85 +1422,177 @@ function LICENSE_real()
  *			  	
  *	REQUIRES :	
  *			  	
- *	USAGE    :	LICENSE_real()
+ *	USAGE    :	LICENSE_purchased()
  *			  	
- *	MODIFIED :	October 31, 2008 -- Troy Elliott, Data Mosaic
+ *	MODIFIED :	January 24, 2011 -- Troy Elliott, Data Mosaic
  *			  	
  */
 
-//MEMO: need to somehow put this section in a Function of it's own
-//running in Tano...strip out jsevents for now
-if (utils.stringToNumber(application.getVersion()) >= 5) {
-	//cast Arguments to array
-	var Arguments = new Array()
-	for (var i = 0; i < arguments.length; i++) {
-		Arguments.push(arguments[i])
-	}
-	
-	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
-}
-
-var inputCompany = ((arguments[0]) ? arguments[0] : license_name) || ''
-var numLicenses = (arguments[1]) ? arguments[1] : ((license_number) ? license_number : 1)
-var dateStart = new Date()
-
-var licenseOpt = new Array()
-
-var padNumLicenses = ''
-while (padNumLicenses.length < 10) {
-	padNumLicenses += numLicenses
-}
-
-var offset = ['F','E','D','C','B','A','9','8','7','6','5','4','3','2','1',null]
-
-//keep generating new licenses until we get an original one
-for (var i = 0; i < offset.length; i++) {
-	var nameCompany = inputCompany
-	
-	//there is something to intersperse
-	if (offset[i]) {
-		//intersperse the offset within the company name at every 4 characters
-		for (var j = 4; j <= nameCompany.length; j += 4) {
-			var k = j / 4 - 1
-			nameCompany = nameCompany.substr(0,j-4 + k) + nameCompany.substr(j-4 + k,4) + offset[i] + nameCompany.substr(j+k)
+	//MEMO: need to somehow put this section in a Function of it's own
+	//running in Tano...strip out jsevents for now
+	if (utils.stringToNumber(application.getVersion()) >= 5) {
+		//cast Arguments to array
+		var Arguments = new Array()
+		for (var i = 0; i < arguments.length; i++) {
+			Arguments.push(arguments[i])
 		}
-		//pad until at least 12 characters in length
-		while (nameCompany.length < 12) {
-			nameCompany += offset[i]
-		}
-	}
-	
-	//create hashes for company and licenses; merge those results to create a company/license hash
-	var hashCompany = LICENSE_md5_hash(nameCompany).toString()
-	var hashLicense = LICENSE_md5_hash(padNumLicenses).toString()
-	var hashPseudo = hashCompany.substr(0,16) + hashLicense.substr(16,16)
-	
-	var uid = hashCompany.toUpperCase() + hashLicense.toUpperCase() + hashPseudo.toUpperCase()
-	
-	//generate license from uid and save into array of possibile licenses
-	var license = LICENSE_format(uid,dateStart)
-	licenseOpt.push(license)
-	
-	//running on licensing server, check for uniqueness
-	if (false) {
-		//break out of for-loop, this value is unique
-		var fsSomething = databaseManager.getFoundSet(controller.getServerName(),'sutra_license')
-		fsSomething.find()
-		fsSomething.license_key = license
-		var results = fsSomething.search()
 		
-		//does not exist on the licensing server
-		if (!results) {
-			return license
+		//reassign arguments without jsevents
+		arguments = Arguments.filter(globals.CODE_jsevent_remove)
+	}
+	
+	var inputCompany = ((arguments[0]) ? arguments[0] : license_name) || ''
+	var numLicenses = (arguments[1]) ? arguments[1] : ((license_number) ? license_number : 1)
+	var dateStart = new Date()
+	
+	var licenseOpt = new Array()
+	
+	var padNumLicenses = ''
+	while (padNumLicenses.length < 10) {
+		padNumLicenses += numLicenses
+	}
+	
+	var offset = ['F','E','D','C','B','A','9','8','7','6','5','4','3','2','1',null]
+	
+	//keep generating new licenses until we get an original one
+	for (var i = 0; i < offset.length; i++) {
+		var nameCompany = inputCompany
+		
+		//there is something to intersperse
+		if (offset[i]) {
+			//intersperse the offset within the company name at every 4 characters
+			for (var j = 4; j <= nameCompany.length; j += 4) {
+				var k = j / 4 - 1
+				nameCompany = nameCompany.substr(0,j-4 + k) + nameCompany.substr(j-4 + k,4) + offset[i] + nameCompany.substr(j+k)
+			}
+			//pad until at least 12 characters in length
+			while (nameCompany.length < 12) {
+				nameCompany += offset[i]
+			}
+		}
+		
+		//create hashes for company and licenses; merge those results to create a company/license hash
+		var hashCompany = LICENSE_md5_hash(nameCompany).toString()
+		var hashLicense = LICENSE_md5_hash(padNumLicenses).toString()
+		var hashPseudo = hashCompany.substr(0,16) + hashLicense.substr(16,16)
+		
+		var uid = hashCompany.toUpperCase() + hashLicense.toUpperCase() + hashPseudo.toUpperCase()
+		
+		//generate license from uid and save into array of possibile licenses
+		var license = LICENSE_format(uid,dateStart)
+		licenseOpt.push(license)
+		
+		//running on licensing server, check for uniqueness
+		if (false) {
+			//break out of for-loop, this value is unique
+			var fsSomething = databaseManager.getFoundSet(controller.getServerName(),'sutra_license')
+			fsSomething.find()
+			fsSomething.license_key = license
+			var results = fsSomething.search()
+			
+			//does not exist on the licensing server
+			if (!results) {
+				return license
+			}
 		}
 	}
+	
+	return licenseOpt
+
+
+
 }
 
-return licenseOpt
+/**
+ * @properties={typeid:24,uuid:"22E93E23-24B9-4745-9708-1A18813365FE"}
+ */
+function LICENSE_community() {
 
-
-
+/*
+ *	TITLE    :	LICENSE_community
+ *			  	
+ *	MODULE   :	_ds_DPLY_deployment
+ *			  	
+ *	ABOUT    :	generate a license for fw that is bought
+ *			  	
+ *	INPUT    :	1- company name
+ *			  	
+ *	OUTPUT   :	when on licensing server, single code
+ *			  	when in client, returns array of possible codes
+ *			  	
+ *	REQUIRES :	
+ *			  	
+ *	USAGE    :	LICENSE_community()
+ *			  	
+ *	MODIFIED :	January 24, 2011 -- Troy Elliott, Data Mosaic
+ *			  	
+ */
+	
+	//MEMO: need to somehow put this section in a Function of it's own
+	//running in Tano...strip out jsevents for now
+	if (utils.stringToNumber(application.getVersion()) >= 5) {
+		//cast Arguments to array
+		var Arguments = new Array()
+		for (var i = 0; i < arguments.length; i++) {
+			Arguments.push(arguments[i])
+		}
+		
+		//reassign arguments without jsevents
+		arguments = Arguments.filter(globals.CODE_jsevent_remove)
+	}
+	
+	var inputCompany = ((arguments[0]) ? arguments[0] : license_name) || ''
+	var numLicenses = '0123456789'	//hard coded at this unique value; really means 5 client licenses
+	var dateStart = new Date()
+	
+	var licenseOpt = new Array()
+	
+	var offset = ['F','E','D','C','B','A','9','8','7','6','5','4','3','2','1',null]
+	
+	//keep generating new licenses until we get an original one
+	for (var i = 0; i < offset.length; i++) {
+		var nameCompany = inputCompany
+		
+		//there is something to intersperse
+		if (offset[i]) {
+			//intersperse the offset within the company name at every 4 characters
+			for (var j = 4; j <= nameCompany.length; j += 4) {
+				var k = j / 4 - 1
+				nameCompany = nameCompany.substr(0,j-4 + k) + nameCompany.substr(j-4 + k,4) + offset[i] + nameCompany.substr(j+k)
+			}
+			//pad until at least 12 characters in length
+			while (nameCompany.length < 12) {
+				nameCompany += offset[i]
+			}
+		}
+		
+		//create hashes for company and licenses; merge those results to create a company/license hash
+		var hashCompany = LICENSE_md5_hash(nameCompany).toString()
+		var hashLicense = LICENSE_md5_hash(numLicenses).toString()
+		var hashPseudo = hashCompany.substr(0,16) + hashLicense.substr(16,16)
+		
+		var uid = hashCompany.toUpperCase() + hashLicense.toUpperCase() + hashPseudo.toUpperCase()
+		
+		//generate license from uid and save into array of possibile licenses
+		var license = LICENSE_format(uid,dateStart)
+		licenseOpt.push(license)
+		
+		//running on licensing server, check for uniqueness
+		if (false) {
+			//break out of for-loop, this value is unique
+			var fsSomething = databaseManager.getFoundSet(controller.getServerName(),'sutra_license')
+			fsSomething.find()
+			fsSomething.license_key = license
+			var results = fsSomething.search()
+			
+			//does not exist on the licensing server
+			if (!results) {
+				return license
+			}
+		}
+	}
+	
+	return licenseOpt
 }
 
 /**
@@ -1584,6 +1709,39 @@ if (license_type) {
 			elements.lbl_status_1.visible = true
 			elements.lbl_status_2.visible = true
 			break
+			
+		case 'Community':
+			//figure out when expires
+//			if (datePurchased) {
+//				var dateExpiry = new Date(datePurchased)
+//				dateExpiry.setDate(dateExpiry.getDate() + 30)
+//				
+//				var temp = dateExpiry - application.getServerTimeStamp()
+//				if (temp > 0) {
+//					temp = new Date(temp)
+//					var janOne = new Date(temp.getFullYear(),0,1)
+//					var daysToExpiry = Math.ceil((temp - janOne) / 86400000)
+//				}
+//				else {
+//					valid = false
+//				}
+//			}
+			valid = true
+			
+			//set status text for evaluation license
+			if (valid) {
+				elements.lbl_status_1.text = 'Valid license'
+				elements.lbl_status_1.fgcolor = '#00FF00'
+				elements.lbl_status_2.text = 'Five (5) clients allowed'
+						//daysToExpiry + ((daysToExpiry > 1) ? ' days remaining' : ' day remaining')
+			}
+			else {
+				elements.lbl_status_1.text = 'Invalid license'
+				elements.lbl_status_1.fgcolor = '#FF0000'
+				elements.lbl_status_2.text = 'Please recheck the code entered'
+			}
+			break
+			
 		case 'Purchased':
 			//figure out when expires
 			if (datePurchased) {
