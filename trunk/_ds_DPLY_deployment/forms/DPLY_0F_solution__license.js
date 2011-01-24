@@ -211,7 +211,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	arguments = Arguments.filter(globals.CODE_jsevent_remove)
 }
 
-var trialMode = arguments[0]
+var trialMode = (typeof arguments[0] == 'boolean') ? arguments[0] : solutionPrefs.config.trialMode
 
 var formName = 'DATASUTRA_0F_solution__header'
 
@@ -368,12 +368,12 @@ if (utils.hasRecords(foundset)) {
 	}
 	//a community edition license
 	else if (license_type == 'Community') {
-//		var licenseKey = LICENSE_purchased()
-//		
-//		//there is a license key
-//		if (license_key) {
-//			var licenseDate = LICENSE_get_date(license_key)
-//		}
+		var licenseKey = LICENSE_community()
+		
+		//there is a license key
+		if (license_key) {
+			var licenseDate = LICENSE_get_date(license_key)
+		}
 	}
 	//trial license
 	else if (license_type == 'Trial') {
@@ -472,11 +472,20 @@ if (utils.hasRecords(foundset)) {
 				TOGGLE_elements(true,licenseDate)
 				
 				if (!skipError) {
-					var restart = plugins.dialogs.showInfoDialog(
-								'Success',
-								'Thank you for your purchase! Support lasts for one year from date of purchase.',
-								'OK'
-						)
+					if (license_type == 'Purchased') {
+						var restart = plugins.dialogs.showInfoDialog(
+									'Success',
+									'Thank you for your purchase! Support lasts for one year from date of purchase.',
+									'OK'
+							)
+					}
+					else if (license_type == 'Community') {
+						var restart = plugins.dialogs.showInfoDialog(
+									'Success',
+									'The community license was activated to: "' + license_name + '".',
+									'OK'
+							)
+					}
 				}
 			}
 		}
@@ -487,19 +496,27 @@ if (utils.hasRecords(foundset)) {
 						'Please check that you have entered the correct registration information'
 					)
 					
-					//make sure in trial mode
-					solutionPrefs.config.trialMode = true
-				}
-				
+				//make sure in trial mode
+//				solutionPrefs.config.trialMode = true
+			}
+			
 
 			//show normal status message
 			if (skipError) {
 				ACTION_status()
 			}
-			//show status message that in trial mode unless trial mode already expired
-			else if (!solutionPrefs.config.prefs.thatsAllFolks) {
-				ACTION_status(true)
+			//in trial mode; show
+			else if (solutionPrefs.config.trialMode) {
+				//show status message that in trial mode unless trial mode already expired
+				if (!solutionPrefs.config.prefs.thatsAllFolks) {
+					ACTION_status(true)
+				}
 			}
+			//something wrong...set labels appropriately
+			else {
+				ACTION_status(false)
+			}
+			
 			
 			//make sure that running in developer if trial
 			if (license_type == 'Trial' && !application.isInDeveloper()) {
@@ -1702,7 +1719,7 @@ if (license_type) {
 	switch (license_type) {
 		case 'Trial':
 			//status explains this is trial mode
-			elements.lbl_status_1.text = 'Running in Trial mode (developer-only)'
+			elements.lbl_status_1.text = 'Running in Trial mode'
 			elements.lbl_status_1.fgcolor = '#000000'
 			elements.lbl_status_2.text = 'Timeout after 60 minutes of use'
 			
@@ -1711,23 +1728,6 @@ if (license_type) {
 			break
 			
 		case 'Community':
-			//figure out when expires
-//			if (datePurchased) {
-//				var dateExpiry = new Date(datePurchased)
-//				dateExpiry.setDate(dateExpiry.getDate() + 30)
-//				
-//				var temp = dateExpiry - application.getServerTimeStamp()
-//				if (temp > 0) {
-//					temp = new Date(temp)
-//					var janOne = new Date(temp.getFullYear(),0,1)
-//					var daysToExpiry = Math.ceil((temp - janOne) / 86400000)
-//				}
-//				else {
-//					valid = false
-//				}
-//			}
-			valid = true
-			
 			//set status text for evaluation license
 			if (valid) {
 				elements.lbl_status_1.text = 'Valid license'
