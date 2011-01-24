@@ -1845,7 +1845,7 @@ function DS_actions(input)
 				//exit from settings mode
 				else if (itemClicked == 'Exit configuration') {
 					//turn on progress indicator
-					globals.CALLBACK_progressbar_start(-273,'Loading new configuration data...','This process will soon only update changed information')
+					globals.TRIGGER_progressbar_start(-273,'Loading new configuration data...','This process will soon only update changed information')
 					
 					//recreate navigationPrefs
 					//with a/c
@@ -2030,7 +2030,7 @@ function DS_actions(input)
 					}
 					
 					//re-set progress indicator toolbar (already removed from toolbar area)
-					globals.CALLBACK_progressbar_stop()
+					globals.TRIGGER_progressbar_stop()
 					
 					//turn licensing check back on
 					if (baDeeBaDee) {
@@ -3373,7 +3373,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			}
 			
 			//LOG windowing
-			globals.CALLBACK_log_create('Flexible windowing',
+			globals.TRIGGER_log_create('Flexible windowing',
 					oldSpace,
 					spaceName,
 					null,
@@ -3899,7 +3899,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			}
 			
 			//LOG windowing
-			globals.CALLBACK_log_create('Flexible windowing',
+			globals.TRIGGER_log_create('Flexible windowing',
 					solutionPrefs.config.activeSpace,
 					solutionPrefs.config.activeSpace,
 					dimensionOneStart,
