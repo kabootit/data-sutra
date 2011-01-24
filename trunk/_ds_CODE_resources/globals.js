@@ -2417,9 +2417,37 @@ var servoy =	'application controller currentcontroller databaseManager elements 
 
 var special =	'null undefined NaN';
 
-var fxGetKeywords = globals.CODE_get_function(117)
-var fxMatch = globals.CODE_get_function(100)
-var fxGetMatches = globals.CODE_get_function(104)
+//var fxGetKeywords = globals.CODE_get_function(117)
+//var fxMatch = globals.CODE_get_function(100)
+//var fxGetMatches = globals.CODE_get_function(104)
+
+function fxGetKeywords(str) {
+	return '\\b' + str.replace(/ /g, '\\b|\\b') + '\\b'
+}
+
+function fxMatch(value, index, css) {
+	var objReturn = new Object()
+	
+	objReturn.value = value
+	objReturn.index = index
+	objReturn.length = value.length
+	objReturn.css = css
+	
+	return objReturn
+}
+
+function fxGetMatches(code, regex, css, func) {
+	var fxMatch = func
+	
+	var index = 0
+	var match = null
+	var matches = new Array()
+	
+	while((match = regex.exec(code)) != null) 
+		matches[matches.length] = fxMatch(match[0], match.index, css)
+	
+	return matches
+}
 
 var regexList = [
 	{ regex: new RegExp('/\\*[\\s\\S]*?\\*/', 'gm'),				css: 'comment' },			// multiline comments //[0]
@@ -2656,7 +2684,6 @@ var returnObject = arguments[0]
 var regexItem = arguments[1]
 var fxGetMatches = arguments[2]
 var fxMatch = arguments[3]
-
 
 var nonFormat = returnObject.rowData
 var indexOffset
