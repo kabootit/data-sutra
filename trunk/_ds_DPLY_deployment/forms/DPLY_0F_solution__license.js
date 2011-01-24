@@ -350,7 +350,7 @@ if (utils.hasRecords(foundset)) {
 	}
 	solutionPrefs.config.trialMode = false
 	
-	//a real license
+	//a purchased license
 	if (license_type == 'Purchased') {
 		var licenseKey = LICENSE_real()
 		
@@ -358,6 +358,15 @@ if (utils.hasRecords(foundset)) {
 		if (license_key) {
 			var licenseDate = LICENSE_get_date(license_key)
 		}
+	}
+	//a community edition license
+	else if (license_type == 'Community') {
+//		var licenseKey = LICENSE_real()
+//		
+//		//there is a license key
+//		if (license_key) {
+//			var licenseDate = LICENSE_get_date(license_key)
+//		}
 	}
 	//trial license
 	else if (license_type == 'Trial') {
@@ -386,7 +395,7 @@ if (utils.hasRecords(foundset)) {
 	//client has not been validated, check concurrent number against license amount
 	if (!clientOK) {
 		//a trial license
-		if (license_type == 'Trial') {
+		if (license_type == 'Trial' || license_type == 'Community') {
 			var licenses = 5
 		}
 		//a real license
@@ -413,7 +422,7 @@ if (utils.hasRecords(foundset)) {
 			}
 		}
 	}
-	//trial; ignore all company-related inquiries
+	//trial or community; ignore all company-related inquiries
 	else {
 		var companyOK = true
 	}
@@ -445,7 +454,7 @@ if (utils.hasRecords(foundset)) {
 	//this client has...
 		//not exceeded max allowed clients AND
 		//company name matches servoy licensee OR
-		//in trial mode
+		//in trial mode and developer
 	if (clientOK && companyOK) {
 		//key matches, license accepted
 		if (LICENSE_hash_compare(licenseKey,license_key) && license_accept) {
@@ -483,6 +492,16 @@ if (utils.hasRecords(foundset)) {
 			//show status message that in trial mode unless trial mode already expired
 			else if (!solutionPrefs.config.prefs.thatsAllFolks) {
 				ACTION_status(true)
+			}
+			
+			//make sure that running in developer if trial
+			if (license_type == 'Trial' && !application.isInDeveloper()) {
+				plugins.dialogs.showErrorDialog(
+						'Restricted',
+						'Trial mode only runs from Servoy Developer.'
+					)
+				
+				application.exit()
 			}
 			
 			if (returnValid) {
