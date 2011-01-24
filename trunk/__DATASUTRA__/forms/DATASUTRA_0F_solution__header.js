@@ -14,8 +14,8 @@ elements.bean_drag.visible = false
 elements.lbl_drag.visible = false
 
 
-//turn demo mode off
-forms.DATASUTRA_0F_solution__header__toolbar.elements.lbl_demo_mode.visible = false
+//turn trial mode off
+forms.DATASUTRA_0F_solution__header__toolbar.elements.lbl_trial_mode.visible = false
 
 
 

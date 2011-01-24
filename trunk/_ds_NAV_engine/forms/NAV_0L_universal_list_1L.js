@@ -125,8 +125,8 @@ if (application.__parent__.solutionPrefs && this.configured) {
 		forms.DPLY_0F_solution__license.ACTION_status()
 		
 		plugins.dialogs.showErrorDialog(
-							'Demo expired',
-							'Demo time expired\n' +
+							'Trial expired',
+							'Trial time expired\n' +
 							'Please restart.'
 						)
 	}

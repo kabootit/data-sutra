@@ -359,7 +359,7 @@ else {
 	
 	//if no license or invalid license, show license key enter place
 	if (utils.hasRecords(forms[prefForm].foundset) && 
-		(forms[prefForm].license_type != 'Demo') && 
+		(forms[prefForm].license_type != 'Trial') && 
 		!forms.DPLY_0F_solution__license.ACTION_validate(true,true)) {
 		
 		forms.DATASUTRA__error.controller.show()
@@ -479,8 +479,8 @@ else {
 						)
 			return	
 			
-			//running in client in demo mode, show license entry page
-			if (application.getApplicationType() == 2 && solutionPrefs.config.demoMode) {
+			//running in client in trial mode, show license entry page
+			if (application.getApplicationType() == 2 && solutionPrefs.config.trialMode) {
 				forms.DATASUTRA__error.controller.show()
 				forms.DATASUTRA__error.elements.tab_main.tabIndex = 3
 				
@@ -489,17 +489,17 @@ else {
 			//running in non-developer
 			else if (application.getApplicationType() != 3) {
 				plugins.dialogs.showErrorDialog(
-						'Demo mode',
-						'Data Sutra is running in demo mode.\n\n' +
+						'Trial mode',
+						'Data Sutra is running in trial mode.\n\n' +
 						'Client will now close.'
 					)
 				
 				application.exit()
 			}
-			//set status text that in demo mode
+			//set status text that in trial mode
 			else {*/
 				application.setStatusText(
-							'Data Sutra is running in Demo mode',
+							'Data Sutra is running in Trial mode',
 							'Visit http://www.data-sutra.com/ to license Data Sutra'
 						)
 			//}
@@ -1397,8 +1397,8 @@ function DS_actions(input)
 			forms.DPLY_0F_solution__license.ACTION_status()
 			
 			plugins.dialogs.showErrorDialog(
-								'Demo expired',
-								'Demo time expired\n' +
+								'Trial expired',
+								'Trial time expired\n' +
 								'Please restart.'
 							)
 		}
@@ -2394,8 +2394,8 @@ function DS_navigation_set(input)
 		forms.DPLY_0F_solution__license.ACTION_status()
 		
 		plugins.dialogs.showErrorDialog(
-							'Demo expired',
-							'Demo time expired\n' +
+							'Trial expired',
+							'Trial time expired\n' +
 							'Please restart.'
 						)
 	}
@@ -2669,8 +2669,8 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		forms.DPLY_0F_solution__license.ACTION_status()
 		
 		plugins.dialogs.showErrorDialog(
-							'Demo expired',
-							'Demo time expired\n' +
+							'Trial expired',
+							'Trial time expired\n' +
 							'Please restart.'
 						)
 	}
@@ -2846,8 +2846,8 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		forms.DPLY_0F_solution__license.ACTION_status()
 		
 		plugins.dialogs.showErrorDialog(
-							'Demo expired',
-							'Demo time expired\n' +
+							'Trial expired',
+							'Trial time expired\n' +
 							'Please restart.'
 						)
 	}
@@ -4037,8 +4037,8 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		forms.DPLY_0F_solution__license.ACTION_status()
 		
 		plugins.dialogs.showErrorDialog(
-							'Demo expired',
-							'Demo time expired\n' +
+							'Trial expired',
+							'Trial time expired\n' +
 							'Please restart.'
 						)
 	}

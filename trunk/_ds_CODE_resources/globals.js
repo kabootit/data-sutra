@@ -1732,8 +1732,8 @@ else if (startStop == 'stop') {
 		
 		var elapsed = solutionPrefs.config.timer.timeEnd - solutionPrefs.config.timer.timeStart
 		
-		//only set when demo mode not expired
-		if (!solutionPrefs.config.demoModeExpired) {
+		//only set when trial mode not expired
+		if (!solutionPrefs.config.trialModeExpired) {
 			application.setStatusText('Elapsed time is: '+ elapsed +' ms.  Finished '+utils.dateFormat(endTime, 'H:MM:ss'))
 		}
 	}

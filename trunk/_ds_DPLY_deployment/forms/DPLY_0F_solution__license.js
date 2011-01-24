@@ -104,10 +104,10 @@ if (license_type == 'Purchased') {
 		licenseKey = ''
 	}
 }
-else if (license_type == 'Demo') {
+else if (license_type == 'Trial') {
 	plugins.dialogs.showErrorDialog(
 					'Licensing error',
-					'Demo mode cannot be licensed'
+					'Trial mode cannot be licensed'
 			)
 	return
 }
@@ -204,12 +204,12 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	arguments = Arguments.filter(globals.CODE_jsevent_remove)
 }
 
-var demoMode = arguments[0]
+var trialMode = arguments[0]
 
 var formName = 'DATASUTRA_0F_solution__header'
 
-if (forms[formName] && forms[formName].elements.lbl_demo_mode) {
-	var elem = forms[formName].elements.lbl_demo_mode
+if (forms[formName] && forms[formName].elements.lbl_trial_mode) {
+	var elem = forms[formName].elements.lbl_trial_mode
 }
 
 var toolTip = 'Visit http://www.data-sutra.com/ to license Data Sutra'
@@ -219,9 +219,9 @@ if (!solutionPrefs.config.prefs) {
 	solutionPrefs.config.prefs = {}
 }
 
-//status text for demo operation when changed
-if (demoMode) {
-	var status = 'Data Sutra is running in Demo mode'
+//status text for trial operation when changed
+if (trialMode) {
+	var status = 'Data Sutra is running in Trial mode'
 	
 	application.setStatusText(
 					status,
@@ -233,8 +233,8 @@ if (demoMode) {
 		elem.visible = true
 	}
 }
-//set status text for normal demo operation
-else if (solutionPrefs.config.demoMode) {
+//set status text for normal trial operation
+else if (solutionPrefs.config.trialMode) {
 	var limit = 60
 	
 	var rightNow = application.getServerTimeStamp()
@@ -245,21 +245,21 @@ else if (solutionPrefs.config.demoMode) {
 	//less than an hour (limit minutes)
 	if (opened < limit) {
 		if (opened == limit - 1) {
-			var status = '1 minute remains in Demo mode'
+			var status = '1 minute remains in Trial mode'
 		}
 		else {
-			var status = (limit - opened) + ' minutes remain in Demo mode'
+			var status = (limit - opened) + ' minutes remain in Trial mode'
 		}
 	}
 	//more than an hour
 	else {
-		var status = '<html><body><font color="red">Demo time expired.  Please restart.</font></body></html>'
+		var status = '<html><body><font color="red">Trial time expired.  Please restart.</font></body></html>'
 		
 		//turn on flag for really annoying popups
 		solutionPrefs.config.prefs.thatsAllFolks = true
 		
 		//turn on flag to not setStatusText anymore
-		solutionPrefs.config.demoModeExpired = true
+		solutionPrefs.config.trialModeExpired = true
 	}
 	
 	//set status text
@@ -273,7 +273,7 @@ else if (solutionPrefs.config.demoMode) {
 		elem.visible = true
 	}
 }
-//no longer demo mode, set status text
+//no longer trial mode, set status text
 else {
 	application.setStatusText(
 				'<html><body>&nbsp;</body></html>',
@@ -308,7 +308,7 @@ function ACTION_validate()
  *	INPUT    :	1- return whether licensed
  *			  	2- suppress error message
  *			  	
- *	OUTPUT   :	true = purchased; false = demo
+ *	OUTPUT   :	true = purchased; false = trial
  *			  	
  *	REQUIRES :	
  *			  	
@@ -341,14 +341,14 @@ if (! application.__parent__.solutionPrefs) {
 
 //there are records here, run...
 if (utils.hasRecords(foundset)) {
-	//reset demo mode so upcoming check will work correctly
+	//reset trial mode so upcoming check will work correctly
 	if (!application.__parent__.solutionPrefs) {
 		application.__parent__.solutionPrefs = new Object()
 	}
 	if (!solutionPrefs.config) {
 		solutionPrefs.config = new Object()
 	}
-	solutionPrefs.config.demoMode = false
+	solutionPrefs.config.trialMode = false
 	
 	//a real license
 	if (license_type == 'Purchased') {
@@ -359,14 +359,14 @@ if (utils.hasRecords(foundset)) {
 			var licenseDate = LICENSE_get_date(license_key)
 		}
 	}
-	//demo license
-	else if (license_type == 'Demo') {
-		solutionPrefs.config.demoMode = true
+	//trial license
+	else if (license_type == 'Trial') {
+		solutionPrefs.config.trialMode = true
 		
 		if (!skipError) {
 			var restart = plugins.dialogs.showInfoDialog(
-							'Demo mode',
-							'Running in demo mode. Timeout after 60 minutes of use.',
+							'Trial mode',
+							'Running in trial mode. Timeout after 60 minutes of use.',
 							'OK'
 					)
 		}
@@ -385,8 +385,8 @@ if (utils.hasRecords(foundset)) {
 	
 	//client has not been validated, check concurrent number against license amount
 	if (!clientOK) {
-		//a demo license
-		if (license_type == 'Demo') {
+		//a trial license
+		if (license_type == 'Trial') {
 			var licenses = 5
 		}
 		//a real license
@@ -403,7 +403,7 @@ if (utils.hasRecords(foundset)) {
 	//company names servoy is registered to
 	var licenseNames = application.getLicenseNames()
 	
-	//non-demo
+	//non-trial
 	if (license_type == 'Purchased') {
 		//check if company name on servoy and frameworks licenses match
 		for (var i = 0; i < licenseNames.length; i++) {
@@ -413,16 +413,16 @@ if (utils.hasRecords(foundset)) {
 			}
 		}
 	}
-	//demo; ignore all company-related inquiries
+	//trial; ignore all company-related inquiries
 	else {
 		var companyOK = true
 	}
 	
 	//error with companies
 	if (!companyOK) {
-		//errors are not ok...enter demo mode
+		//errors are not ok...enter trial mode
 		if (skipError) {
-			solutionPrefs.config.demoMode = true
+			solutionPrefs.config.trialMode = true
 		}
 		//errors are allowed, throw up error box
 		else {
@@ -445,7 +445,7 @@ if (utils.hasRecords(foundset)) {
 	//this client has...
 		//not exceeded max allowed clients AND
 		//company name matches servoy licensee OR
-		//in demo mode
+		//in trial mode
 	if (clientOK && companyOK) {
 		//key matches, license accepted
 		if (LICENSE_hash_compare(licenseKey,license_key) && license_accept) {
@@ -465,14 +465,14 @@ if (utils.hasRecords(foundset)) {
 			}
 		}
 		else {
-			if (!skipError && !solutionPrefs.config.demoMode) {
+			if (!skipError && !solutionPrefs.config.trialMode) {
 				plugins.dialogs.showErrorDialog(
 						'Invalid key',
 						'Please check that you have entered the correct registration information'
 					)
 					
-					//make sure in demo mode
-					solutionPrefs.config.demoMode = true
+					//make sure in trial mode
+					solutionPrefs.config.trialMode = true
 				}
 				
 
@@ -480,7 +480,7 @@ if (utils.hasRecords(foundset)) {
 			if (skipError) {
 				ACTION_status()
 			}
-			//show status message that in demo mode unless demo mode already expired
+			//show status message that in trial mode unless trial mode already expired
 			else if (!solutionPrefs.config.prefs.thatsAllFolks) {
 				ACTION_status(true)
 			}
@@ -535,8 +535,8 @@ if (! application.__parent__.solutionPrefs) {
 
 //there are records here, run...
 if (utils.hasRecords(foundset)) {
-	//reset demo mode so upcoming check will work correctly
-	solutionPrefs.config.demoMode = false
+	//reset trial mode so upcoming check will work correctly
+	solutionPrefs.config.trialMode = false
 	
 	//an eval license
 	if (license_type == 'Evaluation') {
@@ -570,9 +570,9 @@ if (utils.hasRecords(foundset)) {
 			var licenseDate = LICENSE_get_date(license_key)
 		}
 	}
-	//demo license
+	//trial license
 	else {
-		solutionPrefs.config.demoMode = true
+		solutionPrefs.config.trialMode = true
 	}
 	
 	//check if...
@@ -638,9 +638,9 @@ if (utils.hasRecords(foundset)) {
 	//this client has...
 		//not exceeded max allowed clients AND
 		//company name matches servoy licensee OR
-		//in demo mode
-	if (clientOK && companyOK || solutionPrefs.config.demoMode) {
-		//key matches, license accepted, if eval, then time hasn't run out on demo yet
+		//in trial mode
+	if (clientOK && companyOK || solutionPrefs.config.trialMode) {
+		//key matches, license accepted, if eval, then time hasn't run out on trial yet
 		if (LICENSE_hash_compare(licenseKey,license_key) && license_accept && ((license_type == 'Evaluation') ? valid : true)) {
 			if (returnValid) {
 				return true
@@ -650,7 +650,7 @@ if (utils.hasRecords(foundset)) {
 			}
 		}
 		else {
-			if (!skipError && !solutionPrefs.config.demoMode) {
+			if (!skipError && !solutionPrefs.config.trialMode) {
 				plugins.dialogs.showErrorDialog(
 						'Invalid key',
 						'Please check that you have entered the correct registration information'
@@ -855,7 +855,7 @@ function FLD_data_change__license_type()
 //there is a license
 if (license_type) {
 	//remove 'select' as an option from licensing
-	application.setValueListItems('DPLY_license_type',new Array('Demo','Purchased'))
+	application.setValueListItems('DPLY_license_type',new Array('Trial','Community','Purchased'))
 	
 	//purchased
 	if (license_type == 'Purchased') {
@@ -878,8 +878,8 @@ if (license_type) {
 			license_name = licenseNames[0]
 		}
 	}
-	//demo
-	else if (license_type == 'Demo') {
+	//trial
+	else if (license_type == 'Trial') {
 		license_key = null
 		license_name = null
 		license_number = null
@@ -1556,9 +1556,9 @@ var datePurchased = arguments[1]
 
 if (license_type) {
 	switch (license_type) {
-		case 'Demo':
-			//status explains this is demo mode
-			elements.lbl_status_1.text = 'Running in Demo mode (5 clients)'
+		case 'Trial':
+			//status explains this is trial mode
+			elements.lbl_status_1.text = 'Running in Trial mode (developer-only)'
 			elements.lbl_status_1.fgcolor = '#000000'
 			elements.lbl_status_2.text = 'Timeout after 60 minutes of use'
 			
@@ -1610,7 +1610,7 @@ if (!license_accept) {
 }
 
 //disable all elements
-if (license_accept && (valid || license_type == 'Demo')) {
+if (license_accept && (valid || license_type == 'Trial')) {
 	elements.fld_license_type.enabled = false
 	elements.fld_license_name.enabled = false
 	elements.fld_license_number.enabled = false
