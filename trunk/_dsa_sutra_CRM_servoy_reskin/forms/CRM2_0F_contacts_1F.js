@@ -24,6 +24,6 @@ function GOTO_company()
  *			  	
  */
 
-globals.CALLBACK_navigation_set(12,true,crm_contacts_to_companies) 
+globals.TRIGGER_navigation_set(12,true,crm_contacts_to_companies) 
 
 }

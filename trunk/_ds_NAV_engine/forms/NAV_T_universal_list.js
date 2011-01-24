@@ -200,7 +200,7 @@ if (application.__parent__.solutionPrefs) {
 	}
 	
 	//LOG ul action
-	globals.CALLBACK_log_create('UL Actions',
+	globals.TRIGGER_log_create('UL Actions',
 						methodItem,
 						method,
 						serverName,
@@ -664,7 +664,7 @@ if (application.__parent__.solutionPrefs) {
 	//LOG ul display change
 	var serverName = forms[formName].controller.getServerName()
 	var tableName = forms[formName].controller.getTableName()
-	globals.CALLBACK_log_create('UL Displays',
+	globals.TRIGGER_log_create('UL Displays',
 						rowPreview,
 						serverName,
 						tableName
@@ -1069,8 +1069,8 @@ if (filters.length) {
 			}
 		}
 		
-		globals.CALLBACK_fastfind_display_set('Filter: ' + filterTitle,toolTip,filterTitle)
-		globals.CALLBACK_ul_refresh_all()
+		globals.TRIGGER_fastfind_display_set('Filter: ' + filterTitle,toolTip,filterTitle)
+		globals.TRIGGER_ul_refresh_all()
 	}
 	//return original foundset
 	else {
@@ -1081,7 +1081,7 @@ if (filters.length) {
 	}
 	
 	//LOG ul filter
-	globals.CALLBACK_log_create('UL Filters',
+	globals.TRIGGER_log_create('UL Filters',
 						filterTitle,
 						serverName,
 						tableName,
@@ -1172,7 +1172,7 @@ if (application.__parent__.solutionPrefs) {
 	var tabName = elements.tab_ul.getTabFormNameAt(1)
 	
 	//timer for debugging purposes
-	globals.CALLBACK_timer('start')
+	globals.TRIGGER_timer('start')
 	
 	//things to do on the initial show only
 	//TODO WARNING: do rewrite your code to not depend on 'arguments', append them to the parameter list.
@@ -1227,7 +1227,7 @@ if (application.__parent__.solutionPrefs) {
 //	}
 	
 	//set record navigator to reflect current index and found set
-	globals.CALLBACK_toolbar_record_navigator_set()
+	globals.TRIGGER_toolbar_record_navigator_set()
 	
 	//only run when using query based way to hit repository and form present
 	if (forms[formName] && solutionPrefs.repository && solutionPrefs.repository.allFormsByTable && solutionPrefs.repository.allFormsByTable[serverName] && solutionPrefs.repository.allFormsByTable[serverName][tableName] && solutionPrefs.repository.allFormsByTable[serverName][tableName].primaryKey) {			
@@ -1455,10 +1455,10 @@ if (application.__parent__.solutionPrefs) {
 //	UL_sync_records()
 	
 	//update record navigator
-	globals.CALLBACK_toolbar_record_navigator_set()
+	globals.TRIGGER_toolbar_record_navigator_set()
 	
 	//LOG ul sort
-	globals.CALLBACK_log_create('UL Sorts',
+	globals.TRIGGER_log_create('UL Sorts',
 						colName,
 						sortDirection,
 						serverName,
@@ -1563,7 +1563,7 @@ if (application.__parent__.solutionPrefs) {
 		var pkName = 'repositoryAPINotImplemented'
 		var pkActedOn = 0
 	}
-	globals.CALLBACK_log_create('UL Add',
+	globals.TRIGGER_log_create('UL Add',
 						((methods) ? methods : 'Default add'),
 						serverName,
 						tableName,
@@ -1800,7 +1800,7 @@ else if (formName && forms[formName]) {
 }
 
 //LOG ul reporting
-globals.CALLBACK_log_create('UL Reports',
+globals.TRIGGER_log_create('UL Reports',
 					reportID,
 					itemName,
 					formName,
@@ -1949,7 +1949,7 @@ if (forms[formName]) {
 	}
 	
 	//LOG ul tab change
-	globals.CALLBACK_log_create('UL Tabs',
+	globals.TRIGGER_log_create('UL Tabs',
 						itemName,
 						formName
 						)

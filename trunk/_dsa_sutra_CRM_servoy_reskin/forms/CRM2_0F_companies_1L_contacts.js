@@ -25,7 +25,7 @@ function GOTO_contact()
  */
 
 //change the selected navigation record
-globals.CALLBACK_navigation_set(13,true) //contacts is 13
+globals.TRIGGER_navigation_set(13,true) //contacts is 13
 
 }
 

@@ -152,7 +152,7 @@ function DEV_lock_workflow()
  *			  	
  *	MODULE   :	dev_DEV_developer
  *			  	
- *	ABOUT    :	lock the workflow form (opposite of globals.CALLBACK_interface_lock)
+ *	ABOUT    :	lock the workflow form (opposite of globals.TRIGGER_interface_lock)
  *			  	
  *	INPUT    :	1- true/false to lock/unlock the workflow
  *			  	2- true/false to lock/unlock the list area
@@ -531,7 +531,7 @@ if (application.__parent__.solutionPrefs) {
 	}
 	
 	//refire current space
-	globals.CALLBACK_spaces_set(solutionPrefs.config.activeSpace,true,skipUI)
+	globals.TRIGGER_spaces_set(solutionPrefs.config.activeSpace,true,skipUI)
 	
 //	forms.DATASUTRA_0F_solution.elements.bean_main.ignoreRepaint = false
 //	forms.DATASUTRA_0F_solution.elements.bean_list.ignoreRepaint = false
@@ -681,7 +681,7 @@ databaseManager.setAutoSave(true)
 forms[solutionPrefs.config.formNameBase].elements.tab_design_popdown.visible = false
 
 //toggle everything back on
-globals.CALLBACK_interface_lock(false,false)
+globals.TRIGGER_interface_lock(false,false)
 
 //set status to unlocked
 solutionPrefs.config.lockStatus = false
@@ -805,7 +805,7 @@ if (formName) {
 		databaseManager.setAutoSave(false)
 		
 		//lock screen
-		globals.CALLBACK_interface_lock(true,true)
+		globals.TRIGGER_interface_lock(true,true)
 		
 		//remove hover guy window if new one different than currently displayed one
 		if (forms[baseForm].elements.tab_design_popdown.tabIndex > 0  && (forms[baseForm].elements.tab_design_popdown.getTabFormNameAt(1) != formName)) {
@@ -871,7 +871,7 @@ else {
 	forms[baseForm].elements.tab_design_popdown.visible = false
 	
 	//unlock screen
-	globals.CALLBACK_interface_lock(false,false)
+	globals.TRIGGER_interface_lock(false,false)
 }
 
 

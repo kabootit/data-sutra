@@ -26,7 +26,7 @@ function GOTO_staff()
 
 
 //change the selected navigation record
-globals.CALLBACK_navigation_set(7,true) //staff is 7
+globals.TRIGGER_navigation_set(7,true) //staff is 7
 
 }
 

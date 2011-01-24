@@ -230,7 +230,7 @@ function FORM_on_show(firstShow, event)
 //not really form on show, just keeping form on load a bit cleaner
 if (arguments[0]) {
 	// load tooltips from tooltip module
-	globals.CALLBACK_tooltip_set()
+	globals.TRIGGER_tooltip_set()
 	
 	//set selection path
 	if (utils.hasRecords(foundset)) {

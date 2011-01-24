@@ -991,7 +991,7 @@ function FORM_on_load()
  *			  	
  */
 
-//globals.CALLBACK_tooltip_set()
+//globals.TRIGGER_tooltip_set()
 
 
 }
@@ -1024,7 +1024,7 @@ function FORM_on_show()
 
 //temporary hack to get tooltips until licensing removed
 if (application.__parent__.solutionPrefs && solutionPrefs.config && solutionPrefs.config.language && solutionPrefs.i18n && solutionPrefs.i18n[solutionPrefs.config.language]) {
-	globals.CALLBACK_tooltip_set()
+	globals.TRIGGER_tooltip_set()
 }
 
 //no license entered, get valuelist and tack on 'Select' option

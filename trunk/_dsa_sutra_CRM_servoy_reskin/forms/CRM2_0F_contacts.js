@@ -64,7 +64,7 @@ var delRec = plugins.dialogs.showWarningDialog(
 
 if (delRec == 'Yes') {
 	controller.deleteRecord()
-	globals.CALLBACK_ul_refresh_all()
+	globals.TRIGGER_ul_refresh_all()
 }
 
 
@@ -98,7 +98,7 @@ function REC_duplicate()
  */
 
 controller.duplicateRecord(false)
-globals.CALLBACK_ul_refresh_all()
+globals.TRIGGER_ul_refresh_all()
 }
 
 /**
@@ -131,7 +131,7 @@ function REC_new()
 controller.newRecord(true)
 
 //refresh UL
-globals.CALLBACK_ul_refresh_all()
+globals.TRIGGER_ul_refresh_all()
 
 //enter first field
 elements.fld_name_first.requestFocus(false)

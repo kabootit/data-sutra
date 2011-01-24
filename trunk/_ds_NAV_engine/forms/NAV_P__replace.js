@@ -136,7 +136,7 @@ if (application.__parent__.solutionPrefs && application.__parent__.navigationPre
 	
 	//update ul if used
 	if (navigationPrefs.byNavItemID[currentNavItem].navigationItem.useFwList) {
-		globals.CALLBACK_ul_refresh_all()
+		globals.TRIGGER_ul_refresh_all()
 	}
 	
 	//enable closing the form

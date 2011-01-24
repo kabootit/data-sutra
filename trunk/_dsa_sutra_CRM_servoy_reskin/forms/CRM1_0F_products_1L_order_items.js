@@ -44,7 +44,7 @@ if (!results) {
 }
 
 //change the selected navigation record
-globals.CALLBACK_navigation_set(10,true,fsOrders) //orders is 10
+globals.TRIGGER_navigation_set(10,true,fsOrders) //orders is 10
 
 //set selected index
 forms.CRM1_0F_orders.foundset.selectRecord(order_id)

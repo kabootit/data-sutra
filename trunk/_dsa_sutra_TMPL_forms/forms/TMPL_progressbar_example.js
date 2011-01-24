@@ -4,7 +4,7 @@
  */
 function INDEFINITE_start()
 {
-globals.CALLBACK_progressbar_start(null)
+globals.TRIGGER_progressbar_start(null)
 }
 
 /**
@@ -13,7 +13,7 @@ globals.CALLBACK_progressbar_start(null)
  */
 function INDEFINITE_start_gfx()
 {
-globals.CALLBACK_progressbar_start(-273)
+globals.TRIGGER_progressbar_start(-273)
 }
 
 /**
@@ -22,7 +22,7 @@ globals.CALLBACK_progressbar_start(-273)
  */
 function INDEFINITE_stop()
 {
-globals.CALLBACK_progressbar_stop()
+globals.TRIGGER_progressbar_stop()
 }
 
 /**
@@ -33,10 +33,10 @@ function NORMAL_start()
 {
 
 //base
-//globals.CALLBACK_progressbar_start()
+//globals.TRIGGER_progressbar_start()
 
 //more advanced
-globals.CALLBACK_progressbar_start(10,'This is 10 percent',"No I'm not, I'm a tooltip")
+globals.TRIGGER_progressbar_start(10,'This is 10 percent',"No I'm not, I'm a tooltip")
 
 globals.TMPL_progressbar = 10
 }
@@ -47,7 +47,7 @@ globals.TMPL_progressbar = 10
  */
 function NORMAL_stop()
 {
-globals.CALLBACK_progressbar_stop()
+globals.TRIGGER_progressbar_stop()
 }
 
 /**
@@ -58,9 +58,9 @@ function NORMAL_update()
 {
 
 //no text
-//globals.CALLBACK_progressbar_set(globals.test += 10)
+//globals.TRIGGER_progressbar_set(globals.test += 10)
 
 
 //text
-globals.CALLBACK_progressbar_set(globals.TMPL_progressbar += 10,'Check out my new value!!!  '+ globals.TMPL_progressbar)
+globals.TRIGGER_progressbar_set(globals.TMPL_progressbar += 10,'Check out my new value!!!  '+ globals.TMPL_progressbar)
 }

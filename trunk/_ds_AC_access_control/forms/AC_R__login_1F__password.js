@@ -442,7 +442,7 @@ else {
 
 	//TURN ON BUSY
 	plugins.sutra.busyCursor = true
-	globals.CALLBACK_progressbar_start(-273, 'Logging in...')
+	globals.TRIGGER_progressbar_start(-273, 'Logging in...')
 
 	// // //
 	//		2-2. set lower right display logged in status
@@ -1178,7 +1178,7 @@ else {
 	//load navigation sets assigned to the selected group; if there aren't any, give an error
 	if (!globals.NAV_navigation_load(true,groupID)) {
 		//TURN OFF BUSY
-		globals.CALLBACK_progressbar_stop()
+		globals.TRIGGER_progressbar_stop()
 		plugins.sutra.busyCursor = false
 
 		plugins.dialogs.showErrorDialog(
@@ -1243,7 +1243,7 @@ else {
 						'Error',
 						'No default navigation set defined\nReport to administrator'
 					)
-			globals.CALLBACK_feedback_create('No default navigation set')
+			globals.TRIGGER_feedback_create('No default navigation set')
 
 			//how to do this without a loop?
 			for (var i in navigationPrefs.byNavSetID) {
@@ -1259,7 +1259,7 @@ else {
 					'Error',
 					'No navigation sets defined\nReport to administrator'
 				)
-		globals.CALLBACK_feedback_create('No navigation sets')
+		globals.TRIGGER_feedback_create('No navigation sets')
 		return
 	}
 
@@ -1284,13 +1284,13 @@ else {
 			}
 
 			if (totalForms) {
-				globals.CALLBACK_progressbar_start(0,'Pre-loading forms.  Please wait...')
-				globals.CALLBACK_interface_lock(true,true)
+				globals.TRIGGER_progressbar_start(0,'Pre-loading forms.  Please wait...')
+				globals.TRIGGER_interface_lock(true,true)
 			}
 		}
 		//non-transparent way
 		else {
-			globals.CALLBACK_interface_lock(true,true,true,true,'Please wait...Pre-loading')
+			globals.TRIGGER_interface_lock(true,true,true,true,'Please wait...Pre-loading')
 		}
 
 		var formCount = 0
@@ -1305,7 +1305,7 @@ else {
 
 					//we are using the transparent way
 					if (solutionPrefs.config.prefs.formPreloadGray) {
-						globals.CALLBACK_progressbar_set((formCount / totalForms) * 100)
+						globals.TRIGGER_progressbar_set((formCount / totalForms) * 100)
 					}
 					//non-transparent
 					else {
@@ -1389,10 +1389,10 @@ else {
 	if (solutionPrefs.config.prefs.formPreload) {
 		//we are using the transparent way
 		if (solutionPrefs.config.prefs.formPreloadGray) {
-			globals.CALLBACK_progressbar_set(null,'Finishing up...')
+			globals.TRIGGER_progressbar_set(null,'Finishing up...')
 		}
 
-		globals.CALLBACK_interface_lock(false)
+		globals.TRIGGER_interface_lock(false)
 	}
 
 	// // //
@@ -1488,7 +1488,7 @@ else {
 	}
 
 	//TURN OFF BUSY
-	globals.CALLBACK_progressbar_stop()
+	globals.TRIGGER_progressbar_stop()
 	plugins.sutra.busyCursor = false	
 
 	//toolbar and sidebar load

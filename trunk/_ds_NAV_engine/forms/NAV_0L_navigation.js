@@ -139,7 +139,7 @@ switch (arguments[0]) {
 		if (newNav) {
 			//turn on progress bar
 			plugins.sutra.busyCursor = true
-			globals.CALLBACK_progressbar_start(-273, 'Duplicating ' + nav_name + ' to ' + newNav + '....')
+			globals.TRIGGER_progressbar_start(-273, 'Duplicating ' + nav_name + ' to ' + newNav + '....')
 			
 			var formName = 'NAV_0L_navigation'
 			var relnName = 'nav_navigation_to_navigation_item__all'
@@ -277,7 +277,7 @@ switch (arguments[0]) {
 			databaseManager.saveData()
 			
 			//turn off progress bar
-			globals.CALLBACK_progressbar_stop()
+			globals.TRIGGER_progressbar_stop()
 			plugins.sutra.busyCursor = false
 		}
 		break
@@ -297,7 +297,7 @@ switch (arguments[0]) {
 		if (delRec == 'Yes') {
 			//turn on progress bar
 			plugins.sutra.busyCursor = true
-			globals.CALLBACK_progressbar_start(-273, 'Deleting the ' + nav_name + ' navigation set.  Please wait...')
+			globals.TRIGGER_progressbar_start(-273, 'Deleting the ' + nav_name + ' navigation set.  Please wait...')
 			
 			//check if selected record is default display
 			if (nav_default) {
@@ -313,7 +313,7 @@ switch (arguments[0]) {
 			}
 			
 			//turn off progress bar
-			globals.CALLBACK_progressbar_stop()
+			globals.TRIGGER_progressbar_stop()
 			plugins.sutra.busyCursor = false
 		}
 		break	
@@ -497,7 +497,7 @@ var currentArea = 1
 var sizeArea
 var numAreaSize
 var numItemSize
-globals.CALLBACK_progressbar_start(0,'Exporting...')
+globals.TRIGGER_progressbar_start(0,'Exporting...')
 
 	
 	//	choosing what to do will come in a later version
@@ -641,7 +641,7 @@ if (accessControl || blog || navEngine || reportRegistry || solConfig || toolbar
 		//
 		if (accessControl) {
 			
-			globals.CALLBACK_progressbar_set(null,'Adding access and control...')
+			globals.TRIGGER_progressbar_set(null,'Adding access and control...')
 			
 			//Access & control node
 			//
@@ -720,7 +720,7 @@ if (accessControl || blog || navEngine || reportRegistry || solConfig || toolbar
 				accessGroups.setSelectedIndex(h)
 				
 				//progress updater
-				globals.CALLBACK_progressbar_set(startPosn + Math.floor(numAreaSize * (h - 1)),'Access group: ' + accessGroups.group_name)
+				globals.TRIGGER_progressbar_set(startPosn + Math.floor(numAreaSize * (h - 1)),'Access group: ' + accessGroups.group_name)
 				
 				//create xml definition for this access group
 				var accessGroupElem = exportXML.createElement('group')
@@ -806,7 +806,7 @@ if (accessControl || blog || navEngine || reportRegistry || solConfig || toolbar
 				
 				//progres updater, push ahead half a stop
 				if (startPosn + (h / accessGroups.getSize() * (endPosn - startPosn)) <= endPosn) {
-					globals.CALLBACK_progressbar_set(startPosn + Math.floor(numAreaSize * (h - 1)) + numAreaSize / 2)
+					globals.TRIGGER_progressbar_set(startPosn + Math.floor(numAreaSize * (h - 1)) + numAreaSize / 2)
 				}
 				
 				//actions
@@ -941,7 +941,7 @@ if (accessControl || blog || navEngine || reportRegistry || solConfig || toolbar
 			}
 			
 			//update with what doing
-			globals.CALLBACK_progressbar_set(endPosn,'Adding all users...')
+			globals.TRIGGER_progressbar_set(endPosn,'Adding all users...')
 			
 			//create users that were in selected groups
 			var userIDs = new Array()
@@ -1024,7 +1024,7 @@ if (accessControl || blog || navEngine || reportRegistry || solConfig || toolbar
 		//create selected organizations (if they are using the provided organization structure)
 			
 			//update with what doing
-			globals.CALLBACK_progressbar_set(null,'Adding default organizations...')
+			globals.TRIGGER_progressbar_set(null,'Adding default organizations...')
 			
 			var fsOrganization = databaseManager.getFoundSet(controller.getServerName(),'sutra_access_organization')
 			fsOrganization.loadAllRecords()
@@ -1126,7 +1126,7 @@ if (accessControl || blog || navEngine || reportRegistry || solConfig || toolbar
 		//create filters
 			
 			//update with what doing
-			globals.CALLBACK_progressbar_set(null,'Adding filters...')
+			globals.TRIGGER_progressbar_set(null,'Adding filters...')
 			
 			var fsFilters = databaseManager.getFoundSet(controller.getServerName(),'sutra_access_filter')
 			fsFilters.loadAllRecords()
@@ -1157,7 +1157,7 @@ if (accessControl || blog || navEngine || reportRegistry || solConfig || toolbar
 		//create actions registry
 			
 			//update with what doing
-			globals.CALLBACK_progressbar_set(null,'Adding actions registry...')
+			globals.TRIGGER_progressbar_set(null,'Adding actions registry...')
 			
 			var actionsRegistry = databaseManager.getFoundSet(controller.getServerName(),'sutra_access_action')
 			actionsRegistry.loadAllRecords()
@@ -1182,7 +1182,7 @@ if (accessControl || blog || navEngine || reportRegistry || solConfig || toolbar
 		//create password rules
 			
 			//update with what doing
-			globals.CALLBACK_progressbar_set(null,'Adding password rules...')
+			globals.TRIGGER_progressbar_set(null,'Adding password rules...')
 			
 			var passRules = databaseManager.getFoundSet(controller.getServerName(),'sutra_access_rules')
 			passRules.loadAllRecords()
@@ -1220,7 +1220,7 @@ if (accessControl || blog || navEngine || reportRegistry || solConfig || toolbar
 			var endPosn = sizeArea * currentArea
 			
 			//update with what doing
-			globals.CALLBACK_progressbar_set(startPosn,'Adding blogs...')
+			globals.TRIGGER_progressbar_set(startPosn,'Adding blogs...')
 			
 			var blogElem = exportXML.createElement('blogs')
 			rootElem.appendChild(blogElem)
@@ -1235,7 +1235,7 @@ if (accessControl || blog || navEngine || reportRegistry || solConfig || toolbar
 				//loop through all blogs
 				for (var i = 1; i <= fsBlogs.getSize(); i++) {
 					//update with what doing
-					globals.CALLBACK_progressbar_set(startPosn + numAreaSize * (i - 1) / 2)
+					globals.TRIGGER_progressbar_set(startPosn + numAreaSize * (i - 1) / 2)
 				
 					var record = fsBlogs.getRecord(i)
 					
@@ -1352,7 +1352,7 @@ if (accessControl || blog || navEngine || reportRegistry || solConfig || toolbar
 		//
 		if (navEngine) {
 			
-			globals.CALLBACK_progressbar_set(null,'Adding frameworks engine...')
+			globals.TRIGGER_progressbar_set(null,'Adding frameworks engine...')
 			
 				/*
 				//	removed for ver1
@@ -1451,7 +1451,7 @@ if (accessControl || blog || navEngine || reportRegistry || solConfig || toolbar
 					var navigationSet = navSets.getRecord(h)
 					
 					//progress updater: check that all the way filled up to here
-					globals.CALLBACK_progressbar_set(startPosn + numAreaSize * (h - 1),'Navigation set: ' + navigationSet.nav_name)
+					globals.TRIGGER_progressbar_set(startPosn + numAreaSize * (h - 1),'Navigation set: ' + navigationSet.nav_name)
 					
 					//create xml definition for this navigation set
 					
@@ -1498,7 +1498,7 @@ if (accessControl || blog || navEngine || reportRegistry || solConfig || toolbar
 							
 							//progres updater size updated at most every 10 percent of navigation set
 							if ((i / navigationSet[relnNav].getSize()) > itemTenth) {
-								globals.CALLBACK_progressbar_set(startPosn + Math.floor(Math.floor(numAreaSize * (h - 1) + numItemSize * i)))
+								globals.TRIGGER_progressbar_set(startPosn + Math.floor(Math.floor(numAreaSize * (h - 1) + numItemSize * i)))
 								itemTenth = Math.floor(10 * (i / navigationSet[relnNav].getSize())) / 10
 							}
 							
@@ -1838,7 +1838,7 @@ if (accessControl || blog || navEngine || reportRegistry || solConfig || toolbar
 		}
 		
 	//TODO: numbers not adding up here
-		//plugins.dialogs.showInfoDialog('Hello','This is the value' + globals.CALLBACK_progressbar_get()[0])
+		//plugins.dialogs.showInfoDialog('Hello','This is the value' + globals.TRIGGER_progressbar_get()[0])
 		
 		//Reports node
 		//
@@ -1852,7 +1852,7 @@ if (accessControl || blog || navEngine || reportRegistry || solConfig || toolbar
 		//plugins.dialogs.showInfoDialog('Hello','This is the value' + startPosn + ', ' + endPosn)
 			
 			//update with what doing
-			globals.CALLBACK_progressbar_set(startPosn + (startPosn / endPosn) / 2,'Adding report registry...')
+			globals.TRIGGER_progressbar_set(startPosn + (startPosn / endPosn) / 2,'Adding report registry...')
 			
 			var reportElem = exportXML.createElement('reportRegistry')
 			rootElem.appendChild(reportElem)
@@ -1904,7 +1904,7 @@ if (accessControl || blog || navEngine || reportRegistry || solConfig || toolbar
 			var endPosn = sizeArea * currentArea
 			
 			//go to midway point of solConfig's progress...not much to do here
-			globals.CALLBACK_progressbar_set(startPosn + ((endPosn - startPosn) / 2),'Adding solution configuration...')
+			globals.TRIGGER_progressbar_set(startPosn + ((endPosn - startPosn) / 2),'Adding solution configuration...')
 			
 			var fsSolution = databaseManager.getFoundSet(controller.getServerName(),'sutra_solution')
 			fsSolution.loadAllRecords()
@@ -1976,7 +1976,7 @@ if (accessControl || blog || navEngine || reportRegistry || solConfig || toolbar
 			var endPosn = sizeArea * currentArea
 			
 			//update with what doing
-			globals.CALLBACK_progressbar_set(startPosn + (startPosn / endPosn) / 2,'Adding toolbars...')
+			globals.TRIGGER_progressbar_set(startPosn + (startPosn / endPosn) / 2,'Adding toolbars...')
 			
 			var toolbarElem = exportXML.createElement('toolbars')
 			rootElem.appendChild(toolbarElem)
@@ -2034,7 +2034,7 @@ if (accessControl || blog || navEngine || reportRegistry || solConfig || toolbar
 			var endPosn = sizeArea * currentArea
 			
 			//update with what doing
-			globals.CALLBACK_progressbar_set(startPosn + (startPosn / endPosn) / 2,'Adding tooltip registry...')
+			globals.TRIGGER_progressbar_set(startPosn + (startPosn / endPosn) / 2,'Adding tooltip registry...')
 			
 			var tooltipElem = exportXML.createElement('tooltips')
 			rootElem.appendChild(tooltipElem)
@@ -2089,7 +2089,7 @@ if (accessControl || blog || navEngine || reportRegistry || solConfig || toolbar
 			var endPosn = sizeArea * currentArea
 			
 			//update with what doing
-			globals.CALLBACK_progressbar_set(startPosn + (startPosn / endPosn) / 2,'Adding value list registry...')
+			globals.TRIGGER_progressbar_set(startPosn + (startPosn / endPosn) / 2,'Adding value list registry...')
 			
 			var valuelistElem = exportXML.createElement('valuelists')
 			rootElem.appendChild(valuelistElem)
@@ -2150,12 +2150,12 @@ if (accessControl || blog || navEngine || reportRegistry || solConfig || toolbar
 		
 		if (success) {
 			//progress updater
-			globals.CALLBACK_progressbar_set(null,'Compressing data...')
+			globals.TRIGGER_progressbar_set(null,'Compressing data...')
 			
 			//zip xml and output
 			XML_zip([XmlMF],zipFileName)
 			
-			globals.CALLBACK_progressbar_set(100,'Export complete')
+			globals.TRIGGER_progressbar_set(100,'Export complete')
 			plugins.dialogs.showInfoDialog('Export complete','Selected frameworks settings have been successfully exported')
 		}
 		else {
@@ -2171,7 +2171,7 @@ else {
 	plugins.dialogs.showErrorDialog('No export','Nothing selected to export')
 }
 
-globals.CALLBACK_progressbar_stop()
+globals.TRIGGER_progressbar_stop()
 
 
 
@@ -2256,7 +2256,7 @@ var currentArea = 1
 var sizeArea
 var numAreaSize
 var numItemSize
-globals.CALLBACK_progressbar_start(0,'Exporting...')
+globals.TRIGGER_progressbar_start(0,'Exporting...')
 
 	
 	//	choosing what to do will come in a later version
@@ -2400,7 +2400,7 @@ if (accessControl || blog || navEngine || reportRegistry || solConfig || toolbar
 		//
 		if (accessControl) {
 			
-			globals.CALLBACK_progressbar_set(null,'Adding access and control...')
+			globals.TRIGGER_progressbar_set(null,'Adding access and control...')
 			
 			//Access & control node
 			//
@@ -2479,7 +2479,7 @@ if (accessControl || blog || navEngine || reportRegistry || solConfig || toolbar
 				accessGroups.setSelectedIndex(h)
 				
 				//progress updater
-				globals.CALLBACK_progressbar_set(startPosn + Math.floor(numAreaSize * (h - 1)),'Access group: ' + accessGroups.group_name)
+				globals.TRIGGER_progressbar_set(startPosn + Math.floor(numAreaSize * (h - 1)),'Access group: ' + accessGroups.group_name)
 				
 				//create xml definition for this access group
 				var accessGroupElem = exportXML.createElement('group')
@@ -2565,7 +2565,7 @@ if (accessControl || blog || navEngine || reportRegistry || solConfig || toolbar
 				
 				//progres updater, push ahead half a stop
 				if (startPosn + (h / accessGroups.getSize() * (endPosn - startPosn)) <= endPosn) {
-					globals.CALLBACK_progressbar_set(startPosn + Math.floor(numAreaSize * (h - 1)) + numAreaSize / 2)
+					globals.TRIGGER_progressbar_set(startPosn + Math.floor(numAreaSize * (h - 1)) + numAreaSize / 2)
 				}
 				
 				//actions
@@ -2700,7 +2700,7 @@ if (accessControl || blog || navEngine || reportRegistry || solConfig || toolbar
 			}
 			
 			//update with what doing
-			globals.CALLBACK_progressbar_set(endPosn,'Adding all users...')
+			globals.TRIGGER_progressbar_set(endPosn,'Adding all users...')
 			
 			//create users that were in selected groups
 			var userIDs = new Array()
@@ -2783,7 +2783,7 @@ if (accessControl || blog || navEngine || reportRegistry || solConfig || toolbar
 		//create selected organizations (if they are using the provided organization structure)
 			
 			//update with what doing
-			globals.CALLBACK_progressbar_set(null,'Adding default organizations...')
+			globals.TRIGGER_progressbar_set(null,'Adding default organizations...')
 			
 			var fsOrganization = databaseManager.getFoundSet(controller.getServerName(),'sutra_access_organization')
 			fsOrganization.loadAllRecords()
@@ -2885,7 +2885,7 @@ if (accessControl || blog || navEngine || reportRegistry || solConfig || toolbar
 		//create filters
 			
 			//update with what doing
-			globals.CALLBACK_progressbar_set(null,'Adding filters...')
+			globals.TRIGGER_progressbar_set(null,'Adding filters...')
 			
 			var fsFilters = databaseManager.getFoundSet(controller.getServerName(),'sutra_access_filter')
 			fsFilters.loadAllRecords()
@@ -2916,7 +2916,7 @@ if (accessControl || blog || navEngine || reportRegistry || solConfig || toolbar
 		//create actions registry
 			
 			//update with what doing
-			globals.CALLBACK_progressbar_set(null,'Adding actions registry...')
+			globals.TRIGGER_progressbar_set(null,'Adding actions registry...')
 			
 			var actionsRegistry = databaseManager.getFoundSet(controller.getServerName(),'sutra_access_action')
 			actionsRegistry.loadAllRecords()
@@ -2941,7 +2941,7 @@ if (accessControl || blog || navEngine || reportRegistry || solConfig || toolbar
 		//create password rules
 			
 			//update with what doing
-			globals.CALLBACK_progressbar_set(null,'Adding password rules...')
+			globals.TRIGGER_progressbar_set(null,'Adding password rules...')
 			
 			var passRules = databaseManager.getFoundSet(controller.getServerName(),'sutra_access_rules')
 			passRules.loadAllRecords()
@@ -2979,7 +2979,7 @@ if (accessControl || blog || navEngine || reportRegistry || solConfig || toolbar
 			var endPosn = sizeArea * currentArea
 			
 			//update with what doing
-			globals.CALLBACK_progressbar_set(startPosn,'Adding blogs...')
+			globals.TRIGGER_progressbar_set(startPosn,'Adding blogs...')
 			
 			var blogElem = exportXML.createElement('blogs')
 			rootElem.appendChild(blogElem)
@@ -2994,7 +2994,7 @@ if (accessControl || blog || navEngine || reportRegistry || solConfig || toolbar
 				//loop through all blogs
 				for (var i = 1; i <= fsBlogs.getSize(); i++) {
 					//update with what doing
-					globals.CALLBACK_progressbar_set(startPosn + numAreaSize * (i - 1) / 2)
+					globals.TRIGGER_progressbar_set(startPosn + numAreaSize * (i - 1) / 2)
 				
 					var record = fsBlogs.getRecord(i)
 					
@@ -3111,7 +3111,7 @@ if (accessControl || blog || navEngine || reportRegistry || solConfig || toolbar
 		//
 		if (navEngine) {
 			
-			globals.CALLBACK_progressbar_set(null,'Adding frameworks engine...')
+			globals.TRIGGER_progressbar_set(null,'Adding frameworks engine...')
 			
 				/*
 				//	removed for ver1
@@ -3210,7 +3210,7 @@ if (accessControl || blog || navEngine || reportRegistry || solConfig || toolbar
 					var navigationSet = navSets.getRecord(h)
 					
 					//progress updater: check that all the way filled up to here
-					globals.CALLBACK_progressbar_set(startPosn + numAreaSize * (h - 1),'Navigation set: ' + navigationSet.nav_name)
+					globals.TRIGGER_progressbar_set(startPosn + numAreaSize * (h - 1),'Navigation set: ' + navigationSet.nav_name)
 					
 					//create xml definition for this navigation set
 					
@@ -3257,7 +3257,7 @@ if (accessControl || blog || navEngine || reportRegistry || solConfig || toolbar
 							
 							//progres updater size updated at most every 10 percent of navigation set
 							if ((i / navigationSet[relnNav].getSize()) > itemTenth) {
-								globals.CALLBACK_progressbar_set(startPosn + Math.floor(Math.floor(numAreaSize * (h - 1) + numItemSize * i)))
+								globals.TRIGGER_progressbar_set(startPosn + Math.floor(Math.floor(numAreaSize * (h - 1) + numItemSize * i)))
 								itemTenth = Math.floor(10 * (i / navigationSet[relnNav].getSize())) / 10
 							}
 							
@@ -3597,7 +3597,7 @@ if (accessControl || blog || navEngine || reportRegistry || solConfig || toolbar
 		}
 		
 	//TODO: numbers not adding up here
-		//plugins.dialogs.showInfoDialog('Hello','This is the value' + globals.CALLBACK_progressbar_get()[0])
+		//plugins.dialogs.showInfoDialog('Hello','This is the value' + globals.TRIGGER_progressbar_get()[0])
 		
 		//Reports node
 		//
@@ -3611,7 +3611,7 @@ if (accessControl || blog || navEngine || reportRegistry || solConfig || toolbar
 		//plugins.dialogs.showInfoDialog('Hello','This is the value' + startPosn + ', ' + endPosn)
 			
 			//update with what doing
-			globals.CALLBACK_progressbar_set(startPosn + (startPosn / endPosn) / 2,'Adding report registry...')
+			globals.TRIGGER_progressbar_set(startPosn + (startPosn / endPosn) / 2,'Adding report registry...')
 			
 			var reportElem = exportXML.createElement('reportRegistry')
 			rootElem.appendChild(reportElem)
@@ -3663,7 +3663,7 @@ if (accessControl || blog || navEngine || reportRegistry || solConfig || toolbar
 			var endPosn = sizeArea * currentArea
 			
 			//go to midway point of solConfig's progress...not much to do here
-			globals.CALLBACK_progressbar_set(startPosn + ((endPosn - startPosn) / 2),'Adding solution configuration...')
+			globals.TRIGGER_progressbar_set(startPosn + ((endPosn - startPosn) / 2),'Adding solution configuration...')
 			
 			var fsSolution = databaseManager.getFoundSet(controller.getServerName(),'sutra_solution')
 			fsSolution.loadAllRecords()
@@ -3735,7 +3735,7 @@ if (accessControl || blog || navEngine || reportRegistry || solConfig || toolbar
 			var endPosn = sizeArea * currentArea
 			
 			//update with what doing
-			globals.CALLBACK_progressbar_set(startPosn + (startPosn / endPosn) / 2,'Adding toolbars...')
+			globals.TRIGGER_progressbar_set(startPosn + (startPosn / endPosn) / 2,'Adding toolbars...')
 			
 			var toolbarElem = exportXML.createElement('toolbars')
 			rootElem.appendChild(toolbarElem)
@@ -3793,7 +3793,7 @@ if (accessControl || blog || navEngine || reportRegistry || solConfig || toolbar
 			var endPosn = sizeArea * currentArea
 			
 			//update with what doing
-			globals.CALLBACK_progressbar_set(startPosn + (startPosn / endPosn) / 2,'Adding tooltip registry...')
+			globals.TRIGGER_progressbar_set(startPosn + (startPosn / endPosn) / 2,'Adding tooltip registry...')
 			
 			var tooltipElem = exportXML.createElement('tooltips')
 			rootElem.appendChild(tooltipElem)
@@ -3848,7 +3848,7 @@ if (accessControl || blog || navEngine || reportRegistry || solConfig || toolbar
 			var endPosn = sizeArea * currentArea
 			
 			//update with what doing
-			globals.CALLBACK_progressbar_set(startPosn + (startPosn / endPosn) / 2,'Adding value list registry...')
+			globals.TRIGGER_progressbar_set(startPosn + (startPosn / endPosn) / 2,'Adding value list registry...')
 			
 			var valuelistElem = exportXML.createElement('valuelists')
 			rootElem.appendChild(valuelistElem)
@@ -3909,12 +3909,12 @@ if (accessControl || blog || navEngine || reportRegistry || solConfig || toolbar
 		
 		if (success) {
 			//progress updater
-			globals.CALLBACK_progressbar_set(null,'Compressing data...')
+			globals.TRIGGER_progressbar_set(null,'Compressing data...')
 			
 			//zip xml and output
 			XML_zip([XmlMF],zipFileName)
 			
-			globals.CALLBACK_progressbar_set(100,'Export complete')
+			globals.TRIGGER_progressbar_set(100,'Export complete')
 			plugins.dialogs.showInfoDialog('Export complete','Selected frameworks settings have been successfully exported')
 		}
 		else {
@@ -3930,7 +3930,7 @@ else {
 	plugins.dialogs.showErrorDialog('No export','Nothing selected to export')
 }
 
-globals.CALLBACK_progressbar_stop()
+globals.TRIGGER_progressbar_stop()
 
 
 
@@ -4053,7 +4053,7 @@ if (utils.hasRecords(foundset)) {
 }
 
 // load tooltips from tooltip module
-globals.CALLBACK_tooltip_set()
+globals.TRIGGER_tooltip_set()
 
 
 }
@@ -4114,7 +4114,7 @@ var currentArea = 1
 var sizeArea
 var numAreaSize
 var numItemSize
-globals.CALLBACK_progressbar_start(0,'Importing...')
+globals.TRIGGER_progressbar_start(0,'Importing...')
 
 plugins.dialogs.showInfoDialog('Choose import','Choose the file containing the frameworks settings you wish to import','OK')
 var importFile = plugins.file.showFileOpenDialog(1,null,false)
@@ -4124,7 +4124,7 @@ if (importFile) {
 	
 	if (input == 'Yes') {
 		//progress updater
-		globals.CALLBACK_progressbar_set(null,'Reading in XML...')
+		globals.TRIGGER_progressbar_set(null,'Reading in XML...')
 		this.timeBegan = new Date()
 		
 		var zippedFiles = XML_unzip(importFile)
@@ -4186,7 +4186,7 @@ if (importFile) {
 				var endPosn = 20 + sizeArea * currentArea
 					
 				//update with what doing
-				globals.CALLBACK_progressbar_set(startPosn,'Importing access and control...')
+				globals.TRIGGER_progressbar_set(startPosn,'Importing access and control...')
 				
 				if (accessControlNode.accessGroups) {
 					//find out how many groups
@@ -4214,7 +4214,7 @@ if (importFile) {
 					//loop through all groups
 					for (var i in accessControlNode.accessGroups) {
 						//update with what doing
-						globals.CALLBACK_progressbar_set(startPosn + (numAreaSize * groupCount) / 2, 'Access group: ' + accessControlNode.accessGroups[i].groupName)
+						globals.TRIGGER_progressbar_set(startPosn + (numAreaSize * groupCount) / 2, 'Access group: ' + accessControlNode.accessGroups[i].groupName)
 						
 						var groupRecord = fsGroups.getRecord(fsGroups.newRecord(false,true))
 						
@@ -4248,7 +4248,7 @@ if (importFile) {
 						
 						//progres updater, push ahead half a stop
 						if (startPosn + (groupCount / groupCountTotal * (endPosn - startPosn)) <= endPosn) {
-						//	globals.CALLBACK_progressbar_set(startPosn + Math.floor(numAreaSize * (groupCount - 1)) + numAreaSize / 2)
+						//	globals.TRIGGER_progressbar_set(startPosn + Math.floor(numAreaSize * (groupCount - 1)) + numAreaSize / 2)
 						}
 						
 						//actions assigned to this group
@@ -4294,7 +4294,7 @@ if (importFile) {
 					//users
 					if (accessControlNode.accessUsers) {
 						//update with what doing
-						globals.CALLBACK_progressbar_set(endPosn,'Importing users...')
+						globals.TRIGGER_progressbar_set(endPosn,'Importing users...')
 						
 						//get foundset and delete all records
 						var fsAccessUsers = databaseManager.getFoundSet(controller.getServerName(),'sutra_access_user')
@@ -4353,7 +4353,7 @@ if (importFile) {
 					//organizations
 					if (accessControlNode.accessOrganizations) {
 						//update with what doing
-						globals.CALLBACK_progressbar_set(null,'Importing default organizations...')
+						globals.TRIGGER_progressbar_set(null,'Importing default organizations...')
 						
 						//get foundsets and delete all records
 						var fsOrganizations = databaseManager.getFoundSet(controller.getServerName(),'sutra_access_organization')
@@ -4406,7 +4406,7 @@ if (importFile) {
 					//filters
 					if (accessControlNode.accessFilters) {
 						//update with what doing
-						globals.CALLBACK_progressbar_set(null,'Importing filters...')
+						globals.TRIGGER_progressbar_set(null,'Importing filters...')
 						
 						//get foundset and delete all records
 						var fsAccessFilters = databaseManager.getFoundSet(controller.getServerName(),'sutra_access_filter')
@@ -4433,7 +4433,7 @@ if (importFile) {
 					//action registry
 					if (accessControlNode.actionRegistry) {
 						//update with what doing
-						globals.CALLBACK_progressbar_set(null,'Importing actions registry...')
+						globals.TRIGGER_progressbar_set(null,'Importing actions registry...')
 						
 						//get foundset and delete all records
 						var fsAccessActions = databaseManager.getFoundSet(controller.getServerName(),'sutra_access_action')
@@ -4453,7 +4453,7 @@ if (importFile) {
 					//password rules
 					if (accessControlNode.passwordRules) {
 						//update with what doing
-						globals.CALLBACK_progressbar_set(null,'Importing password rules...')
+						globals.TRIGGER_progressbar_set(null,'Importing password rules...')
 						
 						//get foundset and delete all records
 						var fsAccessPass = databaseManager.getFoundSet(controller.getServerName(),'sutra_access_rules')
@@ -4507,7 +4507,7 @@ if (importFile) {
 				var blogCount = 0
 				
 				//update with what doing
-				globals.CALLBACK_progressbar_set(startPosn,'Importing blogs...')
+				globals.TRIGGER_progressbar_set(startPosn,'Importing blogs...')
 				
 				//load blog foundset
 				var fsBlogs = databaseManager.getFoundSet(controller.getServerName(),'sutra_blog')
@@ -4521,7 +4521,7 @@ if (importFile) {
 				//loop through all blogs
 				for (var i in blogNode) {
 					//update with what doing
-					globals.CALLBACK_progressbar_set(startPosn + (numItemSize * blogCount) / 2)
+					globals.TRIGGER_progressbar_set(startPosn + (numItemSize * blogCount) / 2)
 					
 					var blogRecord = fsBlogs.getRecord(fsBlogs.newRecord(false,true))
 					
@@ -4546,7 +4546,7 @@ if (importFile) {
 						//loop through all blog entries
 						for (var j in blogNode[i].entries) {
 							//update with what doing
-						//	globals.CALLBACK_progressbar_set(startPosn + numItemSize * blogCount + (numItemSize * ()))
+						//	globals.TRIGGER_progressbar_set(startPosn + numItemSize * blogCount + (numItemSize * ()))
 							
 							var blogEntryRecord = fsBlogs[relnBlogEntry].getRecord(fsBlogs[relnBlogEntry].newRecord(false,true))
 							
@@ -4594,7 +4594,7 @@ if (importFile) {
 			if (navEngine && engineNode) {
 				
 				//progress updater => set to place where should be
-				globals.CALLBACK_progressbar_set(20,'Importing frameworks engine...')
+				globals.TRIGGER_progressbar_set(20,'Importing frameworks engine...')
 				
 				//load navigation foundset
 				var navSets = databaseManager.getFoundSet(controller.getServerName(),'sutra_navigation')
@@ -4701,7 +4701,7 @@ if (importFile) {
 						}
 						*/
 						//progress updater
-						globals.CALLBACK_progressbar_set(startPosn + numAreaSize * (h - 1),'Creating records for navigation set: ' + engineNode[idVals[h]].name)
+						globals.TRIGGER_progressbar_set(startPosn + numAreaSize * (h - 1),'Creating records for navigation set: ' + engineNode[idVals[h]].name)
 						
 						//create record for this navigation set
 						var navSetRecord = navSets.getRecord(navSets.newRecord(false,true))
@@ -4736,7 +4736,7 @@ if (importFile) {
 								
 								//progres updater size updated at most every 10 percent of navigation set
 								if ((navItemCount / navItemCountTotal) > itemTenth) {
-									globals.CALLBACK_progressbar_set(startPosn + Math.floor(Math.floor(numAreaSize * (h - 1) + numItemSize * navItemCount)))
+									globals.TRIGGER_progressbar_set(startPosn + Math.floor(Math.floor(numAreaSize * (h - 1) + numItemSize * navItemCount)))
 									itemTenth = Math.floor(10 * (navItemCount / navItemCountTotal)) / 10
 								}
 								
@@ -5014,7 +5014,7 @@ if (importFile) {
 				var endPosn = 20 + sizeArea * currentArea
 				
 				//go to midway point...not much to do here
-				globals.CALLBACK_progressbar_set(startPosn + ((endPosn - startPosn) / 2),'Importing report registry...')
+				globals.TRIGGER_progressbar_set(startPosn + ((endPosn - startPosn) / 2),'Importing report registry...')
 				
 				//load report foundset
 				var fsReports = databaseManager.getFoundSet(controller.getServerName(),'sutra_report')
@@ -5054,7 +5054,7 @@ if (importFile) {
 				var endPosn = 20 + sizeArea * currentArea
 				
 				//go to midway point of solConfig's progress...not much to do here
-				globals.CALLBACK_progressbar_set(startPosn + ((endPosn - startPosn) / 2),'Importing solution configuration...')
+				globals.TRIGGER_progressbar_set(startPosn + ((endPosn - startPosn) / 2),'Importing solution configuration...')
 				
 				//load solution foundset
 				var fsSolution = databaseManager.getFoundSet(controller.getServerName(),'sutra_solution')
@@ -5132,7 +5132,7 @@ if (importFile) {
 				var endPosn = 20 + sizeArea * currentArea
 				
 				//go to midway point...not much to do here
-				globals.CALLBACK_progressbar_set(startPosn + ((endPosn - startPosn) / 2),'Importing toolbars...')
+				globals.TRIGGER_progressbar_set(startPosn + ((endPosn - startPosn) / 2),'Importing toolbars...')
 				
 				//load toolbar foundset
 				var fsToolbar = databaseManager.getFoundSet(controller.getServerName(),'sutra_toolbar')
@@ -5187,7 +5187,7 @@ if (importFile) {
 				var endPosn = 20 + sizeArea * currentArea
 				
 				//go to midway point...not much to do here
-				globals.CALLBACK_progressbar_set(startPosn + ((endPosn - startPosn) / 2),'Importing tooltip registry...')
+				globals.TRIGGER_progressbar_set(startPosn + ((endPosn - startPosn) / 2),'Importing tooltip registry...')
 				
 				//load tooltip foundset
 				var fsTooltips = databaseManager.getFoundSet(controller.getServerName(),'sutra_tooltip')
@@ -5229,7 +5229,7 @@ if (importFile) {
 				var endPosn = 20 + sizeArea * currentArea
 				
 				//go to midway point...not much to do here
-				globals.CALLBACK_progressbar_set(startPosn + ((endPosn - startPosn) / 2),'Importing value list registry...')
+				globals.TRIGGER_progressbar_set(startPosn + ((endPosn - startPosn) / 2),'Importing value list registry...')
 				
 				//load valuelist foundset
 				var fsValuelists = databaseManager.getFoundSet(controller.getServerName(),'sutra_valuelist')
@@ -5271,7 +5271,7 @@ else {
 }
 
 
-globals.CALLBACK_progressbar_stop()
+globals.TRIGGER_progressbar_stop()
 
 }
 
@@ -5319,14 +5319,14 @@ var numSetSize
 var numItemSize
 //var progressLabel = forms.DEV_0F_solution__import_export.elements.lbl_progress
 //var progressBean = forms.DEV_0F_solution__import_export.elements.bean_progress
-globals.CALLBACK_progressbar_start(0,'Importing...')
+globals.TRIGGER_progressbar_start(0,'Importing...')
 
 plugins.dialogs.showInfoDialog('Choose import','Choose the file containing the navigation sets you wish to import','OK')
 var importFile = plugins.file.showFileOpenDialog(1,null,false)
 
 if (importFile) {
 	//progress updater
-	globals.CALLBACK_progressbar_start(0,'Reading in XML...')
+	globals.TRIGGER_progressbar_start(0,'Reading in XML...')
 	this.timeBegan = new Date()
 	
 	var zippedFiles = XML_unzip(importFile)
@@ -5373,7 +5373,7 @@ if (importFile) {
 	navSets.clear()
 	
 	//progress updater
-	globals.CALLBACK_progressbar_set(20)
+	globals.TRIGGER_progressbar_set(20)
 	
 	//ask which navigation sets to import
 	var displayVals = new Array()
@@ -5416,9 +5416,9 @@ if (importFile) {
 			}
 			
 			//progress updater
-			globals.CALLBACK_progressbar_set(null,'Creating records for navigation set... ' + ((found && newName) ? newName : navEngine[importNavSets[h]].name))
-			if (globals.CALLBACK_progressbar_get()[0] < 20 + Math.floor(numSetSize * (h))) {
-				globals.CALLBACK_progressbar_set(20 + Math.floor(numSetSize * (h)))
+			globals.TRIGGER_progressbar_set(null,'Creating records for navigation set... ' + ((found && newName) ? newName : navEngine[importNavSets[h]].name))
+			if (globals.TRIGGER_progressbar_get()[0] < 20 + Math.floor(numSetSize * (h))) {
+				globals.TRIGGER_progressbar_set(20 + Math.floor(numSetSize * (h)))
 			}
 			
 			//create record for this navigation set
@@ -5448,8 +5448,8 @@ if (importFile) {
 				//loop through selected navigation items, import data
 				for (var i in navItems) {
 					//progres updater size updated every 4 percent
-					if (globals.CALLBACK_progressbar_get()[0] + 4 <= 20 + Math.floor(numSetSize * h + numItemSize * navItemCount++)) {
-						globals.CALLBACK_progressbar_set(20 + Math.floor(numSetSize * h + numItemSize * navItemCount))
+					if (globals.TRIGGER_progressbar_get()[0] + 4 <= 20 + Math.floor(numSetSize * h + numItemSize * navItemCount++)) {
+						globals.TRIGGER_progressbar_set(20 + Math.floor(numSetSize * h + numItemSize * navItemCount))
 					}
 					
 					//create record for this navItem
@@ -5679,7 +5679,7 @@ if (importFile) {
 			}
 			databaseManager.saveData()
 		}
-		globals.CALLBACK_progressbar_set(100)
+		globals.TRIGGER_progressbar_set(100)
 		
 		plugins.dialogs.showInfoDialog('Import complete','Selected navigation sets have been successfully imported')
 		FORM_on_load(true)
@@ -5693,7 +5693,7 @@ else {
 }
 
 
-globals.CALLBACK_progressbar_stop()
+globals.TRIGGER_progressbar_stop()
 
 }
 
@@ -5753,7 +5753,7 @@ var currentArea = 1
 var sizeArea
 var numAreaSize
 var numItemSize
-globals.CALLBACK_progressbar_start(0,'Importing...')
+globals.TRIGGER_progressbar_start(0,'Importing...')
 
 plugins.dialogs.showInfoDialog('Choose import','Choose the file containing the frameworks settings you wish to import','OK')
 var importFile = plugins.file.showFileOpenDialog(1,null,false)
@@ -5763,7 +5763,7 @@ if (importFile) {
 	
 	if (input == 'Yes') {
 		//progress updater
-		globals.CALLBACK_progressbar_set(null,'Reading in XML...')
+		globals.TRIGGER_progressbar_set(null,'Reading in XML...')
 		this.timeBegan = new Date()
 		
 		var zippedFiles = XML_unzip(importFile)
@@ -5825,7 +5825,7 @@ if (importFile) {
 				var endPosn = 20 + sizeArea * currentArea
 					
 				//update with what doing
-				globals.CALLBACK_progressbar_set(startPosn,'Importing access and control...')
+				globals.TRIGGER_progressbar_set(startPosn,'Importing access and control...')
 				
 				if (accessControlNode.accessGroups) {
 					//find out how many groups
@@ -5853,7 +5853,7 @@ if (importFile) {
 					//loop through all groups
 					for (var i in accessControlNode.accessGroups) {
 						//update with what doing
-						globals.CALLBACK_progressbar_set(startPosn + (numAreaSize * groupCount) / 2, 'Access group: ' + accessControlNode.accessGroups[i].groupName)
+						globals.TRIGGER_progressbar_set(startPosn + (numAreaSize * groupCount) / 2, 'Access group: ' + accessControlNode.accessGroups[i].groupName)
 						
 						var groupRecord = fsGroups.getRecord(fsGroups.newRecord(false,true))
 						
@@ -5887,7 +5887,7 @@ if (importFile) {
 						
 						//progres updater, push ahead half a stop
 						if (startPosn + (groupCount / groupCountTotal * (endPosn - startPosn)) <= endPosn) {
-						//	globals.CALLBACK_progressbar_set(startPosn + Math.floor(numAreaSize * (groupCount - 1)) + numAreaSize / 2)
+						//	globals.TRIGGER_progressbar_set(startPosn + Math.floor(numAreaSize * (groupCount - 1)) + numAreaSize / 2)
 						}
 						
 						//actions assigned to this group
@@ -5933,7 +5933,7 @@ if (importFile) {
 					//users
 					if (accessControlNode.accessUsers) {
 						//update with what doing
-						globals.CALLBACK_progressbar_set(endPosn,'Importing users...')
+						globals.TRIGGER_progressbar_set(endPosn,'Importing users...')
 						
 						//get foundset and delete all records
 						var fsAccessUsers = databaseManager.getFoundSet(controller.getServerName(),'sutra_access_user')
@@ -5992,7 +5992,7 @@ if (importFile) {
 					//organizations
 					if (accessControlNode.accessOrganizations) {
 						//update with what doing
-						globals.CALLBACK_progressbar_set(null,'Importing default organizations...')
+						globals.TRIGGER_progressbar_set(null,'Importing default organizations...')
 						
 						//get foundsets and delete all records
 						var fsOrganizations = databaseManager.getFoundSet(controller.getServerName(),'sutra_access_organization')
@@ -6045,7 +6045,7 @@ if (importFile) {
 					//filters
 					if (accessControlNode.accessFilters) {
 						//update with what doing
-						globals.CALLBACK_progressbar_set(null,'Importing filters...')
+						globals.TRIGGER_progressbar_set(null,'Importing filters...')
 						
 						//get foundset and delete all records
 						var fsAccessFilters = databaseManager.getFoundSet(controller.getServerName(),'sutra_access_filter')
@@ -6072,7 +6072,7 @@ if (importFile) {
 					//action registry
 					if (accessControlNode.actionRegistry) {
 						//update with what doing
-						globals.CALLBACK_progressbar_set(null,'Importing actions registry...')
+						globals.TRIGGER_progressbar_set(null,'Importing actions registry...')
 						
 						//get foundset and delete all records
 						var fsAccessActions = databaseManager.getFoundSet(controller.getServerName(),'sutra_access_action')
@@ -6092,7 +6092,7 @@ if (importFile) {
 					//password rules
 					if (accessControlNode.passwordRules) {
 						//update with what doing
-						globals.CALLBACK_progressbar_set(null,'Importing password rules...')
+						globals.TRIGGER_progressbar_set(null,'Importing password rules...')
 						
 						//get foundset and delete all records
 						var fsAccessPass = databaseManager.getFoundSet(controller.getServerName(),'sutra_access_rules')
@@ -6146,7 +6146,7 @@ if (importFile) {
 				var blogCount = 0
 				
 				//update with what doing
-				globals.CALLBACK_progressbar_set(startPosn,'Importing blogs...')
+				globals.TRIGGER_progressbar_set(startPosn,'Importing blogs...')
 				
 				//load blog foundset
 				var fsBlogs = databaseManager.getFoundSet(controller.getServerName(),'sutra_blog')
@@ -6160,7 +6160,7 @@ if (importFile) {
 				//loop through all blogs
 				for (var i in blogNode) {
 					//update with what doing
-					globals.CALLBACK_progressbar_set(startPosn + (numItemSize * blogCount) / 2)
+					globals.TRIGGER_progressbar_set(startPosn + (numItemSize * blogCount) / 2)
 					
 					var blogRecord = fsBlogs.getRecord(fsBlogs.newRecord(false,true))
 					
@@ -6185,7 +6185,7 @@ if (importFile) {
 						//loop through all blog entries
 						for (var j in blogNode[i].entries) {
 							//update with what doing
-						//	globals.CALLBACK_progressbar_set(startPosn + numItemSize * blogCount + (numItemSize * ()))
+						//	globals.TRIGGER_progressbar_set(startPosn + numItemSize * blogCount + (numItemSize * ()))
 							
 							var blogEntryRecord = fsBlogs[relnBlogEntry].getRecord(fsBlogs[relnBlogEntry].newRecord(false,true))
 							
@@ -6233,7 +6233,7 @@ if (importFile) {
 			if (navEngine && engineNode) {
 				
 				//progress updater => set to place where should be
-				globals.CALLBACK_progressbar_set(20,'Importing frameworks engine...')
+				globals.TRIGGER_progressbar_set(20,'Importing frameworks engine...')
 				
 				//load navigation foundset
 				var navSets = databaseManager.getFoundSet(controller.getServerName(),'sutra_navigation')
@@ -6340,7 +6340,7 @@ if (importFile) {
 						}
 						*/
 						//progress updater
-						globals.CALLBACK_progressbar_set(startPosn + numAreaSize * (h - 1),'Creating records for navigation set: ' + engineNode[idVals[h]].name)
+						globals.TRIGGER_progressbar_set(startPosn + numAreaSize * (h - 1),'Creating records for navigation set: ' + engineNode[idVals[h]].name)
 						
 						//create record for this navigation set
 						var navSetRecord = navSets.getRecord(navSets.newRecord(false,true))
@@ -6375,7 +6375,7 @@ if (importFile) {
 								
 								//progres updater size updated at most every 10 percent of navigation set
 								if ((navItemCount / navItemCountTotal) > itemTenth) {
-									globals.CALLBACK_progressbar_set(startPosn + Math.floor(Math.floor(numAreaSize * (h - 1) + numItemSize * navItemCount)))
+									globals.TRIGGER_progressbar_set(startPosn + Math.floor(Math.floor(numAreaSize * (h - 1) + numItemSize * navItemCount)))
 									itemTenth = Math.floor(10 * (navItemCount / navItemCountTotal)) / 10
 								}
 								
@@ -6653,7 +6653,7 @@ if (importFile) {
 				var endPosn = 20 + sizeArea * currentArea
 				
 				//go to midway point...not much to do here
-				globals.CALLBACK_progressbar_set(startPosn + ((endPosn - startPosn) / 2),'Importing report registry...')
+				globals.TRIGGER_progressbar_set(startPosn + ((endPosn - startPosn) / 2),'Importing report registry...')
 				
 				//load report foundset
 				var fsReports = databaseManager.getFoundSet(controller.getServerName(),'sutra_report')
@@ -6693,7 +6693,7 @@ if (importFile) {
 				var endPosn = 20 + sizeArea * currentArea
 				
 				//go to midway point of solConfig's progress...not much to do here
-				globals.CALLBACK_progressbar_set(startPosn + ((endPosn - startPosn) / 2),'Importing solution configuration...')
+				globals.TRIGGER_progressbar_set(startPosn + ((endPosn - startPosn) / 2),'Importing solution configuration...')
 				
 				//load solution foundset
 				var fsSolution = databaseManager.getFoundSet(controller.getServerName(),'sutra_solution')
@@ -6771,7 +6771,7 @@ if (importFile) {
 				var endPosn = 20 + sizeArea * currentArea
 				
 				//go to midway point...not much to do here
-				globals.CALLBACK_progressbar_set(startPosn + ((endPosn - startPosn) / 2),'Importing toolbars...')
+				globals.TRIGGER_progressbar_set(startPosn + ((endPosn - startPosn) / 2),'Importing toolbars...')
 				
 				//load toolbar foundset
 				var fsToolbar = databaseManager.getFoundSet(controller.getServerName(),'sutra_toolbar')
@@ -6826,7 +6826,7 @@ if (importFile) {
 				var endPosn = 20 + sizeArea * currentArea
 				
 				//go to midway point...not much to do here
-				globals.CALLBACK_progressbar_set(startPosn + ((endPosn - startPosn) / 2),'Importing tooltip registry...')
+				globals.TRIGGER_progressbar_set(startPosn + ((endPosn - startPosn) / 2),'Importing tooltip registry...')
 				
 				//load tooltip foundset
 				var fsTooltips = databaseManager.getFoundSet(controller.getServerName(),'sutra_tooltip')
@@ -6868,7 +6868,7 @@ if (importFile) {
 				var endPosn = 20 + sizeArea * currentArea
 				
 				//go to midway point...not much to do here
-				globals.CALLBACK_progressbar_set(startPosn + ((endPosn - startPosn) / 2),'Importing value list registry...')
+				globals.TRIGGER_progressbar_set(startPosn + ((endPosn - startPosn) / 2),'Importing value list registry...')
 				
 				//load valuelist foundset
 				var fsValuelists = databaseManager.getFoundSet(controller.getServerName(),'sutra_valuelist')
@@ -6910,7 +6910,7 @@ else {
 }
 
 
-globals.CALLBACK_progressbar_stop()
+globals.TRIGGER_progressbar_stop()
 
 }
 
@@ -7222,9 +7222,9 @@ var objectXML = (arguments[1]) ? arguments[1] : new Object()
 //hack alert: update after ~1.5 seconds
 	//TODO: base on size of file
 var nowTime = new Date()
-var nowProgress = globals.CALLBACK_progressbar_get()[0]
+var nowProgress = globals.TRIGGER_progressbar_get()[0]
 if (nowProgress < 20 && (nowTime - this.timeBegan >= 1500)) {
-	globals.CALLBACK_progressbar_set(nowProgress + 5)
+	globals.TRIGGER_progressbar_set(nowProgress + 5)
 	this.timeBegan = new Date()
 }
 
@@ -7456,7 +7456,7 @@ for (var i = 0; i < filesToZip.length; i++) {
 	outFile.putNextEntry(new java.util.zip.ZipEntry(name))
 	
 	//update progress
-	globals.CALLBACK_progressbar_set(90 + (i + 1 / filesToZip.length) * 10)
+	globals.TRIGGER_progressbar_set(90 + (i + 1 / filesToZip.length) * 10)
 	
 	// Transfer bytes from the current file to the ZIP file
 	var len

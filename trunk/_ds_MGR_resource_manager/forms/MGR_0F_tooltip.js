@@ -161,7 +161,7 @@ function FORM_on_show()
  *			  	
  */
 
-globals.CALLBACK_tooltip_set()
+globals.TRIGGER_tooltip_set()
 
 
 }
@@ -322,7 +322,7 @@ if (formName && forms[formName] &&
 	formName == 'DATASUTRA_0F_solution' || formName.substr(0,14) == 'MGR_0F_tooltip')) {
 	
 	//refresh tooltips on this form
-	globals.CALLBACK_tooltip_set(formName,true)
+	globals.TRIGGER_tooltip_set(formName,true)
 	
 	application.showFormInDialog(
 						forms[formName],

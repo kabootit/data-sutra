@@ -63,5 +63,5 @@ if (controller.getMaxRecordIndex() != 1) {
 	databaseManager.saveData()
 }
 
-globals.CALLBACK_tooltip_set()
+globals.TRIGGER_tooltip_set()
 }

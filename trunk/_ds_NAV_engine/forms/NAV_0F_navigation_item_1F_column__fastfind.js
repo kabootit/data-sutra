@@ -120,7 +120,7 @@ function FORM_on_load()
 
 
 // load tooltips from tooltip module
-globals.CALLBACK_tooltip_set()
+globals.TRIGGER_tooltip_set()
 }
 
 /**

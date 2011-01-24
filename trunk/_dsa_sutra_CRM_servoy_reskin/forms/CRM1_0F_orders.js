@@ -126,7 +126,7 @@ function GOTO_company()
  *			  	
  */
 
-globals.CALLBACK_navigation_set(8,true,crm_orders_to_companies)
+globals.TRIGGER_navigation_set(8,true,crm_orders_to_companies)
 
 
 
@@ -159,7 +159,7 @@ function GOTO_contact()
  *			  	
  */
 
-globals.CALLBACK_navigation_set(9,true,crm_order_company_to_contacts)
+globals.TRIGGER_navigation_set(9,true,crm_order_company_to_contacts)
 
 forms.CRM1_0F_contacts.foundset.selectRecord(contact_id)
 
@@ -233,7 +233,7 @@ var delRec = plugins.dialogs.showWarningDialog(
 
 if (delRec == 'Yes') {
 	controller.deleteRecord()
-	globals.CALLBACK_ul_refresh_all()
+	globals.TRIGGER_ul_refresh_all()
 }
 
 
@@ -291,7 +291,7 @@ if (addrCnt && contCnt) {
 	is_active = 1
 	
 	//refresh UL
-	globals.CALLBACK_ul_refresh_all()
+	globals.TRIGGER_ul_refresh_all()
 	
 	//enter first field
 	elements.fld_order_number.requestFocus(false)

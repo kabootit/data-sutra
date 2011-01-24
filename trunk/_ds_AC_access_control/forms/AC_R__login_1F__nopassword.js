@@ -40,7 +40,7 @@ if (application.__parent__.navigationPrefs) {
 					'Error',
 					'No default navigation set defined\nReport to administrator'
 				)
-		globals.CALLBACK_feedback_create('No default navigation set')
+		globals.TRIGGER_feedback_create('No default navigation set')
 		
 		//how to do this without a loop?
 		for (var i in navigationPrefs.byNavSetID) {
@@ -72,13 +72,13 @@ if (application.__parent__.navigationPrefs) {
 			}
 			
 			if (totalForms) {
-				globals.CALLBACK_progressbar_start(0,'Pre-loading forms.  Please wait...')
-				globals.CALLBACK_interface_lock(true,true)
+				globals.TRIGGER_progressbar_start(0,'Pre-loading forms.  Please wait...')
+				globals.TRIGGER_interface_lock(true,true)
 			}
 		}
 		//non-transparent way
 		else {
-			globals.CALLBACK_interface_lock(true,true,true,true,'Please wait...Pre-loading')
+			globals.TRIGGER_interface_lock(true,true,true,true,'Please wait...Pre-loading')
 		}
 		
 		var formCount = 0
@@ -93,7 +93,7 @@ if (application.__parent__.navigationPrefs) {
 					
 					//we are using the transparent way
 					if (solutionPrefs.config.prefs.formPreloadGray) {
-						globals.CALLBACK_progressbar_set((formCount / totalForms) * 100)
+						globals.TRIGGER_progressbar_set((formCount / totalForms) * 100)
 					}
 					//non-transparent
 					else {
@@ -133,7 +133,7 @@ else {
 				'Error',
 				'No navigation sets defined\nReport to administrator'
 		)
-	globals.CALLBACK_feedback_create('No navigation sets')
+	globals.TRIGGER_feedback_create('No navigation sets')
 	return
 }
 
@@ -158,10 +158,10 @@ if (solutionPrefs.screenAttrib.sidebar.status) {
 if (solutionPrefs.config.prefs.formPreload) {
 	//we are using the transparent way
 	if (solutionPrefs.config.prefs.formPreloadGray) {
-		globals.CALLBACK_progressbar_stop()
+		globals.TRIGGER_progressbar_stop()
 	}
 	
-	globals.CALLBACK_interface_lock(false)
+	globals.TRIGGER_interface_lock(false)
 }
 
 //use html based approach for navigation item navigation pane

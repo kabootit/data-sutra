@@ -24,7 +24,7 @@ function FORM_on_load()
  *			  	
  */
 
-globals.CALLBACK_tooltip_set()
+globals.TRIGGER_tooltip_set()
 
 
 }
@@ -67,7 +67,7 @@ else {
 if (input == 'Yes') {
 	
 	//turn on feedback
-	globals.CALLBACK_progressbar_start(null,'Rebuilding static object....')
+	globals.TRIGGER_progressbar_start(null,'Rebuilding static object....')
 	
 	//repository
 	STATIC_repository()
@@ -99,7 +99,7 @@ if (input == 'Yes') {
 	*/
 	
 	//turn off feedback
-	globals.CALLBACK_progressbar_stop()
+	globals.TRIGGER_progressbar_stop()
 	
 	//reopen solution
 	if (restart) {

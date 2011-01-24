@@ -29,7 +29,7 @@ var input = plugins.dialogs.showInputDialog('Blog title','Enter a new blog title
 if (input) {
 	blog_name = input
 	databaseManager.saveData()
-	globals.CALLBACK_ul_refresh_selected()
+	globals.TRIGGER_ul_refresh_selected()
 }	
 }
 
@@ -97,7 +97,7 @@ function FORM_on_load()
  *			  	
  */
 
-globals.CALLBACK_tooltip_set()
+globals.TRIGGER_tooltip_set()
 
 globals.TAB_change_grid_init()
 }
@@ -132,7 +132,7 @@ var delRec = plugins.dialogs.showWarningDialog('Delete record','Do you really wa
 
 if (delRec == 'Yes') {
 	controller.deleteRecord()
-	globals.CALLBACK_ul_refresh_on_delete()
+	globals.TRIGGER_ul_refresh_on_delete()
 }
 }
 
@@ -165,7 +165,7 @@ function REC_new()
 controller.newRecord(true)
 ACTION_rename()
 
-globals.CALLBACK_ul_refresh_all()
+globals.TRIGGER_ul_refresh_all()
 }
 
 /**

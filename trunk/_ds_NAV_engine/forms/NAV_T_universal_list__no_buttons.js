@@ -398,7 +398,7 @@ if (application.__parent__.solutionPrefs) {
 	//LOG ul display change
 	var serverName = forms[formName].controller.getServerName()
 	var tableName = forms[formName].controller.getTableName()
-	globals.CALLBACK_log_create('UL Displays',
+	globals.TRIGGER_log_create('UL Displays',
 						rowPreview,
 						serverName,
 						tableName
@@ -484,7 +484,7 @@ if (application.__parent__.solutionPrefs) {
 	var tabName = elements.tab_ul.getTabFormNameAt(1)
 	
 	//timer for debugging purposes
-	globals.CALLBACK_timer('start')
+	globals.TRIGGER_timer('start')
 	
 	//things to do on the initial show only
 	//TODO WARNING: do rewrite your code to not depend on 'arguments', append them to the parameter list.
@@ -539,7 +539,7 @@ if (application.__parent__.solutionPrefs) {
 //	}
 	
 	//set record navigator to reflect current index and found set
-	globals.CALLBACK_toolbar_record_navigator_set()
+	globals.TRIGGER_toolbar_record_navigator_set()
 	
 	//only run when using query based way to hit repository and form present
 	if (forms[formName] && solutionPrefs.repository && solutionPrefs.repository.allFormsByTable && solutionPrefs.repository.allFormsByTable[serverName] && solutionPrefs.repository.allFormsByTable[serverName][tableName] && solutionPrefs.repository.allFormsByTable[serverName][tableName].primaryKey) {			
@@ -700,7 +700,7 @@ if (forms[formName]) {
 	}
 	
 	//LOG ul tab change
-	globals.CALLBACK_log_create('UL Tabs',
+	globals.TRIGGER_log_create('UL Tabs',
 						itemName,
 						formName
 						)

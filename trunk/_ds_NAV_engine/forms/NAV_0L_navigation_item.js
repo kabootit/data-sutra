@@ -603,7 +603,7 @@ function FORM_on_load()
 
 
 // load tooltips from tooltip module
-globals.CALLBACK_tooltip_set()
+globals.TRIGGER_tooltip_set()
 }
 
 /**
@@ -894,7 +894,7 @@ if (subMethod || utils.hasRecords(foundset)) {
 	//turn on progress bar
 	if (!subMethod) {
 		plugins.sutra.busyCursor = true
-		globals.CALLBACK_progressbar_start(-273, 'Duplicating "' + record.item_name + '" to "' + record.item_name + ' copy"....')
+		globals.TRIGGER_progressbar_start(-273, 'Duplicating "' + record.item_name + '" to "' + record.item_name + ' copy"....')
 	}
 	
 	var formNameNavItem = 'NAV_R_navigation_item'
@@ -1026,7 +1026,7 @@ if (subMethod || utils.hasRecords(foundset)) {
 	
 	//turn off progress bar
 	if (!subMethod) {
-		globals.CALLBACK_progressbar_stop()
+		globals.TRIGGER_progressbar_stop()
 		plugins.sutra.busyCursor = false
 		databaseManager.saveData()
 	}

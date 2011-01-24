@@ -156,7 +156,7 @@ if (filterValue != "<html><b>All") {
 	}
 	
 	//update display with new record filter
-	globals.CALLBACK_fastfind_display_set('Status filter: ' + filterValue,null,'is_active')
+	globals.TRIGGER_fastfind_display_set('Status filter: ' + filterValue,null,'is_active')
 }
 else {
 	controller.loadAllRecords()
@@ -210,7 +210,7 @@ if (addrCnt && contCnt) {
 	is_active = 1
 	
 	databaseManager.saveData()
-	globals.CALLBACK_ul_refresh_all()
+	globals.TRIGGER_ul_refresh_all()
 	
 	forms.CRM1_0F_orders.elements.fld_order_number.requestFocus(false)
 }

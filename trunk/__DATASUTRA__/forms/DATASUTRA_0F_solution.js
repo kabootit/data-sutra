@@ -244,7 +244,7 @@ function FRAME_rename()
  */	
 
 if (solution_name || solution_icon_blob) {
-	globals.CALLBACK_frame_title_set(solution_name,solution_icon_blob) // + ' — Data Sutra'
+	globals.TRIGGER_frame_title_set(solution_name,solution_icon_blob) // + ' — Data Sutra'
 }
 }
 

@@ -32,11 +32,11 @@ var consoleOutput = '';
  *
  * @properties={typeid:24,uuid:"f329a2ea-8dbe-40fa-a8dd-75a01b623979"}
  */
-function CALLBACK_fastfind_display_set()
+function TRIGGER_fastfind_display_set()
 {
 
 /*
- *	TITLE    :	CALLBACK_fastfind_display_set
+ *	TITLE    :	TRIGGER_fastfind_display_set
  *			  	
  *	MODULE   :	rsrc_CODE_sutra
  *			  	
@@ -52,7 +52,7 @@ function CALLBACK_fastfind_display_set()
  *			  	
  *	REQUIRES :	
  *			  	
- *	USAGE    :	CALLBACK_fastfind_display_set(filterText [, toolTipText, setCheck]) Set the text in the fast find field, tooltip for the fast find field, and check box
+ *	USAGE    :	TRIGGER_fastfind_display_set(filterText [, toolTipText, setCheck]) Set the text in the fast find field, tooltip for the fast find field, and check box
  *			  	
  *	MODIFIED :	Mar 7 2008 -- Troy Elliott, Data Mosaic
  *			  	
@@ -142,11 +142,11 @@ if (application.__parent__.solutionPrefs && !solutionPrefs.config.lockStatus) {
  *
  * @properties={typeid:24,uuid:"1544c9a7-7107-4c73-8d7e-eb00586dc023"}
  */
-function CALLBACK_fastfind_override()
+function TRIGGER_fastfind_override()
 {
 
 /*
- *	TITLE    :	CALLBACK_fastfind_override
+ *	TITLE    :	TRIGGER_fastfind_override
  *			  	
  *	MODULE   :	rsrc_CODE_sutra
  *			  	
@@ -180,8 +180,8 @@ function CALLBACK_fastfind_override()
  *			  	
  *	REQUIRES :	
  *			  	
- *	USAGE    :	CALLBACK_fastfind_override(findObject, [navItemID]) Override fast find settings
- *			  	CALLBACK_fastfind_override(false, [navItemID]) Revert to default fast find settings
+ *	USAGE    :	TRIGGER_fastfind_override(findObject, [navItemID]) Override fast find settings
+ *			  	TRIGGER_fastfind_override(false, [navItemID]) Revert to default fast find settings
  *			  	
  *	MODIFIED :	February 2, 2010 -- Troy Elliott, Data Mosaic
  *			  	
@@ -224,11 +224,11 @@ if (application.__parent__.solutionPrefs && !solutionPrefs.config.lockStatus) {
  *
  * @properties={typeid:24,uuid:"c140d3ca-3af7-4bfd-871a-a601f7af59e8"}
  */
-function CALLBACK_feedback_create()
+function TRIGGER_feedback_create()
 {
 
 /*
- *	TITLE    :	CALLBACK_feedback_create
+ *	TITLE    :	TRIGGER_feedback_create
  *			  	
  *	MODULE   :	rsrc_CODE_sutra
  *			  	
@@ -294,11 +294,11 @@ if (issue || detail || takeScreenshot) {
  *
  * @properties={typeid:24,uuid:"fc168413-17ed-4d6a-b0b3-7a69b8674f9e"}
  */
-function CALLBACK_frame_title_set()
+function TRIGGER_frame_title_set()
 {
 
 /*
- *	TITLE    :	CALLBACK_frame_title_set
+ *	TITLE    :	TRIGGER_frame_title_set
  *			  	
  *	MODULE   :	rsrc_CODE_sutra
  *			  	
@@ -312,7 +312,7 @@ function CALLBACK_frame_title_set()
  *			  	
  *	REQUIRES :	solutionPrefs; running in smart client or developer
  *			  	
- *	USAGE    :	CALLBACK_frame_title_set(windowTitle, [iconURL], [windowName]) Sets the window title and assigns an icon to the window specified
+ *	USAGE    :	TRIGGER_frame_title_set(windowTitle, [iconURL], [windowName]) Sets the window title and assigns an icon to the window specified
  *			  	
  *	MODIFIED :	March 1, 2008 -- Tom Parry, Prospect IT Consulting
  *			  	October 1, 2008 -- Troy Elliott, Data Mosaic
@@ -375,11 +375,11 @@ if (application.__parent__.solutionPrefs && solutionPrefs.clientInfo && (solutio
  *
  * @properties={typeid:24,uuid:"7e1bda42-9f42-4736-a207-4b324e59ec3c"}
  */
-function CALLBACK_help_navigation_set()
+function TRIGGER_help_navigation_set()
 {
 
 /*
- *	TITLE    :	CALLBACK_help_navigation_set
+ *	TITLE    :	TRIGGER_help_navigation_set
  *			  	
  *	MODULE   :	rsrc_CODE_sutra
  *			  	
@@ -394,7 +394,7 @@ function CALLBACK_help_navigation_set()
  *			  	
  *	REQUIRES :	
  *			  	
- *	USAGE    :	CALLBACK_help_navigation_set(registry) Navigates to a registered form
+ *	USAGE    :	TRIGGER_help_navigation_set(registry) Navigates to a registered form
  *			  	
  *	MODIFIED :	February 9, 2009 -- Troy Elliott, Data Mosaic
  *			  	
@@ -496,7 +496,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			
 			//pop-up help screen for selected element
 			if (showHelp) {
-				globals.CALLBACK_tooltip_help_popup(showHelp.form,showHelp.element,showHelp.tabPanel)
+				globals.TRIGGER_tooltip_help_popup(showHelp.form,showHelp.element,showHelp.tabPanel)
 			}
 		}
 	}
@@ -516,16 +516,16 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
  *
  * @properties={typeid:24,uuid:"8a2db575-a9de-4646-9936-14468a01d7f4"}
  */
-function CALLBACK_interface_lock()
+function TRIGGER_interface_lock()
 {
 
 /*
- *	TITLE    :	CALLBACK_interface_lock
+ *	TITLE    :	TRIGGER_interface_lock
  *			  	
  *	MODULE   :	rsrc_CODE_sutra
  *			  	
  *	ABOUT    :	disables all frameworks related actions
- *			  		- including: CALLBACK_navigation_set
+ *			  		- including: TRIGGER_navigation_set
  *			  	
  *	INPUT    :	1- true/false - true freezes frameworks (everything except your workflow screen), false returns frameworks to normal operation
  *			  	2- true/false - true freezes frameworks, including workflow area (giving dimmed effect) (optional)
@@ -537,7 +537,7 @@ function CALLBACK_interface_lock()
  *			  	
  *	REQUIRES :	solutionPrefs
  *			  	
- *	USAGE    :	CALLBACK_interface_lock(lockFrameworks, [lockAll], [nonTransparent], [processingIndicator], [text]) Locks/unlocks frameworks, forcing user to stay on workflow screen
+ *	USAGE    :	TRIGGER_interface_lock(lockFrameworks, [lockAll], [nonTransparent], [processingIndicator], [text]) Locks/unlocks frameworks, forcing user to stay on workflow screen
  *			  	
  *	MODIFIED :	March 27, 2009 -- Troy Elliott, Data Mosaic
  *			  	
@@ -747,11 +747,11 @@ if (application.__parent__.solutionPrefs && typeof freeze == 'boolean') {
  *
  * @properties={typeid:24,uuid:"d905985b-6355-4c9c-9e36-d69a2cf797eb"}
  */
-function CALLBACK_log_create()
+function TRIGGER_log_create()
 {
 
 /*
- *	TITLE    :	CALLBACK_log_create
+ *	TITLE    :	TRIGGER_log_create
  *			  	
  *	MODULE   :	rsrc_CODE_sutra
  *			  	
@@ -929,11 +929,11 @@ if (logType && application.__parent__.solutionPrefs && solutionPrefs.analytics &
  *
  * @properties={typeid:24,uuid:"c3da0de9-3fb6-48ba-8406-2bb1060e48f7"}
  */
-function CALLBACK_navigation_filter_update()
+function TRIGGER_navigation_filter_update()
 {
 
 /*
- *	TITLE    :	CALLBACK_navigation_filter_update
+ *	TITLE    :	TRIGGER_navigation_filter_update
  *			  	
  *	MODULE   :	rsrc_CODE_sutra
  *			  	
@@ -948,7 +948,7 @@ function CALLBACK_navigation_filter_update()
  *			  	
  *	REQUIRES :	
  *			  	
- *	USAGE    :	CALLBACK_navigation_filter_update([navItemID], [forceRefresh]) Refresh filters on showing navigation item
+ *	USAGE    :	TRIGGER_navigation_filter_update([navItemID], [forceRefresh]) Refresh filters on showing navigation item
  *			  	
  *	MODIFIED :	May 15, 2009 -- Troy Elliott, Data Mosaic
  *			  	
@@ -984,11 +984,11 @@ else {
  *
  * @properties={typeid:24,uuid:"e58b6503-e021-452d-b2b1-075c79e44ddd"}
  */
-function CALLBACK_navigation_set()
+function TRIGGER_navigation_set()
 {
 
 /*
- *	TITLE    :	CALLBACK_navigation_set
+ *	TITLE    :	TRIGGER_navigation_set
  *			  	
  *	MODULE   :	rsrc_CODE_sutra
  *			  	
@@ -1002,7 +1002,7 @@ function CALLBACK_navigation_set()
  *			  	
  *	REQUIRES :	
  *			  	
- *	USAGE    :	CALLBACK_navigation_set(registry, [setFoundset], [specifyFoundset/pkArray]) Navigates to a registered form and sets its foundset
+ *	USAGE    :	TRIGGER_navigation_set(registry, [setFoundset], [specifyFoundset/pkArray]) Navigates to a registered form and sets its foundset
  *			  	
  *	MODIFIED :	June 17, 2010 -- Troy Elliott, Data Mosaic
  *			  	
@@ -1114,7 +1114,7 @@ if (application.__parent__.solutionPrefs && !solutionPrefs.config.lockStatus) {
 					}
 					//3.5
 					else {
-						globals.CALLBACK_ul_refresh_all()
+						globals.TRIGGER_ul_refresh_all()
 					}
 				}
 				//custom list based on the same, set it too
@@ -1168,11 +1168,11 @@ if (application.__parent__.solutionPrefs && !solutionPrefs.config.lockStatus) {
  *
  * @properties={typeid:24,uuid:"7e91ecfd-e090-4d7b-83cf-782473b41028"}
  */
-function CALLBACK_progressbar_get()
+function TRIGGER_progressbar_get()
 {
 
 /*
- *	TITLE    :	CALLBACK_progressbar_get
+ *	TITLE    :	TRIGGER_progressbar_get
  *			  	
  *	MODULE   :	rsrc_CODE_sutra
  *			  	
@@ -1186,7 +1186,7 @@ function CALLBACK_progressbar_get()
  *			  	
  *	REQUIRES :	
  *			  	
- *	USAGE    :	CALLBACK_progressbar_get()
+ *	USAGE    :	TRIGGER_progressbar_get()
  *			  	
  *	MODIFIED :	June 26, 2008 -- Troy Elliott, Data Mosaic
  *			  	
@@ -1229,11 +1229,11 @@ if (application.__parent__.solutionPrefs && forms[solutionPrefs.config.formNameB
  *
  * @properties={typeid:24,uuid:"13108d13-f698-45c1-a3d7-0b1c4547e37f"}
  */
-function CALLBACK_progressbar_set()
+function TRIGGER_progressbar_set()
 {
 
 /*
- *	TITLE    :	CALLBACK_progressbar_set
+ *	TITLE    :	TRIGGER_progressbar_set
  *			  	
  *	MODULE   :	rsrc_CODE_sutra
  *			  	
@@ -1247,7 +1247,7 @@ function CALLBACK_progressbar_set()
  *			  	
  *	REQUIRES :	
  *			  	
- *	USAGE    :	CALLBACK_progressbar_set()
+ *	USAGE    :	TRIGGER_progressbar_set()
  *			  	
  *	MODIFIED :	June 26, 2008 -- Troy Elliott, Data Mosaic
  *			  	
@@ -1305,11 +1305,11 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
  *
  * @properties={typeid:24,uuid:"99d4d8c5-a92a-4793-a10a-04bb647a2d68"}
  */
-function CALLBACK_progressbar_start()
+function TRIGGER_progressbar_start()
 {
 
 /*
- *	TITLE    :	CALLBACK_progressbar_start
+ *	TITLE    :	TRIGGER_progressbar_start
  *			  	
  *	MODULE   :	rsrc_CODE_sutra
  *			  	
@@ -1325,7 +1325,7 @@ function CALLBACK_progressbar_start()
  *			  	
  *	REQUIRES :	
  *			  	
- *	USAGE    :	CALLBACK_progressbar_start(startPosition,explanation,explanationTooltip,minValue,maxValue)
+ *	USAGE    :	TRIGGER_progressbar_start(startPosition,explanation,explanationTooltip,minValue,maxValue)
  *			  	
  *	MODIFIED :	June 26, 2008 -- Troy Elliott, Data Mosaic
  *			  	
@@ -1428,11 +1428,11 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
  *
  * @properties={typeid:24,uuid:"705d0fdd-b2f9-48a4-9495-d3762c0cb104"}
  */
-function CALLBACK_progressbar_stop()
+function TRIGGER_progressbar_stop()
 {
 
 /*
- *	TITLE    :	CALLBACK_progressbar_stop
+ *	TITLE    :	TRIGGER_progressbar_stop
  *			  	
  *	MODULE   :	rsrc_CODE_sutra
  *			  	
@@ -1444,7 +1444,7 @@ function CALLBACK_progressbar_stop()
  *			  	
  *	REQUIRES :	
  *			  	
- *	USAGE    :	CALLBACK_progressbar_stop()
+ *	USAGE    :	TRIGGER_progressbar_stop()
  *			  	
  *	MODIFIED :	June 26, 2008 -- Troy Elliott, Data Mosaic
  *			  	
@@ -1486,11 +1486,11 @@ if (application.__parent__.solutionPrefs) {
  *
  * @properties={typeid:24,uuid:"32c5064f-1136-410e-8f08-900c0872fc96"}
  */
-function CALLBACK_registered_action_authenticate()
+function TRIGGER_registered_action_authenticate()
 {
 
 /*
- *	TITLE    :	CALLBACK_registered_action_authenticate
+ *	TITLE    :	TRIGGER_registered_action_authenticate
  *			  	
  *	MODULE   :	rsrc_CODE_frameworks
  *			  	
@@ -1502,7 +1502,7 @@ function CALLBACK_registered_action_authenticate()
  *			  	
  *	REQUIRES :	solutionPrefs
  *			  	
- *	USAGE    :	CALLBACK_registered_action_authenticate(actionRegisty) Returns whether currently logged in user is permitted to perform action
+ *	USAGE    :	TRIGGER_registered_action_authenticate(actionRegisty) Returns whether currently logged in user is permitted to perform action
  *			  	
  *	MODIFIED :	December 16, 2009 -- Troy Elliott, Data Mosaic
  *			  	
@@ -1580,11 +1580,11 @@ else {
  *
  * @properties={typeid:24,uuid:"16e4b4b2-b0ef-4af5-81e5-4a1fb2c76a84"}
  */
-function CALLBACK_spaces_set()
+function TRIGGER_spaces_set()
 {
 
 /*
- *	TITLE    :	CALLBACK_spaces_set
+ *	TITLE    :	TRIGGER_spaces_set
  *			  	
  *	MODULE   :	rsrc_CODE_sutra
  *			  	
@@ -1601,7 +1601,7 @@ function CALLBACK_spaces_set()
  *			  	
  *	REQUIRES :	
  *			  	
- *	USAGE    :	CALLBACK_spaces_set(spaceName) Makes the specified space active
+ *	USAGE    :	TRIGGER_spaces_set(spaceName) Makes the specified space active
  *			  	
  *	MODIFIED :	August 19, 2008 -- Troy Elliott, Data Mosaic
  *			  	
@@ -1670,11 +1670,11 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
  *
  * @properties={typeid:24,uuid:"388b465a-89a4-471f-9ad9-8a862a505fe3"}
  */
-function CALLBACK_timer()
+function TRIGGER_timer()
 {
 
 /*
- *	TITLE    :	CALLBACK_timer
+ *	TITLE    :	TRIGGER_timer
  *			  	
  *	MODULE   :	rsrc_CODE_sutra
  *			  	
@@ -1686,7 +1686,7 @@ function CALLBACK_timer()
  *			  	
  *	REQUIRES :	solutionPrefs
  *			  	
- *	USAGE    :	CALLBACK_timer(startStop) Starts/stops timer.  Displays value in status area when stopped
+ *	USAGE    :	TRIGGER_timer(startStop) Starts/stops timer.  Displays value in status area when stopped
  *			  	
  *	MODIFIED :	July 21, 2008 -- Troy Elliott, Data Mosaic
  *			  	
@@ -1749,11 +1749,11 @@ else if (startStop == 'stop') {
  *
  * @properties={typeid:24,uuid:"545d621f-ead0-4ac5-99aa-7e3a05c85e41"}
  */
-function CALLBACK_toolbar_record_navigator_set()
+function TRIGGER_toolbar_record_navigator_set()
 {
 
 /*
- *	TITLE    :	CALLBACK_toolbar_record_navigator_set
+ *	TITLE    :	TRIGGER_toolbar_record_navigator_set
  *			  	
  *	MODULE   :	rsrc_CODE_sutra
  *			  	
@@ -1884,11 +1884,11 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
  *
  * @properties={typeid:24,uuid:"900fee92-988b-4c95-aca8-0072b6277768"}
  */
-function CALLBACK_toolbar_set()
+function TRIGGER_toolbar_set()
 {
 
 /*
- *	TITLE    :	CALLBACK_toolbar_set
+ *	TITLE    :	TRIGGER_toolbar_set
  *			  	
  *	MODULE   :	rsrc_CODE_sutra
  *			  	
@@ -1901,7 +1901,7 @@ function CALLBACK_toolbar_set()
  *			  	
  *	REQUIRES :	
  *			  	
- *	USAGE    :	CALLBACK_toolbar_set(toolbar) Navigates to the specified toolbar if it is available for the logged in user
+ *	USAGE    :	TRIGGER_toolbar_set(toolbar) Navigates to the specified toolbar if it is available for the logged in user
  *			  	
  *	MODIFIED :	August 19, 2008 -- Troy Elliott, Data Mosaic
  *			  	
@@ -1961,11 +1961,11 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
  *
  * @properties={typeid:24,uuid:"6a193823-8789-4ec3-a7bf-45d1238dc5bd"}
  */
-function CALLBACK_tooltip_help_popup()
+function TRIGGER_tooltip_help_popup()
 {
 
 /*
- *	TITLE    :	CALLBACK_tooltip_help_popup
+ *	TITLE    :	TRIGGER_tooltip_help_popup
  *			  	
  *	MODULE   :	rsrc_CODE_sutra
  *			  	
@@ -1977,7 +1977,7 @@ function CALLBACK_tooltip_help_popup()
  *			  	
  *	REQUIRES :	solutionPrefs
  *			  	
- *	USAGE    :	CALLBACK_tooltip_help_popup([tabPanelName])
+ *	USAGE    :	TRIGGER_tooltip_help_popup([tabPanelName])
  *			  	
  *	MODIFIED :	July 9, 2008 -- Troy Elliott, Data Mosaic
  *			  	
@@ -2052,11 +2052,11 @@ else {
  *
  * @properties={typeid:24,uuid:"cdd6b7fe-1a1c-496d-857e-0ab7b32088f4"}
  */
-function CALLBACK_tooltip_set()
+function TRIGGER_tooltip_set()
 {
 
 /*
- *	TITLE    :	CALLBACK_tooltip_set
+ *	TITLE    :	TRIGGER_tooltip_set
  *			  	
  *	MODULE   :	rsrc_CODE_sutra
  *			  	
@@ -2070,7 +2070,7 @@ function CALLBACK_tooltip_set()
  *			  	
  *	REQUIRES :	solutionPrefs
  *			  	
- *	USAGE    :	CALLBACK_tooltip_set([formName], [clearTooltips])
+ *	USAGE    :	TRIGGER_tooltip_set([formName], [clearTooltips])
  *			  	
  *	MODIFIED :	July 9, 2008 -- Troy Elliott, Data Mosaic
  *			  	
@@ -2121,11 +2121,11 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
  *
  * @properties={typeid:24,uuid:"49c0f6ce-61b1-4b64-8b4b-f6d493783dc0"}
  */
-function CALLBACK_ul_display_set()
+function TRIGGER_ul_display_set()
 {
 
 /*
- *	TITLE    :	CALLBACK_ul_display_set
+ *	TITLE    :	TRIGGER_ul_display_set
  *			  	
  *	MODULE   :	rsrc_CODE_sutra
  *			  	
@@ -2137,7 +2137,7 @@ function CALLBACK_ul_display_set()
  *			  	
  *	REQUIRES :	solutionPrefs
  *			  	
- *	USAGE    :	CALLBACK_ul_display_set(displayPosition) Pass in the position of the display on the currently showing form
+ *	USAGE    :	TRIGGER_ul_display_set(displayPosition) Pass in the position of the display on the currently showing form
  *			  	
  *	MODIFIED :	July 31, 2008 -- Troy Elliott, Data Mosaic
  *			  	
@@ -2174,11 +2174,11 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
  *
  * @properties={typeid:24,uuid:"80b5f03d-6fe0-4ee7-a801-7fd0c6a6238e"}
  */
-function CALLBACK_ul_refresh_all()
+function TRIGGER_ul_refresh_all()
 {
 
 /*
- *	TITLE    :	CALLBACK_ul_refresh_all
+ *	TITLE    :	TRIGGER_ul_refresh_all
  *			  	
  *	MODULE   :	rsrc_CODE_sutra
  *			  	
@@ -2210,7 +2210,7 @@ if (application.__parent__.solutionPrefs && application.__parent__.navigationPre
 		//only refresh if visited and UL for this nav item
 		if (formUL && forms[formUL]) {
 			forms[formUL].UL_sync_records()
-			globals.CALLBACK_toolbar_record_navigator_set()
+			globals.TRIGGER_toolbar_record_navigator_set()
 		}
 	}
 }
@@ -2223,13 +2223,13 @@ if (application.__parent__.solutionPrefs && application.__parent__.navigationPre
  *
  * @properties={typeid:24,uuid:"02f4edfb-7cb2-4a99-aeda-ac167959430b"}
  */
-function CALLBACK_ul_refresh_on_delete()
+function TRIGGER_ul_refresh_on_delete()
 {
 //TODO: COMING SOON!!!!
 //MEMO only required for pre 4.0 servoy
 
 /*
- *	TITLE    :	CALLBACK_ul_refresh_on_delete
+ *	TITLE    :	TRIGGER_ul_refresh_on_delete
  *			  	
  *	MODULE   :	rsrc_CODE_sutra
  *			  	
@@ -2241,7 +2241,7 @@ function CALLBACK_ul_refresh_on_delete()
  *			  	
  *	REQUIRES :	universal list in use on current form, solutionPrefs, navigationPrefs
  *			  	
- *	USAGE    :	CALLBACK_ul_refresh_on_delete(displayPosition) Pass in the position of the display on the currently showing form
+ *	USAGE    :	TRIGGER_ul_refresh_on_delete(displayPosition) Pass in the position of the display on the currently showing form
  *			  	
  *	MODIFIED :	August 6, 2009 -- Troy Elliott, Data Mosaic
  *			  	
@@ -2254,7 +2254,7 @@ if (application.__parent__.solutionPrefs && application.__parent__.navigationPre
 	//using universal list, do stuff
 	if (navigationPrefs.byNavItemID[navItemID].navigationItem.useFwList) {
 		
-		globals.CALLBACK_ul_refresh_all()
+		globals.TRIGGER_ul_refresh_all()
 		
 		/*
 		databaseManager.saveData()
@@ -2294,11 +2294,11 @@ if (application.__parent__.solutionPrefs && application.__parent__.navigationPre
  *
  * @properties={typeid:24,uuid:"50d8a27a-2321-4118-b4f7-db097f8c0f0a"}
  */
-function CALLBACK_ul_refresh_selected()
+function TRIGGER_ul_refresh_selected()
 {
 
 /*
- *	TITLE    :	CALLBACK_ul_refresh_selected
+ *	TITLE    :	TRIGGER_ul_refresh_selected
  *			  	
  *	MODULE   :	rsrc_CODE_sutra
  *			  	
@@ -2340,11 +2340,11 @@ if (application.__parent__.solutionPrefs && application.__parent__.navigationPre
  *
  * @properties={typeid:24,uuid:"2eb30059-9a36-47f9-8f8b-1fac91db90c8"}
  */
-function CALLBACK_ul_tab_exit()
+function TRIGGER_ul_tab_exit()
 {
 
 /*
- *	TITLE    :	CALLBACK_ul_tab_exit
+ *	TITLE    :	TRIGGER_ul_tab_exit
  *			  	
  *	MODULE   :	rsrc_CODE_sutra
  *			  	
@@ -5448,10 +5448,10 @@ for ( var i = 1 ; i <= tabTotal ; i++ ) {
 /**
  * @properties={typeid:24,uuid:"8EC7C55E-6B55-43D5-9693-897E32EA0884"}
  */
-function CALLBACK_sidebar_set(newToolbar, showSidebar) {
+function TRIGGER_sidebar_set(newToolbar, showSidebar) {
 
 /*
- *	TITLE    :	CALLBACK_sidebar_set
+ *	TITLE    :	TRIGGER_sidebar_set
  *			  	
  *	MODULE   :	rsrc_CODE_sutra
  *			  	
@@ -5464,7 +5464,7 @@ function CALLBACK_sidebar_set(newToolbar, showSidebar) {
  *			  	
  *	REQUIRES :	
  *			  	
- *	USAGE    :	CALLBACK_toolbar_set(toolbar) Navigates to the specified toolbar if it is available for the logged in user
+ *	USAGE    :	TRIGGER_toolbar_set(toolbar) Navigates to the specified toolbar if it is available for the logged in user
  *			  	
  *	MODIFIED :	August 19, 2008 -- Troy Elliott, Data Mosaic
  *			  	

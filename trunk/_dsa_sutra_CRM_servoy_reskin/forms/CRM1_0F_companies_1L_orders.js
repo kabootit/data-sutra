@@ -25,7 +25,7 @@ function GOTO_order()
  */
 
 //change the selected navigation record
-globals.CALLBACK_navigation_set(10,true) //orders is 10
+globals.TRIGGER_navigation_set(10,true) //orders is 10
 
 }
 

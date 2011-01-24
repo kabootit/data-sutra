@@ -809,11 +809,11 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 					forms[formUL].UL_sync_records()
 				}
 
-				globals.CALLBACK_toolbar_record_navigator_set()
+				globals.TRIGGER_toolbar_record_navigator_set()
 			}
 
 			//LOG find
-			globals.CALLBACK_log_create('Fast finds',
+			globals.TRIGGER_log_create('Fast finds',
 								forms[formName].controller.getServerName(),
 								forms[formName].controller.getTableName(),
 								'Show all'
@@ -1139,7 +1139,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 					'Outstanding unsaved data.  Find not performed.'
 				)
 			
-			globals.CALLBACK_log_create('Fast finds',
+			globals.TRIGGER_log_create('Fast finds',
 							serverName,
 							tableName,
 							'Find mode not entered',
@@ -1203,7 +1203,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 				}
 				
 				//LOG find
-				globals.CALLBACK_log_create('Fast finds',
+				globals.TRIGGER_log_create('Fast finds',
 									serverName,
 									tableName,
 									'Extend',
@@ -1222,7 +1222,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 				}
 				
 				//LOG find
-				globals.CALLBACK_log_create('Fast finds',
+				globals.TRIGGER_log_create('Fast finds',
 									serverName,
 									tableName,
 									'Reduce',
@@ -1282,7 +1282,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 				}
 		
 				//LOG find
-				globals.CALLBACK_log_create('Fast finds',
+				globals.TRIGGER_log_create('Fast finds',
 									serverName,
 									tableName,
 									'Omit',
@@ -1307,7 +1307,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 				}
 				
 				//LOG find
-				globals.CALLBACK_log_create('Fast finds',
+				globals.TRIGGER_log_create('Fast finds',
 									serverName,
 									tableName,
 									'Normal',
@@ -1376,12 +1376,12 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 					}
 					//regenerate html list in 3.5.x
 					else if (utils.stringToNumber(solutionPrefs.clientInfo.verServoy) < 4) {
-						globals.CALLBACK_ul_refresh_all()
+						globals.TRIGGER_ul_refresh_all()
 					}
 				}
 				//update record navigator //if universal list not used
 				else {
-					globals.CALLBACK_toolbar_record_navigator_set()
+					globals.TRIGGER_toolbar_record_navigator_set()
 				}
 			}
 			
@@ -2268,7 +2268,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 				var formNotLoaded = true
 				
 				plugins.sutra.busyCursor = true
-				globals.CALLBACK_progressbar_start(-273, navSpecs.initialFormLabel)
+				globals.TRIGGER_progressbar_start(-273, navSpecs.initialFormLabel)
 			}
 			//update when not showing progress bar to get around multi-threading the navigation item html field
 			else if (!firstForm) {
@@ -2555,7 +2555,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 				
 				if (!designList) {
 					//update record navigator
-					globals.CALLBACK_toolbar_record_navigator_set(solutionPrefs.config.recordNavigatorStatus)
+					globals.TRIGGER_toolbar_record_navigator_set(solutionPrefs.config.recordNavigatorStatus)
 					
 					//select tab
 					forms[baseForm].elements.tab_content_B.tabIndex = forms[baseForm].elements.tab_content_B.getMaxTabIndex()
@@ -2767,7 +2767,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		}
 		
 		//LOG navigation
-		globals.CALLBACK_log_create('Navigation items',
+		globals.TRIGGER_log_create('Navigation items',
 							mainTab,
 							listTab
 							)
@@ -2775,7 +2775,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		
 		//form was not in memory, turn off busy bar and busy cursor
 		if (formNotLoaded) {
-			globals.CALLBACK_progressbar_stop()
+			globals.TRIGGER_progressbar_stop()
 			plugins.sutra.busyCursor = false	
 		}
 		
@@ -4031,7 +4031,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	}
 	
 	//LOG configuration
-	globals.CALLBACK_log_create('Configuration panes',
+	globals.TRIGGER_log_create('Configuration panes',
 						prefPane,
 						prefNavID,
 						navSpecs.idNavigation,
@@ -4192,7 +4192,7 @@ function NAV_foundset_restrict()
  *			  	
  *	ABOUT    :	filters the foundset based on any configured filters
  *			  	NOTE: this method should not be used from your code...
- *			  		Instead see globals.CALLBACK_navigation_filter_update
+ *			  		Instead see globals.TRIGGER_navigation_filter_update
  *			  	
  *	INPUT    :	1- force refresh even if filters haven't changed (optional)
  *			  		- NOTE: will reset all finds/filters/etc
@@ -4490,12 +4490,12 @@ function NAV_universal_list_select()
 		if (!busyIndicator) {
 			plugins.sutra.busyCursor = true
 		}
-		globals.CALLBACK_progressbar_start(-273, navigationPrefs.byNavItemID[currentNavItem].navigationItem.initialRecordLabel)
+		globals.TRIGGER_progressbar_start(-273, navigationPrefs.byNavItemID[currentNavItem].navigationItem.initialRecordLabel)
 	}
 	
 	//log if requested
 	if (logClick) {
-		globals.CALLBACK_log_create('Records',
+		globals.TRIGGER_log_create('Records',
 							serverName,
 							tableName,
 							pkName,
@@ -4510,11 +4510,11 @@ function NAV_universal_list_select()
 	navigationPrefs.byNavItemID[currentNavItem].listData.visitedPKs[(forms[formName][pkName] != 'repositoryAPINotImplemented') ? forms[formName][pkName] : 0] = application.getServerTimeStamp()
 	
 	//update record navigator
-	globals.CALLBACK_toolbar_record_navigator_set()
+	globals.TRIGGER_toolbar_record_navigator_set()
 	
 	//record was not in memory, turn off busy bar and busy cursor
 	if (recNotLoaded) {
-		globals.CALLBACK_progressbar_stop()
+		globals.TRIGGER_progressbar_stop()
 		plugins.sutra.busyCursor = false	
 	}
 	//changing record, finished turn off busy indicatar
@@ -4530,8 +4530,8 @@ function NAV_universal_list_select()
 		forms.DPLY_0F_solution__license.ACTION_status()
 		
 		plugins.dialogs.showErrorDialog(
-							'Demo expired',
-							'Demo time expired\n' +
+							'Trial expired',
+							'Trial time expired\n' +
 							'Please restart.'
 						)
 	}
@@ -4601,7 +4601,7 @@ function NAV_record_next()
  *			  	
  *	OUTPUT   :	
  *			  	
- *	REQUIRES :	solutionPrefs, globals.CALLBACK_toolbar_record_navigator_set()
+ *	REQUIRES :	solutionPrefs, globals.TRIGGER_toolbar_record_navigator_set()
  *			  	
  *	MODIFIED :	Oct 30, 2007 -- Troy Elliott, Data Mosaic
  *			  	
@@ -4687,7 +4687,7 @@ if (application.__parent__.solutionPrefs) {
 			}
 			
 			//update record navigator
-			globals.CALLBACK_toolbar_record_navigator_set()
+			globals.TRIGGER_toolbar_record_navigator_set()
 		}
 		
 		//LOG record navigation
@@ -4706,7 +4706,7 @@ if (application.__parent__.solutionPrefs) {
 			var pkName = 'repositoryAPINotImplemented'
 			var pkActedOn = 0
 		}
-		globals.CALLBACK_log_create('Records',
+		globals.TRIGGER_log_create('Records',
 							serverName,
 							tableName,
 							pkName,
@@ -4735,7 +4735,7 @@ function NAV_record_previous()
  *			  	
  *	OUTPUT   :	
  *			  	
- *	REQUIRES :	solutionPrefs, globals.CALLBACK_toolbar_record_navigator_set()
+ *	REQUIRES :	solutionPrefs, globals.TRIGGER_toolbar_record_navigator_set()
  *			  	
  *	MODIFIED :	Oct 30, 2007 -- Troy Elliott, Data Mosaic
  *			  	
@@ -4809,7 +4809,7 @@ if (application.__parent__.solutionPrefs) {
 			}
 			
 			//update record navigator
-			globals.CALLBACK_toolbar_record_navigator_set()
+			globals.TRIGGER_toolbar_record_navigator_set()
 		}
 		
 		//LOG record navigation
@@ -4828,7 +4828,7 @@ if (application.__parent__.solutionPrefs) {
 			var pkName = 'repositoryAPINotImplemented'
 			var pkActedOn = 0
 		}
-		globals.CALLBACK_log_create('Records',
+		globals.TRIGGER_log_create('Records',
 							serverName,
 							tableName,
 							pkName,

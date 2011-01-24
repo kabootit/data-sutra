@@ -6,7 +6,7 @@ function FORM_on_hide()
 {
 
 //set record navigator to be enabled again
-globals.CALLBACK_toolbar_record_navigator_set(true)
+globals.TRIGGER_toolbar_record_navigator_set(true)
 
 }
 
@@ -18,6 +18,6 @@ function FORM_on_show()
 {
 
 //set record navigator to blank
-globals.CALLBACK_toolbar_record_navigator_set(false)
+globals.TRIGGER_toolbar_record_navigator_set(false)
 
 }

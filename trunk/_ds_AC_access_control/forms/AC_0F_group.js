@@ -87,7 +87,7 @@ function FORM_on_load()
  *			  	
  */
 
-globals.CALLBACK_tooltip_set()
+globals.TRIGGER_tooltip_set()
 
 globals.TAB_change_grid_init()
 }
@@ -251,7 +251,7 @@ var delRec = plugins.dialogs.showWarningDialog('Delete record','Do you really wa
 
 if (delRec == 'Yes') {
 	controller.deleteRecord()
-	globals.CALLBACK_ul_refresh_all()
+	globals.TRIGGER_ul_refresh_all()
 }
 }
 

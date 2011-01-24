@@ -26,5 +26,5 @@ function REC_on_select()
 
 globals.TMPL_example = id_example
 
-globals.CALLBACK_toolbar_record_navigator_set()
+globals.TRIGGER_toolbar_record_navigator_set()
 }

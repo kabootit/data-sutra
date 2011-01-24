@@ -141,7 +141,7 @@ if (application.__parent__.solutionPrefs && this.configured) {
 		plugins.sutra.busyCursor = true
 	}
 	
-	globals.CALLBACK_timer('start')
+	globals.TRIGGER_timer('start')
 	
 	var serverName = forms[formName].controller.getServerName()
 	var tableName = forms[formName].controller.getTableName()
@@ -170,12 +170,12 @@ if (application.__parent__.solutionPrefs && this.configured) {
 		if (!busyIndicator) {
 			plugins.sutra.busyCursor = true
 		}
-		globals.CALLBACK_progressbar_start(-273, navigationPrefs.byNavItemID[currentNavItem].navigationItem.initialRecordLabel)
+		globals.TRIGGER_progressbar_start(-273, navigationPrefs.byNavItemID[currentNavItem].navigationItem.initialRecordLabel)
 	}
 	
 	//log if requested
 	if (logClick) {
-		globals.CALLBACK_log_create('Records',
+		globals.TRIGGER_log_create('Records',
 							serverName,
 							tableName,
 							pkName,
@@ -213,13 +213,13 @@ if (application.__parent__.solutionPrefs && this.configured) {
 	//save currently selected index
 	navigationPrefs.byNavItemID[currentNavItem].listData.index.selected = rowSelected
 	
-	globals.CALLBACK_toolbar_record_navigator_set()
+	globals.TRIGGER_toolbar_record_navigator_set()
 	
-	globals.CALLBACK_timer('stop')
+	globals.TRIGGER_timer('stop')
 	
 	//record was not in memory, turn off busy bar and busy cursor
 	if (recNotLoaded) {
-		globals.CALLBACK_progressbar_stop()
+		globals.TRIGGER_progressbar_stop()
 		plugins.sutra.busyCursor = false	
 	}
 	//changing record, finished turn off busy indicatar

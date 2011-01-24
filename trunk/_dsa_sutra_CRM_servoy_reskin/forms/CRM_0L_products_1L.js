@@ -9,5 +9,5 @@ if (utils.hasRecords(foundset)) {
 }
 
 //sets record navigator to reflect current index and found set
-globals.CALLBACK_toolbar_record_navigator_set()
+globals.TRIGGER_toolbar_record_navigator_set()
 }

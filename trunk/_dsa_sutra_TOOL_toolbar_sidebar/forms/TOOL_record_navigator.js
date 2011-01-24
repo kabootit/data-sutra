@@ -30,7 +30,7 @@ if (application.__parent__.solutionPrefs) {
 	//if not 'previewing' the status area
 	if (solutionPrefs.config.currentFormName != 'MGR_0F_toolbar') {	
 		//update record navigator
-		globals.CALLBACK_toolbar_record_navigator_set()
+		globals.TRIGGER_toolbar_record_navigator_set()
 	}
 }
 

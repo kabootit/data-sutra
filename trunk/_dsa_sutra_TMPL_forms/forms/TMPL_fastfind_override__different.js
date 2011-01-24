@@ -25,7 +25,7 @@ function FORM_on_hide()
  */
 
 //revert to normal fast find
-globals.CALLBACK_fastfind_override(false)
+globals.TRIGGER_fastfind_override(false)
 
 
 }
@@ -90,5 +90,5 @@ findOV.push({
 //findOV.searchForm = 'My_cool_form'
 
 //override fast find
-globals.CALLBACK_fastfind_override(findOV)
+globals.TRIGGER_fastfind_override(findOV)
 }
