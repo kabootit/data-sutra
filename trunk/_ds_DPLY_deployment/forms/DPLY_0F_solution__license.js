@@ -213,7 +213,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 
 var trialMode = (typeof arguments[0] == 'boolean') ? arguments[0] : solutionPrefs.config.trialMode
 
-var formName = 'DATASUTRA_0F_solution__header'
+var formName = 'DATASUTRA_0F_solution__header__toolbar'
 
 if (forms[formName] && forms[formName].elements.lbl_trial_mode) {
 	var elem = forms[formName].elements.lbl_trial_mode
