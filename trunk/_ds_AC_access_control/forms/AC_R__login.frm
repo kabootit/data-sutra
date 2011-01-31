@@ -94,7 +94,7 @@ text:"<html>
     
   <\/head>
   <body>
-    Data Mosaic &#8212; Copyright &#169; 2010
+    Data Mosaic &#8212; Copyright &#169; 2006-2011
   <\/body>
 <\/html>",
 transparent:true,
@@ -239,7 +239,7 @@ showFocus:false,
 size:"270,21",
 styleClass:"fidaction",
 tabSeq:-1,
-text:"Mosaic Frameworks for Servoy",
+text:"Data Sutra",
 transparent:true,
 typeid:7,
 uuid:"e684b97f-f0bf-4fdc-a0ad-abc7819bbe08"
