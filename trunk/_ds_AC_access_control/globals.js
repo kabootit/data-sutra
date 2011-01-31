@@ -4,21 +4,6 @@
 var AC_configuration = 12;
 
 /**
- * @properties={typeid:35,uuid:"830cf64e-5c88-4581-90ea-de8355fb5d08",variableType:4}
- */
-var AC_current_group = null;
-
-/**
- * @properties={typeid:35,uuid:"9a2da13a-3f68-4adb-9372-0be5ab22fa21",variableType:4}
- */
-var AC_current_organization = null;
-
-/**
- * @properties={typeid:35,uuid:"2a06fde2-b4ec-4aee-bbc5-ae42a64d90af",variableType:4}
- */
-var AC_current_staff = null;
-
-/**
  * @properties={typeid:35,uuid:"ad7cb092-61d4-45ae-9f21-95469d08c88b"}
  */
 var AC_filter_action_id = '';
