@@ -114,7 +114,7 @@ uuid:"51cf2069-7c83-43a0-bb32-b956a2d551a5"
 },
 {
 anchors:15,
-dataProviderID:"globals.PREF_license_agreement",
+dataProviderID:"globals.DPLY_license_agreement",
 displayType:8,
 editable:false,
 formIndex:11200,
