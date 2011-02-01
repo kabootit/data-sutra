@@ -2033,15 +2033,15 @@ if (application.__parent__.solutionPrefs) {
 			//if help found, continue
 			if (firstFound) {
 				globals.CODE_text = firstFound
-				forms.CODE_P__konsole.elements.lbl_header.text = 'Inline help'
-				application.showFormInDialog(forms.CODE_P__konsole,-1,-1,-1,-1,' ',true,false,'inlineHelp')
+				forms.CODE_P__text.elements.lbl_header.text = 'Inline help'
+				application.showFormInDialog(forms.CODE_P__text,-1,-1,-1,-1,' ',true,false,'inlineHelp')
 			}
 		}
 		//check to see that there is additional help for this element
 		else if (solutionPrefs.i18n[solutionPrefs.config.language][formName] && solutionPrefs.i18n[solutionPrefs.config.language][formName][elementName] && solutionPrefs.i18n[solutionPrefs.config.language][formName][elementName].inlineHelp) {
 			globals.CODE_text = solutionPrefs.i18n[solutionPrefs.config.language][formName][elementName].inlineHelp
-			forms.CODE_P__konsole.elements.lbl_header.text = 'Inline help'
-			application.showFormInDialog(forms.CODE_P__konsole,-1,-1,-1,-1,' ',true,false,'inlineHelp')
+			forms.CODE_P__text.elements.lbl_header.text = 'Inline help'
+			application.showFormInDialog(forms.CODE_P__text,-1,-1,-1,-1,' ',true,false,'inlineHelp')
 		}
 	}
 	//no default language set up; abort
@@ -5630,5 +5630,88 @@ function TAB_change_set(input, formParent) {
 		else {
 			forms[formParent].elements.tab_sets.tabIndex = input
 		}
+	}
+}
+
+/**
+ * @properties={typeid:24,uuid:"43FDEA90-D609-436A-8401-3153AEA868CE"}
+ */
+function CODE_license_insert() {
+	//prompt for a workspace directory, go through all .js files and insert a block of text with licensing info at the top
+	
+	//generic verbage
+	var licenseTop = "/**\n * @properties={typeid:35,uuid:\"DA7AE05A-1C00-"
+	var licenseStuffing = "\"}\n */\nvar _license_"
+	var licenseEnd = " = 'Copyright (C) 2006 - 2011 Data Mosaic \\\n\t\t\t\t\t\t\t\t\tAll rights reserved \\\n\t\t\t\t\t\t\t\t\t\\\n\t\t\t\t\t\t\t\t\tThe copyright of the computer program(s) herein is \\\n\t\t\t\t\t\t\t\t\tthe property of Data Mosaic. The program(s) may be used/copied \\\n\t\t\t\t\t\t\t\t\tonly with the written permission of the owner or in \\\n\t\t\t\t\t\t\t\t\taccordance with the terms and conditions stipulated in \\\n\t\t\t\t\t\t\t\t\tthe agreement/contract under which the program(s) have \\\n\t\t\t\t\t\t\t\t\tbeen supplied.';\n\n"
+	var cnt = 1
+	
+	function padLast(sequence) {
+		var length = 12 - sequence.length
+		var pad = ''
+			
+		while (length--) {
+			pad += '0'
+		}
+		
+		return pad + sequence
+	}
+	
+	var L33T = {
+			__DATASUTRA__		: 'DA7A',
+			__datasutra__connector	: 'DAC0',
+			_ds_AC_access_control	: 'AC00',
+			_ds_CODE_resources		: 'C0DE',
+			_ds_DEV_tools			: 'DEB0',
+			_ds_DPLY_deployment		: 'D470',
+			_ds_MGR_resource_manager	: 'E640',
+			_ds_NAV_engine		: '4AB0',
+			_dsa_sutra_CRM_servoy_resking	: 'C4E0',
+			_dsa_sutra_DATE_date_picker		: 'DA1E',
+			_dsa_sutra_TMPL_forms :	 '1E47',
+			_dsa_sutra_TOOL_toolbar_sidebar	: '1007'
+		}
+	
+	var workspace = plugins.file.showDirectorySelectDialog(plugins.sutra.getWorkspace().substr(5),'Choose a workspace')
+	
+	//workspace selected
+	if (workspace) {
+		var modules = plugins.file.getFolderContents(workspace, null, 2, 1)
+		
+		for (var i = 0; i < modules.length; i++) {
+			var module = modules[i]
+			var moduleName = module.getAbsolutePath().split('/').pop()
+			
+			var formsJS = plugins.file.getFolderContents(module.getAbsolutePath() + '/forms', '.js', 1)
+			var globalJS = plugins.file.readTXTFile(module.getAbsolutePath() + '/globals.js')
+			
+			//if this 'module' has globals
+			if (globalJS) {
+				//C0DE-1111-00000000000001
+				var sequence = utils.numberFormat(cnt++,'#')
+				var twenty = L33T[moduleName] + '-' + '1111' + '-' + padLast(sequence)
+				
+				var contentJS = licenseTop + twenty + licenseStuffing + moduleName + licenseEnd + globalJS
+				
+				plugins.file.writeTXTFile(module.getAbsolutePath() + '/globals.js',contentJS)
+			}
+			
+			//if this 'module' has forms with javascript, proceed
+			if (formsJS.length) {
+				//loop
+				for (var j = 0; j < formsJS.length; j++) {
+					var formJS = formsJS[j]
+					
+					//C0DE-1111-00000000000001
+					var sequence = utils.numberFormat(cnt++,'#')
+					var twenty = L33T[moduleName] + '-' + '1111' + '-' + padLast(sequence)
+					
+					var contentJS = licenseTop + twenty + licenseStuffing + moduleName + licenseEnd + plugins.file.readTXTFile(formJS)
+					
+					plugins.file.writeTXTFile(formJS,contentJS)
+				}
+			}
+		}
+		
+		plugins.dialogs.showInfoDialog('Completed','Licensing text has been inserted in all ' + cnt - 1 + '.js files.')
 	}
 }
