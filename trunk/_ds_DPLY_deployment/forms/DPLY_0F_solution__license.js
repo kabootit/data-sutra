@@ -211,7 +211,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	arguments = Arguments.filter(globals.CODE_jsevent_remove)
 }
 
-var trialMode = (typeof arguments[0] == 'boolean') ? arguments[0] : solutionPrefs.config.trialMode
+var trialMode = (typeof arguments[0] == 'boolean') ? arguments[0] : null
 
 var formName = 'DATASUTRA_0F_solution__header__toolbar'
 
