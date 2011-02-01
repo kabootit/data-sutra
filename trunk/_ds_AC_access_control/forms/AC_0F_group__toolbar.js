@@ -21,7 +21,7 @@ function LOAD_records()
 
 var toolType = elements.tab_detail.tabIndex
 
-var groupID = id_group
+var groupID = forms.AC_0F_group.id_group
 
 var fsGroupTool = forms.AC_0F_group__toolbar_1L_group_toolbar.foundset
 
