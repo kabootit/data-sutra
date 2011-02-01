@@ -262,39 +262,39 @@ function DATASUTRA_error()
  *			  	
  */
 
-
-var x = arguments[0]
-var y = arguments[1]
-var z = arguments[2]
-
-plugins.dialogs.showErrorDialog('Global error','Arguments: '+x)
-/*
-var error = arguments[0];
-application.output('Exception Object: ' + error)
-application.output('MSG: ' + error.getMessage())
-if (error.isServoyException)
-{
-	application.output('is a ServoyException')
-	application.output('Errorcode: ' + error.getErrorCode())
-  if (error.getErrorCode() == ServoyException.SAVE_FAILED)
-  {
-	  plugins.dialogs.showErrorDialog( 'Error',  'It seems you did not fill in a required field')
-	  
-	  //Get the failed records after a save
-	  var array = databaseManager.getFailedRecords()
-	  for( var i = 0 ; i < array.length ; i++ )
+	var x = arguments[0]
+	var y = arguments[1]
+	var z = arguments[2]
+	
+	plugins.dialogs.showErrorDialog('Error','Arguments: '+x)
+	
+	/*
+	var error = arguments[0];
+	application.output('Exception Object: ' + error)
+	application.output('MSG: ' + error.getMessage())
+	if (error.isServoyException)
+	{
+		application.output('is a ServoyException')
+		application.output('Errorcode: ' + error.getErrorCode())
+	  if (error.getErrorCode() == ServoyException.SAVE_FAILED)
 	  {
-		  var record = array[i];
-		  application.output(record.exception);
-		  if (record.exception.isDataException)
+		  plugins.dialogs.showErrorDialog( 'Error',  'It seems you did not fill in a required field')
+		  
+		  //Get the failed records after a save
+		  var array = databaseManager.getFailedRecords()
+		  for( var i = 0 ; i < array.length ; i++ )
 		  {
-			  application.output('SQL: '+record.exception.getSQL())
-			  application.output('SQLState: '+record.exception.getSQLState())
-			  application.output('VendorErrorCode: '+record.exception.getVendorErrorCode())
+			  var record = array[i];
+			  application.output(record.exception);
+			  if (record.exception.isDataException)
+			  {
+				  application.output('SQL: '+record.exception.getSQL())
+				  application.output('SQLState: '+record.exception.getSQLState())
+				  application.output('VendorErrorCode: '+record.exception.getVendorErrorCode())
+			  }
 		  }
 	  }
-  }
-}*/
+	}*/
 }
 
 /**
@@ -2492,7 +2492,7 @@ if (plugins.sutra && plugins.sutra.executeFunction) {
 		//check if plugin has Fxion
 		if (plugins.sutra.getVersion) {
 			//check for version of plugin
-			if (plugins.sutra.getVersion() == '3.0.0' && success) {
+			if (plugins.sutra.getVersion() == '3.0.0 (unlocked)' && success) {
 				return true
 			}
 			//fail
@@ -2620,6 +2620,7 @@ if (application.__parent__.solutionPrefs) {
  * @param	{Boolean}	[sideExpand=false] Changes the behavior from resizing the window to resizing the window's contents when showing a sidebar.
  * 
  * @author	Troy Elliott, Data Mosaic
+ * @version	2010 August 25
  * 
  * @properties={typeid:24,uuid:"b2bbd2c2-2b6e-4918-accc-74b3ab9769d6"}
  */
