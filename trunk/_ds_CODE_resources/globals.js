@@ -5799,7 +5799,8 @@ function TRIGGER_ul_tab_list(input) {
 	else {
 		var formName = arguments[0]
 		var itemName = arguments[1]
-		var formNameBase = solutionPrefs.config.formNameBase
+		var tabSelected = arguments[2]
+		var baseForm = solutionPrefs.config.formNameBase
 		var prefName = 'Custom tab ' + solutionPrefs.config.currentFormID + ': ' + formName
 		
 		if (forms[formName]) {
@@ -5810,24 +5811,33 @@ function TRIGGER_ul_tab_list(input) {
 			if (formName != 'DATASUTRA_0F_solution__blank_2' && !navigationPrefs.byNavSetName.configPanes.itemsByName[prefName]) {
 				
 				//assign to list tab panel
-				forms[formNameBase].elements.tab_content_B.addTab(forms[formName],'',null,null,null,null)
-				forms[formNameBase].elements.tab_content_B.tabIndex = forms[formNameBase].elements.tab_content_B.getMaxTabIndex()
+				forms[baseForm].elements.tab_content_B.addTab(forms[formName],'',null,null,null,null)
+				forms[baseForm].elements.tab_content_B.tabIndex = forms[baseForm].elements.tab_content_B.getMaxTabIndex()
 				
 				//save status info
 				navigationPrefs.byNavSetName.configPanes.itemsByName[prefName] = new Object()
 				navigationPrefs.byNavSetName.configPanes.itemsByName[prefName].listData = {
-											tabNumber : forms[formNameBase].elements.tab_content_B.tabIndex,
+											tabNumber : forms[baseForm].elements.tab_content_B.tabIndex,
 											dateAdded : application.getServerTimeStamp()
 									}
 				
 			}
 			//blank form, set to blank tab
 			else if (formName == 'DATASUTRA_0F_solution__blank_2') {
-				forms[formNameBase].elements.tab_content_B.tabIndex = 1
+				forms[baseForm].elements.tab_content_B.tabIndex = 1
 			}
 			//set tab to this preference
 			else {
-				forms[formNameBase].elements.tab_content_B.tabIndex = navigationPrefs.byNavSetName.configPanes.itemsByName[prefName].listData.tabNumber
+				forms[baseForm].elements.tab_content_B.tabIndex = navigationPrefs.byNavSetName.configPanes.itemsByName[prefName].listData.tabNumber
+			}
+			
+			//using a custom tab, note which one it is
+			if (tabSelected >= 0) {
+				navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].universalList.buttons.tabs.tabPosn = tabSelected
+			}
+			//using default list (UL or other)
+			else if (navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].universalList.buttons.tabs) {
+				delete navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].universalList.buttons.tabs.tabPosn
 			}
 			
 			//LOG ul tab change
