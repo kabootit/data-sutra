@@ -1861,7 +1861,7 @@ if (valueList.length) {
 		
 		//pass method name as parameter if that form is currently included
 		if (forms[formNames[i]]) {
-			menu[i].setMethodArguments(formNames[i],valueList[i])
+			menu[i].setMethodArguments(formNames[i],valueList[i],i-1)
 		}
 		else {
 			menu[i].setEnabled(false)
@@ -1917,7 +1917,8 @@ function TABS_list_control()
 
 var formName = arguments[0]
 var itemName = arguments[1]
-var formNameBase = solutionPrefs.config.formNameBase
+var tabSelected = arguments[2]
+var baseForm = solutionPrefs.config.formNameBase
 var prefName = 'Custom tab ' + solutionPrefs.config.currentFormID + ': ' + formName
 
 if (forms[formName]) {
@@ -1928,24 +1929,33 @@ if (forms[formName]) {
 	if (formName != 'FRAMEWORKS_blank_1_list' && !navigationPrefs.byNavSetName.configPanes.itemsByName[prefName]) {
 		
 		//assign to list tab panel
-		forms[formNameBase].elements.tab_content_B.addTab(forms[formName],'',null,null,null,null)
-		forms[formNameBase].elements.tab_content_B.tabIndex = forms[formNameBase].elements.tab_content_B.getMaxTabIndex()
+		forms[baseForm].elements.tab_content_B.addTab(forms[formName],'',null,null,null,null)
+		forms[baseForm].elements.tab_content_B.tabIndex = forms[baseForm].elements.tab_content_B.getMaxTabIndex()
 		
 		//save status info
 		navigationPrefs.byNavSetName.configPanes.itemsByName[prefName] = new Object()
 		navigationPrefs.byNavSetName.configPanes.itemsByName[prefName].listData = {
-									tabNumber : forms[formNameBase].elements.tab_content_B.tabIndex,
+									tabNumber : forms[baseForm].elements.tab_content_B.tabIndex,
 									dateAdded : application.getServerTimeStamp()
 							}
 		
 	}
 	//blank form, set to blank tab
 	else if (listTab == 'FRAMEWORKS_blank_1_list') {
-		forms[formNameBase].elements.tab_content_B.tabIndex = 1
+		forms[baseForm].elements.tab_content_B.tabIndex = 1
 	}
 	//set tab to this preference
 	else {
-		forms[formNameBase].elements.tab_content_B.tabIndex = navigationPrefs.byNavSetName.configPanes.itemsByName[prefName].listData.tabNumber
+		forms[baseForm].elements.tab_content_B.tabIndex = navigationPrefs.byNavSetName.configPanes.itemsByName[prefName].listData.tabNumber
+	}
+	
+	//using a custom tab, note which one it is
+	if (tabSelected >= 0) {
+		navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].universalList.buttons.tabs.tabPosn = tabSelected
+	}
+	//using default list (UL or other)
+	else if (navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].universalList.buttons.tabs) {
+		delete navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].universalList.buttons.tabs.tabPosn
 	}
 	
 	//LOG ul tab change

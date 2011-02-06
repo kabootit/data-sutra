@@ -1764,7 +1764,7 @@ if (valueList.length) {
 		
 		//pass method name as parameter if that form is currently included
 		if (forms[formNames[i]]) {
-			menu[i].setMethodArguments(formNames[i],valueList[i])
+			menu[i].setMethodArguments(formNames[i],valueList[i],i-1)
 		}
 		else {
 			menu[i].setEnabled(false)
@@ -1820,6 +1820,7 @@ function TABS_list_control()
 
 var formName = arguments[0]
 var itemName = arguments[1]
+var tabSelected = arguments[2]
 var formNameBase = solutionPrefs.config.formNameBase
 var prefName = 'Custom tab ' + solutionPrefs.config.currentFormID + ': ' + formName
 
@@ -1849,6 +1850,15 @@ if (forms[formName]) {
 	//set tab to this preference
 	else {
 		forms[formNameBase].elements.tab_content_B.tabIndex = navigationPrefs.byNavSetName.configPanes.itemsByName[prefName].listData.tabNumber
+	}
+	
+	//using a custom tab, note which one it is
+	if (tabSelected >= 0) {
+		navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].universalList.buttons.tabs.tabPosn = tabSelected
+	}
+	//using default list (UL or other)
+	else if (navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].universalList.buttons.tabs) {
+		delete navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].universalList.buttons.tabs.tabPosn
 	}
 	
 	//LOG ul tab change

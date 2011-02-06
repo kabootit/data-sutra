@@ -689,7 +689,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			
 			//run post processing method if present
 			if (forms[formName] && forms[formName].FIND_post_process) {
-				forms[formName].FIND_post_process()
+				forms[formName].FIND_post_process()	//for consistency should probably pass oldLoaded in here
 			}
 			
 //			//UL in servoy greater than 4.1
@@ -1406,7 +1406,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			
 			//run post processing method if present
 			if (forms[formName] && forms[formName].FIND_post_process) {
-				forms[formName].FIND_post_process()
+				forms[formName].FIND_post_process(count)
 			}
 		}
 	}
@@ -2341,255 +2341,262 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		
 		
 		//load list window
-
-		//form not yet added, add to lists tab panel
-		if (listTab != 'DATASUTRA_0F_solution__blank_2' && navigationPrefs.byNavItemID[navigationItemID] && !globals.NAV_universal_list_get_status(navigationPrefs.byNavItemID[navigationItemID].listData)) {
-			//create new form instances for UL
-			if (navSpecs.useFwList) {
-				//3.5 hacked UL
-				if (utils.stringToNumber(solutionPrefs.clientInfo.verServoy) < 4) {	
-					var uniList = 'NAV_0L_universal_list'
-					
-					//new form name (NAV_0L_universal_list__set000_item000_CRM_0F_companies)
-					var newFormName = uniList + '__set' + navSpecs.idNavigation + '_item' + navSpecs.idNavigationItem + '_' + mainTab
-					
-					//if form not already defined, define, get and assign 200 record chunk
-					if (!forms[newFormName]) {
-						//create new form instances
-						var success = application.createNewFormInstance(uniList,newFormName)
-						var success = application.createNewFormInstance(uniList+'_1L',newFormName+'_1L')
-						
-						//assign secondary form to UL
-						forms[newFormName].elements.tab_ul.removeAllTabs()
-						forms[newFormName].elements.tab_ul.addTab(forms[newFormName+'_1L'],'UL Records',null,null,null,null)
-						
-						//assign UL to list tab panels
-						forms[baseForm].elements.tab_content_B.addTab(forms[newFormName],newFormName,null,null,null,null)
-						
-						//foundset count
-						var foundsetCount = databaseManager.getFoundSetCount(forms[mainTab].foundset)
-						
-						//get records
-						var dsUniversalList = databaseManager.getDataSetByQuery(
-										forms[baseForm].controller.getServerName(), 
-										'SELECT id_universal_list FROM sutra_universal_list WHERE id_universal_list >= ?',
-										[navigationPrefs.foundsetPool.nextFreePK],
-										forms[mainTab].foundset.getSize() + 1)
-										//(foundsetCount == forms[mainTab].foundset.getSize()) ? forms[mainTab].foundset.getSize() + 1 : forms[mainTab].foundset.getSize())
-						var pkUL = dsUniversalList.getColumnAsArray(1)
-						
-						//save next pk down; and remove it from array
-						navigationPrefs.foundsetPool.nextFreePK = pkUL.pop()
-						
-						//punch down foundset onto form via pk array
-						forms[newFormName+'_1L'].foundset.loadRecords(databaseManager.convertToDataSet(pkUL))
-						
-						//save status info
-						navigationPrefs.byNavItemID[navigationItemID].listData.foundsets.blueprint = pkUL
-						navigationPrefs.byNavItemID[navigationItemID].listData.foundsets.current = forms[newFormName+'_1L'].foundset
-						navigationPrefs.byNavItemID[navigationItemID].listData.tabFormInstance = newFormName
-						navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber = forms[baseForm].elements.tab_content_B.getMaxTabIndex()
-						navigationPrefs.byNavItemID[navigationItemID].listData.dateAdded = application.getServerTimeStamp()
-						
-						//only switch to this tab if not on any of the developer modes
-						if (!designList) {
-							forms[baseForm].elements.tab_content_B.tabIndex = forms[baseForm].elements.tab_content_B.getMaxTabIndex()
-						}
-						//fire form on show to illiminate flicker when eventually shown
-						else {
-							forms[newFormName].FORM_on_show()
-						}
-					}
-				}
-				
-				//4.1+ Solution Model
-				else if (utils.stringToNumber(solutionPrefs.clientInfo.verServoy) >= 4) {
-					var uniList = 'NAV_T_universal_list_1L'
-					
-					//new form name (UL__set000_item000_CRM_0F_companies)
-					var newFormName = 'UL' + '__set' + navSpecs.idNavigation + '_item' + navSpecs.idNavigationItem + '_' + mainTab
-					
-					//if form not already defined or if button-status has changed, define
-					if (!forms[newFormName] ||
-						(navigationPrefs.byNavItemID[navigationItemID].listData.withButtons && !(navSpecs.barItemAdd || navSpecs.barItemAction || navSpecs.barItemFilter || navSpecs.barItemReport)) ||
-						(!navigationPrefs.byNavItemID[navigationItemID].listData.withButtons && (navSpecs.barItemAdd || navSpecs.barItemAction || navSpecs.barItemFilter || navSpecs.barItemReport))
-						) {
-						
-						//create new forms
-						var template = globals.NAV_universal_list_form_to_template(uniList)
-						var myForm = globals.NAV_universal_list_template_to_form(template,newFormName)
-						
-						//set datasource
-						myForm.serverName = serverName
-						myForm.tableName = tableName
-						
-						//set to use same foundset
-						var origForm = solutionModel.getForm(mainTab)
-						if (origForm.namedFoundSet) {
-							myForm.namedFoundSet = origForm.namedFoundSet
-						}
-						
-						//set events
-						myForm.onShow = solutionModel.getGlobalMethod('NAV_universal_list_show')
-						myForm.onRecordSelection = solutionModel.getGlobalMethod('NAV_universal_list_select')
-						myForm.rowBGColorCalculation = 'globals.NAV_row_background'
-//						myForm.getBodyPart().background = '#D1D7E2'
-						
-						//get the UL data and set it up
-						var allULDisplays = navigationPrefs.byNavItemID[navigationItemID].universalList.displays
-						var initialUL = allULDisplays[allULDisplays.displayPosn].rawDisplay
-						
-						for (var i = 0; i < initialUL.length; i++) {
-							var lineItem = initialUL[i]
-							
-							//determine alignment
-							var horizAlign = 2
-							switch (lineItem.align) {
-								case 'left':
-									horizAlign = 2
-									break
-								case 'right':
-									horizAlign = 4
-									break
-								case 'center':
-									horizAlign = 0
-									break
-							}
-							
-							var fieldFormat = null
-							var fieldVL = null
-							
-							//determine format
-							if (lineItem.formatMask == 'Number' || lineItem.formatMask == 'Date') { // || lineItem.formatMask == 'Text') {
-								var fieldFormat = lineItem.format
-							}
-							else if (lineItem.formatMask == 'Valuelist') {
-								var fieldVL = lineItem.format
-							}	
-							
-							//TODO: check for better name
-							var nameNameField = (lineItem.rowDisplay[0].isField) ? lineItem.rowDisplay[0].value : lineItem.fieldName
-							
-							//TODO: error checking for contents of rawDisplay
-							if (!nameNameField) {
-								continue
-							}
-							
-							//create field
-							var myField = myForm.newTextField(
-											nameNameField,			//dataprovider
-											i,						//x
-											0,						//y
-											lineItem.width,			//width
-											20						//height
-										)
-							
-							myField.name = application.getUUID().toString()
-							myField.onFocusGained = solutionModel.getGlobalMethod('NAV_universal_list_select__unhilite')
-							myField.anchors = SM_ANCHOR.ALL
-							myField.horizontalAlignment = horizAlign
-							myField.styleClass = 'customlist'
-							myField.editable = lineItem.editable
-							myField.borderType = 'EmptyBorder,0,0,0,0'
-							myField.margin = '0,4,0,4'
-							myField.scrollbars = 0
-							myField.transparent = false
-							myField.text = (lineItem.header) ? lineItem.header : nameNameField
-							if (fieldFormat) {
-								myField.format = fieldFormat
-							}
-							if (fieldVL) {
-								myField.valuelist = solutionModel.getValueList(fieldVL)
-							}
-							
-							if (lineItem.editable) {
-								myField.onRightClick = solutionModel.getGlobalMethod('NAV_universal_list_edit')
-							}
-						}
-						
-						//assign the secondary form to the main UL with buttons
-						if (navSpecs.barItemAdd || navSpecs.barItemAction || navSpecs.barItemFilter || navSpecs.barItemReport) {
-							forms.NAV_T_universal_list.elements.tab_ul.addTab(forms[newFormName],'UL Records',null,null,null,null)
-							navigationPrefs.byNavItemID[navigationItemID].listData.withButtons = true
-							navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber = forms.NAV_T_universal_list.elements.tab_ul.getMaxTabIndex()
-						}
-						//assign the secondary form to the main UL without buttons
-						else {
-							forms.NAV_T_universal_list__no_buttons.elements.tab_ul.addTab(forms[newFormName],'UL Records',null,null,null,null)
-							navigationPrefs.byNavItemID[navigationItemID].listData.withButtons = false
-							navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber = forms.NAV_T_universal_list__no_buttons.elements.tab_ul.getMaxTabIndex()
-						}
-						
-						//save status info
-						navigationPrefs.byNavItemID[navigationItemID].listData.tabFormInstance = newFormName
-						navigationPrefs.byNavItemID[navigationItemID].listData.dateAdded = application.getServerTimeStamp()
-						
-						//only switch to this tab if not on any of the developer modes
-						if (!designMode) {
-							if (navigationPrefs.byNavItemID[navigationItemID].listData.withButtons) {
-								forms.NAV_T_universal_list.FORM_on_show(true)
-								forms[baseForm].elements.tab_content_B.tabIndex = 2
-								forms.NAV_T_universal_list.elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber
-							}
-							else {
-								forms.NAV_T_universal_list__no_buttons.FORM_on_show(true)
-								forms[baseForm].elements.tab_content_B.tabIndex = 3
-								forms.NAV_T_universal_list__no_buttons.elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber
-							}
-						}
-						//fire form on show to illiminate flicker when eventually shown
-						else {
-						//	forms[newFormName].FORM_on_show()
-						}
-					}
-				}
-			}
-			//add non-UL form to the list as a new tab
-			else {
-				//assign to list tab panels
-				forms[baseForm].elements.tab_content_B.addTab(forms[listTab],'',null,null,null,null)
-				
-				//save status info
-				navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber = forms[baseForm].elements.tab_content_B.getMaxTabIndex()
-				navigationPrefs.byNavItemID[navigationItemID].listData.dateAdded = application.getServerTimeStamp()
-				
-				if (!designList) {
-					//update record navigator
-					globals.TRIGGER_toolbar_record_navigator_set(solutionPrefs.config.recordNavigatorStatus)
-					
-					//select tab
-					forms[baseForm].elements.tab_content_B.tabIndex = forms[baseForm].elements.tab_content_B.getMaxTabIndex()
-				}
-			}
+		
+		//on a custom tab, navigate there
+		if (navigationPrefs.byNavItemID[navigationItemID].universalList.buttons.tabs && typeof navigationPrefs.byNavItemID[navigationItemID].universalList.buttons.tabs.tabPosn == 'number') {
+			var prefName = 'Custom tab ' + navigationItemID + ': ' + navigationPrefs.byNavItemID[navigationItemID].universalList.buttons.tabs[navigationPrefs.byNavItemID[navigationItemID].universalList.buttons.tabs.tabPosn].formToLoad
+			forms[baseForm].elements.tab_content_B.tabIndex = navigationPrefs.byNavSetName.configPanes.itemsByName[prefName].listData.tabNumber
 		}
-		//blank form or error, set to blank tab
-		else if (!designList && listTab == 'DATASUTRA_0F_solution__blank_2') {
-			forms[baseForm].elements.tab_content_B.tabIndex = 1
-		}
-		//form already exists, set tab index
-		else if (!designList) {
-			//3.5
-			if (utils.stringToNumber(solutionPrefs.clientInfo.verServoy) < 4) {
-				forms[baseForm].elements.tab_content_B.tabIndex = navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber
-			}
-			//>=4
-			else if (utils.stringToNumber(solutionPrefs.clientInfo.verServoy) >= 4) {
-				//UL, set to 2 and then correct tab
+		else {
+			//form not yet added, add to lists tab panel
+			if (listTab != 'DATASUTRA_0F_solution__blank_2' && navigationPrefs.byNavItemID[navigationItemID] && !globals.NAV_universal_list_get_status(navigationPrefs.byNavItemID[navigationItemID].listData)) {
+				//create new form instances for UL
 				if (navSpecs.useFwList) {
-					if (navigationPrefs.byNavItemID[navigationItemID].listData.withButtons) {
-						forms.NAV_T_universal_list.FORM_on_show(true)
-						forms[baseForm].elements.tab_content_B.tabIndex = 2
-						forms.NAV_T_universal_list.elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber
+					//3.5 hacked UL
+					if (utils.stringToNumber(solutionPrefs.clientInfo.verServoy) < 4) {	
+						var uniList = 'NAV_0L_universal_list'
+						
+						//new form name (NAV_0L_universal_list__set000_item000_CRM_0F_companies)
+						var newFormName = uniList + '__set' + navSpecs.idNavigation + '_item' + navSpecs.idNavigationItem + '_' + mainTab
+						
+						//if form not already defined, define, get and assign 200 record chunk
+						if (!forms[newFormName]) {
+							//create new form instances
+							var success = application.createNewFormInstance(uniList,newFormName)
+							var success = application.createNewFormInstance(uniList+'_1L',newFormName+'_1L')
+							
+							//assign secondary form to UL
+							forms[newFormName].elements.tab_ul.removeAllTabs()
+							forms[newFormName].elements.tab_ul.addTab(forms[newFormName+'_1L'],'UL Records',null,null,null,null)
+							
+							//assign UL to list tab panels
+							forms[baseForm].elements.tab_content_B.addTab(forms[newFormName],newFormName,null,null,null,null)
+							
+							//foundset count
+							var foundsetCount = databaseManager.getFoundSetCount(forms[mainTab].foundset)
+							
+							//get records
+							var dsUniversalList = databaseManager.getDataSetByQuery(
+											forms[baseForm].controller.getServerName(), 
+											'SELECT id_universal_list FROM sutra_universal_list WHERE id_universal_list >= ?',
+											[navigationPrefs.foundsetPool.nextFreePK],
+											forms[mainTab].foundset.getSize() + 1)
+											//(foundsetCount == forms[mainTab].foundset.getSize()) ? forms[mainTab].foundset.getSize() + 1 : forms[mainTab].foundset.getSize())
+							var pkUL = dsUniversalList.getColumnAsArray(1)
+							
+							//save next pk down; and remove it from array
+							navigationPrefs.foundsetPool.nextFreePK = pkUL.pop()
+							
+							//punch down foundset onto form via pk array
+							forms[newFormName+'_1L'].foundset.loadRecords(databaseManager.convertToDataSet(pkUL))
+							
+							//save status info
+							navigationPrefs.byNavItemID[navigationItemID].listData.foundsets.blueprint = pkUL
+							navigationPrefs.byNavItemID[navigationItemID].listData.foundsets.current = forms[newFormName+'_1L'].foundset
+							navigationPrefs.byNavItemID[navigationItemID].listData.tabFormInstance = newFormName
+							navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber = forms[baseForm].elements.tab_content_B.getMaxTabIndex()
+							navigationPrefs.byNavItemID[navigationItemID].listData.dateAdded = application.getServerTimeStamp()
+							
+							//only switch to this tab if not on any of the developer modes
+							if (!designList) {
+								forms[baseForm].elements.tab_content_B.tabIndex = forms[baseForm].elements.tab_content_B.getMaxTabIndex()
+							}
+							//fire form on show to illiminate flicker when eventually shown
+							else {
+								forms[newFormName].FORM_on_show()
+							}
+						}
 					}
-					else {
-						forms.NAV_T_universal_list__no_buttons.FORM_on_show(true)
-						forms[baseForm].elements.tab_content_B.tabIndex = 3
-						forms.NAV_T_universal_list__no_buttons.elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber
+					
+					//4.1+ Solution Model
+					else if (utils.stringToNumber(solutionPrefs.clientInfo.verServoy) >= 4) {
+						var uniList = 'NAV_T_universal_list_1L'
+						
+						//new form name (UL__set000_item000_CRM_0F_companies)
+						var newFormName = 'UL' + '__set' + navSpecs.idNavigation + '_item' + navSpecs.idNavigationItem + '_' + mainTab
+						
+						//if form not already defined or if button-status has changed, define
+						if (!forms[newFormName] ||
+							(navigationPrefs.byNavItemID[navigationItemID].listData.withButtons && !(navSpecs.barItemAdd || navSpecs.barItemAction || navSpecs.barItemFilter || navSpecs.barItemReport)) ||
+							(!navigationPrefs.byNavItemID[navigationItemID].listData.withButtons && (navSpecs.barItemAdd || navSpecs.barItemAction || navSpecs.barItemFilter || navSpecs.barItemReport))
+							) {
+							
+							//create new forms
+							var template = globals.NAV_universal_list_form_to_template(uniList)
+							var myForm = globals.NAV_universal_list_template_to_form(template,newFormName)
+							
+							//set datasource
+							myForm.serverName = serverName
+							myForm.tableName = tableName
+							
+							//set to use same foundset
+							var origForm = solutionModel.getForm(mainTab)
+							if (origForm.namedFoundSet) {
+								myForm.namedFoundSet = origForm.namedFoundSet
+							}
+							
+							//set events
+							myForm.onShow = solutionModel.getGlobalMethod('NAV_universal_list_show')
+							myForm.onRecordSelection = solutionModel.getGlobalMethod('NAV_universal_list_select')
+							myForm.rowBGColorCalculation = 'globals.NAV_row_background'
+	//						myForm.getBodyPart().background = '#D1D7E2'
+							
+							//get the UL data and set it up
+							var allULDisplays = navigationPrefs.byNavItemID[navigationItemID].universalList.displays
+							var initialUL = allULDisplays[allULDisplays.displayPosn].rawDisplay
+							
+							for (var i = 0; i < initialUL.length; i++) {
+								var lineItem = initialUL[i]
+								
+								//determine alignment
+								var horizAlign = 2
+								switch (lineItem.align) {
+									case 'left':
+										horizAlign = 2
+										break
+									case 'right':
+										horizAlign = 4
+										break
+									case 'center':
+										horizAlign = 0
+										break
+								}
+								
+								var fieldFormat = null
+								var fieldVL = null
+								
+								//determine format
+								if (lineItem.formatMask == 'Number' || lineItem.formatMask == 'Date') { // || lineItem.formatMask == 'Text') {
+									var fieldFormat = lineItem.format
+								}
+								else if (lineItem.formatMask == 'Valuelist') {
+									var fieldVL = lineItem.format
+								}	
+								
+								//TODO: check for better name
+								var nameNameField = (lineItem.rowDisplay[0].isField) ? lineItem.rowDisplay[0].value : lineItem.fieldName
+								
+								//TODO: error checking for contents of rawDisplay
+								if (!nameNameField) {
+									continue
+								}
+								
+								//create field
+								var myField = myForm.newTextField(
+												nameNameField,			//dataprovider
+												i,						//x
+												0,						//y
+												lineItem.width,			//width
+												20						//height
+											)
+								
+								myField.name = application.getUUID().toString()
+								myField.onFocusGained = solutionModel.getGlobalMethod('NAV_universal_list_select__unhilite')
+								myField.anchors = SM_ANCHOR.ALL
+								myField.horizontalAlignment = horizAlign
+								myField.styleClass = 'customlist'
+								myField.editable = lineItem.editable
+								myField.borderType = 'EmptyBorder,0,0,0,0'
+								myField.margin = '0,4,0,4'
+								myField.scrollbars = 0
+								myField.transparent = false
+								myField.text = (lineItem.header) ? lineItem.header : nameNameField
+								if (fieldFormat) {
+									myField.format = fieldFormat
+								}
+								if (fieldVL) {
+									myField.valuelist = solutionModel.getValueList(fieldVL)
+								}
+								
+								if (lineItem.editable) {
+									myField.onRightClick = solutionModel.getGlobalMethod('NAV_universal_list_edit')
+								}
+							}
+							
+							//assign the secondary form to the main UL with buttons
+							if (navSpecs.barItemAdd || navSpecs.barItemAction || navSpecs.barItemFilter || navSpecs.barItemReport) {
+								forms.NAV_T_universal_list.elements.tab_ul.addTab(forms[newFormName],'UL Records',null,null,null,null)
+								navigationPrefs.byNavItemID[navigationItemID].listData.withButtons = true
+								navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber = forms.NAV_T_universal_list.elements.tab_ul.getMaxTabIndex()
+							}
+							//assign the secondary form to the main UL without buttons
+							else {
+								forms.NAV_T_universal_list__no_buttons.elements.tab_ul.addTab(forms[newFormName],'UL Records',null,null,null,null)
+								navigationPrefs.byNavItemID[navigationItemID].listData.withButtons = false
+								navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber = forms.NAV_T_universal_list__no_buttons.elements.tab_ul.getMaxTabIndex()
+							}
+							
+							//save status info
+							navigationPrefs.byNavItemID[navigationItemID].listData.tabFormInstance = newFormName
+							navigationPrefs.byNavItemID[navigationItemID].listData.dateAdded = application.getServerTimeStamp()
+							
+							//only switch to this tab if not on any of the developer modes
+							if (!designMode) {
+								if (navigationPrefs.byNavItemID[navigationItemID].listData.withButtons) {
+									forms.NAV_T_universal_list.FORM_on_show(true)
+									forms[baseForm].elements.tab_content_B.tabIndex = 2
+									forms.NAV_T_universal_list.elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber
+								}
+								else {
+									forms.NAV_T_universal_list__no_buttons.FORM_on_show(true)
+									forms[baseForm].elements.tab_content_B.tabIndex = 3
+									forms.NAV_T_universal_list__no_buttons.elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber
+								}
+							}
+							//fire form on show to illiminate flicker when eventually shown
+							else {
+							//	forms[newFormName].FORM_on_show()
+							}
+						}
 					}
 				}
-				//set to correct tab
+				//add non-UL form to the list as a new tab
 				else {
+					//assign to list tab panels
+					forms[baseForm].elements.tab_content_B.addTab(forms[listTab],'',null,null,null,null)
+					
+					//save status info
+					navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber = forms[baseForm].elements.tab_content_B.getMaxTabIndex()
+					navigationPrefs.byNavItemID[navigationItemID].listData.dateAdded = application.getServerTimeStamp()
+					
+					if (!designList) {
+						//update record navigator
+						globals.TRIGGER_toolbar_record_navigator_set(solutionPrefs.config.recordNavigatorStatus)
+						
+						//select tab
+						forms[baseForm].elements.tab_content_B.tabIndex = forms[baseForm].elements.tab_content_B.getMaxTabIndex()
+					}
+				}
+			}
+			//blank form or error, set to blank tab
+			else if (!designList && listTab == 'DATASUTRA_0F_solution__blank_2') {
+				forms[baseForm].elements.tab_content_B.tabIndex = 1
+			}
+			//form already exists, set tab index
+			else if (!designList) {
+				//3.5
+				if (utils.stringToNumber(solutionPrefs.clientInfo.verServoy) < 4) {
 					forms[baseForm].elements.tab_content_B.tabIndex = navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber
+				}
+				//>=4
+				else if (utils.stringToNumber(solutionPrefs.clientInfo.verServoy) >= 4) {
+					//UL, set to 2 and then correct tab
+					if (navSpecs.useFwList) {
+						if (navigationPrefs.byNavItemID[navigationItemID].listData.withButtons) {
+							forms.NAV_T_universal_list.FORM_on_show(true)
+							forms[baseForm].elements.tab_content_B.tabIndex = 2
+							forms.NAV_T_universal_list.elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber
+						}
+						else {
+							forms.NAV_T_universal_list__no_buttons.FORM_on_show(true)
+							forms[baseForm].elements.tab_content_B.tabIndex = 3
+							forms.NAV_T_universal_list__no_buttons.elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber
+						}
+					}
+					//set to correct tab
+					else {
+						forms[baseForm].elements.tab_content_B.tabIndex = navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber
+					}
 				}
 			}
 		}
