@@ -1,4 +1,5 @@
 dataSource:"db:/sutra/sutra_access_group",
+initialSort:"group_name asc",
 items:[
 {
 anchors:3,

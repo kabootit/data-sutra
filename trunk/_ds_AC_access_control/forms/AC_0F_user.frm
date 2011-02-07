@@ -1,4 +1,5 @@
 dataSource:"db:/sutra/sutra_access_user",
+initialSort:"user_name asc",
 items:[
 {
 anchors:11,
