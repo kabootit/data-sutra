@@ -20,4 +20,9 @@ elements.bean_split.orientation = 1
 elements.bean_split.resizeWeight = 1
 elements.bean_split.dividerLocation = divider
 
+//fire rec on select when no records to remove gradient
+if (!utils.hasRecords(mgr_toolbar__sidebar)) {
+	forms.MGR_0F_toolbar_1L__sidebar_2F.REC_on_select()
+}
+
 }

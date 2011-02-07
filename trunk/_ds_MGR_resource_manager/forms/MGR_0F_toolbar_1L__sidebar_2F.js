@@ -282,7 +282,6 @@ TOGGLE_tab_preview()
 //show popdown fields if needed
 TOGGLE_popdown_size()
 
-
 //fill valuelists
 FILTER_forms()
 FILTER_forms_2()
