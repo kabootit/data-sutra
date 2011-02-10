@@ -2,7 +2,7 @@
  *
  * @properties={typeid:24,uuid:"e421e58a-3ca9-4d2a-9ee5-4e3bb5da0432"}
  */
-function FORM_on_show()
+function FORM_on_show(firstShow)
 {
 
 /*
@@ -42,9 +42,9 @@ var noPassword = this.loginDisabled
 elements.lbl_date.text = globals.CODE_date_format(new Date())
 
 //hide mosaic elements used for nice footer		//TODO: possibly provide a hook into this
-elements.lbl_fw_splash.visible = false
-elements.lbl_fw_splash_1.visible = false
-elements.lbl_fw_splash_2.visible = false
+elements.lbl_footer.visible = false
+elements.lbl_footer_left.visible = false
+elements.lbl_footer_right.visible = false
 
 //which group was the last one to log in
 var groupID = application.getUserProperty('sutraGroup')
@@ -86,9 +86,28 @@ if (staticIntro || (preview && !blogRecord) || ((!blogRecord || !fsPrefs.blog_en
 	
 	//show footer
 	if (fsPrefs.initial_splash_header == 'Welcome to Data Sutra!') {
-		elements.lbl_fw_splash.visible = true
-		elements.lbl_fw_splash_1.visible = true
-		elements.lbl_fw_splash_2.visible = true
+		elements.lbl_footer_left.text = 'Data Sutra'
+		elements.lbl_footer_right.text = '<html><head></head><body>Data Mosaic &#8212; Copyright &#169; 2006-2011</body></html>'
+		
+		elements.lbl_footer.visible = true
+		elements.lbl_footer_left.visible = true
+		elements.lbl_footer_right.visible = true
+		
+		if (firstShow) {
+			elements.fld_blog.setSize(elements.fld_blog.getWidth(), elements.fld_blog.getHeight() - 23)
+		}
+	}
+	else if (fsPrefs.initial_splash_header == 'Welcome to Sutra CMS!') {
+		elements.lbl_footer_left.text = 'Data Mosaic'
+		elements.lbl_footer_right.text = '<html><head></head><body>Copyright &#169; 2011</body></html>'
+		
+		elements.lbl_footer.visible = true
+		elements.lbl_footer_left.visible = true
+		elements.lbl_footer_right.visible = true
+		
+		if (firstShow) {
+			elements.fld_blog.setSize(elements.fld_blog.getWidth(), elements.fld_blog.getHeight() - 23)
+		}
 	}
 	
 	var html = fsPrefs.initial_splash_screen
