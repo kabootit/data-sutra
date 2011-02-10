@@ -35,7 +35,7 @@ name:"group_name"
 allowNull:true,
 creationOrderIndex:6,
 dataType:-1,
-length:65535,
+length:16777215,
 name:"group_notes"
 },
 {
@@ -101,14 +101,14 @@ name:"logout_method"
 allowNull:true,
 creationOrderIndex:5,
 dataType:-1,
-length:65535,
+length:16777215,
 name:"modes_admin"
 },
 {
 allowNull:true,
 creationOrderIndex:7,
 dataType:-1,
-length:65535,
+length:16777215,
 name:"modes_user"
 },
 {
@@ -141,7 +141,7 @@ name:"security_override"
 allowNull:true,
 creationOrderIndex:2,
 dataType:-1,
-length:65535,
+length:16777215,
 name:"toolbars"
 }
 ],

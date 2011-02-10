@@ -12,7 +12,7 @@ name:"id_graphics"
 allowNull:true,
 creationOrderIndex:1,
 dataType:12,
-length:100,
+length:255,
 name:"graphic_name"
 },
 {

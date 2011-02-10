@@ -12,7 +12,7 @@ name:"id_list_display_item"
 allowNull:true,
 creationOrderIndex:1,
 dataType:12,
-length:5000,
+length:255,
 name:"display"
 },
 {

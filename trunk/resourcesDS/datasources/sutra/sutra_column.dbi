@@ -33,14 +33,14 @@ name:"id_navigation_item"
 allowNull:true,
 creationOrderIndex:3,
 dataType:12,
-length:200,
+length:255,
 name:"name_column"
 },
 {
 allowNull:true,
 creationOrderIndex:2,
 dataType:12,
-length:200,
+length:255,
 name:"name_display"
 },
 {

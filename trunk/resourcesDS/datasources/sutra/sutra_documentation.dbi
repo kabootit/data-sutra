@@ -34,7 +34,7 @@ name:"flag_highlight"
 allowNull:true,
 creationOrderIndex:7,
 dataType:-1,
-length:65535,
+length:16777215,
 name:"full_text"
 },
 {

@@ -65,7 +65,7 @@ name:"blog_misc"
 allowNull:true,
 creationOrderIndex:15,
 dataType:12,
-length:200,
+length:255,
 name:"blog_name"
 },
 {

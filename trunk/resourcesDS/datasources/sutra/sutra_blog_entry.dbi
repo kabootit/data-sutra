@@ -25,7 +25,7 @@ name:"blog_posted"
 allowNull:true,
 creationOrderIndex:5,
 dataType:12,
-length:200,
+length:255,
 name:"blog_title"
 },
 {

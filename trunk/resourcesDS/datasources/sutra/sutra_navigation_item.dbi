@@ -111,7 +111,7 @@ name:"foundset_flag"
 allowNull:true,
 creationOrderIndex:12,
 dataType:12,
-length:1000,
+length:500,
 name:"fw_list_title"
 },
 {

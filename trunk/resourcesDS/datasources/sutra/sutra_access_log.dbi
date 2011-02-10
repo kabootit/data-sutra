@@ -120,8 +120,8 @@ name:"servoy_version"
 {
 allowNull:true,
 creationOrderIndex:13,
-dataType:7,
-length:12,
+dataType:3,
+length:19,
 name:"time_difference"
 },
 {
