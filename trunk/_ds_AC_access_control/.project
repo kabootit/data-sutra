@@ -3,7 +3,7 @@
 	<name>_ds_AC_access_control</name>
 	<comment></comment>
 	<projects>
-		<project>resourcesDS</project>
+		<project>resources</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

@@ -3,7 +3,6 @@
 	<name>_ds_NAV_engine</name>
 	<comment></comment>
 	<projects>
-		<project>resourcesDS</project>
 		<project>resources</project>
 	</projects>
 	<buildSpec>

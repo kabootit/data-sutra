@@ -3,7 +3,6 @@
 	<name>__DATASUTRA__</name>
 	<comment></comment>
 	<projects>
-		<project>resourcesDS</project>
 		<project>resources</project>
 	</projects>
 	<buildSpec>

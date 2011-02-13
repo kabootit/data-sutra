@@ -3,7 +3,7 @@
 	<name>_dsa_sutra_TMPL_forms</name>
 	<comment></comment>
 	<projects>
-		<project>resourcesDS</project>
+		<project>resources</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

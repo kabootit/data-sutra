@@ -3,7 +3,7 @@
 	<name>_ds_CODE_resources</name>
 	<comment></comment>
 	<projects>
-		<project>resourcesDS</project>
+		<project>resources</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

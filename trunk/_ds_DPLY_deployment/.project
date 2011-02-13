@@ -3,7 +3,7 @@
 	<name>_ds_DPLY_deployment</name>
 	<comment></comment>
 	<projects>
-		<project>resourcesDS</project>
+		<project>resources</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

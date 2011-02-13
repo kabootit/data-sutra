@@ -3,7 +3,7 @@
 	<name>_dsa_sutra_TOOL_toolbar_sidebar</name>
 	<comment></comment>
 	<projects>
-		<project>resourcesDS</project>
+		<project>resources</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
