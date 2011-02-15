@@ -5720,131 +5720,133 @@ function CODE_license_insert() {
  * @properties={typeid:24,uuid:"F02F73B3-1A9B-4398-9D7C-909247F05EB3"}
  */
 function TRIGGER_ul_tab_list(input) {
-	
-	//grab the actions to this
-	var valueList = new Array()
-	var formNames = new Array()
-	for (var i = 0; i < navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].universalList.buttons.tabs.length ; i++) {
-		var actionItem = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].universalList.buttons.tabs[i]
-		valueList.push(actionItem.menuName)
-		formNames.push(actionItem.formToLoad)
-	}
-	
-	//tack on the selected UL to the top of the pop-down
-	valueList.unshift(navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].universalList.displays[navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].universalList.displays.displayPosn].listTitle || navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].navigationItem.fwListTitle)
-	formNames.unshift((navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.withButtons) ? 'NAV_T_universal_list' : 'NAV_T_universal_list__no_buttons')
-	
-	//called to depress menu
-	if (input instanceof JSEvent) {
-		var popForm = input.getFormName()
-		var popElem = input.getElementName()
+	//only run if meta-objects defined
+	if (application.__parent__.navigationPrefs && application.__parent__.solutionPrefs) {
+		//grab the actions to this
+		var valueList = new Array()
+		var formNames = new Array()
+		for (var i = 0; i < navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].universalList.buttons.tabs.length ; i++) {
+			var actionItem = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].universalList.buttons.tabs[i]
+			valueList.push(actionItem.menuName)
+			formNames.push(actionItem.formToLoad)
+		}
 		
-		//only show pop-up if there are enabled values
-		if (valueList.length > 1) {
+		//tack on the selected UL to the top of the pop-down
+		valueList.unshift(navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].universalList.displays[navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].universalList.displays.displayPosn].listTitle || navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].navigationItem.fwListTitle)
+		formNames.unshift((navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.withButtons) ? 'NAV_T_universal_list' : 'NAV_T_universal_list__no_buttons')
+		
+		//called to depress menu
+		if (input instanceof JSEvent) {
+			var popForm = input.getFormName()
+			var popElem = input.getElementName()
 			
-			//build menu, load tabs, and set menu method arguments
-			var menu = new Array()
-			for ( var i = 0 ; i < valueList.length ; i++ ) {
-			    //set check on universal list
-				if (formNames[i] == forms.DATASUTRA_0F_solution.elements.tab_content_B.getTabFormNameAt(forms.DATASUTRA_0F_solution.elements.tab_content_B.tabIndex)) {
-					menu[i] = plugins.popupmenu.createCheckboxMenuItem(valueList[i] + "", TRIGGER_ul_tab_list)
-					menu[i].setSelected(true)
+			//only show pop-up if there are enabled values
+			if (valueList.length > 1) {
+				
+				//build menu, load tabs, and set menu method arguments
+				var menu = new Array()
+				for ( var i = 0 ; i < valueList.length ; i++ ) {
+				    //set check on universal list
+					if (formNames[i] == forms.DATASUTRA_0F_solution.elements.tab_content_B.getTabFormNameAt(forms.DATASUTRA_0F_solution.elements.tab_content_B.tabIndex)) {
+						menu[i] = plugins.popupmenu.createCheckboxMenuItem(valueList[i] + "", TRIGGER_ul_tab_list)
+						menu[i].setSelected(true)
+					}
+					else {
+						menu[i] = plugins.popupmenu.createMenuItem(valueList[i] + "", TRIGGER_ul_tab_list)
+					}
+					
+					//pass form name as parameter if that form is currently included
+					if (forms[formNames[i]]) {
+						menu[i].setMethodArguments(formNames[i],valueList[i])
+					}
+					else {
+						menu[i].setEnabled(false)
+					}
+					
+					//disable dividers
+					if (valueList[i] == '-') {
+						menu[i].setEnabled(false)
+					}
+				}
+				
+				//are we using a second element to get pop up to align correctly
+				var btnInvisible = popElem + "_down"
+				
+				//push menu down to the header line
+				if (forms[popForm].elements[btnInvisible]) {
+					var elem = forms[popForm].elements[btnInvisible]
+					
+					var currentLocationX = elem.getLocationX()
+					var currentLocationY = elem.getLocationY()
+					
+					elem.setLocation(currentLocationX, currentLocationY + 3)
 				}
 				else {
-					menu[i] = plugins.popupmenu.createMenuItem(valueList[i] + "", TRIGGER_ul_tab_list)
+					var elem = forms[popForm].elements[popElem]
 				}
 				
-				//pass form name as parameter if that form is currently included
-				if (forms[formNames[i]]) {
-					menu[i].setMethodArguments(formNames[i],valueList[i])
-				}
-				else {
-					menu[i].setEnabled(false)
+				//popup menu
+				if (elem != null) {
+				    plugins.popupmenu.showPopupMenu(elem, menu)
 				}
 				
-				//disable dividers
-				if (valueList[i] == '-') {
-					menu[i].setEnabled(false)
+				//set invisible btn back to original location
+				if (forms[popForm].elements[btnInvisible]) {
+					elem.setLocation(currentLocationX, currentLocationY)
 				}
-			}
-			
-			//are we using a second element to get pop up to align correctly
-			var btnInvisible = popElem + "_down"
-			
-			//push menu down to the header line
-			if (forms[popForm].elements[btnInvisible]) {
-				var elem = forms[popForm].elements[btnInvisible]
-				
-				var currentLocationX = elem.getLocationX()
-				var currentLocationY = elem.getLocationY()
-				
-				elem.setLocation(currentLocationX, currentLocationY + 3)
-			}
-			else {
-				var elem = forms[popForm].elements[popElem]
-			}
-			
-			//popup menu
-			if (elem != null) {
-			    plugins.popupmenu.showPopupMenu(elem, menu)
-			}
-			
-			//set invisible btn back to original location
-			if (forms[popForm].elements[btnInvisible]) {
-				elem.setLocation(currentLocationX, currentLocationY)
 			}
 		}
-	}
-	//menu shown and item chosen
-	else {
-		var formName = arguments[0]
-		var itemName = arguments[1]
-		var tabSelected = arguments[2]
-		var baseForm = solutionPrefs.config.formNameBase
-		var prefName = 'Custom tab ' + solutionPrefs.config.currentFormID + ': ' + formName
-		
-		if (forms[formName]) {
-			//set global that end users use in their code
-			globals.NAV_universal_selected_tab = formName
+		//menu shown and item chosen
+		else {
+			var formName = arguments[0]
+			var itemName = arguments[1]
+			var tabSelected = arguments[2]
+			var baseForm = solutionPrefs.config.formNameBase
+			var prefName = 'Custom tab ' + solutionPrefs.config.currentFormID + ': ' + formName
 			
-			//if not loaded, add tab
-			if (formName != 'DATASUTRA_0F_solution__blank_2' && !navigationPrefs.byNavSetName.configPanes.itemsByName[prefName]) {
+			if (forms[formName]) {
+				//set global that end users use in their code
+				globals.NAV_universal_selected_tab = formName
 				
-				//assign to list tab panel
-				forms[baseForm].elements.tab_content_B.addTab(forms[formName],'',null,null,null,null)
-				forms[baseForm].elements.tab_content_B.tabIndex = forms[baseForm].elements.tab_content_B.getMaxTabIndex()
+				//if not loaded, add tab
+				if (formName != 'DATASUTRA_0F_solution__blank_2' && !navigationPrefs.byNavSetName.configPanes.itemsByName[prefName]) {
+					
+					//assign to list tab panel
+					forms[baseForm].elements.tab_content_B.addTab(forms[formName],'',null,null,null,null)
+					forms[baseForm].elements.tab_content_B.tabIndex = forms[baseForm].elements.tab_content_B.getMaxTabIndex()
+					
+					//save status info
+					navigationPrefs.byNavSetName.configPanes.itemsByName[prefName] = new Object()
+					navigationPrefs.byNavSetName.configPanes.itemsByName[prefName].listData = {
+												tabNumber : forms[baseForm].elements.tab_content_B.tabIndex,
+												dateAdded : application.getServerTimeStamp()
+										}
+					
+				}
+				//blank form, set to blank tab
+				else if (formName == 'DATASUTRA_0F_solution__blank_2') {
+					forms[baseForm].elements.tab_content_B.tabIndex = 1
+				}
+				//set tab to this preference
+				else {
+					forms[baseForm].elements.tab_content_B.tabIndex = navigationPrefs.byNavSetName.configPanes.itemsByName[prefName].listData.tabNumber
+				}
 				
-				//save status info
-				navigationPrefs.byNavSetName.configPanes.itemsByName[prefName] = new Object()
-				navigationPrefs.byNavSetName.configPanes.itemsByName[prefName].listData = {
-											tabNumber : forms[baseForm].elements.tab_content_B.tabIndex,
-											dateAdded : application.getServerTimeStamp()
-									}
+				//using a custom tab, note which one it is
+				if (tabSelected >= 0) {
+					navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].universalList.buttons.tabs.tabPosn = tabSelected
+				}
+				//using default list (UL or other)
+				else if (navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].universalList.buttons.tabs) {
+					delete navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].universalList.buttons.tabs.tabPosn
+				}
 				
+				//LOG ul tab change
+				globals.TRIGGER_log_create('UL Tabs',
+									itemName,
+									formName
+									)
 			}
-			//blank form, set to blank tab
-			else if (formName == 'DATASUTRA_0F_solution__blank_2') {
-				forms[baseForm].elements.tab_content_B.tabIndex = 1
-			}
-			//set tab to this preference
-			else {
-				forms[baseForm].elements.tab_content_B.tabIndex = navigationPrefs.byNavSetName.configPanes.itemsByName[prefName].listData.tabNumber
-			}
-			
-			//using a custom tab, note which one it is
-			if (tabSelected >= 0) {
-				navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].universalList.buttons.tabs.tabPosn = tabSelected
-			}
-			//using default list (UL or other)
-			else if (navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].universalList.buttons.tabs) {
-				delete navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].universalList.buttons.tabs.tabPosn
-			}
-			
-			//LOG ul tab change
-			globals.TRIGGER_log_create('UL Tabs',
-								itemName,
-								formName
-								)
 		}
 	}
 }
