@@ -170,7 +170,7 @@ function EDIT_popdown(input) {
 				)
 	
 	//called to depress menu
-	if (typeof input != 'number') {
+	if (input instanceof JSEvent) {
 		//set up menu with arguments
 		var menu = new Array()
 		for ( var i = 0 ; i < valuelist.length ; i++ ) {
