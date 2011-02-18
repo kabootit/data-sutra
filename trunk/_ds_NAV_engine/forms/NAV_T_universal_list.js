@@ -358,7 +358,7 @@ if (application.__parent__.solutionPrefs) {
 	var recSelected = forms[formName].controller.getSelectedIndex()
 	
 	//get menu list from active sort items
-	var displayItems = navigationPrefs.byNavItemID[currentNavItem].universalList.displays
+	var displayItems = (navigationPrefs.byNavItemID[currentNavItem].universalList) ? navigationPrefs.byNavItemID[currentNavItem].universalList.displays : new Array()
 	
 	//max number of displays
 	var maxDisplays = displayItems.length
