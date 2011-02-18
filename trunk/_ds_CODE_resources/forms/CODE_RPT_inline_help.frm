@@ -1,5 +1,4 @@
 borderType:"EmptyBorder,0,0,0,0",
-dataSource:"db:/sutra/sutra_solution",
 defaultPageFormat:"1;612.0;792.0;72.0;72.0;468.0;648.0;",
 items:[
 {

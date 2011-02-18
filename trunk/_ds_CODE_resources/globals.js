@@ -3327,69 +3327,6 @@ if(application.getApplicationType()==5) {
 
 /**
  *
- * @properties={typeid:24,uuid:"4d46769f-0c98-4c3d-88b2-52035b881c9d"}
- */
-function CODE_get_function()
-{
-
-/*
- *	TITLE    :	CODE_get_function
- *			  	
- *	MODULE   :	_rsrc_CODE_sutra
- *			  	
- *	ABOUT    :	creates void javascript Function
- *			  	//TODO!!! THIS IS ONLY FOR 3.5 (not for >4)
- *			  	
- *	INPUT    :	id_sutra_function
- *			  	
- *	OUTPUT   :	Function
- *			  	
- *	REQUIRES :	sutra_function table on the frameworks connection
- *			  	
- *	MODIFIED :	Oct 24, 2007 -- Troy Elliott, Data Mosaic
- *			  	
- */
-
-//MEMO: need to somehow put this section in a Function of it's own
-//running in Tano...strip out jsevents for now
-if (utils.stringToNumber(application.getVersion()) >= 5) {
-	//cast Arguments to array
-	var Arguments = new Array()
-	for (var i = 0; i < arguments.length; i++) {
-		Arguments.push(arguments[i])
-	}
-	
-	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
-}
-
-var args = [arguments[0]] //argument contains the pk of said Function
-
-var server = forms.CODE_0T_function.controller.getServerName()
-var maxReturnedRows = 1
-var query = "SELECT function_arg1, function_arg2, function_arg3, function_arg4, function_arg5, function_body, function_name FROM sutra_function WHERE id_function = ?"
-var dataset = databaseManager.getDataSetByQuery(server, query, args, maxReturnedRows)
-
-var test = new Object()
-
-var fxArg1 = (dataset.getValue(1,1)) ? dataset.getValue(1,1) : undefined
-var fxArg2 = (dataset.getValue(1,2)) ? dataset.getValue(1,2) : undefined
-var fxArg3 = (dataset.getValue(1,3)) ? dataset.getValue(1,3) : undefined
-var fxArg4 = (dataset.getValue(1,4)) ? dataset.getValue(1,4) : undefined
-var fxArg5 = (dataset.getValue(1,5)) ? dataset.getValue(1,5) : undefined
-var fxBody = dataset.getValue(1,6)
-var fxName = dataset.getValue(1,7)
-
-var fxReturn = new Function(fxArg1,fxArg2,fxArg3,fxArg4,fxArg5,fxBody)
-
-return fxReturn
-
-
-
-}
-
-/**
- *
  * @properties={typeid:24,uuid:"422431ed-d24b-4f08-9f47-89da1d3d4c7b"}
  */
 function CODE_highlight_off()
