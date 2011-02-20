@@ -5787,3 +5787,20 @@ function TRIGGER_ul_tab_list(input) {
 		}
 	}
 }
+
+/**
+ * @properties={typeid:24,uuid:"7AF6A8AA-44C4-4ABE-9A0B-18D379BD269A"}
+ */
+function CODE_cursor_busy(busyCursor) {
+	//data sutra plugin available
+	if (plugins.sutra) {
+		//busy cursor requested and not already on
+		if (busyCursor && ! plugins.sutra.busyCursor) {
+			plugins.sutra.busyCursor = true
+		}
+		//busy cursor enabled and request to turn off
+		else if (!busyCursor && plugins.sutra.busyCursor) {
+			plugins.sutra.busyCursor = false
+		}
+	}
+}
