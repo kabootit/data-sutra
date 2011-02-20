@@ -31,12 +31,12 @@ function REC_on_select()
  */
 
 //turn busy on
-plugins.sutra.busyCursor = true
+globals.CODE_cursor_busy(true)
 
 globals.NAV_navigation_item_selected = id_navigation_item
 
 //turn busy off
-plugins.sutra.busyCursor = false
+globals.CODE_cursor_busy(false)
 }
 
 /**

@@ -58,7 +58,7 @@ function REC_on_select()
 
 
 //turn busy on
-plugins.sutra.busyCursor = true
+globals.CODE_cursor_busy(true)
 
 //show/hide config type
 if (nav_navigation_item_to_navigation && nav_navigation_item_to_navigation.flag_config) {
@@ -188,7 +188,7 @@ else {
 }
 
 //turn busy off
-plugins.sutra.busyCursor = false
+globals.CODE_cursor_busy(false)
 
 
 
@@ -235,7 +235,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 }
 
 //turn busy on
-plugins.sutra.busyCursor = true
+globals.CODE_cursor_busy(true)
 
 //set formname
 var formName = 'NAV_0F_navigation_item'
@@ -336,7 +336,7 @@ for ( var i = 1; i <= max ; i++ ) {
 }
 
 //turn busy off
-plugins.sutra.busyCursor = false
+globals.CODE_cursor_busy(false)
 }
 
 /**

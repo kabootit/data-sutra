@@ -893,7 +893,7 @@ if (subMethod || utils.hasRecords(foundset)) {
 	
 	//turn on progress bar
 	if (!subMethod) {
-		plugins.sutra.busyCursor = true
+		globals.CODE_cursor_busy(true)
 		globals.TRIGGER_progressbar_start(-273, 'Duplicating "' + record.item_name + '" to "' + record.item_name + ' copy"....')
 	}
 	
@@ -1027,7 +1027,7 @@ if (subMethod || utils.hasRecords(foundset)) {
 	//turn off progress bar
 	if (!subMethod) {
 		globals.TRIGGER_progressbar_stop()
-		plugins.sutra.busyCursor = false
+		globals.CODE_cursor_busy(false)
 		databaseManager.saveData()
 	}
 }

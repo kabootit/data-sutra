@@ -138,7 +138,7 @@ if (application.__parent__.solutionPrefs && this.configured) {
 	if (navigationPrefs.byNavItemID[currentNavItem].navigationItem.ulBusyIndicator) {
 		var busyIndicator = true
 		
-		plugins.sutra.busyCursor = true
+		globals.CODE_cursor_busy(true)
 	}
 	
 	globals.TRIGGER_timer('start')
@@ -168,7 +168,7 @@ if (application.__parent__.solutionPrefs && this.configured) {
 		
 		//don't turn busy indicator on if it is already on
 		if (!busyIndicator) {
-			plugins.sutra.busyCursor = true
+			globals.CODE_cursor_busy(true)
 		}
 		globals.TRIGGER_progressbar_start(-273, navigationPrefs.byNavItemID[currentNavItem].navigationItem.initialRecordLabel)
 	}
@@ -220,11 +220,11 @@ if (application.__parent__.solutionPrefs && this.configured) {
 	//record was not in memory, turn off busy bar and busy cursor
 	if (recNotLoaded) {
 		globals.TRIGGER_progressbar_stop()
-		plugins.sutra.busyCursor = false	
+		globals.CODE_cursor_busy(false)	
 	}
 	//changing record, finished turn off busy indicatar
 	else if (busyIndicator) {
-		plugins.sutra.busyCursor = false	
+		globals.CODE_cursor_busy(false)	
 	}
 
 }

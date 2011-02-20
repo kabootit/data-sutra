@@ -113,7 +113,7 @@ function REC_on_select()
  */
 
 //turn busy on
-plugins.sutra.busyCursor = true
+globals.CODE_cursor_busy(true)
 
 globals.NAV_navigation_selected = id_navigation
 
@@ -128,5 +128,5 @@ forms.NAV_0F_navigation_item__inline.controller.sort('node_1 asc, node_2 asc')
 forms.NAV_0L_navigation_item_1L.REC_on_select()
 
 //turn busy off
-plugins.sutra.busyCursor = false
+globals.CODE_cursor_busy(false)
 }

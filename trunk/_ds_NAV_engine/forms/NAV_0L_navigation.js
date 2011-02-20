@@ -138,7 +138,7 @@ switch (arguments[0]) {
 		
 		if (newNav) {
 			//turn on progress bar
-			plugins.sutra.busyCursor = true
+			globals.CODE_cursor_busy(true)
 			globals.TRIGGER_progressbar_start(-273, 'Duplicating ' + nav_name + ' to ' + newNav + '....')
 			
 			var formName = 'NAV_0L_navigation'
@@ -278,7 +278,7 @@ switch (arguments[0]) {
 			
 			//turn off progress bar
 			globals.TRIGGER_progressbar_stop()
-			plugins.sutra.busyCursor = false
+			globals.CODE_cursor_busy(false)
 		}
 		break
 		
@@ -296,7 +296,7 @@ switch (arguments[0]) {
 		
 		if (delRec == 'Yes') {
 			//turn on progress bar
-			plugins.sutra.busyCursor = true
+			globals.CODE_cursor_busy(true)
 			globals.TRIGGER_progressbar_start(-273, 'Deleting the ' + nav_name + ' navigation set.  Please wait...')
 			
 			//check if selected record is default display
@@ -314,7 +314,7 @@ switch (arguments[0]) {
 			
 			//turn off progress bar
 			globals.TRIGGER_progressbar_stop()
-			plugins.sutra.busyCursor = false
+			globals.CODE_cursor_busy(false)
 		}
 		break	
 }
@@ -6999,7 +6999,7 @@ var forceShow = arguments[0]
 
 if (globals.CODE_key_pressed() == 2 || typeof forceShow == 'boolean') {
 	//busy on
-//	plugins.sutra.busyCursor = true
+//	globals.CODE_cursor_busy(true)
 	
 	//loop through all records looking for config
 	var foundIt = false
@@ -7029,7 +7029,7 @@ if (globals.CODE_key_pressed() == 2 || typeof forceShow == 'boolean') {
 	}
 	
 	//busy off
-//	plugins.sutra.busyCursor = false
+//	globals.CODE_cursor_busy(false)
 }
 }
 
