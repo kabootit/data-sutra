@@ -3299,7 +3299,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			
 		//activate this space; only if the space switching to is different (unless forced to fire)
 		if (buttonName == elem && (oldSpace != spaceName || noFlip)) {
-			plugins.sutra.busyCursor = true
+			globals.CODE_cursor_busy(true)
 			
 			var bkgndLight = new Packages.java.awt.Color(13752290)
 			var bkgndDark = new Packages.java.awt.Color(10596559)
@@ -3419,7 +3419,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 				}
 			}
 			
-			plugins.sutra.busyCursor = false
+			globals.CODE_cursor_busy(false)
 		}
 		//leave graphic on depressed state if same button clicked
 		else if (buttonName == elem && oldSpace == spaceName) {
