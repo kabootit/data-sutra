@@ -441,7 +441,7 @@ else {
 
 
 	//TURN ON BUSY
-	plugins.sutra.busyCursor = true
+	globals.CODE_cursor_busy(true)
 	globals.TRIGGER_progressbar_start(-273, 'Logging in...')
 
 	// // //
@@ -1179,7 +1179,7 @@ else {
 	if (!globals.NAV_navigation_load(true,groupID)) {
 		//TURN OFF BUSY
 		globals.TRIGGER_progressbar_stop()
-		plugins.sutra.busyCursor = false
+		globals.CODE_cursor_busy(false)
 
 		plugins.dialogs.showErrorDialog(
 					"Login error", 
@@ -1489,7 +1489,7 @@ else {
 
 	//TURN OFF BUSY
 	globals.TRIGGER_progressbar_stop()
-	plugins.sutra.busyCursor = false	
+	globals.CODE_cursor_busy(false)	
 
 	//toolbar and sidebar load
 	globals.DS_toolbar_load()
