@@ -703,11 +703,11 @@ return theMapping
 function NAV_export()
 {
 
-plugins.sutra.busyCursor = true
+globals.CODE_cursor_busy(true)
 
 forms.NAV_0L_navigation.EXPORT_engine()
 
-plugins.sutra.busyCursor = false
+globals.CODE_cursor_busy(false)
 }
 
 /**
@@ -725,11 +725,11 @@ elements.lbl_progress.visible = true
 application.updateUI()
 */
 
-plugins.sutra.busyCursor = true
+globals.CODE_cursor_busy(true)
 
 forms.NAV_0L_navigation.IMPORT_engine()
 
-plugins.sutra.busyCursor = false
+globals.CODE_cursor_busy(false)
 
 /*
 elements.bean_progress.visible = false

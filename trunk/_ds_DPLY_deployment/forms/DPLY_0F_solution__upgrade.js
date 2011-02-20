@@ -46,7 +46,7 @@ var answer = plugins.dialogs.showQuestionDialog(
 
 if (answer == 'Yes') {
 	//busy on
-	plugins.sutra.busyCursor = true
+	globals.CODE_cursor_busy(true)
 	
 	var formName = 'NAV_0L_navigation'
 	var relnItem = 'nav_navigation_to_navigation_item__all'
@@ -90,7 +90,7 @@ if (answer == 'Yes') {
 	forms[formName].TOGGLE_config_set(false)
 	
 	//busy off
-	plugins.sutra.busyCursor = false
+	globals.CODE_cursor_busy(false)
 	
 	plugins.dialogs.showInfoDialog('Finished Button conversion','All your buttons have been updated.','OK')
 }
@@ -142,7 +142,7 @@ var answer = plugins.dialogs.showQuestionDialog(
 if (answer == 'Yes') {
 	
 	//busy on
-	plugins.sutra.busyCursor = true
+	globals.CODE_cursor_busy(true)
 	
 	
 	//NAVIGATION ENGINE
@@ -167,7 +167,7 @@ if (answer == 'Yes') {
 	
 	
 	//busy off
-	plugins.sutra.busyCursor = false
+	globals.CODE_cursor_busy(false)
 	
 	plugins.dialogs.showInfoDialog('Find defaults set','The default find column has been set to "' + defaultFind + '".','OK')
 }
@@ -201,7 +201,7 @@ if (answer) {
 		)
 	
 	//busy on
-	plugins.sutra.busyCursor = true
+	globals.CODE_cursor_busy(true)
 	
 	var formName = 'NAV_0L_navigation'
 	var relnItem = 'nav_navigation_to_navigation_item__all'
@@ -232,7 +232,7 @@ if (answer) {
 	databaseManager.saveData()
 	
 	//busy off
-	plugins.sutra.busyCursor = false
+	globals.CODE_cursor_busy(false)
 	
 	plugins.dialogs.showInfoDialog('Find defaults set','The default find column has been set to "' + defaultFind + '".','OK')
 }
@@ -258,7 +258,7 @@ var answer = plugins.dialogs.showQuestionDialog(
 if (answer == 'Yes') {
 	
 	//busy on
-	plugins.sutra.busyCursor = true
+	globals.CODE_cursor_busy(true)
 	
 	var formName = 'MGR_0F_toolbar'
 	forms[formName].controller.loadAllRecords()
@@ -272,7 +272,7 @@ if (answer == 'Yes') {
 	databaseManager.saveData()
 	
 	//busy off
-	plugins.sutra.busyCursor = false
+	globals.CODE_cursor_busy(false)
 	
 	plugins.dialogs.showInfoDialog('Toolbars upgraded','All toolbars have been upgraded to support sidebars','OK')
 }
