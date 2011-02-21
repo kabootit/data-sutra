@@ -2267,7 +2267,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			if (navSpecs.initialForm && !firstForm) {
 				var formNotLoaded = true
 				
-				plugins.sutra.busyCursor = true
+				globals.CODE_cursor_busy(true)
 				globals.TRIGGER_progressbar_start(-273, navSpecs.initialFormLabel)
 			}
 			//update when not showing progress bar to get around multi-threading the navigation item html field
@@ -2783,7 +2783,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		//form was not in memory, turn off busy bar and busy cursor
 		if (formNotLoaded) {
 			globals.TRIGGER_progressbar_stop()
-			plugins.sutra.busyCursor = false	
+			globals.CODE_cursor_busy(false)	
 		}
 		
 		//turn ul rec on select back on
@@ -4473,7 +4473,7 @@ function NAV_universal_list_select()
 	if (navigationPrefs.byNavItemID[currentNavItem].navigationItem.ulBusyIndicator) {
 		var busyIndicator = true
 		
-		plugins.sutra.busyCursor = true
+		globals.CODE_cursor_busy(true)
 		application.updateUI()
 	}
 	
@@ -4495,7 +4495,7 @@ function NAV_universal_list_select()
 		
 		//don't turn busy indicator on if it is already on
 		if (!busyIndicator) {
-			plugins.sutra.busyCursor = true
+			globals.CODE_cursor_busy(true)
 		}
 		globals.TRIGGER_progressbar_start(-273, navigationPrefs.byNavItemID[currentNavItem].navigationItem.initialRecordLabel)
 	}
@@ -4522,11 +4522,11 @@ function NAV_universal_list_select()
 	//record was not in memory, turn off busy bar and busy cursor
 	if (recNotLoaded) {
 		globals.TRIGGER_progressbar_stop()
-		plugins.sutra.busyCursor = false	
+		globals.CODE_cursor_busy(false)	
 	}
 	//changing record, finished turn off busy indicatar
 	else if (busyIndicator) {
-		plugins.sutra.busyCursor = false	
+		globals.CODE_cursor_busy(false)	
 	}
 	
 	//unhilite the current record (so highlighter spans entire row)
