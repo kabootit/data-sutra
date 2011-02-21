@@ -5782,7 +5782,7 @@ function TRIGGER_ul_tab_list(input) {
 				globals.TRIGGER_log_create('UL Tabs',
 									itemName,
 									formName
-									)
+								)
 			}
 		}
 	}
@@ -5804,3 +5804,12 @@ function CODE_cursor_busy(busyCursor) {
 		}
 	}
 }
+
+/**
+ * @properties={typeid:24,uuid:"cd3e2c07-479b-423d-90e6-8f8134ec6c9c"}
+ */
+function CODE_row_background__filter() {
+	//always bluish...even selected
+	return '#A1B0CF'
+}
+
