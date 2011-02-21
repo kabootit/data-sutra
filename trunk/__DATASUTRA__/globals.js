@@ -4006,7 +4006,7 @@ function DS_toolbar_cycle(event)
  *	ABOUT    :	toggle through toolbars
  *			  	
  *	INPUT    :	1- name or number of tab to show (optional)
- *			  	2- form with toolbar (optional)
+ *			  	2- xxx (optional)
  *			  	
  *	OUTPUT   :	
  *			  	
@@ -4014,24 +4014,27 @@ function DS_toolbar_cycle(event)
  *			  	
  *	USAGE    :	DS_toolbar_cycle(toolbarName) The name of the toolbar to select
  *			  	
- *	MODIFIED :	August 20, 2008 -- Troy Elliott, Data Mosaic
+ *	MODIFIED :	February 21, 2011 -- Troy Elliott, Data Mosaic
  *			  	
  */
 
 if (application.__parent__.solutionPrefs) {
-
-//MEMO: need to somehow put this section in a Function of it's own
-//running in Tano...strip out jsevents for now
-if (utils.stringToNumber(application.getVersion()) >= 5) {
-	//cast Arguments to array
-	var Arguments = new Array()
-	for (var i = 0; i < arguments.length; i++) {
-		Arguments.push(arguments[i])
+	
+	if (event instanceof JSEvent) {
+		var rightClick = event.getType() == event.RIGHTCLICK
 	}
 	
-	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
-}
+	//strip out jsevents
+	if (utils.stringToNumber(application.getVersion()) >= 5) {
+		//cast Arguments to array
+		var Arguments = new Array()
+		for (var i = 0; i < arguments.length; i++) {
+			Arguments.push(arguments[i])
+		}
+		
+		//reassign arguments without jsevents
+		arguments = Arguments.filter(globals.CODE_jsevent_remove)
+	}
 
 	//timed out, throw up error
 	if (solutionPrefs.config.prefs.thatsAllFolks) {
@@ -4045,16 +4048,17 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	}
 	
 	var tabShow = arguments[0]
-	var baseForm = (arguments[1]) ? arguments[1] : solutionPrefs.config.formNameBase
+	var baseForm = solutionPrefs.config.formNameBase
 	var popForm = 'DATASUTRA__toolbar__popdown'
 	
 	var currentTab = forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex
 	var statusTabs = solutionPrefs.panel.toolbar
 	
-	var shiftKey = globals.CODE_key_pressed('shift')
+	//right-click or shift-click will open menu
+	var showMenu = rightClick || globals.CODE_key_pressed('shift')
 	
 	//hide popDown sheet when moving to a new item, but not when showing options to choose from
-	if (tabShow || !shiftKey) {
+	if (tabShow || !showMenu) {
 		forms[baseForm].elements.sheetz.visible = false
 	}
 	
@@ -4072,7 +4076,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	//change visible view
 	else {
 		//show popup of views to be chosen if shift key held
-		if (shiftKey) {
+		if (showMenu) {
 			//get menu list and build menu
 			var menu = new Array()
 			for ( var i = 0 ; i < statusTabs.length ; i++ ) {
