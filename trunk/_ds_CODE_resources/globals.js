@@ -5812,4 +5812,3 @@ function CODE_row_background__filter() {
 	//always bluish...even selected
 	return '#A1B0CF'
 }
-
