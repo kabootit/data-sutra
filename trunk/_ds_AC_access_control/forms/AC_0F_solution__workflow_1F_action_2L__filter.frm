@@ -74,7 +74,7 @@ uuid:"bb313d01-82b8-4193-8570-b111eee17f52"
 ],
 name:"AC_0F_solution__workflow_1F_action_2L__filter",
 paperPrintScale:100,
-rowBGColorCalculation:"filter_row_background",
+rowBGColorCalculation:"globals.CODE_row_background__filter",
 scrollbars:34,
 size:"640,60",
 styleName:"_DATASUTRA_",
