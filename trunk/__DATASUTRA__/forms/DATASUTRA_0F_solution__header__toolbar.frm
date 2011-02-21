@@ -111,7 +111,7 @@ toolTipText:"<html>
 
   <\/head>
   <body>
-    Data Sutra v3.0<br>Revision 58<br>Expires July 1, 2011
+    Data Sutra v3.0<br>Revision &#8805;81 <em>Unlocked<\/em><br><strike>Expires July 1, 2011<\/strike>
   <\/body>
 <\/html>",
 transparent:true,
