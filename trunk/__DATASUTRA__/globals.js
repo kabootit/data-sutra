@@ -4119,10 +4119,10 @@ if (application.__parent__.solutionPrefs) {
 	solutionPrefs.panel.toolbar.selectedTab = forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex
 	
 	var statusTab = statusTabs[solutionPrefs.panel.toolbar.selectedTab - 1]
-	var popDown = statusTab.popDown
+	var thePopDown = statusTab.popDown
 	var tabParent = statusTab.formName
 	//set up popDown, if activated
-	if (popDown) {
+	if (thePopDown) {
 		//popdown showing
 		if (forms[tabParent].popDown == 'show') {
 			forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.setImageURL('media:///toolbar_popdown_up.png')
@@ -4135,10 +4135,15 @@ if (application.__parent__.solutionPrefs) {
 		}
 		forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.visible = true
 		
-		forms[popForm].elements.tab_toolbar_popdown.tabIndex = popDown.tabIndex
+		forms[popForm].elements.tab_toolbar_popdown.tabIndex = thePopDown.tabIndex
 		
+		//show if showing
 		if (forms[statusTab.formName].popDown == 'show') {
 			globals.DS_toolbar_popdown(true)
+		}
+		//hide
+		else {
+			forms[baseForm].elements.tab_toolbar_popdown.visible = false
 		}
 	}
 	else {
