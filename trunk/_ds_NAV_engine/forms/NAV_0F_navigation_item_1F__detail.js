@@ -613,7 +613,9 @@ else {
 	elements.btn_goto_form.enabled = false
 	elements.fld_use_fw_list.enabled = false
 	elements.btn_sort_string.enabled = false
-	use_fw_list = 0
+	if (utils.hasRecords(foundset)) {
+		use_fw_list = 0
+	}
 	databaseManager.saveData()
 }
 
