@@ -213,9 +213,9 @@ function FORM_on_show(firstShow, event)
  */	
 
 //only fire first time shown
-if (firstShow) {	//application.__parent__.solutionPrefs && 
+//if (firstShow) {	//application.__parent__.solutionPrefs && 
 	elements.fld_trigger_name.requestFocus(true)
-}
+//}
 
 }
 
@@ -246,49 +246,4 @@ function FRAME_rename()
 if (solution_name || solution_icon_blob) {
 	globals.TRIGGER_frame_title_set(solution_name,solution_icon_blob) // + ' — Data Sutra'
 }
-}
-
-/**
- *
- * @properties={typeid:24,uuid:"5e1fb938-6992-466a-a682-dcfe493fa016"}
- */
-function zTEST_rewrite()
-{
-
-
-/*
-
-
-plugins.dialogs.showErrorDialog('Start')
-
-forms.DATASUTRA_0F_solution.zTEST_rewrite = globals.DS_plugin_check
-
-plugins.dialogs.showErrorDialog('End')
-*/
-
-
-/*
-//running in client
-if (application.getApplicationType() == 2) {
-
-	//successful creation and execution for that iteration
-	if (success) {
-		//overwrite plugin call (this method) with unscrambled
-		forms.DATASUTRA_0F_solution.zTEST_rewrite = forms.DATASUTRA_0F_solution.zTEST_rewrite.ac
-		
-		plugins.dialogs.showErrorDialog('Overwritten')
-	}
-}
-*/
-
-
-var args = new Array(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4], arguments[5], arguments[6])
-var success = plugins.sutra.tryFWMethod(forms.DATASUTRA_0F_solution.zTEST_rewrite,args,"1")
-
-//successful creation and execution for that iteration
-if (success) {
-	//overwrite plugin call (this method) with unscrambled
-	globals.CODE_method_rewrite(forms.DATASUTRA_0F_solution.zTEST_rewrite, forms.DATASUTRA_0F_solution.zTEST_rewrite.ac)
-}
-
 }

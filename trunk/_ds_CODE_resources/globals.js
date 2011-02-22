@@ -380,6 +380,7 @@ if (application.__parent__.solutionPrefs && solutionPrefs.clientInfo && (solutio
 		
 		if (iconImage) {
 			frame.setIconImage(iconImage)
+//			Packages.javax.swing.SwingUtilities.updateComponentTreeUI(frame)
 		}
 	}
 }
