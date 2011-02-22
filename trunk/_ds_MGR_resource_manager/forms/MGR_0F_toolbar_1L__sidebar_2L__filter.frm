@@ -91,7 +91,7 @@ uuid:"D24EE14D-8E41-4620-9646-EAC64ECA8DBC"
 ],
 name:"MGR_0F_toolbar_1L__sidebar_2L__filter",
 paperPrintScale:100,
-rowBGColorCalculation:"filter_row_background",
+rowBGColorCalculation:"globals.CODE_row_background__filter",
 scrollbars:34,
 size:"640,60",
 styleName:"_DATASUTRA_",

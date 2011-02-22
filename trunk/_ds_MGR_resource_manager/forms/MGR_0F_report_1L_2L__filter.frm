@@ -109,7 +109,7 @@ uuid:"E8B8A2F5-7750-45F5-84B3-5D0188DD0BDE"
 ],
 name:"MGR_0F_report_1L_2L__filter",
 paperPrintScale:100,
-rowBGColorCalculation:"filter_row_background",
+rowBGColorCalculation:"globals.CODE_row_background__filter",
 scrollbars:34,
 size:"640,60",
 styleName:"_DATASUTRA_",

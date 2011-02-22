@@ -71,7 +71,7 @@ uuid:"FED5A395-E657-44BD-8358-FA91FA258A92"
 ],
 name:"MGR_0F_report_1L_2F_3L_action_item__filter",
 paperPrintScale:100,
-rowBGColorCalculation:"filter_row_background",
+rowBGColorCalculation:"globals.CODE_row_background__filter",
 scrollbars:34,
 size:"640,60",
 styleName:"_DATASUTRA_",

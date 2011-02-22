@@ -91,7 +91,7 @@ uuid:"F90C8FE2-A7E2-412F-9007-4B72D6B03F8C"
 ],
 name:"MGR_0F_toolbar_1L__toolbar_2L__filter",
 paperPrintScale:100,
-rowBGColorCalculation:"filter_row_background",
+rowBGColorCalculation:"globals.CODE_row_background__filter",
 scrollbars:34,
 size:"640,60",
 styleName:"_DATASUTRA_",

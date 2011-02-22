@@ -179,7 +179,7 @@ uuid:"FCDD09A1-8811-4257-9631-E91B2EDB21B4"
 ],
 name:"MGR_0F_valuelist_1L__filter",
 paperPrintScale:100,
-rowBGColorCalculation:"filter_row_background",
+rowBGColorCalculation:"globals.CODE_row_background__filter",
 scrollbars:34,
 size:"640,60",
 styleName:"_DATASUTRA_",
