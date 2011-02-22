@@ -205,12 +205,12 @@ function SET_default()
 
 databaseManager.saveData()
 
-var record = foundset.getRecord(foundset.getSelectedIndex())
+var record = foundset.getSelectedRecord()
 
-if (display_default) {
-	var fsUpdater = databaseManager.getFoundSetUpdater(foundset)
-	fsUpdater.setColumn('display_default',0)
-	fsUpdater.performUpdate()
+if (record.display_default) {
+	for (var i = 1; i <= foundset.getSize(); i++) {
+		foundset.getRecord(i).display_default = 0
+	}
 	record.display_default = 1
 }
 //no default display selected
