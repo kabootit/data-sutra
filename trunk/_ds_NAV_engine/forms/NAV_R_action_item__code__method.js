@@ -41,7 +41,7 @@ if (application.__parent__.solutionPrefs && forms.NAV_0F_navigation_item_1F__but
 		methodName = methodName.substr(0, methodName.length - 2) 
 	
 		var repositoryServer = 'repository_server'
-		var maxReturnedRows = 10000
+		var maxReturnedRows = -1
 	
 		// this is where we get the element_id (# rows returned is how many revisions there are)
 		var query = "SELECT b.element_id FROM servoy_element_properties b, servoy_elements a " +
@@ -63,7 +63,7 @@ if (application.__parent__.solutionPrefs && forms.NAV_0F_navigation_item_1F__but
 			
 			// this is where we get the method code (sequence reqd to put long methods in correct order)
 			//TODO: 138 is deprecated; see 312 and 332
-			query = "SELECT property_value FROM servoy_element_properties WHERE content_id = 138 " +
+			query = "SELECT property_value FROM servoy_element_properties WHERE content_id = 312 " +
 						"AND element_id = ? AND revision = ? " +
 						"ORDER BY sequence ASC"
 			args = new Array(methodElementID,methodRevision)
@@ -77,7 +77,27 @@ if (application.__parent__.solutionPrefs && forms.NAV_0F_navigation_item_1F__but
 				methodCode += methodArray[i]
 			}
 			
-			method_from_form = globals.CODE_color_method(methodCode)
+			//the last method in the javascript file is the one we are code coloring
+			var regex = new RegExp('[\\s\\S]*?func' + 'tion ' + methodName + '\\([\\s\\S]*?\\{[\\s]*([\\s\\S]*?)', 'gm')
+			
+			var theMethod = methodCode.replace(regex,'$1')
+			
+			if (theMethod) {
+				
+				//TODO: this post-processing should live in the regex...but I'm no guru there so I'll do it here
+				var cnt = theMethod.length
+				while (theMethod.charAt(cnt) != '}') {
+					cnt--
+				}
+				//check for \n preceeding the }
+				if (theMethod.charAt(cnt-1) == '\n') {
+					cnt--
+				}
+				theMethod = theMethod.slice(0,cnt)
+				
+				method_from_form = globals.CODE_color_method(theMethod)
+			}
+			
 		}
 		else {
 			//give error....or not
