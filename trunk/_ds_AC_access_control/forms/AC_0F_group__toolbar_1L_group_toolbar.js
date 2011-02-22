@@ -114,6 +114,7 @@ if (delRec == 'Yes') {
 	}
 	databaseManager.saveData()
 	
+	foundset.omitRecord(deletedIndex)
 }
 
 

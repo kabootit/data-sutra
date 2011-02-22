@@ -4357,8 +4357,8 @@ else {
 //there are some toolbars
 if (utils.hasRecords(fsToolbar)) {
 	//order by for a/c toolbars
-	if (utils.hasRecords(fsToolbar.ac_toolbar_to_access_group_toolbar)) {
-		fsToolbar.sort('ac_toolbar_to_access_group_toolbar.order_by asc')
+	if (utils.hasRecords(fsToolbar.ac_toolbar_to_access_group_toolbar__login)) {
+		fsToolbar.sort('ac_toolbar_to_access_group_toolbar__login.order_by asc')
 	}
 	//order by for default toolbars
 	else {

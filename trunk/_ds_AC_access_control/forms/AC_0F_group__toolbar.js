@@ -25,11 +25,16 @@ var groupID = forms.AC_0F_group.id_group
 
 var fsGroupTool = forms.AC_0F_group__toolbar_1L_group_toolbar.foundset
 
+fsGroupTool.loadAllRecords()
 fsGroupTool.find()
 fsGroupTool.id_group = groupID
 fsGroupTool.toolbar_type = toolType
 fsGroupTool.flag_chosen = 1
 var results = fsGroupTool.search()
+
+if (results) {
+	fsGroupTool.sort('order_by asc')
+}
 
 forms.AC_0F_group__toolbar_1L_group_toolbar.TOGGLE_order_by()
 
