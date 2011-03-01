@@ -5813,3 +5813,24 @@ function CODE_row_background__filter() {
 	//always bluish...even selected
 	return '#A1B0CF'
 }
+
+/**
+ * Callback method for when form is shown.
+ *
+ * @param {Boolean} firstShow form is shown first time after load
+ * @param {JSEvent} event the event that triggered the action
+ *
+ * @properties={typeid:24,uuid:"38E91726-3B1D-4A3F-812D-B8B71D7F6530"}
+ */
+function CODE_multiselect(firstShow, event) {
+	var formName = event.getFormName()
+	
+	//turn multiselect on
+	if (firstShow && formName) {
+		forms[formName].foundset.multiSelect = true
+		
+		if (forms[formName].FORM_on_show) {
+			forms[formName].FORM_on_show(firstShow, event)
+		}
+	}
+}
