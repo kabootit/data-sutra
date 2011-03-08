@@ -5798,6 +5798,7 @@ function CODE_cursor_busy(busyCursor) {
 		//busy cursor requested and not already on
 		if (busyCursor && ! plugins.sutra.busyCursor) {
 			plugins.sutra.busyCursor = true
+			application.updateUI()
 		}
 		//busy cursor enabled and request to turn off
 		else if (!busyCursor && plugins.sutra.busyCursor) {
