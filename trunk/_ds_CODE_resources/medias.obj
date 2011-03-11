@@ -655,6 +655,12 @@ uuid:"b867376b-0aec-438d-9881-91a236d67eaa"
 },
 {
 mimeType:"image/png",
+name:"btn_link.png",
+typeid:37,
+uuid:"B8DB3C9D-D517-4AB4-9E91-2CE335E466F3"
+},
+{
+mimeType:"image/png",
 name:"btn_navset.png",
 typeid:37,
 uuid:"80f0591a-3e8c-4ba7-b4ce-46e213f0c69c"
