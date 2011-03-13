@@ -44,1922 +44,1285 @@ var AC_current_organization = null;
 var AC_current_staff = null;
 
 /**
+ * Set text and tooltip of fast find field.
+ * 
+ * @param	{String}	findText Text to display in the fast find field.
+ * @param	{String}	[findTooltip] Tooltip to display on hover of the fast find field.
+ * @param	{String}	[findCheck] Column name to check in the fast find field pop-up menu.
  *
  * @properties={typeid:24,uuid:"f329a2ea-8dbe-40fa-a8dd-75a01b623979"}
  */
-function TRIGGER_fastfind_display_set()
-{
-
-/*
- *	TITLE    :	TRIGGER_fastfind_display_set
- *			  	
- *	MODULE   :	rsrc_CODE_sutra
- *			  	
- *	ABOUT    :	set fast find text and (optionally) check box in fast find drop down
- *			  	
- *	INPUT    :	1) text to put into the fast find area
- *			  	2) tooltip for fast find area
- *			  	3) A) columnName to put check mark next to in drop down
- *			  			(if true/nothing passed, will select 'Filter applied...'; if false passed, nothing is checked)
- *			  	   B) item that should be checked in filter menu
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
- *	USAGE    :	TRIGGER_fastfind_display_set(filterText [, toolTipText, setCheck]) Set the text in the fast find field, tooltip for the fast find field, and check box
- *			  	
- *	MODIFIED :	Mar 7 2008 -- Troy Elliott, Data Mosaic
- *			  	
- */
-
-//solutionPrefs defined and frameworks not in a locked status
-if (application.__parent__.solutionPrefs && !solutionPrefs.config.lockStatus) {
-
-	var filterText = arguments[0]
-	var toolTip = arguments[1]
-	var setCheck = arguments[2]
-	var baseForm = solutionPrefs.config.formNameBase
-	var currentNavItem = solutionPrefs.config.currentFormID
+function TRIGGER_fastfind_display_set(findText,findTooltip,findCheck) {
+	//solutionPrefs defined and frameworks not in a locked status
+	if (application.__parent__.solutionPrefs && !solutionPrefs.config.lockStatus) {
 	
-	if (setCheck == undefined) {
-		setCheck = true
-	}
-	
-	//set text in fast find area
-	globals.DATASUTRA_find = filterText
-	
-	//only show stop button if a message is passed
-	if (filterText) {
-		//show stop button
-	//	forms[solutionPrefs.config.formNameBase].elements.find_end.setImageURL('media:///find_stop.png')
-	}
-	//set check to appear next to column which was filtered
-	if (setCheck && setCheck != true) {
-		globals.DATASUTRA_find_field = setCheck
-	}
-	//set check to appear next to 'Filter applied...'
-	else if (setCheck) {
-		globals.DATASUTRA_find_field = 'Filtered'
-	}
-	//set check to some weird value so nothing will be checked
-	//MEMO: do not set to null because then it will be set to 'Show all' by default
-	else if (!setCheck) {
-		globals.DATASUTRA_find_field = 'NuttinHoney'
-	}
-	
-	//save down values of last 'find'
-	if (application.__parent__.solutionPrefs) {
-		var formName = solutionPrefs.config.currentFormName
-		var serverName = forms[formName].controller.getServerName()
-		var tableName = forms[formName].controller.getTableName()
+		var findText = arguments[0]
+		var findTooltip = arguments[1]
+		var findCheck = arguments[2]
+		var baseForm = solutionPrefs.config.formNameBase
+		var currentNavItem = solutionPrefs.config.currentFormID
 		
-		//add server name if not already
-		if (!solutionPrefs.fastFind.currentSearch[serverName]) {
-			solutionPrefs.fastFind.currentSearch[serverName] = new Object()
+		if (findCheck == undefined) {
+			findCheck = true
 		}
-		//add table name if not already
-		if (!solutionPrefs.fastFind.currentSearch[serverName][tableName]) {
-			solutionPrefs.fastFind.currentSearch[serverName][tableName] = new Object()
-		}
-		//only run when data is available
-		if (solutionPrefs.repository && solutionPrefs.repository.allFormsByTable && 
-			solutionPrefs.repository.allFormsByTable[serverName] && 
-			solutionPrefs.repository.allFormsByTable[serverName][tableName] && 
-			solutionPrefs.repository.allFormsByTable[serverName][tableName][formName]) {
 		
-			//check if not using separateFoundset
-			if (!solutionPrefs.repository.allFormsByTable[serverName][tableName][formName].useSeparateFoundset) {
-				solutionPrefs.fastFind.currentSearch[serverName][tableName].lastFindValue = filterText
-				solutionPrefs.fastFind.currentSearch[serverName][tableName].lastFindField = (setCheck && setCheck != true) ? setCheck : null
-				solutionPrefs.fastFind.currentSearch[serverName][tableName].lastFindTip = toolTip
+		//set text in fast find area
+		globals.DATASUTRA_find = findText
+		
+		//only show stop button if a message is passed
+		if (findText) {
+			//show stop button
+		//	forms[solutionPrefs.config.formNameBase].elements.find_end.setImageURL('media:///find_stop.png')
+		}
+		//set check to appear next to column which was filtered
+		if (findCheck && findCheck != true) {
+			globals.DATASUTRA_find_field = setCheck
+		}
+		//set check to appear next to 'Filter applied...'
+		else if (findCheck) {
+			globals.DATASUTRA_find_field = 'Filtered'
+		}
+		//set check to some weird value so nothing will be checked
+		//MEMO: do not set to null because then it will be set to 'Show all' by default
+		else if (!findCheck) {
+			globals.DATASUTRA_find_field = 'NuttinHoney'
+		}
+		
+		//save down values of last 'find'
+		if (application.__parent__.solutionPrefs) {
+			var formName = solutionPrefs.config.currentFormName
+			var serverName = forms[formName].controller.getServerName()
+			var tableName = forms[formName].controller.getTableName()
+			
+			//add server name if not already
+			if (!solutionPrefs.fastFind.currentSearch[serverName]) {
+				solutionPrefs.fastFind.currentSearch[serverName] = new Object()
 			}
-		}
-		
-		//fast find is enabled, track
-		if (navigationPrefs.byNavItemID[currentNavItem].fastFind) {
-			navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindValue = filterText
-			navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindField = (setCheck && setCheck != true) ? setCheck : null
-			navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindTip = toolTip
-		}
-	}
-	
-	//set tooltip if provided
-	if (toolTip != null) {
-		forms[baseForm + '__header__fastfind'].elements.fld_find.toolTipText = toolTip
-	}
-
-}
-
-}
-
-/**
- *
- * @properties={typeid:24,uuid:"1544c9a7-7107-4c73-8d7e-eb00586dc023"}
- */
-function TRIGGER_fastfind_override()
-{
-
-/*
- *	TITLE    :	TRIGGER_fastfind_override
- *			  	
- *	MODULE   :	rsrc_CODE_sutra
- *			  	
- *	ABOUT    :	override the fast find items for the selected navigation item
- *			  	
- *	INPUT    :	1) fast find array is an array of objects
- *			  		- array has property of "searchForm" to override starting point for find
- *			  			(default searchForm is a navigation item's form as defined in the navigation engine)
- *			  		- an array item object looks like:
-	{
-		//the name displayed in the fast find dropdown
-		findName	: 'Display name',
-		//type of column as reported from JSColumn.getTypeAsString()
-		columnType	: 'TEXT',
-		//name of the column in the backend
-		columnName	: 'column_name',
-		//relation(s) to above column
-			//MEMO: if no relation, specify 'NONE'
-		relation	: 'relation_name' || 'NONE',
-		//valuelist to convert actual value in column to display value
-		valuelist	: 'valuelist_name',
-		//used in concert with valuelist; forces valuelist picker to display as a typeahead field instead of depending on number of elements in the value list
-		typeahead	: 1,
-		//displays more info about what the fast find item actually is
-		toolTip		: 'ToolTip displayed when fast find item hovered over'
-	}
- *			  	
- *			  	2) navigation item ID to work on (default is the current navItem)
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
- *	USAGE    :	TRIGGER_fastfind_override(findObject, [navItemID]) Override fast find settings
- *			  	TRIGGER_fastfind_override(false, [navItemID]) Revert to default fast find settings
- *			  	
- *	MODIFIED :	February 2, 2010 -- Troy Elliott, Data Mosaic
- *			  	
- */
-
-//solutionPrefs defined and frameworks not in a locked status
-if (application.__parent__.solutionPrefs && !solutionPrefs.config.lockStatus) {
-
-	var findOverride = arguments[0]
-	var currentNavItem = arguments[1] || solutionPrefs.config.currentFormID
-	
-	var baseForm = solutionPrefs.config.formNameBase
-	
-	if (currentNavItem && navigationPrefs.byNavItemID[currentNavItem]) {
-		var thisNav = navigationPrefs.byNavItemID[currentNavItem]
-		
-		//find override present, override
-		if (findOverride) {
-			//punch default for this form down (so can roll back)
-			if (!thisNav.fastFindInitial) {
-				thisNav.fastFindInitial = globals.CODE_copy_object(thisNav.fastFind)
+			//add table name if not already
+			if (!solutionPrefs.fastFind.currentSearch[serverName][tableName]) {
+				solutionPrefs.fastFind.currentSearch[serverName][tableName] = new Object()
+			}
+			//only run when data is available
+			if (solutionPrefs.repository && solutionPrefs.repository.allFormsByTable && 
+				solutionPrefs.repository.allFormsByTable[serverName] && 
+				solutionPrefs.repository.allFormsByTable[serverName][tableName] && 
+				solutionPrefs.repository.allFormsByTable[serverName][tableName][formName]) {
+			
+				//check if not using separateFoundset
+				if (!solutionPrefs.repository.allFormsByTable[serverName][tableName][formName].useSeparateFoundset) {
+					solutionPrefs.fastFind.currentSearch[serverName][tableName].lastFindValue = findText
+					solutionPrefs.fastFind.currentSearch[serverName][tableName].lastFindField = (setCheck && setCheck != true) ? setCheck : null
+					solutionPrefs.fastFind.currentSearch[serverName][tableName].lastFindTip = findTooltip
+				}
 			}
 			
-			thisNav.fastFind = findOverride
+			//fast find is enabled, track
+			if (navigationPrefs.byNavItemID[currentNavItem].fastFind) {
+				navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindValue = findText
+				navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindField = (setCheck && setCheck != true) ? setCheck : null
+				navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindTip = findTooltip
+			}
 		}
-		//revert to default
-		else {
-			if (thisNav.fastFindInitial) {
-				thisNav.fastFind = globals.CODE_copy_object(thisNav.fastFindInitial)
+		
+		//set tooltip if provided
+		if (findTooltip != null) {
+			forms[baseForm + '__header__fastfind'].elements.fld_find.toolTipText = findTooltip
+		}
+	
+	}
+}
+
+/**
+ * Override/Revert fast find options for selected navigation item.
+ * 
+ * @param	{Object[]|Boolean}	findOverride Items describing fast find possibilities. A value of false reverts to default fast find.
+ * @param	{String}	[findOverride.searchForm] Overrides the form where a find begins.
+ * @param	{Number}	[itemID] The navigation item whose fast find is changed.
+ *
+ * @example
+ * 
+ *	var findOV = new Array()
+ *	
+ *	//item 1: a sample
+ *	findOV.push({
+ *			//the name displayed in the fast find dropdown
+ *			findName	: 'Display name',
+ *			//type of column as reported from JSColumn.getTypeAsString()
+ *			columnType	: 'TEXT',
+ *			//name of the column in the backend
+ *			columnName	: 'column_name',
+ *			//relation(s) to above column
+ *				//MEMO: if no relation, specify 'NONE'
+ *			relation	: 'relation_name' || 'NONE',
+ *			//valuelist to convert actual value in column to display value
+ *			valuelist	: 'valuelist_name',
+ *			//used in concert with valuelist; forces valuelist picker to display as a typeahead field instead of depending on number of elements in the value list
+ *			typeahead	: 1,
+ *			//displays more info about what the fast find item actually is
+ *			toolTip		: 'ToolTip displayed when fast find item hovered over'
+ *		})
+ *	
+ *	//where do we want to find on it (only needed if searching not on the main form
+ *	findOV.searchForm = 'my_form'
+ *	
+ *	//override fast find
+ *	globals.TRIGGER_fastfind_override(findOV)
+ * 
+ * @example
+ * 
+ * 	//reset fast find to default (undoes a previous fastfind override)
+ * 	globals.TRIGGER_fastfind_override(false)
+ * 	
+ * @properties={typeid:24,uuid:"1544c9a7-7107-4c73-8d7e-eb00586dc023"}
+ */
+function TRIGGER_fastfind_override(findOverride,itemID) {
+	//solutionPrefs defined and frameworks not in a locked status
+	if (application.__parent__.solutionPrefs && !solutionPrefs.config.lockStatus) {
+	
+		var findOverride = arguments[0]
+		var itemID = arguments[1] || solutionPrefs.config.currentFormID
+		
+		var baseForm = solutionPrefs.config.formNameBase
+		
+		if (itemID && navigationPrefs.byNavItemID[itemID]) {
+			var thisNav = navigationPrefs.byNavItemID[itemID]
+			
+			//find override present, override
+			if (findOverride) {
+				//punch default for this form down (so can roll back)
+				if (!thisNav.fastFindInitial) {
+					thisNav.fastFindInitial = globals.CODE_copy_object(thisNav.fastFind)
+				}
+				
+				thisNav.fastFind = findOverride
+			}
+			//revert to default
+			else {
+				if (thisNav.fastFindInitial) {
+					thisNav.fastFind = globals.CODE_copy_object(thisNav.fastFindInitial)
+				}
 			}
 		}
 	}
 }
 
-
-
-}
-
 /**
+ * Leave feedback in the developer feedback area.
+ * 
+ * @param	{String}	issue A concise name for the feedback.
+ * @param	{String}	description More precise details regarding the feedback.
+ * @param	{Boolean}	[screenshot=false] Take a snapshot of the main Servoy window at the time feedback is created.
  *
  * @properties={typeid:24,uuid:"c140d3ca-3af7-4bfd-871a-a601f7af59e8"}
  */
-function TRIGGER_feedback_create()
-{
+function TRIGGER_feedback_create(issue,description,screenshot) {
 
-/*
- *	TITLE    :	TRIGGER_feedback_create
- *			  	
- *	MODULE   :	rsrc_CODE_sutra
- *			  	
- *	ABOUT    :	leave feedback programatically
- *			  	
- *	INPUT    :	1) issue
- *			  	2) description of issue
- *			  	3) take screenshot of screen
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
- *	MODIFIED :	September 17, 2008 -- Troy Elliott, Data Mosaic
- *			  	
- */
-
-
-var issue = arguments[0]
-var detail = arguments[1]
-var takeScreenshot = arguments[2]
-
-//any arguments given, run method
-if (issue || detail || takeScreenshot) {
-	//get foundset
-	var formName = 'CODE_0F_solution'
-	var fsFeedback = databaseManager.getFoundSet(forms[formName].controller.getServerName(),'sutra_feedback')
-	var record = fsFeedback.getRecord(fsFeedback.newRecord(false,true))
+	var issue = arguments[0]
+	var detail = arguments[1]
+	var screenshot = arguments[2]
 	
-	record.feedback_status = 'Pending'
-	record.id_log = solutionPrefs.clientInfo.logID
-	record.id_navigation = globals.DATASUTRA_navigation_set
-	record.id_navigation_item = solutionPrefs.config.currentFormID
-	record.feedback_issue = issue
-	record.feedback_summary = detail
-	
-	if (takeScreenshot) {
-		//get screensize of window
-		var x = application.getWindowX()
-		var y = application.getWindowY()
-		var width = application.getWindowWidth()
-		var height =  application.getWindowHeight()
+	//any arguments given, run method
+	if (issue || detail || screenshot) {
+		//get foundset
+		/** @type {JSFoundSet<db:/sutra/sutra_feedback>}*/
+		var fsFeedback = databaseManager.getFoundSet('sutra','sutra_feedback')
+		var record = fsFeedback.getRecord(fsFeedback.newRecord(false,true))
 		
-		//get screenshot
-		var screenShot = (new java.awt.Robot()).createScreenCapture(new java.awt.Rectangle(x,y,width,height))
-		var rawData = new java.io.ByteArrayOutputStream()
-		Packages.javax.imageio.ImageIO.write(screenShot,'png',rawData)
+		record.feedback_status = 'Pending'
+		record.id_log = solutionPrefs.clientInfo.logID
+		record.id_navigation = globals.DATASUTRA_navigation_set
+		record.id_navigation_item = solutionPrefs.config.currentFormID
+		record.feedback_issue = issue
+		record.feedback_summary = detail
 		
-		record.feedback_screenshot = rawData.toByteArray()
-	}
+		if (screenshot) {
+			//get screensize of window
+			var x = application.getWindowX()
+			var y = application.getWindowY()
+			var width = application.getWindowWidth()
+			var height =  application.getWindowHeight()
+			
+			//get screenshot
+			var screenShot = (new java.awt.Robot()).createScreenCapture(new java.awt.Rectangle(x,y,width,height))
+			var rawData = new java.io.ByteArrayOutputStream()
+			Packages.javax.imageio.ImageIO.write(screenShot,'png',rawData)
+			
+			record.feedback_screenshot = rawData.toByteArray()
+		}
+		
+		if (solutionPrefs.access && solutionPrefs.access.userName) {
+			record.feedback_author = solutionPrefs.access.userName
+		}
 	
-	if (solutionPrefs.access && solutionPrefs.access.userName) {
-		record.feedback_author = solutionPrefs.access.userName
+		databaseManager.saveData(record)
 	}
-
-	databaseManager.saveData(record)
-}
-
-
 }
 
 /**
+ * Sets the window title and/or icon for specified window.
+ * 
+ * @param	{String}	windowTitle New title for window.
+ * @param	{String}	windowIcon Image to use for icon. Can be url from Servoy media library ("media:///my_image.gif").
+ * @param	{String}	[frameName=<top level servoy window>] Name of window to operate on.
  *
  * @properties={typeid:24,uuid:"fc168413-17ed-4d6a-b0b3-7a69b8674f9e"}
  */
-function TRIGGER_frame_title_set()
-{
-
-/*
- *	TITLE    :	TRIGGER_frame_title_set
- *			  	
- *	MODULE   :	rsrc_CODE_sutra
- *			  	
- *	ABOUT    :	sets the top level window title and/or icon
- *			  	
- *	INPUT    :	1- window title
- *			  	2- icon url ("media:///my_image.gif" is valid for accessing media in the servoy media library)
- *			  	3- name of window to set (when no argument passed, top level servoy window modified)
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	solutionPrefs; running in smart client or developer
- *			  	
- *	USAGE    :	TRIGGER_frame_title_set(windowTitle, [iconURL], [windowName]) Sets the window title and assigns an icon to the window specified
- *			  	
- *	MODIFIED :	March 1, 2008 -- Tom Parry, Prospect IT Consulting
- *			  	October 1, 2008 -- Troy Elliott, Data Mosaic
- *			  	
- */	//TODO: windowName find; more error checking
-
-var windowTitle = arguments[0]
-var windowIcon = arguments[1]
-var frameName = arguments[2]
-var callingForm = application.getMethodTriggerFormName()
-
-//check if in developer or client
-if (application.__parent__.solutionPrefs && solutionPrefs.clientInfo && (solutionPrefs.clientInfo.typeServoy == 'client' || solutionPrefs.clientInfo.typeServoy == 'developer')) {
-	//all frames in use
-	var allFrames = Packages.java.awt.Frame.getFrames()
+function TRIGGER_frame_title_set(windowTitle, windowIcon, frameName) {
+	var windowTitle = arguments[0]
+	var windowIcon = arguments[1]
+	var frameName = arguments[2]
+	var callingForm = application.getMethodTriggerFormName()
 	
-	//find frame to operate on
-	if (frameName) {
+	//check if in developer or client
+	if (application.__parent__.solutionPrefs && solutionPrefs.clientInfo && (solutionPrefs.clientInfo.typeServoy == 'client' || solutionPrefs.clientInfo.typeServoy == 'developer')) {
+		//all frames in use
+		var allFrames = Packages.java.awt.Frame.getFrames()
 		
-	}
-	//use top level servoy window
-	else {
-		var frame = Packages.java.awt.Frame.getFrames()[0]
-	}
-	
-	//set new window title
-	if (windowTitle) {
-		frame.setTitle(windowTitle)
-	}
-	
-	//set new window icon
-	if (windowIcon) {
-		//image coming from media library
-		if (utils.stringPatternCount(windowIcon,'media:///')) {
-			var iconImage = new Packages.javax.swing.ImageIcon(new Packages.java.net.URL(windowIcon)).getImage()
+		//find frame to operate on
+		if (frameName) {
+			
 		}
-		//top-level window hack
-		else if (callingForm == solutionPrefs.config.formNameBase) {
-			var iconImage = new Packages.javax.swing.ImageIcon(windowIcon).getImage()
-		}
-		//image on disk someplace
-		else {/*
-			try  (
-				new Packages.javax.swing.ImageIcon(windowIcon).getImage()
-				//var iconImage = new Packages.java.awt.Toolkit.getDefaultToolkit().getImage(windowIcon)
-			)
-			catch {}
-			*/
+		//use top level servoy window
+		else {
+			var frame = Packages.java.awt.Frame.getFrames()[0]
 		}
 		
-		if (iconImage) {
-			frame.setIconImage(iconImage)
-//			Packages.javax.swing.SwingUtilities.updateComponentTreeUI(frame)
+		//set new window title
+		if (windowTitle) {
+			frame.setTitle(windowTitle)
+		}
+		
+		//set new window icon
+		if (windowIcon) {
+			//image coming from media library
+			if (utils.stringPatternCount(windowIcon,'media:///')) {
+				var iconImage = new Packages.javax.swing.ImageIcon(new Packages.java.net.URL(windowIcon)).getImage()
+			}
+			//top-level window hack
+			else if (callingForm == solutionPrefs.config.formNameBase) {
+				var iconImage = new Packages.javax.swing.ImageIcon(windowIcon).getImage()
+			}
+			//image on disk someplace
+			else {/*
+				try  (
+					new Packages.javax.swing.ImageIcon(windowIcon).getImage()
+					//var iconImage = new Packages.java.awt.Toolkit.getDefaultToolkit().getImage(windowIcon)
+				)
+				catch {}
+				*/
+			}
+			
+			if (iconImage) {
+				frame.setIconImage(iconImage)
+			}
 		}
 	}
-}
-
 }
 
 /**
+ * Navigates to a registered form (navigation item) from within inline help.
+ * 
+ * @param	{Number}	itemID Registry of navigation_item to jump to.
+ * @param	{Boolean}	[confirmJump] Prompt to leave current location.
+ * @param	{String}	[subLanding] Sub tab panel and tab to show on arrival.
+ * @param	{Boolean}	[showHelp] Show related help on arrival.
  *
  * @properties={typeid:24,uuid:"7e1bda42-9f42-4736-a207-4b324e59ec3c"}
  */
-function TRIGGER_help_navigation_set()
-{
-
-/*
- *	TITLE    :	TRIGGER_help_navigation_set
- *			  	
- *	MODULE   :	rsrc_CODE_sutra
- *			  	
- *	ABOUT    :	jump to navigation items from within inline help
- *			  	
- *	INPUT    :	1- registry (item_id) of navigation_item to jump to
- *			  	2- prompt to leave current location
- *			  	3- sub tab panel/tab # to land on
- *			  	4- show related help pop up on arrival
- *			  	
- *	OUTPUT   :	true if navigated to new place, false if not navigated or unable to navigate there
- *			  	
- *	REQUIRES :	
- *			  	
- *	USAGE    :	TRIGGER_help_navigation_set(registry) Navigates to a registered form
- *			  	
- *	MODIFIED :	February 9, 2009 -- Troy Elliott, Data Mosaic
- *			  	
- */	//TODO: check to see if group is allowed to navigate here
-
-//solutionPrefs defined and frameworks not in a locked status
-if (application.__parent__.solutionPrefs && !solutionPrefs.config.lockStatus) {
-
-//MEMO: need to somehow put this section in a Function of it's own
-//running in Tano...strip out jsevents for now
-if (utils.stringToNumber(application.getVersion()) >= 5) {
-	//cast Arguments to array
-	var Arguments = new Array()
-	for (var i = 0; i < arguments.length; i++) {
-		Arguments.push(arguments[i])
-	}
+function TRIGGER_help_navigation_set(itemID, confirmJump, subLanding, showHelp) {
+//TODO: check to see if group is allowed to navigate here
 	
-	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
-}
-
-	var itemID = arguments[0]
-	var confirm = arguments[1]
-	var subLanding = arguments[2]
-	var showHelp = arguments[3]
+	//solutionPrefs defined and frameworks not in a locked status
+	if (application.__parent__.solutionPrefs && !solutionPrefs.config.lockStatus) {
 	
-	var baseForm = solutionPrefs.config.formNameBase
-	
-/*	var subLanding = {
-					form: ,			//name of form
-					tabPanel: , 	//tab panel on form
-					tabNumber: ,	//tab number of tab panel
-					pseudo: true,	//pseudo record navigator (form is this pseudo nav...)
-					action: 		//name of method on pseudo-form
-				}
-	var showHelp = {
-					form: ,			//name of form
-					tabPanel: , 	//tab panel on form
-					element: 		//name of element with tooltip to trigger
-				}
-*/
-	
-	//loop through all available items until the specified one found (will find first occurrence)
-	var navItemID = false
-	for (var i in navigationPrefs.byNavItemID) {
-		if (!navItemID && navigationPrefs.byNavItemID[i].navigationItem.itemId == itemID) {
-			navItemID = i
-		}
-	}
-	
-	//selected navigation item is available for this user
-	if (navItemID) {
-		//confirm to leave current location
-		if (confirm) {
-			var proceed = plugins.dialogs.showQuestionDialog(
-										'Navigate away',
-										'If you continue, you will leave the screen you are currently viewing',
-										'Yes',
-										'No'
-									)
-		}
-		else {
-			var proceed = 'Yes'
+		var itemID = arguments[0]
+		var confirm = arguments[1]
+		var subLanding = arguments[2]
+		var showHelp = arguments[3]
+		
+		var baseForm = solutionPrefs.config.formNameBase
+		
+	/*	var subLanding = {
+						form: ,			//name of form
+						tabPanel: , 	//tab panel on form
+						tabNumber: ,	//tab number of tab panel
+						pseudo: true,	//pseudo record navigator (form is this pseudo nav...)
+						action: 		//name of method on pseudo-form
+					}
+		var showHelp = {
+						form: ,			//name of form
+						tabPanel: , 	//tab panel on form
+						element: 		//name of element with tooltip to trigger
+					}
+	*/
+		
+		//loop through all available items until the specified one found (will find first occurrence)
+		var navItemID = false
+		for (var i in navigationPrefs.byNavItemID) {
+			if (!navItemID && navigationPrefs.byNavItemID[i].navigationItem.itemId == itemID) {
+				navItemID = i
+			}
 		}
 		
-		if (proceed == 'Yes') {
-			//close the opened help dialog box
-			forms.CODE_P__konsole.ACTION_close()
-			
-			var navSetID = navigationPrefs.byNavItemID[navItemID].navigationItem.idNavigation
-			var formNameWorkflow = navigationPrefs.byNavItemID[navItemID].navigationItem.formToLoad
-			
-			//if from a different navigation set
-			if (globals.DATASUTRA_navigation_set != navSetID) {
-				navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].lastNavItem = solutionPrefs.config.currentFormID
-				globals.DATASUTRA_navigation_set = navSetID
+		//selected navigation item is available for this user
+		if (navItemID) {
+			//confirm to leave current location
+			if (confirm) {
+				var proceed = plugins.dialogs.showQuestionDialog(
+											'Navigate away',
+											'If you continue, you will leave the screen you are currently viewing',
+											'Yes',
+											'No'
+										)
+			}
+			else {
+				var proceed = 'Yes'
 			}
 			
-			//redraw list; make sure row is expanded if node2; load new item
-			forms.NAV_0L_solution.LIST_expand_collapse(navItemID,'open',navSetID)
+			if (proceed == 'Yes') {
+				//close the opened help dialog box
+				forms.CODE_P__konsole.ACTION_close()
+				
+				var navSetID = navigationPrefs.byNavItemID[navItemID].navigationItem.idNavigation
+				var formNameWorkflow = navigationPrefs.byNavItemID[navItemID].navigationItem.formToLoad
+				
+				//if from a different navigation set
+				if (globals.DATASUTRA_navigation_set != navSetID) {
+					navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].lastNavItem = solutionPrefs.config.currentFormID
+					globals.DATASUTRA_navigation_set = navSetID
+				}
+				
+				//redraw list; make sure row is expanded if node2; load new item
+				forms.NAV_0L_solution.LIST_expand_collapse(navItemID,'open',navSetID)
+				
+				//move around to land on correct spot of this form
+				if (subLanding) {
+					//quasi-record navigator
+					if (subLanding.pseudo &&
+						subLanding.form && forms[subLanding.form] && subLanding.action && forms[subLanding.form][subLanding.action]) {
+						
+						//get there
+						forms[subLanding.form][subLanding.action]()
+						
+						//set tab
+						if (forms[baseForm].elements.tab_content_C.getTabFormNameAt(1)) {
+							subLanding.form = forms[baseForm].elements.tab_content_C.getTabFormNameAt(1)
+						}
+					}
+					
+					
+				}
+				
+				//pop-up help screen for selected element
+				if (showHelp) {
+					globals.TRIGGER_tooltip_help_popup(showHelp.form,showHelp.element,showHelp.tabPanel)
+				}
+			}
+		}
+		else {
+			plugins.dialogs.showErrorDialog(
+								'Destination error',
+								'The landing destination is not available.  See the administrator'
+							)
+			return false
+		}
+	}
+}
+
+/**
+ * Disables all data sutra related actions.
+ * 
+ * @param	{Boolean}	freeze Freezes/Unfreezes everything except the main workflow area.
+ * @param	{Boolean}	[freezeAll] Freezes the workflow area too.
+ * @param	{Boolean}	[nonTransparent] Turn off transparency so stuff frozen also invisible.
+ * @param	{Boolean}	[spinner] Put facebook spinner in center of screen.
+ * @param	{String}	[nonTransparentText] Text to display over top of non-transparent box.
+ *
+ * @properties={typeid:24,uuid:"8a2db575-a9de-4646-9936-14468a01d7f4"}
+ */
+function TRIGGER_interface_lock(freeze,freezeAll,nonTransparent,spinner,nonTransparentText) {
+//TODO: either...
+		//put multiple curtain graphics on the layout so everything except for the workflow is covered
+		// OR
+		//trap the state of everything on the workflow form and set it back as it was before being enabled/disabled
+	
+	var freeze = arguments[0]
+	var freezeAll = arguments[1]
+	var nonTransparent = arguments[2]
+	var spinner = arguments[3]
+	var nonTransparentText = arguments[4]
+	
+	//check to see that solutionPrefs is defined and parameter passed
+	if (application.__parent__.solutionPrefs && typeof freeze == 'boolean') {
+		var baseForm = solutionPrefs.config.formNameBase
+		var workflowForm = solutionPrefs.config.currentFormName
+		
+		//set up spinner to show progress
+		if (spinner) {
+		//	forms[baseForm].elements.gfx_curtain_3.setSize(32,32)
+			forms[baseForm].elements.gfx_curtain_3.setLocation((application.getWindowWidth() / 2) - 16, (application.getWindowHeight() / 2) - 200)
+			forms[baseForm].elements.gfx_curtain_3.visible = true
+		}
+		
+		//resize curtain to cover everything and then show it
+		if (freezeAll) {
+			//height of normal header (44)
+			var y = 0
 			
-			//move around to land on correct spot of this form
-			if (subLanding) {
-				//quasi-record navigator
-				if (subLanding.pseudo &&
-					subLanding.form && forms[subLanding.form] && subLanding.action && forms[subLanding.form][subLanding.action]) {
+			//if in design mode....
+			if (solutionPrefs.design.statusDesign) {
+				//height of design mode bar
+				y += 42
+				
+				var designBar = 'DEV_0F_solution__designbar'
+				
+				//design bar form exists, go exploring
+				if (forms[designBar]) {
+					//turn off everything
+					forms[designBar].controller.enabled = false
 					
-					//get there
-					forms[subLanding.form][subLanding.action]()
+					//active tab
+					var designTab = forms[designBar].elements.tab_action.getTabFormNameAt(forms[designBar].elements.tab_action.tabIndex)
 					
-					//set tab
-					if (forms[baseForm].elements.tab_content_C.getTabFormNameAt(1)) {
-						subLanding.form = forms[baseForm].elements.tab_content_C.getTabFormNameAt(1)
+					//light background in main design bar
+					if (forms[designBar].elements.gfx_header) {
+						forms[designBar].elements.gfx_header.enabled = true
+					}
+					
+					//highlighter in main design bar
+					if (forms[designBar].elements.highlighter) {
+						forms[designBar].elements.highlighter.enabled = true
+					}
+					
+					//design bar action form exists, go exploring
+					if (forms[designTab]) {
+						//light background in main design bar
+						if (forms[designTab].elements.gfx_header) {
+							forms[designTab].elements.gfx_header.enabled = true
+						}
+						
+						//highlighter in main design bar
+						if (forms[designTab].elements.highlighter) {
+							forms[designTab].elements.highlighter.enabled = true
+						}
 					}
 				}
 				
-				
+				//just turn off the second curtain so don't get double effect
+				forms[baseForm].elements.gfx_curtain_2.visible = false
 			}
 			
-			//pop-up help screen for selected element
-			if (showHelp) {
-				globals.TRIGGER_tooltip_help_popup(showHelp.form,showHelp.element,showHelp.tabPanel)
+			//set location
+			forms[baseForm].elements.gfx_curtain.setLocation(0,y)
+			//set size
+			forms[baseForm].elements.gfx_curtain.setSize(application.getWindowWidth(),application.getWindowHeight())
+			
+			//non-transparent, set up
+			if (nonTransparent) {
+				forms[baseForm].elements.gfx_curtain.transparent = false
+				forms[baseForm].elements.gfx_curtain.setImageURL(null)
+				forms[baseForm].elements.gfx_curtain.setBorder('MatteBorder,0,0,200,0,#323A4B')
+				
+				//set text
+				if (nonTransparentText) {
+					forms[baseForm].elements.gfx_curtain.text = nonTransparentText
+				}
+			}
+			
+			forms[baseForm].elements.gfx_curtain.enabled = true
+			forms[baseForm].elements.gfx_curtain.visible = true
+		}
+		//lock everything
+		else if (freeze) {
+			//turn off everything
+			forms[baseForm].controller.enabled = false
+			
+			//turn on grafx stuff
+				//header/footer
+				forms[baseForm + '__header'].elements.gfx_header.enabled = true
+				forms[baseForm + '__footer'].elements.gfx_footer.enabled = true
+				
+				//check content panels for subheader element
+				var tabPanels = ['A','B','C','D']
+				for (var i = 0; i < tabPanels.length; i++) {
+					var tabPanel = 'tab_content_' + tabPanels[i]
+					
+					//there is a form in this tab panel
+					if (forms[baseForm].elements[tabPanel].tabIndex) {
+						var formName = forms[baseForm].elements[tabPanel].getTabFormNameAt(forms[baseForm].elements[tabPanel].tabIndex)
+						
+						//if a subheader present, turn it on
+						if (forms[formName] && forms[formName].elements.gfx_subheader) {
+							forms[formName].elements.gfx_subheader.enabled = true
+						}
+					}
+				}
+				
+				//check active toolbar for background elements
+				if (forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex) {
+					var formName = forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getTabFormNameAt(forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex)
+					
+					//if toolbar background graphics present, turn them on
+					if (forms[formName].elements.gfx_tool_left) {
+						forms[formName].elements.gfx_tool_left.enabled = true
+					}
+					if (forms[formName].elements.gfx_tool_center) {
+						forms[formName].elements.gfx_tool_center.enabled = true
+					}
+					if (forms[formName].elements.gfx_tool_right) {
+						forms[formName].elements.gfx_tool_right.enabled = true
+					}
+				}
+			
+			//set space borders to light color
+			var borderDisabled = 'MatteBorder,0,0,0,1,#797778'
+			for (var i = 1; i <= 14 && ((i== 1 || i == 8) ? i++ : i); i++) {
+				forms[baseForm + '__header'].elements['btn_space_' + i].setBorder(borderDisabled)
+			}
+			
+			//turn on workflow form
+			forms[workflowForm].controller.enabled = true
+		}
+		//unlock everything
+		else {
+			//turn on everything
+			forms[baseForm].controller.enabled = true
+			
+			//turn off curtain
+			if (forms[baseForm].elements.gfx_curtain.visible) {
+				forms[baseForm].elements.gfx_curtain.visible = false
+				
+				//return curtain to default state
+				forms[baseForm].elements.gfx_curtain.transparent = true
+				forms[baseForm].elements.gfx_curtain.setImageURL('media:///curtain_5E6166.png')
+				forms[baseForm].elements.gfx_curtain.setBorder('EmptyBorder,0,0,0,0')
+				
+				forms[baseForm].elements.gfx_curtain.text = null
+				forms[baseForm].elements.gfx_curtain.toolTipText = null
+			}
+			
+			//turn off curtain3
+			if (forms[baseForm].elements.gfx_curtain_3.visible) {
+				forms[baseForm].elements.gfx_curtain_3.visible = false
+			}
+			
+			//developer was locked, return to that state
+			if (solutionPrefs.design.statusLockWorkflow || solutionPrefs.design.statusLockList) {
+				globals.DEV_lock_workflow()
+			}
+			
+			//only show active space options
+			var borderEnabled = 'MatteBorder,0,0,0,1,#333333'
+			var borderDisabled = 'MatteBorder,0,0,0,1,#797778'
+			var spacesOK = (navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID] && navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].spaceSetup) ? navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].spaceSetup : new Array(true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true)
+			for (var i = 1; i <= 14; i++) {
+				forms[baseForm + '__header'].elements['btn_space_' + i].enabled = spacesOK[i-1]
+				
+				if (i != 1 && i != 8) {
+					forms[baseForm + '__header'].elements['btn_space_' + i].setBorder(spacesOK[i-1] ? borderEnabled : borderDisabled)
+				}
 			}
 		}
+		
+		//save down current locked status
+		solutionPrefs.config.lockStatus = freeze
+	}
+}
+
+/**
+ * Logs a Data Sutra event.
+ * 
+ * @param	{String}	logType Type of log. Possible values:<br>
+ * 						Custom,Configuration panes,Fast finds,Flexible windowing,Navigation items,<br>
+ *			  			Records,UL Add,UL Actions,UL Displays,UL Filters,UL Print,UL Sorts,UL Tabs
+ * @param	{String}	valueOne
+ * @param	{String}	valueTwo
+ * @param	{String}	valueThree
+ * @param	{String}	valueFour
+ * @param	{String}	valueFive
+ * @param	{String}	valueSix
+ * @param	{String}	valueSeven
+ * @param	{String}	valueEight
+ * @param	{String}	valueNine
+ * 
+ * @properties={typeid:24,uuid:"d905985b-6355-4c9c-9e36-d69a2cf797eb"}
+ */
+function TRIGGER_log_create(logType,valueOne,valueTwo,valueThree,valueFour,valueFive,valueSix,valueSeven,valueEight,valueNine) {
+	
+	var logType = arguments[0]
+	var valueOne = arguments[1]
+	var valueTwo = arguments[2]
+	var valueThree = arguments[3]
+	var valueFour = arguments[4]
+	var valueFive = arguments[5]
+	var valueSix = arguments[6]
+	var valueSeven = arguments[7]
+	var valueEight = arguments[8]
+	var valueNine = arguments[9]
+	
+	//logType parameter passed in, solutionPrefs defined, analytics turned on, and logging for logType
+	if (logType && application.__parent__.solutionPrefs && solutionPrefs.analytics && solutionPrefs.analytics.logging[utils.stringReplace(logType,' ','_')]) {
+		//get foundset
+		/** @type {JSFoundSet<db:/sutra/sutra_log>}*/
+		var fsLog = databaseManager.getFoundSet('sutra','sutra_log')
+		var record = fsLog.getRecord(fsLog.newRecord())
+		
+		//set basic log information
+		record.log_type = logType
+		record.id_organization = (solutionPrefs.access.organizationID) ? solutionPrefs.access.organizationID : null
+		record.id_group = (solutionPrefs.access.groupID) ? solutionPrefs.access.groupID : null
+		record.id_user = (solutionPrefs.access.userID) ? solutionPrefs.access.userID : null
+		record.id_access_log = (solutionPrefs.clientInfo.logID) ? solutionPrefs.clientInfo.logID : null
+		if (solutionPrefs.history && solutionPrefs.config.currentHistoryPosition >= 0) {
+			record.id_navigation = solutionPrefs.history[solutionPrefs.config.currentHistoryPosition].navigationSetID
+			record.id_navigation_item = solutionPrefs.history[solutionPrefs.config.currentHistoryPosition].navigationItemID
+			record.navigation_set = solutionPrefs.history[solutionPrefs.config.currentHistoryPosition].navigationSetName
+			record.navigation_item = solutionPrefs.history[solutionPrefs.config.currentHistoryPosition].navigationSetID
+		}
+		
+		switch (logType) {
+			case 'Custom':
+				record.custom = valueOne
+				break
+			case 'Configuration panes':
+				record.config_pane = valueOne
+				record.id_navigation_item = valueTwo
+				record.id_navigation = valueThree
+				record.navigation_set = valueFour
+				record.navigation_item = valueFive
+				break
+			case 'Fast finds':
+				record.server_name = valueOne
+				record.table_name = valueTwo
+				record.find_type = valueThree
+				record.find_relation = valueFour
+				record.find_field = valueFive
+				record.find_value = valueSix
+				record.find_records_found = valueSeven
+				break
+			case 'Flexible windowing':
+				record.window_space_from = valueOne
+				record.window_space_to = valueTwo
+				record.window_dimension_1_then = valueThree
+				record.window_dimension_2_then = valueFour
+				record.window_dimension_1_now = valueFive
+				record.window_dimension_2_now = valueSix
+				record.window_size_x = valueSeven
+				record.window_size_y = valueEight
+				break
+			case 'Navigation items':
+				record.navigation_form = valueOne
+				record.navigation_list = valueTwo
+				break
+			case 'Records':
+				record.serverName = valueOne
+				record.tableName = valueTwo
+				record.record_field = valueThree
+				record.record_id = valueFour
+				break
+			case 'UL Add':
+				record.actions_method = valueOne
+				record.server_name = valueTwo
+				record.table_name = valueThree
+				record.record_field = valueFour
+				record.record_id = valueFive
+				break
+			case 'UL Actions':
+				record.actions_item = valueOne
+				record.actions_method = valueTwo
+				record.server_name = valueThree
+				record.table_name = valueFour
+				record.record_field = valueFive
+				record.record_id = valueSix
+				break
+			case 'UL Displays':
+				record.actions_item = valueOne
+				record.server_name = valueTwo
+				record.table_name = valueThree
+				break
+			case 'UL Filters':
+				record.actions_item = valueOne
+				record.server_name = valueTwo
+				record.table_name = valueThree
+				record.record_field = valueFour
+				record.record_id = valueFive
+				record.find_records_found = valueSix
+				break
+			case 'UL Reports':
+				record.report_id = valueOne
+				record.actions_item = valueTwo
+				record.report_form = valueThree
+				record.actions_method = valueFour
+				break
+			case 'UL Sorts':
+				record.sort_field = valueOne
+				record.sort_direction = valueTwo
+				record.server_name = valueThree
+				record.table_name = valueFour
+				record.record_field = valueFive
+				record.record_id = valueSix
+				break
+			case 'UL Tabs':
+				record.actions_item = valueOne
+				record.tab_form = valueTwo
+				break
+		}
+		
+		databaseManager.saveData(record)
+	}
+	
+	
+	/*
+	
+				record. = valueOne
+				record. = valueTwo
+				record. = valueThree
+				record. = valueFour
+				record. = valueFive
+				record. = valueSix
+				record. = valueSeven
+				record. = valueEight
+				record. = valueNine
+				record. = valueTen
+				record. = valueEleven
+	*/
+}
+
+/**
+ * Programatically trigger a navigation item filter parameter refresh.<br>
+ * Only re-filter if the filter values have changed.
+ * 
+ * @param	{Boolean}	[forceRefresh] Force a refresh even if filters have not been changed.<br>
+ * 						Note: all finds/filters/etc will be reset.
+ * @param	{Number}	[itemID] The navigation item to re-filter.
+ *
+ * @returns	{Boolean}	Refresh performed.
+ * 
+ * @properties={typeid:24,uuid:"c3da0de9-3fb6-48ba-8406-2bb1060e48f7"}
+ */
+function TRIGGER_navigation_filter_update(forceRefresh,itemID) {
+	//solutionPrefs defined and frameworks not in a locked status
+	if (application.__parent__.solutionPrefs && solutionPrefs.config && solutionPrefs.config.currentFormID && !solutionPrefs.config.lockStatus) {
+	
+	//MEMO: need to somehow put this section in a Function of it's own
+	//running in Tano...strip out jsevents for now
+	if (utils.stringToNumber(application.getVersion()) >= 5) {
+		//cast Arguments to array
+		var Arguments = new Array()
+		for (var i = 0; i < arguments.length; i++) {
+			Arguments.push(arguments[i])
+		}
+		
+		//reassign arguments without jsevents
+		arguments = Arguments.filter(globals.CODE_jsevent_remove)
+	}
+	
+		var forceRefresh = arguments[0]
+		var navItemID = arguments[1]
+		
+		return globals.NAV_foundset_restrict(forceRefresh,navItemID)
 	}
 	else {
-		plugins.dialogs.showErrorDialog(
-							'Destination error',
-							'The landing destination is not available.  See the administrator'
-						)
 		return false
 	}
 }
 
-
-}
-
 /**
+ * Programatically navigate to a different navigation item.<br>
+ * Note: the sort of the target form will be reset to it's default state.
+ * 
+ * @param	{String}	[itemID] The navigation item to jump to.
+ * @param	{Boolean}	[setFoundset] Modify the foundset on the new navigation item.
+ * @param	{JSFoundset|Number[]}	[useFoundset] Foundset or array of primary keys to restore on the destination form.
  *
- * @properties={typeid:24,uuid:"8a2db575-a9de-4646-9936-14468a01d7f4"}
- */
-function TRIGGER_interface_lock()
-{
-
-/*
- *	TITLE    :	TRIGGER_interface_lock
- *			  	
- *	MODULE   :	rsrc_CODE_sutra
- *			  	
- *	ABOUT    :	disables all frameworks related actions
- *			  		- including: TRIGGER_navigation_set
- *			  	
- *	INPUT    :	1- true/false - true freezes frameworks (everything except your workflow screen), false returns frameworks to normal operation
- *			  	2- true/false - true freezes frameworks, including workflow area (giving dimmed effect) (optional)
- *			  	3- true/false - true turns off transparency so stuff beneath invisible (optional)
- *			  	4- true/false - true puts facebook spinner in center of screen (optional)
- *			  	5- text to display when nonTransparent enabled (optional)
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	solutionPrefs
- *			  	
- *	USAGE    :	TRIGGER_interface_lock(lockFrameworks, [lockAll], [nonTransparent], [processingIndicator], [text]) Locks/unlocks frameworks, forcing user to stay on workflow screen
- *			  	
- *	MODIFIED :	March 27, 2009 -- Troy Elliott, Data Mosaic
- *			  	
- */	//TODO: either...
-		//put multiple curtain graphics on the layout so everything except for the workflow is covered
-		// OR
-		//trap the state of everything on the workflow form and set it back as it was before being enabled/disabled
-
-//MEMO: need to somehow put this section in a Function of it's own
-//running in Tano...strip out jsevents for now
-if (utils.stringToNumber(application.getVersion()) >= 5) {
-	//cast Arguments to array
-	var Arguments = new Array()
-	for (var i = 0; i < arguments.length; i++) {
-		Arguments.push(arguments[i])
-	}
-	
-	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
-}
-
-var freeze = arguments[0]
-var freezeAll = arguments[1]
-var nonTransparent = arguments[2]
-var spinner = arguments[3]
-var nonTransparentText = arguments[4]
-
-//check to see that solutionPrefs is defined and parameter passed
-if (application.__parent__.solutionPrefs && typeof freeze == 'boolean') {
-	var baseForm = solutionPrefs.config.formNameBase
-	var workflowForm = solutionPrefs.config.currentFormName
-	
-	//set up spinner to show progress
-	if (spinner) {
-	//	forms[baseForm].elements.gfx_curtain_3.setSize(32,32)
-		forms[baseForm].elements.gfx_curtain_3.setLocation((application.getWindowWidth() / 2) - 16, (application.getWindowHeight() / 2) - 200)
-		forms[baseForm].elements.gfx_curtain_3.visible = true
-	}
-	
-	//resize curtain to cover everything and then show it
-	if (freezeAll) {
-		//height of normal header (44)
-		var y = 0
-		
-		//if in design mode....
-		if (solutionPrefs.design.statusDesign) {
-			//height of design mode bar
-			y += 42
-			
-			var designBar = 'DEV_0F_solution__designbar'
-			
-			//design bar form exists, go exploring
-			if (forms[designBar]) {
-				//turn off everything
-				forms[designBar].controller.enabled = false
-				
-				//active tab
-				var designTab = forms[designBar].elements.tab_action.getTabFormNameAt(forms[designBar].elements.tab_action.tabIndex)
-				
-				//light background in main design bar
-				if (forms[designBar].elements.gfx_header) {
-					forms[designBar].elements.gfx_header.enabled = true
-				}
-				
-				//highlighter in main design bar
-				if (forms[designBar].elements.highlighter) {
-					forms[designBar].elements.highlighter.enabled = true
-				}
-				
-				//design bar action form exists, go exploring
-				if (forms[designTab]) {
-					//light background in main design bar
-					if (forms[designTab].elements.gfx_header) {
-						forms[designTab].elements.gfx_header.enabled = true
-					}
-					
-					//highlighter in main design bar
-					if (forms[designTab].elements.highlighter) {
-						forms[designTab].elements.highlighter.enabled = true
-					}
-				}
-			}
-			
-			//just turn off the second curtain so don't get double effect
-			forms[baseForm].elements.gfx_curtain_2.visible = false
-		}
-		
-		//set location
-		forms[baseForm].elements.gfx_curtain.setLocation(0,y)
-		//set size
-		forms[baseForm].elements.gfx_curtain.setSize(application.getWindowWidth(),application.getWindowHeight())
-		
-		//non-transparent, set up
-		if (nonTransparent) {
-			forms[baseForm].elements.gfx_curtain.transparent = false
-			forms[baseForm].elements.gfx_curtain.setImageURL(null)
-			forms[baseForm].elements.gfx_curtain.setBorder('MatteBorder,0,0,200,0,#323A4B')
-			
-			//set text
-			if (nonTransparentText) {
-				forms[baseForm].elements.gfx_curtain.text = nonTransparentText
-			}
-		}
-		
-		forms[baseForm].elements.gfx_curtain.enabled = true
-		forms[baseForm].elements.gfx_curtain.visible = true
-	}
-	//lock everything
-	else if (freeze) {
-		//turn off everything
-		forms[baseForm].controller.enabled = false
-		
-		//turn on grafx stuff
-			//header/footer
-			forms[baseForm + '__header'].elements.gfx_header.enabled = true
-			forms[baseForm + '__footer'].elements.gfx_footer.enabled = true
-			
-			//check content panels for subheader element
-			var tabPanels = ['A','B','C','D']
-			for (var i = 0; i < tabPanels.length; i++) {
-				var tabPanel = 'tab_content_' + tabPanels[i]
-				
-				//there is a form in this tab panel
-				if (forms[baseForm].elements[tabPanel].tabIndex) {
-					var formName = forms[baseForm].elements[tabPanel].getTabFormNameAt(forms[baseForm].elements[tabPanel].tabIndex)
-					
-					//if a subheader present, turn it on
-					if (forms[formName] && forms[formName].elements.gfx_subheader) {
-						forms[formName].elements.gfx_subheader.enabled = true
-					}
-				}
-			}
-			
-			//check active toolbar for background elements
-			if (forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex) {
-				var formName = forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getTabFormNameAt(forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex)
-				
-				//if toolbar background graphics present, turn them on
-				if (forms[formName].elements.gfx_tool_left) {
-					forms[formName].elements.gfx_tool_left.enabled = true
-				}
-				if (forms[formName].elements.gfx_tool_center) {
-					forms[formName].elements.gfx_tool_center.enabled = true
-				}
-				if (forms[formName].elements.gfx_tool_right) {
-					forms[formName].elements.gfx_tool_right.enabled = true
-				}
-			}
-		
-		//set space borders to light color
-		var borderDisabled = 'MatteBorder,0,0,0,1,#797778'
-		for (var i = 1; i <= 14 && ((i== 1 || i == 8) ? i++ : i); i++) {
-			forms[baseForm + '__header'].elements['btn_space_' + i].setBorder(borderDisabled)
-		}
-		
-		//turn on workflow form
-		forms[workflowForm].controller.enabled = true
-	}
-	//unlock everything
-	else {
-		//turn on everything
-		forms[baseForm].controller.enabled = true
-		
-		//turn off curtain
-		if (forms[baseForm].elements.gfx_curtain.visible) {
-			forms[baseForm].elements.gfx_curtain.visible = false
-			
-			//return curtain to default state
-			forms[baseForm].elements.gfx_curtain.transparent = true
-			forms[baseForm].elements.gfx_curtain.setImageURL('media:///curtain_5E6166.png')
-			forms[baseForm].elements.gfx_curtain.setBorder('EmptyBorder,0,0,0,0')
-			
-			forms[baseForm].elements.gfx_curtain.text = null
-			forms[baseForm].elements.gfx_curtain.toolTipText = null
-		}
-		
-		//turn off curtain3
-		if (forms[baseForm].elements.gfx_curtain_3.visible) {
-			forms[baseForm].elements.gfx_curtain_3.visible = false
-		}
-		
-		//developer was locked, return to that state
-		if (solutionPrefs.design.statusLockWorkflow || solutionPrefs.design.statusLockList) {
-			globals.DEV_lock_workflow()
-		}
-		
-		//only show active space options
-		var borderEnabled = 'MatteBorder,0,0,0,1,#333333'
-		var borderDisabled = 'MatteBorder,0,0,0,1,#797778'
-		var spacesOK = (navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID] && navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].spaceSetup) ? navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].spaceSetup : new Array(true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true)
-		for (var i = 1; i <= 14; i++) {
-			forms[baseForm + '__header'].elements['btn_space_' + i].enabled = spacesOK[i-1]
-			
-			if (i != 1 && i != 8) {
-				forms[baseForm + '__header'].elements['btn_space_' + i].setBorder(spacesOK[i-1] ? borderEnabled : borderDisabled)
-			}
-		}
-	}
-	
-	//save down current locked status
-	solutionPrefs.config.lockStatus = freeze
-}
-
-}
-
-/**
- *
- * @properties={typeid:24,uuid:"d905985b-6355-4c9c-9e36-d69a2cf797eb"}
- */
-function TRIGGER_log_create()
-{
-
-/*
- *	TITLE    :	TRIGGER_log_create
- *			  	
- *	MODULE   :	rsrc_CODE_sutra
- *			  	
- *	ABOUT    :	logs a particular event
- *			  	
- *	INPUT    :	1) type of log
- *			  		values:	Custom,Configuration panes,Fast finds,Flexible windowing,Navigation items,
- *			  				Records,UL Add,UL Actions,UL Displays,UL Filters,UL Print,UL Sorts,UL Tabs
- *			  	2) value1
- *			  	3) value2
- *			  	4) value3
- *			  	5) etc
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
- *	MODIFIED :	Mar 2008 -- Troy Elliott, Data Mosaic
- *			  	
- */	//TODO: allow more values for custom type
-
-//MEMO: need to somehow put this section in a Function of it's own
-//running in Tano...strip out jsevents for now
-if (utils.stringToNumber(application.getVersion()) >= 5) {
-	//cast Arguments to array
-	var Arguments = new Array()
-	for (var i = 0; i < arguments.length; i++) {
-		Arguments.push(arguments[i])
-	}
-	
-	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
-}
-
-var logType = arguments[0]
-var valueOne = arguments[1]
-var valueTwo = arguments[2]
-var valueThree = arguments[3]
-var valueFour = arguments[4]
-var valueFive = arguments[5]
-var valueSix = arguments[6]
-var valueSeven = arguments[7]
-var valueEight = arguments[8]
-var valueNine = arguments[9]
-
-//logType parameter passed in, solutionPrefs defined, analytics turned on, and logging for logType
-if (logType && application.__parent__.solutionPrefs && solutionPrefs.analytics && solutionPrefs.analytics.logging[utils.stringReplace(logType,' ','_')]) {
-	//get foundset
-	var formName = solutionPrefs.config.formNameBase
-	var fsLog = databaseManager.getFoundSet(forms[formName].controller.getServerName(),'sutra_log')
-	var record = fsLog.getRecord(fsLog.newRecord())
-	
-	//set basic log information
-	record.log_type = logType
-	record.id_organization = (solutionPrefs.access.organizationID) ? solutionPrefs.access.organizationID : null
-	record.id_group = (solutionPrefs.access.groupID) ? solutionPrefs.access.groupID : null
-	record.id_user = (solutionPrefs.access.userID) ? solutionPrefs.access.userID : null
-	record.id_access_log = (solutionPrefs.clientInfo.logID) ? solutionPrefs.clientInfo.logID : null
-	if (solutionPrefs.history && solutionPrefs.config.currentHistoryPosition >= 0) {
-		record.id_navigation = solutionPrefs.history[solutionPrefs.config.currentHistoryPosition].navigationSetID
-		record.id_navigation_item = solutionPrefs.history[solutionPrefs.config.currentHistoryPosition].navigationItemID
-		record.navigation_set = solutionPrefs.history[solutionPrefs.config.currentHistoryPosition].navigationSetName
-		record.navigation_item = solutionPrefs.history[solutionPrefs.config.currentHistoryPosition].navigationSetID
-	}
-	
-	switch (logType) {
-		case 'Custom':
-			record.custom = valueOne
-			break
-		case 'Configuration panes':
-			record.config_pane = valueOne
-			record.id_navigation_item = valueTwo
-			record.id_navigation = valueThree
-			record.navigation_set = valueFour
-			record.navigation_item = valueFive
-			break
-		case 'Fast finds':
-			record.server_name = valueOne
-			record.table_name = valueTwo
-			record.find_type = valueThree
-			record.find_relation = valueFour
-			record.find_field = valueFive
-			record.find_value = valueSix
-			record.find_records_found = valueSeven
-			break
-		case 'Flexible windowing':
-			record.window_space_from = valueOne
-			record.window_space_to = valueTwo
-			record.window_dimension_1_then = valueThree
-			record.window_dimension_2_then = valueFour
-			record.window_dimension_1_now = valueFive
-			record.window_dimension_2_now = valueSix
-			record.window_size_x = valueSeven
-			record.window_size_y = valueEight
-			break
-		case 'Navigation items':
-			record.navigation_form = valueOne
-			record.navigation_list = valueTwo
-			break
-		case 'Records':
-			record.serverName = valueOne
-			record.tableName = valueTwo
-			record.record_field = valueThree
-			record.record_id = valueFour
-			break
-		case 'UL Add':
-			record.actions_method = valueOne
-			record.server_name = valueTwo
-			record.table_name = valueThree
-			record.record_field = valueFour
-			record.record_id = valueFive
-			break
-		case 'UL Actions':
-			record.actions_item = valueOne
-			record.actions_method = valueTwo
-			record.server_name = valueThree
-			record.table_name = valueFour
-			record.record_field = valueFive
-			record.record_id = valueSix
-			break
-		case 'UL Displays':
-			record.actions_item = valueOne
-			record.server_name = valueTwo
-			record.table_name = valueThree
-			break
-		case 'UL Filters':
-			record.actions_item = valueOne
-			record.server_name = valueTwo
-			record.table_name = valueThree
-			record.record_field = valueFour
-			record.record_id = valueFive
-			record.find_records_found = valueSix
-			break
-		case 'UL Reports':
-			record.report_id = valueOne
-			record.actions_item = valueTwo
-			record.report_form = valueThree
-			record.actions_method = valueFour
-			break
-		case 'UL Sorts':
-			record.sort_field = valueOne
-			record.sort_direction = valueTwo
-			record.server_name = valueThree
-			record.table_name = valueFour
-			record.record_field = valueFive
-			record.record_id = valueSix
-			break
-		case 'UL Tabs':
-			record.actions_item = valueOne
-			record.tab_form = valueTwo
-			break
-	}
-	
-//	databaseManager.saveData()
-}
-
-
-/*
-
-			record. = valueOne
-			record. = valueTwo
-			record. = valueThree
-			record. = valueFour
-			record. = valueFive
-			record. = valueSix
-			record. = valueSeven
-			record. = valueEight
-			record. = valueNine
-			record. = valueTen
-			record. = valueEleven
-*/
-}
-
-/**
- *
- * @properties={typeid:24,uuid:"c3da0de9-3fb6-48ba-8406-2bb1060e48f7"}
- */
-function TRIGGER_navigation_filter_update()
-{
-
-/*
- *	TITLE    :	TRIGGER_navigation_filter_update
- *			  	
- *	MODULE   :	rsrc_CODE_sutra
- *			  	
- *	ABOUT    :	manually trigger navigation item filter parameter refresh
- *			  		- if any filters have changed, reset
- *			  	
- *	INPUT    :	1- force refresh even if filters haven't changed (optional)
- *			  		- NOTE: will reset all finds/filters/etc
- *			  	2- navigationItemID of worfklow to update (optional)
- *			  	
- *	OUTPUT   :	boolean whether refreshed or not
- *			  	
- *	REQUIRES :	
- *			  	
- *	USAGE    :	TRIGGER_navigation_filter_update([navItemID], [forceRefresh]) Refresh filters on showing navigation item
- *			  	
- *	MODIFIED :	May 15, 2009 -- Troy Elliott, Data Mosaic
- *			  	
- */
-
-//solutionPrefs defined and frameworks not in a locked status
-if (application.__parent__.solutionPrefs && solutionPrefs.config && solutionPrefs.config.currentFormID && !solutionPrefs.config.lockStatus) {
-
-//MEMO: need to somehow put this section in a Function of it's own
-//running in Tano...strip out jsevents for now
-if (utils.stringToNumber(application.getVersion()) >= 5) {
-	//cast Arguments to array
-	var Arguments = new Array()
-	for (var i = 0; i < arguments.length; i++) {
-		Arguments.push(arguments[i])
-	}
-	
-	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
-}
-
-	var forceRefresh = arguments[0]
-	var navItemID = arguments[1]
-	
-	return globals.NAV_foundset_restrict(forceRefresh,navItemID)
-}
-else {
-	return false
-}
-}
-
-/**
- *
+ * @returns	{Boolean}	Success of loading the foundset requested.
+ * 
  * @properties={typeid:24,uuid:"e58b6503-e021-452d-b2b1-075c79e44ddd"}
  */
-function TRIGGER_navigation_set()
-{
-
-/*
- *	TITLE    :	TRIGGER_navigation_set
- *			  	
- *	MODULE   :	rsrc_CODE_sutra
- *			  	
- *	ABOUT    :	jumps between navigation items; note: sort will be reset to whatever is specified (default would be to go in pk order)
- *			  	
- *	INPUT    :	1- registry (item_id) of navigation_item to jump to
- *			  	2- true/false to bring over related foundset from current form
- *			  	3- foundset/array of pks to restore on destination form
- *			  	
- *	OUTPUT   :	true if foundset loaded, false if foundset not loaded, null if no foundset operations performed or nothing happened
- *			  	
- *	REQUIRES :	
- *			  	
- *	USAGE    :	TRIGGER_navigation_set(registry, [setFoundset], [specifyFoundset/pkArray]) Navigates to a registered form and sets its foundset
- *			  	
- *	MODIFIED :	June 17, 2010 -- Troy Elliott, Data Mosaic
- *			  	
- */	//TODO: when navitem filters on, record will not be preserved when new records loaded in
-
-//solutionPrefs defined and frameworks not in a locked status
-if (application.__parent__.solutionPrefs && !solutionPrefs.config.lockStatus) {
-
-	var itemID = arguments[0]
-	var setFoundset = arguments[1]
-	var useFoundset = arguments[2]
-
-	//loop through all available items, finding everything with this registry
-	var navItemID = new Array()
-	for (var i in navigationPrefs.byNavItemID) {
-		if (navigationPrefs.byNavItemID[i] && navigationPrefs.byNavItemID[i].navigationItem.itemId == itemID) {
-			navItemID.push(i)
-		}
-	}
-
-	//try to find navigaion item from selected set
-	for (var i = 0; i < navItemID.length; i++) {
-		if (navigationPrefs.byNavItemID[navItemID[i]].navigationItem.idNavigation == globals.DATASUTRA_navigation_set) {
-			var found = true
-			break
-		}
-	}
-
-	//prefer navigaion item from selected set
-	if (found) {
-		var navItem = navigationPrefs.byNavItemID[navItemID[i]].navigationItem
-	}
-	//take first navigation item with passed registry
-	else if (navItemID.length) {
-		var navItem = navigationPrefs.byNavItemID[navItemID[0]].navigationItem
-	}
-
-	if (navItem) {
-		var navSetID = navItem.idNavigation
-		var formNameWorkflow = navItem.formToLoad
-		var formNameList = navItem.listToLoad
-		var stringSort = navItem.sortString
-
-		//if from a different navigation set
-		if (globals.DATASUTRA_navigation_set != navSetID) {
-			navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].lastNavItem = solutionPrefs.config.currentFormID
-			globals.DATASUTRA_navigation_set = navSetID
-
-			//update text display
-			var displayValue = application.getValueListDisplayValue('NAV_navigation_set',globals.DATASUTRA_navigation_set)
-			forms.NAV_0L_solution.elements.lbl_header.text = (displayValue) ? displayValue.toUpperCase() : 'NAVIGATION'
-		}
-
-		//redraw list; make sure row is expanded if node2; load new item
-		forms.NAV_0L_solution.LIST_expand_collapse(navItem.idNavigationItem,'open',navSetID)
-
-		//bring foundset over
-		if (setFoundset) {
-			var callingFoundset = (useFoundset) ? useFoundset : forms[application.getMethodTriggerFormName()].foundset
-
-			//we're passed an array, convert to dataset
-			if (callingFoundset instanceof Array) {
-				var ds = databaseManager.convertToDataSet(callingFoundset)
-
-				forms[formNameWorkflow].controller.loadRecords(ds)
+function TRIGGER_navigation_set(itemID, setFoundset, useFoundset) {
+//TODO: when navitem filters on, record will not be preserved when new records loaded in
+	
+	//solutionPrefs defined and frameworks not in a locked status
+	if (application.__parent__.solutionPrefs && !solutionPrefs.config.lockStatus) {
+	
+		var itemID = arguments[0]
+		var setFoundset = arguments[1]
+		var useFoundset = arguments[2]
+	
+		//loop through all available items, finding everything with this registry
+		var navItemID = new Array()
+		for (var i in navigationPrefs.byNavItemID) {
+			if (navigationPrefs.byNavItemID[i] && navigationPrefs.byNavItemID[i].navigationItem.itemId == itemID) {
+				navItemID.push(i)
 			}
-			//working with foundset, verify that based on same table
-			else {
-
-				var dataSourceOne = callingFoundset.getDataSource()
-				var dataSourceTwo = forms[formNameWorkflow].controller.getDataSource()
-
-				var formOne = databaseManager.getDataSourceServerName(dataSourceOne) + '—' + databaseManager.getDataSourceTableName(dataSourceOne)
-				var formTwo = databaseManager.getDataSourceServerName(dataSourceTwo) + '—' + databaseManager.getDataSourceTableName(dataSourceTwo)
-
-				//check that the two forms are based on the same table from the same server
-				if (formOne == formTwo) {
-					//load related foundset
-					forms[formNameWorkflow].controller.loadRecords(callingFoundset.unrelate())
-
-				}
+		}
+	
+		//try to find navigaion item from selected set
+		for (var i = 0; i < navItemID.length; i++) {
+			if (navigationPrefs.byNavItemID[navItemID[i]].navigationItem.idNavigation == globals.DATASUTRA_navigation_set) {
+				var found = true
+				break
 			}
-
-			//one of the above two is true, //TODO!
-			if (true) {
-				//restrict if required to
-			//	globals.NAV_foundset_restrict(true,null,true)
-
-				//reset the sort
-				if (stringSort && forms[formNameWorkflow].controller.getMaxRecordIndex()) {
-					forms[formNameWorkflow].controller.sort(stringSort)
+		}
+	
+		//prefer navigaion item from selected set
+		if (found) {
+			var navItem = navigationPrefs.byNavItemID[navItemID[i]].navigationItem
+		}
+		//take first navigation item with passed registry
+		else if (navItemID.length) {
+			var navItem = navigationPrefs.byNavItemID[navItemID[0]].navigationItem
+		}
+	
+		if (navItem) {
+			var navSetID = navItem.idNavigation
+			var formNameWorkflow = navItem.formToLoad
+			var formNameList = navItem.listToLoad
+			var stringSort = navItem.sortString
+	
+			//if from a different navigation set
+			if (globals.DATASUTRA_navigation_set != navSetID) {
+				navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].lastNavItem = solutionPrefs.config.currentFormID
+				globals.DATASUTRA_navigation_set = navSetID
+	
+				//update text display
+				var displayValue = application.getValueListDisplayValue('NAV_navigation_set',globals.DATASUTRA_navigation_set)
+				forms.NAV_0L_solution.elements.lbl_header.text = (displayValue) ? displayValue.toUpperCase() : 'NAVIGATION'
+			}
+	
+			//redraw list; make sure row is expanded if node2; load new item
+			forms.NAV_0L_solution.LIST_expand_collapse(navItem.idNavigationItem,'open',navSetID)
+	
+			//bring foundset over
+			if (setFoundset) {
+				var callingFoundset = (useFoundset) ? useFoundset : forms[application.getMethodTriggerFormName()].foundset
+	
+				//we're passed an array, convert to dataset
+				if (callingFoundset instanceof Array) {
+					var ds = databaseManager.convertToDataSet(callingFoundset)
+	
+					forms[formNameWorkflow].controller.loadRecords(ds)
 				}
-
-				//modified foundset
-				var modifiedFoundset = forms[formNameWorkflow].foundset
-
-				//show that only a portion of current foundset selected
-				globals.DATASUTRA_find = 'Related subset'
-				globals.DATASUTRA_find_field = null
-			//	forms[solutionPrefs.config.formNameBase].elements.find_end.setImageURL('media:///find_stop.png')
-
-				//using UL, refresh
-				if (navItem.useFwList) {
-					//serclipse 4
-					if (utils.stringToNumber(solutionPrefs.clientInfo.verServoy) >= 4) {
-						var formUL = navigationPrefs.byNavItemID[navItem.idNavigationItem].listData.tabFormInstance
-
-						forms[formUL].controller.loadRecords(modifiedFoundset.unrelate())
-					}
-					//3.5
-					else {
-						globals.TRIGGER_ul_refresh_all()
-					}
-				}
-				//custom list based on the same, set it too
-				else if (formNameList && forms[formNameList]) {
-					var dataSourceThree = forms[formNameWorkflow].controller.getDataSource()
-					var formThree = databaseManager.getDataSourceServerName(dataSourceThree) + '—' + databaseManager.getDataSourceTableName(dataSourceThree)
-
+				//working with foundset, verify that based on same table
+				else {
+	
+					var dataSourceOne = callingFoundset.getDataSource()
+					var dataSourceTwo = forms[formNameWorkflow].controller.getDataSource()
+	
+					var formOne = databaseManager.getDataSourceServerName(dataSourceOne) + '—' + databaseManager.getDataSourceTableName(dataSourceOne)
+					var formTwo = databaseManager.getDataSourceServerName(dataSourceTwo) + '—' + databaseManager.getDataSourceTableName(dataSourceTwo)
+	
 					//check that the two forms are based on the same table from the same server
-					if (formTwo == formThree) {
+					if (formOne == formTwo) {
 						//load related foundset
-						forms[formNameList].controller.loadRecords(modifiedFoundset.unrelate())
-
-						//crazy hack for our nested unrelated panes
-						if (forms[formNameList + '_1L']) {
-							var dataSourceFour = forms[formNameList + '_1L'].controller.getDataSource()
-							var formFour = databaseManager.getDataSourceServerName(dataSourceFour) + '—' + databaseManager.getDataSourceTableName(dataSourceFour)
-							if (formThree == formFour) {
-								//load related foundset
-								forms[formNameList + '_1L'].controller.loadRecords(modifiedFoundset.unrelate())
-							}
-						}
-
-						return true
+						forms[formNameWorkflow].controller.loadRecords(callingFoundset.unrelate())
 					}
+				}
+	
+				//one of the above two is true, //TODO!
+				if (true) {
+					//restrict if required to
+				//	globals.NAV_foundset_restrict(true,null,true)
+	
+					//reset the sort
+					if (stringSort && forms[formNameWorkflow].controller.getMaxRecordIndex()) {
+						forms[formNameWorkflow].controller.sort(stringSort)
+					}
+	
+					//modified foundset
+					var modifiedFoundset = forms[formNameWorkflow].foundset
+	
+					//show that only a portion of current foundset selected
+					globals.DATASUTRA_find = 'Related subset'
+					globals.DATASUTRA_find_field = null
+				//	forms[solutionPrefs.config.formNameBase].elements.find_end.setImageURL('media:///find_stop.png')
+	
+					//using UL, refresh
+					if (navItem.useFwList) {
+						//serclipse 4
+						if (utils.stringToNumber(solutionPrefs.clientInfo.verServoy) >= 4) {
+							var formUL = navigationPrefs.byNavItemID[navItem.idNavigationItem].listData.tabFormInstance
+	
+							forms[formUL].controller.loadRecords(modifiedFoundset.unrelate())
+						}
+						//3.5
+						else {
+							globals.TRIGGER_ul_refresh_all()
+						}
+					}
+					//custom list based on the same, set it too
+					else if (formNameList && forms[formNameList]) {
+						var dataSourceThree = forms[formNameWorkflow].controller.getDataSource()
+						var formThree = databaseManager.getDataSourceServerName(dataSourceThree) + '—' + databaseManager.getDataSourceTableName(dataSourceThree)
+	
+						//check that the two forms are based on the same table from the same server
+						if (formTwo == formThree) {
+							//load related foundset
+							forms[formNameList].controller.loadRecords(modifiedFoundset.unrelate())
+	
+							//crazy hack for our nested unrelated panes
+							if (forms[formNameList + '_1L']) {
+								var dataSourceFour = forms[formNameList + '_1L'].controller.getDataSource()
+								var formFour = databaseManager.getDataSourceServerName(dataSourceFour) + '—' + databaseManager.getDataSourceTableName(dataSourceFour)
+								if (formThree == formFour) {
+									//load related foundset
+									forms[formNameList + '_1L'].controller.loadRecords(modifiedFoundset.unrelate())
+								}
+							}
+	
+							return true
+						}
+					}
+					else {
+						return false
+					}
+	
+					return true
 				}
 				else {
 					return false
 				}
-
-				return true
 			}
 			else {
-				return false
+				return null
 			}
 		}
 		else {
+			plugins.dialogs.showErrorDialog(
+						'Navigation error',
+						'You do not have access to this screen.  Please see administrator'
+				)
 			return null
 		}
 	}
-	else {
-		plugins.dialogs.showErrorDialog(
-					'Navigation error',
-					'You do not have access to this screen.  Please see administrator'
-			)
-		return null
-	}
-}
 }
 
 /**
- *
+ * Get the status of the progress toolbar.
+ * 
+ * @returns	{Array}	Current status of the progrress toolbar [progressValue, explanationText, explanationText, progressMaxValue]<br>	
+ * 					progressValue Current value of the progress bean (null means that indeterminate or not shown).<br>
+ *					explanationText Current explanatory text.<br>
+ * 					explanationText Current tooltip of explanatory text.
+ * 					progressMaxValue Current maximum value of the progress bean.
+ * 
  * @properties={typeid:24,uuid:"7e91ecfd-e090-4d7b-83cf-782473b41028"}
  */
-function TRIGGER_progressbar_get()
-{
-
-/*
- *	TITLE    :	TRIGGER_progressbar_get
- *			  	
- *	MODULE   :	rsrc_CODE_sutra
- *			  	
- *	ABOUT    :	
- *			  	
- *	INPUT    :	
- *			  	
- *	OUTPUT   :	1- value of bean	(null means that either indeterminate or not showing)
- *			  	2- text 
- *			  	3- toolTip on text
- *			  	
- *	REQUIRES :	
- *			  	
- *	USAGE    :	TRIGGER_progressbar_get()
- *			  	
- *	MODIFIED :	June 26, 2008 -- Troy Elliott, Data Mosaic
- *			  	
- */
-
-if (application.__parent__.solutionPrefs && forms[solutionPrefs.config.formNameBase+'__header__toolbar'].elements.tab_toolbar.getTabNameAt(forms[solutionPrefs.config.formNameBase+'__header__toolbar'].elements.tab_toolbar.getMaxTabIndex()) == 'TOOL_progress_bar') {
-	var formName = 'TOOL_progress_bar'
-	
-	//get progressbar value if showing
-	if (forms[formName].elements.bean_progress.visible && !forms[formName].elements.bean_progress.indeterminate) {
-		var value = forms[formName].elements.bean_progress.value
+function TRIGGER_progressbar_get(progressValue,textValue,textTooltip) {
+	if (application.__parent__.solutionPrefs && forms[solutionPrefs.config.formNameBase+'__header__toolbar'].elements.tab_toolbar.getTabNameAt(forms[solutionPrefs.config.formNameBase+'__header__toolbar'].elements.tab_toolbar.getMaxTabIndex()) == 'TOOL_progress_bar') {
+		var formName = 'TOOL_progress_bar'
+		
+		//get progressbar value if showing
+		if (forms[formName].elements.bean_progress.visible && !forms[formName].elements.bean_progress.indeterminate) {
+			var progressValue = forms[formName].elements.bean_progress.value
+			var progressMaxValue = forms[formName].elements.bean_progress.maximum
+		}
+		else {
+			var progressValue = null
+		}
+		
+		//get text
+		if (forms[formName].elements.lbl_progress_text.visible && forms[formName].elements.lbl_progress_text.text) {
+			var explanationText = forms[formName].elements.lbl_progress_text.text
+		}
+		else {
+			var explanationText = null
+		}
+		
+		//get toolTip
+		if (forms[formName].elements.lbl_progress_text.visible && forms[formName].elements.lbl_progress_text.toolTipText) {
+			var explanationToolTip = forms[formName].elements.lbl_progress_text.toolTipText
+		}
+		else if (explanationToolTip) {
+			var explanationToolTip = null
+		}
+		
+		return [progressValue,explanationText,explanationToolTip,progressMaxValue]
 	}
-	else {
-		var value = null
-	}
-	
-	//get text
-	if (forms[formName].elements.lbl_progress_text.visible && forms[formName].elements.lbl_progress_text.text) {
-		var explanationText = forms[formName].elements.lbl_progress_text.text
-	}
-	else {
-		var explanationText = null
-	}
-	
-	//get toolTip
-	if (forms[formName].elements.lbl_progress_text.visible && forms[formName].elements.lbl_progress_text.toolTipText) {
-		var explanationToolTip = forms[formName].elements.lbl_progress_text.toolTipText
-	}
-	else if (explanationToolTip) {
-		var explanationToolTip = null
-	}
-	
-	return [value,explanationText,explanationToolTip]
-}
-
-
 }
 
 /**
- *
+ * Set the status of the progress toolbar.
+ * 
+ * @param	{Number}	[progressValue] Value for progress bean.
+ * @param	{String}	[explanationText] Explanatory text (null clears existing text, empty will not change existing value, non-empty will set new value).
+ * @param	{String}	[explanationToolTip] Tooltip for explanatory text.
+ * 
  * @properties={typeid:24,uuid:"13108d13-f698-45c1-a3d7-0b1c4547e37f"}
  */
-function TRIGGER_progressbar_set()
-{
-
-/*
- *	TITLE    :	TRIGGER_progressbar_set
- *			  	
- *	MODULE   :	rsrc_CODE_sutra
- *			  	
- *	ABOUT    :	
- *			  	
- *	INPUT    :	1- value
- *			  	2- text (null will clear, empty will not change value, new value will be set)
- *			  	3- toolTip
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
- *	USAGE    :	TRIGGER_progressbar_set()
- *			  	
- *	MODIFIED :	June 26, 2008 -- Troy Elliott, Data Mosaic
- *			  	
- */
-
-if (application.__parent__.solutionPrefs) {
-
-//MEMO: need to somehow put this section in a Function of it's own
-//running in Tano...strip out jsevents for now
-if (utils.stringToNumber(application.getVersion()) >= 5) {
-	//cast Arguments to array
-	var Arguments = new Array()
-	for (var i = 0; i < arguments.length; i++) {
-		Arguments.push(arguments[i])
-	}
+function TRIGGER_progressbar_set(progressValue,explanationText,explanationToolTip) {
+	if (application.__parent__.solutionPrefs) {
 	
-	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
-}
-
-	var formName = 'TOOL_progress_bar'
-	
-	var value = arguments[0]
-	var explanationText = arguments[1]
-	var explanationToolTip = arguments[2]
-	
-	//set new progress value
-	if (typeof value == 'number') {
-		forms[formName].elements.bean_progress.value = value
-		forms[formName].elements.bean_progress.updateUI()
+		var formName = 'TOOL_progress_bar'
+		
+		var progressValue = arguments[0]
+		var explanationText = arguments[1]
+		var explanationToolTip = arguments[2]
+		
+		//set new progress value
+		if (typeof value == 'number') {
+			forms[formName].elements.bean_progress.value = value
+			forms[formName].elements.bean_progress.updateUI()
+		}
+		
+		//set text
+		if (explanationText == null && typeof explanationText == 'object') {
+			forms[formName].elements.lbl_progress_text.text = null
+		}
+		else if (explanationText) {
+			forms[formName].elements.lbl_progress_text.text = explanationText
+		}
+		
+		//set toolTip
+		if (explanationToolTip == null && typeof explanationToolTip == 'object') {
+			forms[formName].elements.lbl_progress_text.toolTipText = null
+		}
+		else if (explanationToolTip) {
+			forms[formName].elements.lbl_progress_text.toolTipText = explanationToolTip
+		}
+		
+		application.updateUI()
 	}
-	
-	//set text
-	if (explanationText == null && typeof explanationText == 'object') {
-		forms[formName].elements.lbl_progress_text.text = null
-	}
-	else if (explanationText) {
-		forms[formName].elements.lbl_progress_text.text = explanationText
-	}
-	
-	//set toolTip
-	if (explanationToolTip == null && typeof explanationToolTip == 'object') {
-		forms[formName].elements.lbl_progress_text.toolTipText = null
-	}
-	else if (explanationToolTip) {
-		forms[formName].elements.lbl_progress_text.toolTipText = explanationToolTip
-	}
-	
-	application.updateUI()
-}
-
 }
 
 /**
- *
+ * Show and set the initial status of the progress toolbar.
+ * 
+ * @param	{Number}	progressValue Value for progress bean (usually 0; null will show indeterminate progressbar; -273 will show animated gif).
+ * @param	{String}	[explanationText] Explanatory text (empty string will hide element).
+ * @param	{String}	[explanationToolTip] Tooltip for explanatory text.
+ * @param	{Number}	[minimum=0] Minimum value for progress bean.
+ * @param	{Number}	[maximum=100] Maximum value for progress bean.
+ * 
  * @properties={typeid:24,uuid:"99d4d8c5-a92a-4793-a10a-04bb647a2d68"}
  */
-function TRIGGER_progressbar_start()
-{
-
-/*
- *	TITLE    :	TRIGGER_progressbar_start
- *			  	
- *	MODULE   :	rsrc_CODE_sutra
- *			  	
- *	ABOUT    :	sets up the progressbar
- *			  	
- *	INPUT    :	1- initial value (usually 0); if null, bar will be indeterminate; if -273, use gif
- *			  	2- explanation text; if empty, text will not be available
- *			  	3- explanation toolTip
- *			  	4- minimum (defaults to 0)
- *			  	5- maximum (defaults to 100)
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
- *	USAGE    :	TRIGGER_progressbar_start(startPosition,explanation,explanationTooltip,minValue,maxValue)
- *			  	
- *	MODIFIED :	June 26, 2008 -- Troy Elliott, Data Mosaic
- *			  	
- */
-
-if (application.__parent__.solutionPrefs) {
-
-//MEMO: need to somehow put this section in a Function of it's own
-//running in Tano...strip out jsevents for now
-if (utils.stringToNumber(application.getVersion()) >= 5) {
-	//cast Arguments to array
-	var Arguments = new Array()
-	for (var i = 0; i < arguments.length; i++) {
-		Arguments.push(arguments[i])
-	}
+function TRIGGER_progressbar_start(progressValue,explanationText,explanationToolTip,minimum,maximum) {
+	if (application.__parent__.solutionPrefs) {
 	
-	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
+		var formName = 'TOOL_progress_bar'
+		var baseForm = solutionPrefs.config.formNameBase
+		
+		var progressValue = arguments[0]
+		var explanationText = arguments[1]
+		var explanationToolTip = arguments[2]
+		var minimum = (typeof arguments[3] == 'number') ? arguments[3] : 0
+		var maximum = (typeof arguments[4] == 'number') ? arguments[4] : 100
+		
+		//only run if progressbar not added
+		if (forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getTabFormNameAt(forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getMaxTabIndex()) != formName) {
+	
+			//save down active toolbar to restore
+			solutionPrefs.config.lastSelectedToolbar = forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex
+			
+			//load scrollbar tab
+			forms[baseForm + '__header__toolbar'].elements.tab_toolbar.addTab(forms[formName],'')
+			forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex = forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getMaxTabIndex()
+			
+			//hide toolbar controls
+			forms[baseForm + '__header__toolbar'].elements.btn_toolbar_toggle.visible = false
+			forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.visible = false
+		}
+		//hide bean stuff to make sure the passed values are obeyed
+		else {
+			forms[formName].elements.lbl_progress_text.visible = false
+			forms[formName].elements.bean_progress.indeterminate = false
+			forms[formName].elements.bean_progress.value = 0
+			forms[formName].elements.bean_progress.visible = false
+			forms[formName].elements.gfx_progress.visible = false
+		}
+		
+		//turn on progressbar elements
+		forms[formName].elements.bean_progress.visible = true
+		forms[formName].elements.lbl_progress_text.visible = (explanationText) ? true : false
+		forms[formName].elements.gfx_progress.visible = false
+		
+		//indeterminate gif
+		if (progressValue == -273) {
+			forms[formName].elements.bean_progress.visible = false
+			forms[formName].elements.gfx_progress.visible = true
+		}
+		//indeterminate progressbar
+		else if (progressValue == null && typeof progressValue == 'object') {
+			forms[formName].elements.bean_progress.indeterminate = true
+		}
+		//normal progressbar
+		else {
+			//initial value
+			if (typeof progressValue == 'number') {
+				forms[formName].elements.bean_progress.value = progressValue
+			}
+			else {
+				forms[formName].elements.bean_progress.value = 0
+			}
+			
+			//min/max
+			forms[formName].elements.bean_progress.minimum = minimum
+			forms[formName].elements.bean_progress.maximum = maximum
+		}
+		
+		
+		//set text
+		if (explanationText) {
+			forms[formName].elements.lbl_progress_text.text = explanationText
+			forms[formName].elements.lbl_progress_text.toolTipText = explanationToolTip
+		}
+		
+		//two updates (maybe more required)
+	//	application.updateUI()
+	//	application.updateUI()
+		application.updateUI(50)
+	}
 }
 
-	var formName = 'TOOL_progress_bar'
-	var baseForm = solutionPrefs.config.formNameBase
-	
-	var initialValue = arguments[0]
-	var explanationText = arguments[1]
-	var explanationToolTip = arguments[2]
-	var minimum = (typeof arguments[3] == 'number') ? arguments[3] : 0
-	var maximum = (typeof arguments[4] == 'number') ? arguments[4] : 100
-	
-	//only run if progressbar not added
-	if (forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getTabFormNameAt(forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getMaxTabIndex()) != formName) {
-
-		//save down active toolbar to restore
-		solutionPrefs.config.lastSelectedToolbar = forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex
+/**
+ * Remove progress toolbar and re-select the last toolbar the user was viewing.
+ * 
+ * @properties={typeid:24,uuid:"705d0fdd-b2f9-48a4-9495-d3762c0cb104"}
+ */
+function TRIGGER_progressbar_stop() {
+	if (application.__parent__.solutionPrefs) {
+		var baseForm = solutionPrefs.config.formNameBase
+		var formName = 'TOOL_progress_bar'
 		
-		//load scrollbar tab
-		forms[baseForm + '__header__toolbar'].elements.tab_toolbar.addTab(forms[formName],'')
-		forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex = forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getMaxTabIndex()
+		//remove progress toolbar if it is present
+		if (forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getTabFormNameAt(forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getMaxTabIndex()) == formName) {
+			forms[baseForm + '__header__toolbar'].elements.tab_toolbar.removeTabAt(forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getMaxTabIndex())
+			
+			//set toolbar to previous if it wasn't the last tab
+			if (solutionPrefs.config.lastSelectedToolbar != forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getMaxTabIndex()) {
+				globals.DS_toolbar_cycle(solutionPrefs.config.lastSelectedToolbar)
+			}
+			
+			//show toolbar controls
+			forms[baseForm + '__header__toolbar'].elements.btn_toolbar_toggle.visible = true
+			//forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.visible = false
+		}
 		
-		//hide toolbar controls
-		forms[baseForm + '__header__toolbar'].elements.btn_toolbar_toggle.visible = false
-		forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.visible = false
-	}
-	//hide bean stuff to make sure the passed values are obeyed
-	else {
+		//clear out lastSelectedToolbar
+		solutionPrefs.config.lastSelectedToolbar = null
+		
+		//hide bean stuff to be ready for next time
 		forms[formName].elements.lbl_progress_text.visible = false
 		forms[formName].elements.bean_progress.indeterminate = false
 		forms[formName].elements.bean_progress.value = 0
 		forms[formName].elements.bean_progress.visible = false
 		forms[formName].elements.gfx_progress.visible = false
 	}
-	
-	//turn on progressbar elements
-	forms[formName].elements.bean_progress.visible = true
-	forms[formName].elements.lbl_progress_text.visible = (explanationText) ? true : false
-	forms[formName].elements.gfx_progress.visible = false
-	
-	//indeterminate gif
-	if (initialValue == -273) {
-		forms[formName].elements.bean_progress.visible = false
-		forms[formName].elements.gfx_progress.visible = true
-		
-	}
-	//indeterminate scrollbar
-	else if (initialValue == null && typeof initialValue == 'object') {
-		forms[formName].elements.bean_progress.indeterminate = true
-	}
-	//normal scrollbar
-	else {
-		//initial value
-		if (typeof initialValue == 'number') {
-			forms[formName].elements.bean_progress.value = initialValue
-		}
-		else {
-			forms[formName].elements.bean_progress.value = 0
-		}
-		
-		//min/max
-		forms[formName].elements.bean_progress.minimum = minimum
-		forms[formName].elements.bean_progress.maximum = maximum
-	}
-	
-	
-	//set text
-	if (explanationText) {
-		forms[formName].elements.lbl_progress_text.text = explanationText
-		forms[formName].elements.lbl_progress_text.toolTipText = explanationToolTip
-	}
-	
-	//two updates (maybe more required)
-	application.updateUI()
-	application.updateUI()
-	application.updateUI()
-}
-
-
 }
 
 /**
- *
- * @properties={typeid:24,uuid:"705d0fdd-b2f9-48a4-9495-d3762c0cb104"}
- */
-function TRIGGER_progressbar_stop()
-{
-
-/*
- *	TITLE    :	TRIGGER_progressbar_stop
- *			  	
- *	MODULE   :	rsrc_CODE_sutra
- *			  	
- *	ABOUT    :	reset toolbars and select last toolbar user was viewing
- *			  	
- *	INPUT    :	
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
- *	USAGE    :	TRIGGER_progressbar_stop()
- *			  	
- *	MODIFIED :	June 26, 2008 -- Troy Elliott, Data Mosaic
- *			  	
- */
-
-
-if (application.__parent__.solutionPrefs) {
-	var baseForm = solutionPrefs.config.formNameBase
-	var formName = 'TOOL_progress_bar'
-	
-	//remove progress toolbar if it is present
-	if (forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getTabFormNameAt(forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getMaxTabIndex()) == formName) {
-		forms[baseForm + '__header__toolbar'].elements.tab_toolbar.removeTabAt(forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getMaxTabIndex())
-		
-		//set toolbar to previous if it wasn't the last tab
-		if (solutionPrefs.config.lastSelectedToolbar != forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getMaxTabIndex()) {
-			globals.DS_toolbar_cycle(solutionPrefs.config.lastSelectedToolbar)
-		}
-		
-		//show toolbar controls
-		forms[baseForm + '__header__toolbar'].elements.btn_toolbar_toggle.visible = true
-		//forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.visible = false
-	}
-	
-	//clear out lastSelectedToolbar
-	solutionPrefs.config.lastSelectedToolbar = null
-	
-	//hide bean stuff to be ready for next time
-	forms[formName].elements.lbl_progress_text.visible = false
-	forms[formName].elements.bean_progress.indeterminate = false
-	forms[formName].elements.bean_progress.value = 0
-	forms[formName].elements.bean_progress.visible = false
-	forms[formName].elements.gfx_progress.visible = false
-}
-
-}
-
-/**
- *
+ * Checks if the group of the currently logged in user is permitted to perform action.
+ * 
+ * @param	{String}	registeredAction Registered action (configured in Access & control).
+ * 
+ * @returns	{Boolean}	Action authorized status.
+ * 
  * @properties={typeid:24,uuid:"32c5064f-1136-410e-8f08-900c0872fc96"}
  */
-function TRIGGER_registered_action_authenticate()
-{
-
-/*
- *	TITLE    :	TRIGGER_registered_action_authenticate
- *			  	
- *	MODULE   :	rsrc_CODE_frameworks
- *			  	
- *	ABOUT    :	checks if the group of the currently logged in user is permitted to perform action
- *			  	
- *	INPUT    :	action registry id; configured in Access and Control
- *			  	
- *	OUTPUT   :	true/false
- *			  	
- *	REQUIRES :	solutionPrefs
- *			  	
- *	USAGE    :	TRIGGER_registered_action_authenticate(actionRegisty) Returns whether currently logged in user is permitted to perform action
- *			  	
- *	MODIFIED :	December 16, 2009 -- Troy Elliott, Data Mosaic
- *			  	
- */
-
-//check to see that solutionPrefs is defined
-if (application.__parent__.solutionPrefs) {
-
-//MEMO: need to somehow put this section in a Function of it's own
-//running in Tano...strip out jsevents for now
-if (utils.stringToNumber(application.getVersion()) >= 5) {
-	//cast Arguments to array
-	var Arguments = new Array()
-	for (var i = 0; i < arguments.length; i++) {
-		Arguments.push(arguments[i])
-	}
-	
-	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
-}
-	
-	//check to see that access and control is enabled
-	if (solutionPrefs.access && solutionPrefs.access.groupID) {
-		var actionRegistry = arguments[0]
-		var serverName = forms[solutionPrefs.config.formNameBase].controller.getServerName()
-		
-		var allActions = databaseManager.getFoundSet(serverName, 'sutra_access_action')
-		allActions.clear()
-		
-		allActions.find()
-		allActions.action_id = actionRegistry
-		var results = allActions.search()
-		
-		//the specified action does exist
-		if (results) {
-			var actionID = allActions.id_action
+function TRIGGER_registered_action_authenticate(registeredAction) {
+	//check to see that solutionPrefs is defined
+	if (application.__parent__.solutionPrefs) {
+		//check to see that access and control is enabled
+		if (solutionPrefs.access && solutionPrefs.access.groupID) {
+			var registeredAction = arguments[0]
 			
-			var groupActions = databaseManager.getFoundSet(serverName, 'sutra_access_group_action')
-			groupActions.clear()
+			/** @type {JSFoundSet<db:/sutra/sutra_access_action>}*/
+			var allActions = databaseManager.getFoundSet('sutra', 'sutra_access_action')
+			allActions.clear()
 			
-			groupActions.find()
-			groupActions.id_action = actionID
-			groupActions.id_group = solutionPrefs.access.groupID
-			groupActions.flag_enabled = 1
-			results = groupActions.search()
+			allActions.find()
+			allActions.action_id = registeredAction
+			var results = allActions.search()
 			
-			//action allowed
+			//the specified action does exist
 			if (results) {
-				return true
+				var actionID = allActions.id_action
+				
+				/** @type {JSFoundSet<db:/sutra/sutra_access_group_action>}*/
+				var groupActions = databaseManager.getFoundSet('sutra', 'sutra_access_group_action')
+				groupActions.clear()
+				
+				groupActions.find()
+				groupActions.id_action = actionID
+				groupActions.id_group = solutionPrefs.access.groupID
+				groupActions.flag_enabled = 1
+				results = groupActions.search()
+				
+				//action allowed
+				if (results) {
+					return true
+				}
+				//action disallowed
+				else {
+					return false
+				}
 			}
-			//action disallowed
+			//the specified action does not exist
 			else {
 				return false
 			}
 		}
-		//the specified action does not exist
+		//solutionPrefs access and control is turned off, allow action
 		else {
-			return false
+			return true
 		}
 	}
-	//solutionPrefs access and control is turned off, allow action
+	//solutionPrefs not defined, therefore running in standalone module; allow action
 	else {
 		return true
 	}
 }
-//solutionPrefs not defined, therefore running in standalone module; allow action
-else {
-	return true
-}
-
-
-}
 
 /**
- *
+ * Makes the specified space active.
+ * 
+ * @param	{String}	spaceName Space name to jump to. Valid inputs are:<br>
+ * 						'standard','list','vertical','centered','classic','wide','workflow',<br>
+ *						'standard flip','list flip','vertical flip','centered flip','classic flip','wide flip','workflow flip'
+ * @param	{Boolean}	[alwaysFire] Go to requested space even if already there.
+ * @param	{Boolean}	[skipUI] Do not application.updateUI() as the method runs.
+ * 
+ * @returns	{Boolean}	Space was changed.
+ * 
  * @properties={typeid:24,uuid:"16e4b4b2-b0ef-4af5-81e5-4a1fb2c76a84"}
  */
-function TRIGGER_spaces_set()
-{
-
-/*
- *	TITLE    :	TRIGGER_spaces_set
- *			  	
- *	MODULE   :	rsrc_CODE_sutra
- *			  	
- *	ABOUT    :	change the current workflow to the specified space
- *			  	
- *	INPUT    :	1- space name to jump to
- *			  		Valid inputs are:
- *			  			'standard','list','vertical','centered','classic','wide','workflow',
- *						'standard flip','list flip','vertical flip','centered flip','classic flip','wide flip','workflow flip'
- *			  	2- go there even if already on that space
- *			  	3- do not fire application updateUIs
- *			  	
- *	OUTPUT   :	true if space changed, false if no change (already on that space or input was not valid)
- *			  	
- *	REQUIRES :	
- *			  	
- *	USAGE    :	TRIGGER_spaces_set(spaceName) Makes the specified space active
- *			  	
- *	MODIFIED :	August 19, 2008 -- Troy Elliott, Data Mosaic
- *			  	
- */	//TODO: only allow spaces enabled for navItem to be navigable
-
-//solutionPrefs defined and frameworks not in a locked status
-if (application.__parent__.solutionPrefs && !solutionPrefs.config.lockStatus) {
-
-//MEMO: need to somehow put this section in a Function of it's own
-//running in Tano...strip out jsevents for now
-if (utils.stringToNumber(application.getVersion()) >= 5) {
-	//cast Arguments to array
-	var Arguments = new Array()
-	for (var i = 0; i < arguments.length; i++) {
-		Arguments.push(arguments[i])
-	}
+function TRIGGER_spaces_set(spaceName,alwaysFire,skipUI) {
+//TODO: only allow spaces enabled for navItem to be navigable
 	
-	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
-}
-
-	var oldSpace = solutionPrefs.config.activeSpace
-	var newSpace = arguments[0]
-	var alwaysFire = arguments[1]
-	var skipUI = arguments[2]
-	
-	var spaceNames = [	'standard','list','vertical','centered','classic','wide','workflow',
-						'standard flip','list flip','vertical flip','centered flip','classic flip','wide flip','workflow flip']
-	
-	//check to make sure that newSpace is a valid input
-	var found = false
-	for (var i = 0; i < spaceNames.length && !found; i++) {
-		if (spaceNames[i] == newSpace) {
-			found = true
-		}
-	}
-	
-	//destination space is valid and different than current space
-	if ((newSpace != oldSpace || alwaysFire) && found) {
-		var baseForm = solutionPrefs.config.formNameBase
+	//solutionPrefs defined and frameworks not in a locked status
+	if (application.__parent__.solutionPrefs && !solutionPrefs.config.lockStatus) {
+		var oldSpace = solutionPrefs.config.activeSpace
+		var newSpace = arguments[0]
+		var alwaysFire = arguments[1]
+		var skipUI = arguments[2]
 		
-		//hide complement and show current
-		if (i < 8) {
-			var complement = i + 7
-		}
-		else {
-			var complement = i - 7
-		}
-		forms[baseForm + '__header'].elements['btn_space_'+i].visible = true
-		forms[baseForm + '__header'].elements['btn_space_'+complement].visible = false
+		var spaceNames = [	'standard','list','vertical','centered','classic','wide','workflow',
+							'standard flip','list flip','vertical flip','centered flip','classic flip','wide flip','workflow flip']
 		
-		//fire space changer	
-		globals.DS_space_change('btn_space_'+i,true,alwaysFire,skipUI)
-		
-		return true
-	}
-	else {
-		return false
-	}
-}
-
-
-}
-
-/**
- *
- * @properties={typeid:24,uuid:"388b465a-89a4-471f-9ad9-8a862a505fe3"}
- */
-function TRIGGER_timer()
-{
-
-/*
- *	TITLE    :	TRIGGER_timer
- *			  	
- *	MODULE   :	rsrc_CODE_sutra
- *			  	
- *	ABOUT    :	starts/stops timer for debugging speed issues
- *			  	
- *	INPUT    :	1- 'start'/'stop'
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	solutionPrefs
- *			  	
- *	USAGE    :	TRIGGER_timer(startStop) Starts/stops timer.  Displays value in status area when stopped
- *			  	
- *	MODIFIED :	July 21, 2008 -- Troy Elliott, Data Mosaic
- *			  	
- */
-
-//MEMO: need to somehow put this section in a Function of it's own
-//running in Tano...strip out jsevents for now
-if (utils.stringToNumber(application.getVersion()) >= 5) {
-	//cast Arguments to array
-	var Arguments = new Array()
-	for (var i = 0; i < arguments.length; i++) {
-		Arguments.push(arguments[i])
-	}
-	
-	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
-}
-
-var startStop = arguments[0]
-
-//check for solutionPrefs
-if (!application.__parent__.solutionPrefs) {
-	solutionPrefs = {config : {timer: new Object()}}
-}
-//check for config node
-else if (!solutionPrefs.config) {
-	solutionPrefs.config = {timer : new Object()}
-}
-//check for timer node
-else if (!solutionPrefs.config.timer) {
-	solutionPrefs.config.timer = new Object()
-}
-
-
-//start timing
-if (startStop == 'start') {
-	solutionPrefs.config.timer.timeStart = new Date().getTime()
-}
-//stop timing
-else if (startStop == 'stop') {
-	if (solutionPrefs.config.timer.timeStart) {
-		var endTime = solutionPrefs.config.timer.timeEnd = new Date().getTime()
-		
-		var elapsed = solutionPrefs.config.timer.timeEnd - solutionPrefs.config.timer.timeStart
-		
-		//only set when trial mode not expired
-		if (!solutionPrefs.config.trialModeExpired) {
-			application.setStatusText('Elapsed time is: '+ elapsed +' ms.  Finished '+utils.dateFormat(endTime, 'H:MM:ss'))
-		}
-	}
-	else {
-		plugins.dialogs.showErrorDialog('Timer error','The timer has not been started yet')
-	}
-}
-
-
-}
-
-/**
- *
- * @properties={typeid:24,uuid:"545d621f-ead0-4ac5-99aa-7e3a05c85e41"}
- */
-function TRIGGER_toolbar_record_navigator_set()
-{
-
-/*
- *	TITLE    :	TRIGGER_toolbar_record_navigator_set
- *			  	
- *	MODULE   :	rsrc_CODE_sutra
- *			  	
- *	ABOUT    :	update record navigator graphical objects to reflect current record
- *			  	
- *	INPUT    :	1- true/false to enable disable record navigator (if false passed, true must be specified before rn will work on other future forms)
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	solutionPrefs
- *			  	
- *	MODIFIED :	June 17, 2008 -- Troy Elliott, Data Mosaic
- *			  	
- */
-
-//solutionPrefs defined and frameworks not in a locked status
-if (application.__parent__.solutionPrefs && !solutionPrefs.config.lockStatus) {
-
-//MEMO: need to somehow put this section in a Function of it's own
-//running in Tano...strip out jsevents for now
-if (utils.stringToNumber(application.getVersion()) >= 5) {
-	//cast Arguments to array
-	var Arguments = new Array()
-	for (var i = 0; i < arguments.length; i++) {
-		Arguments.push(arguments[i])
-	}
-	
-	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
-}
-
-	/*************
-		inputs
-	*************/
-	
-	//record navigator status
-	if (typeof arguments[0] == 'boolean') {
-		var rnStatus = solutionPrefs.config.recordNavigatorStatus = arguments[0]
-	}
-	else {
-		var rnStatus = solutionPrefs.config.recordNavigatorStatus
-	}
-	
-	//get record navigator form name
-	var formNameRN	 	= 'TOOL_record_navigator'
-	
-	//get form name
-	var formName 		= solutionPrefs.config.currentFormName
-	
-	//get current index
-	var thisIndex 			= forms[formName].controller.getSelectedIndex()
-	
-	//loaded records size
-	var loaded			= forms[formName].controller.getMaxRecordIndex()
-	
-	//get max table size
-	var size 			= databaseManager.getFoundSetCount(forms[formName].foundset)
-	
-	//set range
-	var setSize			= ""
-	
-	//get current id of loaded form
-	var currentNavItem	= solutionPrefs.config.currentFormID
-	
-	//update record navigator normally
-	if (rnStatus) {
-		//enable elements if needed
-		if (!forms[formNameRN].elements.btn_rec_left.enabled) {
-			forms[formNameRN].elements.btn_rec_left.enabled = true
-			forms[formNameRN].elements.btn_rec_right.enabled = true
-		}
-		
-		
-		/***************************
-			universal list specific
-		****************************/
-		
-		//using universal list, do stuff
-		if (navigationPrefs.byNavItemID[currentNavItem] && navigationPrefs.byNavItemID[currentNavItem].navigationItem.useFwList) {
-			navigationPrefs.byNavItemID[currentNavItem].listData.index.selected = thisIndex
-				
-			var limitStart = navigationPrefs.byNavItemID[currentNavItem].listData.index.start
-			var limitEnd = navigationPrefs.byNavItemID[currentNavItem].listData.index.end
-			
-			if (limitStart && limitEnd) {
-				//setSize = " List showing " + utils.numberFormat(limitStart,'###,###,###,###') + "-" + utils.numberFormat(limitEnd,'###,###,###,###') + "."
-			}
-		}
-		
-			
-		/***************************
-			current record display
-		****************************/
-		
-		//figure out record object display length
-		var maxWidth		= forms[formNameRN].elements.obj_records_max.getWidth()
-		
-		var recordDivisor	= (thisIndex / loaded) ? thisIndex / loaded : 0
-		var recordWidth		= maxWidth * recordDivisor
-		
-		//display record object
-		forms[formNameRN].elements.obj_records.setSize(recordWidth, forms[formNameRN].elements.obj_records.getHeight())
-				
-		//display label
-		var recDisplay = "Record " + utils.numberFormat(thisIndex,'###,###,###,###') + " of " + utils.numberFormat(loaded,'###,###,###,###')
-		if (loaded == size) {
-			recDisplay += " total records."
-		}
-		else {
-			recDisplay += " loaded. " + utils.numberFormat(size,'###,###,###,###') + " total records."
-		}
-		recDisplay += setSize
-		forms[formNameRN].elements.lbl_records.text = recDisplay
-	}
-	//null out value on record navigator
-	else {
-		forms[formNameRN].elements.obj_records.setSize(forms[formNameRN].elements.obj_records_max.getWidth(), forms[formNameRN].elements.obj_records.getHeight())
-		forms[formNameRN].elements.lbl_records.text = 'Record Navigator inactive'
-		
-		//disable elements
-		forms[formNameRN].elements.btn_rec_left.enabled = false
-		forms[formNameRN].elements.btn_rec_right.enabled = false
-	}
-}
-}
-
-/**
- *
- * @properties={typeid:24,uuid:"900fee92-988b-4c95-aca8-0072b6277768"}
- */
-function TRIGGER_toolbar_set()
-{
-
-/*
- *	TITLE    :	TRIGGER_toolbar_set
- *			  	
- *	MODULE   :	rsrc_CODE_sutra
- *			  	
- *	ABOUT    :	jumps between navigation items
- *			  	
- *	INPUT    :	1- toolbar name to jump to
- *			  		Valid inputs are the tab names as defined in the Toolbar setup configuration
- *			  	
- *	OUTPUT   :	true if toolbar changed, false if no change (toolbar already visible or input was not valid)
- *			  	
- *	REQUIRES :	
- *			  	
- *	USAGE    :	TRIGGER_toolbar_set(toolbar) Navigates to the specified toolbar if it is available for the logged in user
- *			  	
- *	MODIFIED :	August 19, 2008 -- Troy Elliott, Data Mosaic
- *			  	
- */
-
-//solutionPrefs defined and frameworks not in a locked status
-if (application.__parent__.solutionPrefs && !solutionPrefs.config.lockStatus) {
-
-//MEMO: need to somehow put this section in a Function of it's own
-//running in Tano...strip out jsevents for now
-if (utils.stringToNumber(application.getVersion()) >= 5) {
-	//cast Arguments to array
-	var Arguments = new Array()
-	for (var i = 0; i < arguments.length; i++) {
-		Arguments.push(arguments[i])
-	}
-	
-	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
-}
-
-	var baseForm = solutionPrefs.config.formNameBase
-	
-	//only run when not in a preference
-	if (!solutionPrefs.config.prefs.preferenceMode) {
-		var newToolbar = arguments[0]
-		var oldToolbar = solutionPrefs.panel.toolbar[forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex - 1].tabName
-		
-		var allToolbars = solutionPrefs.panel.toolbar
-		
-		//check to make sure that newToolbar is a valid input
+		//check to make sure that newSpace is a valid input
 		var found = false
-		for (var i = 0; i < allToolbars.length; i++) {
-			if (allToolbars[i].tabName == newToolbar) {
+		for (var i = 0; i < spaceNames.length && !found; i++) {
+			if (spaceNames[i] == newSpace) {
 				found = true
-				break
 			}
 		}
 		
-		//destination toolbar is valid and different than current toolbar, change
-		if (newToolbar != oldToolbar && found) {
-			globals.DS_toolbar_cycle(i + 1)
+		//destination space is valid and different than current space
+		if ((newSpace != oldSpace || alwaysFire) && found) {
+			var baseForm = solutionPrefs.config.formNameBase
+			
+			//hide complement and show current
+			if (i < 8) {
+				var complement = i + 7
+			}
+			else {
+				var complement = i - 7
+			}
+			forms[baseForm + '__header'].elements['btn_space_'+i].visible = true
+			forms[baseForm + '__header'].elements['btn_space_'+complement].visible = false
+			
+			//fire space changer	
+			globals.DS_space_change('btn_space_'+i,true,alwaysFire,skipUI)
 			
 			return true
 		}
@@ -1969,225 +1332,390 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	}
 }
 
-
-
+/**
+ * Starts/stops a timer used for debugging. Elapsed time displayed in status area of main window.
+ * 
+ * @param	{String}	startStop Command to "start" or "stop" the timer.
+ * 
+ * @properties={typeid:24,uuid:"388b465a-89a4-471f-9ad9-8a862a505fe3"}
+ */
+function TRIGGER_timer(startStop) {
+	
+	//MEMO: need to somehow put this section in a Function of it's own
+	//running in Tano...strip out jsevents for now
+	if (utils.stringToNumber(application.getVersion()) >= 5) {
+		//cast Arguments to array
+		var Arguments = new Array()
+		for (var i = 0; i < arguments.length; i++) {
+			Arguments.push(arguments[i])
+		}
+		
+		//reassign arguments without jsevents
+		arguments = Arguments.filter(globals.CODE_jsevent_remove)
+	}
+	
+	var startStop = arguments[0]
+	
+	//check for solutionPrefs
+	if (!application.__parent__.solutionPrefs) {
+		solutionPrefs = {config : {timer: new Object()}}
+	}
+	//check for config node
+	else if (!solutionPrefs.config) {
+		solutionPrefs.config = {timer : new Object()}
+	}
+	//check for timer node
+	else if (!solutionPrefs.config.timer) {
+		solutionPrefs.config.timer = new Object()
+	}
+	
+	
+	//start timing
+	if (startStop == 'start') {
+		solutionPrefs.config.timer.timeStart = new Date().getTime()
+	}
+	//stop timing
+	else if (startStop == 'stop') {
+		if (solutionPrefs.config.timer.timeStart) {
+			var endTime = solutionPrefs.config.timer.timeEnd = new Date().getTime()
+			
+			var elapsed = solutionPrefs.config.timer.timeEnd - solutionPrefs.config.timer.timeStart
+			
+			//only set when trial mode not expired
+			if (!solutionPrefs.config.trialModeExpired) {
+				application.setStatusText('Elapsed time is: '+ elapsed +' ms.  Finished '+utils.dateFormat(endTime, 'H:MM:ss'))
+			}
+		}
+		else {
+			plugins.dialogs.showErrorDialog('Timer error','The timer has not been started yet')
+		}
+	}
 }
 
 /**
- *
- * @properties={typeid:24,uuid:"6a193823-8789-4ec3-a7bf-45d1238dc5bd"}
+ * Update record navigator toolbar graphical objects to reflect current record.
+ * 
+ * @param	{Boolean}	[status] Enable/disable the record navigator.<br>
+ * 						Note: if false passed, true must be specified before navigator will work on other future forms.
+ * 
+ * @properties={typeid:24,uuid:"545d621f-ead0-4ac5-99aa-7e3a05c85e41"}
  */
-function TRIGGER_tooltip_help_popup()
-{
+function TRIGGER_toolbar_record_navigator_set(status) {
 
-/*
- *	TITLE    :	TRIGGER_tooltip_help_popup
- *			  	
- *	MODULE   :	rsrc_CODE_sutra
- *			  	
- *	ABOUT    :	shows tooltip in larger pop-up window
- *			  	
- *	INPUT    :	1- name of tab panel that has the actual help (optional)
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	solutionPrefs
- *			  	
- *	USAGE    :	TRIGGER_tooltip_help_popup([tabPanelName])
- *			  	
- *	MODIFIED :	July 9, 2008 -- Troy Elliott, Data Mosaic
- *			  	
- */
-
-//MEMO: need to somehow put this section in a Function of it's own
-//running in Tano...strip out jsevents for now
-if (utils.stringToNumber(application.getVersion()) >= 5) {
-	//cast Arguments to array
-	var Arguments = new Array()
-	for (var i = 0; i < arguments.length; i++) {
-		Arguments.push(arguments[i])
+	//solutionPrefs defined and frameworks not in a locked status
+	if (application.__parent__.solutionPrefs && !solutionPrefs.config.lockStatus) {
+	
+	//MEMO: need to somehow put this section in a Function of it's own
+	//running in Tano...strip out jsevents for now
+	if (utils.stringToNumber(application.getVersion()) >= 5) {
+		//cast Arguments to array
+		var Arguments = new Array()
+		for (var i = 0; i < arguments.length; i++) {
+			Arguments.push(arguments[i])
+		}
+		
+		//reassign arguments without jsevents
+		arguments = Arguments.filter(globals.CODE_jsevent_remove)
 	}
 	
-	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
-}
-
-var tabPanelName = arguments[0] || 'tab_detail'
-var formName = application.getMethodTriggerFormName() || arguments[1]
-var elementName = application.getMethodTriggerElementName() || arguments[2]
-
-if (application.__parent__.solutionPrefs) {
-	//there is a default language configured
-	if (solutionPrefs.config && solutionPrefs.config.language) {
-		//special case where the additional help is located one tab level beneath the help button
-		if (elementName == 'btn_help' && forms[formName].elements[tabPanelName]) {
-			var tabFormName = forms[formName].elements[tabPanelName].getTabFormNameAt(forms[formName].elements[tabPanelName].tabIndex)
-			var firstFound = false
+		/*************
+			inputs
+		*************/
+		
+		//record navigator status
+		if (typeof arguments[0] == 'boolean') {
+			var rnStatus = solutionPrefs.config.recordNavigatorStatus = arguments[0]
+		}
+		else {
+			var rnStatus = solutionPrefs.config.recordNavigatorStatus
+		}
+		
+		//get record navigator form name
+		var formNameRN	 	= 'TOOL_record_navigator'
+		
+		//get form name
+		var formName 		= solutionPrefs.config.currentFormName
+		
+		//get current index
+		var thisIndex 			= forms[formName].controller.getSelectedIndex()
+		
+		//loaded records size
+		var loaded			= forms[formName].controller.getMaxRecordIndex()
+		
+		//get max table size
+		var size 			= databaseManager.getFoundSetCount(forms[formName].foundset)
+		
+		//set range
+		var setSize			= ""
+		
+		//get current id of loaded form
+		var currentNavItem	= solutionPrefs.config.currentFormID
+		
+		//update record navigator normally
+		if (rnStatus) {
+			//enable elements if needed
+			if (!forms[formNameRN].elements.btn_rec_left.enabled) {
+				forms[formNameRN].elements.btn_rec_left.enabled = true
+				forms[formNameRN].elements.btn_rec_right.enabled = true
+			}
 			
-			//loop through all inline help and get the first one available
-			for (var j in solutionPrefs.i18n[solutionPrefs.config.language][tabFormName]) {
-				if (!firstFound) {
-					firstFound = solutionPrefs.i18n[solutionPrefs.config.language][tabFormName][j].inlineHelp
+			
+			/***************************
+				universal list specific
+			****************************/
+			
+			//using universal list, do stuff
+			if (navigationPrefs.byNavItemID[currentNavItem] && navigationPrefs.byNavItemID[currentNavItem].navigationItem.useFwList) {
+				navigationPrefs.byNavItemID[currentNavItem].listData.index.selected = thisIndex
+					
+				var limitStart = navigationPrefs.byNavItemID[currentNavItem].listData.index.start
+				var limitEnd = navigationPrefs.byNavItemID[currentNavItem].listData.index.end
+				
+				if (limitStart && limitEnd) {
+					//setSize = " List showing " + utils.numberFormat(limitStart,'###,###,###,###') + "-" + utils.numberFormat(limitEnd,'###,###,###,###') + "."
 				}
 			}
 			
-			//if help found, continue
-			if (firstFound) {
-				globals.CODE_text = firstFound
+				
+			/***************************
+				current record display
+			****************************/
+			
+			//figure out record object display length
+			var maxWidth		= forms[formNameRN].elements.obj_records_max.getWidth()
+			
+			var recordDivisor	= (thisIndex / loaded) ? thisIndex / loaded : 0
+			var recordWidth		= maxWidth * recordDivisor
+			
+			//display record object
+			forms[formNameRN].elements.obj_records.setSize(recordWidth, forms[formNameRN].elements.obj_records.getHeight())
+					
+			//display label
+			var recDisplay = "Record " + utils.numberFormat(thisIndex,'###,###,###,###') + " of " + utils.numberFormat(loaded,'###,###,###,###')
+			if (loaded == size) {
+				recDisplay += " total records."
+			}
+			else {
+				recDisplay += " loaded. " + utils.numberFormat(size,'###,###,###,###') + " total records."
+			}
+			recDisplay += setSize
+			forms[formNameRN].elements.lbl_records.text = recDisplay
+		}
+		//null out value on record navigator
+		else {
+			forms[formNameRN].elements.obj_records.setSize(forms[formNameRN].elements.obj_records_max.getWidth(), forms[formNameRN].elements.obj_records.getHeight())
+			forms[formNameRN].elements.lbl_records.text = 'Record Navigator inactive'
+			
+			//disable elements
+			forms[formNameRN].elements.btn_rec_left.enabled = false
+			forms[formNameRN].elements.btn_rec_right.enabled = false
+		}
+	}
+}
+
+/**
+ * Navigates to the specified toolbar if it is available for the logged in user.
+ * 
+ * @param	{String}	toolbarName Toolbar name to jump to (defined in toolbar config "tab name").
+ * 
+ * @returns	{Boolean}	Toolbar able to be changed.
+ * 
+ * @properties={typeid:24,uuid:"900fee92-988b-4c95-aca8-0072b6277768"}
+ */
+function TRIGGER_toolbar_set(toolbarName) {
+	//solutionPrefs defined and frameworks not in a locked status
+	if (application.__parent__.solutionPrefs && !solutionPrefs.config.lockStatus) {
+	
+		var baseForm = solutionPrefs.config.formNameBase
+		
+		//only run when not in a preference
+		if (!solutionPrefs.config.prefs.preferenceMode) {
+			var newToolbar = arguments[0]
+			var oldToolbar = solutionPrefs.panel.toolbar[forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex - 1].tabName
+			
+			var allToolbars = solutionPrefs.panel.toolbar
+			
+			//check to make sure that newToolbar is a valid input
+			var found = false
+			for (var i = 0; i < allToolbars.length && !found; i++) {
+				if (allToolbars[i].tabName == newToolbar) {
+					found = true
+					break
+				}
+			}
+			
+			//destination toolbar is valid and different than current toolbar, change
+			if (newToolbar != oldToolbar && found) {
+				globals.DS_toolbar_cycle(i + 1)
+				
+				return true
+			}
+			else {
+				return false
+			}
+		}
+	}
+}
+
+/**
+ * Shows detailed view of tooltip in a FiD.
+ * 
+ * @param	{String}	tabPanelName Name of tab panel that has help.
+ * @param	{String}	formName Name of form that has help.
+ * @param	{String}	elemName Name of element that has help.
+ * 
+ * @properties={typeid:24,uuid:"6a193823-8789-4ec3-a7bf-45d1238dc5bd"}
+ */
+function TRIGGER_tooltip_help_popup(tabPanelName,formName,elemName) {
+	
+	//MEMO: need to somehow put this section in a Function of it's own
+	//running in Tano...strip out jsevents for now
+	if (utils.stringToNumber(application.getVersion()) >= 5) {
+		//cast Arguments to array
+		var Arguments = new Array()
+		for (var i = 0; i < arguments.length; i++) {
+			Arguments.push(arguments[i])
+		}
+		
+		//reassign arguments without jsevents
+		arguments = Arguments.filter(globals.CODE_jsevent_remove)
+	}
+	
+	var tabPanelName = arguments[0] || 'tab_detail'
+	var formName = application.getMethodTriggerFormName() || arguments[1]
+	var elemName = application.getMethodTriggerElementName() || arguments[2]
+	
+	if (application.__parent__.solutionPrefs) {
+		//there is a default language configured
+		if (solutionPrefs.config && solutionPrefs.config.language) {
+			//special case where the additional help is located one tab level beneath the help button
+			if (elemName == 'btn_help' && forms[formName].elements[tabPanelName]) {
+				var tabFormName = forms[formName].elements[tabPanelName].getTabFormNameAt(forms[formName].elements[tabPanelName].tabIndex)
+				var firstFound = false
+				
+				//loop through all inline help and get the first one available
+				for (var j in solutionPrefs.i18n[solutionPrefs.config.language][tabFormName]) {
+					if (!firstFound) {
+						firstFound = solutionPrefs.i18n[solutionPrefs.config.language][tabFormName][j].inlineHelp
+					}
+				}
+				
+				//if help found, continue
+				if (firstFound) {
+					globals.CODE_text = firstFound
+					forms.CODE_P__text.elements.lbl_header.text = 'Inline help'
+					application.showFormInDialog(forms.CODE_P__text,-1,-1,-1,-1,' ',true,false,'inlineHelp')
+				}
+			}
+			//check to see that there is additional help for this element
+			else if (solutionPrefs.i18n[solutionPrefs.config.language][formName] && solutionPrefs.i18n[solutionPrefs.config.language][formName][elemName] && solutionPrefs.i18n[solutionPrefs.config.language][formName][elemName].inlineHelp) {
+				globals.CODE_text = solutionPrefs.i18n[solutionPrefs.config.language][formName][elemName].inlineHelp
 				forms.CODE_P__text.elements.lbl_header.text = 'Inline help'
 				application.showFormInDialog(forms.CODE_P__text,-1,-1,-1,-1,' ',true,false,'inlineHelp')
 			}
 		}
-		//check to see that there is additional help for this element
-		else if (solutionPrefs.i18n[solutionPrefs.config.language][formName] && solutionPrefs.i18n[solutionPrefs.config.language][formName][elementName] && solutionPrefs.i18n[solutionPrefs.config.language][formName][elementName].inlineHelp) {
-			globals.CODE_text = solutionPrefs.i18n[solutionPrefs.config.language][formName][elementName].inlineHelp
-			forms.CODE_P__text.elements.lbl_header.text = 'Inline help'
-			application.showFormInDialog(forms.CODE_P__text,-1,-1,-1,-1,' ',true,false,'inlineHelp')
+		//no default language set up; abort
+		else {
+			plugins.dialogs.showErrorDialog(
+							'Error',
+							'No default language is specified'
+					)
 		}
 	}
-	//no default language set up; abort
 	else {
 		plugins.dialogs.showErrorDialog(
-						'Error',
-						'No default language is specified'
-				)
+							'Error',
+							'Inline help/tooltips only work when in Data Sutra'
+					)
 	}
-}
-else {
-	plugins.dialogs.showErrorDialog(
-						'Error',
-						'Inline help/tooltips only work when in Data Sutra'
-				)
-}
-
-
-
 }
 
 /**
- *
+ * Sets tooltips on all named elements of current form.
+ * 
+ * @param	{String}	[formName] Form to work on.
+ * @param	{String}	[clearAll] Clear tooltips on all non-Data Sutra managed elements.
+ * 
  * @properties={typeid:24,uuid:"cdd6b7fe-1a1c-496d-857e-0ab7b32088f4"}
  */
-function TRIGGER_tooltip_set()
-{
-
-/*
- *	TITLE    :	TRIGGER_tooltip_set
- *			  	
- *	MODULE   :	rsrc_CODE_sutra
- *			  	
- *	ABOUT    :	sets tooltip on all named elements of current form
- *			  	
- *	INPUT    :	all optional
- *			  	1- name of form
- *			  	2- clear tooltip on all elements not configured through frameworks
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	solutionPrefs
- *			  	
- *	USAGE    :	TRIGGER_tooltip_set([formName], [clearTooltips])
- *			  	
- *	MODIFIED :	July 9, 2008 -- Troy Elliott, Data Mosaic
- *			  	
- */
-
-if (application.__parent__.solutionPrefs && solutionPrefs.config && solutionPrefs.config.language) {
-
-//MEMO: need to somehow put this section in a Function of it's own
-//running in Tano...strip out jsevents for now
-if (utils.stringToNumber(application.getVersion()) >= 5) {
-	//cast Arguments to array
-	var Arguments = new Array()
-	for (var i = 0; i < arguments.length; i++) {
-		Arguments.push(arguments[i])
-	}
-	
-	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
-}
-
-	var formName = (arguments[0]) ? arguments[0] : application.getMethodTriggerFormName()
-	var clearAll = (arguments[1]) ? arguments[1] : false
-	var langName = solutionPrefs.config.language
-	
-	//check to see that default language is specified, there are values for it, the form is specified, and exists
-	if (langName && solutionPrefs.i18n[langName] && formName && forms[formName]) {
-		var allElements = forms[formName].elements.allnames
-		
-		//loop through all named elements on this form
-		for (var i = 0; i < allElements.length; i++) {
-			var elementName = allElements[i]
-			
-			//a tooltip exists for this form/element combo and the element can take a tooltip
-			if (solutionPrefs.i18n[langName][formName] && solutionPrefs.i18n[langName][formName][elementName] && typeof forms[formName].elements[elementName].toolTipText != undefined) {
-				//set tooltip
-				forms[formName].elements[elementName].toolTipText = solutionPrefs.i18n[langName][formName][elementName].toolTip
+function TRIGGER_tooltip_set(formName,clearAll) {
+	if (application.__parent__.solutionPrefs && solutionPrefs.config && solutionPrefs.config.language) {
+		//MEMO: need to somehow put this section in a Function of it's own
+		//running in Tano...strip out jsevents for now
+		if (utils.stringToNumber(application.getVersion()) >= 5) {
+			//cast Arguments to array
+			var Arguments = new Array()
+			for (var i = 0; i < arguments.length; i++) {
+				Arguments.push(arguments[i])
 			}
-			//clear tooltip if none specified and clearAll attribute set
-			else if (clearAll && typeof forms[formName].elements[elementName].toolTipText != undefined) {
-				forms[formName].elements[elementName].toolTipText = null
+			
+			//reassign arguments without jsevents
+			arguments = Arguments.filter(globals.CODE_jsevent_remove)
+		}
+		
+		var formName = (arguments[0]) ? arguments[0] : application.getMethodTriggerFormName()
+		var clearAll = (arguments[1]) ? arguments[1] : false
+		var langName = solutionPrefs.config.language
+		
+		//check to see that default language is specified, there are values for it, the form is specified, and exists
+		if (langName && solutionPrefs.i18n[langName] && formName && forms[formName]) {
+			var allElements = forms[formName].elements.allnames
+			
+			//loop through all named elements on this form
+			for (var i = 0; i < allElements.length; i++) {
+				var elemName = allElements[i]
+				
+				//a tooltip exists for this form/element combo and the element can take a tooltip
+				if (solutionPrefs.i18n[langName][formName] && solutionPrefs.i18n[langName][formName][elemName] && typeof forms[formName].elements[elemName].toolTipText != undefined) {
+					//set tooltip
+					forms[formName].elements[elemName].toolTipText = solutionPrefs.i18n[langName][formName][elemName].toolTip
+				}
+				//clear tooltip if none specified and clearAll attribute set
+				else if (clearAll && typeof forms[formName].elements[elemName].toolTipText != undefined) {
+					forms[formName].elements[elemName].toolTipText = null
+				}
 			}
 		}
 	}
 }
-}
 
 /**
- *
+ * Go to the specified universal list display for selected navigation item.
+ * 
+ * @param	{Number}	[displayPosn] Position of UL display in the display array.
+ * 
  * @properties={typeid:24,uuid:"49c0f6ce-61b1-4b64-8b4b-f6d493783dc0"}
  */
-function TRIGGER_ul_display_set()
-{
+function TRIGGER_ul_display_set(displayPosn) {
 
-/*
- *	TITLE    :	TRIGGER_ul_display_set
- *			  	
- *	MODULE   :	rsrc_CODE_sutra
- *			  	
- *	ABOUT    :	go to the specified display for the currently showing form
- *			  	
- *	INPUT    :	position in display array
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	solutionPrefs
- *			  	
- *	USAGE    :	TRIGGER_ul_display_set(displayPosition) Pass in the position of the display on the currently showing form
- *			  	
- *	MODIFIED :	July 31, 2008 -- Troy Elliott, Data Mosaic
- *			  	
- */
-
-//solutionPrefs defined and frameworks not in a locked status
-if (application.__parent__.solutionPrefs && !solutionPrefs.config.lockStatus) {
-
-//MEMO: need to somehow put this section in a Function of it's own
-//running in Tano...strip out jsevents for now
-if (utils.stringToNumber(application.getVersion()) >= 5) {
-	//cast Arguments to array
-	var Arguments = new Array()
-	for (var i = 0; i < arguments.length; i++) {
-		Arguments.push(arguments[i])
+	//solutionPrefs defined and frameworks not in a locked status
+	if (application.__parent__.solutionPrefs && !solutionPrefs.config.lockStatus) {
+	
+	//MEMO: need to somehow put this section in a Function of it's own
+	//running in Tano...strip out jsevents for now
+	if (utils.stringToNumber(application.getVersion()) >= 5) {
+		//cast Arguments to array
+		var Arguments = new Array()
+		for (var i = 0; i < arguments.length; i++) {
+			Arguments.push(arguments[i])
+		}
+		
+		//reassign arguments without jsevents
+		arguments = Arguments.filter(globals.CODE_jsevent_remove)
 	}
-	
-	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
-}
-	var displayPosn = arguments[0]
-	
-	//check that on a form that has a universal list
-	if (solutionPrefs.config.currentFormID && navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID] && navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].navigationItem && navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].navigationItem.useFwList) {
-		forms[navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.tabFormInstance].DISPLAY_list(true,displayPosn)
+		var displayPosn = arguments[0]
+		
+		//check that on a form that has a universal list
+		if (solutionPrefs.config.currentFormID && navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID] && navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].navigationItem && navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].navigationItem.useFwList) {
+			forms[navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.tabFormInstance].DISPLAY_list(true,displayPosn)
+		}
+		
 	}
-	
-}
-
-
 }
 
 /**
- *
+ * @deprecated
+ * 
  * @properties={typeid:24,uuid:"80b5f03d-6fe0-4ee7-a801-7fd0c6a6238e"}
  */
 function TRIGGER_ul_refresh_all()
@@ -2236,7 +1764,8 @@ if (application.__parent__.solutionPrefs && application.__parent__.navigationPre
 }
 
 /**
- *
+ * @deprecated
+ * 
  * @properties={typeid:24,uuid:"02f4edfb-7cb2-4a99-aeda-ac167959430b"}
  */
 function TRIGGER_ul_refresh_on_delete()
@@ -2307,7 +1836,8 @@ if (application.__parent__.solutionPrefs && application.__parent__.navigationPre
 }
 
 /**
- *
+ * @deprecated
+ * 
  * @properties={typeid:24,uuid:"50d8a27a-2321-4118-b4f7-db097f8c0f0a"}
  */
 function TRIGGER_ul_refresh_selected()
@@ -2353,33 +1883,15 @@ if (application.__parent__.solutionPrefs && application.__parent__.navigationPre
 }
 
 /**
- *
+ * Remove tab navigated to using the tab controller on the universal list and return universal list
+ * 
  * @properties={typeid:24,uuid:"2eb30059-9a36-47f9-8f8b-1fac91db90c8"}
  */
-function TRIGGER_ul_tab_exit()
-{
-
-/*
- *	TITLE    :	TRIGGER_ul_tab_exit
- *			  	
- *	MODULE   :	rsrc_CODE_sutra
- *			  	
- *	ABOUT    :	remove tab navigated to using the tab controller on the universal list and return universal list
- *			  	
- *	INPUT    :	
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	universal list in use on current form, solutionPrefs
- *			  	
- *	MODIFIED :	Oct 26, 2007 -- Troy Elliott, Data Mosaic
- *			  	
- */
-
-//solutionPrefs defined and frameworks not in a locked status
-if (application.__parent__.solutionPrefs && !solutionPrefs.config.lockStatus) {
-	forms[solutionPrefs.config.formNameBase].elements.tab_content_B.tabIndex = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.tabNumber
-}
+function TRIGGER_ul_tab_exit() {
+	//solutionPrefs defined and frameworks not in a locked status
+	if (application.__parent__.solutionPrefs && !solutionPrefs.config.lockStatus) {
+		forms[solutionPrefs.config.formNameBase].elements.tab_content_B.tabIndex = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.tabNumber
+	}
 }
 
 /**
@@ -5426,90 +4938,70 @@ for ( var i = 1 ; i <= tabTotal ; i++ ) {
 }
 
 /**
+ * Navigates to the specified sidebar if it is available for the logged in user.
+ * 
+ * @param	{String}	sidebarName Sidebar name to jump to (defined in sidebar config "tab name").
+ * 
+ * @returns	{Boolean}	Sidebar able to be changed.
+ * 
  * @properties={typeid:24,uuid:"8EC7C55E-6B55-43D5-9693-897E32EA0884"}
  */
 function TRIGGER_sidebar_set(newToolbar, showSidebar) {
-
-/*
- *	TITLE    :	TRIGGER_sidebar_set
- *			  	
- *	MODULE   :	rsrc_CODE_sutra
- *			  	
- *	ABOUT    :	jumps between navigation items
- *			  	
- *	INPUT    :	1- sidebar name to jump to
- *			  		Valid inputs are the tab names as defined in the Sidebar setup configuration
- *			  	
- *	OUTPUT   :	true if toolbar changed, false if no change (toolbar already visible or input was not valid)
- *			  	
- *	REQUIRES :	
- *			  	
- *	USAGE    :	TRIGGER_toolbar_set(toolbar) Navigates to the specified toolbar if it is available for the logged in user
- *			  	
- *	MODIFIED :	August 19, 2008 -- Troy Elliott, Data Mosaic
- *			  	
- */
-
-//solutionPrefs defined and frameworks not in a locked status
-if (application.__parent__.solutionPrefs && !solutionPrefs.config.lockStatus) {
-
-	var baseForm = solutionPrefs.config.formNameBase
-
-	//only run when not in a preference
-	if (!solutionPrefs.config.prefs.preferenceMode) {
-		//offset will probably be different depending on help status
-		var oldToolbar = solutionPrefs.panel.sidebar[forms.DATASUTRA__sidebar.elements.tab_content.tabIndex - 2].tabName
-
-		var allToolbars = solutionPrefs.panel.sidebar
-
-		//check to make sure that newToolbar is a valid input
-		var found = false
-		for (var i = 0; i < allToolbars.length; i++) {
-			if (allToolbars[i].tabName == newToolbar) {
-				found = true
-				break
+	//solutionPrefs defined and frameworks not in a locked status
+	if (application.__parent__.solutionPrefs && !solutionPrefs.config.lockStatus) {
+	
+		//only run when not in a preference
+		if (!solutionPrefs.config.prefs.preferenceMode) {
+			//offset will probably be different depending on help status
+			var oldToolbar = solutionPrefs.panel.sidebar[forms.DATASUTRA__sidebar.elements.tab_content.tabIndex - 2].tabName
+	
+			var allToolbars = solutionPrefs.panel.sidebar
+	
+			//check to make sure that newToolbar is a valid input
+			var found = false
+			for (var i = 0; i < allToolbars.length && !found; i++) {
+				if (allToolbars[i].tabName == newToolbar) {
+					found = true
+					break
+				}
 			}
-		}
-
-		//destination toolbar is valid and different than current toolbar, change
-		if (newToolbar != oldToolbar && found) {
-			//should this by i or i+1?
-			forms.DATASUTRA__sidebar__header.TAB_popdown(i + 1)
-
-			if (showSidebar && !solutionPrefs.screenAttrib.sidebar.status) {
-				globals.DS_sidebar_toggle(true)
+	
+			//destination toolbar is valid and different than current toolbar, change
+			if (newToolbar != oldToolbar && found) {
+				//should this by i or i+1?
+				forms.DATASUTRA__sidebar__header.TAB_popdown(i + 1)
+				
+				//show sidebar if not currently expanded
+				if (showSidebar && !solutionPrefs.screenAttrib.sidebar.status) {
+					globals.DS_sidebar_toggle(true)
+				}
+	
+				return true
 			}
-
-			return true
-		}
-		else {
-
-			if (showSidebar && !solutionPrefs.screenAttrib.sidebar.status) {
-				globals.DS_sidebar_toggle(true)
+			else {
+	
+				if (showSidebar && !solutionPrefs.screenAttrib.sidebar.status) {
+					globals.DS_sidebar_toggle(true)
+				}
+	
+				return false
 			}
-
-			return false
 		}
 	}
 }
 
-}
-
 /**
- *
+ * Hotkey shortcut to pop open the adBlocks console in a non-modal FiD.
+ * 
  * @properties={typeid:24,uuid:"ea705c5e-0455-46df-a703-4f445937273c"}
  */
-function _1()
-{
-
-forms.CODE_P__konsole.initialize()
-
-var	nHeight = cmdVarBin.windowSize.height
-var	nWidth = cmdVarBin.windowSize.width
-
-application.showFormInDialog(forms.CODE_P__konsole, 20, 50, nWidth, nHeight + 20, 'Servoy Konsole',  true,  false, 'KONSOLE', false)
-
-
+function _1() {
+	forms.CODE_P__konsole.initialize()
+	
+	var	nHeight = cmdVarBin.windowSize.height
+	var	nWidth = cmdVarBin.windowSize.width
+	
+	application.showFormInDialog(forms.CODE_P__konsole, 20, 50, nWidth, nHeight + 20, 'Servoy Konsole',  true,  false, 'KONSOLE', false)
 }
 
 /**
@@ -5572,6 +5064,8 @@ function TAB_change_set(input, formParent) {
 }
 
 /**
+ * Helper method to insert Data Mosaic license in all javascript files.
+ * 
  * @properties={typeid:24,uuid:"43FDEA90-D609-436A-8401-3153AEA868CE"}
  */
 function CODE_license_insert() {
@@ -5655,9 +5149,15 @@ function CODE_license_insert() {
 }
 
 /**
+ * Navigates to the specified toolbar if it is available for the logged in user.
+ * 
+ * @param	{JSEvent|String}	input Event from click to pop-up options or formName to work on.
+ * @param	{String}	[itemName] 
+ * @param	{Number}	[tabSelected]
+ * 
  * @properties={typeid:24,uuid:"F02F73B3-1A9B-4398-9D7C-909247F05EB3"}
  */
-function TRIGGER_ul_tab_list(input) {
+function TRIGGER_ul_tab_list(input,itemName,tabSelected) {
 	//only run if meta-objects defined
 	if (application.__parent__.navigationPrefs && application.__parent__.solutionPrefs) {
 		//grab the actions to this
