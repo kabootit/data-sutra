@@ -76,7 +76,7 @@ function TRIGGER_fastfind_display_set(findText,findTooltip,findCheck) {
 		}
 		//set check to appear next to column which was filtered
 		if (findCheck && findCheck != true) {
-			globals.DATASUTRA_find_field = setCheck
+			globals.DATASUTRA_find_field = findCheck
 		}
 		//set check to appear next to 'Filter applied...'
 		else if (findCheck) {
@@ -111,7 +111,7 @@ function TRIGGER_fastfind_display_set(findText,findTooltip,findCheck) {
 				//check if not using separateFoundset
 				if (!solutionPrefs.repository.allFormsByTable[serverName][tableName][formName].useSeparateFoundset) {
 					solutionPrefs.fastFind.currentSearch[serverName][tableName].lastFindValue = findText
-					solutionPrefs.fastFind.currentSearch[serverName][tableName].lastFindField = (setCheck && setCheck != true) ? setCheck : null
+					solutionPrefs.fastFind.currentSearch[serverName][tableName].lastFindField = (findCheck && findCheck != true) ? findCheck : null
 					solutionPrefs.fastFind.currentSearch[serverName][tableName].lastFindTip = findTooltip
 				}
 			}
@@ -119,7 +119,7 @@ function TRIGGER_fastfind_display_set(findText,findTooltip,findCheck) {
 			//fast find is enabled, track
 			if (navigationPrefs.byNavItemID[currentNavItem].fastFind) {
 				navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindValue = findText
-				navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindField = (setCheck && setCheck != true) ? setCheck : null
+				navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindField = (findCheck && findCheck != true) ? findCheck : null
 				navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindTip = findTooltip
 			}
 		}
@@ -3604,34 +3604,46 @@ return returnObj
 }
 
 /**
- *
  * @properties={typeid:24,uuid:"e4cac4d3-9c81-4dce-b624-dcbc788c8cbf"}
  */
 function CODE_row_background(index, selected, fieldType, fieldName, formName, fieldState)
 {
 
-//	var index = arguments[0]
-//	var selected = arguments[1]
-//	var fieldType = arguments[2]
-//	var fieldName = arguments[3]
-//	var formName = arguments[4]
-//	var fieldState = arguments[5]
-	
-	//if empty, make it red
+//	//if empty, make it red
 //	if (!fieldState[fieldName]) {
 //		return "#FF0000"
 //	}
 	
-	//white/tan with medium blue highlighter
-	if (selected) {
-		return '#BED7F7'
-	}
-	else {
-		if (index % 2 == 0) {
-			return '#F7F8EF'
+	//highlight selected record
+	if (globals.CODE_row_background__highlight.status && globals.CODE_row_background__highlight.status() && 
+		globals.CODE_row_background__highlight.form && formName == globals.CODE_row_background__highlight.form()) {
+		
+		//white/tan with green highlighter
+		if (selected) {
+			return '#B6E6B6'
 		}
 		else {
-			return '#FFFFFF'
+			if (index % 2 == 0) {
+				return '#F7F8EF'
+			}
+			else {
+				return '#FFFFFF'
+			}
+		}
+	}
+	//normal highlighting
+	else {
+		//white/tan with medium blue highlighter
+		if (selected) {
+			return '#BED7F7'
+		}
+		else {
+			if (index % 2 == 0) {
+				return '#F7F8EF'
+			}
+			else {
+				return '#FFFFFF'
+			}
 		}
 	}
 }
@@ -5334,4 +5346,32 @@ function CODE_multiselect(firstShow, event) {
 			forms[formName].FORM_on_show(firstShow, event)
 		}
 	}
+}
+
+/**
+ * Turns on accent highlight of selected row for specified time on form.
+ * 
+ * @param	{String}	formName The form on which to highlight the selected row.
+ * @param	{Number}	[delay=500] Amount of time to highlight selected row.
+ * 
+ * @properties={typeid:24,uuid:"28376429-115F-4661-8311-AE6173815A64"}
+ */
+function CODE_row_background__highlight(formName,delay) {
+	arguments.callee.form = function() {
+		return formName
+	}
+	
+	arguments.callee.status = function() {
+		return status || false
+	}
+	
+	//turn on accent highlight
+	var status = true
+	
+	//refresh screen so that accent seen
+	application.updateUI(delay || 500)
+	
+	//turn accent off and refresh screen again
+	status = false
+	application.updateUI()
 }
