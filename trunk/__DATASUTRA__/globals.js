@@ -2619,179 +2619,139 @@ if (application.__parent__.solutionPrefs) {
  * @param	{Integer}	[sideWidth] Override the default sidebar width.
  * @param	{Boolean}	[sideExpand=false] Changes the behavior from resizing the window to resizing the window's contents when showing a sidebar.
  * 
- * @author	Troy Elliott, Data Mosaic
- * @version	2010 August 25
- * 
  * @properties={typeid:24,uuid:"b2bbd2c2-2b6e-4918-accc-74b3ab9769d6"}
  */
-function DS_sidebar_toggle()
+function DS_sidebar_toggle(sideToggle, sideWidth, sideExpand)
 {
-
-/*
- *	TITLE    :	DS_sidebar_toggle
- *			  	
- *	MODULE   :	_DATASUTRA_
- *			  	
- *	ABOUT    :	show/hide sidebar
- *			  	
- *	INPUT    :	1 - true/false to show/hide sidebar
- *			  	2 - override default width for sidebar (optional)
- *			  	3 - don't change expansion status
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
- *	USAGE    :	DS_sidebar_toggle()
- *			  	
- *	MODIFIED :	September 8, 2009 -- Troy Elliott, Data Mosaic
- *			  	
- */	//MEMO: sideExpand changes the behavior from resizing the window to resizing the window's contents when showing a sidebar
-
-var sideExpand = !globals.CODE_key_pressed('shift')
-
-if (application.__parent__.solutionPrefs) {	
-
-//MEMO: need to somehow put this section in a Function of it's own
-//running in Tano...strip out jsevents for now
-if (utils.stringToNumber(application.getVersion()) >= 5) {
-	//cast Arguments to array
-	var Arguments = new Array()
-	for (var i = 0; i < arguments.length; i++) {
-		Arguments.push(arguments[i])
-	}
 	
-	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
-}
-
-	//timed out, throw up error
-	if (solutionPrefs.config.prefs.thatsAllFolks) {
-		forms.DPLY_0F_solution__license.ACTION_status()
-		
-		plugins.dialogs.showErrorDialog(
-							'Trial expired',
-							'Trial time expired\n' +
-							'Please restart.'
-						)
-	}
+	var sideExpand = !globals.CODE_key_pressed('shift')
 	
-	var baseForm = solutionPrefs.config.formNameBase
-	
-	var toggle = (typeof arguments[0] == 'boolean') ? arguments[0] : !solutionPrefs.screenAttrib.sidebar.status
-	var sidebarWidth = arguments[1] || solutionPrefs.screenAttrib.sidebar.currentSize
-	var maxWidth = application.getWindowWidth(null)
-	
-	if (arguments[2]) {
-		sideExpand = false
-	}
-	
-	var headerHeight = forms[baseForm].elements.bean_header.getHeight()
-	var mainHeight = forms[baseForm].elements.bean_main.getHeight()
-	
-	//developer windows
-	if (false) {
-		
-	}
-	//windows
-	else if (utils.stringPatternCount(solutionPrefs.clientInfo.typeOS,'Windows')) {
-		var theme = plugins.sutra.getWindowsTheme()
-		
-		//aero
-		if (utils.stringToNumber(solutionPrefs.clientInfo.verOS) > 6 && theme != 'Classic') {
-			var offset = 16
-		}
-		//luna
-		else if (utils.stringPatternCount(solutionPrefs.clientInfo.verOS,'5.1') && theme == 'Luna') {
-			var offset = 8
-		}
-		//classic
-		else {
-			var offset = 8
-		}
-	}
-	//3.5 developer (mac?)
-	else if (solutionPrefs.clientInfo.typeServoy == 'developer' && utils.stringToNumber(solutionPrefs.clientInfo.verServoy) < 4) {
-		var offset = 1
-	}
-	//linux
-	else if (false) {
-		var offset = 99
-	}
-	else {
-		var offset = 0
-	}
-	
-	
-	//toggle on
-	if (toggle && sidebarWidth) {
-		
-		forms[baseForm].elements.bean_wrapper_1.leftComponent = forms[baseForm].elements.bean_wrapper_2
-		forms[baseForm].elements.bean_wrapper_1.rightComponent = forms[baseForm].elements.tab_content_D
-		forms[baseForm].elements.bean_wrapper_1.resizeWeight = 1
-		//sidebar makes window grow
-		if (sideExpand) {
-			var mainWidth = maxWidth - offset
-			maxWidth += sidebarWidth
-			application.setWindowSize(maxWidth,application.getWindowHeight(null),null)
+	if (application.__parent__.solutionPrefs) {	
+		//timed out, throw up error
+		if (solutionPrefs.config.prefs.thatsAllFolks) {
+			forms.DPLY_0F_solution__license.ACTION_status()
 			
-			forms[baseForm].elements.bean_wrapper_1.dividerLocation = mainWidth
+			plugins.dialogs.showErrorDialog(
+								'Trial expired',
+								'Trial time expired\n' +
+								'Please restart.'
+							)
+		}
+		
+		var baseForm = solutionPrefs.config.formNameBase
+		
+		var sideToggle = (typeof arguments[0] == 'boolean') ? arguments[0] : !solutionPrefs.screenAttrib.sidebar.status
+		var sideWidth = arguments[1] || solutionPrefs.screenAttrib.sidebar.currentSize
+		var maxWidth = application.getWindowWidth(null)
+		
+		if (arguments[2]) {
+			sideExpand = false
+		}
+		
+		var headerHeight = forms[baseForm].elements.bean_header.getHeight()
+		var mainHeight = forms[baseForm].elements.bean_main.getHeight()
+		
+		//developer windows
+		if (false) {
 			
-			//TODO: reset dividerlocation if dividers showing
-			//see DATASUTRA_0F_solution__header.SIDEBAR_expand()
 		}
-		//sidebar fits inside window
+		//windows
+		else if (utils.stringPatternCount(solutionPrefs.clientInfo.typeOS,'Windows')) {
+			var theme = plugins.sutra.getWindowsTheme()
+			
+			//aero
+			if (utils.stringToNumber(solutionPrefs.clientInfo.verOS) > 6 && theme != 'Classic') {
+				var offset = 16
+			}
+			//luna
+			else if (utils.stringPatternCount(solutionPrefs.clientInfo.verOS,'5.1') && theme == 'Luna') {
+				var offset = 8
+			}
+			//classic
+			else {
+				var offset = 8
+			}
+		}
+		//3.5 developer (mac?)
+		else if (solutionPrefs.clientInfo.typeServoy == 'developer' && utils.stringToNumber(solutionPrefs.clientInfo.verServoy) < 4) {
+			var offset = 1
+		}
+		//linux
+		else if (false) {
+			var offset = 99
+		}
 		else {
-			var mainWidth = maxWidth - sidebarWidth - offset
-			forms[baseForm].elements.bean_wrapper_1.dividerLocation = mainWidth
+			var offset = 0
 		}
 		
-		solutionPrefs.screenAttrib.sidebar.status = true
 		
-		//hide toggle on graphic
-		forms[baseForm + '__header'].elements.btn_sidebar_expand.visible = false
-		//forms[baseForm + '__header'].elements.lbl_drag.visible = true
-		
-		//if first tab showing (help), enter help mode
-		if (forms.DATASUTRA__sidebar.elements.tab_content.tabIndex == 1) {
-			globals.DS_help(true)
+		//toggle on
+		if (sideToggle && sideWidth) {
+			
+			forms[baseForm].elements.bean_wrapper_1.leftComponent = forms[baseForm].elements.bean_wrapper_2
+			forms[baseForm].elements.bean_wrapper_1.rightComponent = forms[baseForm].elements.tab_content_D
+			forms[baseForm].elements.bean_wrapper_1.resizeWeight = 1
+			//sidebar makes window grow
+			if (sideExpand) {
+				var mainWidth = maxWidth - offset
+				maxWidth += sideWidth
+				application.setWindowSize(maxWidth,application.getWindowHeight(null),null)
+				
+				forms[baseForm].elements.bean_wrapper_1.dividerLocation = mainWidth
+				
+				//TODO: reset dividerlocation if dividers showing
+				//see DATASUTRA_0F_solution__header.SIDEBAR_expand()
+			}
+			//sidebar fits inside window
+			else {
+				var mainWidth = maxWidth - sideWidth - offset
+				forms[baseForm].elements.bean_wrapper_1.dividerLocation = mainWidth
+			}
+			
+			solutionPrefs.screenAttrib.sidebar.status = true
+			
+			//hide toggle on graphic
+			forms[baseForm + '__header'].elements.btn_sidebar_expand.visible = false
+			//forms[baseForm + '__header'].elements.lbl_drag.visible = true
+			
+			//if first tab showing (help), enter help mode
+			if (forms.DATASUTRA__sidebar.elements.tab_content.tabIndex == 1) {
+				globals.DS_help(true)
+			}
+			//not on first tab, but in help mode; leave help
+			else if (solutionPrefs.config.helpMode) {
+				globals.DS_help(false)
+			}
+			
 		}
-		//not on first tab, but in help mode; leave help
-		else if (solutionPrefs.config.helpMode) {
-			globals.DS_help(false)
-		}
-		
-	}
-	//toggle off
-	else {
-		//sidebar makes window shrink
-		if (sideExpand) {
-			var mainWidth = maxWidth - sidebarWidth
-			application.setWindowSize(mainWidth,application.getWindowHeight(null),null)
-		}
-		//sidebar fits inside window
+		//toggle off
 		else {
-			var mainWidth = maxWidth - offset
-		}
-		
-		forms[baseForm].elements.bean_wrapper_1.leftComponent = forms[baseForm].elements.bean_wrapper_2
-		forms[baseForm].elements.bean_wrapper_1.rightComponent = null
-		
-		solutionPrefs.screenAttrib.sidebar.status = false
-		
-		//show toggle on graphic
-		forms[baseForm + '__header'].elements.btn_sidebar_expand.visible = true
-	//	forms[baseForm + '__header'].elements.lbl_drag.visible = false
-		
-		//in help, leave it
-		if (solutionPrefs.config.helpMode) {
-			//set flag that not in helpmode
-			solutionPrefs.config.helpMode = false
+			//sidebar makes window shrink
+			if (sideExpand) {
+				var mainWidth = maxWidth - sideWidth
+				application.setWindowSize(mainWidth,application.getWindowHeight(null),null)
+			}
+			//sidebar fits inside window
+			else {
+				var mainWidth = maxWidth - offset
+			}
+			
+			forms[baseForm].elements.bean_wrapper_1.leftComponent = forms[baseForm].elements.bean_wrapper_2
+			forms[baseForm].elements.bean_wrapper_1.rightComponent = null
+			
+			solutionPrefs.screenAttrib.sidebar.status = false
+			
+			//show toggle on graphic
+			forms[baseForm + '__header'].elements.btn_sidebar_expand.visible = true
+		//	forms[baseForm + '__header'].elements.lbl_drag.visible = false
+			
+			//in help, leave it
+			if (solutionPrefs.config.helpMode) {
+				//set flag that not in helpmode
+				solutionPrefs.config.helpMode = false
+			}
 		}
 	}
-}
-
-
 }
 
 /**
