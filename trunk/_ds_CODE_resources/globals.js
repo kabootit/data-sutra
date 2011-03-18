@@ -3284,6 +3284,7 @@ function CODE_record_duplicate()
 	 *			  	2- array of relations to copy through
 	 *			  	3- overwrite array (from autoenter/relations/etc) with values from copying record
 	 * 					- array of arrays with info about which columns to overwrite
+	 *			  	4- option to disable autosave
 	 *			  	
 	 *	OUTPUT   :	new parent record
 	 *			  	
@@ -3329,6 +3330,7 @@ function CODE_record_duplicate()
 			overwriteOK[i] = (arguments[2]) ? true : false
 		}
 	}
+	var noSave = arguments[3]
 
 	//object to store all relations
 		//tree required for construction
@@ -3411,8 +3413,10 @@ function CODE_record_duplicate()
 			globals.CODE_record_duplicate_fx(srcRecord,destRecord,relations[relations[i]])
 		}
 
-		databaseManager.saveData()
-
+		if (!noSave) {
+			databaseManager.saveData()
+		}
+		
 		return destRecord
 	}
 }
