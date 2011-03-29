@@ -2207,6 +2207,11 @@ if (! sServer )
 var aTableName = databaseManager.getTableNames(sServer);
 var aColName;
 
+//TSE mod 3/29/2011
+if (!aTableName) {
+	return
+}
+
 aTableName.sort();
 aTableName.reverse();
 
