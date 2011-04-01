@@ -5306,6 +5306,62 @@ function TRIGGER_ul_tab_list(input,itemName,tabSelected) {
 }
 
 /**
+ * Calls the UL action event.
+ * 
+ * @param	{JSEvent}	event Event from click to pop-up options.
+ * 
+ * @properties={typeid:24,uuid:"DD0B38BF-70F8-40CF-BE62-A7C11A322A1A"}
+ */
+function TRIGGER_ul_button_action(event) {
+	//only run if meta-objects defined
+	if (application.__parent__.navigationPrefs && application.__parent__.solutionPrefs) {
+		forms.NAV_T_universal_list.ACTIONS_list(event)
+	}
+}
+
+/**
+ * Calls the UL add event.
+ * 
+ * @param	{JSEvent}	event Event from click to pop-up options.
+ * 
+ * @properties={typeid:24,uuid:"DB5DF8A9-9150-40FA-B0C4-B70A916CBBC3"}
+ */
+function TRIGGER_ul_button_add(event) {
+	//only run if meta-objects defined
+	if (application.__parent__.navigationPrefs && application.__parent__.solutionPrefs) {
+		forms.NAV_T_universal_list.REC_new(event)
+	}
+}
+
+/**
+ * Calls the UL report event.
+ * 
+ * @param	{JSEvent}	event Event from click to pop-up options.
+ * 
+ * @properties={typeid:24,uuid:"FBAD991A-A258-4D77-9C55-DBDC35A471F1"}
+ */
+function TRIGGER_ul_button_report(event) {
+	//only run if meta-objects defined
+	if (application.__parent__.navigationPrefs && application.__parent__.solutionPrefs) {
+		forms.NAV_T_universal_list.REPORTS_list(event)
+	}
+}
+
+/**
+ * Calls the UL filter event.
+ * 
+ * @param	{JSEvent}	event Event from click to pop-up options.
+ * 
+ * @properties={typeid:24,uuid:"2A613595-9E4D-4D0C-AD7F-689E1FA8CF65"}
+ */
+function TRIGGER_ul_button_filter(event) {
+	//only run if meta-objects defined
+	if (application.__parent__.navigationPrefs && application.__parent__.solutionPrefs) {
+		forms.NAV_T_universal_list.FILTERS_list(event)
+	}
+}
+
+/**
  * @properties={typeid:24,uuid:"7AF6A8AA-44C4-4ABE-9A0B-18D379BD269A"}
  */
 function CODE_cursor_busy(busyCursor) {

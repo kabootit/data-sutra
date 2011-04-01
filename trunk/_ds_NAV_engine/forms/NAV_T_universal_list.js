@@ -72,7 +72,7 @@ if (valueList.length) {
 	//hack not required
 	if (utils.stringToNumber(application.getVersion()) >= 5) {
 		//pop up the popup menu
-		var elem = elements[application.getMethodTriggerElementName()]
+		var elem = forms[application.getMethodTriggerFormName()].elements[application.getMethodTriggerElementName()]
 		if (elem != null) {
 		    plugins.popupmenu.showPopupMenu(elem, menu);
 		}
@@ -860,7 +860,7 @@ if (menuMain.length) {
 	//hack not required
 	if (utils.stringToNumber(application.getVersion()) >= 5) {
 		//pop up the popup menu
-		var elem = elements[application.getMethodTriggerElementName()]
+		var elem = forms[application.getMethodTriggerFormName()].elements[application.getMethodTriggerElementName()]
 		if (elem != null) {
 		    plugins.popupmenu.showPopupMenu(elem, menuMain);
 		}
@@ -1662,7 +1662,7 @@ if (valueList.length) {
 	//hack not required
 	if (utils.stringToNumber(application.getVersion()) >= 5) {
 		//pop up the popup menu
-		var elem = elements[application.getMethodTriggerElementName()]
+		var elem = forms[application.getMethodTriggerFormName()].elements[application.getMethodTriggerElementName()]
 		if (elem != null) {
 		    plugins.popupmenu.showPopupMenu(elem, menu);
 		}
@@ -1926,7 +1926,7 @@ if (forms[formName]) {
 	globals.NAV_universal_selected_tab = formName
 	
 	//if not loaded, add tab
-	if (formName != 'FRAMEWORKS_blank_1_list' && !navigationPrefs.byNavSetName.configPanes.itemsByName[prefName]) {
+	if (formName != 'DATASUTRA_0F_solution__blank_2' && !navigationPrefs.byNavSetName.configPanes.itemsByName[prefName]) {
 		
 		//assign to list tab panel
 		forms[baseForm].elements.tab_content_B.addTab(forms[formName],'',null,null,null,null)
@@ -1939,10 +1939,6 @@ if (forms[formName]) {
 									dateAdded : application.getServerTimeStamp()
 							}
 		
-	}
-	//blank form, set to blank tab
-	else if (listTab == 'FRAMEWORKS_blank_1_list') {
-		forms[baseForm].elements.tab_content_B.tabIndex = 1
 	}
 	//set tab to this preference
 	else {
