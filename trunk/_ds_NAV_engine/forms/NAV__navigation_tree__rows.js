@@ -104,41 +104,26 @@ function LIST_redraw(event,itemID,reScroll,skipLoadForms) {
 		if (event instanceof JSEvent) {
 			var navDetails = forms.NAV__navigation_tree._rows[event.getElementName().split('_').pop()]
 			itemID = navDetails.navItemID
+			
+			//get current scroll position
+			var scrollRows = plugins.ScrollerPlus.getScroller(controller.getName(), SCROLLER_TYPE.FORM, SCROLL_ORIENTATION.VERTICAL)
+			var scrollY = scrollRows.position			
 		}
 		
-//		//get current scroll position
-//		var scrollX = elements.fld_html.getScrollX()
-//		var scrollY = elements.fld_html.getScrollY()
-//		
-//		//bring second html field to foreground to mask flicker
-//		elements.fld_html_2.setScroll(0, scrollY)
-//		elements.fld_html_2.visible = true
-//		
-//		//hide original html field while being changed
-//		elements.fld_html.visible = false
-		
-		//assign new html to list global
+		//redo form
 		forms.NAV__navigation_tree.LIST_generate(itemID)
 		
 		//if rescroll requested, rescroll
 		if (reScroll) {
-			forms.NAV__navigation_tree.LIST_rescroll('NAV_0L_solution','fld_html',itemID)
+			forms.NAV__navigation_tree.LIST_rescroll('NAV_0L_solution',itemID)
 		}
 		
-//		//LIST_redraw_continued method sets scrollbar and makes element visible
-//		var scrollX = elements.fld_html.getScrollX()
-//		var scrollY = elements.fld_html.getScrollY()
-//			
-//		//return to original scroll position
-//		elements.fld_html.setScroll(0, scrollY)
-//		
-//		//show/hide correct html field
-//		elements.fld_html.visible = true
-//		elements.fld_html_2.visible = false
-//		
-//		//refresh screen so redraw is faster
-//		application.updateUI()
-//		
+		//return to original scroll position
+		if (scrollRows) {
+			application.updateUI()
+			scrollRows.position = scrollY
+		}
+		
 		//go to selected form
 		if (!skipLoadForms) {
 			globals.NAV_workflow_load(itemID)

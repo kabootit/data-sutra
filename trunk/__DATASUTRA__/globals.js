@@ -2362,25 +2362,7 @@ if (application.__parent__.solutionPrefs) {
  *
  * @properties={typeid:24,uuid:"b3e74e7e-5da7-4752-a6aa-b154b093649f"}
  */
-function DS_navigation_set(input)
-{
-
-/*
- *	TITLE    :	DS_navigation_set
- *			  	
- *	MODULE   :	_DATASUTRA_
- *			  	
- *	ABOUT    :	show navigation sets
- *			  	
- *	INPUT    :	
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
- *	MODIFIED :	June 25, 2008 -- Troy Elliott, Data Mosaic
- *			  	
- */
+function DS_navigation_set(input) {
 
 	var formName = application.getMethodTriggerFormName()
 	var fwNavSet = application.getMethodTriggerElementName()

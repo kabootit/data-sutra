@@ -310,85 +310,84 @@ function LIST_generate(selected) {
  * @properties={typeid:24,uuid:"C8E2FCEF-C1C4-42B6-B179-4C73ECC94ED0"}
  */
 function LIST_rescroll(formName,idNavItem) {
-//
-//	//arguments
-//	var formName = arguments[0]
-//	var elem = arguments[1]
-//	var idNavItem = arguments[2]
-//	
-//	//if navigation items in this set, do the appropriate toggle
-//	if (navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set] && navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].itemsByOrder && navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].itemsByOrder.length) {
-//		//find position in array
-//		var selected = -1
-//		var indexStart = 1
-//		var indexEnd = 0
-//		
-//		for (var i = 0; i < navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].itemsByOrder.length; i++) {
-//			//this item is visible
-//			if (navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].itemsByOrder[i].navigationItem.rowStatusShow) {
-//				//this is the selected
-//				if (navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].itemsByOrder[i].navigationItem.idNavigationItem == idNavItem) {
-//					selected = indexEnd
-//				}
-//				indexEnd++
-//			}
-//		}
-//	}
-//	
-//	//information about scroll field
-//	var heightHTML = forms[formName].elements[elem].getHeight()
-//	var rowHeight = 20 //this is set in the css for the html field...may be overridden in top level style sheet
-//	var clickSize = Math.floor(heightHTML / 10) //the amount of one downward click in the scroll bar
-//	var rowScroll = heightHTML / rowHeight //Math.floor() gives the number of rows that can be displayed without scrolling
-//	var maxScroll = (rowHeight * (indexEnd - indexStart + 1)) - heightHTML
-//	var currentScroll = forms[formName].elements[elem].getScrollY()
-//	var currentTop = (currentScroll) ? Math.ceil(currentScroll / rowHeight) + 1 : 1 //index of record at top of scroll (add 1 to account for parital records)
-//	var currentBottom = currentTop + Math.floor(rowScroll) - 1 //subtract 1 to account for partial records, 1 for selected offset (in defintion of selected)
-//	
-//	//selected item in loaded set
-//	if (indexStart <= selected && selected <= indexEnd) {
-//		//scroll up
-//		if (selected < currentTop) {
-//			//can fit without scroll
-//			if (selected <= Math.floor(rowScroll)) {
-//				forms[formName].elements[elem].setScroll(0,0)
-//				return true
-//			}
-//			//set to be a few down
-//			else {
-//				var scrollY = ((selected - 1) * 20) //-1 to get the bottom of the prior record (in other words, the top of the record we want)
-//				//if there is room, set the scroll position to be slightly above the selected record
-//				if (Math.floor(rowScroll) > 4) {
-//					scrollY -= 40
-//				}
-//				forms[formName].elements[elem].setScroll(0,scrollY)
-//				return true
-//			}
-//		}
-//		//scroll down
-//		else if (selected > currentBottom) {
-//			//can fit with scroll all the way to the bottom
-//			if ((indexEnd - Math.floor(rowScroll) < selected) && (selected < indexEnd)) {
-//				forms[formName].elements[elem].setScroll(0,maxScroll)
-//				return true
-//			}
-//			//set to be a few up
-//			else {
-//				var scrollY = ((selected - 1) * 20) //-1 to get the bottom of the prior record (in other words, the top of the record we want)
-//				//if there is room, set the scroll position to be slightly above the selected record
-//				if (Math.floor(rowScroll) > 4) {
-//					scrollY -= 60
-//				}
-//				forms[formName].elements[elem].setScroll(0,scrollY)
-//				return true
-//			}
-//		
-//		}
-//		//otherwise selected item in viewable area; no action necessary
-//	}
-//	
-//	//if no scrolling took place, return false
-//	return false
+	var scrollRows = plugins.ScrollerPlus.getScroller(controller.getName() + '__rows', SCROLLER_TYPE.FORM, SCROLL_ORIENTATION.VERTICAL)
+	
+	//if navigation items in this set, do the appropriate toggle
+	if (navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set] && navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].itemsByOrder && navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].itemsByOrder.length) {
+		var selected = -1
+		var indexStart = 1
+		var indexEnd = 0
+		
+		for (var i = 0; i < navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].itemsByOrder.length; i++) {
+			//this item is visible
+			if (navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].itemsByOrder[i].navigationItem.rowStatusShow) {
+				//this is the selected
+				if (navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].itemsByOrder[i].navigationItem.idNavigationItem == idNavItem) {
+					selected = indexEnd
+				}
+				indexEnd++
+			}
+		}
+	}
+	
+	//information about scroll field
+	var heightHTML = forms.DATASUTRA_0F_solution.elements.tab_content_A.getHeight()
+	var rowHeight = 20
+	var clickSize = Math.floor(heightHTML / 10) //the amount of one downward click in the scroll bar
+	var rowScroll = heightHTML / rowHeight //Math.floor() gives the number of rows that can be displayed without scrolling
+	var maxScroll = 5000 //(rowHeight * (indexEnd - indexStart + 1)) - heightHTML
+	var currentScroll = scrollRows.position
+	var currentTop = (currentScroll) ? Math.ceil(currentScroll / rowHeight) + 1 : 1 //index of record at top of scroll (add 1 to account for partial records)
+	var currentBottom = currentTop + Math.floor(rowScroll) - 1 //subtract 1 to account for partial records, 1 for selected offset (in defintion of selected)
+	var scrollPosn = null
+	
+	//selected item in loaded set
+	if (indexStart <= selected && selected <= indexEnd) {
+		//scroll up
+		if (selected < currentTop) {
+			//can fit without scroll
+			if (selected <= Math.floor(rowScroll)) {
+				scrollPosn = 0
+			}
+			//set to be a few down
+			else {
+				var scrollY = ((selected - 1) * 20) //-1 to get the bottom of the prior record (in other words, the top of the record we want)
+				//if there is room, set the scroll position to be slightly above the selected record
+				if (Math.floor(rowScroll) > 4) {
+					scrollY -= 40
+				}
+				scrollPosn = scrollY
+			}
+		}
+		//scroll down
+		else if (selected > currentBottom) {
+			//can fit with scroll all the way to the bottom
+			if ((indexEnd - Math.floor(rowScroll) < selected) && (selected < indexEnd)) {
+				scrollPosn = maxScroll
+			}
+			//set to be a few up
+			else {
+				var scrollY = ((selected - 1) * 20) //-1 to get the bottom of the prior record (in other words, the top of the record we want)
+				//if there is room, set the scroll position to be slightly above the selected record
+				if (Math.floor(rowScroll) > 4) {
+					scrollY -= 60
+				}
+				scrollPosn = scrollY
+			}
+		
+		}
+		//otherwise selected item in viewable area; no action necessary
+	}
+	
+	if (typeof scrollPosn == 'number') {
+		application.updateUI()
+		scrollRows.position = scrollPosn
+		return true
+	}
+	//if no scrolling took place, return false
+	else {
+		return false
+	}
 }
 
 /**
