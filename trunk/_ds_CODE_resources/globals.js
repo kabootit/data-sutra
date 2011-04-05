@@ -1065,8 +1065,8 @@ function TRIGGER_progressbar_set(progressValue,explanationText,explanationToolTi
 		var explanationToolTip = arguments[2]
 		
 		//set new progress value
-		if (typeof value == 'number') {
-			forms[formName].elements.bean_progress.value = value
+		if (typeof progressValue == 'number') {
+			forms[formName].elements.bean_progress.value = progressValue
 			forms[formName].elements.bean_progress.updateUI()
 		}
 		
