@@ -386,14 +386,18 @@ function TRIGGER_help_navigation_set(itemID, confirmJump, subLanding, showHelp) 
 				var navSetID = navigationPrefs.byNavItemID[navItemID].navigationItem.idNavigation
 				var formNameWorkflow = navigationPrefs.byNavItemID[navItemID].navigationItem.formToLoad
 				
-				//if from a different navigation set
-				if (globals.DATASUTRA_navigation_set != navSetID) {
-					navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].lastNavItem = solutionPrefs.config.currentFormID
-					globals.DATASUTRA_navigation_set = navSetID
-				}
+				var lastitem = solutionPrefs.config.currentFormID
 				
 				//redraw list; make sure row is expanded if node2; load new item
-				forms.NAV_0L_solution.LIST_expand_collapse(navItemID,'open',navSetID)
+				forms.NAV__navigation_tree__rows.LIST_expand_collapse(null,navItemID,'open',navSetID)
+				
+				//if from a different navigation set
+				if (globals.DATASUTRA_navigation_set != navSetID) {
+					navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].lastNavItem = lastItem
+					globals.DATASUTRA_navigation_set = navSetID
+					
+					forms.NAV__navigation_tree.LABEL_update()
+				}
 				
 				//move around to land on correct spot of this form
 				if (subLanding) {
@@ -879,20 +883,21 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset) {
 			var formNameWorkflow = navItem.formToLoad
 			var formNameList = navItem.listToLoad
 			var stringSort = navItem.sortString
-	
+			
+			var lastItem = solutionPrefs.config.currentFormID
+			
+			//redraw list; make sure row is expanded if node2; load new item
+			forms.NAV__navigation_tree__rows.LIST_expand_collapse(null,navItem.idNavigationItem,'open',navSetID)
+			
 			//if from a different navigation set
 			if (globals.DATASUTRA_navigation_set != navSetID) {
-				navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].lastNavItem = solutionPrefs.config.currentFormID
+				navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].lastNavItem = lastItem
 				globals.DATASUTRA_navigation_set = navSetID
 	
 				//update text display
-				var displayValue = application.getValueListDisplayValue('NAV_navigation_set',globals.DATASUTRA_navigation_set)
-				forms.NAV_0L_solution.elements.lbl_header.text = (displayValue) ? displayValue.toUpperCase() : 'NAVIGATION'
+				forms.NAV__navigation_tree.LABEL_update()
 			}
-	
-			//redraw list; make sure row is expanded if node2; load new item
-			forms.NAV_0L_solution.LIST_expand_collapse(navItem.idNavigationItem,'open',navSetID)
-	
+			
 			//bring foundset over
 			if (setFoundset) {
 				var callingFoundset = (useFoundset) ? useFoundset : forms[application.getMethodTriggerFormName()].foundset

@@ -56,8 +56,7 @@ if (this.flagEdit) {
 		application.setValueListItems('NAV_navigation_set', navSetNames, navigationSets)
 		
 		//update text display with new navigation set name
-		var displayValue = application.getValueListDisplayValue('NAV_navigation_set',globals.DATASUTRA_navigation_set)
-		forms.NAV_0L_solution.elements.lbl_header.text = (displayValue) ? displayValue.toUpperCase() : 'NAVIGATION'
+		forms.NAV__navigation_tree.LABEL_update()
 	}
 }
 //new navigation set

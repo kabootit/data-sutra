@@ -185,7 +185,7 @@ if (utils.hasRecords(fsNavItems) && solutionPrefs.config.currentFormID) {
 		navPrefs
 		
 	//redraw
-	forms.NAV_0L_solution.LIST_redraw(pkRecSelect,true)
+	forms.NAV__navigation_tree.LIST_redraw(null,pkRecSelect,true)
 }
 
 
@@ -399,7 +399,7 @@ if (utils.hasRecords(fsNavItems) && solutionPrefs.config.currentFormID) {
 		navPrefs
 	
 	//redraw
-	forms.NAV_0L_solution.LIST_redraw(pkRecSelect,true)
+	forms.NAV__navigation_tree.LIST_redraw(null,pkRecSelect,true)
 }
 
 

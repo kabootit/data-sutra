@@ -827,10 +827,10 @@ if (delRec == 'Yes') {
 		}
 		
 		//redraw navitem list
-		forms.NAV_0L_solution.LIST_redraw(theItem,true)
+		forms.NAV__navigation_tree.LIST_redraw(null,theItem,true)
 		
 	}
-	//called in frameworks engine, refresh main workflow are if needed
+	//called in frameworks engine, refresh main workflow area if needed
 	else {
 		//load no records into main pane
 		relationName = 'nav_navigation_to_navigation_item__set'

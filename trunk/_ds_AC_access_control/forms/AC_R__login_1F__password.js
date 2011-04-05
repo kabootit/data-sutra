@@ -204,7 +204,7 @@ else if (globals.AC_login_user && !globals.AC_login_password) {
 else {
 
 	var baseForm = solutionPrefs.config.formNameBase
-	var navigationList = 'NAV_0L_solution'
+	var navigationList = 'NAV__navigation_tree'
 
 	// // //
 	//		1. validate login

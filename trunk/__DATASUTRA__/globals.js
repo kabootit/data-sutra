@@ -329,7 +329,6 @@ if (application.getApplicationType() == APPLICATION_TYPES.HEADLESS_CLIENT) {
 }
 //normal startup
 else {
-	var navigationList = 'NAV_0L_solution'
 	var prefForm = 'DATASUTRA_0F_solution__blank_4'
 	var baseForm = 'DATASUTRA_0F_solution'
 	var serverName = forms[prefForm].controller.getServerName()
@@ -1884,7 +1883,7 @@ function DS_actions(input)
 					if (forms[baseForm].elements.tab_content_A.tabIndex > 0) {
 						forms[baseForm].elements.tab_content_A.removeTabAt(1)
 					}
-					forms[baseForm].elements.tab_content_A.addTab(forms.NAV_0L_solution,'',null,null,null,null)
+					forms[baseForm].elements.tab_content_A.addTab(forms.NAV__navigation_tree)
 					forms[baseForm].elements.tab_content_A.tabIndex = forms[baseForm].elements.tab_content_A.getMaxTabIndex()
 					
 					//check that last viewed navigation set still ok

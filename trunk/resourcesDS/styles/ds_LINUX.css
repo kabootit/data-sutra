@@ -209,6 +209,47 @@ field.navigationset
 	font-size: 12pt;
 }
 
+label.tree {
+	border-style: solid;
+	border-width: 0px;
+	color: '#000000';
+	font-size: 11pt;
+	margin: 0px 0px 0px 2px;
+}
+
+label.tree_arrow_close {
+	background-image: 'media:///row_collapsed.png';
+	margin: 0px 0px 0px 0px;
+	text-align: right;
+}
+
+label.tree_arrow_open {
+	background-image: 'media:///row_expanded.png';
+	margin: 0px 0px 0px 0px;
+	text-align: right;
+}
+
+label.tree_select {
+	border-style: solid;
+	border-width: 0px;
+	color: '#FFFFFF';
+	font-size: 11pt;
+	font-weight: bold;
+	margin: 0px 0px 0px 2px;
+}
+
+label.tree_select_arrow_close {
+	background-image: 'media:///row_collapsed_selected.png';
+	margin: 0px 0px 0px 0px;
+	text-align: right;
+}
+
+label.tree_select_arrow_open {
+	background-image: 'media:///row_expanded_selected.png';
+	margin: 0px 0px 0px 0px;
+	text-align: right;
+}
+
 field.fastfind
 {
 	border-style: solid;

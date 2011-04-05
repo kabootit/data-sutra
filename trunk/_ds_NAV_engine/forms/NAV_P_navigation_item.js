@@ -162,7 +162,7 @@ application.closeFormDialog('inlineNavItem')
 
 //nav item name changed, redraw navitem list
 if (redraw) {
-	forms.NAV_0L_solution.LIST_redraw(record.id_navigation_item,true)
+	forms.NAV__navigation_tree.LIST_redraw(null,record.id_navigation_item,true)
 }
 
 

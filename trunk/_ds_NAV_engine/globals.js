@@ -2295,7 +2295,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		}
 		
 		//only add history item if not navigating history and not in any preference
-		if (historyPosition == undefined && forms[baseForm].elements.tab_content_A.getTabFormNameAt(1) == 'NAV_0L_solution') {
+		if (historyPosition == undefined && forms[baseForm].elements.tab_content_A.getTabFormNameAt(1) == 'NAV__navigation_tree') {
 			//add new history item to solution Prefs
 			var historyItem = solutionPrefs.history[solutionPrefs.history.length] = new Object()
 			historyItem.navigationSetID = navSpecs.idNavigation
@@ -4400,57 +4400,51 @@ function NAV_navigation_set_load()
  *			  	
  */
 
-//MEMO: need to somehow put this section in a Function of it's own
-//running in Tano...strip out jsevents for now
-if (utils.stringToNumber(application.getVersion()) >= 5) {
-	//cast Arguments to array
-	var Arguments = new Array()
-	for (var i = 0; i < arguments.length; i++) {
-		Arguments.push(arguments[i])
+	//MEMO: need to somehow put this section in a Function of it's own
+	//running in Tano...strip out jsevents for now
+	if (utils.stringToNumber(application.getVersion()) >= 5) {
+		//cast Arguments to array
+		var Arguments = new Array()
+		for (var i = 0; i < arguments.length; i++) {
+			Arguments.push(arguments[i])
+		}
+		
+		//reassign arguments without jsevents
+		arguments = Arguments.filter(globals.CODE_jsevent_remove)
 	}
 	
-	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
-}
-
-var skipLoadForms = arguments[0]
-var treeTop = arguments[1]
-
-var formName = 'NAV_0L_solution'
-
-//there is a set
-if (globals.DATASUTRA_navigation_set) {
-	//this set has been navigated to before, go to last selected item
-	if (navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set] && navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].lastNavItem && !treeTop) {
-		var itemID = navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].lastNavItem
+	var skipLoadForms = arguments[0]
+	var treeTop = arguments[1]
+	
+	var formName = 'NAV__navigation_tree'
+	
+	//there is a set
+	if (globals.DATASUTRA_navigation_set) {
+		//this set has been navigated to before, go to last selected item
+		if (navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set] && navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].lastNavItem && !treeTop) {
+			var itemID = navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].lastNavItem
+		}
+		//go to first item in the navigation set
+		else if (navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set] && navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].itemsByOrder && navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].itemsByOrder.length) {
+			var itemID = navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].itemsByOrder[0].navigationItem.idNavigationItem
+			var initialLoad = true
+		}
+		//there aren't any nav items in this set, load blanks
+		else {
+			var itemID = null
+		}
 	}
-	//go to first item in the navigation set
-	else if (navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set] && navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].itemsByOrder && navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].itemsByOrder.length) {
-		var itemID = navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].itemsByOrder[0].navigationItem.idNavigationItem
-		var initialLoad = true
+	
+	//first time set is viewed and collapse all pref enabled
+	if (initialLoad && solutionPrefs.config.navigationCollapse) {
+		forms[formName + '__rows'].LIST_expand_collapse(null,itemID,true)
 	}
-	//there aren't any nav items in this set, load blanks
+	//regenerate list
 	else {
-		var itemID = null
+		forms[formName + '__rows'].LIST_redraw(null,itemID,true,skipLoadForms)
 	}
-}
-//no set selected, null out global
-else {
-	globals.NAV_list_2 = globals.NAV_list = null
-}
-
-//update text display
-var displayValue = application.getValueListDisplayValue('NAV_navigation_set',globals.DATASUTRA_navigation_set)
-forms[formName].elements.lbl_header.text = (displayValue) ? displayValue.toUpperCase() : 'NAVIGATION'
-
-//first time set is viewed and collapse all pref enabled
-if (initialLoad && solutionPrefs.config.navigationCollapse) {
-	forms[formName].LIST_expand_collapse(itemID,true)
-}
-//regenerate list
-else {
-	forms[formName].LIST_redraw(itemID,true,skipLoadForms)
-}
+	
+	forms[formName].LABEL_update()
 
 }
 

@@ -25,7 +25,7 @@ function ACTION_continue()
  */
 
 var baseForm = solutionPrefs.config.formNameBase
-var navigationList = 'NAV_0L_solution'
+var navigationList = 'NAV__navigation_tree'
 
 //reset loginDisabled flag so that previews will show misc and qotd areas
 delete this.loginDisabled

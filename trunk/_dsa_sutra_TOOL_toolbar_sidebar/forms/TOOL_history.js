@@ -186,7 +186,7 @@ if (!clearHistory) {
 	}
 	
 	//regenerate navigation list
-	forms.NAV_0L_solution.LIST_redraw(navigationItemID,true,true)
+	forms.NAV__navigation_tree__rows.LIST_redraw(null,navigationItemID,true,true)
 
 	//select correct navigation item
 	globals.NAV_workflow_load(navigationItemID,historyPosn)
