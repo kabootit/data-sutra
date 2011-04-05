@@ -872,7 +872,7 @@ label.developerbutton
 	label.standard_table_check_noedit /* not transparent */
 	{
 		border-style: solid;
-		border-width: 0px 0px 1px 0px;
+		border-width: 0px 0px 1px 1px;
 		border-color: #647B95;
 		background-color: #F1F1F1;
 	}
@@ -887,7 +887,7 @@ label.developerbutton
 	label.standard_table_check_bottom_noedit /* not transparent */
 	{
 		border-style: solid;
-		border-width: 0px 0px 0px 0px;
+		border-width: 0px 0px 0px 1px;
 		border-color: #647B95;
 		background-color: #F1F1F1;
 	}
@@ -1100,7 +1100,7 @@ label.developerbutton
 	label.bold_table_check_noedit /* not transparent */
 	{
 		border-style: solid;
-		border-width: 0px 0px 1px 0px;
+		border-width: 0px 0px 1px 1px;
 		border-color: #647B95;
 		background-color: #F1F1F1;
 	}
@@ -1115,7 +1115,7 @@ label.developerbutton
 	label.bold_table_check_bottom_noedit /* not transparent */
 	{
 		border-style: solid;
-		border-width: 0px 0px 0px 0px;
+		border-width: 0px 0px 0px 1px;
 		border-color: #647B95;
 		background-color: #F1F1F1;
 	}
