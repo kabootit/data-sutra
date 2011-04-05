@@ -224,7 +224,7 @@ else {
 					'space_centered_horizontal_1, space_centered_horizontal_2, space_classic_horizontal, ' +
 					'space_classic_vertical, space_list_horizontal, space_standard_horizontal, space_standard_vertical, ' +
 					'space_vertical_horizontal_1, space_vertical_horizontal_2, space_wide_horizontal, space_wide_vertical, ' +
-					'sidebar_width, developer_mode ' +
+					'sidebar_width, developer_mode, id_user ' +
 				'FROM sutra_access_user ' +
 				'WHERE user_name = ? and user_password = ?'
 	var args = new Array(globals.AC_login_user, passwordMD5)
@@ -277,6 +277,9 @@ else {
 		var sidebarSize = dataset.getValue(1,25)
 
 		var designMode = dataset.getValue(1,26)
+		
+		var fsUser = databaseManager.getFoundSet(serverName,'sutra_access_user')
+		fsUser.loadRecords(dataset.getValue(1,27))
 	}
 	catch (error) {
 		plugins.dialogs.showErrorDialog(
@@ -523,7 +526,9 @@ else {
 	solutionPrefs.access.groupName = groupName
 	solutionPrefs.access.passNoChange = passNoChange
 	solutionPrefs.access.passExpiration = expirationDate
-
+	solutionPrefs.access.user = {record : fsUser.getRecord(1)}
+	solutionPrefs.access.favorites = solutionPrefs.access.user.record.favorites || new Array()
+	
 	//place for user extensions; usually used for SaaS preferences
 	solutionPrefs.access.extend = new Object()
 

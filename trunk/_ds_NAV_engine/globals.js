@@ -2511,6 +2511,9 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 								if (lineItem.editable) {
 									myField.onRightClick = solutionModel.getGlobalMethod('NAV_universal_list_edit')
 								}
+								else {
+									myField.onRightClick = solutionModel.getGlobalMethod('NAV_universal_list_right_click')
+								}
 							}
 							
 							//assign the secondary form to the main UL with buttons
@@ -2802,9 +2805,16 @@ function NAV_universal_list_edit(input,elem) {
 	if (input instanceof JSEvent) {
 		var elem = forms[input.getFormName()].elements[input.getElementName()]
 		
-		//build menu
-		var menu = new Array()
-		menu.push(plugins.popupmenu.createMenuItem('Edit...', globals.NAV_universal_list_edit))
+		//get generic menu
+		var menu = globals.NAV_universal_list_right_click(null,null,true)
+		
+		//needs divider
+		if (menu.length) {
+			menu.unshift(plugins.popupmenu.createMenuItem('-'))
+		}
+		
+		//tack on edit on top
+		menu.unshift(plugins.popupmenu.createMenuItem('Edit...', globals.NAV_universal_list_edit))
 		menu[0].setMethodArguments(null,input)
 		
 		//pop up the popup menu
@@ -2821,6 +2831,75 @@ function NAV_universal_list_edit(input,elem) {
 			
 //			application.updateUI()
 		}
+	}
+}
+
+/**
+ * @properties={typeid:24,uuid:"74617C2C-E06A-4E7E-A3AD-10CB50797CA4"}
+ */
+function NAV_universal_list_right_click(input,elem,list,record) {
+	//build menu
+	var menu = new Array()
+	
+	//access and control turned on, this ul takes favorites
+	if (solutionPrefs.access.accessControl && navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].navigationItem.favoritable) {
+		if (!record && input instanceof JSEvent) {
+			record = forms[input.getFormName()].foundset.getSelectedRecord()
+		}
+		
+		var fave = {
+				datasource : record.foundset.getDataSource(),
+				pk : record.getPKs()[0] //won't work for compound pk
+			}
+		
+		//this is already a favorite, check it
+		if (solutionPrefs.access.favorites.some(favExists)) {
+			menu.push(plugins.popupmenu.createCheckboxMenuItem('Favorite', globals.NAV_universal_list_right_click))
+			menu[menu.length - 1].setSelected(true)
+		}
+		else {
+			menu.push(plugins.popupmenu.createMenuItem('Favorite', globals.NAV_universal_list_right_click))
+		}
+		
+		menu[0].setMethodArguments(null,null,null,record)
+	}
+	
+	//what's in the menu?
+	if (list) {
+		return menu
+	}
+	
+	//there is something to do
+	if (menu.length) {
+		//called to depress menu
+		if (input instanceof JSEvent) {
+			var elem = forms[input.getFormName()].elements[input.getElementName()]
+			
+			//pop up the popup menu
+			if (elem != null) {
+			    plugins.popupmenu.showPopupMenu(elem, menu)
+			}
+		}
+		//make favorite
+		else {
+			//new favorite, add to stack
+			if (!solutionPrefs.access.favorites.some(favExists)) {
+				solutionPrefs.access.favorites.push(fave)
+			}
+			//remove favorite
+			else {
+				solutionPrefs.access.favorites.splice(solutionPrefs.access.favorites.map(favExists).indexOf(true),1)
+			}
+			
+			//assign back into record
+			solutionPrefs.access.user.record.favorites = solutionPrefs.access.favorites //globals.CODE_copy_object(solutionPrefs.access.favorites)
+			databaseManager.saveData(solutionPrefs.access.user.record)
+		}
+	}
+	
+	//checks if already exists
+	function favExists(item) {
+		return item && item.datasource == fave.datasource && item.pk == fave.pk
 	}
 }
 

@@ -1360,28 +1360,11 @@ for (var i = totalRecs; i < 100000; i++) {
 }
 
 /**
- *
+ * Show frameworks actions available for current user
+ * 
  * @properties={typeid:24,uuid:"48174bfa-d0a4-4e64-935e-b4b73feffa12"}
  */
-function DS_actions(input)
-{
-
-/*
- *	TITLE    :	DS_actions
- *			  	
- *	MODULE   :	_DATASUTRA_
- *			  	
- *	ABOUT    :	show frameworks actions available for current user
- *			  	
- *	INPUT    :	
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
- *	MODIFIED :	Mar 24, 2008 -- Troy Elliott, Data Mosaic
- *			  	
- */
+function DS_actions(input) {
 	
 	//check license
 	forms.DPLY_0F_solution__license.ACTION_validate(true,true)

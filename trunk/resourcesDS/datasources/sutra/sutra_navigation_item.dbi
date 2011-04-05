@@ -82,6 +82,12 @@ name:"description"
 },
 {
 allowNull:true,
+creationOrderIndex:45,
+dataType:4,
+name:"favoritable"
+},
+{
+allowNull:true,
 creationOrderIndex:42,
 dataType:12,
 length:255,

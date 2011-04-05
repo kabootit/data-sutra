@@ -142,7 +142,7 @@ formIndex:10500,
 items:[
 {
 containsFormID:"bce5bcd4-1414-4245-be24-e24145e18d32",
-location:"150,138",
+location:"150,127",
 relationName:"nav_navigation_item_to_navigation_item",
 text:"NAV_0F_navigation_item_1F__button",
 typeid:15,
@@ -150,7 +150,7 @@ uuid:"33c3ee76-1e0d-45ee-a9be-862dea8f3e63"
 },
 {
 containsFormID:"1ee11f3d-65eb-4152-bf91-97b325137046",
-location:"40,58",
+location:"40,47",
 relationName:"nav_navigation_item_to_navigation_item",
 text:"NAV_0F_navigation_item_1F__detail",
 typeid:15,
@@ -158,7 +158,7 @@ uuid:"3ddd9acf-87db-4c24-af24-f4e692ada597"
 },
 {
 containsFormID:"2a5e4e0b-05f8-4078-adfc-a6261b448fea",
-location:"180,158",
+location:"180,147",
 relationName:"nav_navigation_item_to_navigation_item",
 text:"NAV_0F_navigation_item_1F__help",
 typeid:15,
@@ -166,7 +166,7 @@ uuid:"79ae7100-3c17-405b-aee2-d44790d02909"
 },
 {
 containsFormID:"fd5d135f-2b68-49ac-a61b-fe82c9b0ceca",
-location:"100,98",
+location:"100,87",
 relationName:"nav_navigation_item_to_column",
 text:"NAV_0F_navigation_item_1F_column__fastfind",
 typeid:15,
@@ -174,7 +174,7 @@ uuid:"83945b2a-b51d-4e3f-bac1-4476fa221471"
 },
 {
 containsFormID:"4a99681c-8c54-40bc-b448-63019172ed53",
-location:"120,118",
+location:"120,107",
 relationName:"nav_navigation_item_to_navigation_item",
 text:"NAV_0F_navigation_item_1F__replace",
 typeid:15,
@@ -182,17 +182,17 @@ uuid:"a1280a0c-a5f1-4820-9918-4389e99145c9"
 },
 {
 containsFormID:"816fbccd-6afb-47db-8a89-142a352082ca",
-location:"70,78",
+location:"70,67",
 relationName:"nav_navigation_item_to_navigation_item",
 text:"NAV_0F_navigation_item_1F__universal_lists",
 typeid:15,
 uuid:"e99ecd2b-bf19-464f-8fbc-49ef5cc2ca34"
 }
 ],
-location:"0,48",
+location:"0,37",
 name:"tab_navigation",
 printable:false,
-size:"550,135",
+size:"550,146",
 tabOrientation:-1,
 typeid:16,
 uuid:"936f5db3-ec35-4284-9156-31f97f0cd744"

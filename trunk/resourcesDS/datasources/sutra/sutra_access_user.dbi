@@ -44,6 +44,14 @@ name:"developer_mode"
 },
 {
 allowNull:true,
+converterName:"StringSerializer",
+creationOrderIndex:39,
+dataType:-1,
+length:16777215,
+name:"favorites"
+},
+{
+allowNull:true,
 creationOrderIndex:23,
 dataType:4,
 name:"id_group"

@@ -626,12 +626,18 @@ if (useFWList) {
 	elements.fld_custom_list.visible = false
 	elements.fld_list_title.visible = true
 	elements.btn_custom_list.visible = false
+	
+	elements.fld_favoritbale.enabled = true
+	elements.lbl_favoritable_2.transparent = true
 }
 else {
 	elements.lbl_list_title.text = 'List area'
 	elements.fld_custom_list.visible = true
 	elements.fld_list_title.visible = false
 	elements.btn_custom_list.visible = true
+	
+	elements.fld_favoritbale.enabled = false
+	elements.lbl_favoritable_2.transparent = false
 }
 
 //load appropriate form valuelist
