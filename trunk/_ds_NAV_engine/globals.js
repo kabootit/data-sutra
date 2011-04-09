@@ -2481,14 +2481,26 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 									continue
 								}
 								
-								//create field
-								var myField = myForm.newTextField(
-												nameNameField,			//dataprovider
-												i,						//x
-												0,						//y
-												lineItem.width,			//width
-												20						//height
-											)
+								//create check field
+								if (lineItem.formatMask == 'Check') {
+									var myField = myForm.newCheck(
+													nameNameField,			//dataprovider
+													i,						//x
+													0,						//y
+													lineItem.width,			//width
+													20						//height
+												)
+								}
+								//create normal field
+								else {
+									var myField = myForm.newTextField(
+													nameNameField,			//dataprovider
+													i,						//x
+													0,						//y
+													lineItem.width,			//width
+													20						//height
+												)
+								}
 								
 								myField.name = application.getUUID().toString()
 								myField.onFocusGained = solutionModel.getGlobalMethod('NAV_universal_list_select__unhilite')
@@ -2838,18 +2850,37 @@ function NAV_universal_list_edit(input,elem) {
  * @properties={typeid:24,uuid:"74617C2C-E06A-4E7E-A3AD-10CB50797CA4"}
  */
 function NAV_universal_list_right_click(input,elem,list,record) {
+	var currentNavItem = solutionPrefs.config.currentFormID
+	
 	//build menu
 	var menu = new Array()
 	
 	//access and control turned on, this ul takes favorites
-	if (solutionPrefs.access.accessControl && navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].navigationItem.favoritable) {
+	if (solutionPrefs.access.accessControl && navigationPrefs.byNavItemID[currentNavItem].navigationItem.favoritable) {
 		if (!record && input instanceof JSEvent) {
 			record = forms[input.getFormName()].foundset.getSelectedRecord()
 		}
 		
+		//get view of this record showing in UL
+		var displayItems = navigationPrefs.byNavItemID[currentNavItem].universalList.displays
+		//loop through display items to find the selected one
+		for (var i = 0; i < displayItems.length; i++) {
+			if (globals.DATASUTRA_display == displayItems[i].displayID) {
+				break
+			}
+		}
+		
 		var fave = {
+				navItemID : currentNavItem,
+				display : displayItems[i],
 				datasource : record.foundset.getDataSource(),
-				pk : record.getPKs()[0] //won't work for compound pk
+				//won't work for compound pk
+				pkName : databaseManager.getTable(record).getRowIdentifierColumnNames()[0],
+				pk : record.getPKs()[0],
+				meta : {
+					dateCreated : application.getServerTimeStamp(),
+					createdBy : solutionPrefs.access.userID
+				}
 			}
 		
 		//this is already a favorite, check it
@@ -2885,6 +2916,7 @@ function NAV_universal_list_right_click(input,elem,list,record) {
 			//new favorite, add to stack
 			if (!solutionPrefs.access.favorites.some(favExists)) {
 				solutionPrefs.access.favorites.push(fave)
+				var selectFave = solutionPrefs.access.favorites.length - 1
 			}
 			//remove favorite
 			else {
@@ -2892,8 +2924,13 @@ function NAV_universal_list_right_click(input,elem,list,record) {
 			}
 			
 			//assign back into record
-			solutionPrefs.access.user.record.favorites = solutionPrefs.access.favorites //globals.CODE_copy_object(solutionPrefs.access.favorites)
+			solutionPrefs.access.user.record.favorites = solutionPrefs.access.favorites
 			databaseManager.saveData(solutionPrefs.access.user.record)
+			
+			//if in favorites mode, redraw
+			if (globals.DATASUTRA_navigation_set == 0) {
+				forms.NAV__navigation_tree__rows.LIST_redraw(null,null,true,false,true,selectFave)
+			}
 		}
 	}
 	
@@ -2953,7 +2990,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	var includeSet = arguments[3]
 	
 	var serverName = forms[solutionPrefs.config.formNameBase].controller.getServerName()
-	var maxReturnedRows = 100
+	var maxReturnedRows = -1
 	
 	//navPrefs will be returned and saved in the group record
 	if (returnPrefs) {
@@ -3060,7 +3097,6 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		var navSetNames = new Array()
 		var navSetDefault = new Array()
 		
-		
 		//order correctly
 		for (var i = 0; i < groupOrderedNavigationSets.length; i++) {
 			var found = false
@@ -3084,6 +3120,11 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	//add in hidden frameworks configuration set items
 	navigationSets.push(solutionPrefs.config.navigationSetID)
 	navSetNames.push('configPanes')
+	navSetDefault.push(null)
+	
+	//add in favorites place holder
+	navigationSets.push(0)
+	navSetNames.push('favoriteRecords')
 	navSetDefault.push(null)
 	
 	//create objects the first time around
@@ -4478,19 +4519,6 @@ function NAV_navigation_set_load()
  *	MODIFIED :	Aug 29, 2007 -- David Workman, Data Mosaic
  *			  	
  */
-
-	//MEMO: need to somehow put this section in a Function of it's own
-	//running in Tano...strip out jsevents for now
-	if (utils.stringToNumber(application.getVersion()) >= 5) {
-		//cast Arguments to array
-		var Arguments = new Array()
-		for (var i = 0; i < arguments.length; i++) {
-			Arguments.push(arguments[i])
-		}
-		
-		//reassign arguments without jsevents
-		arguments = Arguments.filter(globals.CODE_jsevent_remove)
-	}
 	
 	var skipLoadForms = arguments[0]
 	var treeTop = arguments[1]
@@ -4498,9 +4526,13 @@ function NAV_navigation_set_load()
 	var formName = 'NAV__navigation_tree'
 	
 	//there is a set
-	if (globals.DATASUTRA_navigation_set) {
+	if (globals.DATASUTRA_navigation_set >= 0) {
+		//working with favorites
+		if (globals.DATASUTRA_navigation_set == 0) {
+			var favoriteMode = true
+		}
 		//this set has been navigated to before, go to last selected item
-		if (navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set] && navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].lastNavItem && !treeTop) {
+		else if (navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set] && navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].lastNavItem && !treeTop) {
 			var itemID = navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].lastNavItem
 		}
 		//go to first item in the navigation set
@@ -4508,19 +4540,19 @@ function NAV_navigation_set_load()
 			var itemID = navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].itemsByOrder[0].navigationItem.idNavigationItem
 			var initialLoad = true
 		}
-		//there aren't any nav items in this set, load blanks
-		else {
+		//this isn't favorites and there aren't any nav items in this set, load blanks
+		else if (itemID != 0) {
 			var itemID = null
 		}
 	}
 	
-	//first time set is viewed and collapse all pref enabled
-	if (initialLoad && solutionPrefs.config.navigationCollapse) {
+	//first time set is viewed, collapse all pref enabled, and not favorites
+	if (initialLoad && solutionPrefs.config.navigationCollapse && itemID != 0) {
 		forms[formName + '__rows'].LIST_expand_collapse(null,itemID,true)
 	}
 	//regenerate list
 	else {
-		forms[formName + '__rows'].LIST_redraw(null,itemID,true,skipLoadForms)
+		forms[formName + '__rows'].LIST_redraw(null,itemID,true,skipLoadForms,favoriteMode)
 	}
 	
 	forms[formName].LABEL_update()

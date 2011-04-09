@@ -1345,7 +1345,10 @@ else {
 		forms[baseForm].elements.tab_content_C.removeAllTabs()
 	}
 
-
+	//set up favorites
+	if (solutionPrefs.access.favorites.length) {
+		
+	}
 
 	//run custom method for this group after filters applied
 	if (methodLoginB && globals[methodLoginB]) {

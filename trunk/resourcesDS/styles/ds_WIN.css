@@ -224,6 +224,14 @@ label.tree_arrow_open {
 	text-align: right;
 }
 
+label.tree_header {
+	border-style: solid;
+	border-width: 0px;
+	color: '#4C4C4C';
+	font-weight: bold;
+	margin: 0px 0px 0px 4px;
+}
+
 label.tree_select {
 	border-style: solid;
 	border-width: 0px;

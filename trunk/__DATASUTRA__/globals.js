@@ -2346,10 +2346,6 @@ if (application.__parent__.solutionPrefs) {
  * @properties={typeid:24,uuid:"b3e74e7e-5da7-4752-a6aa-b154b093649f"}
  */
 function DS_navigation_set(input) {
-
-	var formName = application.getMethodTriggerFormName()
-	var fwNavSet = application.getMethodTriggerElementName()
-	
 	//validate license
 	forms.DPLY_0F_solution__license.ACTION_validate(true,true)
 	
@@ -2368,6 +2364,12 @@ function DS_navigation_set(input) {
 	var vlItems = application.getValueListItems('NAV_navigation_set')
 	var vlDisplay = vlItems.getColumnAsArray(1)
 	var vlReal = vlItems.getColumnAsArray(2)
+	
+	//are there favorites?
+	if (application.__parent__.solutionPrefs && solutionPrefs.access && solutionPrefs.access.favorites && solutionPrefs.access.favorites.length) {
+		vlDisplay.push('-','Favorites')
+		vlReal.push(null,0)
+	}
 	
 	//called to depress menu
 	if (input instanceof JSEvent) {
@@ -2392,11 +2394,10 @@ function DS_navigation_set(input) {
 			if (vlDisplay[i] == '-') {
 				menu[i].setEnabled(false)
 			}
-			
 		}
 		
 		//pop menu down
-		var elem = forms[formName].elements[fwNavSet]
+		var elem = forms[input.getFormName()].elements[input.getElementName()]
 		if (elem != null && menu.length) {
 			plugins.popupmenu.showPopupMenu(elem, menu)
 		}
@@ -2407,7 +2408,7 @@ function DS_navigation_set(input) {
 	
 		var oldItem = globals.DATASUTRA_navigation_set
 		
-		if (input) {
+		if (input >= 0) {
 			//save last selected item when changing navigation sets
 			if (oldItem != input) {
 				if (oldItem) {
@@ -3845,6 +3846,24 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 						forms[currentNavItem.listData.tabFormInstance].UL_fill_data()
 					}
 				}
+			}
+			
+			//TODO: only do if changed spaces have different dimensions
+			//favorites mode on, refresh so get full width available
+			if (globals.DATASUTRA_navigation_set == 0) {
+				//which record is selected
+				var navForm = solutionModel.getForm('NAV__navigation_tree__rows')
+				var allComponents = navForm.getComponents()
+				for (var i = 0; i < allComponents.length; i++) {
+					var thisComponent = allComponents[i]
+					
+					if (thisComponent.imageMedia && thisComponent.imageMedia.getName() == "row_selected.png") {
+						var selected = utils.stringToNumber(thisComponent.name.split('_').pop())
+						break
+					}
+				}
+				
+				forms.NAV__navigation_tree__rows.LIST_redraw(null,null,true,false,true,selected)
 			}
 		}
 		
