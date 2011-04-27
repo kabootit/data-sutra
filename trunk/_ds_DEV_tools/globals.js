@@ -146,60 +146,111 @@ else {
  */
 function DEV_lock_workflow()
 {
-
-/*
- *	TITLE    :	DEV_lock_workflow
- *			  	
- *	MODULE   :	dev_DEV_developer
- *			  	
- *	ABOUT    :	lock the workflow form (opposite of globals.TRIGGER_interface_lock)
- *			  	
- *	INPUT    :	1- true/false to lock/unlock the workflow
- *			  	2- true/false to lock/unlock the list area
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
- *	USAGE    :	DEV_lock_workflow([lockWorkflow], [lockList]) Locks the workflow and/or list areas; when called without arguments, refires current state
- *			  	
- *	MODIFIED :	February 27, 2009 -- Troy Elliott, Data Mosaic
- *			  	
- */
 	
-var lockWorkflow = (typeof arguments[0] == 'boolean') ? arguments[0] : solutionPrefs.design.statusLockWorkflow
-var lockList = (typeof arguments[1] == 'boolean') ? arguments[1] : solutionPrefs.design.statusLockList
-
-if (application.__parent__.solutionPrefs) {
-	var baseForm = solutionPrefs.config.formNameBase
-	
-	//lock the workflow
-	if (lockWorkflow) {
+	/*
+	 *	TITLE    :	DEV_lock_workflow
+	 *			  	
+	 *	MODULE   :	dev_DEV_developer
+	 *			  	
+	 *	ABOUT    :	lock the workflow form (opposite of globals.TRIGGER_interface_lock)
+	 *			  	
+	 *	INPUT    :	1- true/false to lock/unlock the workflow
+	 *			  	2- true/false to lock/unlock the list area
+	 *			  	3- true/false to lock/unlock the navigation area
+	 *			  	
+	 *	OUTPUT   :	
+	 *			  	
+	 *	REQUIRES :	
+	 *			  	
+	 *	USAGE    :	DEV_lock_workflow([lockWorkflow], [lockList], [lockNavigation]) Locks the workflow and/or list areas; when called without arguments, refires current state
+	 *			  	
+	 *	MODIFIED :	February 27, 2009 -- Troy Elliott, Data Mosaic
+	 *			  	
+	 */
 		
-		var x = 0
-		var y = 86 		//offset for design mode and normal header
+	if (application.__parent__.solutionPrefs) {
+		var lockWorkflow = (typeof arguments[0] == 'boolean') ? arguments[0] : solutionPrefs.design.statusLockWorkflow
+		var lockList = (typeof arguments[1] == 'boolean') ? arguments[1] : solutionPrefs.design.statusLockList
+		var lockNavigation = (typeof arguments[2] == 'boolean') ? arguments[2] : solutionPrefs.design.statusLockNavigation
+		
+		var baseForm = solutionPrefs.config.formNameBase
+		
+		//MEMO: 44 is offset for normal header
 		var divider = 8
 		
+		//all gfx
+		var gfxTop = forms[baseForm].elements.gfx_curtain_top
+		var gfxLeftOne = forms[baseForm].elements.gfx_curtain_left_1
+		var gfxLeftTwo = forms[baseForm].elements.gfx_curtain_left_2
+		var gfxLeftRight = forms[baseForm].elements.gfx_curtain_leftright
+		var gfxRight = forms[baseForm].elements.gfx_curtain_right
+		var gfxCurtain = forms[baseForm].elements.gfx_curtain
+		
+		//turn everything off
+		gfxTop.visible = false
+		gfxLeftOne.visible = false
+		gfxLeftTwo.visible = false
+		gfxLeftRight.visible = false
+		gfxRight.visible = false
+		gfxCurtain.visible = false
+		
+		//graphic 1
+		var x = 0
+		var y = 44
+		var gfx1 = gfxCurtain
+		
+		//graphic 2
 		var x2 = 0
-		var y2 = 86
+		var y2 = 44
+		var gfx2 = gfxLeftOne
+		
+		//graphic 3
+		var x3 = 0
+		var y3 = 44
+		var gfx3 = gfxTop
+		
+		//if in design mode....
+		if (solutionPrefs.design.statusDesign) {
+			//height of design mode bar
+			y += 42
+			y2 += 42
+			y3 += 42
+		}
 		
 		//figure out location of curtain
 		switch (solutionPrefs.config.activeSpace) {
 			case 'standard':
+				x += solutionPrefs.screenAttrib.spaces.standard.currentHorizontal
 				y2 += solutionPrefs.screenAttrib.spaces.standard.currentVertical
 				
 				if (solutionPrefs.config.flexibleSpace) {
+					x += divider
 					y2 += divider
 				}
+				break
 			case 'standard flip':
 				x += solutionPrefs.screenAttrib.spaces.standard.currentHorizontal
+				y3 += solutionPrefs.screenAttrib.spaces.standard.currentVertical
+				
+				if (solutionPrefs.config.flexibleSpace) {
+					x += divider
+					y3 += divider
+				}
+				
+				gfx2 = gfxTop
+				gfx3 = gfxLeftOne
+				break
+				
+			case 'list':
+				x += solutionPrefs.screenAttrib.spaces.list.currentHorizontal
 				
 				if (solutionPrefs.config.flexibleSpace) {
 					x += divider
 				}
-				break
 				
-			case 'list':
+				var nonNavigation = true
+				break
+			
 			case 'list flip':
 				x += solutionPrefs.screenAttrib.spaces.list.currentHorizontal
 				
@@ -207,145 +258,175 @@ if (application.__parent__.solutionPrefs) {
 					x += divider
 				}
 				
-				if (solutionPrefs.config.activeSpace == 'list flip') {
-					var nonList = true
-				}
+				var nonList = true
+				
+				gfx3 = gfxLeftOne
 				break
 				
 			case 'vertical':
+				x += solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalOne + solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalTwo
 				x2 += solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalOne
 				
 				if (solutionPrefs.config.flexibleSpace) {
+					x += divider
 					x2 += divider
 				}
+				
+				gfx3 = gfxLeftTwo
+				break
 			case 'vertical flip':
 				x += solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalOne + solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalTwo
+				x3 += solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalOne
 				
 				if (solutionPrefs.config.flexibleSpace) {
 					x += divider
+					x3 += divider
 				}
+				
+				gfx2 = gfxLeftTwo
+				gfx3 = gfxLeftOne
 				break
 				
 			case 'centered':
+				x += solutionPrefs.screenAttrib.spaces.centered.currentHorizontalOne
 				x2 += application.getWindowWidth(null) - solutionPrefs.screenAttrib.spaces.centered.currentHorizontalTwo
 				
 				if (solutionPrefs.config.flexibleSpace) {
+					x += divider
 					x2 += divider
 				}
+				
+				gfx2 = gfxRight
+				gfx3 = gfxLeftOne
+				break
 			case 'centered flip':
 				x += solutionPrefs.screenAttrib.spaces.centered.currentHorizontalOne
+				x3 += application.getWindowWidth(null) - solutionPrefs.screenAttrib.spaces.centered.currentHorizontalTwo
 				
 				if (solutionPrefs.config.flexibleSpace) {
 					x += divider
+					x3 += divider
 				}
 				
+				gfx3 = gfxRight
 				break
 				
 			case 'classic':
-				x2 += solutionPrefs.screenAttrib.spaces.classic.currentHorizontal
-				
-				if (solutionPrefs.config.flexibleSpace) {
-					x2 += divider
-				}
-			case 'classic flip':
 				x += solutionPrefs.screenAttrib.spaces.classic.currentHorizontal
+				x2 += solutionPrefs.screenAttrib.spaces.classic.currentHorizontal
 				y += solutionPrefs.screenAttrib.spaces.classic.currentVertical
 				
 				if (solutionPrefs.config.flexibleSpace) {
 					x += divider
+					x2 += divider
 					y += divider
 				}
+				
+				gfx2 = gfxLeftRight
+				gfx3 = gfxLeftOne
+				break
+			case 'classic flip':
+				x += solutionPrefs.screenAttrib.spaces.classic.currentHorizontal
+				x3 += solutionPrefs.screenAttrib.spaces.classic.currentHorizontal
+				y += solutionPrefs.screenAttrib.spaces.classic.currentVertical
+				
+				if (solutionPrefs.config.flexibleSpace) {
+					x += divider
+					x3 += divider
+					y += divider
+				}
+				
+				gfx2 = gfxLeftOne
+				gfx3 = gfxLeftRight
 				break
 				
 			case 'wide':
 				x2 += solutionPrefs.screenAttrib.spaces.wide.currentHorizontal
-				
-				if (solutionPrefs.config.flexibleSpace) {
-					x2 += divider
-				}
-			case 'wide flip':
 				y += solutionPrefs.screenAttrib.spaces.wide.currentVertical
 				
 				if (solutionPrefs.config.flexibleSpace) {
+					x2 += divider
 					y += divider
 				}
+				
+				gfx2 = gfxLeftRight
+				gfx3 = gfxTop
+				break
+			case 'wide flip':
+				x3 += solutionPrefs.screenAttrib.spaces.wide.currentHorizontal
+				y += solutionPrefs.screenAttrib.spaces.wide.currentVertical
+				
+				if (solutionPrefs.config.flexibleSpace) {
+					x3 += divider
+					y += divider
+				}
+				
+				gfx2 = gfxTop
+				gfx3 = gfxLeftRight
 				break
 				
 			case 'workflow':
 				if (solutionPrefs.config.activeSpace == 'workflow') {
 					var nonList = true
+					var nonNavigation = true
 				}
 				break
 				
 			case 'workflow flip':
 				if (!lockList) {
-					forms[baseForm].elements.gfx_curtain.visible = false
-					forms[baseForm].elements.gfx_curtain_2.visible = false
-					return
+					var nonList = true
 				}
-				else {
-					nonList = true
-				}
+				var nonNavigation = true
 				break
 		}
 		
 	//CURTAIN ONE
-		//set location
-		forms[baseForm].elements.gfx_curtain.setLocation(x,y)
-		//set size
-		forms[baseForm].elements.gfx_curtain.setSize(
-								forms[baseForm].elements.tab_content_C.getWidth(),
-								forms[baseForm].elements.tab_content_C.getHeight()
-							)
+		if (lockWorkflow && solutionPrefs.config.activeSpace != 'workflow flip') {
+			//set location
+			gfx1.setLocation(x,y)
+			//set size
+			gfx1.setSize(
+						forms[baseForm].elements.tab_content_C.getWidth(),
+						forms[baseForm].elements.tab_content_C.getHeight()
+					)
+			
+			//turn on curtain
+			gfx1.visible = true
+		}
 		
-		//turn on curtain
-		forms[baseForm].elements.gfx_curtain.visible = true
-	
 	//CURTAIN TWO
 		if (lockList && !nonList) {
 			//set location
-			forms[baseForm].elements.gfx_curtain_2.setLocation(x2,y2)
+			gfx2.setLocation(x2,y2)
 			//set size
-			forms[baseForm].elements.gfx_curtain_2.setSize(
-									forms[baseForm].elements.tab_content_B.getWidth(),
-									forms[baseForm].elements.tab_content_B.getHeight()
-								)
+			gfx2.setSize(
+						forms[baseForm].elements.tab_content_B.getWidth(),
+						forms[baseForm].elements.tab_content_B.getHeight()
+					)
 			
 			//turn on curtain
-			forms[baseForm].elements.gfx_curtain_2.visible = true
+			gfx2.visible = true
 		}
-		else {
-			//turn off curtain
-			forms[baseForm].elements.gfx_curtain_2.visible = false
-		}
-		
-//		//turn off tabpanel
-//		forms[baseForm].elements.tab_content_C.enabled = false
-//				
-//		//there is a form in tab panel
-//		if (forms[baseForm].elements.tab_content_C.tabIndex) {
-//			var formName = forms[baseForm].elements.tab_content_C.getTabFormNameAt(forms[baseForm].elements.tab_content_C.tabIndex)
-//			
-//			//if a subheader present, turn it on
-//			if (forms[formName].elements.gfx_subheader) {
-//				forms[formName].elements.gfx_subheader.enabled = true
-//			}
-//		}
-	}
-	//unlock the workflow
-	else {
-		//turn off curtains
-		forms[baseForm].elements.gfx_curtain.visible = false
-		forms[baseForm].elements.gfx_curtain_2.visible = false
-		
-//		//turn on tabpanel
-//		forms[baseForm].elements.tab_content_C.enabled = true
-	}
 	
-	//track state of workflow lockedness
-	solutionPrefs.design.statusLockWorkflow = lockWorkflow
-	solutionPrefs.design.statusLockList = lockWorkflow && lockList
-}
+	//CURTAIN THREE
+		if (lockNavigation && !nonNavigation) {
+			//set location
+			gfx3.setLocation(x3,y3)
+			//set size
+			gfx3.setSize(
+						forms[baseForm].elements.tab_content_A.getWidth(),
+						forms[baseForm].elements.tab_content_A.getHeight()
+					)
+			
+			//turn on curtain
+			gfx3.visible = true
+		}
+		
+		//track state of workflow lockedness
+		solutionPrefs.design.statusLockWorkflow = lockWorkflow
+		solutionPrefs.design.statusLockList = lockWorkflow && lockList
+		solutionPrefs.design.statusLockNavigation = lockNavigation
+	}
 }
 
 /**
