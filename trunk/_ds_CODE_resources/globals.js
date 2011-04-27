@@ -5714,3 +5714,95 @@ function CODE_row_background__highlight(formName,delay) {
 	status = false
 	application.updateUI()
 }
+
+/** 
+ * Show and set the initial status of the floater window.
+ * 
+ * @param	{Boolean}	toggle Show/hide the floater window.
+ * @param	{String}	[formName] Form to load in the tab panel (all others removed).
+ * @param	{Boolean}	[lockScreen] Lock screen from other interactions until hidden.
+ * @param	{Number}	[positionX] X co-ordinates for tab panel.
+ * @param	{Number}	[positionY] Y co-ordinates for tab panel.
+ * @param	{Number}	[sizeX=formName's width] Width of floater.
+ * @param	{Number}	[sizeY=formName's height] Height of floater.
+ * @param	{String}	[saveTooltip] Tooltip to show over save check button.
+ * @param	{String}	[cancelTooltip] Tooltip to show over cancel button.
+ * @param	{Boolean}	[nonTransparent] Lock screen from other interactions until hidden.
+ * * 
+ * @properties={typeid:24,uuid:"A3612F37-7D06-4047-A445-26B17069486B"}
+ */
+function TRIGGER_floater_set(toggle,formName,lockScreen,positionX,positionY,sizeX,sizeY,saveTooltip,cancelTooltip,nonTransparent) {
+	var floater = forms.DATASUTRA_0F_solution.elements.tab_floater
+	var content = forms.DATASUTRA__floater.elements.tab_content
+	
+	//show floater
+	if (toggle) {
+		
+		if (formName && solutionModel.getForm(formName)) {
+			//add tab
+			if (content.getTabFormNameAt(content.tabIndex) != formName) {
+				content.removeAllTabs()
+				content.addTab(forms[formName])
+			}
+			
+			//set size of base form
+			var smForm = solutionModel.getForm(formName)
+			
+			//get height
+			var totalHeight = 0
+			for (var i in smForm.getParts()) {
+				totalHeight += smForm.getParts()[i].height
+			}
+			
+			sizeX = sizeX || (solutionModel.getForm(formName).width + 40)
+			sizeY = sizeY || (totalHeight + 50)
+		}
+		
+		//set position
+		if (positionX || positionY) {
+			floater.setLocation(positionX || 0, positionY || 0)
+		}
+		
+		//set size
+		if (sizeX || sizeY) {
+			floater.setSize(sizeX, sizeY)
+		}
+		
+		//set save tooltip
+		if (saveTooltip) {
+			forms.DATASUTRA__floater.elements.btn_save.toolTipText = saveTooltip
+		}
+		else {
+			forms.DATASUTRA__floater.elements.btn_save.toolTipText = 'Save'
+		}
+		
+		//set cancel tooltip
+		if (cancelTooltip) {
+			forms.DATASUTRA__floater.elements.btn_cancel.toolTipText = cancelTooltip
+		}
+		else {
+			forms.DATASUTRA__floater.elements.btn_cancel.toolTipText = 'Cancel'
+		}
+		
+		//set non-transparency
+		if (nonTransparent) {
+			content.transparent = false
+		}
+		else {
+			content.transparent = true
+		}
+		
+		//disable all actions
+		if (lockScreen) {
+			globals.TRIGGER_interface_lock(true,true)
+		}
+		
+		//turn on
+		floater.visible = true
+	}
+	//hide floater
+	else {
+		floater.visible = false
+		globals.TRIGGER_interface_lock(false)
+	}
+}

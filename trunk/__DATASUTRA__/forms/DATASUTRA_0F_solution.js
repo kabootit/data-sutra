@@ -135,9 +135,11 @@ if (currentcontroller.getName() == formName) {
 	//fastfind area pop
 	elements.tab_fastfind.visible = false
 	
+	//floater tab panel
+	elements.tab_floater.visible = false
+	
 	//turn off loading hider
 	elements.gfx_curtain_blank.visible = false
-	
 	
 	//tack on listener to my bean
 //	var listener = new Packages.java.beans.PropertyChangeListener({propertyChange:popUp})
