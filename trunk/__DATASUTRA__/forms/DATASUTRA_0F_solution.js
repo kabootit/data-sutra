@@ -102,15 +102,25 @@ if (currentcontroller.getName() == formName) {
 	elements.lock.frameIcon = new Packages.javax.swing.ImageIcon(new Packages.java.net.URL('media:///toolbar_lock.png'))
 	
 	//hide locking curtains; set image
+	elements.gfx_curtain_header.visible = false
+	elements.gfx_curtain_header.setImageURL('media:///curtain_5E6166.png')
 	elements.gfx_curtain.visible = false
 	elements.gfx_curtain.setImageURL('media:///curtain_5E6166.png')
-	elements.gfx_curtain_2.visible = false
-	elements.gfx_curtain_2.setImageURL('media:///curtain_5E6166.png')
-	elements.gfx_curtain_3.setSize(32,32)
-	application.updateUI()
-//	elements.gfx_curtain_3.setLocation((application.getWindowWidth() / 2) - 66, (application.getWindowHeight() / 2 - 200))
-	elements.gfx_curtain_3.visible = false
-	elements.gfx_curtain_3.setImageURL('media:///progressbar_facebook.gif')
+	elements.gfx_curtain_left_1.visible = false
+	elements.gfx_curtain_left_1.setImageURL('media:///curtain_5E6166.png')
+	elements.gfx_curtain_left_2.visible = false
+	elements.gfx_curtain_left_2.setImageURL('media:///curtain_5E6166.png')
+	elements.gfx_curtain_leftright.visible = false
+	elements.gfx_curtain_leftright.setImageURL('media:///curtain_5E6166.png')
+	elements.gfx_curtain_right.visible = false
+	elements.gfx_curtain_right.setImageURL('media:///curtain_5E6166.png')
+	elements.gfx_curtain_top.visible = false
+	elements.gfx_curtain_top.setImageURL('media:///curtain_5E6166.png')
+	elements.gfx_spinner.setSize(32,32)
+//	application.updateUI()
+//	elements.gfx_spinner.setLocation((application.getWindowWidth() / 2) - 66, (application.getWindowHeight() / 2 - 200))
+	elements.gfx_spinner.visible = false
+	elements.gfx_spinner.setImageURL('media:///progressbar_facebook.gif')
 	
 	//hide designbar popdown
 	elements.tab_design_popdown.visible = false
