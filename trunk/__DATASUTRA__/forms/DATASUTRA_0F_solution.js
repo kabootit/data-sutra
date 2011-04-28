@@ -112,8 +112,10 @@ if (currentcontroller.getName() == formName) {
 	elements.gfx_curtain_left_2.setImageURL('media:///curtain_5E6166.png')
 	elements.gfx_curtain_leftright.visible = false
 	elements.gfx_curtain_leftright.setImageURL('media:///curtain_5E6166.png')
-	elements.gfx_curtain_right.visible = false
-	elements.gfx_curtain_right.setImageURL('media:///curtain_5E6166.png')
+	elements.gfx_curtain_right_1.visible = false
+	elements.gfx_curtain_right_1.setImageURL('media:///curtain_5E6166.png')
+	elements.gfx_curtain_right_2.visible = false
+	elements.gfx_curtain_right_2.setImageURL('media:///curtain_5E6166.png')
 	elements.gfx_curtain_top.visible = false
 	elements.gfx_curtain_top.setImageURL('media:///curtain_5E6166.png')
 	elements.gfx_spinner.setSize(32,32)

@@ -473,7 +473,8 @@ function TRIGGER_interface_lock(freeze,freezeAll,nonTransparent,spinner,nonTrans
 		var gfxLeftOne = forms[baseForm].elements.gfx_curtain_left_1
 		var gfxLeftTwo = forms[baseForm].elements.gfx_curtain_left_2
 		var gfxLeftRight = forms[baseForm].elements.gfx_curtain_leftright
-		var gfxRight = forms[baseForm].elements.gfx_curtain_right
+		var gfxRightOne = forms[baseForm].elements.gfx_curtain_right_1
+		var gfxRightTwo = forms[baseForm].elements.gfx_curtain_right_2
 		var gfxCurtain = forms[baseForm].elements.gfx_curtain
 		
 		//turn everything off
@@ -482,7 +483,8 @@ function TRIGGER_interface_lock(freeze,freezeAll,nonTransparent,spinner,nonTrans
 		gfxLeftOne.visible = false
 		gfxLeftTwo.visible = false
 		gfxLeftRight.visible = false
-		gfxRight.visible = false
+		gfxRightOne.visible = false
+		gfxRightTwo.visible = false
 		gfxCurtain.visible = false
 		
 		//graphic 1
@@ -582,24 +584,32 @@ function TRIGGER_interface_lock(freeze,freezeAll,nonTransparent,spinner,nonTrans
 				x += solutionPrefs.screenAttrib.spaces.centered.currentHorizontalOne
 				x2 += application.getWindowWidth(null) - solutionPrefs.screenAttrib.spaces.centered.currentHorizontalTwo
 				
+				if (solutionPrefs.screenAttrib.sidebar.status) {
+					x2 -= solutionPrefs.screenAttrib.sidebar.currentSize
+				}
+				
 				if (solutionPrefs.config.flexibleSpace) {
 					x += divider
 					x2 += divider
 				}
 				
-				gfx2 = gfxRight
+				gfx2 = gfxRightOne
 				gfx3 = gfxLeftOne
 				break
 			case 'centered flip':
 				x += solutionPrefs.screenAttrib.spaces.centered.currentHorizontalOne
 				x3 += application.getWindowWidth(null) - solutionPrefs.screenAttrib.spaces.centered.currentHorizontalTwo
 				
+				if (solutionPrefs.screenAttrib.sidebar.status) {
+					x3 -= solutionPrefs.screenAttrib.sidebar.currentSize
+				}
+				
 				if (solutionPrefs.config.flexibleSpace) {
 					x += divider
 					x3 += divider
 				}
 				
-				gfx3 = gfxRight
+				gfx3 = gfxRightOne
 				break
 				
 			case 'classic':
@@ -855,6 +865,23 @@ function TRIGGER_interface_lock(freeze,freezeAll,nonTransparent,spinner,nonTrans
 					
 					//turn on curtain
 					gfx3.visible = true
+				}
+				
+			//CURTAIN SIDEBAR
+				if (freeze && solutionPrefs.screenAttrib.sidebar.status) {
+					//set location
+					gfxRightTwo.setLocation(
+								forms[baseForm].elements.tab_content_D.getLocationX(),
+								forms[baseForm].elements.tab_content_D.getLocationY() + 44
+							)
+					//set size
+					gfxRightTwo.setSize(
+								forms[baseForm].elements.tab_content_D.getWidth(),
+								forms[baseForm].elements.tab_content_D.getHeight() - 44
+							)
+					
+					//turn on curtain
+					gfxRightTwo.visible = true
 				}
 			}
 		}
