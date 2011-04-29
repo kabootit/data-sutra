@@ -1314,7 +1314,7 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset) {
  * 
  * @properties={typeid:24,uuid:"7e91ecfd-e090-4d7b-83cf-782473b41028"}
  */
-function TRIGGER_progressbar_get(progressValue,textValue,textTooltip) {
+function TRIGGER_progressbar_get() {
 	if (application.__parent__.solutionPrefs && forms[solutionPrefs.config.formNameBase+'__header__toolbar'].elements.tab_toolbar.getTabNameAt(forms[solutionPrefs.config.formNameBase+'__header__toolbar'].elements.tab_toolbar.getMaxTabIndex()) == 'TOOL_progress_bar') {
 		var formName = 'TOOL_progress_bar'
 		
