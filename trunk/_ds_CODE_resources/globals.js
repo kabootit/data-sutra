@@ -5792,6 +5792,15 @@ function TRIGGER_floater_set(toggle,formName,lockScreen,positionX,positionY,size
 		
 		//set size
 		if (sizeX || sizeY) {
+			//check to see that will be entirely visible
+			//TODO: when toolbars showing this gets messed up, so add in a 40-pixel fudge factor
+			if (floater.getLocationX() + sizeX > application.getWindowWidth(null)) {
+				sizeX = application.getWindowWidth(null) - floater.getLocationX()
+			}
+			if (floater.getLocationY() + sizeY + 40 > application.getWindowHeight(null)) {
+				sizeY = application.getWindowHeight(null) - floater.getLocationY() - 80
+			}
+			
 			floater.setSize(sizeX, sizeY)
 		}
 		
