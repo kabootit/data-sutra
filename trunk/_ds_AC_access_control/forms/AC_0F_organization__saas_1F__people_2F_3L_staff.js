@@ -40,3 +40,23 @@ globals.TRIGGER_navigation_set(7,true) //staff is 7
 function REC_on_select(event) {
 	globals.AC_staff_selected = id_staff
 }
+
+/**
+ * Perform the element default action.
+ *
+ * @param {JSEvent} event the event that triggered the action
+ *
+ * @properties={typeid:24,uuid:"5CCD19B0-F04D-444B-8F3A-418DE25A1414"}
+ */
+function REC_delete(event) {
+	var delRec = plugins.dialogs.showWarningDialog(
+					'Delete record',
+					'Do you really want to delete the selected filter?',
+					'Yes',
+					'No'
+				)
+	
+	if (delRec == 'Yes') {
+		controller.deleteRecord()
+	}
+}

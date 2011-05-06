@@ -8,6 +8,22 @@ typeid:19,
 uuid:"23A6552F-FD1A-448D-ADFF-9B1E841C1062"
 },
 {
+borderType:"SpecialMatteBorder,0.0,0.0,1.0,0.0,#000000,#999999,#999999,#999999,0.0,1.0",
+formIndex:11301,
+imageMediaID:"16c4d692-c1ea-4200-a078-1150b1da4d5f",
+location:"730,30",
+mediaOptions:1,
+name:"btn_delete",
+onActionMethodID:"5CCD19B0-F04D-444B-8F3A-418DE25A1414",
+rolloverCursor:12,
+showClick:false,
+showFocus:false,
+size:"20,22",
+toolTipText:"Delete selected user",
+typeid:7,
+uuid:"33E81E4B-6D24-402D-976B-22C0810A3842"
+},
+{
 borderType:"SpecialMatteBorder,0.0,0.0,1.0,0.0,#000000,#000000,#999999,#000000,0.0,1.0",
 dataProviderID:"type_staff",
 formIndex:10300,
