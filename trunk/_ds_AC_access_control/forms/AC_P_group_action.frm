@@ -50,7 +50,7 @@ uuid:"66be2d1a-35d2-41d7-8e95-eccfdd3c5c48"
 },
 {
 anchors:15,
-dataProviderID:"ac_mosaic_access_group_action_to_mosaic_access_action.description",
+dataProviderID:"ac_access_group_action_to_access_action.description",
 displayType:1,
 editable:false,
 formIndex:10900,
@@ -116,7 +116,7 @@ uuid:"b653821c-5347-4a3f-b311-dd7fdb366d32"
 {
 anchors:11,
 borderType:"SpecialMatteBorder,0.0,0.0,1.0,0.0,#000000,#000000,#999999,#000000,0.0,1.0",
-dataProviderID:"ac_mosaic_access_group_action_to_mosaic_access_action.action_name",
+dataProviderID:"ac_access_group_action_to_access_action.action_name",
 displaysTags:true,
 editable:false,
 formIndex:10500,
