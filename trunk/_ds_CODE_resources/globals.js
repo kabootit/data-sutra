@@ -1187,9 +1187,6 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset) {
 			
 			var lastItem = solutionPrefs.config.currentFormID
 			
-			//redraw list; make sure row is expanded if node2; load new item
-			forms.NAV__navigation_tree__rows.LIST_expand_collapse(null,navItem.idNavigationItem,'open',navSetID)
-			
 			//if from a different navigation set
 			if (globals.DATASUTRA_navigation_set != navSetID) {
 				navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].lastNavItem = lastItem
@@ -1198,6 +1195,9 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset) {
 				//update text display
 				forms.NAV__navigation_tree.LABEL_update()
 			}
+			
+			//redraw list; make sure row is expanded if node2; load new item
+			forms.NAV__navigation_tree__rows.LIST_expand_collapse(null,navItem.idNavigationItem,'open',navSetID)
 			
 			//bring foundset over
 			if (setFoundset) {
