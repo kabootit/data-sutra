@@ -5842,3 +5842,44 @@ function TRIGGER_floater_set(toggle,formName,lockScreen,positionX,positionY,size
 		globals.TRIGGER_interface_lock(false)
 	}
 }
+
+/**
+ * @properties={typeid:24,uuid:"9FCCA57A-7354-4C73-96D2-A81A5C08DF4E"}
+ */
+function CODE_servoy_object_exists(methodName, formName) {
+	//a method passed in to check
+	if (methodName) {
+		//a form specified
+		if (formName) {
+			var smForm = solutionModel.getForm(formName)
+			
+			//check to see if form exists
+			if (smForm) {
+				
+				//check for method existence on given form
+				if (smForm.getFormMethod(methodName)) {
+					return true
+				}
+				else {
+					return false
+				}
+			}
+			else {
+				return false
+			}
+		}
+		//no form specified, at the global scope
+		else {
+			//check for global method existence
+			if (solutionModel.getGlobalMethod(methodName)) {
+				return true
+			}
+			else {
+				return false
+			}
+		}
+	}
+	else {
+		return false
+	}
+}
