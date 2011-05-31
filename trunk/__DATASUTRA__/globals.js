@@ -4856,7 +4856,7 @@ function DS_client_info_load()
 	
 	//get external ip address if connection available
 	if (pingResult) {
-		var ipExternal = plugins.http.getPageData('http://whatismyip.com/automation/n09230945.asp')
+		var ipExternal = plugins.http.getPageData('http://automation.whatismyip.com/n09230945.asp')
 	}
 	if (!ipExternal || ipExternal.indexOf('Error',0) != -1) {
 		ipExternal = 'UNKNOWN'
