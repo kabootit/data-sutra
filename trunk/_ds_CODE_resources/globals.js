@@ -1315,7 +1315,7 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset) {
  * @properties={typeid:24,uuid:"7e91ecfd-e090-4d7b-83cf-782473b41028"}
  */
 function TRIGGER_progressbar_get() {
-	if (application.__parent__.solutionPrefs && forms[solutionPrefs.config.formNameBase+'__header__toolbar'].elements.tab_toolbar.getTabNameAt(forms[solutionPrefs.config.formNameBase+'__header__toolbar'].elements.tab_toolbar.getMaxTabIndex()) == 'TOOL_progress_bar') {
+	if (application.__parent__.solutionPrefs && forms[solutionPrefs.config.formNameBase+'__header__toolbar'].elements.tab_toolbar.getTabFormNameAt(forms[solutionPrefs.config.formNameBase+'__header__toolbar'].elements.tab_toolbar.getMaxTabIndex()) == 'TOOL_progress_bar') {
 		var formName = 'TOOL_progress_bar'
 		
 		//get progressbar value if showing
@@ -1416,11 +1416,10 @@ function TRIGGER_progressbar_start(progressValue,explanationText,explanationTool
 		
 		//only run if progressbar not added
 		if (forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getTabFormNameAt(forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getMaxTabIndex()) != formName) {
-	
 			//save down active toolbar to restore
 			solutionPrefs.config.lastSelectedToolbar = forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex
 			
-			//load scrollbar tab
+			//load progressbar tab
 			forms[baseForm + '__header__toolbar'].elements.tab_toolbar.addTab(forms[formName],'')
 			forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex = forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getMaxTabIndex()
 			
@@ -1498,6 +1497,10 @@ function TRIGGER_progressbar_stop() {
 			if (solutionPrefs.config.lastSelectedToolbar != forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getMaxTabIndex()) {
 				globals.DS_toolbar_cycle(solutionPrefs.config.lastSelectedToolbar)
 			}
+			//manually set the tab index; otherwise will still be on removed tab
+			else {
+				forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex = forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getMaxTabIndex()
+			}
 			
 			//show toolbar controls
 			forms[baseForm + '__header__toolbar'].elements.btn_toolbar_toggle.visible = true
@@ -1505,7 +1508,7 @@ function TRIGGER_progressbar_stop() {
 		}
 		
 		//clear out lastSelectedToolbar
-		solutionPrefs.config.lastSelectedToolbar = null
+		delete solutionPrefs.config.lastSelectedToolbar
 		
 		//hide bean stuff to be ready for next time
 		forms[formName].elements.lbl_progress_text.visible = false
