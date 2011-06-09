@@ -621,7 +621,16 @@ function LIST_favorites(selected) {
 				
 				//get the record
 				var fsRecord = databaseManager.getFoundSet(details.datasource)
-				fsRecord.loadRecords(details.pk)
+				
+				//need to handle uuids differently
+				if (details.pk && application.getUUID(details.pk) && application.getUUID(details.pk).toString() == details.pk) {
+					fsRecord.loadRecords(application.getUUID(details.pk))
+				}
+				//just load up whatever value is stored
+				else {
+					fsRecord.loadRecords(details.pk)
+				}
+				
 				var faveRec = fsRecord.getRecord(1) 
 				
 				//what kind of record is this
