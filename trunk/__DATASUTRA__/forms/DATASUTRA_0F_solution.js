@@ -63,138 +63,142 @@ function FORM_on_load()
  *			  	
  */	
 
-if (! application.__parent__.solutionPrefs) {
-	globals.DATASUTRA_open()
-}
-
-var formName = 'DATASUTRA_0F_solution'
-
-//continue setting things up if no error in login
-if (currentcontroller.getName() == formName) {
-
-	//wrapper bean 1
-	elements.bean_wrapper_1.leftComponent = elements.bean_wrapper_2
-	elements.bean_wrapper_1.rightComponent = null
+//don't run in headless client; headless client for example will use whatever solution is activated as context
+if (application.getApplicationType() != APPLICATION_TYPES.HEADLESS_CLIENT) {
 	
-	//wrapper bean 2
-	elements.bean_wrapper_2.topComponent = elements.bean_header
-	elements.bean_wrapper_2.bottomComponent = elements.bean_main
-	elements.bean_wrapper_2.dividerLocation = 44
-	
-	//header bean
-	elements.bean_header.topComponent = null
-	elements.bean_header.bottomComponent = elements.tab_header
-	
-	//main bean
-	elements.bean_main.leftComponent = elements.bean_list
-	elements.bean_main.rightComponent = elements.bean_workflow
-	
-	//list bean
-	elements.bean_list.topComponent = elements.tab_content_A
-	elements.bean_list.bottomComponent = elements.tab_content_B
-	
-	//workflow bean
-	elements.bean_workflow.topComponent = null
-	elements.bean_workflow.bottomComponent = elements.tab_content_C
-	
-	//unlock content
-	elements.lock.contentPane = elements.tab_lock
-	elements.lock.frameIcon = new Packages.javax.swing.ImageIcon(new Packages.java.net.URL('media:///toolbar_lock.png'))
-	
-	//hide locking curtains; set image
-	elements.gfx_curtain_header.visible = false
-	elements.gfx_curtain_header.setImageURL('media:///curtain_5E6166.png')
-	elements.gfx_curtain.visible = false
-	elements.gfx_curtain.setImageURL('media:///curtain_5E6166.png')
-	elements.gfx_curtain_left_1.visible = false
-	elements.gfx_curtain_left_1.setImageURL('media:///curtain_5E6166.png')
-	elements.gfx_curtain_left_2.visible = false
-	elements.gfx_curtain_left_2.setImageURL('media:///curtain_5E6166.png')
-	elements.gfx_curtain_leftright.visible = false
-	elements.gfx_curtain_leftright.setImageURL('media:///curtain_5E6166.png')
-	elements.gfx_curtain_right_1.visible = false
-	elements.gfx_curtain_right_1.setImageURL('media:///curtain_5E6166.png')
-	elements.gfx_curtain_right_2.visible = false
-	elements.gfx_curtain_right_2.setImageURL('media:///curtain_5E6166.png')
-	elements.gfx_curtain_top.visible = false
-	elements.gfx_curtain_top.setImageURL('media:///curtain_5E6166.png')
-	elements.gfx_spinner.setSize(32,32)
-//	application.updateUI()
-//	elements.gfx_spinner.setLocation((application.getWindowWidth() / 2) - 66, (application.getWindowHeight() / 2 - 200))
-	elements.gfx_spinner.visible = false
-	elements.gfx_spinner.setImageURL('media:///progressbar_facebook.gif')
-	
-	//hide designbar popdown
-	elements.tab_design_popdown.visible = false
-	
-	//hide flexible spaces with sidebar showing top-border hack
-	elements.gfx_flexible.visible = false
-	
-	//toolbar area pop-down
-//	elements.sheetz.contentPane = elements.tab_toolbar_popdown
-	elements.tab_toolbar_popdown.visible = false
-	
-	//fastfind area pop
-	elements.tab_fastfind.visible = false
-	
-	//floater tab panel
-	elements.tab_floater.visible = false
-	
-	//turn off loading hider
-	elements.gfx_curtain_blank.visible = false
-	
-	//tack on listener to my bean
-//	var listener = new Packages.java.beans.PropertyChangeListener({propertyChange:popUp})
-//	elements.bean_main.addPropertyChangeListener('dividerLocation',listener)
-	
-	/*
-	//maximize workflow and show splash/login screen
-	if (solutionPrefs.access && solutionPrefs.access.accessControl) {	
-		//load main window
-		if (elements.tab_content_C.tabIndex > 0) {
-			elements.tab_content_C.removeAllTabs()
-		}
-		elements.tab_content_C.addTab(forms.AC_R__login,'')
-		elements.tab_content_C.tabIndex = 1
-		
-		//re-size screen if too small
-		if (application.getWindowWidth() < 950 || application.getWindowHeight() < 650) {
-			application.setWindowSize(980,680)
-			application.setWindowLocation(-1,-1)
-		}
-		
-		//go to workflow maximized view
-		globals.DS_space_change('btn_space_7',true)
+	if (! application.__parent__.solutionPrefs) {
+		globals.DATASUTRA_open()
 	}
-	//else when no access and control, view determined fx_load_forms
-	*/
-	application.updateUI()
 	
+	var formName = 'DATASUTRA_0F_solution'
 	
-	/*
-	//maximize workflow and show splash/login screen
+	//continue setting things up if no error in login
+	if (currentcontroller.getName() == formName) {
+	
+		//wrapper bean 1
+		elements.bean_wrapper_1.leftComponent = elements.bean_wrapper_2
+		elements.bean_wrapper_1.rightComponent = null
 		
-		//login
+		//wrapper bean 2
+		elements.bean_wrapper_2.topComponent = elements.bean_header
+		elements.bean_wrapper_2.bottomComponent = elements.bean_main
+		elements.bean_wrapper_2.dividerLocation = 44
+		
+		//header bean
+		elements.bean_header.topComponent = null
+		elements.bean_header.bottomComponent = elements.tab_header
+		
+		//main bean
+		elements.bean_main.leftComponent = elements.bean_list
+		elements.bean_main.rightComponent = elements.bean_workflow
+		
+		//list bean
+		elements.bean_list.topComponent = elements.tab_content_A
+		elements.bean_list.bottomComponent = elements.tab_content_B
+		
+		//workflow bean
+		elements.bean_workflow.topComponent = null
+		elements.bean_workflow.bottomComponent = elements.tab_content_C
+		
+		//unlock content
+		elements.lock.contentPane = elements.tab_lock
+		elements.lock.frameIcon = new Packages.javax.swing.ImageIcon(new Packages.java.net.URL('media:///toolbar_lock.png'))
+		
+		//hide locking curtains; set image
+		elements.gfx_curtain_header.visible = false
+		elements.gfx_curtain_header.setImageURL('media:///curtain_5E6166.png')
+		elements.gfx_curtain.visible = false
+		elements.gfx_curtain.setImageURL('media:///curtain_5E6166.png')
+		elements.gfx_curtain_left_1.visible = false
+		elements.gfx_curtain_left_1.setImageURL('media:///curtain_5E6166.png')
+		elements.gfx_curtain_left_2.visible = false
+		elements.gfx_curtain_left_2.setImageURL('media:///curtain_5E6166.png')
+		elements.gfx_curtain_leftright.visible = false
+		elements.gfx_curtain_leftright.setImageURL('media:///curtain_5E6166.png')
+		elements.gfx_curtain_right_1.visible = false
+		elements.gfx_curtain_right_1.setImageURL('media:///curtain_5E6166.png')
+		elements.gfx_curtain_right_2.visible = false
+		elements.gfx_curtain_right_2.setImageURL('media:///curtain_5E6166.png')
+		elements.gfx_curtain_top.visible = false
+		elements.gfx_curtain_top.setImageURL('media:///curtain_5E6166.png')
+		elements.gfx_spinner.setSize(32,32)
+	//	application.updateUI()
+	//	elements.gfx_spinner.setLocation((application.getWindowWidth() / 2) - 66, (application.getWindowHeight() / 2 - 200))
+		elements.gfx_spinner.visible = false
+		elements.gfx_spinner.setImageURL('media:///progressbar_facebook.gif')
+		
+		//hide designbar popdown
+		elements.tab_design_popdown.visible = false
+		
+		//hide flexible spaces with sidebar showing top-border hack
+		elements.gfx_flexible.visible = false
+		
+		//toolbar area pop-down
+	//	elements.sheetz.contentPane = elements.tab_toolbar_popdown
+		elements.tab_toolbar_popdown.visible = false
+		
+		//fastfind area pop
+		elements.tab_fastfind.visible = false
+		
+		//floater tab panel
+		elements.tab_floater.visible = false
+		
+		//turn off loading hider
+		elements.gfx_curtain_blank.visible = false
+		
+		//tack on listener to my bean
+	//	var listener = new Packages.java.beans.PropertyChangeListener({propertyChange:popUp})
+	//	elements.bean_main.addPropertyChangeListener('dividerLocation',listener)
+		
+		/*
+		//maximize workflow and show splash/login screen
 		if (solutionPrefs.access && solutionPrefs.access.accessControl) {	
+			//load main window
+			if (elements.tab_content_C.tabIndex > 0) {
+				elements.tab_content_C.removeAllTabs()
+			}
 			elements.tab_content_C.addTab(forms.AC_R__login,'')
+			elements.tab_content_C.tabIndex = 1
+			
+			//re-size screen if too small
+			if (application.getWindowWidth() < 950 || application.getWindowHeight() < 650) {
+				application.setWindowSize(980,680)
+				application.setWindowLocation(-1,-1)
+			}
+			
+			//go to workflow maximized view
+			globals.DS_space_change('btn_space_7',true)
 		}
-		//splash
-		else {
-			elements.tab_content_C.addTab(forms.AC_R__login,'')
-		}
-		elements.tab_content_C.tabIndex = 1
+		//else when no access and control, view determined fx_load_forms
+		*/
+		application.updateUI()
 		
-		//re-size screen if too small
-		if (application.getWindowWidth() < 950 || application.getWindowHeight() < 650) {
-			application.setWindowSize(980,680)
-			application.setWindowLocation(-1,-1)
-		}
 		
-		//go to workflow maximized view
-		globals.DS_space_change('btn_space_7',true)
-	
-	application.updateUI()
-	*/
+		/*
+		//maximize workflow and show splash/login screen
+			
+			//login
+			if (solutionPrefs.access && solutionPrefs.access.accessControl) {	
+				elements.tab_content_C.addTab(forms.AC_R__login,'')
+			}
+			//splash
+			else {
+				elements.tab_content_C.addTab(forms.AC_R__login,'')
+			}
+			elements.tab_content_C.tabIndex = 1
+			
+			//re-size screen if too small
+			if (application.getWindowWidth() < 950 || application.getWindowHeight() < 650) {
+				application.setWindowSize(980,680)
+				application.setWindowLocation(-1,-1)
+			}
+			
+			//go to workflow maximized view
+			globals.DS_space_change('btn_space_7',true)
+		
+		application.updateUI()
+		*/
+	}
 }
 }
 
@@ -226,10 +230,13 @@ function FORM_on_show(firstShow, event)
  *			  	
  */	
 
-//only fire first time shown
-//if (firstShow) {	//application.__parent__.solutionPrefs && 
-	elements.fld_trigger_name.requestFocus(true)
-//}
+//don't run in headless client; headless client for example will use whatever solution is activated as context
+if (application.getApplicationType() != APPLICATION_TYPES.HEADLESS_CLIENT) {
+	//only fire first time shown
+	//if (firstShow) {	//application.__parent__.solutionPrefs && 
+		elements.fld_trigger_name.requestFocus(true)
+	//}
+}
 
 }
 
