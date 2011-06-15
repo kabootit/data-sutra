@@ -3784,11 +3784,14 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	else if (navSpecs.itemName == 'Solution configuration') {
 		navTab = 'MGR_0L__solution_config'
 	}
-	else if (navSpecs.itemName == 'Deployment') {
+	else if (navSpecs.itemName == 'Installation' || navSpecs.itemName == 'Deployment') {
 		navTab = 'DPLY_0L__deployment'
 	}
 	else if (navSpecs.itemName == 'Developer tools') {
 		navTab = 'DEV_0L_options'
+	}
+	else if (navSpecs.itemName == 'SaaS') {
+		navTab = 'AC_0L_saas'
 	}
 	if (!forms[navTab]) {
 		navTab = 'DATASUTRA_0F_solution__blank_3'
