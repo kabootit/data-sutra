@@ -257,11 +257,11 @@ uuid:"388d29fa-ab1f-4ab3-8092-5375e379862a"
 {
 anchors:11,
 formIndex:10100,
-location:"66,0",
+location:"50,0",
 mediaOptions:14,
 showClick:false,
 showFocus:false,
-size:"690,15",
+size:"700,15",
 styleClass:"header",
 tabSeq:-1,
 text:"ACCESS & CONTROL GROUPS",

@@ -1,0 +1,10 @@
+addEmptyValue:1,
+customValues:"General|1
+Profile|2
+Application|3",
+name:"AC_preference_type",
+returnDataProviders:1,
+separator:" ",
+showDataProviders:1,
+typeid:34,
+uuid:"56F1CE5A-EB25-494E-8310-0C9B6988445D"

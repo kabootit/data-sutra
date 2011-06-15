@@ -1,4 +1,9 @@
 /**
+ * @properties={typeid:35,uuid:"0C31EF45-CF3A-494A-BD95-64CBF32B23F1",variableType:4}
+ */
+var AC_preference_type = 1;
+
+/**
  * @properties={typeid:35,uuid:"716299f9-521c-4a7f-b7b3-4e4b40e54f10",variableType:4}
  */
 var AC_configuration = 12;
@@ -139,7 +144,7 @@ function AC_password_set()
  *			  	
  */
 
-var formName = 'AC_0F_solution__prefs_1F_rules'
+var formName = 'AC_0F_rules'
 
 if (forms[formName].foundset.getSize()) {
 	if (! application.__parent__.solutionPrefs) {

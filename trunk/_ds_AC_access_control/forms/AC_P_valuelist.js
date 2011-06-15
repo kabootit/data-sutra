@@ -55,7 +55,7 @@ function ACTION_ok(event, createLists)
 				var copyList = fsOrgList.getRecord(fsOrgList.newRecord(false,true))
 				
 				databaseManager.copyMatchingColumns(listItem,copyList,true)
-				copyList.id_organization = forms.AC_0F_organization__saas_1F__valuelist.id_organization
+				copyList.id_organization = forms.AC_0F_organization__valuelist.id_organization
 			}
 		}
 	}
@@ -66,10 +66,10 @@ function ACTION_ok(event, createLists)
 	application.closeFormDialog('accessSaaSValuelist')
 	
 	//reload current records
-	forms.AC_0F_organization__saas_1F__valuelist.ACTION_load()
+	forms.AC_0F_organization__valuelist.ACTION_load()
 	
 	//force rec on select after data saved so that it updates properly
-	forms.AC_0F_organization__saas_1F__valuelist_2L_valuelist__name.REC_on_select()
+	forms.AC_0F_organization__valuelist_1L_valuelist__name.REC_on_select()
 
 }
 

@@ -685,7 +685,7 @@ else {
 			 - params: the status after step 5
 	*/
 
-	var fsFilters = forms.AC_0F_organization__saas_1F_filter.foundset
+	var fsFilters = forms.AC_0F_filter.foundset
 	var restoreFilters = fsFilters.duplicateFoundSet()
 
 	fsFilters.clear()
@@ -798,7 +798,7 @@ else {
 
 
 	//reset filter foundset
-	forms.AC_0F_organization__saas_1F_filter.controller.loadRecords(restoreFilters)
+	forms.AC_0F_filter.controller.loadRecords(restoreFilters)
 
 	//flatten out instances where there are both database and table filters
 	for (var i in filterables.byConnection) {

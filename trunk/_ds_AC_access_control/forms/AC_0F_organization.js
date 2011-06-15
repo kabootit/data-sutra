@@ -3,7 +3,7 @@
  *
  * @param {JSEvent} event the event that triggered the action
  *
- * @properties={typeid:24,uuid:"83a577b9-a295-4a70-8da5-4bc2d8aad7ae"}
+ * @properties={typeid:24,uuid:"117E0FBC-E0EC-477D-8E7A-8BF0E0D875A3"}
  */
 function TAB_change(event)
 {

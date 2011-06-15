@@ -150,7 +150,7 @@ typeid:7,
 uuid:"dc4ab675-1914-4954-a40b-5c0b5250f39f"
 }
 ],
-name:"AC_0F_solution__prefs_1F__status",
+name:"AC_0F_solution__setup_1F__status",
 navigatorID:"-1",
 onShowMethodID:"e6c09847-e98f-4fb5-a2de-43438989d622",
 paperPrintScale:100,

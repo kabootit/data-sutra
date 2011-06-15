@@ -5,7 +5,7 @@ items:[
 {
 containsFormID:"C8FED1E2-7C8F-41C0-806D-EEB531A69E5A",
 location:"20,40",
-text:"AC_0F_organization__saas_1F__people_2F",
+text:"AC_0F_organization_1F__people_2F",
 typeid:15,
 uuid:"D584D138-4306-45BE-B550-43D20663D2B0"
 }
@@ -91,7 +91,7 @@ items:[
 {
 containsFormID:"A09CD4A9-9A74-4799-8E71-A86F82AA375B",
 location:"30,120",
-text:"AC_0F_organization__saas_1F__people_2F__log",
+text:"AC_0F_organization_1F__people_2F__log",
 typeid:15,
 uuid:"28AA7826-3D74-4B8C-97C4-192DD3E0046A"
 }
@@ -105,7 +105,7 @@ typeid:16,
 uuid:"DA885319-B51C-4895-BDD6-A47B30B29355"
 }
 ],
-name:"AC_0F_organization__saas_1F__people",
+name:"AC_0F_organization_1F__people",
 navigatorID:"-1",
 onLoadMethodID:"98C62983-2F1C-4A0B-93A7-87E4EFB93BCB",
 onShowMethodID:"2D5AC089-23F9-4754-8AE7-45AC29E88A99",

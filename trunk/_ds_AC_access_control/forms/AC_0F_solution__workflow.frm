@@ -166,14 +166,14 @@ uuid:"77E6EEC2-C02E-4DCE-99EA-4664E4CB1224"
 {
 anchors:11,
 formIndex:10100,
-location:"66,0",
+location:"50,0",
 mediaOptions:14,
 showClick:false,
 showFocus:false,
-size:"590,15",
+size:"600,15",
 styleClass:"header",
 tabSeq:-1,
-text:"WORKFLOW CONTROL",
+text:"ACCESS & CONTROL WORKFLOW CONTROL",
 transparent:true,
 typeid:7,
 uuid:"AFCAF0EB-B26B-4AB3-A670-1875AE38363E"

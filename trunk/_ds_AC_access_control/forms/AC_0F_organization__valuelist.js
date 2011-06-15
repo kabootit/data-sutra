@@ -77,7 +77,7 @@ function ACTIONS_list_name_control()
  *			  	
  */
 
-var fsValuelist = forms.AC_0F_organization__saas_1F__valuelist_2L_valuelist__name.foundset
+var fsValuelist = forms.AC_0F_organization__valuelist_1L_valuelist__name.foundset
 
 switch (arguments[0]) {
 	case 0: //create
@@ -88,14 +88,14 @@ switch (arguments[0]) {
 		databaseManager.saveData()
 		
 		//force rec on select after data saved so that it updates properly
-		forms.AC_0F_organization__saas_1F__valuelist_2L_valuelist__name.REC_on_select()
+		forms.AC_0F_organization__valuelist_1L_valuelist__name.REC_on_select()
 		
-		forms.AC_0F_organization__saas_1F__valuelist_2L_valuelist__name.elements.fld_name.requestFocus()
+		forms.AC_0F_organization__valuelist_1L_valuelist__name.elements.fld_name.requestFocus()
 		break
 		
 	case 1:	//modify
 		//find only valuelists which are not already managed
-		var existingLists = databaseManager.getFoundSetDataProviderAsArray(forms.AC_0F_organization__saas_1F__valuelist_2L_valuelist__name.foundset, 'id_valuelist')
+		var existingLists = databaseManager.getFoundSetDataProviderAsArray(forms.AC_0F_organization__valuelist_1L_valuelist__name.foundset, 'id_valuelist')
 		
 		var query = "SELECT id_valuelist FROM sutra_valuelist WHERE flag_edit = 1 AND id_valuelist IN " +
 					"(SELECT min(id_valuelist) FROM sutra_valuelist GROUP BY valuelist_name)"
@@ -213,7 +213,7 @@ if (elem != null) {
  * @properties={typeid:24,uuid:"0ABDFD19-DDE4-46BD-A45B-86E7752F8146"}
  */
 function REC_new_item(event) {
-	var fsItems = forms.AC_0F_organization__saas_1F__valuelist_2L_valuelist__item.foundset
+	var fsItems = forms.AC_0F_organization__valuelist_1L_valuelist__item.foundset
 	
 	//record selected
 	if (utils.hasRecords(fsItems)) {
@@ -243,7 +243,7 @@ function REC_new_item(event) {
 		newRec.relation_1 = selectedRec.relation_1
 		newRec.relation_2 = selectedRec.relation_2
 		
-		forms.AC_0F_organization__saas_1F__valuelist_2L_valuelist__item.elements.fld_visible.requestFocus()
+		forms.AC_0F_organization__valuelist_1L_valuelist__item.elements.fld_visible.requestFocus()
 	}
 	//no valuelist selected
 	else {
@@ -284,7 +284,7 @@ switch (arguments[0]) {
 		REC_new_item()
 		break
 	case 1: //new sub item
-		forms.AC_0F_organization__saas_1F__valuelist_2L_valuelist__item.REC_new_sub();
+		forms.AC_0F_organization__valuelist_1L_valuelist__item.REC_new_sub();
 		break
 	case  3:	//delete all
 		var input = plugins.dialogs.showWarningDialog("Warning", "Delete all records?", "Yes", "No")
@@ -329,20 +329,37 @@ function ACTION_load(selectVL) {
 	var recCount = datasetPK.getMaxRowIndex()
 
     // Load the desired records into a form's foundset using the PK's from ds_pk
-    forms.AC_0F_organization__saas_1F__valuelist_2L_valuelist__name.controller.loadRecords(datasetPK)
-    forms.AC_0F_organization__saas_1F__valuelist_2L_valuelist__name.controller.sort('valuelist_name asc')
+    forms.AC_0F_organization__valuelist_1L_valuelist__name.controller.loadRecords(datasetPK)
+    forms.AC_0F_organization__valuelist_1L_valuelist__name.controller.sort('valuelist_name asc')
     
     //record to select passed in, select it
     if (selectVL) {
-    	for (var i = 1; i <= forms.AC_0F_organization__saas_1F__valuelist_2L_valuelist__name.foundset.getSize(); i++) {
-    		var record = forms.AC_0F_organization__saas_1F__valuelist_2L_valuelist__name.foundset.getRecord(i)
+    	for (var i = 1; i <= forms.AC_0F_organization__valuelist_1L_valuelist__name.foundset.getSize(); i++) {
+    		var record = forms.AC_0F_organization__valuelist_1L_valuelist__name.foundset.getRecord(i)
     		
     		if (record.valuelist_name == selectVL) {
-    			forms.AC_0F_organization__saas_1F__valuelist_2L_valuelist__name.foundset.setSelectedIndex(i)
+    			forms.AC_0F_organization__valuelist_1L_valuelist__name.foundset.setSelectedIndex(i)
     			break
     		}
     	}
     }
+}
+
+/**
+ * Handle record selected.
+ *
+ * @param {JSEvent} event the event that triggered the action
+ *
+ * @properties={typeid:24,uuid:"4A2D5262-50A1-482A-9984-333B9E5B9516"}
+ */
+function REC_on_select(event) {
+	//load up what should be here
+	ACTION_load()
+	
+	//clear out items if no records
+	if (!utils.hasRecords(forms.AC_0F_organization__valuelist_1L_valuelist__name.foundset)) {
+		forms.AC_0F_organization__valuelist_1L_valuelist__item.foundset.clear()
+	}
 }
 
 /**

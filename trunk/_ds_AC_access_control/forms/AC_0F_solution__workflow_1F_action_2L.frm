@@ -9,7 +9,7 @@ items:[
 {
 containsFormID:"6a8b13a4-6cea-4496-bca2-c0b2ab0602ad",
 location:"20,0",
-text:"AC_0F_solution__prefs_1F_action_2L__filter",
+text:"AC_0F_solution__setup_1F_action_2L__filter",
 typeid:15,
 uuid:"4977861f-ed27-449e-b10f-ce8e9b54a55d"
 }

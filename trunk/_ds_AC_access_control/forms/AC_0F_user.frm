@@ -46,11 +46,11 @@ uuid:"14ce670e-47e8-4bc6-8145-17cefe68a6d3"
 {
 anchors:11,
 formIndex:13500,
-location:"66,0",
+location:"50,0",
 mediaOptions:14,
 showClick:false,
 showFocus:false,
-size:"490,15",
+size:"500,15",
 styleClass:"header",
 tabSeq:-1,
 text:"ACCESS & CONTROL USERS",

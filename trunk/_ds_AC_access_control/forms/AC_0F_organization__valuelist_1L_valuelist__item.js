@@ -57,7 +57,7 @@ function REC_delete(event) {
 		}
 		
 		//reload top level form in case it got deleted
-		forms.AC_0F_organization__saas_1F__valuelist.ACTION_load(nameVL)
+		forms.AC_0F_organization__valuelist.ACTION_load(nameVL)
 	}
 }
 
@@ -235,8 +235,8 @@ function DIR_down(event) {
  */
 function FORM_on_show(firstShow, event) {
 	//on the valuelist pane, clear out items if no records
-	if (!utils.hasRecords(forms.AC_0F_organization__saas_1F__valuelist_2L_valuelist__name.foundset)) {
-		forms.AC_0F_organization__saas_1F__valuelist_2L_valuelist__item.foundset.clear()
+	if (!utils.hasRecords(forms.AC_0F_organization__valuelist_1L_valuelist__name.foundset)) {
+		forms.AC_0F_organization__valuelist_1L_valuelist__item.foundset.clear()
 	}	
 }
 

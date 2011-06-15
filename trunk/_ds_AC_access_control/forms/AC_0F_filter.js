@@ -25,12 +25,12 @@ function ACTION_toggle_flags()
  */
 
 if (elements.tab_detail.tabIndex == 1) {
-	var formName = 'AC_0F_organization__saas_1F_filter_2L__table'
+	var formName = 'AC_0F_filter_1L__table'
 	var relnName = 'ac_access_filter_to_access_filter__database'
 	var filterType = (forms[formName][relnName]) ? forms[formName][relnName].total_active : 0
 }
 else if (elements.tab_detail.tabIndex == 2) {
-	var formName = 'AC_0F_organization__saas_1F_filter_2L__database'
+	var formName = 'AC_0F_filter_1L__database'
 	var relnName = 'ac_access_filter_to_access_filter__table'
 	var filterType = (forms[formName][relnName]) ? forms[formName][relnName].total_active : 0
 }

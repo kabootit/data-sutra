@@ -148,7 +148,7 @@ typeid:7,
 uuid:"f806f8f3-45f5-453d-867c-6eaa2687b62f"
 }
 ],
-name:"AC_0F_organization__saas_1F_filter_2L__table",
+name:"AC_0F_filter_1L__table",
 navigatorID:"-1",
 onLoadMethodID:"22a40747-38f2-4e52-99d9-3f808cec0d61",
 onRecordSelectionMethodID:"162214a0-c9f8-4d12-952a-5fe7403b311d",

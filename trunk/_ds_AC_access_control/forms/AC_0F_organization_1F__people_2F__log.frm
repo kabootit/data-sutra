@@ -42,7 +42,7 @@ items:[
 containsFormID:"BBF48A46-6A96-4D43-B64A-54AA5437A7B3",
 location:"20,20",
 relationName:"ac_access_log__staff",
-text:"AC_0F_organization__saas_1F__people_2F__log_3L_log",
+text:"AC_0F_organization_1F__people_2F__log_3L_log",
 typeid:15,
 uuid:"CFFED77E-327F-4CBC-88B1-D3C6B8DA7263"
 }
@@ -73,7 +73,7 @@ typeid:7,
 uuid:"A20AA449-9E71-49C8-B44D-5DCCA5D9D8E2"
 }
 ],
-name:"AC_0F_organization__saas_1F__people_2F__log",
+name:"AC_0F_organization_1F__people_2F__log",
 navigatorID:"-1",
 onLoadMethodID:"9FAF96FC-245A-4FBD-A2C0-A263A86D37CD",
 paperPrintScale:100,

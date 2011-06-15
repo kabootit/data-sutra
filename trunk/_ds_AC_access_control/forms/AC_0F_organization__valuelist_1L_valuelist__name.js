@@ -10,14 +10,14 @@ function REC_on_select(event,vlName) {
 		vlName = valuelist_name
 	}
 	
-	var formName = 'AC_0F_organization__saas_1F__valuelist_2L_valuelist__item'
+	var formName = 'AC_0F_organization__valuelist_1L_valuelist__item'
 	
 	forms[formName].foundset.find()
 	
 	//find all valuelist items
 	if (vlName) {
 		forms[formName].foundset.valuelist_name = vlName
-		forms[formName].foundset.id_organization = forms.AC_0F_organization__saas_1F__valuelist.id_organization
+		forms[formName].foundset.id_organization = forms.AC_0F_organization__valuelist.id_organization
 	}
 	//just created valuelist, find only itself
 	else {
@@ -49,14 +49,14 @@ function FLD_data_change__name(oldValue, newValue, event) {
 	
 	if (!results) {
 //		//update all items
-//		var fsUpdater = databaseManager.getFoundSetUpdater(forms.AC_0F_organization__saas_1F__valuelist_2L_valuelist__item.foundset)
+//		var fsUpdater = databaseManager.getFoundSetUpdater(forms.AC_0F_organization__valuelist_1L_valuelist__item.foundset)
 //		fsUpdater.setColumn('valuelist_name',newValue)
 //		fsUpdater.performUpdate()
 //		
 //		REC_on_select(newValue)
 //		
 //		//request focus on item list
-//		forms.AC_0F_organization__saas_1F__valuelist_2L_valuelist__item.elements.fld_visible.requestFocus()
+//		forms.AC_0F_organization__valuelist_1L_valuelist__item.elements.fld_visible.requestFocus()
 //		
 		//value ok
 //		return true
@@ -85,8 +85,8 @@ function REC_delete(event) {
 					'No'
 				)
 	if (delRec == 'Yes') {
-		forms.AC_0F_organization__saas_1F__valuelist_2L_valuelist__item.foundset.deleteAllRecords()
+		forms.AC_0F_organization__valuelist_1L_valuelist__item.foundset.deleteAllRecords()
 		
-		forms.AC_0F_organization__saas_1F__valuelist.ACTION_load()
+		forms.AC_0F_organization__valuelist.ACTION_load()
 	}
 }
