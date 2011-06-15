@@ -2,54 +2,55 @@
  *
  * @properties={typeid:24,uuid:"eed0cfc4-7f69-44a0-b0fa-2e17e9cf6763"}
  */
-function FORM_on_load()
-{
-
-//set up split bean
-elements.split_tool_find.leftComponent = elements.tab_toolbar
-elements.split_tool_find.rightComponent = elements.tab_fastfind
-
-//turn off sidebar drag related stuff
-elements.bean_drag.visible = false
-elements.lbl_drag.visible = false
-
-
-//turn trial mode off
-forms.DATASUTRA_0F_solution__header__toolbar.elements.lbl_trial_mode.visible = false
-
-
-
-//the java drag junks!
-
-
-/*
-//make it global so other listener methods can access it
-application.__parent__.origin = new Packages.java.awt.Point()
-
-//set up listeners
-elements.bean_header.addMouseListener(new Packages.java.awt.event.MouseAdapter({mousePressed:mouseListener}))
-elements.bean_header.addMouseMotionListener(new Packages.java.awt.event.MouseMotionAdapter({mouseDragged:mouseMotionListener}))
-*/
-
-
-/*
- // Avoid creating a point with each mousePressed() call
-  Point origin = new Point();
-  frame.addMouseListener(new MouseAdapter() {
-    public void mousePressed(MouseEvent e) {
-      origin.x = e.getX();
-      origin.y = e.getY();
-    }
-  });
-  frame.addMouseMotionListener(new MouseMotionAdapter() {
-    public void mouseDragged(MouseEvent e) {
-      Point p = frame.getLocation();
-      frame.setLocation(
-        p.x + e.getX() - origin.x, 
-        p.y + e.getY() - origin.y);
-    }
-  });
-*/
+function FORM_on_load() {
+	//don't run in headless client; headless client for example will use whatever solution is activated as context
+	if (application.getApplicationType() != APPLICATION_TYPES.HEADLESS_CLIENT) {
+		//set up split bean
+		elements.split_tool_find.leftComponent = elements.tab_toolbar
+		elements.split_tool_find.rightComponent = elements.tab_fastfind
+		
+		//turn off sidebar drag related stuff
+		elements.bean_drag.visible = false
+		elements.lbl_drag.visible = false
+		
+		
+		//turn trial mode off
+		forms.DATASUTRA_0F_solution__header__toolbar.elements.lbl_trial_mode.visible = false
+		
+		
+		
+		//the java drag junks!
+		
+		
+		/*
+		//make it global so other listener methods can access it
+		application.__parent__.origin = new Packages.java.awt.Point()
+		
+		//set up listeners
+		elements.bean_header.addMouseListener(new Packages.java.awt.event.MouseAdapter({mousePressed:mouseListener}))
+		elements.bean_header.addMouseMotionListener(new Packages.java.awt.event.MouseMotionAdapter({mouseDragged:mouseMotionListener}))
+		*/
+		
+		
+		/*
+		 // Avoid creating a point with each mousePressed() call
+		  Point origin = new Point();
+		  frame.addMouseListener(new MouseAdapter() {
+		    public void mousePressed(MouseEvent e) {
+		      origin.x = e.getX();
+		      origin.y = e.getY();
+		    }
+		  });
+		  frame.addMouseMotionListener(new MouseMotionAdapter() {
+		    public void mouseDragged(MouseEvent e) {
+		      Point p = frame.getLocation();
+		      frame.setLocation(
+		        p.x + e.getX() - origin.x, 
+		        p.y + e.getY() - origin.y);
+		    }
+		  });
+		*/
+	}
 }
 
 /**
