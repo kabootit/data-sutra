@@ -31,7 +31,7 @@ items:[
 containsFormID:"7D47C052-9E2D-4D68-9707-B69E606C82F8",
 location:"20,30",
 relationName:"ac_access_organization_to_access_staff",
-text:"AC_0F_organization_1F__people_2F_3L_staff",
+text:"AC_0F_organization_1F_2L_staff",
 typeid:15,
 uuid:"45F70983-CDDE-4669-82A7-F3FD8BB6CF98"
 }
@@ -80,7 +80,7 @@ typeid:7,
 uuid:"EE9381BF-CFE4-40C0-B4C5-08C511E90754"
 }
 ],
-name:"AC_0F_organization_1F__people_2F",
+name:"AC_0F_organization_1F",
 navigatorID:"-1",
 paperPrintScale:100,
 scrollbars:36,

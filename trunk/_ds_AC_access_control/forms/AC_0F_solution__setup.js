@@ -1,138 +1,86 @@
 /**
- * Perform the element default action.
  *
- * @param {JSEvent} event the event that triggered the action
- *
- * @properties={typeid:24,uuid:"63559cf8-5bb5-43ff-ba0c-ede79ad4d643"}
+ * @properties={typeid:24,uuid:"e6c09847-e98f-4fb5-a2de-43438989d622"}
  */
-function TAB_change(event)
+function FORM_on_show()
 {
-	
+
 /*
- *	TITLE    :	TAB_change
+ *	TITLE    :	FORM_on_show
  *			  	
- *	MODULE   :	ds_NAV_engine
+ *	MODULE   :	ds_AC_access_control
  *			  	
- *	ABOUT    :	fancy tab panel method
+ *	ABOUT    :	toggle elements
  *			  	
- *	INPUT    :	name of element 'clicked'
+ *	INPUT    :	
  *			  	
  *	OUTPUT   :	
  *			  	
- *	REQUIRES :	element labeled ==> tab_navigation (tab panel), tab_# (graphic), tab_lbl_# (label)
+ *	REQUIRES :	
  *			  	
- *	MODIFIED :	Aug 29, 2007 -- Troy Elliott, Data Mosaic
+ *	USAGE    :	
+ *			  	
+ *	MODIFIED :	March 3, 2009 -- Troy Elliott, Data Mosaic
  *			  	
  */
 
-//MEMO: need to somehow put this section in a Function of it's own
-//running in Tano...strip out jsevents for now
-if (utils.stringToNumber(application.getVersion()) >= 5) {
-	//cast Arguments to array
-	var Arguments = new Array()
-	for (var i = 0; i < arguments.length; i++) {
-	//TODO WARNING: do rewrite your code to not depend on 'arguments', append them to the parameter list.
-		Arguments.push(arguments[i])
-	}
-	
-	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
+if (utils.hasRecords(foundset)) {
+	var toggle = (login_disabled) ? false : true
 }
-
-//set formname
-var formName = application.getMethodTriggerFormName()
-
-//set the tab panel name
-var tabPanelName = 'tab_preference'
-
-//set prefix for element
-var prefix = 'tab_'
-
-//get button that called
-if (arguments[0]) {
-	var btnClicked = prefix + arguments[0]
-}
+//no login
 else {
-	var btnClicked = application.getMethodTriggerElementName()
+	var toggle = false
 }
 
-//get number of tabs
-var tab_num = forms[formName].elements[tabPanelName].getMaxTabIndex()
+elements.btn_on.visible = toggle
+elements.btn_off.visible = !toggle
 
-var orig = btnClicked.split("_")
-orig = utils.stringToNumber(orig[1])
+//on, set color to green
+if (toggle) {
+	elements.lbl_on.fgcolor = '#589293'
+}
+//off, set color to normal
+else {
+	elements.lbl_on.fgcolor = elements.lbl_off.fgcolor
+}
+}
 
-var max = 2
+/**
+ *
+ * @properties={typeid:24,uuid:"b59d7646-ad2b-47c4-8cbf-c4a279d93fa9"}
+ */
+function TOGGLE_access_control()
+{
 
-var j = ""
-var x = ""
+/*
+ *	TITLE    :	TOGGLE_access_control
+ *			  	
+ *	MODULE   :	ds_AC_access_control
+ *			  	
+ *	ABOUT    :	toggle elements
+ *			  	
+ *	INPUT    :	
+ *			  	
+ *	OUTPUT   :	
+ *			  	
+ *	REQUIRES :	
+ *			  	
+ *	USAGE    :	
+ *			  	
+ *	MODIFIED :	March 3, 2009 -- Troy Elliott, Data Mosaic
+ *			  	
+ */
 
-
-//1. process unclicked buttons
-
-for ( var i = 1; i <= max ; i++ ) {
-
-	//figure out what graphic to load
-	if ( i == 1 ) {
-		switch (orig) {
-			case (i) :
-				x = 1
-				break
-			case (i + 1) :
-				x = 2
-				break
-			default :
-				x = 3
-				break
-		}
-		j = 1
-	}
-	
-	else if ( (i > 1) && (i < max) ) {
-		switch (orig) {
-			case (i) :
-				x = 1
-				break
-			case (i - 1) :
-				x = 2
-				break
-			case (i + 1) :
-				x = 3
-				break
-			default :
-				x = 4
-				break
-		}
-		j = 2
-	}
-	
-	else if ( i = max ) {
-		switch (orig) {
-			case (i) :
-				x = 1
-				break
-			case (i - 1) :
-				x = 2
-				break
-			default :
-				x = 3
-				break
-		}
-		j = 3
-	}
-	
-	//set image URL
-	elements["tab_" + i].setImageURL('media:///tab_' + j + '_' + x + '.gif')
-	
-	//activate correct tab and set label foreground color
-	if ( i == orig ) {
-		elements["tab_lbl_" + i].fgcolor = '#333333'
-		
-		//set tab index
-		forms[formName].elements[tabPanelName].tabIndex = i;	
+if (utils.hasRecords(foundset)) {
+	if (login_disabled) {
+		login_disabled = 0
 	}
 	else {
-		elements["tab_lbl_" + i].fgcolor = '#ffffff'
+		login_disabled = 1
 	}
+	
+	databaseManager.saveData()
+	
+	FORM_on_show()
 }
 }

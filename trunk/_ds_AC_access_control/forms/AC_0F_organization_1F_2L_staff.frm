@@ -111,7 +111,7 @@ typeid:7,
 uuid:"D239F78F-3313-4F95-A153-3DD75002FDC4"
 }
 ],
-name:"AC_0F_organization_1F__people_2F_3L_staff",
+name:"AC_0F_organization_1F_2L_staff",
 onRecordSelectionMethodID:"7E9AEC9A-BEAF-4E6E-99F6-65F000102CB4",
 paperPrintScale:100,
 rowBGColorCalculation:"globals.CODE_row_background",

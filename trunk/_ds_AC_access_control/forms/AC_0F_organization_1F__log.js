@@ -18,7 +18,7 @@ function ELEM_divider_drag() {
 	
 	var mouseEvent = arguments[0]
 	
-	var splitPane = forms.AC_0F_organization_1F__people.elements.bean_main
+	var splitPane = forms.AC_0F_organization.elements.bean_main
 	
 	splitPane.dividerLocation = splitPane.dividerLocation + mouseEvent.getY()
 	

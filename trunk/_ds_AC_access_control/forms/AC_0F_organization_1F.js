@@ -25,6 +25,6 @@ function REC_new()
  */
 
 ac_access_organization_to_access_staff.newRecord(1,true)
-forms.AC_0F_organization_1F__people_2F_3L_staff.elements.fld_name_first.requestFocus(false)
+forms.AC_0F_organization_1F_2L_staff.elements.fld_name_first.requestFocus(false)
 
 }

@@ -1,138 +1,34 @@
 /**
- * Perform the element default action.
+ * Callback method when form is (re)loaded.
  *
  * @param {JSEvent} event the event that triggered the action
  *
- * @properties={typeid:24,uuid:"117E0FBC-E0EC-477D-8E7A-8BF0E0D875A3"}
+ * @properties={typeid:24,uuid:"98C62983-2F1C-4A0B-93A7-87E4EFB93BCB"}
  */
-function TAB_change(event)
-{
-	
-/*
- *	TITLE    :	TAB_change
- *			  	
- *	MODULE   :	ds_NAV_engine
- *			  	
- *	ABOUT    :	fancy tab panel method
- *			  	
- *	INPUT    :	name of element 'clicked'
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	element labeled ==> tab_navigation (tab panel), tab_# (graphic), tab_lbl_# (label)
- *			  	
- *	MODIFIED :	Aug 29, 2007 -- Troy Elliott, Data Mosaic
- *			  	
+function FORM_on_load(event) {
+	//set up bean
+	elements.bean_main.dividerSize = 0
+	elements.bean_main.dividerLocation = 200
+	elements.bean_main.resizeWeight = 1
+	elements.bean_main.topComponent = elements.tab_top
+	elements.bean_main.bottomComponent = elements.tab_bottom
+}
+
+/**
+ * Callback method for when form is shown.
+ *
+ * @param {Boolean} firstShow form is shown first time after load
+ * @param {JSEvent} event the event that triggered the action
+ *
+ * @properties={typeid:24,uuid:"2D5AC089-23F9-4754-8AE7-45AC29E88A99"}
  */
-
-//MEMO: need to somehow put this section in a Function of it's own
-//running in Tano...strip out jsevents for now
-if (utils.stringToNumber(application.getVersion()) >= 5) {
-	//cast Arguments to array
-	var Arguments = new Array()
-	for (var i = 0; i < arguments.length; i++) {
-	//TODO WARNING: do rewrite your code to not depend on 'arguments', append them to the parameter list.
-		Arguments.push(arguments[i])
-	}
+function FORM_on_show(firstShow, event) {
+	var baseForm = solutionPrefs.config.formNameBase
 	
-	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
-}
-
-//set formname
-var formName = application.getMethodTriggerFormName()
-
-//set the tab panel name
-var tabPanelName = 'tab_saas'
-
-//set prefix for element
-var prefix = 'tab_'
-
-//get button that called
-if (arguments[0]) {
-	var btnClicked = prefix + arguments[0]
-}
-else {
-	var btnClicked = application.getMethodTriggerElementName()
-}
-
-//get number of tabs
-var tab_num = forms[formName].elements[tabPanelName].getMaxTabIndex()
-
-var orig = btnClicked.split("_")
-orig = utils.stringToNumber(orig[1])
-
-var max = 3
-
-var j = ""
-var x = ""
-
-
-//1. process unclicked buttons
-
-for ( var i = 1; i <= max ; i++ ) {
-
-	//figure out what graphic to load
-	if ( i == 1 ) {
-		switch (orig) {
-			case (i) :
-				x = 1
-				break
-			case (i + 1) :
-				x = 2
-				break
-			default :
-				x = 3
-				break
-		}
-		j = 1
+	//load list window
+	var listTab = "AC_0L_organization"
+	var prefName = 'Access & control Organizations'
+	if (navigationPrefs.byNavSetName.configPanes.itemsByName[prefName]) {
+		forms[baseForm].elements.tab_content_B.tabIndex = navigationPrefs.byNavSetName.configPanes.itemsByName[prefName].listData.tabNumber
 	}
-	
-	else if ( (i > 1) && (i < max) ) {
-		switch (orig) {
-			case (i) :
-				x = 1
-				break
-			case (i - 1) :
-				x = 2
-				break
-			case (i + 1) :
-				x = 3
-				break
-			default :
-				x = 4
-				break
-		}
-		j = 2
-	}
-	
-	else if ( i = max ) {
-		switch (orig) {
-			case (i) :
-				x = 1
-				break
-			case (i - 1) :
-				x = 2
-				break
-			default :
-				x = 3
-				break
-		}
-		j = 3
-	}
-	
-	//set image URL
-	elements["tab_" + i].setImageURL('media:///tab_' + j + '_' + x + '.gif')
-	
-	//activate correct tab and set label foreground color
-	if ( i == orig ) {
-		elements["tab_lbl_" + i].fgcolor = '#333333'
-		
-		//set tab index
-		forms[formName].elements[tabPanelName].tabIndex = i;	
-	}
-	else {
-		elements["tab_lbl_" + i].fgcolor = '#ffffff'
-	}
-}
 }

@@ -75,6 +75,21 @@ typeid:7,
 uuid:"244FAE60-8C77-4FC2-AEC8-30EB8EEEE0E9"
 },
 {
+formIndex:11401,
+location:"200,36",
+mediaOptions:14,
+showClick:false,
+showFocus:false,
+size:"90,15",
+styleClass:"fancytabunselect",
+tabSeq:-1,
+text:"Batch",
+toolTipText:"Coming soon...",
+transparent:true,
+typeid:7,
+uuid:"26AFA891-955C-4C11-9A04-64797A708053"
+},
+{
 height:53,
 partType:1,
 typeid:19,
