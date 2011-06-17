@@ -45,22 +45,15 @@ borderType:"MatteBorder,0,0,0,1,#333333",
 formIndex:10400,
 items:[
 {
-containsFormID:"06c6eb3f-765a-4ad2-91bc-f05e0dd63d86",
-location:"280,103",
-text:"import",
-typeid:15,
-uuid:"5dda2233-85b6-43c1-9b2b-3c9c4a907d1d"
-},
-{
 containsFormID:"8a2743f0-5100-46e1-a261-a5a0b234af99",
-location:"240,83",
-text:"static obj",
+location:"260,110",
+text:"static object",
 typeid:15,
-uuid:"8ce648a4-4e7a-420e-8b52-6f3ed488e70a"
+uuid:"102392CA-050B-4D76-9071-7D7645E91390"
 },
 {
 containsFormID:"edf5eb79-abf8-46d3-898b-de3bbd3a7c79",
-location:"350,143",
+location:"230,80",
 text:"license",
 typeid:15,
 uuid:"cc2c4d55-4c08-4248-b9b8-b6ae9dbd3548"
@@ -171,9 +164,9 @@ borderType:"MatteBorder,1,0,0,0,#333333",
 formIndex:12000,
 items:[
 {
-containsFormID:"45ef2ffb-ed59-4ae5-a402-93341f0ec7a7",
+containsFormID:"78361653-C7AE-4079-BE59-684C80F0317C",
 location:"0,250",
-text:"FRAMEWORKS_blank_2_list",
+text:"DATASUTRA_0F_solution__blank_4",
 typeid:15,
 uuid:"3a36da26-2989-4e7c-8678-c3c84d8edf79"
 }
@@ -337,9 +330,16 @@ anchors:9,
 formIndex:10000,
 items:[
 {
+containsFormID:"45ef2ffb-ed59-4ae5-a402-93341f0ec7a7",
+location:"0,73",
+text:"DATASUTRA_0F_solution__blank_3",
+typeid:15,
+uuid:"31FAB25B-92E9-41B2-AF43-75AD80C11AB2"
+},
+{
 containsFormID:"48d823c9-86ce-47fc-9b17-c9ac9063aa4f",
-location:"10,90",
-text:"DPLY_0L__deployment",
+location:"40,100",
+text:"NSTL_0L__options",
 typeid:15,
 uuid:"53b6d04b-135d-4636-b73f-92564e99e6cb"
 }

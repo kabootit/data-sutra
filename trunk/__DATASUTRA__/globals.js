@@ -344,14 +344,16 @@ else {
 	
 	}
 	
-	/*
 	//	//check for correct version of plugin
 	//if incorrect version, abort
 	if (!globals.DS_plugin_check()) {
+		//fill enough of solutionPrefs that prompt to quit is not triggered
+		solutionPrefs.clientInfo = new Object()
+		
 		forms.DATASUTRA__error.controller.show()
 	}
 	//continue with method
-	else {*/
+	else {
 	
 	//mark this client as non-validated
 	application.setUserProperty('sutraValid' + application.getSolutionName() + '-' + application.getServerURL().substr(7),'false')
@@ -359,15 +361,15 @@ else {
 	//if no license or invalid license, show license key enter place
 	if (utils.hasRecords(forms[prefForm].foundset) && 
 		(forms[prefForm].license_type != 'Trial') && 
-		!forms.DPLY_0F_solution__license.ACTION_validate(true,true)) {
+		!forms.NSTL_0F_solution__license.ACTION_validate(true,true)) {
 		
 		forms.DATASUTRA__error.controller.show()
-		forms.DPLY_0L__deployment.GO_four()
+		forms.NSTL_0L__options.GO_one()
 	}
 	//if no engine data, show import/export screen
 	else if (!utils.hasRecords(forms[prefForm].foundset)) {
 		forms.DATASUTRA__error.controller.show()
-		forms.DPLY_0L__deployment.GO_three()
+		forms.NSTL_0L__options.GO_two()
 	}
 	//continue with method
 	else {
@@ -471,7 +473,7 @@ else {
 		
 		
 		
-		if (!forms.DPLY_0F_solution__license.ACTION_validate(true,true)) {
+		if (!forms.NSTL_0F_solution__license.ACTION_validate(true,true)) {
 		/*	plugins.dialogs.showErrorDialog(
 							'Licensing error',
 							'The license entered has expired'
@@ -989,7 +991,7 @@ else {
 		// //PART IX: load up title toolbar
 		globals.DS_toolbar_load()
 		
-	}
+	}}
 }
 
 
@@ -1367,7 +1369,7 @@ for (var i = totalRecs; i < 100000; i++) {
 function DS_actions(input) {
 	
 	//check license
-	forms.DPLY_0F_solution__license.ACTION_validate(true,true)
+	forms.NSTL_0F_solution__license.ACTION_validate(true,true)
 	
 	//name for non-named item
 	var noName = '**No name**'
@@ -1376,7 +1378,7 @@ function DS_actions(input) {
 		
 		//timed out, throw up error
 		if (solutionPrefs.config.prefs.thatsAllFolks) {
-			forms.DPLY_0F_solution__license.ACTION_status()
+			forms.NSTL_0F_solution__license.ACTION_status()
 			
 			plugins.dialogs.showErrorDialog(
 								'Trial expired',
@@ -2347,11 +2349,11 @@ if (application.__parent__.solutionPrefs) {
  */
 function DS_navigation_set(input) {
 	//validate license
-	forms.DPLY_0F_solution__license.ACTION_validate(true,true)
+	forms.NSTL_0F_solution__license.ACTION_validate(true,true)
 	
 	//timed out, throw up error
 	if (solutionPrefs.config.prefs.thatsAllFolks) {
-		forms.DPLY_0F_solution__license.ACTION_status()
+		forms.NSTL_0F_solution__license.ACTION_status()
 		
 		plugins.dialogs.showErrorDialog(
 							'Trial expired',
@@ -2594,7 +2596,7 @@ function DS_sidebar_toggle(sideToggle, sideWidth, sideExpand)
 	if (application.__parent__.solutionPrefs) {	
 		//timed out, throw up error
 		if (solutionPrefs.config.prefs.thatsAllFolks) {
-			forms.DPLY_0F_solution__license.ACTION_status()
+			forms.NSTL_0F_solution__license.ACTION_status()
 			
 			plugins.dialogs.showErrorDialog(
 								'Trial expired',
@@ -2769,7 +2771,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 
 	//timed out, throw up error
 	if (solutionPrefs.config.prefs.thatsAllFolks) {
-		forms.DPLY_0F_solution__license.ACTION_status()
+		forms.NSTL_0F_solution__license.ACTION_status()
 		
 		plugins.dialogs.showErrorDialog(
 							'Trial expired',
@@ -3981,7 +3983,7 @@ if (application.__parent__.solutionPrefs) {
 
 	//timed out, throw up error
 	if (solutionPrefs.config.prefs.thatsAllFolks) {
-		forms.DPLY_0F_solution__license.ACTION_status()
+		forms.NSTL_0F_solution__license.ACTION_status()
 		
 		plugins.dialogs.showErrorDialog(
 							'Trial expired',

@@ -36,6 +36,4 @@ if (application.__parent__.solutionPrefs && solutionPrefs.config) {
 
 application.updateUI()
 
-//if this form is shown, it is definitely for an error, force the error screen to show
-forms.DPLY_0L__deployment.GO_one()
 }
