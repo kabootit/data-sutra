@@ -5419,7 +5419,7 @@ function CODE_license_insert() {
 			_ds_AC_access_control	: 'AC00',
 			_ds_CODE_resources		: 'C0DE',
 			_ds_DEV_tools			: 'DEB0',
-			_ds_DPLY_deployment		: 'D470',
+			_ds_NSTL_installation		: 'D470',
 			_ds_MGR_resource_manager	: 'E640',
 			_ds_NAV_engine		: '4AB0',
 			_dsa_sutra_CRM_servoy_resking	: 'C4E0',
