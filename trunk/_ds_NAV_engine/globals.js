@@ -3785,7 +3785,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		navTab = 'MGR_0L__solution_config'
 	}
 	else if (navSpecs.itemName == 'Installation' || navSpecs.itemName == 'Deployment') {
-		navTab = 'DPLY_0L__deployment'
+		navTab = 'NSTL_0L__options'
 	}
 	else if (navSpecs.itemName == 'Developer tools') {
 		navTab = 'DEV_0L_options'
@@ -4034,7 +4034,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	}
 	
 	//normal workflow load
-	if (navTab != 'AC_0L_options' && navTab != 'MGR_0L__solution_config' && navTab != 'DPLY_0L__deployment' && navTab != 'DEV_0L_options') {
+	if (navTab != 'AC_0L_options' && navTab != 'MGR_0L__solution_config' && navTab != 'NSTL_0L__options' && navTab != 'DEV_0L_options') {
 		//remove main window if new one different than currently displayed one
 		if (forms[baseForm].elements.tab_content_C.tabIndex > 0  && (forms[baseForm].elements.tab_content_C.getTabFormNameAt(1) != mainTab)) {
 			forms[baseForm].elements.tab_content_C.removeTabAt(1)
@@ -4642,7 +4642,7 @@ function NAV_universal_list_select()
 	
 	//timed out, throw up error
 	if (solutionPrefs.config.prefs.thatsAllFolks) {
-		forms.DPLY_0F_solution__license.ACTION_status()
+		forms.NSTL_0F_solution__license.ACTION_status()
 		
 		plugins.dialogs.showErrorDialog(
 							'Trial expired',
