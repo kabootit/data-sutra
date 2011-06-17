@@ -92,7 +92,7 @@ if (application.__parent__.solutionPrefs) {
 	if (forms[baseForm].elements.tab_content_C.tabIndex > 0) {
 		forms[baseForm].elements.tab_content_C.removeTabAt(1)
 	}
-	forms[baseForm].elements.tab_content_C.addTab(forms.DPLY_0F_solution__license,'')
+	forms[baseForm].elements.tab_content_C.addTab(forms.NSTL_0F_solution__license,'')
 	forms[baseForm].elements.tab_content_C.tabIndex = forms[baseForm].elements.tab_content_C.getMaxTabIndex()
 }
 
