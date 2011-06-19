@@ -346,14 +346,14 @@ else {
 	
 	//	//check for correct version of plugin
 	//if incorrect version, abort
-	if (!globals.DS_plugin_check()) {
-		//fill enough of solutionPrefs that prompt to quit is not triggered
-		solutionPrefs.clientInfo = new Object()
-		
-		forms.DATASUTRA__error.controller.show()
-	}
-	//continue with method
-	else {
+//	if (!globals.DS_plugin_check()) {
+//		//fill enough of solutionPrefs that prompt to quit is not triggered
+//		solutionPrefs.clientInfo = new Object()
+//		
+//		forms.DATASUTRA__error.controller.show()
+//	}
+//	//continue with method
+//	else {
 	
 	//mark this client as non-validated
 	application.setUserProperty('sutraValid' + application.getSolutionName() + '-' + application.getServerURL().substr(7),'false')
@@ -991,7 +991,7 @@ else {
 		// //PART IX: load up title toolbar
 		globals.DS_toolbar_load()
 		
-	}}
+	}
 }
 
 
