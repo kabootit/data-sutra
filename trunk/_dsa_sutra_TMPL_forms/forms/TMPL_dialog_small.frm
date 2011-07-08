@@ -1,6 +1,24 @@
 dataSource:"db:/sutra/sutra_solution",
 items:[
 {
+formIndex:11202,
+horizontalAlignment:0,
+imageMediaID:"3cf0066c-4133-44b3-827a-f27396820ecc",
+location:"310,75",
+mediaOptions:1,
+name:"btn_popdown",
+onActionMethodID:"2CA4350A-931A-4584-8F3C-C3E5A00775C7",
+rolloverCursor:12,
+rolloverImageMediaID:"e46c7218-8fa7-4c59-b3b7-14d96c02a27b",
+showClick:false,
+showFocus:false,
+size:"20,16",
+toolTipText:"Click me!",
+transparent:true,
+typeid:7,
+uuid:"0E2A7DE6-9E33-4D2C-9624-85850A15C3F8"
+},
+{
 borderType:"EmptyBorder,0,0,0,0",
 formIndex:10200,
 imageMediaID:"95a43c06-8988-440c-a759-e453d5712411",
@@ -117,7 +135,7 @@ typeid:7,
 uuid:"E07F0DA5-48E2-479B-A3C4-C62ADC2579C3"
 }
 ],
-name:"TMPL_floater_example",
+name:"TMPL_dialog_small",
 navigatorID:"-1",
 onDeleteAllRecordsCmdMethodID:"-1",
 onDeleteRecordCmdMethodID:"-1",
