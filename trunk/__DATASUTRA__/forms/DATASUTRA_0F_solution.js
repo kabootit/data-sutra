@@ -141,7 +141,10 @@ if (application.getApplicationType() != APPLICATION_TYPES.HEADLESS_CLIENT) {
 		elements.tab_fastfind.visible = false
 		
 		//floater tab panel
-		elements.tab_floater.visible = false
+		elements.tab_dialog.visible = false
+		
+		//inliner tab panel
+		elements.tab_dialog.visible = false		
 		
 		//turn off loading hider
 		elements.gfx_curtain_blank.visible = false

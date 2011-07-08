@@ -3,7 +3,7 @@
  *
  * @param {JSEvent} event the event that triggered the action
  *
- * @properties={typeid:24,uuid:"62A1C335-DA52-40A0-97D5-D195D3CE044C"}
+ * @properties={typeid:24,uuid:"C036A355-7BB2-4B41-B095-161FFD4CA65E"}
  */
 function ACTION_cancel(event) {
 	var formName = elements.tab_content.getTabFormNameAt(elements.tab_content.tabIndex)
@@ -14,7 +14,7 @@ function ACTION_cancel(event) {
 	
 	//hide
 	if (typeof closeOK != 'boolean' || closeOK) {
-		globals.TRIGGER_floater_set(false)
+		globals.TRIGGER_dialog_small(false)
 	}
 }
 
@@ -23,7 +23,7 @@ function ACTION_cancel(event) {
  *
  * @param {JSEvent} event the event that triggered the action
  *
- * @properties={typeid:24,uuid:"0595EA34-BADE-4FC1-9AB7-24E71B0F5DF3"}
+ * @properties={typeid:24,uuid:"209E1EE7-2A47-4140-AECD-DB1ACC9C1722"}
  */
 function ACTION_save(event) {
 	var formName = elements.tab_content.getTabFormNameAt(elements.tab_content.tabIndex)
@@ -34,6 +34,6 @@ function ACTION_save(event) {
 	
 	//hide
 	if (typeof closeOK != 'boolean' || closeOK) {
-		globals.TRIGGER_floater_set(false)
+		globals.TRIGGER_dialog_small(false)
 	}
 }

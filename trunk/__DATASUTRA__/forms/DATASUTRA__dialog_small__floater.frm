@@ -180,7 +180,7 @@ typeid:7,
 uuid:"F5805B2A-8782-4B1F-BA05-B82A389695E8"
 }
 ],
-name:"DATASUTRA__floater",
+name:"DATASUTRA__dialog_small__floater",
 navigatorID:"-1",
 onDeleteAllRecordsCmdMethodID:"-1",
 onDeleteRecordCmdMethodID:"-1",
