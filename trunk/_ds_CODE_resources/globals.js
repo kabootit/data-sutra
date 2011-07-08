@@ -5746,37 +5746,77 @@ function CODE_row_background__highlight(formName,delay) {
 }
 
 /** 
- * Show and set the initial status of the floater window.
+ * Show and set the initial status of the small dialog window.
  * 
- * @param	{Boolean}	toggle Show/hide the floater window.
+ * @param	{Boolean}	toggle Show/hide the dialog.
+ * @param	{String}	[typeForm='touch'] What style dialog is this.
  * @param	{String}	[formName] Form to load in the tab panel (all others removed).
  * @param	{Boolean}	[lockScreen] Lock screen from other interactions until hidden.
  * @param	{Number}	[positionX] X co-ordinates for tab panel.
  * @param	{Number}	[positionY] Y co-ordinates for tab panel.
- * @param	{Number}	[sizeX=formName's width] Width of floater.
- * @param	{Number}	[sizeY=formName's height] Height of floater.
- * @param	{String}	[saveTooltip] Tooltip to show over save check button.
+ * @param	{Number}	[sizeX=formName's width] Width of dialog.
+ * @param	{Number}	[sizeY=formName's height] Height of dialog.
+ * @param	{String}	[saveTooltip] Tooltip to show over ok button.
  * @param	{String}	[cancelTooltip] Tooltip to show over cancel button.
  * @param	{Boolean}	[nonTransparent] Lock screen from other interactions until hidden.
- * * 
- * @properties={typeid:24,uuid:"A3612F37-7D06-4047-A445-26B17069486B"}
+ * @param	{Boolean}	[showArrow=false] Show arrow.
+ * @param	{Number}	[positionArrow=center of inliner] Position of arrow.
+ * 
+ * @properties={typeid:24,uuid:"A3612F37-7D06-4047-A445-26B170694F6B"}
  */
-function TRIGGER_floater_set(toggle,formName,lockScreen,positionX,positionY,sizeX,sizeY,saveTooltip,cancelTooltip,nonTransparent) {
-	var floater = forms.DATASUTRA_0F_solution.elements.tab_floater
-	var content = forms.DATASUTRA__floater.elements.tab_content
+function TRIGGER_dialog_small(toggle,typeForm,formName,lockScreen,positionX,positionY,sizeX,sizeY,saveTooltip,cancelTooltip,nonTransparent,showArrow,positionArrow) {
+	//the tabpanel that gets moved around to do this effect
+	var dialog = forms.DATASUTRA_0F_solution.elements.tab_dialog
 	
-	//show floater
+	var widthOffset = 0
+	var heightOffset = 0
+	
+	switch (typeForm || 'touch') {
+		case 'touch':
+			var windowing = forms.DATASUTRA__dialog_small__touch
+			widthOffset = 60
+			heightOffset = 100
+			
+			//select this look and feel
+			forms.DATASUTRA__dialog_small.elements.tab_type.tabIndex = 3
+			break
+		case 'float':
+			var windowing = forms.DATASUTRA__dialog_small__floater
+			widthOffset = 40
+			heightOffset = 50
+			
+			//select this look and feel
+			forms.DATASUTRA__dialog_small.elements.tab_type.tabIndex = 1
+			break
+		case 'standard':
+			var windowing = forms.DATASUTRA__dialog_small__standard
+			
+			//select this look and feel
+			forms.DATASUTRA__dialog_small.elements.tab_type.tabIndex = 2
+			break
+	}
+	
+	//where the content gets stored
+	var content = windowing.elements.tab_content
+	
+	//show dialog
 	if (toggle) {
+		var smForm = solutionModel.getForm(formName)
 		
-		if (formName && solutionModel.getForm(formName)) {
+		if (formName && smForm) {
 			//add tab
 			if (content.getTabFormNameAt(content.tabIndex) != formName) {
 				content.removeAllTabs()
 				content.addTab(forms[formName])
 			}
+			//re-run form on show (form never really hidden in first place)
+			else {
+				if (smForm.onShow) {
+					forms[formName][smForm.onShow.getName()]()
+				}
+			}
 			
 			//set size of base form
-			var smForm = solutionModel.getForm(formName)
 			
 			//get height
 			var totalHeight = 0
@@ -5784,43 +5824,59 @@ function TRIGGER_floater_set(toggle,formName,lockScreen,positionX,positionY,size
 				totalHeight += smForm.getParts()[i].height
 			}
 			
-			sizeX = sizeX || (solutionModel.getForm(formName).width + 40)
-			sizeY = sizeY || (totalHeight + 50)
+			sizeX = sizeX || (solutionModel.getForm(formName).width + widthOffset)
+			sizeY = sizeY || (totalHeight + heightOffset)
+		}
+		
+		//show arrow
+		if (showArrow) {
+			//adjust position of inliner to be centered
+			positionX -= (sizeX / 2)
+			
+			windowing.elements.gfx_location.setLocation((positionArrow || (sizeX / 2)) - 8, 1)
+			windowing.elements.gfx_location.visible = true
+		}
+		else {
+			windowing.elements.gfx_location.visible = false
 		}
 		
 		//set position
 		if (positionX || positionY) {
-			floater.setLocation(positionX || 0, positionY || 0)
+			dialog.setLocation(positionX || 0, positionY || 0)
 		}
 		
 		//set size
 		if (sizeX || sizeY) {
 			//check to see that will be entirely visible
 			//TODO: when toolbars showing this gets messed up, so add in a 40-pixel fudge factor
-			if (floater.getLocationX() + sizeX > application.getWindowWidth(null)) {
-				sizeX = application.getWindowWidth(null) - floater.getLocationX()
+			if (dialog.getLocationX() + sizeX > application.getWindowWidth(null)) {
+				sizeX = application.getWindowWidth(null) - dialog.getLocationX()
 			}
-			if (floater.getLocationY() + sizeY + 40 > application.getWindowHeight(null)) {
-				sizeY = application.getWindowHeight(null) - floater.getLocationY() - 80
+			if (dialog.getLocationY() + sizeY + 40 > application.getWindowHeight(null)) {
+				sizeY = application.getWindowHeight(null) - dialog.getLocationY() - 80
 			}
 			
-			floater.setSize(sizeX, sizeY)
+			dialog.setSize(sizeX, sizeY)
 		}
 		
 		//set save tooltip
-		if (saveTooltip) {
-			forms.DATASUTRA__floater.elements.btn_save.toolTipText = saveTooltip
-		}
-		else {
-			forms.DATASUTRA__floater.elements.btn_save.toolTipText = 'Save'
+		if (windowing.elements.btn_ok && windowing.elements.btn_ok.toolTipText) {
+			if (saveTooltip) {
+				windowing.elements.btn_ok.toolTipText = saveTooltip
+			}
+			else {
+				windowing.elements.btn_ok.toolTipText = 'Save'
+			}
 		}
 		
 		//set cancel tooltip
-		if (cancelTooltip) {
-			forms.DATASUTRA__floater.elements.btn_cancel.toolTipText = cancelTooltip
-		}
-		else {
-			forms.DATASUTRA__floater.elements.btn_cancel.toolTipText = 'Cancel'
+		if (windowing.elements.btn_cancel && windowing.elements.btn_cancel.toolTipText) {
+			if (cancelTooltip) {
+				windowing.elements.btn_cancel.toolTipText = cancelTooltip
+			}
+			else {
+				windowing.elements.btn_cancel.toolTipText = 'Cancel'
+			}
 		}
 		
 		//set non-transparency
@@ -5837,11 +5893,11 @@ function TRIGGER_floater_set(toggle,formName,lockScreen,positionX,positionY,size
 		}
 		
 		//turn on
-		floater.visible = true
+		dialog.visible = true
 	}
-	//hide floater
+	//hide dialog
 	else {
-		floater.visible = false
+		dialog.visible = false
 		globals.TRIGGER_interface_lock(false)
 	}
 }
