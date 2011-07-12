@@ -5110,50 +5110,54 @@ return screenAttrib
  * @properties={typeid:24,uuid:"76844970-3686-4D95-810F-6495CA6856CE"}
  */
 function DS_font_fix() {
-	//TODO: test on windows...will definitely need some tweaks
-	var fontTahoma = new Packages.javax.swing.plaf.FontUIResource("Tahoma",0,11)
+	//don't run in headless client; (headless client will use whatever solution is activated as context)
+	if (application.getApplicationType() != APPLICATION_TYPES.HEADLESS_CLIENT) {
 	
-	var fontVerdana = new Packages.javax.swing.plaf.FontUIResource("Verdana",0,11)
-	var fontMSSansSerif = new Packages.javax.swing.plaf.FontUIResource("MS Sans Serif",0,12)
+		//TODO: test on windows...will definitely need some tweaks
+		var fontTahoma = new Packages.javax.swing.plaf.FontUIResource("Tahoma",0,11)
+		
+		var fontVerdana = new Packages.javax.swing.plaf.FontUIResource("Verdana",0,11)
+		var fontMSSansSerif = new Packages.javax.swing.plaf.FontUIResource("MS Sans Serif",0,12)
+		
+		//on a mac
+		if (application.getOSName() == 'Mac OS X') {
+			var fontDefault = fontVerdana
+			var fontWindow = fontTahoma
+		}
+		//on windows, linux, etc.
+		else {
+			var fontDefault = fontMSSansSerif
+			var fontWindow = fontTahoma
+		}
+		
+		var uiDefaults = Packages.javax.swing.UIManager.getDefaults()
+		
+		uiDefaults.put("MenuItem.font", fontWindow)
+		uiDefaults.put("Menu.font", fontWindow)
+	   	uiDefaults.put("CheckBoxMenuItem.font", fontWindow)
+	//	uiDefaults.put("RadioButtonMenuItem.font", fontWindow)
+	//	uiDefaults.put("ComboBox.font", fontDefault)
+	//	uiDefaults.put("RadioButton.font", fontDefault)
+	//	uiDefaults.put("CheckBox.font", fontDefault)
+	//	uiDefaults.put("Button.font", fontDefault)
+		//needed because of the status area text
+		uiDefaults.put("Label.font", fontWindow)
+	//	uiDefaults.put("TabbedPane.font", fontDefault)
+		//needed for tree view bean
+		uiDefaults.put("Panel.font", fontDefault)
+	//	uiDefaults.put("TitledBorder.font", fontDefault)
+		//needed for checkboxes
+		uiDefaults.put("List.font", fontDefault)
+	//	uiDefaults.put("Table.font", fontDefault)
+		uiDefaults.put("TableHeader.font", fontWindow)
+	//	uiDefaults.put("Tree.font", fontDefault)
+	//	uiDefaults.put("TextArea.font", fontDefault)
+	//	uiDefaults.put("PasswordField.font", fontDefault)
+	//	uiDefaults.put("TextField.font", fontDefault)
 	
-	//on a mac
-	if (application.getOSName() == 'Mac OS X') {
-		var fontDefault = fontVerdana
-		var fontWindow = fontTahoma
-	}
-	//on windows, linux, etc.
-	else {
-		var fontDefault = fontMSSansSerif
-		var fontWindow = fontTahoma
-	}
-	
-	var uiDefaults = Packages.javax.swing.UIManager.getDefaults()
-	
-	uiDefaults.put("MenuItem.font", fontWindow)
-	uiDefaults.put("Menu.font", fontWindow)
-   	uiDefaults.put("CheckBoxMenuItem.font", fontWindow)
-//	uiDefaults.put("RadioButtonMenuItem.font", fontWindow)
-//	uiDefaults.put("ComboBox.font", fontDefault)
-//	uiDefaults.put("RadioButton.font", fontDefault)
-//	uiDefaults.put("CheckBox.font", fontDefault)
-//	uiDefaults.put("Button.font", fontDefault)
-	//needed because of the status area text
-	uiDefaults.put("Label.font", fontWindow)
-//	uiDefaults.put("TabbedPane.font", fontDefault)
-	//needed for tree view bean
-	uiDefaults.put("Panel.font", fontDefault)
-//	uiDefaults.put("TitledBorder.font", fontDefault)
-	//needed for checkboxes
-	uiDefaults.put("List.font", fontDefault)
-//	uiDefaults.put("Table.font", fontDefault)
-	uiDefaults.put("TableHeader.font", fontWindow)
-//	uiDefaults.put("Tree.font", fontDefault)
-//	uiDefaults.put("TextArea.font", fontDefault)
-//	uiDefaults.put("PasswordField.font", fontDefault)
-//	uiDefaults.put("TextField.font", fontDefault)
-
-	var frames = Packages.java.awt.Frame.getFrames()
-	for (var i = 0; i < frames.length; i++) {
-		Packages.javax.swing.SwingUtilities.updateComponentTreeUI(frames[i])
+		var frames = Packages.java.awt.Frame.getFrames()
+		for (var i = 0; i < frames.length; i++) {
+			Packages.javax.swing.SwingUtilities.updateComponentTreeUI(frames[i])
+		}
 	}
 }
