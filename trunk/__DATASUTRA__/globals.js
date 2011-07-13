@@ -68,170 +68,173 @@ function DATASUTRA_close()
  */
 	//check to make sure this method isn't called twice
 		//MEMO: called explicitly from 
+
+	if (application.getApplicationType() != APPLICATION_TYPES.HEADLESS_CLIENT) {
 	
-	// still at login screen, just close
-	if (application.__parent__.solutionPrefs && solutionPrefs.clientInfo && !solutionPrefs.clientInfo.logID) {
-		//mark this client as non-validated
-		application.setUserProperty('sutraValid-' + application.getSolutionName() + '-' + application.getServerURL().substr(7),'false')
-	
-		//when closed from x icon in windowing, will close client
-		application.exit()
-	}
-	//go through proper logout
-	else {
-		var logOut = plugins.dialogs.showQuestionDialog(
-						'Logout',
-						'Do you really want to log out?',
-						'Yes',
-						'No'
-					)
-	
-		if (logOut == 'Yes') {
+		// still at login screen, just close
+		if (application.__parent__.solutionPrefs && solutionPrefs.clientInfo && !solutionPrefs.clientInfo.logID) {
+			//mark this client as non-validated
+			application.setUserProperty('sutraValid-' + application.getSolutionName() + '-' + application.getServerURL().substr(7),'false')
 		
-			if (!globals.DATASUTRA_close.inProcess) {
-				globals.DATASUTRA_close.inProcess = true	
+			//when closed from x icon in windowing, will close client
+			application.exit()
+		}
+		//go through proper logout
+		else {
+			var logOut = plugins.dialogs.showQuestionDialog(
+							'Logout',
+							'Do you really want to log out?',
+							'Yes',
+							'No'
+						)
+		
+			if (logOut == 'Yes') {
 			
-				//working with a validated session
-				if (application.__parent__.solutionPrefs && solutionPrefs.clientInfo && solutionPrefs.clientInfo.logID) {
-					//punch down solutionPrefs
-					//MEMO: any methods (Functions) assigned as a property must be removed
+				if (!globals.DATASUTRA_close.inProcess) {
+					globals.DATASUTRA_close.inProcess = true	
 				
-					var baseForm = solutionPrefs.config.formNameBase
-					var outGroup
-					var outSolution
-					var shutSolution
-					var logoutOK
-				
-					//only run in client
-					if (solutionPrefs.clientInfo.typeServoy == 'client') {
-						//repository information
-						var fileName = application.getUserProperty('sutraRepository-' + application.getSolutionName() + '-' + application.getServerURL().substr(7))
-						if (fileName && !solutionPrefs.repository.api) {
-							var repoFile = plugins.file.createFile(fileName)
-							plugins.file.writeTXTFile(repoFile,plugins.serialize.toJSON(solutionPrefs.repository))
-						}
-						/*
-						//navigation information
-						var fileName = '/Users/yort/.servoy/naviTest.txt' //application.getUserProperty('sutraNavigation-' + application.getSolutionName() + '-' + application.getServerURL().substr(7))
-						if (fileName) {
-							var navFile = plugins.file.createFile(fileName)
-						
-							//null out values that should not be saved down
-							navigationPrefs.foundsetPool = ''
-						
-							for (var i in navigationPrefs.byNavItemID) {
-								//data in records with universal lists
-								if (navigationPrefs.byNavItemID[i].listData && navigationPrefs.byNavItemID[i].listData.clientUUID) {
-									navigationPrefs.byNavItemID[i].listData.clientUUID = ''
-									navigationPrefs.byNavItemID[i].listData.dateFullRefresh = ''
-									navigationPrefs.byNavItemID[i].listData.dateModified = ''
-									navigationPrefs.byNavItemID[i].listData.tabFormInstance = ''
-									navigationPrefs.byNavItemID[i].listData.tabNumber = ''
-								
-									navigationPrefs.byNavItemID[i].listData.foundsets = ''
-									navigationPrefs.byNavItemID[i].listData.visitedPKs = ''
-								}
-								//data in records without universal lists
-								else {
-									navigationPrefs.byNavItemID[i].listData.tabNumber = ''
-								}
+					//working with a validated session
+					if (application.__parent__.solutionPrefs && solutionPrefs.clientInfo && solutionPrefs.clientInfo.logID) {
+						//punch down solutionPrefs
+						//MEMO: any methods (Functions) assigned as a property must be removed
+					
+						var baseForm = solutionPrefs.config.formNameBase
+						var outGroup
+						var outSolution
+						var shutSolution
+						var logoutOK
+					
+						//only run in client
+						if (solutionPrefs.clientInfo.typeServoy == 'client') {
+							//repository information
+							var fileName = application.getUserProperty('sutraRepository-' + application.getSolutionName() + '-' + application.getServerURL().substr(7))
+							if (fileName && !solutionPrefs.repository.api) {
+								var repoFile = plugins.file.createFile(fileName)
+								plugins.file.writeTXTFile(repoFile,plugins.serialize.toJSON(solutionPrefs.repository))
 							}
-						
-							plugins.file.writeTXTFile(navFile,plugins.serialize.toJSON(navigationPrefs))
-						}*/
-					}
-				
-					//run group logout method
-					if (solutionPrefs.access.accessControl && globals[solutionPrefs.access.logoutMethod]) {
-						outGroup = globals[solutionPrefs.access.logoutMethod]()
-					}
-				
-					//ok to continue?
-					if (typeof outGroup != 'boolean' || (typeof outGroup == 'boolean' && outGroup)) {
-				
-						//run solution logout method
-						if (forms[baseForm].method_logout && globals[forms[baseForm].method_logout]) {
-							outSolution = globals[forms[baseForm].method_logout]()
+							/*
+							//navigation information
+							var fileName = '/Users/yort/.servoy/naviTest.txt' //application.getUserProperty('sutraNavigation-' + application.getSolutionName() + '-' + application.getServerURL().substr(7))
+							if (fileName) {
+								var navFile = plugins.file.createFile(fileName)
+							
+								//null out values that should not be saved down
+								navigationPrefs.foundsetPool = ''
+							
+								for (var i in navigationPrefs.byNavItemID) {
+									//data in records with universal lists
+									if (navigationPrefs.byNavItemID[i].listData && navigationPrefs.byNavItemID[i].listData.clientUUID) {
+										navigationPrefs.byNavItemID[i].listData.clientUUID = ''
+										navigationPrefs.byNavItemID[i].listData.dateFullRefresh = ''
+										navigationPrefs.byNavItemID[i].listData.dateModified = ''
+										navigationPrefs.byNavItemID[i].listData.tabFormInstance = ''
+										navigationPrefs.byNavItemID[i].listData.tabNumber = ''
+									
+										navigationPrefs.byNavItemID[i].listData.foundsets = ''
+										navigationPrefs.byNavItemID[i].listData.visitedPKs = ''
+									}
+									//data in records without universal lists
+									else {
+										navigationPrefs.byNavItemID[i].listData.tabNumber = ''
+									}
+								}
+							
+								plugins.file.writeTXTFile(navFile,plugins.serialize.toJSON(navigationPrefs))
+							}*/
+						}
+					
+						//run group logout method
+						if (solutionPrefs.access.accessControl && globals[solutionPrefs.access.logoutMethod]) {
+							outGroup = globals[solutionPrefs.access.logoutMethod]()
 						}
 					
 						//ok to continue?
-						if (typeof outSolution != 'boolean' || (typeof outSolution == 'boolean' && outSolution)) {
-				
-							//run shutdown method
-							if (forms[baseForm].method_shutdown && globals[forms[baseForm].method_shutdown]) {
-								shutSolution = globals[forms[baseForm].method_shutdown]()
+						if (typeof outGroup != 'boolean' || (typeof outGroup == 'boolean' && outGroup)) {
+					
+							//run solution logout method
+							if (forms[baseForm].method_logout && globals[forms[baseForm].method_logout]) {
+								outSolution = globals[forms[baseForm].method_logout]()
 							}
 						
 							//ok to continue?
-							if (typeof shutSolution != 'boolean' || (typeof shutSolution == 'boolean' && shutSolution)) {
-								logoutOK = true
+							if (typeof outSolution != 'boolean' || (typeof outSolution == 'boolean' && outSolution)) {
+					
+								//run shutdown method
+								if (forms[baseForm].method_shutdown && globals[forms[baseForm].method_shutdown]) {
+									shutSolution = globals[forms[baseForm].method_shutdown]()
+								}
+							
+								//ok to continue?
+								if (typeof shutSolution != 'boolean' || (typeof shutSolution == 'boolean' && shutSolution)) {
+									logoutOK = true
+								}
 							}
 						}
 					}
 				}
-			}
-			else {
-				logoutOK = true
-			}
-			
-			if (logoutOK) {
-				//do session logging
-				var accessLog = databaseManager.getFoundSet(forms[baseForm].controller.getServerName(),'sutra_access_log')
-			
-				//find record for current user
-				accessLog.find()
-				accessLog.id_log = solutionPrefs.clientInfo.logID
-				var results = accessLog.search()
-			
-				if (results == 1) {
-					accessLog.date_logout = application.getServerTimeStamp()
-					databaseManager.saveData()
+				else {
+					logoutOK = true
 				}
-			
-				//do access control logging, pref update
-				if (solutionPrefs.access.accessControl) {
-					//save down developer mode state
-					var fsUser = databaseManager.getFoundSet(forms[baseForm].controller.getServerName(),'sutra_access_user')
+				
+				if (logoutOK) {
+					//do session logging
+					var accessLog = databaseManager.getFoundSet(forms[baseForm].controller.getServerName(),'sutra_access_log')
 				
 					//find record for current user
-					fsUser.find()
-					fsUser.id_user = solutionPrefs.access.userID
-					var results = fsUser.search()
+					accessLog.find()
+					accessLog.id_log = solutionPrefs.clientInfo.logID
+					var results = accessLog.search()
 				
-					//there is a user and the developer mode setting has changed during the session
-					if (results == 1 && (fsUser.developer_mode != ((solutionPrefs.design.statusDesign) ? 1 : 0))) {
-						fsUser.developer_mode = (solutionPrefs.design.statusDesign) ? 1 : 0
+					if (results == 1) {
+						accessLog.date_logout = application.getServerTimeStamp()
 						databaseManager.saveData()
 					}
-				}						
-			
-				//mark this client as non-validated
-				application.setUserProperty('sutraValid-' + application.getSolutionName() + '-' + application.getServerURL().substr(7),'false')
-			
-				//when closed from logout option in action wheel, will reopen
-				//when closed from x icon in windowing, will close client
-				application.closeSolution(application.getSolutionName())
+				
+					//do access control logging, pref update
+					if (solutionPrefs.access.accessControl) {
+						//save down developer mode state
+						var fsUser = databaseManager.getFoundSet(forms[baseForm].controller.getServerName(),'sutra_access_user')
+					
+						//find record for current user
+						fsUser.find()
+						fsUser.id_user = solutionPrefs.access.userID
+						var results = fsUser.search()
+					
+						//there is a user and the developer mode setting has changed during the session
+						if (results == 1 && (fsUser.developer_mode != ((solutionPrefs.design.statusDesign) ? 1 : 0))) {
+							fsUser.developer_mode = (solutionPrefs.design.statusDesign) ? 1 : 0
+							databaseManager.saveData()
+						}
+					}						
+				
+					//mark this client as non-validated
+					application.setUserProperty('sutraValid-' + application.getSolutionName() + '-' + application.getServerURL().substr(7),'false')
+				
+					//when closed from logout option in action wheel, will reopen
+					//when closed from x icon in windowing, will close client
+					application.closeSolution(application.getSolutionName())
+				}
+				
+				//something has gone wrong and we're in developer, allow to quit anyways
+				if (!logoutOK && application.isInDeveloper()) {
+					logoutOK = true
+				}
 			}
-			
-			//something has gone wrong and we're in developer, allow to quit anyways
-			if (!logoutOK && application.isInDeveloper()) {
-				logoutOK = true
-			}
-		}
-	
-		if (!logoutOK) {
-			//if method gets this far, time to invalidate it
-			globals.DATASUTRA_close.inProcess = null
 		
-			if (logOut == 'Yes') {
-				//show info that logout canceled
-				plugins.dialogs.showErrorDialog(
-						'Error',
-						'Log out aborted'
-				)
+			if (!logoutOK) {
+				//if method gets this far, time to invalidate it
+				globals.DATASUTRA_close.inProcess = null
+			
+				if (logOut == 'Yes') {
+					//show info that logout canceled
+					plugins.dialogs.showErrorDialog(
+							'Error',
+							'Log out aborted'
+					)
+				}
+			
+				return false
 			}
-		
-			return false
 		}
 	}
 }
