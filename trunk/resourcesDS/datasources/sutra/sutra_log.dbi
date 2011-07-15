@@ -192,7 +192,8 @@ name:"record_field"
 {
 allowNull:true,
 creationOrderIndex:20,
-dataType:4,
+dataType:12,
+length:255,
 name:"record_id"
 },
 {
