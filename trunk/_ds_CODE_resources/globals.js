@@ -986,9 +986,6 @@ function TRIGGER_log_create(logType,valueOne,valueTwo,valueThree,valueFour,value
 		}
 		
 		switch (logType) {
-			case 'Custom':
-				record.custom = valueOne
-				break
 			case 'Configuration panes':
 				record.config_pane = valueOne
 				record.id_navigation_item = valueTwo
@@ -1070,6 +1067,11 @@ function TRIGGER_log_create(logType,valueOne,valueTwo,valueThree,valueFour,value
 			case 'UL Tabs':
 				record.actions_item = valueOne
 				record.tab_form = valueTwo
+				break
+			default:
+			case 'Custom':
+				record.custom_key = logType
+				record.custom_value = valueOne
 				break
 		}
 		
@@ -1746,7 +1748,7 @@ function TRIGGER_toolbar_record_navigator_set(status) {
 		var formName 		= solutionPrefs.config.currentFormName
 		
 		//get current index
-		var thisIndex 			= forms[formName].controller.getSelectedIndex()
+		var thisIndex 		= forms[formName].controller.getSelectedIndex()
 		
 		//loaded records size
 		var loaded			= forms[formName].controller.getMaxRecordIndex()
