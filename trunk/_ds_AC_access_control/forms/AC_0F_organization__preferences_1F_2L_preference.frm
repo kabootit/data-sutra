@@ -1,5 +1,5 @@
 dataSource:"db:/sutra/sutra_access_preference",
-initialSort:"action_name asc",
+initialSort:"",
 items:[
 {
 anchors:11,
