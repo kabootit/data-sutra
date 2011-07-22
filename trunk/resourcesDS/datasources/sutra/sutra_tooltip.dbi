@@ -57,7 +57,7 @@ autoEnterType:5,
 creationOrderIndex:4,
 dataType:12,
 length:255,
-lookupValue:"globals.TIP_default_language",
+lookupValue:"globals.MGR_tooltip_language_default",
 name:"i18n_language"
 },
 {
