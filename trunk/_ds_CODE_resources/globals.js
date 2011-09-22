@@ -1484,9 +1484,11 @@ function TRIGGER_progressbar_start(progressValue,explanationText,explanationTool
 /**
  * Remove progress toolbar and re-select the last toolbar the user was viewing.
  * 
+ * @param	{Boolean}	[forceUpdate=false] Redraws the screen when finished.
+ * 
  * @properties={typeid:24,uuid:"705d0fdd-b2f9-48a4-9495-d3762c0cb104"}
  */
-function TRIGGER_progressbar_stop() {
+function TRIGGER_progressbar_stop(forceUpdate) {
 	if (application.__parent__.solutionPrefs) {
 		var baseForm = solutionPrefs.config.formNameBase
 		var formName = 'TOOL_progress_bar'
@@ -1518,6 +1520,10 @@ function TRIGGER_progressbar_stop() {
 		forms[formName].elements.bean_progress.value = 0
 		forms[formName].elements.bean_progress.visible = false
 		forms[formName].elements.gfx_progress.visible = false
+	}
+	
+	if (forceUpdate) {
+		application.updateUI()
 	}
 }
 
