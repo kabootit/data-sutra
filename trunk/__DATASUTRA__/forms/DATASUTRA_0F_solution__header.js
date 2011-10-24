@@ -3,8 +3,8 @@
  * @properties={typeid:24,uuid:"eed0cfc4-7f69-44a0-b0fa-2e17e9cf6763"}
  */
 function FORM_on_load() {
-	//don't run in headless client; headless client for example will use whatever solution is activated as context
-	if (application.getApplicationType() != APPLICATION_TYPES.HEADLESS_CLIENT) {
+	//don't run in headless or web client (they use whatever solution is activated as context)
+	if (application.getApplicationType() == APPLICATION_TYPES.SMART_CLIENT || application.getApplicationType() == APPLICATION_TYPES.RUNTIME_CLIENT) {
 		//set up split bean
 		elements.split_tool_find.leftComponent = elements.tab_toolbar
 		elements.split_tool_find.rightComponent = elements.tab_fastfind

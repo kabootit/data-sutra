@@ -69,7 +69,8 @@ function DATASUTRA_close()
 	//check to make sure this method isn't called twice
 		//MEMO: called explicitly from 
 
-	if (application.getApplicationType() != APPLICATION_TYPES.HEADLESS_CLIENT) {
+	//don't run in headless or web client (they use whatever solution is activated as context)
+	if (application.getApplicationType() == APPLICATION_TYPES.SMART_CLIENT || application.getApplicationType() == APPLICATION_TYPES.RUNTIME_CLIENT) {
 	
 		// still at login screen, just close
 		if (application.__parent__.solutionPrefs && solutionPrefs.clientInfo && !solutionPrefs.clientInfo.logID) {
@@ -5113,8 +5114,8 @@ return screenAttrib
  * @properties={typeid:24,uuid:"76844970-3686-4D95-810F-6495CA6856CE"}
  */
 function DS_font_fix() {
-	//don't run in headless client; (headless client will use whatever solution is activated as context)
-	if (application.getApplicationType() != APPLICATION_TYPES.HEADLESS_CLIENT) {
+	//don't run in headless or web client (they use whatever solution is activated as context)
+	if (application.getApplicationType() == APPLICATION_TYPES.SMART_CLIENT || application.getApplicationType() == APPLICATION_TYPES.RUNTIME_CLIENT) {
 	
 		//TODO: test on windows...will definitely need some tweaks
 		var fontTahoma = new Packages.javax.swing.plaf.FontUIResource("Tahoma",0,11)

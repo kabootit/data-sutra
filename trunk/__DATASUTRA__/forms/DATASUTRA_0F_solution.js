@@ -63,9 +63,8 @@ function FORM_on_load()
  *			  	
  */	
 
-//don't run in headless client; headless client for example will use whatever solution is activated as context
-if (application.getApplicationType() != APPLICATION_TYPES.HEADLESS_CLIENT) {
-	
+//don't run in headless or web client (they use whatever solution is activated as context)
+if (application.getApplicationType() == APPLICATION_TYPES.SMART_CLIENT || application.getApplicationType() == APPLICATION_TYPES.RUNTIME_CLIENT) {	
 	if (! application.__parent__.solutionPrefs) {
 		globals.DATASUTRA_open()
 	}
@@ -233,8 +232,8 @@ function FORM_on_show(firstShow, event)
  *			  	
  */	
 
-//don't run in headless client; headless client for example will use whatever solution is activated as context
-if (application.getApplicationType() != APPLICATION_TYPES.HEADLESS_CLIENT) {
+//don't run in headless or web client (they use whatever solution is activated as context)
+if (application.getApplicationType() == APPLICATION_TYPES.SMART_CLIENT || application.getApplicationType() == APPLICATION_TYPES.RUNTIME_CLIENT) {
 	//only fire first time shown
 	//if (firstShow) {	//application.__parent__.solutionPrefs && 
 		elements.fld_trigger_name.requestFocus(true)
