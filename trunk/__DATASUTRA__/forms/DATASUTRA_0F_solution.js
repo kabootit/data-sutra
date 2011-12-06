@@ -202,6 +202,12 @@ if (application.getApplicationType() == APPLICATION_TYPES.SMART_CLIENT || applic
 		*/
 	}
 }
+//run startup method specified in meta data for web client (for sutra cms)
+else if (application.getApplicationType() == APPLICATION_TYPES.WEB_CLIENT) {
+	if (method_startup && solutionModel.getGlobalMethod(method_startup)) {
+		globals[method_startup]()
+	}
+}
 }
 
 /**
