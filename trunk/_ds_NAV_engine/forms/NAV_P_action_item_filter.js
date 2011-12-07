@@ -63,7 +63,9 @@ function ACTION_ok()
 databaseManager.saveData()
 
 //turn autosave back on
-databaseManager.setAutoSave(true)
+if (!databaseManager.getAutoSave()) {
+	databaseManager.setAutoSave(true)
+}
 
 //enaable closing the form
 globals.CODE_hide_form = 1
@@ -147,7 +149,7 @@ application.setValueListItems('NAV_filter_columns', aColumnName)
  *
  * @properties={typeid:24,uuid:"1d93e12f-a126-40fa-ba3b-8ffe03d1a3b0"}
  */
-function FLD_data_change__filter_type()
+function FLD_data_change__filter_type(oldValue,newValue,event)
 {
 
 /*
@@ -169,7 +171,7 @@ function FLD_data_change__filter_type()
  *			  	
  */
 
-switch (filter_type) {
+switch (oldValue || filter_type) {
 	case 'Value':
 		elements.lbl_method_name.visible = false
 		elements.fld_method_name.visible = false

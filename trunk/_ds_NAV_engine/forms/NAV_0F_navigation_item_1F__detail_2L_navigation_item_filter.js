@@ -73,9 +73,7 @@ record.column_relation = forms.NAV_0L_navigation_item_1L.form_to_load_table
 record.filter_type = 'Value'
 
 //show dialog
-forms.NAV_P_navigation_item_filter.controller.find()
-forms.NAV_P_navigation_item_filter.id_navigation_item_filter = record.id_navigation_item_filter
-forms.NAV_P_navigation_item_filter.controller.search()
+forms.NAV_P_navigation_item_filter.foundset.loadRecords(foundset)
 
 //disable cancelling
 forms.NAV_P_navigation_item_filter.elements.btn_cancel.visible = false
