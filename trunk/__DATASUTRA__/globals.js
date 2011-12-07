@@ -2002,18 +2002,28 @@ function DS_actions(input) {
 					
 					//in servoy 4 or greater
 					if (utils.stringToNumber(solutionPrefs.clientInfo.verServoy) >= 4) {
-						//retrigger the shown UL to reload
-						forms.NAV_T_universal_list.DISPLAY_cycle(true)
-						
-						if (navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.withButtons) {
-							forms.NAV_T_universal_list.FORM_on_show(true)
-							forms[baseForm].elements.tab_content_B.tabIndex = 2
-							forms.NAV_T_universal_list.elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.tabNumber
+						//a custom tab was actually being shown
+						if (false) {
+							forms[baseForm].elements.tab_content_B.tabIndex = navigationPrefs.byNavSetName.configPanes.itemsByName['Custom tab ' + solutionPrefs.config.currentFormID + ': ' + solutionPrefs.config.currentFormName].listData.tabNumber
 						}
+						//retrigger the shown UL to reload
 						else {
-							forms.NAV_T_universal_list__no_buttons.FORM_on_show(true)
-							forms[baseForm].elements.tab_content_B.tabIndex = 3
-							forms.NAV_T_universal_list__no_buttons.elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.tabNumber
+							//with buttons
+							if (navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.withButtons) {
+								forms.NAV_T_universal_list.DISPLAY_cycle(true)
+							
+								forms.NAV_T_universal_list.FORM_on_show(true)
+								forms[baseForm].elements.tab_content_B.tabIndex = 2
+								forms.NAV_T_universal_list.elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.tabNumber
+							}
+							//without buttons
+							else {
+								forms.NAV_T_universal_list__no_buttons.DISPLAY_cycle(true)
+								
+								forms.NAV_T_universal_list__no_buttons.FORM_on_show(true)
+								forms[baseForm].elements.tab_content_B.tabIndex = 3
+								forms.NAV_T_universal_list__no_buttons.elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.tabNumber
+							}
 						}
 					}
 					
