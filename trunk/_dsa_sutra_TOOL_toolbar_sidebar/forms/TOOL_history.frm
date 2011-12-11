@@ -1,4 +1,3 @@
-dataSource:"db:/sutra/sutra_solution",
 items:[
 {
 borderType:"EmptyBorder,0,0,0,0",

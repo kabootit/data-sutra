@@ -1416,26 +1416,24 @@ function TRIGGER_progressbar_start(progressValue,explanationText,explanationTool
 		var minimum = (typeof arguments[3] == 'number') ? arguments[3] : 0
 		var maximum = (typeof arguments[4] == 'number') ? arguments[4] : 100
 		
-		//only run if progressbar not added
-		if (forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getTabFormNameAt(forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getMaxTabIndex()) != formName) {
+		//hide bean stuff to make sure the passed values are obeyed
+		forms[formName].elements.lbl_progress_text.visible = false
+		forms[formName].elements.bean_progress.indeterminate = false
+		forms[formName].elements.bean_progress.value = 0
+		forms[formName].elements.bean_progress.visible = false
+		forms[formName].elements.gfx_progress.visible = false
+		
+		//only run if progressbar not selected
+		if (forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex != 3) {
 			//save down active toolbar to restore
 			solutionPrefs.config.lastSelectedToolbar = forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex
 			
 			//load progressbar tab
-			forms[baseForm + '__header__toolbar'].elements.tab_toolbar.addTab(forms[formName],'')
-			forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex = forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getMaxTabIndex()
+			forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex = 3
 			
 			//hide toolbar controls
 			forms[baseForm + '__header__toolbar'].elements.btn_toolbar_toggle.visible = false
 			forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.visible = false
-		}
-		//hide bean stuff to make sure the passed values are obeyed
-		else {
-			forms[formName].elements.lbl_progress_text.visible = false
-			forms[formName].elements.bean_progress.indeterminate = false
-			forms[formName].elements.bean_progress.value = 0
-			forms[formName].elements.bean_progress.visible = false
-			forms[formName].elements.gfx_progress.visible = false
 		}
 		
 		//turn on progressbar elements
@@ -1493,22 +1491,19 @@ function TRIGGER_progressbar_stop(forceUpdate) {
 		var baseForm = solutionPrefs.config.formNameBase
 		var formName = 'TOOL_progress_bar'
 		
-		//remove progress toolbar if it is present
-		if (forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getTabFormNameAt(forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getMaxTabIndex()) == formName) {
-			forms[baseForm + '__header__toolbar'].elements.tab_toolbar.removeTabAt(forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getMaxTabIndex())
-			
-			//set toolbar to previous if it wasn't the last tab
-			if (solutionPrefs.config.lastSelectedToolbar != forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getMaxTabIndex()) {
+		//progress toolbar is showing, go back to last selected toolbar
+		if (forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex == 3) {
+			//set toolbar to previous if there is one
+			if (solutionPrefs.config.lastSelectedToolbar) {
 				globals.DS_toolbar_cycle(solutionPrefs.config.lastSelectedToolbar)
 			}
-			//manually set the tab index; otherwise will still be on removed tab
+			//go to solution title
 			else {
-				forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex = forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getMaxTabIndex()
+				forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex = 1
 			}
 			
-			//show toolbar controls
-			forms[baseForm + '__header__toolbar'].elements.btn_toolbar_toggle.visible = true
-			//forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.visible = false
+			//show toolbar controls when more than one option
+			forms[baseForm + '__header__toolbar'].elements.btn_toolbar_toggle.visible = solutionPrefs.panel.toolbar.length > 1
 		}
 		
 		//clear out lastSelectedToolbar
@@ -1847,10 +1842,10 @@ function TRIGGER_toolbar_set(toolbarName) {
 		
 		//only run when not in a preference
 		if (!solutionPrefs.config.prefs.preferenceMode) {
-			var newToolbar = arguments[0]
-			var oldToolbar = solutionPrefs.panel.toolbar[forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex - 1].tabName
-			
 			var allToolbars = solutionPrefs.panel.toolbar
+			
+			var newToolbar = toolbarName
+			var oldToolbar = allToolbars[forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex - 4].tabName
 			
 			//check to make sure that newToolbar is a valid input
 			var found = false
@@ -1863,12 +1858,44 @@ function TRIGGER_toolbar_set(toolbarName) {
 			
 			//destination toolbar is valid and different than current toolbar, change
 			if (newToolbar != oldToolbar && found) {
-				globals.DS_toolbar_cycle(i + 1)
+				globals.DS_toolbar_cycle(i + 4)
 				
 				return true
 			}
 			else {
 				return false
+			}
+		}
+	}
+}
+
+/**
+ * Set the state of a toolbar
+ * 
+ * @param	{String}	toolbarName Name of toolbar that needs to be dis/enabled.
+ * @param	{Boolean}	status Force status of toolbar.
+ * 
+ * @properties={typeid:24,uuid:"8A2E04BD-EE95-41A4-82CF-C0C2392FBFC6"}
+ */
+function TRIGGER_toolbar_toggle(toolbarName,status) {
+	//solutionPrefs defined and frameworks not in a locked status
+	if (application.__parent__.solutionPrefs && !solutionPrefs.config.lockStatus) {
+		var baseForm = solutionPrefs.config.formNameBase
+		var allToolbars = solutionPrefs.panel.toolbar
+		var newToolbar = toolbarName
+		
+		//find requested toolbar and set enabled status appropriately
+		for (var i = 0; i < allToolbars.length; i++) {
+			var thisToolbar = allToolbars[i]
+			                              
+			if (thisToolbar.tabName == newToolbar) {
+				//nothing specified, toggle
+				if (typeof status != 'boolean') {
+					status = !thisToolbar.enabled
+				}
+				
+				thisToolbar.enabled = status
+				break
 			}
 		}
 	}

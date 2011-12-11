@@ -131,3 +131,33 @@ if (delRec == 'Yes') {
 	controller.setSelectedIndex(recSelect)
 }
 }
+
+/**
+ * Handle changed data.
+ *
+ * @param {Object} oldValue old value
+ * @param {Object} newValue new value
+ * @param {JSEvent} event the event that triggered the action
+ *
+ * @returns {Boolean}
+ *
+ * @properties={typeid:24,uuid:"429B31A1-7F20-4AB4-B7F2-61524CB8BCDB"}
+ */
+function FLD_tab_name__data_change(oldValue, newValue, event) {
+	var fsDupe = databaseManager.getFoundSet('sutra','sutra_toolbar')
+	
+	fsDupe.find()
+	fsDupe.toolbar_type = 2
+	fsDupe.tab_name = newValue
+	var results = fsDupe.search()
+	
+	if (results > 1) {
+		plugins.dialogs.showErrorDialog(
+					'Error',
+					'The registry must be unique'
+			)
+		return false
+	}
+	
+	return true
+}

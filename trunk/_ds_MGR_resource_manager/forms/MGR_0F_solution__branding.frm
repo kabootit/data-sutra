@@ -465,7 +465,6 @@ showClick:false,
 showFocus:false,
 size:"6,36",
 tabSeq:-1,
-transparent:true,
 typeid:7,
 uuid:"E5BBBDD8-BDAD-436C-B879-87ADFA87CCF3"
 },

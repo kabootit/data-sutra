@@ -531,7 +531,8 @@ else {
 						//object for frameworks engine, design bar, preload, etc. changes
 						prefs : { 
 								formPreload : ((forms[prefForm].preload_toplevel) ? true : false),
-								formPreloadGray : ((forms[prefForm].preload_blackout) ? false : true)
+								formPreloadGray : ((forms[prefForm].preload_blackout) ? false : true),
+								configNotify : ((forms[prefForm].config_notify) ? true : false)
 							},
 						//helpMode status
 						helpMode : false,
@@ -1368,6 +1369,11 @@ for (var i = totalRecs; i < 100000; i++) {
 /**
  * Show frameworks actions available for current user
  * 
+ * @param {JSEvent|String}	input Event that called the method or the item chosen.
+ * @param {String}			[itemFormName] Form for the item chosen.
+ * @param {String}			[itemID] Navigation Item ID for the item chosen.
+ * @param {String}			[itemType] Type of item chosen.
+ * 
  * @properties={typeid:24,uuid:"48174bfa-d0a4-4e64-935e-b4b73feffa12"}
  */
 function DS_actions(input) {
@@ -1392,7 +1398,6 @@ function DS_actions(input) {
 		}
 		
 		var baseForm = solutionPrefs.config.formNameBase
-		var fwAction = application.getMethodTriggerElementName()
 		var btnInvisible = 'btn_fw_action_left'
 		var inPref = solutionPrefs.config.prefs.preferenceMode
 		var currentNavItem = solutionPrefs.config.currentFormID
@@ -1400,7 +1405,6 @@ function DS_actions(input) {
 		
 		//called to depress menu
 		if (input instanceof JSEvent) {	
-			
 			//using access and control, need allowed configuration modes
 			if (solutionPrefs.access && solutionPrefs.access.accessControl) {
 				var admin = globals.CODE_copy_object(solutionPrefs.access.allowedAdminPrefs)
@@ -1944,7 +1948,7 @@ function DS_actions(input) {
 					}
 					
 					//reload toolbars and sidebars
-					solutionPrefs.panel = globals.DS_panel_load()
+					solutionPrefs.panel = globals.DS_panel_load(globals.AC_current_group)
 					globals.DS_toolbar_load()
 					globals.DS_sidebar_load()
 					
@@ -1954,7 +1958,7 @@ function DS_actions(input) {
 						if (solutionPrefs.config.prefs.toolbarTabSelected <= forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getMaxTabIndex()) {
 							forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex = solutionPrefs.config.prefs.toolbarTabSelected
 						}
-						solutionPrefs.config.prefs.toolbarTabSelected = null
+						delete solutionPrefs.config.prefs.toolbarTabSelected
 					}
 					
 					//return sidebar window to most recent position and then clear out the stored value
@@ -1963,14 +1967,14 @@ function DS_actions(input) {
 						if (solutionPrefs.config.prefs.sidebarTabSelected <= forms[baseForm].elements.tab_content_D.getMaxTabIndex()) {
 							forms[baseForm].elements.tab_content_D.tabIndex = solutionPrefs.config.prefs.sidebarTabSelected
 						}
-						solutionPrefs.config.prefs.sidebarTabSelected = null
+						delete solutionPrefs.config.prefs.sidebarTabSelected
 					}
 					
 					//show sidebar
 					if (solutionPrefs.config.prefs.sidebar) {
 						globals.DS_sidebar_toggle(true,null,true)
 						
-						solutionPrefs.config.prefs.sidebar = null
+						delete solutionPrefs.config.prefs.sidebar
 					}
 					
 					//reload tooltips
@@ -1994,11 +1998,11 @@ function DS_actions(input) {
 					
 					//remove preference related flags
 					//solutionPrefs.config.prefs.preferenceMode = false	//MEMO: moved to NAV_workflow_load
-					solutionPrefs.config.prefs.workflowSpace = null
-					solutionPrefs.config.prefs.workflowFormName = null
-					solutionPrefs.config.prefs.workflowFormID = null
-					solutionPrefs.config.prefs.preferenceMode = false
-					solutionPrefs.config.prefs.designMode = false
+					delete solutionPrefs.config.prefs.workflowSpace
+					delete solutionPrefs.config.prefs.workflowFormName
+					delete solutionPrefs.config.prefs.workflowFormID
+					delete solutionPrefs.config.prefs.preferenceMode
+					delete solutionPrefs.config.prefs.designMode
 					
 					//in servoy 4 or greater
 					if (utils.stringToNumber(solutionPrefs.clientInfo.verServoy) >= 4) {
@@ -2037,6 +2041,15 @@ function DS_actions(input) {
 				}
 				//go to a specific preference
 				else if (itemClicked != '-' && itemClicked != 'Design mode') {
+					
+					//turn on progress indicator when enabled
+					if (solutionPrefs.config.prefs.configNotify) {
+						var currentToolbar = forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex
+						
+						globals.CODE_cursor_busy(true)
+						globals.TRIGGER_progressbar_start(-273,'Loading ' + itemClicked + '. Please wait...')
+					}
+					
 					//entering a preference for the first time
 					if (!solutionPrefs.config.prefs.preferenceMode) {
 						forms[baseForm].elements.sheetz.visible = false
@@ -2045,7 +2058,7 @@ function DS_actions(input) {
 						solutionPrefs.config.prefs.preferenceMode = true
 						
 						//save current toolbar tab
-						solutionPrefs.config.prefs.toolbarTabSelected = forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex
+						solutionPrefs.config.prefs.toolbarTabSelected = currentToolbar
 						
 						//save current sidebar tab
 						solutionPrefs.config.prefs.sidebarTabSelected = forms[baseForm].elements.tab_content_D.tabIndex
@@ -2057,7 +2070,6 @@ function DS_actions(input) {
 							globals.DS_sidebar_toggle(false,null,true)
 							application.updateUI()
 						}
-						
 						
 						//if we were in design mode, save it
 						if (designMode) {
@@ -2098,13 +2110,8 @@ function DS_actions(input) {
 						//hide frameworks action graphic, showing red outline underneath
 						forms[baseForm + '__header'].elements.btn_fw_action.visible = false
 						
-						var prefTab = 'TOOL_config_pane'
-						
-						//add in preference tab
-						forms[baseForm + '__header__toolbar'].elements.tab_toolbar.removeAllTabs()
-						if (forms[prefTab]) {
-							forms[baseForm + '__header__toolbar'].elements.tab_toolbar.addTab(forms[prefTab],null,'Preference',null,null)
-						}
+						//set background color to be frameworks yellow
+						forms[baseForm + '__header__toolbar'].elements.lbl_color.bgcolor = '#f5fbd4'
 					}
 					
 					//set flag for check of selected preference
@@ -2113,13 +2120,19 @@ function DS_actions(input) {
 					//load selected preference
 					globals.NAV_preference_load(itemClicked,itemID)
 					
+					//turn off progress indicator when enabled
+					if (solutionPrefs.config.prefs.configNotify) {
+//						globals.TRIGGER_progressbar_stop()
+						globals.CODE_cursor_busy(false)
+					}
+					
 					//change header to display preference selected
 					forms.TOOL_config_pane.elements.lbl_title.text = itemClicked
+					forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex = 2
 				}
 			}
 		}
 	}
-
 }
 
 /**
@@ -2532,7 +2545,7 @@ if (application.__parent__.solutionPrefs) {
 	forms[sideForm].elements.tab_content.removeAllTabs()
 	
 	//add in help tab (always the first)	
-	forms[sideForm].elements.tab_content.addTab(forms['MGR_0S_documentation'],null,"Help...I'm melting",null,null,null,null,null,1)
+	forms[sideForm].elements.tab_content.addTab(forms['MGR_0S_documentation'],null,"Help...I'm melting")
 	
 	//add in tabs to popdown
 	if (sidebars.length) {
@@ -2542,7 +2555,7 @@ if (application.__parent__.solutionPrefs) {
 			
 			//selected form exists in solution
 			if (forms[statusTab.formName]) {
-				forms[sideForm].elements.tab_content.addTab(forms[statusTab.formName],null,statusTab.tabName,null,null,null,null,null,i + 2)
+				forms[sideForm].elements.tab_content.addTab(forms[statusTab.formName],null,statusTab.tabName)
 			}
 			//remove from sidebars
 			else {
@@ -3954,162 +3967,170 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
  *
  * @properties={typeid:24,uuid:"0aa82afc-9ecd-4b63-b3af-87d9170abb24"}
  */
-function DS_toolbar_cycle(event)
-{
-	
-/*
- *	TITLE    :	DS_toolbar_cycle
- *			  	
- *	MODULE   :	_DATASUTRA_
- *			  	
- *	ABOUT    :	toggle through toolbars
- *			  	
- *	INPUT    :	1- name or number of tab to show (optional)
- *			  	2- xxx (optional)
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	elements listed below
- *			  	
- *	USAGE    :	DS_toolbar_cycle(toolbarName) The name of the toolbar to select
- *			  	
- *	MODIFIED :	February 21, 2011 -- Troy Elliott, Data Mosaic
- *			  	
- */
-
-if (application.__parent__.solutionPrefs) {
-	
-	if (event instanceof JSEvent) {
-		var rightClick = event.getType() == event.RIGHTCLICK
-	}
-	
-	//strip out jsevents
-	if (utils.stringToNumber(application.getVersion()) >= 5) {
-		//cast Arguments to array
-		var Arguments = new Array()
-		for (var i = 0; i < arguments.length; i++) {
-			Arguments.push(arguments[i])
+function DS_toolbar_cycle(event) {
+	if (application.__parent__.solutionPrefs) {
+		
+		if (event instanceof JSEvent) {
+			var rightClick = event.getType() == event.RIGHTCLICK
 		}
 		
-		//reassign arguments without jsevents
-		arguments = Arguments.filter(globals.CODE_jsevent_remove)
-	}
-
-	//timed out, throw up error
-	if (solutionPrefs.config.prefs.thatsAllFolks) {
-		forms.NSTL_0F_solution__license.ACTION_status()
-		
-		plugins.dialogs.showErrorDialog(
-							'Trial expired',
-							'Trial time expired\n' +
-							'Please restart.'
-						)
-	}
-	
-	var tabShow = arguments[0]
-	var baseForm = solutionPrefs.config.formNameBase
-	var popForm = 'DATASUTRA__toolbar__popdown'
-	
-	var currentTab = forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex
-	var statusTabs = solutionPrefs.panel.toolbar
-	
-	//right-click or shift-click will open menu
-	var showMenu = rightClick || globals.CODE_key_pressed('shift')
-	
-	//hide popDown sheet when moving to a new item, but not when showing options to choose from
-	if (tabShow || !showMenu) {
-		forms[baseForm].elements.sheetz.visible = false
-	}
-	
-	//if passed tab name equal to current tab, set tabShow to be index of it
-	for (var i = 0; typeof tabShow != 'number' && i < statusTabs.length ; i++) {
-		if (tabShow == statusTabs[i].tabName) {
-			tabShow = i + 1
+		//strip out jsevents
+		if (utils.stringToNumber(application.getVersion()) >= 5) {
+			//cast Arguments to array
+			var Arguments = new Array()
+			for (var i = 0; i < arguments.length; i++) {
+				Arguments.push(arguments[i])
+			}
+			
+			//reassign arguments without jsevents
+			arguments = Arguments.filter(globals.CODE_jsevent_remove)
 		}
-	}
 	
-	//if requested index, go to it
-	if (tabShow > 0) {
-		forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex = tabShow
-	}
-	//change visible view
-	else {
-		//show popup of views to be chosen if shift key held
-		if (showMenu) {
-			//get menu list and build menu
-			var menu = new Array()
-			for ( var i = 0 ; i < statusTabs.length ; i++ ) {
-				menu[i] = plugins.popupmenu.createCheckboxMenuItem(statusTabs[i].tabName, globals.DS_toolbar_cycle)
-				
-				//set menu method arguments
-				menu[i].setMethodArguments(statusTabs[i].tabName)
-				
-				//set check mark
-				if (i + 1 == forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex) {
-					menu[i].setSelected(true)
+		//timed out, throw up error
+		if (solutionPrefs.config.prefs.thatsAllFolks) {
+			forms.NSTL_0F_solution__license.ACTION_status()
+			
+			plugins.dialogs.showErrorDialog(
+								'Trial expired',
+								'Trial time expired\n' +
+								'Please restart.'
+							)
+		}
+		
+		var tabShow = arguments[0]
+		var baseForm = solutionPrefs.config.formNameBase
+		var popForm = 'DATASUTRA__toolbar__popdown'
+		
+		var currentTab = forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex
+		var maxTab = forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getMaxTabIndex()
+		var statusTabs = solutionPrefs.panel.toolbar
+		
+		//right-click or shift-click will open menu
+		var showMenu = rightClick || globals.CODE_key_pressed('shift')
+		
+		//hide popDown sheet when moving to a new item, but not when showing options to choose from
+		if (tabShow || !showMenu) {
+			forms[baseForm].elements.sheetz.visible = false
+		}
+		
+		//if passed tab name equal to current tab, set tabShow to be index of it
+		for (var i = 0; typeof tabShow != 'number' && i < statusTabs.length ; i++) {
+			if (tabShow == statusTabs[i].tabName) {
+				tabShow = i + 4
+			}
+		}
+		
+		//if requested index, go to it
+		if (tabShow > 0) {
+			forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex = tabShow
+		}
+		//change visible view
+		else {
+			//show popup of views to be chosen if shift key held
+			if (showMenu) {
+				//get menu list and build menu
+				var menu = new Array()
+				for ( var i = 0 ; i < statusTabs.length ; i++ ) {
+					var thisTab = statusTabs[i]
+					//only show enabled toolbars
+					if (thisTab.enabled) {	
+						menu[i] = plugins.popupmenu.createCheckboxMenuItem(thisTab.tabName, globals.DS_toolbar_cycle)
+						
+						//set menu method arguments
+						menu[i].setMethodArguments(thisTab.tabName)
+						
+						//set check mark
+						if (i + 4 == forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex) {
+							menu[i].setSelected(true)
+						}
+						else {
+							menu[i].setSelected(false)
+						}	
+					}
 				}
-				else {
-					menu[i].setSelected(false)
-				}	
+				
+				//pop up the popup menu
+				var elem = forms[baseForm + '__header__toolbar'].elements[application.getMethodTriggerElementName()]
+				if (elem != null) {
+					plugins.popupmenu.showPopupMenu(elem, menu)
+				}
+				
+				return
 			}
-			
-			//pop up the popup menu
-			var elem = forms[baseForm + '__header__toolbar'].elements[application.getMethodTriggerElementName()]
-			if (elem != null) {
-				plugins.popupmenu.showPopupMenu(elem, menu)
-			}
-			
-			return
-		}
-		//cycle through views
-		else {
-			//if not the last tab
-			if (currentTab < statusTabs.length) {
-				forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex = currentTab + 1
-			}
-			//last tab, loop
+			//cycle through views
 			else {
-				forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex = 1
+				function nextTab(currentTab) {
+					//check to find next enabled tab
+					while (!thisTab || !thisTab.enabled) {
+						//if not the last tab
+						if (currentTab < maxTab) {
+							currentTab ++
+						}
+						//last tab, loop
+						else {
+							currentTab = 4
+							
+							//check to make sure only loop through past the first entry once to avoid infinite loop if nothing enabled
+							if (looped) {
+								//show title toolbar
+								currentTab = 1
+								break
+							}
+							var looped = true
+						}
+						
+						var thisTab = statusTabs[currentTab - 4]
+					}
+					
+					return currentTab
+				}
+				
+				//show next enabled view
+				forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex = nextTab(currentTab)
 			}
 		}
-	}
-	
-	//save which tab is currently selected
-	solutionPrefs.panel.toolbar.selectedTab = forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex
-	
-	var statusTab = statusTabs[solutionPrefs.panel.toolbar.selectedTab - 1]
-	var thePopDown = statusTab.popDown
-	var tabParent = statusTab.formName
-	//set up popDown, if activated
-	if (thePopDown) {
-		//popdown showing
-		if (forms[tabParent].popDown == 'show') {
-			forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.setImageURL('media:///toolbar_popdown_up.png')
-			forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.toolTipText = 'Hide additional ' + statusTab.tabName + ' info'
-		}
-		//popdown not showing
-		else {
-			forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.setImageURL('media:///toolbar_popdown_down.png')
-			forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.toolTipText = 'Show more info for ' + statusTab.tabName
-		}
-		forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.visible = true
 		
-		forms[popForm].elements.tab_toolbar_popdown.tabIndex = thePopDown.tabIndex
+		//save which tab is currently selected
+		solutionPrefs.panel.toolbar.selectedTab = forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex
 		
-		//show if showing
-		if (forms[statusTab.formName].popDown == 'show') {
-			globals.DS_toolbar_popdown(true)
+		var statusTab = statusTabs[solutionPrefs.panel.toolbar.selectedTab - 4]
+		
+		//set color appropriately (defaults to white if not explicitly set)
+		forms[baseForm + '__header__toolbar'].elements.lbl_color.bgcolor = statusTab.gradientColor
+		
+		//set up popDown, if activated
+		var thePopDown = statusTab.popDown
+		var tabParent = statusTab.formName
+		
+		if (thePopDown) {
+			//popdown showing
+			if (forms[tabParent].popDown == 'show') {
+				forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.setImageURL('media:///toolbar_popdown_up.png')
+				forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.toolTipText = 'Hide additional ' + statusTab.tabName + ' info'
+			}
+			//popdown not showing
+			else {
+				forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.setImageURL('media:///toolbar_popdown_down.png')
+				forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.toolTipText = 'Show more info for ' + statusTab.tabName
+			}
+			forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.visible = true
+			
+			forms[popForm].elements.tab_toolbar_popdown.tabIndex = thePopDown.tabIndex
+			
+			//show if showing
+			if (forms[statusTab.formName].popDown == 'show') {
+				globals.DS_toolbar_popdown(true)
+			}
+			//hide
+			else {
+				forms[baseForm].elements.tab_toolbar_popdown.visible = false
+			}
 		}
-		//hide
 		else {
+			forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.visible = false
 			forms[baseForm].elements.tab_toolbar_popdown.visible = false
 		}
 	}
-	else {
-		forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.visible = false
-		forms[baseForm].elements.tab_toolbar_popdown.visible = false
-	}
-}
 }
 
 /**
@@ -4142,11 +4163,14 @@ if (application.__parent__.solutionPrefs) {
 	var baseForm = solutionPrefs.config.formNameBase
 	var popForm = 'DATASUTRA__toolbar__popdown'
 	var toolbars = solutionPrefs.panel.toolbar
+	var enabledToolbars = 0
 	
 	forms[baseForm + '__header__toolbar'].elements.tab_toolbar.visible = false
 	
 	//remove all tabs from toolbar and popdown
-	forms[baseForm + '__header__toolbar'].elements.tab_toolbar.removeAllTabs()
+	while (forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getMaxTabIndex() > 3) {
+		forms[baseForm + '__header__toolbar'].elements.tab_toolbar.removeTabAt(4)
+	}
 	forms[popForm].elements.tab_toolbar_popdown.removeAllTabs()
 	
 	//add in tabs to toolbar and popdown
@@ -4157,13 +4181,17 @@ if (application.__parent__.solutionPrefs) {
 			
 			//selected form exists in solution
 			if (forms[toolTab.formName]) {
-				forms[baseForm + '__header__toolbar'].elements.tab_toolbar.addTab(forms[toolTab.formName],null,toolTab.tabName,null,null,null,null,null,i + 1)
+				forms[baseForm + '__header__toolbar'].elements.tab_toolbar.addTab(forms[toolTab.formName],null,toolTab.tabName)
 				//popDown activated
 				if (toolTab.popDown) {
 					//selected form exists in solution
 					if (forms[toolTab.popDown.formName]) {
-						forms[popForm].elements.tab_toolbar_popdown.addTab(forms[toolTab.popDown.formName],null,toolTab.tabName,null,null,null,null,null,toolTab.popDown.tabIndex)
+						forms[popForm].elements.tab_toolbar_popdown.addTab(forms[toolTab.popDown.formName],null,toolTab.tabName)
 					}
+				}
+				
+				if (toolTab.enabled) {
+					enabledToolbars ++
 				}
 			}
 			//remove from toolbars
@@ -4173,14 +4201,14 @@ if (application.__parent__.solutionPrefs) {
 		}
 		
 		//select first tab
-		globals.DS_toolbar_cycle(1)
+		globals.DS_toolbar_cycle(4)
 	}
 	
 	//turn tab panel back on
 	forms[baseForm + '__header__toolbar'].elements.tab_toolbar.visible = true
 	
-	//if only one tab, remove tab changer button
-	if (toolbars.length > 1) {
+	//if only one enabled tab, remove tab changer button
+	if (enabledToolbars > 1) {
 		forms[baseForm + '__header__toolbar'].elements.btn_toolbar_toggle.visible = true
 	}
 	else {
@@ -4227,7 +4255,8 @@ if (onlyTitle) {
 		tabName : 'Solution title',
 		formName : 'TOOL_title',
 		display : 1,
-		popDown : 0
+		popDown : 0,
+		gradientColor : '#F2FBCA'
 	}]
 	
 	//punch back out all our toolbar and sidebar panels
@@ -4302,7 +4331,6 @@ if (typeof groupID == 'number') {
 	var dataset = databaseManager.getDataSetByQuery(serverName, query, args, 100)
 	
 	//get foundset with allowed toolbars
-	fsToolbar.clear()
 	fsToolbar.loadRecords(dataset)
 }
 //get all enabled toolbars
@@ -4311,6 +4339,8 @@ else {
 	fsToolbar.toolbar_type = panelType
 	fsToolbar.row_status_show = 1
 	fsToolbar.search()
+	
+	var allToolbars = true
 }
 
 //there are some toolbars
@@ -4355,6 +4385,8 @@ if (utils.hasRecords(fsToolbar)) {
 					formName : record.form_name,
 					display : record.row_status_show,
 					description : record.description,
+					//no a/c all enabled; otherwise use group setting
+					enabled : (allToolbars || record.ac_toolbar_to_access_group_toolbar__login.flag_show) ? true : false,
 					popDown : (record.pop_down_show) ?
 										{
 									autoSize : record.pop_down_autosize,
@@ -4367,6 +4399,11 @@ if (utils.hasRecords(fsToolbar)) {
 								record.pop_down_show
 				})
 			
+			//default background color for toolbar is pale yellow
+			if (panelType == 1) {
+				panel[panel.length - 1].gradientColor = (record.background_color) ? record.background_color : '#f5fbd4'
+			}
+				
 			//sidebars can have background color and gradient
 			if (panelType == 2) {
 				panel[panel.length - 1].gradient = (record.flag_gradient) ? true : false
@@ -4440,10 +4477,10 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	var statusTabs = solutionPrefs.panel.toolbar
 	
 	//using a pop down
-	if (statusTabs[currentTab - 1].popDown) {
-		var downPop = statusTabs[currentTab - 1].popDown
+	if (statusTabs[currentTab - 4].popDown) {
+		var downPop = statusTabs[currentTab - 4].popDown
 		var tabName = downPop.formName
-		var tabParent = statusTabs[currentTab - 1].formName
+		var tabParent = statusTabs[currentTab - 4].formName
 		
 		//location offset for design mode
 		if (solutionPrefs.design.statusDesign) {
@@ -4521,7 +4558,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 //			forms[baseForm].elements.sheetz.visible = false
 		}
 		
-		var statusTab = statusTabs[currentTab - 1]
+		var statusTab = statusTabs[currentTab - 4]
 		//popdown showing
 		if (forms[tabParent].popDown == 'show') {
 			forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.setImageURL('media:///toolbar_popdown_up.png')

@@ -37,6 +37,12 @@ name:"blog_enable"
 },
 {
 allowNull:true,
+creationOrderIndex:71,
+dataType:4,
+name:"config_notify"
+},
+{
+allowNull:true,
 creationOrderIndex:14,
 dataType:12,
 length:255,

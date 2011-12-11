@@ -616,7 +616,7 @@ if (application.__parent__.solutionPrefs) {
 			forms.DATASUTRA__sidebar__header.elements.gfx_header.setBorder('MatteBorder,0,0,1,0,#333333')
 		}
 		
-		//remove progress toolbar if it is present
+		//remove design mode toolbar if it is present
 		if (forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getTabFormNameAt(forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getMaxTabIndex()) == prefTab) {
 			forms[baseForm + '__header__toolbar'].elements.tab_toolbar.removeTabAt(forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getMaxTabIndex())
 			

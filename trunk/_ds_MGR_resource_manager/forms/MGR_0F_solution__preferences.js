@@ -418,3 +418,22 @@ if ((application.getSolutionName() != '_ds_MGR_resource_manager') && application
 	myKiosk.showToolbar = kiosk_toolbar
 }
 }
+
+/**
+ * Handle changed data.
+ *
+ * @param {Object} oldValue old value
+ * @param {Object} newValue new value
+ * @param {JSEvent} event the event that triggered the action
+ *
+ * @returns {Boolean}
+ *
+ * @properties={typeid:24,uuid:"29D90178-91B7-4F33-9BA6-1C9C0DB25437"}
+ */
+function FLD_data_change__config_notify(oldValue, newValue, event) {
+	databaseManager.saveData()
+
+	if ((application.getSolutionName() != '_ds_MGR_resource_manager') && application.__parent__.solutionPrefs) {
+		solutionPrefs.config.prefs.configNotify = (config_notify) ? true : false
+	}
+}

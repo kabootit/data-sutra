@@ -161,10 +161,11 @@ dataProviderID:"tab_name",
 formIndex:10000,
 location:"0,40",
 name:"fld_tab_name",
+onDataChangeMethodID:"469B31A1-7F20-4AB4-B7F2-61524CB8BCDB",
 size:"120,22",
 styleClass:"tableview",
 tabSeq:1,
-text:"Tab name",
+text:"Registry",
 typeid:4,
 uuid:"EC6B8963-5744-4BC1-A817-12E49862F143"
 }

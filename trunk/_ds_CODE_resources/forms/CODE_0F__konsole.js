@@ -458,7 +458,7 @@ if (oArg) {
 
 //roll up if currently showing
 var formName = solutionPrefs.config.formNameBase
-var tabParent = solutionPrefs.panel.toolbar[solutionPrefs.panel.toolbar.selectedTab - 1].formName
+var tabParent = solutionPrefs.panel.toolbar[solutionPrefs.panel.toolbar.selectedTab - 4].formName
 
 if (forms[tabParent].popDown == 'show') {
 	var statusStartX = forms[formName + '__header__toolbar'].elements.tab_toolbar.getLocationX()
@@ -503,12 +503,12 @@ if (forms[tabParent].popDown == 'show') {
 	cmdVarBin.hidden = true
 	
 	forms[formName + '__header__toolbar'].elements.btn_toolbar_popdown.setImageURL('media:///toolbar_popdown_down.png')
-	forms[formName + '__header__toolbar'].elements.btn_toolbar_popdown.toolTipText = 'Show more info for ' + solutionPrefs.panel.toolbar[solutionPrefs.panel.toolbar.selectedTab - 1].tabName
+	forms[formName + '__header__toolbar'].elements.btn_toolbar_popdown.toolTipText = 'Show more info for ' + solutionPrefs.panel.toolbar[solutionPrefs.panel.toolbar.selectedTab - 4].tabName
 }
 //popdown not showing
 else {
 //	forms[formName + '__header__toolbar'].elements.btn_toolbar_popdown.setImageURL('media:///toolbar_popdown_up.png')
-//	forms[formName + '__header__toolbar'].elements.btn_toolbar_popdown.toolTipText = 'Hide additional ' + solutionPrefs.panel.toolbar[solutionPrefs.panel.toolbar.selectedTab - 1].tabName + ' info'
+//	forms[formName + '__header__toolbar'].elements.btn_toolbar_popdown.toolTipText = 'Hide additional ' + solutionPrefs.panel.toolbar[solutionPrefs.panel.toolbar.selectedTab - 4].tabName + ' info'
 }
 
 return true
@@ -1606,7 +1606,7 @@ var rollSize = 30
 var indent = 0
 
 //the heights are different and the form is currently showing
-if (newHeight != origHeight && forms[solutionPrefs.panel.toolbar[solutionPrefs.panel.toolbar.selectedTab - 1].formName].popDown == 'show') {
+if (newHeight != origHeight && forms[solutionPrefs.panel.toolbar[solutionPrefs.panel.toolbar.selectedTab - 4].formName].popDown == 'show') {
 	//negative number means that needs to go up, positive, go down
 	var difference = origHeight - newHeight
 	
@@ -2111,7 +2111,7 @@ elements.fldInput.requestFocus(false)
 var numLines = utils.stringPatternCount(globals.consoleOutput,'\n')
 var currentTab = solutionPrefs.panel.toolbar.selectedTab
 var statusTabs = solutionPrefs.panel.toolbar
-var tabParent = statusTabs[currentTab - 1].formName
+var tabParent = statusTabs[currentTab - 4].formName
 
 //first time popDown called
 if (! forms[tabParent].popDown) {
@@ -2172,7 +2172,7 @@ if (cmdVarBin.hidden != true && sInput != 'hide') {
 		
 		//change graphic, if needed
 		forms[formName + '__header__toolbar'].elements.btn_toolbar_popdown.setImageURL('media:///toolbar_popdown_up.png')
-		forms[formName + '__header__toolbar'].elements.btn_toolbar_popdown.toolTipText = 'Hide additional ' + statusTabs[solutionPrefs.panel.toolbar.selectedTab - 1].tabName + ' info'
+		forms[formName + '__header__toolbar'].elements.btn_toolbar_popdown.toolTipText = 'Hide additional ' + statusTabs[solutionPrefs.panel.toolbar.selectedTab - 4].tabName + ' info'
 	}
 	//adjust roll based on height
 	else if (miniHeight != cmdVarBin.miniWindowSize.height) {

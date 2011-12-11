@@ -105,6 +105,7 @@ if (delRec == 'Yes') {
 	var deletedIndex = foundset.getSelectedIndex()
 	
 	flag_chosen = 0
+	flag_show = 0
 	order_by = null
 	databaseManager.saveData()
 	

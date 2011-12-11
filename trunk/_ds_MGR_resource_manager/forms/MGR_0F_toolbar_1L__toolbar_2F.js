@@ -267,6 +267,7 @@ if (application.__parent__.solutionPrefs) {
 	elements.tab_preview.setSize(width, elements.tab_preview.getHeight())
 	elements.gfx_tool_center.setSize(width - 12,elements.gfx_tool_center.getHeight())
 	elements.gfx_tool_right.setLocation(elements.gfx_tool_center.getLocationX() + elements.gfx_tool_center.getWidth(),elements.gfx_tool_right.getLocationY())
+	elements.lbl_color.setSize(width,elements.lbl_color.getHeight())
 }
 
 //set grid line to be same size as preview
@@ -312,6 +313,23 @@ FILTER_forms()
 FILTER_forms_2()
 
 FILTER_methods()
+
+//set color
+TOGGLE_color()
+
+}
+
+/**
+ * @properties={typeid:24,uuid:"D06A7A08-C212-4D14-A995-F8BA20EC207B"}
+ */
+function TOGGLE_color() {
+	//do the color
+	if (background_color) {
+		elements.lbl_color.bgcolor = background_color
+	}
+	else {
+		elements.lbl_color.bgcolor = '#f5fbd4'
+	}
 }
 
 /**

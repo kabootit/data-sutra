@@ -19,6 +19,15 @@ name:"flag_chosen"
 },
 {
 allowNull:true,
+autoEnterSubType:0,
+autoEnterType:1,
+creationOrderIndex:6,
+dataType:4,
+defaultValue:"1",
+name:"flag_show"
+},
+{
+allowNull:true,
 creationOrderIndex:2,
 dataType:4,
 name:"id_group"
