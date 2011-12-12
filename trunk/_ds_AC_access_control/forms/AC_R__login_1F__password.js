@@ -755,15 +755,15 @@ else {
 
 			//add filter information
 			for (var j = 1; j <= fsFilters.getSize(); j++) {
-				var record = fsFilters.getRecord(j)
-				var objRecord = globals.CODE_record_object(record,true,true)
+				var theRecord = fsFilters.getRecord(j)
+				var objRecord = globals.CODE_record_object(theRecord,true,true)
 
 				//tack on classification to objRecord
 				objRecord.filterScope = filterScope
 
 				//no db container, create
-				if (!filterables.byConnection[record.filter_database]) {
-					filterables.byConnection[record.filter_database] = {
+				if (!filterables.byConnection[theRecord.filter_database]) {
+					filterables.byConnection[theRecord.filter_database] = {
 										database : new Array(),
 									//	tables : new Array(),
 										table :	{
@@ -772,22 +772,22 @@ else {
 								}
 				}
 				//no table container, create
-				if (record.filter_table && !filterables.byConnection[record.filter_database].table[record.filter_table]) {
-					filterables.byConnection[record.filter_database].table[record.filter_table] = new Array()
+				if (theRecord.filter_table && !filterables.byConnection[theRecord.filter_database].table[theRecord.filter_table]) {
+					filterables.byConnection[theRecord.filter_database].table[theRecord.filter_table] = new Array()
 				}
 
 				//add filter object under the connection node
 				//database
 				if (i == 0 || i == 1) {
-					filterables.byConnection[record.filter_database].database.push(objRecord)
+					filterables.byConnection[theRecord.filter_database].database.push(objRecord)
 				}
 				//table
 				else if (i == 2 || i == 3) {
-					filterables.byConnection[record.filter_database].table[record.filter_table].push(objRecord)
-					//filterables.byConnection[record.filter_database].tables.push(objRecord)
+					filterables.byConnection[theRecord.filter_database].table[theRecord.filter_table].push(objRecord)
+					//filterables.byConnection[theRecord.filter_database].tables.push(objRecord)
 
 					//set length flag
-					filterables.byConnection[record.filter_database].table.length++
+					filterables.byConnection[theRecord.filter_database].table.length++
 				}
 
 				//add filter object under the type of node
@@ -1036,20 +1036,20 @@ else {
 
 			//when there are sub valuelists, they will all be rewritten the first time through, but the looping will still hit once for each sub-vl and do nothing
 			for (var i = 1; i <= fsValuelist.getSize(); i++) {
-				var record = fsValuelist.getRecord(i)
+				var theRecord = fsValuelist.getRecord(i)
 
-				var vlName = record.valuelist_name
-				var vlRelation = record.relation_1
+				var vlName = theRecord.valuelist_name
+				var vlRelation = theRecord.relation_1
 				var vlDisplay = new Array()
 				var vlReal = new Array()
 
 				//MEMO: this will only get the parent records of a cascading vl; this is ok because they use relations to work anyway
 				while (record.valuelist_name == vlName && record.relation_1 == vlRelation) {
-					vlReal.push((record.saved) ? record.saved : record.visible)
-					vlDisplay.push(record.visible)
+					vlReal.push((theRecord.saved) ? theRecord.saved : theRecord.visible)
+					vlDisplay.push(theRecord.visible)
 
 					i++
-					record = fsValuelist.getRecord(i)
+					theRecord = fsValuelist.getRecord(i)
 				}
 
 				i--
@@ -1120,9 +1120,9 @@ else {
 								thisVL.relationName = newRelnName
 
 								//get to skip over sub-vls already created
-								while (record.valuelist_name == vlName) {
+								while (theRecord.valuelist_name == vlName) {
 									i++
-									record = fsValuelist.getRecord(i)
+									theRecord = fsValuelist.getRecord(i)
 								}
 								i--
 							}
