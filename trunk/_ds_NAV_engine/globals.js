@@ -4582,7 +4582,6 @@ function NAV_universal_list_select()
 		var busyIndicator = true
 		
 		globals.CODE_cursor_busy(true)
-		application.updateUI()
 	}
 	
 	//LOG record navigation
