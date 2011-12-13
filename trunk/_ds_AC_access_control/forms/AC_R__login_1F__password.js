@@ -1044,7 +1044,7 @@ else {
 				var vlReal = new Array()
 
 				//MEMO: this will only get the parent records of a cascading vl; this is ok because they use relations to work anyway
-				while (record.valuelist_name == vlName && record.relation_1 == vlRelation) {
+				while (theRecord.valuelist_name == vlName && theRecord.relation_1 == vlRelation) {
 					vlReal.push((theRecord.saved) ? theRecord.saved : theRecord.visible)
 					vlDisplay.push(theRecord.visible)
 
