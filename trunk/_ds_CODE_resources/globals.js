@@ -1434,6 +1434,9 @@ function TRIGGER_progressbar_start(progressValue,explanationText,explanationTool
 			//hide toolbar controls
 			forms[baseForm + '__header__toolbar'].elements.btn_toolbar_toggle.visible = false
 			forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.visible = false
+			
+			//set color of toolbar to toolbar yellow
+			forms[baseForm + '__header__toolbar'].elements.lbl_color.bgcolor = '#f5fbd4'
 		}
 		
 		//turn on progressbar elements
