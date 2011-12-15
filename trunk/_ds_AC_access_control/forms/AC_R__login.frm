@@ -79,7 +79,7 @@ typeid:7,
 uuid:"3fbc1c7d-051c-47ec-822f-6414a743741f"
 },
 {
-anchors:6,
+anchors:14,
 formIndex:11400,
 horizontalAlignment:4,
 location:"215,428",

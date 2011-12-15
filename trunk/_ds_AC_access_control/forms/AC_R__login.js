@@ -98,8 +98,8 @@ if (staticIntro || (preview && !blogRecord) || ((!blogRecord || !fsPrefs.blog_en
 		}
 	}
 	else if (fsPrefs.initial_splash_header == 'Welcome to Sutra CMS!') {
-		elements.lbl_footer_left.text = 'Data Mosaic'
-		elements.lbl_footer_right.text = '<html><head></head><body>Copyright &#169; 2011</body></html>'
+		elements.lbl_footer_left.text = 'Sutra CMS'
+		elements.lbl_footer_right.text = '<html><head></head><body>Data Mosaic &#8212; Copyright &#169; 2011, MIT Licensed</body></html>'
 		
 		elements.lbl_footer.visible = true
 		elements.lbl_footer_left.visible = true
