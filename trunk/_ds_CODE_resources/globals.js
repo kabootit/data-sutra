@@ -1,4 +1,19 @@
 /**
+ * @properties={typeid:35,uuid:"830cf64e-5c88-4581-90ea-de8355fb5d08",variableType:4}
+ */
+var AC_current_group = null;
+
+/**
+ * @properties={typeid:35,uuid:"9a2da13a-3f68-4adb-9372-0be5ab22fa21",variableType:4}
+ */
+var AC_current_organization = null;
+
+/**
+ * @properties={typeid:35,uuid:"2a06fde2-b4ec-4aee-bbc5-ae42a64d90af",variableType:4}
+ */
+var AC_current_staff = null;
+
+/**
  * @properties={typeid:35,uuid:"36968bfc-a7ae-4a48-bf13-89b9db2ca70a",variableType:4}
  */
 var CODE_constant_1 = 1;
@@ -27,21 +42,6 @@ var consoleInput = '';
  * @properties={typeid:35,uuid:"22fe62e8-0e3c-4d34-84d2-96f15d50543b"}
  */
 var consoleOutput = '';
-
-/**
- * @properties={typeid:35,uuid:"830cf64e-5c88-4581-90ea-de8355fb5d08",variableType:4}
- */
-var AC_current_group = null;
-
-/**
- * @properties={typeid:35,uuid:"9a2da13a-3f68-4adb-9372-0be5ab22fa21",variableType:4}
- */
-var AC_current_organization = null;
-
-/**
- * @properties={typeid:35,uuid:"2a06fde2-b4ec-4aee-bbc5-ae42a64d90af",variableType:4}
- */
-var AC_current_staff = null;
 
 /**
  * Set text and tooltip of fast find field.
@@ -1317,7 +1317,7 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset) {
  * @properties={typeid:24,uuid:"7e91ecfd-e090-4d7b-83cf-782473b41028"}
  */
 function TRIGGER_progressbar_get() {
-	if (application.__parent__.solutionPrefs && forms[solutionPrefs.config.formNameBase+'__header__toolbar'].elements.tab_toolbar.getTabFormNameAt(forms[solutionPrefs.config.formNameBase+'__header__toolbar'].elements.tab_toolbar.getMaxTabIndex()) == 'TOOL_progress_bar') {
+	if (application.__parent__.solutionPrefs && forms[solutionPrefs.config.formNameBase+'__header__toolbar'].elements.tab_toolbar.tabIndex == 3) {
 		var formName = 'TOOL_progress_bar'
 		
 		//get progressbar value if showing
@@ -1848,12 +1848,14 @@ function TRIGGER_toolbar_set(toolbarName) {
 			var allToolbars = solutionPrefs.panel.toolbar
 			
 			var newToolbar = toolbarName
-			var oldToolbar = allToolbars[forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex - 4].tabName
-			
+			var oldToolbar = (allToolbars[forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex - 4]) ? allToolbars[forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex - 4].tabName : ''
+				
 			//check to make sure that newToolbar is a valid input
 			var found = false
 			for (var i = 0; i < allToolbars.length && !found; i++) {
-				if (allToolbars[i].tabName == newToolbar) {
+				var thisToolbar = allToolbars[i]
+				
+				if (thisToolbar.tabName == newToolbar && thisToolbar.enabled) {
 					found = true
 					break
 				}
@@ -3585,8 +3587,10 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 var square = (arguments[0]) ? arguments[0] : false
 var size = (arguments[1]) ? arguments[1] : 'small'
 
-//only modifies when running in frameworks, on OS X Leopard, and using the Aqua look and feel
-if (application.__parent__.solutionPrefs && solutionPrefs.clientInfo.typeOS == 'Mac OS X' && solutionPrefs.clientInfo.typeLAF == 'Mac OS X' && solutionPrefs.clientInfo.verOS >= '10.5' && solutionPrefs.clientInfo.verServoy >= '3.5.7' && solutionPrefs.clientInfo.typeServoy != 'webclient') {
+//only modifies when running on OS X Leopard, and using the Aqua look and feel
+if (application.__parent__.solutionPrefs && 
+	(solutionPrefs.clientInfo.typeOS == 'Mac OS X' && solutionPrefs.clientInfo.typeLAF == 'Mac OS X' && solutionPrefs.clientInfo.verOS >= '10.5' && solutionPrefs.clientInfo.verServoy >= '3.5.7' && solutionPrefs.clientInfo.typeServoy != 'webclient') ||
+	(application.getOSName() == 'Mac OS X' && application.getCurrentLookAndFeelName() == 'Mac OS X' && ((plugins.sutra) ? plugins.sutra.getOSVersion() : '0') >= '10.5' && application.getVersion() >= '3.5.7' && application.getApplicationType() != 5)) {
 	var formName = (arguments[2]) ? arguments[2] : application.getMethodTriggerFormName()
 	
 	if (forms[formName]) {
