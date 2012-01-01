@@ -2259,13 +2259,13 @@ function CODE_color_method()
  *			  	
  *	INPUT    :	string to be colored
  *			  	
- *	REQUIRES :	globals.CODE_get_function(100, 104, 117), globals.CODE_color_method_fx
+ *	REQUIRES :	globals.CODE_color_method_fx
  *			  	
  *	OUTPUT   :	html colored string
  *			  	
  *	MODIFIED :	Oct 25, 2007 -- Troy Elliott, Data Mosaic
  *			  	
- */	//TODO: remove functions and create bona-fide servoy methods
+ */
 
 //MEMO: need to somehow put this section in a Function of it's own
 //running in Tano...strip out jsevents for now
@@ -2280,19 +2280,8 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	arguments = Arguments.filter(globals.CODE_jsevent_remove)
 }
 
-//
-// 1) set up for servoy style
-//
-
-var keywords =	'abstract boolean break byte case catch char class const continue debugger ' +
-				'default delete do else enum export extends final finally float for ' +
-				'Function if implements import in instanceof interface package return super switch ' +
-				'this throw throws transient try typeof var void while with';
-
-var servoy =	'application controller currentcontroller databaseManager elements forms foundset ' +
-				'globals history i18n plugins security ServoyException utils';
-
-var special =	'null undefined NaN';
+var method = arguments[0]
+var codeType = arguments[1] || 'servoy'
 
 //var fxGetKeywords = globals.CODE_get_function(117)
 //var fxMatch = globals.CODE_get_function(100)
@@ -2326,26 +2315,42 @@ function fxGetMatches(code, regex, css, func) {
 	return matches
 }
 
-var regexList = [
-	{ regex: new RegExp('/\\*[\\s\\S]*?\\*/', 'gm'),				css: 'comment' },			// multiline comments //[0]
-	{ regex: new RegExp('//[^TODO,MEMO].*$', 'gm'),					css: 'comment' },			// one line comments //[1]
-	{ regex: new RegExp('"(?:\\.|(\\\\\\")|[^\\""\\n])*"','g'),		css: 'string' },			// double quoted strings //[2]
-	{ regex: new RegExp("'(?:\\.|(\\\\\\')|[^\\''\\n])*'", 'g'),	css: 'string' },			// single quoted strings //[3]
-	{ regex: new RegExp('[(){}]', 'gm'),							css: 'string' },			// brackets () {} //[4]
-	{ regex: new RegExp('\\b([\\d]+(\\.[\\d]+)?|0x[a-f0-9]+)\\b', 'gi'),	css: 'number' },	// numbers //[5]
-	{ regex: new RegExp('(?:\&lt;|<)(?:=)*|(?:\&gt;|>)(?:=)*|!(?:=)*|[[]|]|(?:==)', 'gm'), css: 'keyword'},	// comparison, square [] //[6]
-	{ regex: new RegExp(fxGetKeywords(keywords), 'gm'),			css: 'keyword' },			// keywords //[7]
-	{ regex: new RegExp(fxGetKeywords(servoy), 'gm'),			css: 'servoy' },			// servoy words //[8]
-	{ regex: new RegExp(fxGetKeywords(special), 'gm'),			css: 'special' },			// special red words //[9]
-	{ regex: new RegExp('[*-]|[+]|=[^=]|[/][^/*]', 'gm'),			css: 'special' },			// operators //[10]
-	{ regex: new RegExp('//[TODO,MEMO].*$', 'gm'),					css: 'devnotes' }			// todo developer notes //[11]
-	];
+//
+// 1) set up for correct style
+//
+switch (codeType) {
+	case 'servoy':
+		var keywords =	'abstract boolean break byte case catch char class const continue debugger ' +
+						'default delete do else enum export extends final finally float for ' +
+						'Function if implements import in instanceof interface package return super switch ' +
+						'this throw throws transient try typeof var void while with';
+		
+		var servoy =	'application controller currentcontroller databaseManager elements forms foundset ' +
+						'globals history i18n plugins security ServoyException utils';
+		
+		var special =	'null undefined NaN';
+		
+		var regexList = [
+			{ regex: new RegExp('<!--[\\s\\S]*?-->', 'gm'),				css: 'comment' },			// multiline comments //[0]
+			{ regex: new RegExp('//[^TODO,MEMO].*$', 'gm'),					css: 'comment' },			// one line comments //[1]
+			{ regex: new RegExp('"(?:\\.|(\\\\\\")|[^\\""\\n])*"','g'),		css: 'string' },			// double quoted strings //[2]
+			{ regex: new RegExp("'(?:\\.|(\\\\\\')|[^\\''\\n])*'", 'g'),	css: 'string' },			// single quoted strings //[3]
+			{ regex: new RegExp('[(){}]', 'gm'),							css: 'string' },			// brackets () {} //[4]
+			{ regex: new RegExp('\\b([\\d]+(\\.[\\d]+)?|0x[a-f0-9]+)\\b', 'gi'),	css: 'number' },	// numbers //[5]
+			{ regex: new RegExp('(?:\&lt;|<)(?:=)*|(?:\&gt;|>)(?:=)*|!(?:=)*|[[]|]|(?:==)', 'gm'), css: 'keyword'},	// comparison, square [] //[6]
+			{ regex: new RegExp(fxGetKeywords(keywords), 'gm'),			css: 'keyword' },			// keywords //[7]
+			{ regex: new RegExp(fxGetKeywords(servoy), 'gm'),			css: 'servoy' },			// servoy words //[8]
+			{ regex: new RegExp(fxGetKeywords(special), 'gm'),			css: 'special' },			// special red words //[9]
+			{ regex: new RegExp('[*-]|[+]|=[^=]|[/][^/*]', 'gm'),			css: 'special' },			// operators //[10]
+			];
+		break
+}
+
 
 //
 // 2) get variable filled with data
 //
 
-var method = arguments[0]
 
 // a value present to be colored
 if ((!(method == null || method == undefined)) ? method.length : false) { 
@@ -5728,14 +5733,6 @@ function CODE_cursor_busy(busyCursor) {
 			plugins.sutra.busyCursor = false
 		}
 	}
-}
-
-/**
- * @properties={typeid:24,uuid:"cd3e2c07-479b-423d-90e6-8f8134ec6c9c"}
- */
-function CODE_row_background__filter() {
-	//always bluish...even selected
-	return '#A1B0CF'
 }
 
 /**
