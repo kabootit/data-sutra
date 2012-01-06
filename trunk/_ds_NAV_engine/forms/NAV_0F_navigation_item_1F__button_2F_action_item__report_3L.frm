@@ -23,7 +23,7 @@ verticalAlignment:0
 },
 {
 anchors:11,
-dataProviderID:"nav_mosaic_action_item_to_mosaic_report.report_description",
+dataProviderID:"nav_action_item_to_report.report_description",
 displayType:1,
 editable:false,
 formIndex:11000,
