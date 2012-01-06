@@ -1,0 +1,12 @@
+dataSource:"db:/sutra/sutra_list_display_item",
+items:[
+{
+dataProviderIDToAggregate:"display_width_percent",
+name:"total_width",
+type:4,
+typeid:40,
+uuid:"19e6ef1e-607d-48ea-9bb4-8a6d1f243ce2"
+}
+],
+typeid:39,
+uuid:"42bcf889-023d-4511-ae00-f65399d1f0d9"

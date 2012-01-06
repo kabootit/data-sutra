@@ -1,0 +1,11 @@
+addEmptyValue:1,
+customValues:"<Values for boolean>
+Active | Inactive
+Yes | No
+True | False
+1 | 0
+Good | Bad",
+name:"NAV_format_bool",
+separator:" ",
+typeid:34,
+uuid:"3c6c52b0-25d8-42bd-b769-dfe171cbe705"
