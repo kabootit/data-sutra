@@ -1,0 +1,13 @@
+addEmptyValue:1,
+customValues:"Day
+Week
+Month
+Quarter
+Year
+----
+Custom
+Time",
+name:"DATE_range_type",
+separator:" ",
+typeid:34,
+uuid:"1494350b-23cb-4b1b-835a-7c3e0f28c4b3"
