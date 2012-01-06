@@ -94,7 +94,7 @@ uuid:"6c4baca0-916a-4dbc-8067-e876a8142f7e"
 {
 anchors:11,
 borderType:"SpecialMatteBorder,0.0,0.0,1.0,0.0,#000000,#000000,#999999,#000000,0.0,1.0",
-dataProviderID:"dev_mosaic_feedback_to_mosaic_navigation_item.item_name",
+dataProviderID:"dev_feedback_to_navigation_item.item_name",
 editable:false,
 formIndex:11100,
 location:"710,18",
@@ -193,7 +193,7 @@ uuid:"cbcdf131-ff08-498d-a78c-85e483fe74a3"
 {
 anchors:11,
 borderType:"SpecialMatteBorder,0.0,0.0,1.0,0.0,#000000,#000000,#999999,#000000,0.0,1.0",
-dataProviderID:"dev_mosaic_feedback_to_mosaic_navigation.nav_name",
+dataProviderID:"dev_feedback_to_navigation.nav_name",
 editable:false,
 formIndex:11000,
 location:"630,18",
