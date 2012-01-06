@@ -20,7 +20,7 @@ typeid:7,
 uuid:"000E57E6-0D13-4F93-91FC-7902037F84AB"
 },
 {
-dataProviderID:"globals.VL_test",
+dataProviderID:"_vlTest",
 displayType:2,
 editable:false,
 formIndex:10400,
