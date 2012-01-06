@@ -16,7 +16,7 @@ uuid:"33f1cce2-f6de-4d22-b7be-7e1e49399f3f"
 },
 {
 anchors:15,
-dataProviderID:"ac_mosaic_access_group_toolbar_to_mosaic_toolbar.description",
+dataProviderID:"ac_access_group_toolbar_to_toolbar.description",
 displayType:1,
 editable:false,
 formIndex:10900,
