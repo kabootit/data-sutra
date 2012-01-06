@@ -1,0 +1,12 @@
+addEmptyValue:1,
+dataProviderID1:"address_id",
+dataProviderID2:"select_address",
+name:"CRM_contact__company_address",
+relationName:"crm_contacts_to_companies.crm_companies_to_addresses",
+returnDataProviders:1,
+separator:" ",
+showDataProviders:2,
+sortOptions:"county asc, line_1 asc, line_2 asc",
+typeid:34,
+uuid:"be81dafb-e25d-4c03-9565-32ee4f07ef66",
+valueListType:1

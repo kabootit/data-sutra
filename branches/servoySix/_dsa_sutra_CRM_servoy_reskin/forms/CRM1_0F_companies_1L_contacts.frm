@@ -1,0 +1,173 @@
+dataSource:"db:/sutra_example/contacts",
+initialSort:"name_last asc, name_first asc",
+items:[
+{
+height:75,
+partType:5,
+typeid:19,
+uuid:"0bf0c457-a0be-4ef5-ba0c-b6bb7b574484"
+},
+{
+anchors:11,
+borderType:"SpecialMatteBorder,0.0,0.0,1.0,0.0,#000000,#000000,#999999,#000000,0.0,1.0",
+dataProviderID:"phone_cell",
+editable:false,
+formIndex:10200,
+location:"497,41",
+selectOnEnter:true,
+size:"110,22",
+styleClass:"tableview",
+tabSeq:4,
+text:"Mobile",
+typeid:4,
+uuid:"480e3b0f-ebdd-485c-a81e-d3adeed7f306"
+},
+{
+background:"#d1d7e2",
+height:20,
+partType:1,
+typeid:19,
+uuid:"508a960e-8970-4f36-8968-5af49273617a"
+},
+{
+anchors:11,
+borderType:"SpecialMatteBorder,0.0,0.0,1.0,0.0,#000000,#000000,#999999,#000000,0.0,1.0",
+dataProviderID:"phone_direct",
+editable:false,
+formIndex:10000,
+location:"356,41",
+selectOnEnter:true,
+size:"140,22",
+styleClass:"tableview",
+tabSeq:3,
+text:"Phone",
+typeid:4,
+uuid:"78af8151-85c8-4959-8d30-a5cc0e3109f6"
+},
+{
+anchors:11,
+borderType:"SpecialMatteBorder,0.0,0.0,1.0,0.0,#000000,#000000,#999999,#000000,0.0,1.0",
+dataProviderID:"job_title",
+editable:false,
+formIndex:10300,
+location:"176,40",
+selectOnEnter:true,
+size:"179,22",
+styleClass:"tableview",
+tabSeq:2,
+text:"Title",
+typeid:4,
+uuid:"b12c62e7-beab-427b-bbb2-c04f228df32f"
+},
+{
+anchors:11,
+borderType:"SpecialMatteBorder,0.0,0.0,1.0,0.0,#000000,#000000,#999999,#000000,0.0,1.0",
+dataProviderID:"name_lf",
+editable:false,
+formIndex:10100,
+location:"25,40",
+name:"fld_name",
+selectOnEnter:true,
+size:"150,22",
+styleClass:"tableview",
+tabSeq:1,
+text:"Name",
+typeid:4,
+uuid:"b49feae5-c847-4c01-877c-f8fe424c01a5"
+},
+{
+anchors:11,
+borderType:"SpecialMatteBorder,0.0,0.0,1.0,0.0,#000000,#000000,#999999,#000000,0.0,1.0",
+dataProviderID:"job_title",
+editable:false,
+formIndex:10700,
+location:"186,110",
+selectOnEnter:true,
+size:"179,22",
+styleClass:"tableview",
+tabSeq:-2,
+text:"<html>
+  <head>
+    <style type=\"text/css\">
+      <!--
+        .rowselected { background-image: url(media:///bck_subheader.png); text-decoration: none }
+        table { border-spacing: 0px; width: 600px; border: 0px }
+        td { text-indent: 20px; padding-left: 0px; white-space: nowrap; height: 15; border: 0px; line-height: 15; text-align: center; padding-top: 0px; padding-bottom: 0px; padding-right: 0px }
+      -->
+    <\/style>
+        
+  <\/head>
+  <body>
+    <table>
+      <tr>
+        <td class=\"rowselected\">
+          Title
+        <\/td>
+      <\/tr>
+    <\/table>
+  <\/body>
+<\/html>",
+typeid:4,
+uuid:"cb34f8f7-ad66-4e6e-8105-020911d7c961"
+},
+{
+anchors:11,
+borderType:"SpecialMatteBorder,0.0,0.0,1.0,0.0,#000000,#000000,#999999,#000000,0.0,1.0",
+dataProviderID:"email",
+editable:false,
+formIndex:10600,
+location:"608,41",
+selectOnEnter:true,
+size:"149,22",
+styleClass:"tableview",
+tabSeq:5,
+text:"Email",
+typeid:4,
+uuid:"cee8d3cd-92f2-4b0f-a923-a63aa6e49a7b"
+},
+{
+borderType:"SpecialMatteBorder,0.0,0.0,1.0,0.0,#000000,#000000,#999999,#000000,0.0,1.0",
+formIndex:10500,
+imageMediaID:"e838f55d-86d2-4582-9ea2-031a2143dbfa",
+location:"0,40",
+mediaOptions:1,
+onActionMethodID:"60bd3cd2-7953-467d-9d4e-d7bb8114a564",
+rolloverCursor:12,
+rolloverImageMediaID:"264d3d85-ce2d-4dfd-a5e7-a066a504fe35",
+showClick:false,
+showFocus:false,
+size:"20,22",
+tabSeq:-2,
+toolTipText:"View/edit contact",
+typeid:7,
+uuid:"df11fa03-0a18-4cb6-8ca7-b2c2b87a88ff"
+},
+{
+anchors:3,
+borderType:"EmptyBorder,0,0,0,0",
+formIndex:10400,
+imageMediaID:"ca71eeeb-624d-461d-a4b3-41a387f1304a",
+location:"720,0",
+mediaOptions:1,
+onActionMethodID:"ab3e692b-6e4e-47f5-b8af-bf9eb8c31687",
+rolloverCursor:12,
+rolloverImageMediaID:"e5ed6909-0205-4660-b805-94edf9739179",
+showClick:false,
+showFocus:false,
+size:"20,20",
+tabSeq:-2,
+toolTipText:"Add new contact",
+transparent:true,
+typeid:7,
+uuid:"e53d54c2-99a2-41e7-a139-b177d9542566"
+}
+],
+name:"CRM1_0F_companies_1L_contacts",
+paperPrintScale:100,
+rowBGColorCalculation:"globals.CODE_row_background",
+scrollbars:33,
+size:"758,75",
+styleName:"_DATASUTRA_",
+typeid:3,
+uuid:"9c4ede2c-5fb6-4483-a104-f89131fb3a6a",
+view:3

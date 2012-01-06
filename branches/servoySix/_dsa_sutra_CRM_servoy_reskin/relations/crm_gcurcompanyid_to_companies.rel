@@ -1,0 +1,8 @@
+foreignDataSource:"db:/sutra_example/companies",
+items:[
+{foreignColumnName:"company_id",primaryDataProviderID:"globals.CRM_company_id",typeid:23,uuid:"44a8aa25-d45f-4133-9bc4-cd46bee7c4f5"}
+],
+name:"crm_gcurcompanyid_to_companies",
+primaryDataSource:"db:/sutra_example/companies",
+typeid:22,
+uuid:"2dae9a3a-46cd-4508-b467-a0056ff9ac72"

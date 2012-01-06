@@ -1,0 +1,12 @@
+addEmptyValue:1,
+dataProviderID1:"category_type_id",
+dataProviderID2:"description",
+dataSource:"db:/sutra_example/category_types",
+name:"CRM_product_categories",
+returnDataProviders:1,
+separator:" ",
+showDataProviders:2,
+sortOptions:"description asc",
+typeid:34,
+uuid:"6eb62ff9-66fc-4a1f-a3c9-80dd055f2802",
+valueListType:1

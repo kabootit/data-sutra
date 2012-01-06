@@ -1,0 +1,12 @@
+addEmptyValue:1,
+dataProviderID1:"visible",
+dataSource:"db:/sutra/sutra_valuelist",
+name:"CRM_ship_method",
+returnDataProviders:1,
+separator:" ",
+showDataProviders:1,
+sortOptions:"order_by asc",
+typeid:34,
+useTableFilter:true,
+uuid:"9CCBB83F-768E-467E-83A1-24FA1A088EE2",
+valueListType:1

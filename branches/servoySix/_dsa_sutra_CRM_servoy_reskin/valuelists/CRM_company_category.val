@@ -1,0 +1,9 @@
+dataProviderID1:"company_category",
+dataSource:"db:/sutra_example/companies",
+name:"CRM_company_category",
+returnDataProviders:1,
+separator:" ",
+showDataProviders:1,
+typeid:34,
+uuid:"7ee71351-c287-4e63-86e8-52ed1a42fdea",
+valueListType:1
