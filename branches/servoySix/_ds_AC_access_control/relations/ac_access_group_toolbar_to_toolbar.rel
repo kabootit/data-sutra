@@ -1,0 +1,8 @@
+foreignDataSource:"db:/sutra/sutra_toolbar",
+items:[
+{foreignColumnName:"id_toolbar",primaryDataProviderID:"id_toolbar",typeid:23,uuid:"71f3c930-f9a2-4e40-8cc4-397cb3a70bbd"}
+],
+name:"ac_access_group_toolbar_to_toolbar",
+primaryDataSource:"db:/sutra/sutra_access_group_toolbar",
+typeid:22,
+uuid:"3ef02c08-11cf-4aa4-b922-5fd3174b15ae"

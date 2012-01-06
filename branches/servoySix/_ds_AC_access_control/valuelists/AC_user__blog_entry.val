@@ -1,0 +1,12 @@
+addEmptyValue:1,
+dataProviderID1:"id_user",
+dataProviderID2:"user_name",
+name:"AC_user__blog_entry",
+relationName:"ac_blog_entry_to_access_user_group.ac_access_user_group_to_access_user",
+returnDataProviders:1,
+separator:" ",
+showDataProviders:2,
+sortOptions:"user_name asc",
+typeid:34,
+uuid:"958c3f04-db63-4f2c-8966-f08f0af2e696",
+valueListType:1
