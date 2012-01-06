@@ -102,6 +102,7 @@ if (application.getApplicationType() == APPLICATION_TYPES.SMART_CLIENT || applic
 		//unlock content
 		elements.lock.contentPane = elements.tab_lock
 		elements.lock.frameIcon = new Packages.javax.swing.ImageIcon(new Packages.java.net.URL('media:///toolbar_lock.png'))
+		elements.lock.visible = false
 		
 		//hide locking curtains; set image
 		elements.gfx_curtain_header.visible = false
