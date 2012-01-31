@@ -1,45 +1,63 @@
 /**
+ * @type {Number}
+ *
  * @properties={typeid:35,uuid:"830cf64e-5c88-4581-90ea-de8355fb5d08",variableType:4}
  */
 var AC_current_group = null;
 
 /**
+ * @type {Number}
+ *
  * @properties={typeid:35,uuid:"9a2da13a-3f68-4adb-9372-0be5ab22fa21",variableType:4}
  */
 var AC_current_organization = null;
 
 /**
+ * @type {Number}
+ *
  * @properties={typeid:35,uuid:"2a06fde2-b4ec-4aee-bbc5-ae42a64d90af",variableType:4}
  */
 var AC_current_staff = null;
 
 /**
+ * @type {Number}
+ *
  * @properties={typeid:35,uuid:"36968bfc-a7ae-4a48-bf13-89b9db2ca70a",variableType:4}
  */
 var CODE_constant_1 = 1;
 
 /**
- * @properties={typeid:35,uuid:"0f826280-4af9-4738-a3eb-417d7e6510d8"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"0f826280-4af9-4738-a3eb-417d7e6510d8",variableType:12}
  */
 var CODE_ddarray_field = '';
 
 /**
+ * @type {Number}
+ *
  * @properties={typeid:35,uuid:"1212d8f4-ea41-49b2-9bf7-be528a0b42a3",variableType:4}
  */
 var CODE_hide_form = 0;
 
 /**
- * @properties={typeid:35,uuid:"ed5f234f-6d84-4e88-9619-0f55d431ea33"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"ed5f234f-6d84-4e88-9619-0f55d431ea33",variableType:12}
  */
 var CODE_text = null;
 
 /**
- * @properties={typeid:35,uuid:"9d94760c-98ad-4b2d-bd75-021a7a87c5d0"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"9d94760c-98ad-4b2d-bd75-021a7a87c5d0",variableType:12}
  */
 var consoleInput = '';
 
 /**
- * @properties={typeid:35,uuid:"22fe62e8-0e3c-4d34-84d2-96f15d50543b"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"22fe62e8-0e3c-4d34-84d2-96f15d50543b",variableType:12}
  */
 var consoleOutput = '';
 
@@ -1533,6 +1551,7 @@ function TRIGGER_progressbar_stop(forceUpdate) {
  * @returns	{Boolean}	Action authorized status.
  * 
  * @properties={typeid:24,uuid:"32c5064f-1136-410e-8f08-900c0872fc96"}
+ * @AllowToRunInFind
  */
 function TRIGGER_registered_action_authenticate(registeredAction) {
 	//check to see that solutionPrefs is defined
@@ -2331,7 +2350,7 @@ switch (codeType) {
 		var special =	'null undefined NaN';
 		
 		var regexList = [
-			{ regex: new RegExp('<!--[\\s\\S]*?-->', 'gm'),				css: 'comment' },			// multiline comments //[0]
+			{ regex: new RegExp('/\\*[\\s\\S]*?\\*/', 'gm'),				css: 'comment' },			// multiline comments //[0]
 			{ regex: new RegExp('//[^TODO,MEMO].*$', 'gm'),					css: 'comment' },			// one line comments //[1]
 			{ regex: new RegExp('"(?:\\.|(\\\\\\")|[^\\""\\n])*"','g'),		css: 'string' },			// double quoted strings //[2]
 			{ regex: new RegExp("'(?:\\.|(\\\\\\')|[^\\''\\n])*'", 'g'),	css: 'string' },			// single quoted strings //[3]
@@ -2342,6 +2361,7 @@ switch (codeType) {
 			{ regex: new RegExp(fxGetKeywords(servoy), 'gm'),			css: 'servoy' },			// servoy words //[8]
 			{ regex: new RegExp(fxGetKeywords(special), 'gm'),			css: 'special' },			// special red words //[9]
 			{ regex: new RegExp('[*-]|[+]|=[^=]|[/][^/*]', 'gm'),			css: 'special' },			// operators //[10]
+			{ regex: new RegExp('//[TODO,MEMO].*$', 'gm'),					css: 'devnotes' }			// todo developer notes //[11]
 			];
 		break
 }
@@ -4009,6 +4029,14 @@ function CODE_row_background(index, selected, fieldType, fieldName, formName, fi
 }
 
 /**
+ * @properties={typeid:24,uuid:"cd3e2c07-479b-423d-90e6-8f8134ec6c9c"}
+ */
+function CODE_row_background__filter() {
+	//always bluish...even selected
+	return '#A1B0CF'
+}
+
+/**
  *
  * @properties={typeid:24,uuid:"e559f8ea-8821-43d7-bfe8-8eb5d975988c"}
  */
@@ -4396,7 +4424,7 @@ function CODE_workspace_data()
 {
 //	 *	INPUT    :	1- true to create a unique copy (non-reference) of everything; used when creating static object
 
-	var tano = (Math.floor(utils.stringToNumber(application.getVersion())) == 5) ? true : false
+	var tano = (Math.floor(utils.stringToNumber(application.getVersion())) >= 5) ? true : false
 	
 	var nonRef = arguments[0]
 	
@@ -5980,4 +6008,84 @@ function CODE_servoy_object_exists(methodName, formName) {
 	else {
 		return false
 	}
+}
+
+/**
+ * Wrapper to aide in converting deprecated showFormInDialog calls
+ * 
+ * @param {Form} form
+ * @param {Number} [x]
+ * @param {Number} [y]
+ * @param {Number} [width]
+ * @param {Number} [height]
+ * @param {String} [title]
+ * @param {Boolean} [resizable=true]
+ * @param {Boolean} [showText=false]
+ * @param {String} [name]
+ * @param {Boolean} [modal=true]
+ * 
+ * @properties={typeid:24,uuid:"95177CA4-C36C-4F0D-A076-45F78F7836F4"}
+ */
+function CODE_form_in_dialog(form, x, y, width, height, title, resizable, showText, name, modal) {
+//	application.showFormInDialog(
+//		forms[formName],
+//		-1,-1,-1,-1,
+//		' ',
+//		false,
+//		false,
+//		'addressEdit'
+//	)
+
+	function getSize(value, defaultValue, noMinusOne) {
+		if (typeof value == 'number' && ((noMinusOne) ? value != -1 : true)) {
+			return value
+		}
+		else {
+			return defaultValue
+		}
+	}
+	
+	var smForm = solutionModel.getForm(form.controller.getName())
+	
+	var totalWidth = smForm.width
+	//offset for platform windowing
+	totalWidth += 0
+	
+	var totalHeight = 0
+	for (var i in smForm.getParts()) {
+		totalHeight += smForm.getParts()[i].height
+	}
+	//offset for platform windowing
+	totalHeight += 22
+	
+	if (typeof resizable != 'boolean') {
+		resizable = true
+	}
+	
+	if (typeof showText != 'boolean') {
+		showText = false
+	}
+	
+	if (typeof modal != 'boolean') {
+		modal = true
+	}
+	
+	var modality = modal ? JSWindow.MODAL_DIALOG : JSWindow.DIALOG
+	
+	//check to see if this FiD already exists and remove it
+	if (application.getWindow(name)) {
+		application.getWindow(name).destroy()
+	}
+	
+	var FiD = application.createWindow(name,modality)
+	FiD.setInitialBounds(
+					getSize(x,-1),
+					getSize(y,-1),
+					getSize(width,totalWidth,true),
+					getSize(height,totalHeight,true)
+				)
+	FiD.resizable = resizable
+	FiD.showTextToolbar(showText)
+	FiD.title = title
+	FiD.show(form)
 }
