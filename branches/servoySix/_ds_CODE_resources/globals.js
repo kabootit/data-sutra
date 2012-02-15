@@ -701,8 +701,8 @@ function TRIGGER_interface_lock(freeze,freezeAll,nonTransparent,spinner,nonTrans
 		
 		//set up spinner to show progress
 		if (spinner) {
-			forms[baseForm].elements.gfx_spinner.setSize(application.getWindowWidth(),32)
-			forms[baseForm].elements.gfx_spinner.setLocation((application.getWindowWidth() / 2) - 16, (application.getWindowHeight() / 2) - 200)
+//			forms[baseForm].elements.gfx_spinner.setSize(application.getWindowWidth(),32)
+//			forms[baseForm].elements.gfx_spinner.setLocation((application.getWindowWidth() / 2) - 16, (application.getWindowHeight() / 2) - 200)
 			forms[baseForm].elements.gfx_spinner.visible = true
 		}
 		else {
