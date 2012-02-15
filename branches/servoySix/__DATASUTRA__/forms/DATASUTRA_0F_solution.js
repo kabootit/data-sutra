@@ -121,11 +121,11 @@ if (application.getApplicationType() == APPLICATION_TYPES.SMART_CLIENT || applic
 		elements.gfx_curtain_right_2.setImageURL('media:///curtain_5E6166.png')
 		elements.gfx_curtain_top.visible = false
 		elements.gfx_curtain_top.setImageURL('media:///curtain_5E6166.png')
-		elements.gfx_spinner.setSize(32,32)
-	//	application.updateUI()
-	//	elements.gfx_spinner.setLocation((application.getWindowWidth() / 2) - 66, (application.getWindowHeight() / 2 - 200))
+//		elements.gfx_spinner.setSize(32,32)
+//		application.updateUI()
+//		elements.gfx_spinner.setLocation((application.getWindowWidth() / 2) - 66, (application.getWindowHeight() / 2 - 200))
 		elements.gfx_spinner.visible = false
-		elements.gfx_spinner.setImageURL('media:///progressbar_facebook.gif')
+//		elements.gfx_spinner.setImageURL('media:///progressbar_facebook.gif')
 		
 		//hide designbar popdown
 		elements.tab_design_popdown.visible = false
