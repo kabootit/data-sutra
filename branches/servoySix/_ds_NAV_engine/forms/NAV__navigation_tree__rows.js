@@ -98,6 +98,7 @@ function LIST_expand_collapse(event, idNavItem, forceToggle, idNavSet) {
  * @param	{Boolean}	favoriteMode Work on favorites.
  *
  * @properties={typeid:24,uuid:"85E9B237-1118-4C13-98F4-8147DA35322F"}
+ * @AllowToRunInFind
  */
 function LIST_redraw(event,itemID,reScroll,skipLoadForms,favoriteMode,selected) {
 	if (application.__parent__.solutionPrefs && application.__parent__.navigationPrefs) {
@@ -113,8 +114,10 @@ function LIST_redraw(event,itemID,reScroll,skipLoadForms,favoriteMode,selected) 
 			}			
 			
 			//get current scroll position
-			var scrollRows = plugins.ScrollerPlus.getScroller(controller.getName(), SCROLLER_TYPE.FORM, SCROLL_ORIENTATION.VERTICAL)
-			var scrollY = scrollRows.position			
+			if (plugins.ScrollerPlus) {
+				var scrollRows = plugins.ScrollerPlus.getScroller(controller.getName(), SCROLLER_TYPE.FORM, SCROLL_ORIENTATION.VERTICAL)
+			}
+			var scrollY = scrollRows ? scrollRows.position : 0
 		}
 		
 		//redo form of favorite records
