@@ -1,5 +1,7 @@
 /**
- * @properties={typeid:35,uuid:"78c3311e-2401-4b46-afbf-1f66d20c2d1b"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"78c3311e-2401-4b46-afbf-1f66d20c2d1b",variableType:12}
  */
 var DATASUTRA_display = null;
 
@@ -9,32 +11,44 @@ var DATASUTRA_display = null;
 var DATASUTRA_feedback;
 
 /**
- * @properties={typeid:35,uuid:"f30d47f9-1fbb-4c6c-abe4-fb8dd77c4c83"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"f30d47f9-1fbb-4c6c-abe4-fb8dd77c4c83",variableType:12}
  */
 var DATASUTRA_find = null;
 
 /**
- * @properties={typeid:35,uuid:"1e40b95d-c1f9-412e-af82-63b6e4b860f7"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"1e40b95d-c1f9-412e-af82-63b6e4b860f7",variableType:12}
  */
 var DATASUTRA_find_field = '';
 
 /**
- * @properties={typeid:35,uuid:"eee1d8a8-d004-43ff-b546-89ac718bfe9b"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"eee1d8a8-d004-43ff-b546-89ac718bfe9b",variableType:12}
  */
 var DATASUTRA_find_pretty = '';
 
 /**
- * @properties={typeid:35,uuid:"28d6987c-cde4-4c1a-b2c6-3eac80aa1cd1"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"28d6987c-cde4-4c1a-b2c6-3eac80aa1cd1",variableType:12}
  */
 var DATASUTRA_log_status = '';
 
 /**
+ * @type {Number}
+ *
  * @properties={typeid:35,uuid:"ec493450-b6e1-4cdf-85e0-77b537d600cd",variableType:4}
  */
 var DATASUTRA_navigation_set = null;
 
 /**
- * @properties={typeid:35,uuid:"7b178c56-8131-4a29-a948-9cab3f772e44"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"7b178c56-8131-4a29-a948-9cab3f772e44",variableType:12}
  */
 var DATASUTRA_sort = null;
 
@@ -46,6 +60,7 @@ var DATASUTRA_sort = null;
  * @returns {Boolean} allow close
  *
  * @properties={typeid:24,uuid:"3431c36a-d389-49ca-81f5-07e2ae81720e"}
+ * @AllowToRunInFind
  */
 function DATASUTRA_close()
 {
@@ -304,8 +319,9 @@ function DATASUTRA_error()
 /**
  *
  * @properties={typeid:24,uuid:"b3b6d503-9f36-459f-9cbd-256e1d068c77"}
+ * @AllowToRunInFind
  */
-function DATASUTRA_open()
+function DATASUTRA_init()
 {
 
 /*
@@ -1005,6 +1021,7 @@ else {
 /**
  *
  * @properties={typeid:24,uuid:"0d123e49-aae2-458f-abb2-daefe014614e"}
+ * @AllowToRunInFind
  */
 function DS_data_import()
 {
@@ -1734,7 +1751,7 @@ function DS_actions(input) {
 			}
 			//check for non-standard prefpane logout
 			else if (itemClicked == 'Logout') {
-				application.closeSolution(application.getSolutionName())
+				application.closeSolution(application.getSolutionName(),'DATASUTRA_open','true')
 			}
 			//check for non-standard prefpane lock session
 			else if (itemClicked == 'Lock session') {
@@ -4289,6 +4306,7 @@ else {
 /**
  *
  * @properties={typeid:24,uuid:"85957dcb-ced3-4b4a-aa4b-fda4f36e9429"}
+ * @AllowToRunInFind
  */
 function DS_panel_load_fx()
 {
@@ -4700,6 +4718,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 /**
  *
  * @properties={typeid:24,uuid:"0f1d350b-c5ab-4dba-95cd-3bf67898992e"}
+ * @AllowToRunInFind
  */
 function DS_tooltip_load()
 {
@@ -5210,5 +5229,15 @@ function DS_font_fix() {
 		for (var i = 0; i < frames.length; i++) {
 			Packages.javax.swing.SwingUtilities.updateComponentTreeUI(frames[i])
 		}
+	}
+}
+
+/**
+ * @properties={typeid:24,uuid:"0ECDA534-BDB1-406E-9611-FE2C89320F4C"}
+ */
+function DATASUTRA_open(skipFontFix) {
+	//when re-log in to the solution, don't need to fire font fix
+	if (!skipFontFix) {
+		globals.DS_font_fix()
 	}
 }

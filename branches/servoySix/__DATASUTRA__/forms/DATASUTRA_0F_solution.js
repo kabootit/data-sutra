@@ -66,7 +66,7 @@ function FORM_on_load()
 //don't run in headless or web client (they use whatever solution is activated as context)
 if (application.getApplicationType() == APPLICATION_TYPES.SMART_CLIENT || application.getApplicationType() == APPLICATION_TYPES.RUNTIME_CLIENT) {	
 	if (! application.__parent__.solutionPrefs) {
-		globals.DATASUTRA_open()
+		globals.DATASUTRA_init()
 	}
 	
 	var formName = 'DATASUTRA_0F_solution'
