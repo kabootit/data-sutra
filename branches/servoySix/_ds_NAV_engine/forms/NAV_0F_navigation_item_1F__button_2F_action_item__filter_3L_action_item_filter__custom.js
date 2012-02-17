@@ -46,6 +46,7 @@ if (delRec == 'Yes') {
 /**
  *
  * @properties={typeid:24,uuid:"87a64fe2-eb1f-4e91-ad2e-2aff6f01aeb8"}
+ * @AllowToRunInFind
  */
 function REC_edit()
 {
@@ -77,7 +78,7 @@ databaseManager.setAutoSave(false)
 //enable cancelling
 forms.NAV_P_action_item_filter.elements.btn_cancel.visible = true
 
-application.showFormInDialog(forms.NAV_P_action_item_filter,-1,-1,-1,-1,'Edit',false,false,'filterDetails')
+globals.CODE_form_in_dialog(forms.NAV_P_action_item_filter,-1,-1,-1,-1,'Edit',false,false,'filterDetails')
 }
 
 /**
@@ -86,6 +87,7 @@ application.showFormInDialog(forms.NAV_P_action_item_filter,-1,-1,-1,-1,'Edit',f
  * @param {JSEvent} event the event that triggered the action
  *
  * @properties={typeid:24,uuid:"5caf2221-192a-41d5-adb4-97f25508675f"}
+ * @AllowToRunInFind
  */
 function REC_new(event)
 {
@@ -145,7 +147,7 @@ if (!noPopup) {
 	//disable cancelling
 	forms.NAV_P_action_item_filter.elements.btn_cancel.visible = false
 	
-	application.showFormInDialog(forms.NAV_P_action_item_filter,-1,-1,-1,-1,'New filter',false,false,'filterDetails')
+	globals.CODE_form_in_dialog(forms.NAV_P_action_item_filter,-1,-1,-1,-1,'New filter',false,false,'filterDetails')
 }
 //return record object for additional processing
 else {

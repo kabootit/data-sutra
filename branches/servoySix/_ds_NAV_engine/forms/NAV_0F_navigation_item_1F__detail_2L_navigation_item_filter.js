@@ -15,6 +15,7 @@ if (delRec == 'Yes') {
 /**
  *
  * @properties={typeid:24,uuid:"460ced44-a1e4-4798-8e63-c56ae2337622"}
+ * @AllowToRunInFind
  */
 function REC_edit()
 {
@@ -46,7 +47,7 @@ databaseManager.setAutoSave(false)
 //enable cancelling
 forms.NAV_P_navigation_item_filter.elements.btn_cancel.visible = true
 
-application.showFormInDialog(
+globals.CODE_form_in_dialog(
 		forms.NAV_P_navigation_item_filter,
 		-1,-1,-1,-1,
 		'Edit',
@@ -78,7 +79,7 @@ forms.NAV_P_navigation_item_filter.foundset.loadRecords(foundset)
 //disable cancelling
 forms.NAV_P_navigation_item_filter.elements.btn_cancel.visible = false
 
-application.showFormInDialog(
+globals.CODE_form_in_dialog(
 			forms.NAV_P_navigation_item_filter,
 			-1,-1,-1,-1,
 			'New filter',
