@@ -12,6 +12,7 @@ LOAD_records()
 /**
  *
  * @properties={typeid:24,uuid:"6b587c63-d4eb-4f69-8509-ce2ed9f325a1"}
+ * @AllowToRunInFind
  */
 function LOAD_records()
 {
@@ -44,6 +45,7 @@ forms.AC_0F_group__toolbar_1L_group_toolbar.TOGGLE_order_by()
 /**
  *
  * @properties={typeid:24,uuid:"6c33d4ab-ac83-4134-a944-d2551672926c"}
+ * @AllowToRunInFind
  */
 function REC_new()
 {
@@ -79,7 +81,7 @@ var dataset = databaseManager.getDataSetByQuery(
 var allToolbars = dataset.getColumnAsArray(1)
 
 //find group viewer merge records
-var groupToolbar = databaseManager.getFoundSet(controller.getServerName(),'sutra_access_group_toolbar')
+var groupToolbar = forms.AC_P_group_toolbar.foundset //databaseManager.getFoundSet(controller.getServerName(),'sutra_access_group_toolbar')
 groupToolbar.clear()
 groupToolbar.find()
 groupToolbar.id_group = globals.AC_group_selected
@@ -114,13 +116,13 @@ var results = groupToolbar.search()
 
 if (results) {
 	groupToolbar.sort('ac_access_group_toolbar_to_toolbar.row_order asc')
-	forms.AC_P_group_toolbar.controller.loadRecords(groupToolbar)
+//	forms.AC_P_group_toolbar.controller.loadRecords(groupToolbar)
 	
 	//temporarily turn of auto save
 	databaseManager.setAutoSave(false)
 	
 	//show FID
-	application.showFormInDialog(forms.AC_P_group_toolbar,-1,-1,-1,-1,"Toolbars",false,false,'accessGroupToolbars')
+	globals.CODE_form_in_dialog(forms.AC_P_group_toolbar,-1,-1,-1,-1,"Toolbars",false,false,'accessGroupToolbars')
 }
 else {
 	plugins.dialogs.showInfoDialog('No toolbars','There are no toolbars that are not already assigned to this group')

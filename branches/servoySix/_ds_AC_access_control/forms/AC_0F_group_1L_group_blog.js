@@ -1,6 +1,7 @@
 /**
  *
  * @properties={typeid:24,uuid:"dcd7f7bf-2f3d-4250-9e15-4d75f74046f1"}
+ * @AllowToRunInFind
  */
 function REC_new()
 {
@@ -43,7 +44,7 @@ else {
 	// distinction is flag_chosen
 	
 	//find group blog merge records
-	var fsGroupBlog = databaseManager.getFoundSet(controller.getServerName(),'sutra_access_group_blog')
+	var fsGroupBlog = forms.AC_P_group_blog.foundset //databaseManager.getFoundSet(controller.getServerName(),'sutra_access_group_blog')
 	fsGroupBlog.clear()
 	fsGroupBlog.find()
 	fsGroupBlog.id_group = globals.AC_group_selected
@@ -76,13 +77,13 @@ else {
 	var results = fsGroupBlog.search()
 	
 	if (results) {
-		forms.AC_P_group_blog.controller.loadRecords(fsGroupBlog)
+//		forms.AC_P_group_blog.controller.loadRecords(fsGroupBlog)
 		
 		//temporarily turn of auto save
 		databaseManager.setAutoSave(false)
 		
 		//show FID
-		application.showFormInDialog(forms.AC_P_group_blog,-1,-1,-1,-1,"Blogs",false,false,'accessGroupBlogs')
+		globals.CODE_form_in_dialog(forms.AC_P_group_blog,-1,-1,-1,-1,"Blogs",false,false,'accessGroupBlogs')
 	}
 	else {
 		plugins.dialogs.showInfoDialog('No blogs','There are no blogs that are not already assigned to this group')

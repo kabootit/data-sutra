@@ -36,6 +36,7 @@ if (delRec == 'Yes') {
 /**
  *
  * @properties={typeid:24,uuid:"6660dbd9-fd74-4b7f-a1d7-16a832f89265"}
+ * @AllowToRunInFind
  */
 function REC_new()
 {
@@ -72,7 +73,7 @@ var dataset = databaseManager.getDataSetByQuery(
 var allActions = dataset.getColumnAsArray(1)
 
 //find user group merge records
-var groupAction = databaseManager.getFoundSet(controller.getServerName(),'sutra_access_group_action')
+var groupAction = forms.AC_P_group_action.foundset //databaseManager.getFoundSet(controller.getServerName(),'sutra_access_group_action')
 groupAction.clear()
 groupAction.find()
 groupAction.id_group = globals.AC_group_selected
@@ -105,13 +106,13 @@ groupAction.flag_chosen = '^='
 var results = groupAction.search()
 
 if (results) {
-	forms.AC_P_group_action.controller.loadRecords(groupAction)
+//	forms.AC_P_group_action.controller.loadRecords(groupAction)
 	
 	//temporarily turn of auto save
 	databaseManager.setAutoSave(false)
 	
 	//show FID
-	application.showFormInDialog(forms.AC_P_group_action,-1,-1,-1,-1,"Actions",false,false,'accessGroupActions')
+	globals.CODE_form_in_dialog(forms.AC_P_group_action,-1,-1,-1,-1,"Actions",false,false,'accessGroupActions')
 }
 else {
 	plugins.dialogs.showInfoDialog('No actions','There are no actions that are not already assigned to this group')

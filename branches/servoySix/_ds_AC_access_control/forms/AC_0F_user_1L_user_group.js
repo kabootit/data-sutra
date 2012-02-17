@@ -1,6 +1,7 @@
 /**
  *
  * @properties={typeid:24,uuid:"86743a47-40f0-4723-ba93-3cbe3c4aee31"}
+ * @AllowToRunInFind
  */
 function REC_new()
 {
@@ -76,7 +77,7 @@ if (results) {
 	databaseManager.setAutoSave(false)
 	
 	//show FID
-	application.showFormInDialog(forms.AC_P_user_group__group,-1,-1,-1,-1,"Groups",false,false,'accessAssignGroups')
+	globals.CODE_form_in_dialog(forms.AC_P_user_group__group,-1,-1,-1,-1,"Groups",false,false,'accessAssignGroups')
 }
 else {
 	plugins.dialogs.showInfoDialog('No groups','This user is already a member of all available groups')

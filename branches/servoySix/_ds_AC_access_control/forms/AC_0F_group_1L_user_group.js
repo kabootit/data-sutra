@@ -1,6 +1,7 @@
 /**
  *
  * @properties={typeid:24,uuid:"4b91d6bd-bb32-41ed-89c9-565e68494512"}
+ * @AllowToRunInFind
  */
 function REC_new()
 {
@@ -37,7 +38,7 @@ var dataset = databaseManager.getDataSetByQuery(
 var allUsers = dataset.getColumnAsArray(1)
 
 //find user group merge records
-var fsUserGroup = databaseManager.getFoundSet(controller.getServerName(),'sutra_access_user_group')
+var fsUserGroup = forms.AC_P_user_group__user.foundset //databaseManager.getFoundSet(controller.getServerName(),'sutra_access_user_group')
 fsUserGroup.clear()
 fsUserGroup.find()
 fsUserGroup.id_group = globals.AC_group_selected
@@ -70,13 +71,13 @@ fsUserGroup.flag_chosen = '^='
 var results = fsUserGroup.search()
 
 if (results) {
-	forms.AC_P_user_group__user.controller.loadRecords(fsUserGroup)
+//	forms.AC_P_user_group__user.controller.loadRecords(fsUserGroup)
 	
 	//temporarily turn off auto save
 	databaseManager.setAutoSave(false)
 	
 	//show FID
-	application.showFormInDialog(forms.AC_P_user_group__user,-1,-1,-1,-1,"Users",false,false,'accessAssignUsers')
+	globals.CODE_form_in_dialog(forms.AC_P_user_group__user,-1,-1,-1,-1,"Users",false,false,'accessAssignUsers')
 }
 else {
 	plugins.dialogs.showInfoDialog('No users','There are no users that are not already a member of this group')
