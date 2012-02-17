@@ -1,170 +1,238 @@
 /**
- * @properties={typeid:35,uuid:"04fde543-69cc-4de9-af47-7f7c22221f17"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"04fde543-69cc-4de9-af47-7f7c22221f17",variableType:12}
  */
 var NAV_action_item_category_action = 'Actions';
 
 /**
- * @properties={typeid:35,uuid:"c8e9baad-4ca5-4111-9ceb-4257cc4ddeaf"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"c8e9baad-4ca5-4111-9ceb-4257cc4ddeaf",variableType:12}
  */
 var NAV_action_item_category_add = 'Add';
 
 /**
- * @properties={typeid:35,uuid:"14aca55c-d5bf-4734-8e2c-9eaacf8e42ea"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"14aca55c-d5bf-4734-8e2c-9eaacf8e42ea",variableType:12}
  */
 var NAV_action_item_category_filter = 'Filters';
 
 /**
- * @properties={typeid:35,uuid:"a4c5f7bd-90af-4de9-87a2-749c98c26996"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"a4c5f7bd-90af-4de9-87a2-749c98c26996",variableType:12}
  */
 var NAV_action_item_category_report = 'Reports';
 
 /**
- * @properties={typeid:35,uuid:"8ad58fd5-6640-4533-a736-906c6018eed7"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"8ad58fd5-6640-4533-a736-906c6018eed7",variableType:12}
  */
 var NAV_action_item_category_tab = 'Tabs';
 
 /**
+ * @type {Number}
+ *
  * @properties={typeid:35,uuid:"603eed9c-dae9-415a-8ce2-0448c04415cd",variableType:4}
  */
 var NAV_action_item_filter_sub1;
 
 /**
+ * @type {Number}
+ *
  * @properties={typeid:35,uuid:"c65b6161-a436-41ee-b326-a6383e3457b3",variableType:4}
  */
 var NAV_action_item_filter_sub2;
 
 /**
- * @properties={typeid:35,uuid:"b67ba890-0da3-4bb6-bc60-4c45d90f1fb3"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"b67ba890-0da3-4bb6-bc60-4c45d90f1fb3",variableType:12}
  */
 var NAV_column_relation = '';
 
 /**
+ * @type {Number}
+ *
  * @properties={typeid:35,uuid:"53c12f5d-b101-4b85-9cb3-421415086abc",variableType:4}
  */
 var NAV_constant_one = 1;
 
 /**
- * @properties={typeid:35,uuid:"48bb6b19-55db-43df-a6df-42d0b8c9925c"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"48bb6b19-55db-43df-a6df-42d0b8c9925c",variableType:12}
  */
 var NAV_export_access = '';
 
 /**
- * @properties={typeid:35,uuid:"9d5202c9-7092-4e60-a6fd-34883bc72ecb"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"9d5202c9-7092-4e60-a6fd-34883bc72ecb",variableType:12}
  */
 var NAV_export_navset = '';
 
 /**
- * @properties={typeid:35,uuid:"e846eb36-3c55-4bf8-938c-c87b99a425b1"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"e846eb36-3c55-4bf8-938c-c87b99a425b1",variableType:12}
  */
 var NAV_filter_column = '';
 
 /**
+ * @type {Number}
+ *
  * @properties={typeid:35,uuid:"06af79eb-28ea-4d7a-bace-766f2fe2a1c1",variableType:4}
  */
 var NAV_filter_level = 1;
 
 /**
- * @properties={typeid:35,uuid:"43ca97e8-3878-41fd-9ee6-3a8588b6f3d0"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"43ca97e8-3878-41fd-9ee6-3a8588b6f3d0",variableType:12}
  */
 var NAV_filter_operator = '';
 
 /**
- * @properties={typeid:35,uuid:"099b6774-5e90-4c11-8659-fe9d91f74e45"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"099b6774-5e90-4c11-8659-fe9d91f74e45",variableType:12}
  */
 var NAV_filter_relation = '';
 
 /**
- * @properties={typeid:35,uuid:"9ec08c62-ff3e-4431-9eb7-4b966812e083"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"9ec08c62-ff3e-4431-9eb7-4b966812e083",variableType:12}
  */
 var NAV_filter_value = '';
 
 /**
- * @properties={typeid:35,uuid:"a957cb02-5d4e-4370-b4bf-6f69f4a0ed9f"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"a957cb02-5d4e-4370-b4bf-6f69f4a0ed9f",variableType:12}
  */
 var NAV_filter_valuelist = '';
 
 /**
- * @properties={typeid:35,uuid:"e5527fda-b14c-445e-b245-d3868dc2a348"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"e5527fda-b14c-445e-b245-d3868dc2a348",variableType:12}
  */
 var NAV_find_relation = '';
 
 /**
- * @properties={typeid:35,uuid:"4109f3dd-075c-4767-aafd-a4940ae30af9"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"4109f3dd-075c-4767-aafd-a4940ae30af9",variableType:12}
  */
 var NAV_import_access = '';
 
 /**
- * @properties={typeid:35,uuid:"d936d5e9-0585-475d-a047-5f604f5ee9ae"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"d936d5e9-0585-475d-a047-5f604f5ee9ae",variableType:12}
  */
 var NAV_import_navset = '';
 
 /**
- * @properties={typeid:35,uuid:"a8ced98a-7f42-4930-a021-fff5e01f95df"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"a8ced98a-7f42-4930-a021-fff5e01f95df",variableType:12}
  */
 var NAV_import_navset_flag = '';
 
 /**
- * @properties={typeid:35,uuid:"c464ad5f-8f71-405c-aab9-4c1339db4121"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"c464ad5f-8f71-405c-aab9-4c1339db4121",variableType:12}
  */
 var NAV_importexport_areas = '';
 
 /**
- * @properties={typeid:35,uuid:"e944d726-036e-4e46-a262-2a8d955d40e4"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"e944d726-036e-4e46-a262-2a8d955d40e4",variableType:12}
  */
 var NAV_list = '';
 
 /**
- * @properties={typeid:35,uuid:"ad0d1dc0-4c57-4a42-8c56-b2268abe4a17"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"ad0d1dc0-4c57-4a42-8c56-b2268abe4a17",variableType:12}
  */
 var NAV_list_2 = '';
 
 /**
- * @properties={typeid:35,uuid:"3a982de9-e5ea-4cb9-9f03-26dd4668e913"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"3a982de9-e5ea-4cb9-9f03-26dd4668e913",variableType:12}
  */
 var NAV_list_header = '';
 
 /**
- * @properties={typeid:35,uuid:"69dceaef-b28e-4e46-bcfb-1dbcb893440a"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"69dceaef-b28e-4e46-bcfb-1dbcb893440a",variableType:12}
  */
 var NAV_module_filter = '';
 
 /**
+ * @type {Number}
+ *
  * @properties={typeid:35,uuid:"87002b1b-a4e5-429f-987d-b20fedf12634",variableType:4}
  */
 var NAV_named_column = 1;
 
 /**
+ * @type {Number}
+ *
  * @properties={typeid:35,uuid:"0618d530-6a36-4b6b-a1db-48d81a7a06d7",variableType:4}
  */
 var NAV_navigation_item_selected;
 
 /**
+ * @type {Number}
+ *
  * @properties={typeid:35,uuid:"eec4d528-a87b-4edf-bd57-7360bc838231",variableType:4}
  */
 var NAV_navigation_selected;
 
 /**
+ * @type {Number}
+ *
  * @properties={typeid:35,uuid:"47c700b6-24c2-4e9c-bd14-d76df704977b",variableType:4}
  */
 var NAV_P_all;
 
 /**
- * @properties={typeid:35,uuid:"5dc65415-862f-4ed0-bcbb-acace058cfd1"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"5dc65415-862f-4ed0-bcbb-acace058cfd1",variableType:12}
  */
 var NAV_password = '';
 
 /**
- * @properties={typeid:35,uuid:"f4da5f17-2afc-48a7-a58a-9368cb3d04f5"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"f4da5f17-2afc-48a7-a58a-9368cb3d04f5",variableType:12}
  */
 var NAV_search_valuelist = '';
 
 /**
- * @properties={typeid:35,uuid:"4311f451-1e2d-4188-8284-8fdc9d394f6b"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"4311f451-1e2d-4188-8284-8fdc9d394f6b",variableType:12}
  */
 var NAV_universal_selected_filter = '';
 
 /**
- * @properties={typeid:35,uuid:"f57b9736-ec41-44ab-8775-549649921261"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"f57b9736-ec41-44ab-8775-549649921261",variableType:12}
  */
 var NAV_universal_selected_tab = '';
 
@@ -545,6 +613,7 @@ if (application.__parent__.solutionPrefs) {
 /**
  *
  * @properties={typeid:24,uuid:"9ef40968-9dd8-4229-94ca-3f38361d3aa0"}
+ * @AllowToRunInFind
  */
 function NAV_find_fields_control()
 {
@@ -998,6 +1067,7 @@ if (application.__parent__.solutionPrefs) {
 /**
  *
  * @properties={typeid:24,uuid:"ed5ad8d1-8530-43ff-a244-251d915d370d"}
+ * @AllowToRunInFind
  */
 function NAV_find_search()
 {
@@ -1416,6 +1486,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 /**
  *
  * @properties={typeid:24,uuid:"53b1a6e0-0dd4-40c5-af64-348bd5c51e91"}
+ * @AllowToRunInFind
  */
 function NAV_find_search_request()
 {
@@ -4311,6 +4382,7 @@ return {
 /**
  *
  * @properties={typeid:24,uuid:"d2d302dc-13b6-495e-ac6a-d29b120541bc"}
+ * @AllowToRunInFind
  */
 function NAV_foundset_restrict()
 {
@@ -4597,7 +4669,7 @@ function NAV_universal_list_select()
 	
 	//record not clicked on before, throw up busy bar and busy cursor
 	var record = forms[formName].foundset.getRecord(rowSelected)
-	if (navigationPrefs.byNavItemID[currentNavItem].navigationItem.initialRecord && !navigationPrefs.byNavItemID[currentNavItem].listData.visitedPKs[record[pkName]]) {
+	if (record && navigationPrefs.byNavItemID[currentNavItem].navigationItem.initialRecord && !navigationPrefs.byNavItemID[currentNavItem].listData.visitedPKs[record[pkName]]) {
 		var recNotLoaded = true
 		
 		//don't turn busy indicator on if it is already on
@@ -6177,36 +6249,50 @@ function NAV_row_background(index, selected, fieldType, fieldName, formName, fie
 }
 
 /**
- * @properties={typeid:35,uuid:"46324019-4a22-4ca6-84dc-9473456360a9"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"46324019-4a22-4ca6-84dc-9473456360a9",variableType:12}
  */
 var NAV_replace_field_value = '';
 
 /**
+ * @type {Date}
+ *
  * @properties={typeid:35,uuid:"7955df03-d512-4ebd-8863-e143cfa3dfba",variableType:93}
  */
 var NAV_replace_field_value_date = new Date();
 
 /**
+ * @type {Number}
+ *
  * @properties={typeid:35,uuid:"568532a3-3de2-4ea8-8367-043bf1591a3a",variableType:4}
  */
 var NAV_replace_field_value_options;
 
 /**
+ * @type {Number}
+ *
  * @properties={typeid:35,uuid:"37ec3567-11fd-40eb-b1d3-55f8ff8eac58",variableType:4}
  */
 var NAV_replace_field;
 
 /**
- * @properties={typeid:35,uuid:"c34dbe04-0eb0-4ed8-8a03-9d629a3f7145"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"c34dbe04-0eb0-4ed8-8a03-9d629a3f7145",variableType:12}
  */
 var NAV_replace_method = '';
 
 /**
+ * @type {Number}
+ *
  * @properties={typeid:35,uuid:"bbe906b7-408f-4fcd-9ed8-5c74c480d9a6",variableType:4}
  */
 var NAV_replace_step_increment = 1;
 
 /**
+ * @type {Number}
+ *
  * @properties={typeid:35,uuid:"d2946431-465e-4771-8e68-046c1ee4e080",variableType:4}
  */
 var NAV_replace_step_start = 1;
