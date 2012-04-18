@@ -7,6 +7,5 @@
 	<buildSpec>
 	</buildSpec>
 	<natures>
-		<nature>com.servoy.eclipse.core.ServoyResources</nature>
 	</natures>
 </projectDescription>
