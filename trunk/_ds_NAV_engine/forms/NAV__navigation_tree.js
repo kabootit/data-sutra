@@ -180,6 +180,7 @@ function LIST_generate(selected) {
 									navItemName : navItem.navigationItem.itemName,
 									nodeOne : navItem.navigationItem.nodeOne,
 									nodeTwo : navItem.navigationItem.nodeTwo,
+									description : navItem.navigationItem.description,
 									expanded : navItem.navigationItem.rowStatusExpanded,
 									fave : navItem.navigationItem.favorite,
 									arrayPosn : i
@@ -243,6 +244,9 @@ function LIST_generate(selected) {
 				lblClick.onAction = thisForm.getFormMethod('LIST_redraw')
 				lblClick.rolloverCursor = SM_CURSOR.HAND_CURSOR
 				lblClick.rolloverImageMedia = solutionModel.getMedia("row_selected_light.png")
+				if (details.description) {
+					lblClick.toolTipText = details.description
+				}
 				
 				//TRIANGLE
 				//parent expanded
