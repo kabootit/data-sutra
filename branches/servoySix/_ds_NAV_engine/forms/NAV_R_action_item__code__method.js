@@ -32,7 +32,7 @@ if (application.__parent__.solutionPrefs && forms.NAV_0F_navigation_item_1F__but
 	var moduleName = forms.NAV_0F_navigation_item_1F__button.module_filter 
 	
 	//only run when using query based way to hit repository
-	if (!solutionPrefs.repository.api) {
+	if (!solutionPrefs.repository.api && solutionPrefs.repository.allForms) {
 		var rootElementID = solutionPrefs.repository.allModules[moduleName].rootElementID
 		var activeRelease = solutionPrefs.repository.allModules[moduleName].activeRelease
 		var parentID = solutionPrefs.repository.allForms[moduleName][formName].elementID

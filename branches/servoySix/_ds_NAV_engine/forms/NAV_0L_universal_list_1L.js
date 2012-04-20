@@ -152,7 +152,7 @@ if (application.__parent__.solutionPrefs && this.configured) {
 
 	//LOG record navigation
 	//only run when using query based way to hit repository
-	if (!solutionPrefs.repository.api) {
+	if (!solutionPrefs.repository.api && solutionPrefs.repository.allForms) {
 		var pkName = solutionPrefs.repository.allFormsByTable[serverName][tableName].primaryKey
 		var pkActedOn = forms[formName][pkName]
 	}

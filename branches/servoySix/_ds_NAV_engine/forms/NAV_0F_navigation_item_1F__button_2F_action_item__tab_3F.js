@@ -10,7 +10,7 @@ if (application.__parent__.solutionPrefs) {
 	
 	if (utils.hasRecords(foundset)) {
 		//only run when using query based way to hit repository
-		if (!solutionPrefs.repository.api) {
+		if (!solutionPrefs.repository.api && solutionPrefs.repository.allForms) {
 			//load formNames for selected module
 			var moduleForms = solutionPrefs.repository.allForms[module_filter]
 			var formNames = new Array()

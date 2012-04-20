@@ -12,7 +12,7 @@ if (forms[nav_column_to_navigation_item.form_to_load]) {
 	var serverName = forms[nav_column_to_navigation_item.form_to_load].foundset.getServerName()
 	var tableName = forms[nav_column_to_navigation_item.form_to_load].foundset.getTableName()
 	//only run when using query based way to hit repository
-	if (!solutionPrefs.repository.api) {
+	if (!solutionPrefs.repository.api && solutionPrefs.repository.allForms) {
 		var pk = solutionPrefs.repository.allFormsByTable[serverName][tableName].primaryKey
 	}
 	else {

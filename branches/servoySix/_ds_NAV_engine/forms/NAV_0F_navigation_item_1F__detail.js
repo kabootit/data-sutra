@@ -95,10 +95,13 @@ function FILTER_forms()
  *			  	
  */
 
+//when in navigation module alone, show forms anyway
+ var formNames = forms.allnames
+
 //only show forms from selected module when in top level form
 if (application.__parent__.solutionPrefs && foundset.getSize() && module_filter) {
 	//get from repository via queries way
-	if (!solutionPrefs.repository.api) {
+	if (!solutionPrefs.repository.api && solutionPrefs.repository.allForms) {
 		
 		var moduleForms = solutionPrefs.repository.allForms[module_filter]
 		var formNames = new Array()
@@ -126,10 +129,6 @@ if (application.__parent__.solutionPrefs && foundset.getSize() && module_filter)
 			}
 		}
 	}
-}
-//when in navigation module alone, show forms anyway
-else {
-	var formNames = forms.allnames
 }
 
 formNames = formNames.sort()
@@ -241,6 +240,7 @@ if (initial_record && (initial_record_label == null || initial_record_label == '
 /**
  *
  * @properties={typeid:24,uuid:"75dbeb6a-e9fa-4382-908f-d066ce92e88d"}
+ * @AllowToRunInFind
  */
 function FLD_data_change__item_id()
 {
