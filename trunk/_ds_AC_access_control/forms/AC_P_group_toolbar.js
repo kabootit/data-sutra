@@ -18,7 +18,7 @@ function ACTION_cancel() {
 		//enaable closing the form
 		globals.CODE_hide_form = 1
 		
-		application.closeFormDialog('accessGroupToolbars')
+		globals.CODE_form_in_dialog_close('accessGroupToolbars')
 	}
 }
 
@@ -35,7 +35,7 @@ function ACTION_ok() {
 	//enaable closing the form
 	globals.CODE_hide_form = 1
 	
-	application.closeFormDialog('accessGroupToolbars')
+	globals.CODE_form_in_dialog_close('accessGroupToolbars')
 	
 	//reload current records
 	forms.AC_0F_group__toolbar.LOAD_records()

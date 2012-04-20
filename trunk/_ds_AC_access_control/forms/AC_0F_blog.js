@@ -66,7 +66,7 @@ forms.AC_R__login.blogID = id_blog
 //preview mode
 forms.AC_R__login.elements.tab_login.tabIndex = 3
 
-application.showFormInDialog(forms.AC_R__login,-1,-1,-1,-1,'Blog preview',true,false,'blogPreview')
+globals.CODE_form_in_dialog(forms.AC_R__login,-1,-1,-1,-1,'Blog preview',true,false,'blogPreview')
 
 forms.AC_R__login.previewMode = false
 }

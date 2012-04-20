@@ -33,7 +33,7 @@ if (!globals.CODE_hide_form) {
 	//enaable closing the form
 	globals.CODE_hide_form = 1
 	
-	application.closeFormDialog('accessScreen')
+	globals.CODE_form_in_dialog_close('accessScreen')
 }
 
 }
@@ -103,7 +103,7 @@ databaseManager.setAutoSave(true)
 //enaable closing the form
 globals.CODE_hide_form = 1
 
-application.closeFormDialog('accessScreen')
+globals.CODE_form_in_dialog_close('accessScreen')
 
 //resize window
 if (this.reSize) {
@@ -509,7 +509,7 @@ controller.search()
 databaseManager.setAutoSave(false)
 
 //show form in dialog
-application.showFormInDialog(forms.AC_P_screen,-1,-1,-1,-1,'Screen',false,false,'accessScreen')
+globals.CODE_form_in_dialog(forms.AC_P_screen,-1,-1,-1,-1,'Screen',false,false,'accessScreen')
 
 
 

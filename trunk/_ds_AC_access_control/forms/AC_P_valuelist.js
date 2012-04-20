@@ -15,7 +15,7 @@ if (!globals.CODE_hide_form) {
 	//enaable closing the form
 	globals.CODE_hide_form = 1
 	
-	application.closeFormDialog('accessSaaSValuelist')
+	globals.CODE_form_in_dialog_close('accessSaaSValuelist')
 }
 }
 
@@ -63,7 +63,7 @@ function ACTION_ok(event, createLists)
 	//enaable closing the form
 	globals.CODE_hide_form = 1
 	
-	application.closeFormDialog('accessSaaSValuelist')
+	globals.CODE_form_in_dialog_close('accessSaaSValuelist')
 	
 	//reload current records
 	forms.AC_0F_organization__valuelist.ACTION_load()

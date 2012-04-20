@@ -387,7 +387,7 @@ else {
 
 		//load found records onto FiD
 		forms.AC_P_group.controller.loadRecords(groupIDs)
-		application.showFormInDialog(
+		globals.CODE_form_in_dialog(
 					forms.AC_P_group,
 					-1,-1,200,300,
 					'Groups',

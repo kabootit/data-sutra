@@ -25,7 +25,7 @@ function ACTION_ok()
 //enaable closing the form
 globals.CODE_hide_form = 1
 
-application.closeFormDialog('accessLoginGroup')
+globals.CODE_form_in_dialog_close('accessLoginGroup')
 }
 
 /**
