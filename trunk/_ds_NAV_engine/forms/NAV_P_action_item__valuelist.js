@@ -36,7 +36,7 @@ if (!globals.CODE_hide_form) {
 	//enaable closing the form
 	globals.CODE_hide_form = 1
 	
-	application.closeFormDialog('filterValuelist')
+	globals.CODE_form_in_dialog_close('filterValuelist')
 }
 }
 
@@ -135,7 +135,7 @@ if (globals.NAV_filter_column && globals.NAV_filter_operator && globals.NAV_filt
 	globals.CODE_hide_form = 1
 	
 	//close the form
-	application.closeFormDialog('filterValuelist')
+	globals.CODE_form_in_dialog_close('filterValuelist')
 	
 	forms[formName].REC_on_select()
 }

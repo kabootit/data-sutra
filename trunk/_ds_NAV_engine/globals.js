@@ -598,7 +598,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	//custom search
 	if (colType == 'CUSTOM') {
 		//show dialog for value to be searched on
-		application.showFormInDialog(
+		globals.CODE_form_in_dialog(
 					forms[findValue.formName],
 					-1,-1,-1,-1,
 					' ',
@@ -648,7 +648,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		application.setValueListItems('NAV_replace_type',typeDisplay)
 
 		//show popup dialog
-		application.showFormInDialog(
+		globals.CODE_form_in_dialog(
 					forms.NAV_P__replace,
 					-1,-1,-1,-1,
 					'Power Replace',
@@ -823,7 +823,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		else if (colType == "DATETIME") {
 			forms.DATE_P__search.FrameworksFastFind = true
 
-			application.showFormInDialog(forms.DATE_P__search,-1,-1,-1,-1,"Search",false,false,'datePicker')
+			globals.CODE_form_in_dialog(forms.DATE_P__search,-1,-1,-1,-1,"Search",false,false,'datePicker')
 
 //			//load form into fastfind tab panel
 //			globals.NAV_find_set_popdown('DATE_P__search')
@@ -866,7 +866,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 
 			//show dialog for value to be searched on
 			//var vlValue = plugins.dialogs.showSelectDialog('Valuelist','Choose item from valuelist.',vlDisplay)
-			application.showFormInDialog(
+			globals.CODE_form_in_dialog(
 						forms.NAV_P__find,
 						-1,-1,-1,-1,
 						'Valuelist',
@@ -1116,7 +1116,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		//show date picker
 		if (colType == "DATETIME" && searchValue == null) {
 			forms.DATE_P__search.FrameworksFastFind = true
-			application.showFormInDialog(forms.DATE_P__search,-1,-1,-1,-1,"Search",false)
+			globals.CODE_form_in_dialog(forms.DATE_P__search,-1,-1,-1,-1,"Search",false)
 		}
 		
 		//if no value to search for, quit

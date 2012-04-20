@@ -31,7 +31,7 @@ databaseManager.setAutoSave(true)
 //enaable closing the form
 globals.CODE_hide_form = 1
 
-application.closeFormDialog('inlineNavItem')
+globals.CODE_form_in_dialog_close('inlineNavItem')
 
 
 }
@@ -158,7 +158,7 @@ else {
 //enaable closing the form
 globals.CODE_hide_form = 1
 
-application.closeFormDialog('inlineNavItem')
+globals.CODE_form_in_dialog_close('inlineNavItem')
 
 //nav item name changed, redraw navitem list
 if (redraw) {
