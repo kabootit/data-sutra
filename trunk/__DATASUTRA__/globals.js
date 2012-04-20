@@ -1778,7 +1778,7 @@ function DS_actions(input) {
 				globals.DATASUTRA_feedback = rawData.toByteArray()
 				
 				//show popup dialog
-				application.showFormInDialog(forms.DEV_P_feedback,-1,-1,-1,-1,'Submit feedback',false,false,'feedback',true)
+				globals.CODE_form_in_dialog(forms.DEV_P_feedback,-1,-1,-1,-1,'Submit feedback',false,false,'feedback',true)
 			}
 			//check for non-standard prefpane design mode
 			else if (itemClicked == 'Design mode') {
@@ -4655,7 +4655,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	if (solutionPrefs.config.helpMode) {
 		globals.DS_sidebar_toggle(false)
 		
-		application.showFormInDialog(
+		globals.CODE_form_in_dialog(
 				forms.MGR_P_documentation,
 				-1,-1,-1,-1,
 				'Help',
@@ -4676,7 +4676,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		
 		//show form in dialog
 		if (expanded) {
-			application.showFormInDialog(
+			globals.CODE_form_in_dialog(
 					forms[tabName],
 					-1,-1,tabWidth,tabHeight,
 					thisTab.tabName,
@@ -4701,7 +4701,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		}
 		//close form in dialog
 		else {
-			application.closeFormDialog('SIDE_' + currentTab + '_' + tabParent)
+			globals.CODE_form_in_dialog_close('SIDE_' + currentTab + '_' + tabParent)
 		}
 		
 		forms[sideForm + '__header'].elements.btn_popin.visible = expanded
