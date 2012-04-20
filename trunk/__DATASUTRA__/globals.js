@@ -305,7 +305,7 @@ function DATASUTRA_error()
  *
  * @properties={typeid:24,uuid:"b3b6d503-9f36-459f-9cbd-256e1d068c77"}
  */
-function DATASUTRA_open()
+function DATASUTRA_init()
 {
 
 /*
@@ -1734,7 +1734,7 @@ function DS_actions(input) {
 			}
 			//check for non-standard prefpane logout
 			else if (itemClicked == 'Logout') {
-				application.closeSolution(application.getSolutionName())
+				application.closeSolution(application.getSolutionName(),'DATASUTRA_open','true')
 			}
 			//check for non-standard prefpane lock session
 			else if (itemClicked == 'Lock session') {
@@ -1955,9 +1955,9 @@ function DS_actions(input) {
 					//return toolbar window to most recent position and then clear out the stored value
 					if (solutionPrefs.config.prefs.toolbarTabSelected) {
 						//formerly selected tab no longer available
-						if (solutionPrefs.config.prefs.toolbarTabSelected <= forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getMaxTabIndex()) {
+//						if (solutionPrefs.config.prefs.toolbarTabSelected <= forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getMaxTabIndex()) {
 							forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex = solutionPrefs.config.prefs.toolbarTabSelected
-						}
+//						}
 						delete solutionPrefs.config.prefs.toolbarTabSelected
 					}
 					
@@ -2031,8 +2031,9 @@ function DS_actions(input) {
 						}
 					}
 					
-					//re-set progress indicator toolbar (already removed from toolbar area)
+					//re-set progress indicator toolbar => issue with restoring last selected toolbar
 					globals.TRIGGER_progressbar_stop()
+					forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex = 1
 					
 					//turn licensing check back on
 					if (baDeeBaDee) {
@@ -4040,7 +4041,9 @@ function DS_toolbar_cycle(event) {
 						menu[i].setMethodArguments(thisTab.tabName)
 						
 						//set check mark
-						if (i + 4 == forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex) {
+						if (i + 4 == forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex ||
+							(forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex == 1 && thisTab.formName == 'TOOL_title')) {
+							
 							menu[i].setSelected(true)
 						}
 						else {
@@ -4090,43 +4093,52 @@ function DS_toolbar_cycle(event) {
 			}
 		}
 		
-		//save which tab is currently selected
-		solutionPrefs.panel.toolbar.selectedTab = forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex
+		//save which tab is currently selected if different
+		if (solutionPrefs.panel.toolbar.selectedTab != tabShow) {
+			solutionPrefs.panel.toolbar.selectedTab = forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex
+		}
 		
 		var statusTab = statusTabs[solutionPrefs.panel.toolbar.selectedTab - 4]
 		
-		//set color appropriately (defaults to white if not explicitly set)
-		forms[baseForm + '__header__toolbar'].elements.lbl_color.bgcolor = statusTab.gradientColor
-		
-		//set up popDown, if activated
-		var thePopDown = statusTab.popDown
-		var tabParent = statusTab.formName
-		
-		if (thePopDown) {
-			//popdown showing
-			if (forms[tabParent].popDown == 'show') {
-				forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.setImageURL('media:///toolbar_popdown_up.png')
-				forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.toolTipText = 'Hide additional ' + statusTab.tabName + ' info'
-			}
-			//popdown not showing
-			else {
-				forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.setImageURL('media:///toolbar_popdown_down.png')
-				forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.toolTipText = 'Show more info for ' + statusTab.tabName
-			}
-			forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.visible = true
+		if (statusTab) {
+			//set color appropriately (defaults to white if not explicitly set)
+			forms[baseForm + '__header__toolbar'].elements.lbl_color.bgcolor = statusTab.gradientColor
 			
-			forms[popForm].elements.tab_toolbar_popdown.tabIndex = thePopDown.tabIndex
+			//set up popDown, if activated
+			var thePopDown = statusTab.popDown
+			var tabParent = statusTab.formName
 			
-			//show if showing
-			if (forms[statusTab.formName].popDown == 'show') {
-				globals.DS_toolbar_popdown(true)
+			if (thePopDown) {
+				//popdown showing
+				if (forms[tabParent].popDown == 'show') {
+					forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.setImageURL('media:///toolbar_popdown_up.png')
+					forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.toolTipText = 'Hide additional ' + statusTab.tabName + ' info'
+				}
+				//popdown not showing
+				else {
+					forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.setImageURL('media:///toolbar_popdown_down.png')
+					forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.toolTipText = 'Show more info for ' + statusTab.tabName
+				}
+				forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.visible = true
+				
+				forms[popForm].elements.tab_toolbar_popdown.tabIndex = thePopDown.tabIndex
+				
+				//show if showing
+				if (forms[statusTab.formName].popDown == 'show') {
+					globals.DS_toolbar_popdown(true)
+				}
+				//hide
+				else {
+					forms[baseForm].elements.tab_toolbar_popdown.visible = false
+				}
 			}
-			//hide
 			else {
+				forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.visible = false
 				forms[baseForm].elements.tab_toolbar_popdown.visible = false
 			}
 		}
 		else {
+			forms[baseForm + '__header__toolbar'].elements.lbl_color.bgcolor = '#FFFFFF'
 			forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.visible = false
 			forms[baseForm].elements.tab_toolbar_popdown.visible = false
 		}
@@ -4369,6 +4381,8 @@ if (utils.hasRecords(fsToolbar)) {
 		var moduleFilter = (record.module_filter_2) ? record.module_filter_2 : record.module_filter
 		//get size of pop-down form
 		if (record.pop_down_autosize && 
+			application.__parent__.solutionPrefs && 
+			solutionPrefs.repository && solutionPrefs.repository[repoType] && 
 			solutionPrefs.repository[repoType][moduleFilter] && 
 			solutionPrefs.repository[repoType][moduleFilter][record.pop_down_form] &&
 			solutionPrefs.repository[repoType][moduleFilter][record.pop_down_form].formSize) {
@@ -5210,5 +5224,15 @@ function DS_font_fix() {
 		for (var i = 0; i < frames.length; i++) {
 			Packages.javax.swing.SwingUtilities.updateComponentTreeUI(frames[i])
 		}
+	}
+}
+
+/**
+ * @properties={typeid:24,uuid:"0ECDA534-BDB1-406E-9611-FE2C89320F4C"}
+ */
+function DATASUTRA_open(skipFontFix) {
+	//when re-log in to the solution, don't need to fire font fix
+	if (!skipFontFix) {
+		globals.DS_font_fix()
 	}
 }

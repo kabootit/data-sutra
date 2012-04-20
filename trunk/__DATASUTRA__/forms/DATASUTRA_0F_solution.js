@@ -66,7 +66,7 @@ function FORM_on_load()
 //don't run in headless or web client (they use whatever solution is activated as context)
 if (application.getApplicationType() == APPLICATION_TYPES.SMART_CLIENT || application.getApplicationType() == APPLICATION_TYPES.RUNTIME_CLIENT) {	
 	if (! application.__parent__.solutionPrefs) {
-		globals.DATASUTRA_open()
+		globals.DATASUTRA_init()
 	}
 	
 	var formName = 'DATASUTRA_0F_solution'
@@ -102,6 +102,7 @@ if (application.getApplicationType() == APPLICATION_TYPES.SMART_CLIENT || applic
 		//unlock content
 		elements.lock.contentPane = elements.tab_lock
 		elements.lock.frameIcon = new Packages.javax.swing.ImageIcon(new Packages.java.net.URL('media:///toolbar_lock.png'))
+		elements.lock.visible = false
 		
 		//hide locking curtains; set image
 		elements.gfx_curtain_header.visible = false
@@ -120,11 +121,11 @@ if (application.getApplicationType() == APPLICATION_TYPES.SMART_CLIENT || applic
 		elements.gfx_curtain_right_2.setImageURL('media:///curtain_5E6166.png')
 		elements.gfx_curtain_top.visible = false
 		elements.gfx_curtain_top.setImageURL('media:///curtain_5E6166.png')
-		elements.gfx_spinner.setSize(32,32)
-	//	application.updateUI()
-	//	elements.gfx_spinner.setLocation((application.getWindowWidth() / 2) - 66, (application.getWindowHeight() / 2 - 200))
+//		elements.gfx_spinner.setSize(32,32)
+//		application.updateUI()
+//		elements.gfx_spinner.setLocation((application.getWindowWidth() / 2) - 66, (application.getWindowHeight() / 2 - 200))
 		elements.gfx_spinner.visible = false
-		elements.gfx_spinner.setImageURL('media:///progressbar_facebook.gif')
+//		elements.gfx_spinner.setImageURL('media:///progressbar_facebook.gif')
 		
 		//hide designbar popdown
 		elements.tab_design_popdown.visible = false

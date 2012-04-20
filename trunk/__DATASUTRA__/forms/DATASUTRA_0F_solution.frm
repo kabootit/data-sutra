@@ -95,7 +95,8 @@ name:"sheetz",
 size:"80,80",
 typeid:12,
 usesUI:true,
-uuid:"125ae2a3-4b8d-4ca7-ac57-1a6f60b873cd"
+uuid:"125ae2a3-4b8d-4ca7-ac57-1a6f60b873cd",
+visible:false
 },
 {
 anchors:11,
@@ -122,13 +123,14 @@ uuid:"19a5534d-8687-4a5f-a916-bbec6ecf69d7"
 anchors:11,
 formIndex:12500,
 horizontalAlignment:0,
-location:"940,160",
+imageMediaID:"7dbf27ed-7b2c-429c-9404-8b7ec1d312e4",
+location:"0,160",
 mediaOptions:1,
 name:"gfx_spinner",
 onActionMethodID:"73261329-fc04-437b-bfd0-e9e6a1277029",
 showClick:false,
 showFocus:false,
-size:"40,40",
+size:"700,32",
 transparent:true,
 typeid:7,
 uuid:"1c7cc471-4100-4b89-8921-f211995b07cd"
