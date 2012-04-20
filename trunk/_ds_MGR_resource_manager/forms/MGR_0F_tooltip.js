@@ -324,7 +324,7 @@ if (formName && forms[formName] &&
 	//refresh tooltips on this form
 	globals.TRIGGER_tooltip_set(formName,true)
 	
-	application.showFormInDialog(
+	globals.CODE_form_in_dialog(
 						forms[formName],
 						-1,
 						-1,
@@ -375,7 +375,7 @@ function PRINT_TIP_report()
 //set today string
 globals.MGR_tooltip_today = globals.CODE_date_format(new Date())
 
-application.showFormInDialog(forms.MGR_P__tooltip_select, -1, -1, -1, -1, 'Choose module', false, false,'printTipSimple')
+globals.CODE_form_in_dialog(forms.MGR_P__tooltip_select, -1, -1, -1, -1, 'Choose module', false, false,'printTipSimple')
 
 if (globals.MGR_tooltip__module) {
 	var modules = globals.MGR_tooltip__module.split('\n')

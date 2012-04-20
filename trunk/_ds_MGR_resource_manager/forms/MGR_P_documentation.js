@@ -9,7 +9,7 @@ function ACTION_cancel()
 
 globals.CODE_hide_form = 1
 
-application.closeFormDialog('popoutHelp')
+globals.CODE_form_in_dialog_close('popoutHelp')
 
 globals.DS_help()
 }
