@@ -249,6 +249,9 @@ var currentNavItem = arguments[0]
 //toggle add record button
 if (navigationPrefs.byNavItemID[currentNavItem].universalList && navigationPrefs.byNavItemID[currentNavItem].universalList.buttons.add) {
 	elements.btn_add.visible = true
+	
+	//show custom tooltip
+	elements.btn_add.toolTipText = navigationPrefs.byNavItemID[currentNavItem].universalList.buttons.add.menuTooltip || 'Add'
 }
 else {
 	elements.btn_add.visible = false

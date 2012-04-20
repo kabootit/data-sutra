@@ -12,17 +12,17 @@ var tabFormName = 'NAV_0F_navigation_item_1F__button_2F_action_item__report_3L'
 var relationName = forms[formName].elements.tab_buttons.getTabRelationNameAt(tabNumber)
 
 
-forms[formName][relationName].newRecord(true, true)
+forms[formName][relationName].newRecord(false, true)
 
 var foundsetSize = forms[formName][relationName].getSize()
 
 //select newly created record
-forms[formName][relationName].setSelectedIndex(1)
+//forms[formName][relationName].setSelectedIndex(1)
 
 //fill in fields
 forms[formName][relationName].order_by = foundsetSize
 forms[formName][relationName].id_report = id_report
-//forms[formName][relationName].menu_name = report_description
+forms[formName][relationName].menu_name = report_description
 
 //select newly created record
 databaseManager.saveData()
