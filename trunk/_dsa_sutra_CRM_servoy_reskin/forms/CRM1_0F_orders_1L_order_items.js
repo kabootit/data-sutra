@@ -32,7 +32,7 @@ forms.CRM_P_order_items.orderitem_id = orderItemID
 forms.CRM_P_order_items.controller.search()
 
 //show form in dialog
-application.showFormInDialog(forms.CRM_P_order_items,-1,-1,-1,-1,'Edit',false,false,false,'crm1OrderItem')
+globals.CODE_form_in_dialog(forms.CRM_P_order_items,-1,-1,-1,-1,'Edit',false,false,false,'crm1OrderItem')
 }
 
 /**
