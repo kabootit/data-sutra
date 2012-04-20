@@ -450,7 +450,8 @@ if (this.FrameworksFastFind) {
 //	//hide tabpanel
 //	globals.NAV_find_set_popdown(null,false)	
 	
-	globals.DATASUTRA_find = (globals.DATE_date_range_type == 'Day') ? '#'+globals.DATE_date_range_entry : globals.DATE_date_range_entry //trap for day
+	//date ranges need to be prefixed by # to get the full day of the last day in the range
+	globals.DATASUTRA_find = (globals.DATE_date_range_type != 'Time') ? '#' + globals.DATE_date_range_entry : globals.DATE_date_range_entry
 	globals.NAV_find_end_normal()
 
 }
@@ -470,7 +471,7 @@ else {
 	
 	var searchDate = globals.DATE_date_range_entry + '|' + solutionPrefs.fastFind.dateFormat
 	
-	if (globals.DATE_date_range_type == 'Day') {
+	if (globals.DATE_date_range_type != 'Time') {
 		searchDate = '#' + searchDate
 	}
 	
