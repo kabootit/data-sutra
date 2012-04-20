@@ -468,17 +468,20 @@ else {
 	//copy current foundset to restore if no records are found
 	var currentRecs = forms[globals.DATE_date_range_search_form].foundset.duplicateFoundSet()
 	
-	var searchDate = new Date()
-	searchDate = globals.DATE_date_range_entry
+	var searchDate = globals.DATE_date_range_entry + '|' + solutionPrefs.fastFind.dateFormat
+	
+	if (globals.DATE_date_range_type == 'Day') {
+		searchDate = '#' + searchDate
+	}
 	
 	//search calling form
 	forms[globals.DATE_date_range_search_form].controller.find()
 	
 	forms[globals.DATE_date_range_search_form][globals.DATE_date_range_field_name] = searchDate
 	
-	forms[globals.DATE_date_range_search_form].elements.fld_date_to_search.requestFocus()
+//	forms[globals.DATE_date_range_search_form].elements.fld_date_to_search.requestFocus()
 	
-	forms[globals.DATE_date_range_search_form].elements.fld_date_to_search.replaceSelectedText("")
+//	forms[globals.DATE_date_range_search_form].elements.fld_date_to_search.replaceSelectedText("")
 	
 	var count = forms[globals.DATE_date_range_search_form].controller.search()
 	
