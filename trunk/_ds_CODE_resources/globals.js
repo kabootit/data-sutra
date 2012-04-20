@@ -1957,14 +1957,14 @@ function TRIGGER_tooltip_help_popup(tabPanelName,formName,elemName) {
 				if (firstFound) {
 					globals.CODE_text = firstFound
 					forms.CODE_P__text.elements.lbl_header.text = 'Inline help'
-					application.showFormInDialog(forms.CODE_P__text,-1,-1,-1,-1,' ',true,false,'inlineHelp')
+					globals.CODE_form_in_dialog(forms.CODE_P__text,-1,-1,-1,-1,' ',true,false,'inlineHelp')
 				}
 			}
 			//check to see that there is additional help for this element
 			else if (solutionPrefs.i18n[solutionPrefs.config.language][formName] && solutionPrefs.i18n[solutionPrefs.config.language][formName][elemName] && solutionPrefs.i18n[solutionPrefs.config.language][formName][elemName].inlineHelp) {
 				globals.CODE_text = solutionPrefs.i18n[solutionPrefs.config.language][formName][elemName].inlineHelp
 				forms.CODE_P__text.elements.lbl_header.text = 'Inline help'
-				application.showFormInDialog(forms.CODE_P__text,-1,-1,-1,-1,' ',true,false,'inlineHelp')
+				globals.CODE_form_in_dialog(forms.CODE_P__text,-1,-1,-1,-1,' ',true,false,'inlineHelp')
 			}
 		}
 		//no default language set up; abort
@@ -5386,7 +5386,7 @@ function _1() {
 	var	nHeight = cmdVarBin.windowSize.height
 	var	nWidth = cmdVarBin.windowSize.width
 	
-	application.showFormInDialog(forms.CODE_P__konsole, 20, 50, nWidth, nHeight + 20, 'Servoy Konsole',  true,  false, 'KONSOLE', false)
+	globals.CODE_form_in_dialog(forms.CODE_P__konsole, 20, 50, nWidth, nHeight + 20, 'Servoy Konsole',  true,  false, 'KONSOLE', false)
 }
 
 /**
@@ -6115,5 +6115,22 @@ function CODE_form_in_dialog(form, x, y, width, height, title, resizable, showTe
 		FiD.showTextToolbar(showText)
 		FiD.title = title
 		FiD.show(form)
+	}
+}
+
+/**
+ * Wrapper to aide in converting deprecated closeFormDialog calls
+ * 
+ * @param {String} [name]
+ * 
+ * @properties={typeid:24,uuid:"BAF7CB19-281E-49ED-B83D-E6AEF1A566F6"}
+ */
+function CODE_form_in_dialog_close(name) {
+	//pre-6
+	if (utils.stringToNumber(application.getVersion()) < 6) {
+		application.closeFormDialog(name)
+	}
+	else {
+		application.getWindow(name).destroy()
 	}
 }

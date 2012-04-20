@@ -324,7 +324,7 @@ if (oArg.syntax)
 	return oSyntax;
 }
 
-application.closeFormDialog('KONSOLE')
+globals.CODE_form_in_dialog_close('KONSOLE')
 
 return true;
 
@@ -574,7 +574,7 @@ var bDialog = false;;
 if (application.isFormInDialog(forms[formName]))
 {
 	bDialog = true;
-	application.closeFormDialog(true);
+	globals.CODE_form_in_dialog_close(true);
 }
 
 plugins.kioskmode.setMenuVisible(bVisible)
@@ -1085,7 +1085,7 @@ var bReturn = true;
 if (forms[oArg.arg])
 {
 	oArg.result = "Closing Commander to show form '" + oArg.arg + "'...";
-	application.closeFormDialog(true);
+	globals.CODE_form_in_dialog_close(true);
 	forms[oArg.arg].controller.show();
 }
 else
@@ -1323,7 +1323,7 @@ var bDialog = false;;
 if (application.isFormInDialog(forms[formName]))
 {
 	bDialog = true;
-	application.closeFormDialog(true);
+	globals.CODE_form_in_dialog_close(true);
 }
 
 plugins.kioskmode.setToolBarVisible(bVisible);
@@ -2281,7 +2281,7 @@ forms.CODE_P__konsole.initialize()
 var	nHeight = cmdVarBin.windowSize.height
 var	nWidth = cmdVarBin.windowSize.width
 
-application.showFormInDialog(forms.CODE_P__konsole, -1,  -1, nWidth, nHeight + 20, 'Servoy Console',  true,  false);
+globals.CODE_form_in_dialog(forms.CODE_P__konsole, -1,  -1, nWidth, nHeight + 20, 'Servoy Console',  true,  false);
 
 }
 
