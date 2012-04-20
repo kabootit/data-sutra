@@ -1514,8 +1514,12 @@ function TRIGGER_progressbar_stop(forceUpdate) {
 		
 		//progress toolbar is showing, go back to last selected toolbar
 		if (forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex == 3) {
+			//set toolbar to preference pane when in a preference
+			if (solutionPrefs.config.prefs.toolbarTabSelected) {
+				forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex = 2
+			}
 			//set toolbar to previous if there is one
-			if (solutionPrefs.config.lastSelectedToolbar) {
+			else if (solutionPrefs.config.lastSelectedToolbar) {
 				globals.DS_toolbar_cycle(solutionPrefs.config.lastSelectedToolbar)
 			}
 			//go to solution title
