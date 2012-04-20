@@ -136,7 +136,7 @@ if (application.__parent__.solutionPrefs) {
 	
 	//load formNames for selected module
 	//only run when using query based way to hit repository
-	if (!solutionPrefs.repository.api) {
+	if (!solutionPrefs.repository.api && solutionPrefs.repository.allForms) {
 		var moduleForms = solutionPrefs.repository.allForms[help_module_filter]
 	
 		var formNames = new Array()
@@ -208,6 +208,7 @@ FILTER_forms()
 /**
  *
  * @properties={typeid:24,uuid:"5cfde065-fd56-49e2-a662-bec295e802de"}
+ * @AllowToRunInFind
  */
 function GET_record()
 {

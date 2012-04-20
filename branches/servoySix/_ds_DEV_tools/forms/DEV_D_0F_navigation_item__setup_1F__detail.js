@@ -40,7 +40,7 @@ function FILTER_forms()
 //only show forms from selected module when in top level form
 if (application.__parent__.solutionPrefs && foundset.getSize() && module_filter) {
 	//get from repository via queries way
-	if (!solutionPrefs.repository.api) {
+	if (!solutionPrefs.repository.api && solutionPrefs.repository.allForms) {
 		//load formNames for report module
 		var moduleForms = solutionPrefs.repository.allForms[module_filter]
 		var formNames = new Array()
@@ -112,6 +112,7 @@ else {
 /**
  *
  * @properties={typeid:24,uuid:"71f8c755-2210-40df-a121-2afe3d0b0567"}
+ * @AllowToRunInFind
  */
 function FLD_data_change__item_id()
 {
