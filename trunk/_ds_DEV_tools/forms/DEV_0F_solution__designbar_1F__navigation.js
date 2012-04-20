@@ -665,7 +665,7 @@ if (forms.NAV_0F_navigation_item.elements.tab_navigation.tabIndex != 1) {
 }
 
 //show popup
-application.showFormInDialog(
+globals.CODE_form_in_dialog(
 			forms[formName],
 			-1,-1,875,675,
 			'Navigation item',
