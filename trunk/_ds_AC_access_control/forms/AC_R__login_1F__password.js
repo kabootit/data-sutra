@@ -1271,7 +1271,10 @@ else {
 
 	//loop through all items in navPrefs and put each form in the main screen except for navigation preference items
 	if (solutionPrefs.config.prefs.formPreload) {
-
+		
+		//set flag that preload happening
+		solutionPrefs.config.prefs.formPreloading = true
+		
 		//we are using the transparent way
 		if (solutionPrefs.config.prefs.formPreloadGray) {
 			//figure out how many nav items we are looking at
@@ -1401,6 +1404,9 @@ else {
 		}
 
 		globals.TRIGGER_interface_lock(false)
+		
+		//remove flag that preload happening
+		delete solutionPrefs.config.prefs.formPreloading
 	}
 
 	// // //
