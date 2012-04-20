@@ -27,10 +27,10 @@ function FILTER_forms()
 //only run when inside frameworks
 if (application.__parent__.solutionPrefs) {
 	//load formNames for selected module
-	if (!solutionPrefs.repository.api) {
+	if (!solutionPrefs.repository.api && solutionPrefs.repository.allForms) {
 		var moduleForms = solutionPrefs.repository.allForms[module_filter]
 	}
-	else {
+	else if (solutionPrefs.repository.workspace) {
 		var moduleForms = solutionPrefs.repository.workspace[module_filter]
 	}
 	
@@ -87,10 +87,10 @@ function FILTER_forms_2()
 //only run when inside frameworks
 if (application.__parent__.solutionPrefs) {
 	//load formNames for selected module
-	if (!solutionPrefs.repository.api) {
+	if (!solutionPrefs.repository.api && solutionPrefs.repository.allForms) {
 		var moduleForms = solutionPrefs.repository.allForms[module_filter_2]
 	}
-	else {
+	else if (solutionPrefs.repository.workspace) {
 		var moduleForms = solutionPrefs.repository.workspace[module_filter_2]
 	}
 	

@@ -204,7 +204,7 @@ if (application.__parent__.solutionPrefs) {
 					)
 	//module selected	
 	if (module) {
-		if (!solutionPrefs.repository.api) {
+		if (!solutionPrefs.repository.api && solutionPrefs.repository.allForms) {
 			//loop through all forms in this module
 			for (var formName in solutionPrefs.repository.allForms[module]) {
 				//if valid form, get all named elements

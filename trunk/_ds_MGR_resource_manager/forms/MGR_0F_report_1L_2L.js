@@ -134,7 +134,7 @@ function SET_forms()
 //only show forms from selected module when in top level form
 if (application.__parent__.solutionPrefs && foundset.getSize() && report_module) {
 	//get from repository via queries way
-	if (!solutionPrefs.repository.api) {
+	if (!solutionPrefs.repository.api && solutionPrefs.repository.allForms) {
 		//load formNames for report module
 		var moduleForms = solutionPrefs.repository.allForms[report_module]
 		var formNames = new Array()
