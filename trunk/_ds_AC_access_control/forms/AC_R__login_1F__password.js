@@ -139,7 +139,7 @@ function FORM_on_show()
 elements.gfx_capslock.visible = false
 
 //read previous login from properties
-globals.AC_login_user = application.getUserProperty('sutraUser')
+globals.AC_login_user = application.getUserProperty('sutra' + application.getServerURL().substr(7) + 'User')
 
 //request focus on user field if empty
 if (!globals.AC_login_user) {
@@ -568,9 +568,9 @@ else {
 	//		2-5. add client info to the properties file on the local machine
 	// // //
 
-	application.setUserProperty('sutraUser',globals.AC_login_user)
-	application.setUserProperty('sutraGroup',groupID)
-	application.setUserProperty('sutraOrganization',organizationID)
+	application.setUserProperty('sutra' + application.getServerURL().substr(7) + 'User',globals.AC_login_user)
+	application.setUserProperty('sutra' + application.getServerURL().substr(7) + 'Group',groupID)
+	application.setUserProperty('sutra' + application.getServerURL().substr(7) + 'Organization',organizationID)
 
 
 	// // //

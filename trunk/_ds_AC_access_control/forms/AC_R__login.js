@@ -47,8 +47,8 @@ elements.lbl_footer_left.visible = false
 elements.lbl_footer_right.visible = false
 
 //which group was the last one to log in
-var groupID = application.getUserProperty('sutraGroup')
-var userID = application.getUserProperty('sutraUser')
+var groupID = application.getUserProperty('sutra' + application.getServerURL().substr(7) + 'Group')
+var userID = application.getUserProperty('sutra' + application.getServerURL().substr(7) + 'User')
 
 //running in preview mode
 if (preview && this.blogID) {
