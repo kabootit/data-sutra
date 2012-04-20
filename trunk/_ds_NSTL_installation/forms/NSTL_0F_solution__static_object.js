@@ -79,7 +79,7 @@ if (input == 'Yes') {
 	databaseManager.saveData()
 	var abc = navigation_node
 	//show popup to choose which groups to save navigationPrefs for
-	application.showFormInDialog(forms.DEV_P_group,-1,-1,200,300,'Groups',false,false,'devGroupChecksum')
+	globals.CODE_form_in_dialog(forms.DEV_P_group,-1,-1,200,300,'Groups',false,false,'devGroupChecksum')
 	
 	if (globals.DEV_P_navigation) {
 		var groupIDs = globals.DEV_P_navigation.split('\n')
