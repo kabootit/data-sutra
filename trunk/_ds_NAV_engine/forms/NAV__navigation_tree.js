@@ -355,7 +355,9 @@ function LIST_generate(selected) {
  * @properties={typeid:24,uuid:"C8E2FCEF-C1C4-42B6-B179-4C73ECC94ED0"}
  */
 function LIST_rescroll(idNavItem) {
-	var scrollRows = plugins.ScrollerPlus.getScroller(controller.getName() + '__rows', SCROLLER_TYPE.FORM, SCROLL_ORIENTATION.VERTICAL)
+	if (plugins.ScrollerPlus) {
+		var scrollRows = plugins.ScrollerPlus.getScroller(controller.getName() + '__rows', SCROLLER_TYPE.FORM, SCROLL_ORIENTATION.VERTICAL)
+	}
 	
 	//if navigation items in this set, do the appropriate toggle
 	if (navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set] && navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].itemsByOrder && navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].itemsByOrder.length) {
@@ -381,7 +383,7 @@ function LIST_rescroll(idNavItem) {
 	var clickSize = Math.floor(heightHTML / 10) //the amount of one downward click in the scroll bar
 	var rowScroll = heightHTML / rowHeight //Math.floor() gives the number of rows that can be displayed without scrolling
 	var maxScroll = 5000 //(rowHeight * (indexEnd - indexStart + 1)) - heightHTML
-	var currentScroll = scrollRows.position
+	var currentScroll = scrollRows ? scrollRows.position : 0
 	var currentTop = (currentScroll) ? Math.ceil(currentScroll / rowHeight) + 1 : 1 //index of record at top of scroll (add 1 to account for partial records)
 	var currentBottom = currentTop + Math.floor(rowScroll) - 1 //subtract 1 to account for partial records, 1 for selected offset (in defintion of selected)
 	var scrollPosn = null
@@ -424,7 +426,7 @@ function LIST_rescroll(idNavItem) {
 		//otherwise selected item in viewable area; no action necessary
 	}
 	
-	if (typeof scrollPosn == 'number') {
+	if (typeof scrollPosn == 'number' && scrollRows) {
 		application.updateUI()
 		scrollRows.position = scrollPosn
 		return true

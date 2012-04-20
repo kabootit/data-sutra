@@ -77,7 +77,7 @@ databaseManager.setAutoSave(false)
 //enable cancelling
 forms.NAV_P_action_item_filter.elements.btn_cancel.visible = true
 
-application.showFormInDialog(forms.NAV_P_action_item_filter,-1,-1,-1,-1,'Edit',false,false,'filterDetails')
+globals.CODE_form_in_dialog(forms.NAV_P_action_item_filter,-1,-1,-1,-1,'Edit',false,false,'filterDetails')
 }
 
 /**
@@ -145,7 +145,7 @@ if (!noPopup) {
 	//disable cancelling
 	forms.NAV_P_action_item_filter.elements.btn_cancel.visible = false
 	
-	application.showFormInDialog(forms.NAV_P_action_item_filter,-1,-1,-1,-1,'New filter',false,false,'filterDetails')
+	globals.CODE_form_in_dialog(forms.NAV_P_action_item_filter,-1,-1,-1,-1,'New filter',false,false,'filterDetails')
 }
 //return record object for additional processing
 else {

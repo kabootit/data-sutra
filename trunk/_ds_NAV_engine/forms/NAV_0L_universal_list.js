@@ -134,7 +134,7 @@ if (application.__parent__.solutionPrefs) {
 	var serverName = forms[formName].controller.getServerName()
 	var tableName = forms[formName].controller.getTableName()
 	//only run when using query based way to hit repository
-	if (!solutionPrefs.repository.api) {
+	if (!solutionPrefs.repository.api && solutionPrefs.repository.allForms) {
 		var pkName = solutionPrefs.repository.allFormsByTable[serverName][tableName].primaryKey
 		var pkActedOn = forms[formName][pkName]
 	}
@@ -819,7 +819,7 @@ if (filters.length) {
 	var serverName = forms[formName].controller.getServerName()
 	var tableName = forms[formName].controller.getTableName()
 	//only run when using query based way to hit repository
-	if (!solutionPrefs.repository.api) {
+	if (!solutionPrefs.repository.api && solutionPrefs.repository.allForms) {
 		var pkName = solutionPrefs.repository.allFormsByTable[serverName][tableName].primaryKey
 		var pkActedOn = forms[formName][pkName]
 	}
@@ -1119,7 +1119,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	globals.TRIGGER_toolbar_record_navigator_set()
 	
 	//only run when using query based way to hit repository and form present
-	if (!solutionPrefs.repository.api && forms[formName]) {			
+	if (!solutionPrefs.repository.api && solutionPrefs.repository.allForms && forms[formName]) {			
 		var serverName = forms[formName].controller.getServerName()
 		var tableName = forms[formName].controller.getTableName()
 		
@@ -1309,7 +1309,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	var serverName = forms[formName].controller.getServerName()
 	var tableName = forms[formName].controller.getTableName()
 	//only run when using query based way to hit repository
-	if (!solutionPrefs.repository.api) {
+	if (!solutionPrefs.repository.api && solutionPrefs.repository.allForms) {
 		var pkName = solutionPrefs.repository.allFormsByTable[serverName][tableName].primaryKey
 		var pkActedOn = forms[formName][pkName]
 	}
@@ -1354,7 +1354,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		solutionPrefs.fastFind.currentSearch[serverName][tableName] = new Object()
 	}
 	//only run when using query based way to hit repository
-	if (!solutionPrefs.repository.api) {
+	if (!solutionPrefs.repository.api && solutionPrefs.repository.allForms) {
 		//check if not using separateFoundset
 		if (!solutionPrefs.repository.allFormsByTable[serverName][tableName][formName].useSeparateFoundset) {
 			solutionPrefs.fastFind.currentSearch[serverName][tableName].sortField = colName
@@ -1469,7 +1469,7 @@ if (application.__parent__.solutionPrefs) {
 	var serverName = forms[formName].controller.getServerName()
 	var tableName = forms[formName].controller.getTableName()
 	//only run when using query based way to hit repository
-	if (!solutionPrefs.repository.api) {
+	if (!solutionPrefs.repository.api && solutionPrefs.repository.allForms) {
 		var pkName = solutionPrefs.repository.allFormsByTable[serverName][tableName].primaryKey
 		var pkActedOn = forms[formName][pkName]
 	}

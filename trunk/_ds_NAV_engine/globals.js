@@ -4597,7 +4597,7 @@ function NAV_universal_list_select()
 	
 	//record not clicked on before, throw up busy bar and busy cursor
 	var record = forms[formName].foundset.getRecord(rowSelected)
-	if (navigationPrefs.byNavItemID[currentNavItem].navigationItem.initialRecord && !navigationPrefs.byNavItemID[currentNavItem].listData.visitedPKs[record[pkName]]) {
+	if (record && navigationPrefs.byNavItemID[currentNavItem].navigationItem.initialRecord && !navigationPrefs.byNavItemID[currentNavItem].listData.visitedPKs[record[pkName]]) {
 		var recNotLoaded = true
 		
 		//don't turn busy indicator on if it is already on

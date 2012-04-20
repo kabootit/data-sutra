@@ -113,8 +113,10 @@ function LIST_redraw(event,itemID,reScroll,skipLoadForms,favoriteMode,selected) 
 			}			
 			
 			//get current scroll position
-			var scrollRows = plugins.ScrollerPlus.getScroller(controller.getName(), SCROLLER_TYPE.FORM, SCROLL_ORIENTATION.VERTICAL)
-			var scrollY = scrollRows.position			
+			if (plugins.ScrollerPlus) {
+				var scrollRows = plugins.ScrollerPlus.getScroller(controller.getName(), SCROLLER_TYPE.FORM, SCROLL_ORIENTATION.VERTICAL)
+			}
+			var scrollY = scrollRows ? scrollRows.position : 0
 		}
 		
 		//redo form of favorite records
