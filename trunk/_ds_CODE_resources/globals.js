@@ -487,6 +487,14 @@ function TRIGGER_interface_lock(freeze,freezeAll,nonTransparent,spinner,nonTrans
 		gfxRightTwo.visible = false
 		gfxCurtain.visible = false
 		
+		//return curtain to default state
+		gfxCurtain.text = null
+		gfxCurtain.transparent = true
+		gfxCurtain.setImageURL('media:///curtain_5E6166.png')
+		gfxCurtain.setBorder('EmptyBorder,0,0,0,0')
+		gfxCurtain.text = null
+		gfxCurtain.toolTipText = null
+		
 		//graphic 1
 		var x = 0
 		var y = 44
@@ -895,15 +903,14 @@ function TRIGGER_interface_lock(freeze,freezeAll,nonTransparent,spinner,nonTrans
 				//turn off curtain
 				if (forms[baseForm].elements.gfx_curtain.visible) {
 					forms[baseForm].elements.gfx_curtain.visible = false
-					
-					//return curtain to default state
-					forms[baseForm].elements.gfx_curtain.transparent = true
-					forms[baseForm].elements.gfx_curtain.setImageURL('media:///curtain_5E6166.png')
-					forms[baseForm].elements.gfx_curtain.setBorder('EmptyBorder,0,0,0,0')
-					
-					forms[baseForm].elements.gfx_curtain.text = null
-					forms[baseForm].elements.gfx_curtain.toolTipText = null
-				}
+				}	
+//				//return curtain to default state
+//				forms[baseForm].elements.gfx_curtain.transparent = true
+//				forms[baseForm].elements.gfx_curtain.setImageURL('media:///curtain_5E6166.png')
+//				forms[baseForm].elements.gfx_curtain.setBorder('EmptyBorder,0,0,0,0')
+//				
+//				forms[baseForm].elements.gfx_curtain.text = null
+//				forms[baseForm].elements.gfx_curtain.toolTipText = null
 				
 				//turn off curtain3
 				if (forms[baseForm].elements.gfx_spinner.visible) {
