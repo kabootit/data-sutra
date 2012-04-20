@@ -239,26 +239,27 @@ var results = navigationSet.search()
 	}
 //}
 
+databaseManager.saveData()
 
 /*
  * load FID with unassigned navigation records
  */
 
 //find group navigation set unassigned
-var navigationSet = databaseManager.getFoundSet(controller.getServerName(),'sutra_control_navigation')
+var navigationSet = forms.AC_P_control_navigation.foundset//databaseManager.getFoundSet(controller.getServerName(),'sutra_control_navigation')
 navigationSet.clear()
 navigationSet.find()
 navigationSet.id_group = id_group
 navigationSet.flag_chosen = '^='
 var results = navigationSet.search()
 
-forms.AC_P_control_navigation.controller.loadRecords(navigationSet)
+//forms.AC_P_control_navigation.controller.loadRecords(navigationSet)
 
 //temporarily turn of auto save
 databaseManager.setAutoSave(false)
 
 //show FID
-application.showFormInDialog(forms.AC_P_control_navigation,-1,-1,-1,-1,"Access",false,false,'groupNavigationSets')
+globals.CODE_form_in_dialog(forms.AC_P_control_navigation,-1,-1,-1,-1,"Access",false,false,'groupNavigationSets')
 
 
 

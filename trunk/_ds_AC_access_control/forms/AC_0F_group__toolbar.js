@@ -79,7 +79,7 @@ var dataset = databaseManager.getDataSetByQuery(
 var allToolbars = dataset.getColumnAsArray(1)
 
 //find group viewer merge records
-var groupToolbar = databaseManager.getFoundSet(controller.getServerName(),'sutra_access_group_toolbar')
+var groupToolbar = forms.AC_P_group_toolbar.foundset //databaseManager.getFoundSet(controller.getServerName(),'sutra_access_group_toolbar')
 groupToolbar.clear()
 groupToolbar.find()
 groupToolbar.id_group = globals.AC_group_selected
@@ -114,13 +114,13 @@ var results = groupToolbar.search()
 
 if (results) {
 	groupToolbar.sort('ac_access_group_toolbar_to_toolbar.row_order asc')
-	forms.AC_P_group_toolbar.controller.loadRecords(groupToolbar)
+//	forms.AC_P_group_toolbar.controller.loadRecords(groupToolbar)
 	
 	//temporarily turn of auto save
 	databaseManager.setAutoSave(false)
 	
 	//show FID
-	application.showFormInDialog(forms.AC_P_group_toolbar,-1,-1,-1,-1,"Toolbars",false,false,'accessGroupToolbars')
+	globals.CODE_form_in_dialog(forms.AC_P_group_toolbar,-1,-1,-1,-1,"Toolbars",false,false,'accessGroupToolbars')
 }
 else {
 	plugins.dialogs.showInfoDialog('No toolbars','There are no toolbars that are not already assigned to this group')

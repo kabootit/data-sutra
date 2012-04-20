@@ -76,7 +76,7 @@ if (results) {
 	databaseManager.setAutoSave(false)
 	
 	//show FID
-	application.showFormInDialog(forms.AC_P_user_group__group,-1,-1,-1,-1,"Groups",false,false,'accessAssignGroups')
+	globals.CODE_form_in_dialog(forms.AC_P_user_group__group,-1,-1,-1,-1,"Groups",false,false,'accessAssignGroups')
 }
 else {
 	plugins.dialogs.showInfoDialog('No groups','This user is already a member of all available groups')
