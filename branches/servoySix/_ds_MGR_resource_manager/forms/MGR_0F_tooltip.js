@@ -204,7 +204,7 @@ if (application.__parent__.solutionPrefs) {
 					)
 	//module selected	
 	if (module) {
-		if (!solutionPrefs.repository.api) {
+		if (!solutionPrefs.repository.api && solutionPrefs.repository.allForms) {
 			//loop through all forms in this module
 			for (var formName in solutionPrefs.repository.allForms[module]) {
 				//if valid form, get all named elements
@@ -349,6 +349,7 @@ else {
 /**
  *
  * @properties={typeid:24,uuid:"DBDDC126-933F-4B96-89A6-2DE1D67F3C0B"}
+ * @AllowToRunInFind
  */
 function PRINT_TIP_report()
 {

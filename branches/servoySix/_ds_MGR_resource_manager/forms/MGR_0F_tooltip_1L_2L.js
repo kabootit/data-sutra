@@ -221,7 +221,7 @@ function SET_forms()
 if (application.__parent__.solutionPrefs && foundset.getSize() && module_filter) {
 	
 	//get from the repository via a few queries
-	if (!solutionPrefs.repository.api) {
+	if (!solutionPrefs.repository.api && solutionPrefs.repository.allForms) {
 		//load formNames for report module
 		var moduleForms = solutionPrefs.repository.allForms[module_filter]
 		var formNames = new Array()
