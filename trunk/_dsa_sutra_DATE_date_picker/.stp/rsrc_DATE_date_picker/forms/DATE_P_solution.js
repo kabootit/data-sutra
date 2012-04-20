@@ -28,7 +28,7 @@ this.FrameworksFastFind = null
 //enable closing the form
 globals.CODE_hide_form = 1
 
-application.closeFormDialog('datePicker')
+globals.CODE_form_in_dialog_close('datePicker')
 }
 
 /**
@@ -443,7 +443,7 @@ if (this.FrameworksFastFind) {
 	globals.CODE_hide_form = 1
 	
 	//close FID
-	application.closeFormDialog('datePicker')
+	globals.CODE_form_in_dialog_close('datePicker')
 	
 	globals.DATASUTRA_find = (globals.DATE_date_range_type == 'Day') ? '#'+globals.DATE_date_range_entry : globals.DATE_date_range_entry //trap for day
 	globals.NAV_find_end_normal()
@@ -458,7 +458,7 @@ else {
 	globals.CODE_hide_form = 1
 	
 	//close FID
-	application.closeFormDialog('datePicker')
+	globals.CODE_form_in_dialog_close('datePicker')
 	
 	//copy current foundset to restore if no records are found
 	var currentRecs = forms[globals.DATE_date_range_search_form].foundset.duplicateFoundSet()
