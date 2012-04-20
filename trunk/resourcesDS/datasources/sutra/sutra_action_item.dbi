@@ -82,6 +82,13 @@ name:"menu_name"
 },
 {
 allowNull:true,
+creationOrderIndex:18,
+dataType:-1,
+length:16777215,
+name:"menu_tooltip"
+},
+{
+allowNull:true,
 creationOrderIndex:2,
 dataType:-1,
 length:16777215,

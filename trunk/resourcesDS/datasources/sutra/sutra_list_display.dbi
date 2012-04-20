@@ -16,6 +16,14 @@ name:"display_default"
 },
 {
 allowNull:true,
+creationOrderIndex:7,
+dataType:12,
+description:"`",
+length:255,
+name:"flag_platform"
+},
+{
+allowNull:true,
 creationOrderIndex:5,
 dataType:12,
 length:255,
