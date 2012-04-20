@@ -2343,8 +2343,8 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		//load list window
 		
 		//on a custom tab, navigate there
-		if (navigationPrefs.byNavItemID[navigationItemID].universalList && navigationPrefs.byNavItemID[navigationItemID].universalList.buttons.tabs && typeof navigationPrefs.byNavItemID[navigationItemID].universalList.buttons.tabs.tabPosn == 'number') {
-			var prefName = 'Custom tab ' + navigationItemID + ': ' + navigationPrefs.byNavItemID[navigationItemID].universalList.buttons.tabs[navigationPrefs.byNavItemID[navigationItemID].universalList.buttons.tabs.tabPosn].formToLoad
+		if (navigationPrefs.byNavItemID[navigationItemID].buttons.tabs && typeof navigationPrefs.byNavItemID[navigationItemID].buttons.tabs.tabPosn == 'number') {
+			var prefName = 'Custom tab ' + navigationItemID + ': ' + navigationPrefs.byNavItemID[navigationItemID].buttons.tabs[navigationPrefs.byNavItemID[navigationItemID].buttons.tabs.tabPosn].formToLoad
 			forms[baseForm].elements.tab_content_B.tabIndex = navigationPrefs.byNavSetName.configPanes.itemsByName[prefName].listData.tabNumber
 		}
 		else {
@@ -3482,8 +3482,7 @@ navItemObj._about_ = '[' + record[relationName].nav_name + '] ' + record.item_na
 	if (record.use_fw_list) {
 		//main container
 		navItemObj.universalList = {
-						displays : new Array(),
-						buttons : new Object()
+						displays : new Array()
 					}
 		
 		if (oldNavItemObj && oldNavItemObj.universalList && 	oldNavItemObj.universalList.displays) {
@@ -3515,6 +3514,8 @@ navItemObj._about_ = '[' + record[relationName].nav_name + '] ' + record.item_na
 			}
 		}
 		
+		navItemObj.buttons = new Object()
+		
 		//load buttons
 		var relnButton = 'nav_navigation_item_to_action_item'
 		var relnFilter = 'nav_action_item_to_action_item_filter'
@@ -3534,7 +3535,7 @@ navItemObj._about_ = '[' + record[relationName].nav_name + '] ' + record.item_na
 						//check that button turned on
 						if (record.bar_item_add) {
 							//assign subItem
-							navItemObj.universalList.buttons.add = subItem
+							navItemObj.buttons.add = subItem
 						}
 						
 						break
@@ -3542,12 +3543,12 @@ navItemObj._about_ = '[' + record[relationName].nav_name + '] ' + record.item_na
 						//check that button turned on
 						if (record.bar_item_action) {
 							//create array if none exists
-							if (!navItemObj.universalList.buttons.actions) {
-								navItemObj.universalList.buttons.actions = new Array()
+							if (!navItemObj.buttons.actions) {
+								navItemObj.buttons.actions = new Array()
 							}
 							
 							//assign subItem to last position
-							navItemObj.universalList.buttons.actions.push(subItem)
+							navItemObj.buttons.actions.push(subItem)
 						}
 						
 						break
@@ -3555,8 +3556,8 @@ navItemObj._about_ = '[' + record[relationName].nav_name + '] ' + record.item_na
 						//check that button turned on
 						if (record.bar_item_filter) {
 							//create array if none exists
-							if (!navItemObj.universalList.buttons.filters) {
-								navItemObj.universalList.buttons.filters = new Array()
+							if (!navItemObj.buttons.filters) {
+								navItemObj.buttons.filters = new Array()
 							}
 							
 							//tare out last value
@@ -3633,21 +3634,21 @@ navItemObj._about_ = '[' + record[relationName].nav_name + '] ' + record.item_na
 									var found = false
 									
 									//SUB 1
-									for (var j = 0; j < navItemObj.universalList.buttons.filters.length && !found; j++) {
+									for (var j = 0; j < navItemObj.buttons.filters.length && !found; j++) {
 										//this node has children
-										if (navItemObj.universalList.buttons.filters[j].actionID) {
+										if (navItemObj.buttons.filters[j].actionID) {
 												//check node itself
-												if (navItemObj.universalList.buttons.filters[j].actionID == subItem.idActionItemParent) {
+												if (navItemObj.buttons.filters[j].actionID == subItem.idActionItemParent) {
 														found = true
-														navItemObj.universalList.buttons.filters[j].push(filterNode)
+														navItemObj.buttons.filters[j].push(filterNode)
 												}
 												
 												//SUB2
-												for (var k = 0; k < navItemObj.universalList.buttons.filters[j].length && !found; k++) {
+												for (var k = 0; k < navItemObj.buttons.filters[j].length && !found; k++) {
 														//check node itself
-														if (navItemObj.universalList.buttons.filters[j][k].actionID == subItem.idActionItemParent) {
+														if (navItemObj.buttons.filters[j][k].actionID == subItem.idActionItemParent) {
 																found = true
-																navItemObj.universalList.buttons.filters[j][k].push(filterNode)
+																navItemObj.buttons.filters[j][k].push(filterNode)
 														}	
 												}
 										}
@@ -3655,7 +3656,7 @@ navItemObj._about_ = '[' + record[relationName].nav_name + '] ' + record.item_na
 								}
 								//added to MAIN MENU
 								else {
-									navItemObj.universalList.buttons.filters.push(filterNode)
+									navItemObj.buttons.filters.push(filterNode)
 								}
 							}
 						}
@@ -3665,12 +3666,12 @@ navItemObj._about_ = '[' + record[relationName].nav_name + '] ' + record.item_na
 						//check that button turned on
 						if (record.bar_item_report) {
 							//create array if none exists
-							if (!navItemObj.universalList.buttons.reports) {
-								navItemObj.universalList.buttons.reports = new Array()
+							if (!navItemObj.buttons.reports) {
+								navItemObj.buttons.reports = new Array()
 							}
 							
 							//assign subItem to last position
-							navItemObj.universalList.buttons.reports.push(subItem)
+							navItemObj.buttons.reports.push(subItem)
 						}
 						
 						break
@@ -3678,12 +3679,12 @@ navItemObj._about_ = '[' + record[relationName].nav_name + '] ' + record.item_na
 						//check that button turned on
 						if (record.bar_item_tab) {
 							//create array if none exists
-							if (!navItemObj.universalList.buttons.tabs) {
-								navItemObj.universalList.buttons.tabs = new Array()
+							if (!navItemObj.buttons.tabs) {
+								navItemObj.buttons.tabs = new Array()
 							}
 							
 							//assign subItem to last position
-							navItemObj.universalList.buttons.tabs.push(subItem)
+							navItemObj.buttons.tabs.push(subItem)
 						}
 						
 						break
@@ -3696,8 +3697,8 @@ navItemObj._about_ = '[' + record[relationName].nav_name + '] ' + record.item_na
 			
 			for (var i = 0; i < reSort.length; i++) {
 				//check if that item is even present
-				if (navItemObj.universalList.buttons[reSort[i]]) {
-					navItemObj.universalList.buttons[reSort[i]].sort(globals.CODE_sort_dd_array)
+				if (navItemObj.buttons[reSort[i]]) {
+					navItemObj.buttons[reSort[i]].sort(globals.CODE_sort_dd_array)
 				}
 			}
 		}

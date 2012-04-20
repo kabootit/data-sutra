@@ -32,8 +32,8 @@ function ACTIONS_list()
 var valueList = new Array()
 var methodTypes = new Array()
 var methods = new Array()
-for (var i = 0; i < navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].universalList.buttons.actions.length ; i++) {
-	var actionItem = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].universalList.buttons.actions[i]
+for (var i = 0; i < navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].buttons.actions.length ; i++) {
+	var actionItem = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].buttons.actions[i]
 	valueList.push(actionItem.menuName)
 	methodTypes.push(actionItem.methodType)
 	methods.push(actionItem.method)
@@ -247,18 +247,18 @@ function BUTTONS_toggle()
 var currentNavItem = arguments[0]
 
 //toggle add record button
-if (navigationPrefs.byNavItemID[currentNavItem].universalList && navigationPrefs.byNavItemID[currentNavItem].universalList.buttons.add) {
+if (navigationPrefs.byNavItemID[currentNavItem].universalList && navigationPrefs.byNavItemID[currentNavItem].buttons.add) {
 	elements.btn_add.visible = true
 	
 	//show custom tooltip
-	elements.btn_add.toolTipText = navigationPrefs.byNavItemID[currentNavItem].universalList.buttons.add.menuTooltip || 'Add'
+	elements.btn_add.toolTipText = navigationPrefs.byNavItemID[currentNavItem].buttons.add.menuTooltip || 'Add'
 }
 else {
 	elements.btn_add.visible = false
 }
 
 //toggle actions button
-if (navigationPrefs.byNavItemID[currentNavItem].universalList && navigationPrefs.byNavItemID[currentNavItem].universalList.buttons.actions) {
+if (navigationPrefs.byNavItemID[currentNavItem].universalList && navigationPrefs.byNavItemID[currentNavItem].buttons.actions) {
 	elements.btn_actions.visible = true
 }
 else {
@@ -266,7 +266,7 @@ else {
 }
 
 //toggle filters button
-if (navigationPrefs.byNavItemID[currentNavItem].universalList && navigationPrefs.byNavItemID[currentNavItem].universalList.buttons.filters) {
+if (navigationPrefs.byNavItemID[currentNavItem].universalList && navigationPrefs.byNavItemID[currentNavItem].buttons.filters) {
 	elements.btn_filters.visible = true
 }
 else {
@@ -274,7 +274,7 @@ else {
 }
 
 //toggle reports button
-if (navigationPrefs.byNavItemID[currentNavItem].universalList && navigationPrefs.byNavItemID[currentNavItem].universalList.buttons.reports) {
+if (navigationPrefs.byNavItemID[currentNavItem].universalList && navigationPrefs.byNavItemID[currentNavItem].buttons.reports) {
 	elements.btn_reports.visible = true
 }
 else {
@@ -282,7 +282,7 @@ else {
 }
 
 //toggle tabs button
-if (navigationPrefs.byNavItemID[currentNavItem].universalList && navigationPrefs.byNavItemID[currentNavItem].universalList.buttons.tabs) {
+if (navigationPrefs.byNavItemID[currentNavItem].universalList && navigationPrefs.byNavItemID[currentNavItem].buttons.tabs) {
 	elements.btn_tabs.visible = true
 }
 else {
@@ -298,7 +298,7 @@ else {
 }
 
 //toggle line between add and actions
-if (navigationPrefs.byNavItemID[currentNavItem].universalList && navigationPrefs.byNavItemID[currentNavItem].universalList.buttons.add && navigationPrefs.byNavItemID[currentNavItem].universalList.buttons.actions) {
+if (navigationPrefs.byNavItemID[currentNavItem].universalList && navigationPrefs.byNavItemID[currentNavItem].buttons.add && navigationPrefs.byNavItemID[currentNavItem].buttons.actions) {
 	elements.divider_add_action.visible = true
 }
 else {
@@ -306,7 +306,7 @@ else {
 }
 
 //toggle line between actions and filters
-if (navigationPrefs.byNavItemID[currentNavItem].universalList && navigationPrefs.byNavItemID[currentNavItem].universalList.buttons.actions && navigationPrefs.byNavItemID[currentNavItem].universalList.buttons.filters) {
+if (navigationPrefs.byNavItemID[currentNavItem].universalList && navigationPrefs.byNavItemID[currentNavItem].buttons.actions && navigationPrefs.byNavItemID[currentNavItem].buttons.filters) {
 	elements.divider_action_filter.visible = true
 }
 else {
@@ -856,7 +856,7 @@ var menuMain = FX_multitier_menu(allMenus,0)
 
 */
 
-var menuMain = FX_multitier_menu(navigationPrefs.byNavItemID[navigationID].universalList.buttons.filters)
+var menuMain = FX_multitier_menu(navigationPrefs.byNavItemID[navigationID].buttons.filters)
 
 //only show pop-up if there are enabled values
 if (menuMain.length) {
@@ -1501,8 +1501,8 @@ if (application.__parent__.solutionPrefs) {
 	var formName = solutionPrefs.config.currentFormName
 	
 	//grab the actions to this
-	if (navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].universalList.buttons.add) {
-		var actionItem = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].universalList.buttons.add
+	if (navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].buttons.add) {
+		var actionItem = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].buttons.add
 		methodTypes = actionItem.methodType
 		methods = actionItem.method
 	}
@@ -1615,8 +1615,8 @@ var reportMethods = new Array()
 var reportWrappers = new Array()
 var allReports = databaseManager.getFoundSet('sutra','sutra_report')
 
-for (var i = 0; i < navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].universalList.buttons.reports.length ; i++) {
-	var reportItem = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].universalList.buttons.reports[i]
+for (var i = 0; i < navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].buttons.reports.length ; i++) {
+	var reportItem = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].buttons.reports[i]
 	valueList.push(reportItem.menuName)
 	reportIDs.push(reportItem.idReport)
 	
@@ -1838,8 +1838,8 @@ function TABS_list()
 //grab the actions to this
 var valueList = new Array()
 var formNames = new Array()
-for (var i = 0; i < navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].universalList.buttons.tabs.length ; i++) {
-	var actionItem = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].universalList.buttons.tabs[i]
+for (var i = 0; i < navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].buttons.tabs.length ; i++) {
+	var actionItem = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].buttons.tabs[i]
 	valueList.push(actionItem.menuName)
 	formNames.push(actionItem.formToLoad)
 }
@@ -1950,11 +1950,11 @@ if (forms[formName]) {
 	
 	//using a custom tab, note which one it is
 	if (tabSelected >= 0) {
-		navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].universalList.buttons.tabs.tabPosn = tabSelected
+		navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].buttons.tabs.tabPosn = tabSelected
 	}
 	//using default list (UL or other)
-	else if (navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].universalList.buttons.tabs) {
-		delete navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].universalList.buttons.tabs.tabPosn
+	else if (navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].buttons.tabs) {
+		delete navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].buttons.tabs.tabPosn
 	}
 	
 	//LOG ul tab change
