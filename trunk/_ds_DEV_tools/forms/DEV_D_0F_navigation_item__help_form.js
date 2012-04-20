@@ -136,7 +136,7 @@ if (application.__parent__.solutionPrefs) {
 	
 	//load formNames for selected module
 	//only run when using query based way to hit repository
-	if (!solutionPrefs.repository.api) {
+	if (!solutionPrefs.repository.api && solutionPrefs.repository.allForms) {
 		var moduleForms = solutionPrefs.repository.allForms[help_module_filter]
 	
 		var formNames = new Array()
