@@ -683,8 +683,8 @@ function TRIGGER_interface_lock(freeze,freezeAll,nonTransparent,spinner,nonTrans
 		
 		//set up spinner to show progress
 		if (spinner) {
-			forms[baseForm].elements.gfx_spinner.setSize(application.getWindowWidth(),32)
-			forms[baseForm].elements.gfx_spinner.setLocation((application.getWindowWidth() / 2) - 16, (application.getWindowHeight() / 2) - 200)
+//			forms[baseForm].elements.gfx_spinner.setSize(application.getWindowWidth(),32)
+//			forms[baseForm].elements.gfx_spinner.setLocation((application.getWindowWidth() / 2) - 16, (application.getWindowHeight() / 2) - 200)
 			forms[baseForm].elements.gfx_spinner.visible = true
 		}
 		else {
@@ -1496,8 +1496,12 @@ function TRIGGER_progressbar_stop(forceUpdate) {
 		
 		//progress toolbar is showing, go back to last selected toolbar
 		if (forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex == 3) {
+			//set toolbar to preference pane when in a preference
+			if (solutionPrefs.config.prefs.toolbarTabSelected) {
+				forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex = 2
+			}
 			//set toolbar to previous if there is one
-			if (solutionPrefs.config.lastSelectedToolbar) {
+			else if (solutionPrefs.config.lastSelectedToolbar) {
 				globals.DS_toolbar_cycle(solutionPrefs.config.lastSelectedToolbar)
 			}
 			//go to solution title
@@ -2331,7 +2335,7 @@ switch (codeType) {
 		var special =	'null undefined NaN';
 		
 		var regexList = [
-			{ regex: new RegExp('<!--[\\s\\S]*?-->', 'gm'),				css: 'comment' },			// multiline comments //[0]
+			{ regex: new RegExp('/\\*[\\s\\S]*?\\*/', 'gm'),				css: 'comment' },			// multiline comments //[0]
 			{ regex: new RegExp('//[^TODO,MEMO].*$', 'gm'),					css: 'comment' },			// one line comments //[1]
 			{ regex: new RegExp('"(?:\\.|(\\\\\\")|[^\\""\\n])*"','g'),		css: 'string' },			// double quoted strings //[2]
 			{ regex: new RegExp("'(?:\\.|(\\\\\\')|[^\\''\\n])*'", 'g'),	css: 'string' },			// single quoted strings //[3]
@@ -2342,6 +2346,7 @@ switch (codeType) {
 			{ regex: new RegExp(fxGetKeywords(servoy), 'gm'),			css: 'servoy' },			// servoy words //[8]
 			{ regex: new RegExp(fxGetKeywords(special), 'gm'),			css: 'special' },			// special red words //[9]
 			{ regex: new RegExp('[*-]|[+]|=[^=]|[/][^/*]', 'gm'),			css: 'special' },			// operators //[10]
+			{ regex: new RegExp('//[TODO,MEMO].*$', 'gm'),					css: 'devnotes' }			// todo developer notes //[11]
 			];
 		break
 }
@@ -4009,6 +4014,14 @@ function CODE_row_background(index, selected, fieldType, fieldName, formName, fi
 }
 
 /**
+ * @properties={typeid:24,uuid:"cd3e2c07-479b-423d-90e6-8f8134ec6c9c"}
+ */
+function CODE_row_background__filter() {
+	//always bluish...even selected
+	return '#A1B0CF'
+}
+
+/**
  *
  * @properties={typeid:24,uuid:"e559f8ea-8821-43d7-bfe8-8eb5d975988c"}
  */
@@ -4396,7 +4409,7 @@ function CODE_workspace_data()
 {
 //	 *	INPUT    :	1- true to create a unique copy (non-reference) of everything; used when creating static object
 
-	var tano = (Math.floor(utils.stringToNumber(application.getVersion())) == 5) ? true : false
+	var tano = (Math.floor(utils.stringToNumber(application.getVersion())) >= 5) ? true : false
 	
 	var nonRef = arguments[0]
 	
@@ -5979,5 +5992,128 @@ function CODE_servoy_object_exists(methodName, formName) {
 	}
 	else {
 		return false
+	}
+}
+
+/**
+ * Wrapper to aide in converting deprecated showFormInDialog calls
+ * 
+ * @param {Form} form
+ * @param {Number} [x]
+ * @param {Number} [y]
+ * @param {Number} [width]
+ * @param {Number} [height]
+ * @param {String} [title]
+ * @param {Boolean} [resizable=true]
+ * @param {Boolean} [showText=false]
+ * @param {String} [name]
+ * @param {Boolean} [modal=true]
+ * 
+ * @properties={typeid:24,uuid:"95177CA4-C36C-4F0D-A076-45F78F7836F4"}
+ */
+function CODE_form_in_dialog(form, x, y, width, height, title, resizable, showText, name, modal) {
+	
+	//pre-6
+	if (utils.stringToNumber(application.getVersion()) < 6) {
+		application.showFormInDialog(
+				form,
+				x,y,width,height,
+				title,
+				resizable,
+				showText,
+				name,
+				modal
+			)
+	}
+	//post-6
+	else {
+		function getSize(value, defaultValue, noMinusOne) {
+			if (typeof value == 'number' && ((noMinusOne) ? value != -1 : true)) {
+				return value
+			}
+			else {
+				return defaultValue
+			}
+		}
+		
+		//didn't take window size into account unless resizable enabled; manually calculate window dimensions
+		if (utils.stringToNumber(utils.stringReplace(application.getVersion(),'.','')) < 605) {
+			var offset = 0
+			var titleBar = 0
+			//windows
+			if (utils.stringPatternCount(solutionPrefs.clientInfo.typeOS,'Windows')) {
+				var theme = plugins.sutra.getWindowsTheme()
+				
+				//todo: figure out specifically
+				titleBar = 30
+				
+				//aero
+				if (utils.stringToNumber(solutionPrefs.clientInfo.verOS) > 6 && theme != 'Classic') {
+					offset = 16
+				}
+				//luna
+				else if (utils.stringPatternCount(solutionPrefs.clientInfo.verOS,'5.1') && theme == 'Luna') {
+					offset = 8
+				}
+				//classic
+				else {
+					offset = 8
+				}
+			}
+			//mac
+			else {
+				titleBar = 22
+			}
+			
+			var smForm = solutionModel.getForm(form.controller.getName())
+			
+			var totalWidth = smForm.width
+			
+			//offset for platform windowing
+			totalWidth += offset
+			
+			var totalHeight = 0
+			for (var i in smForm.getParts()) {
+				totalHeight += smForm.getParts()[i].height
+			}
+			//offset for platform windowing
+			totalHeight += titleBar + offset
+		}
+		//can auto-calculate height-width
+		else {
+			totalWidth = -1
+			totalHeight = -1
+		}
+		
+		if (typeof resizable != 'boolean') {
+			resizable = true
+		}
+		
+		if (typeof showText != 'boolean') {
+			showText = false
+		}
+		
+		if (typeof modal != 'boolean') {
+			modal = true
+		}
+		
+		var modality = modal ? JSWindow.MODAL_DIALOG : JSWindow.DIALOG
+		
+		//check to see if this FiD already exists and remove it
+		if (application.getWindow(name)) {
+			application.getWindow(name).destroy()
+		}
+		
+		var FiD = application.createWindow(name,modality)
+		FiD.setInitialBounds(
+						getSize(x,-1),
+						getSize(y,-1),
+						getSize(width,totalWidth,true),
+						getSize(height,totalHeight,true)
+					)
+		FiD.resizable = resizable
+		FiD.showTextToolbar(showText)
+		FiD.title = title
+		FiD.show(form)
 	}
 }
