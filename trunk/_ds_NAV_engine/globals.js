@@ -2343,7 +2343,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		//load list window
 		
 		//on a custom tab, navigate there
-		if (navigationPrefs.byNavItemID[navigationItemID].buttons.tabs && typeof navigationPrefs.byNavItemID[navigationItemID].buttons.tabs.tabPosn == 'number') {
+		if (navigationPrefs.byNavItemID[navigationItemID].buttons && navigationPrefs.byNavItemID[navigationItemID].buttons.tabs && typeof navigationPrefs.byNavItemID[navigationItemID].buttons.tabs.tabPosn == 'number') {
 			var prefName = 'Custom tab ' + navigationItemID + ': ' + navigationPrefs.byNavItemID[navigationItemID].buttons.tabs[navigationPrefs.byNavItemID[navigationItemID].buttons.tabs.tabPosn].formToLoad
 			forms[baseForm].elements.tab_content_B.tabIndex = navigationPrefs.byNavSetName.configPanes.itemsByName[prefName].listData.tabNumber
 		}
