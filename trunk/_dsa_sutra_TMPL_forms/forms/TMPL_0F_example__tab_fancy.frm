@@ -3,6 +3,15 @@ items:[
 {
 anchors:15,
 formIndex:11000,
+items:[
+{
+containsFormID:"4C400AD6-1DC0-4B6F-AB83-2E7FE97698C0",
+location:"0,84",
+text:"CODE__blank",
+typeid:15,
+uuid:"21B9DFDC-A06D-46BD-B46F-163C19700ECD"
+}
+],
 location:"0,54",
 name:"tab_example",
 printable:false,
