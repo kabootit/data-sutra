@@ -1,5 +1,5 @@
 fileVersion:38,
-mustAuthenticate:false,
+mustAuthenticate:true,
 name:"__DATASUTRA__",
 protectionPassword:"N4Fdo/LIAzp3yNKqZiqVxQ==",
 solutionType:1,

@@ -1734,7 +1734,7 @@ function DS_actions(input) {
 			}
 			//check for non-standard prefpane logout
 			else if (itemClicked == 'Logout') {
-				application.closeSolution(application.getSolutionName(),'DATASUTRA_open','true')
+				security.logout(application.getSolutionName(),'DATASUTRA_open','true')
 			}
 			//check for non-standard prefpane lock session
 			else if (itemClicked == 'Lock session') {
@@ -4214,6 +4214,10 @@ if (application.__parent__.solutionPrefs) {
 		
 		//select first tab
 		globals.DS_toolbar_cycle(4)
+	}
+	//select solution title tab
+	else {
+		globals.DS_toolbar_cycle(1)
 	}
 	
 	//turn tab panel back on
