@@ -69,7 +69,7 @@ forms.CRM_P_addresses.address_id = addressID
 forms.CRM_P_addresses.controller.search()
 
 //show form in dialog
-application.showFormInDialog(forms.CRM_P_addresses,-1,-1,-1,-1,'Edit',false,false,'crm2EditAddress')
+globals.CODE_form_in_dialog(forms.CRM_P_addresses,-1,-1,-1,-1,'Edit',false,false,'crm2EditAddress')
 }
 
 /**
@@ -109,5 +109,5 @@ forms.CRM_P_addresses.address_id = addressID
 forms.CRM_P_addresses.controller.search()
 
 //show form in dialog
-application.showFormInDialog(forms.CRM_P_addresses,-1,-1,-1,-1,'New address',false,false,false,'crm2EditAddress')
+globals.CODE_form_in_dialog(forms.CRM_P_addresses,-1,-1,-1,-1,'New address',false,false,false,'crm2EditAddress')
 }
