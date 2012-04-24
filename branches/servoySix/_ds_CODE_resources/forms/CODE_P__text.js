@@ -27,7 +27,7 @@ function ACTION_close()
 globals.CODE_hide_form = 1
 globals.CODE_text = null
 
-application.closeFormDialog('inlineHelp')
+globals.CODE_form_in_dialog_close('inlineHelp')
 }
 
 /**
@@ -92,7 +92,7 @@ function PRINT_help()
 
 // close inline help form
 globals.CODE_hide_form = 1
-application.closeFormDialog('inlineHelp')
+globals.CODE_form_in_dialog_close('inlineHelp')
 
 // print form
 forms.CODE_RPT_inline_help.controller.showPrintPreview(true)

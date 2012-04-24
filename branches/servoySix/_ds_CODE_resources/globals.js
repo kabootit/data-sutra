@@ -505,6 +505,14 @@ function TRIGGER_interface_lock(freeze,freezeAll,nonTransparent,spinner,nonTrans
 		gfxRightTwo.visible = false
 		gfxCurtain.visible = false
 		
+		//return curtain to default state
+		gfxCurtain.text = null
+		gfxCurtain.transparent = true
+		gfxCurtain.setImageURL('media:///curtain_5E6166.png')
+		gfxCurtain.setBorder('EmptyBorder,0,0,0,0')
+		gfxCurtain.text = null
+		gfxCurtain.toolTipText = null
+		
 		//graphic 1
 		var x = 0
 		var y = 44
@@ -913,15 +921,14 @@ function TRIGGER_interface_lock(freeze,freezeAll,nonTransparent,spinner,nonTrans
 				//turn off curtain
 				if (forms[baseForm].elements.gfx_curtain.visible) {
 					forms[baseForm].elements.gfx_curtain.visible = false
-					
-					//return curtain to default state
-					forms[baseForm].elements.gfx_curtain.transparent = true
-					forms[baseForm].elements.gfx_curtain.setImageURL('media:///curtain_5E6166.png')
-					forms[baseForm].elements.gfx_curtain.setBorder('EmptyBorder,0,0,0,0')
-					
-					forms[baseForm].elements.gfx_curtain.text = null
-					forms[baseForm].elements.gfx_curtain.toolTipText = null
-				}
+				}	
+//				//return curtain to default state
+//				forms[baseForm].elements.gfx_curtain.transparent = true
+//				forms[baseForm].elements.gfx_curtain.setImageURL('media:///curtain_5E6166.png')
+//				forms[baseForm].elements.gfx_curtain.setBorder('EmptyBorder,0,0,0,0')
+//				
+//				forms[baseForm].elements.gfx_curtain.text = null
+//				forms[baseForm].elements.gfx_curtain.toolTipText = null
 				
 				//turn off curtain3
 				if (forms[baseForm].elements.gfx_spinner.visible) {
@@ -1976,14 +1983,14 @@ function TRIGGER_tooltip_help_popup(tabPanelName,formName,elemName) {
 				if (firstFound) {
 					globals.CODE_text = firstFound
 					forms.CODE_P__text.elements.lbl_header.text = 'Inline help'
-					application.showFormInDialog(forms.CODE_P__text,-1,-1,-1,-1,' ',true,false,'inlineHelp')
+					globals.CODE_form_in_dialog(forms.CODE_P__text,-1,-1,-1,-1,' ',true,false,'inlineHelp')
 				}
 			}
 			//check to see that there is additional help for this element
 			else if (solutionPrefs.i18n[solutionPrefs.config.language][formName] && solutionPrefs.i18n[solutionPrefs.config.language][formName][elemName] && solutionPrefs.i18n[solutionPrefs.config.language][formName][elemName].inlineHelp) {
 				globals.CODE_text = solutionPrefs.i18n[solutionPrefs.config.language][formName][elemName].inlineHelp
 				forms.CODE_P__text.elements.lbl_header.text = 'Inline help'
-				application.showFormInDialog(forms.CODE_P__text,-1,-1,-1,-1,' ',true,false,'inlineHelp')
+				globals.CODE_form_in_dialog(forms.CODE_P__text,-1,-1,-1,-1,' ',true,false,'inlineHelp')
 			}
 		}
 		//no default language set up; abort
@@ -5405,7 +5412,7 @@ function _1() {
 	var	nHeight = cmdVarBin.windowSize.height
 	var	nWidth = cmdVarBin.windowSize.width
 	
-	application.showFormInDialog(forms.CODE_P__konsole, 20, 50, nWidth, nHeight + 20, 'Servoy Konsole',  true,  false, 'KONSOLE', false)
+	globals.CODE_form_in_dialog(forms.CODE_P__konsole, 20, 50, nWidth, nHeight + 20, 'Servoy Konsole',  true,  false, 'KONSOLE', false)
 }
 
 /**
@@ -5567,8 +5574,8 @@ function TRIGGER_ul_tab_list(input,itemName,tabSelected) {
 		//grab the actions to this
 		var valueList = new Array()
 		var formNames = new Array()
-		for (var i = 0; i < navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].universalList.buttons.tabs.length ; i++) {
-			var actionItem = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].universalList.buttons.tabs[i]
+		for (var i = 0; i < navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].buttons.tabs.length ; i++) {
+			var actionItem = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].buttons.tabs[i]
 			valueList.push(actionItem.menuName)
 			formNames.push(actionItem.formToLoad)
 		}
@@ -5676,11 +5683,11 @@ function TRIGGER_ul_tab_list(input,itemName,tabSelected) {
 				
 				//using a custom tab, note which one it is
 				if (tabSelected >= 0) {
-					navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].universalList.buttons.tabs.tabPosn = tabSelected
+					navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].buttons.tabs.tabPosn = tabSelected
 				}
 				//using default list (UL or other)
-				else if (navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].universalList.buttons.tabs) {
-					delete navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].universalList.buttons.tabs.tabPosn
+				else if (navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].buttons.tabs) {
+					delete navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].buttons.tabs.tabPosn
 				}
 				
 				//LOG ul tab change
@@ -6013,6 +6020,7 @@ function CODE_servoy_object_exists(methodName, formName) {
 		return false
 	}
 }
+<<<<<<< .working
 
 /**
  * Wrapper to aide in converting deprecated showFormInDialog calls
@@ -6092,4 +6100,144 @@ function CODE_form_in_dialog(form, x, y, width, height, title, resizable, showTe
 	FiD.showTextToolbar(showText)
 	FiD.title = title
 	FiD.show(form)
+}=======
+
+/**
+ * Wrapper to aide in converting deprecated showFormInDialog calls
+ * 
+ * @param {Form} form
+ * @param {Number} [x]
+ * @param {Number} [y]
+ * @param {Number} [width]
+ * @param {Number} [height]
+ * @param {String} [title]
+ * @param {Boolean} [resizable=true]
+ * @param {Boolean} [showText=false]
+ * @param {String} [name]
+ * @param {Boolean} [modal=true]
+ * 
+ * @properties={typeid:24,uuid:"95177CA4-C36C-4F0D-A076-45F78F7836F4"}
+ */
+function CODE_form_in_dialog(form, x, y, width, height, title, resizable, showText, name, modal) {
+	
+	//pre-6
+	if (utils.stringToNumber(application.getVersion()) < 6) {
+		application.showFormInDialog(
+				form,
+				x,y,width,height,
+				title,
+				resizable,
+				showText,
+				name,
+				modal
+			)
+	}
+	//post-6
+	else {
+		function getSize(value, defaultValue, noMinusOne) {
+			if (typeof value == 'number' && ((noMinusOne) ? value != -1 : true)) {
+				return value
+			}
+			else {
+				return defaultValue
+			}
+		}
+		
+		//didn't take window size into account unless resizable enabled; manually calculate window dimensions
+		if (utils.stringToNumber(utils.stringReplace(application.getVersion(),'.','')) < 605) {
+			var offset = 0
+			var titleBar = 0
+			//windows
+			if (utils.stringPatternCount(solutionPrefs.clientInfo.typeOS,'Windows')) {
+				var theme = plugins.sutra.getWindowsTheme()
+				
+				//todo: figure out specifically
+				titleBar = 30
+				
+				//aero
+				if (utils.stringToNumber(solutionPrefs.clientInfo.verOS) > 6 && theme != 'Classic') {
+					offset = 16
+				}
+				//luna
+				else if (utils.stringPatternCount(solutionPrefs.clientInfo.verOS,'5.1') && theme == 'Luna') {
+					offset = 8
+				}
+				//classic
+				else {
+					offset = 8
+				}
+			}
+			//mac
+			else {
+				titleBar = 22
+			}
+			
+			var smForm = solutionModel.getForm(form.controller.getName())
+			
+			var totalWidth = smForm.width
+			
+			//offset for platform windowing
+			totalWidth += offset
+			
+			var totalHeight = 0
+			for (var i in smForm.getParts()) {
+				totalHeight += smForm.getParts()[i].height
+			}
+			//offset for platform windowing
+			totalHeight += titleBar + offset
+		}
+		//can auto-calculate height-width
+		else {
+			totalWidth = -1
+			totalHeight = -1
+		}
+		
+		if (typeof resizable != 'boolean') {
+			resizable = true
+		}
+		
+		if (typeof showText != 'boolean') {
+			showText = false
+		}
+		
+		if (typeof modal != 'boolean') {
+			modal = true
+		}
+		
+		var modality = modal ? JSWindow.MODAL_DIALOG : JSWindow.DIALOG
+		
+		//check to see if this FiD already exists and remove it
+		if (application.getWindow(name)) {
+			application.getWindow(name).destroy()
+		}
+		
+		var FiD = application.createWindow(name,modality)
+		FiD.setInitialBounds(
+						getSize(x,-1),
+						getSize(y,-1),
+						getSize(width,totalWidth,true),
+						getSize(height,totalHeight,true)
+					)
+		FiD.resizable = resizable
+		FiD.showTextToolbar(showText)
+		FiD.title = title
+		FiD.show(form)
+	}
 }
+
+/**
+ * Wrapper to aide in converting deprecated closeFormDialog calls
+ * 
+ * @param {String} [name]
+ * 
+ * @properties={typeid:24,uuid:"BAF7CB19-281E-49ED-B83D-E6AEF1A566F6"}
+ */
+function CODE_form_in_dialog_close(name) {
+	//pre-6
+	if (utils.stringToNumber(application.getVersion()) < 6) {
+		application.closeFormDialog(name)
+	}
+	else {
+		application.getWindow(name).destroy()
+	}
+}>>>>>>> .merge-right.r256
