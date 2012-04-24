@@ -29,7 +29,7 @@ if (!globals.CODE_hide_form) {
 	//enable closing the form
 	globals.CODE_hide_form = 1
 	
-	application.closeFormDialog('datePicker')
+	globals.CODE_form_in_dialog_close('datePicker')
 }
 }
 
@@ -446,12 +446,13 @@ if (this.FrameworksFastFind) {
 	globals.CODE_hide_form = 1
 	
 	//close FID
-	application.closeFormDialog('datePicker')
+	globals.CODE_form_in_dialog_close('datePicker')
 	
 //	//hide tabpanel
 //	globals.NAV_find_set_popdown(null,false)	
 	
-	globals.DATASUTRA_find = (globals.DATE_date_range_type == 'Day') ? '#'+globals.DATE_date_range_entry : globals.DATE_date_range_entry //trap for day
+	//date ranges need to be prefixed by # to get the full day of the last day in the range
+	globals.DATASUTRA_find = (globals.DATE_date_range_type != 'Time') ? '#' + globals.DATE_date_range_entry : globals.DATE_date_range_entry
 	globals.NAV_find_end_normal()
 
 }
@@ -464,14 +465,14 @@ else {
 	globals.CODE_hide_form = 1
 	
 	//close FID
-	application.closeFormDialog('datePicker')
+	globals.CODE_form_in_dialog_close('datePicker')
 	
 	//copy current foundset to restore if no records are found
 	var currentRecs = forms[globals.DATE_date_range_search_form].foundset.duplicateFoundSet()
 	
 	var searchDate = globals.DATE_date_range_entry + '|' + solutionPrefs.fastFind.dateFormat
 	
-	if (globals.DATE_date_range_type == 'Day') {
+	if (globals.DATE_date_range_type != 'Time') {
 		searchDate = '#' + searchDate
 	}
 	
