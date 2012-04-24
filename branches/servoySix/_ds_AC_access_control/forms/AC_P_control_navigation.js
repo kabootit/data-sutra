@@ -19,7 +19,7 @@ if (!globals.CODE_hide_form) {
 	//enaable closing the form
 	globals.CODE_hide_form = 1
 	
-	application.closeFormDialog('groupNavigationSets')
+	globals.CODE_form_in_dialog_close('groupNavigationSets')
 }
 }
 
@@ -58,7 +58,7 @@ forms.AC_0F_group.REC_on_select()
 //enaable closing the form
 globals.CODE_hide_form = 1
 
-application.closeFormDialog('groupNavigationSets')
+globals.CODE_form_in_dialog_close('groupNavigationSets')
 }
 
 /**

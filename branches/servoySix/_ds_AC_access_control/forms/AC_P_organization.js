@@ -29,7 +29,7 @@ if (!globals.CODE_hide_form) {
 	databaseManager.rollbackEditedRecords()
 	databaseManager.setAutoSave(true)
 	
-	application.closeFormDialog('accessUserOrganization')
+	globals.CODE_form_in_dialog_close('accessUserOrganization')
 }
 }
 
@@ -64,7 +64,7 @@ globals.CODE_hide_form = 1
 databaseManager.saveData()
 databaseManager.setAutoSave(true)
 
-application.closeFormDialog('accessUserOrganization')
+globals.CODE_form_in_dialog_close('accessUserOrganization')
 }
 
 /**
@@ -146,5 +146,5 @@ controller.search()
 
 //show form in dialog
 databaseManager.setAutoSave(false)
-application.showFormInDialog(forms.AC_P_organization,-1,-1,-1,-1,' ',false,false,'accessUserOrganization')
+globals.CODE_form_in_dialog(forms.AC_P_organization,-1,-1,-1,-1,' ',false,false,'accessUserOrganization')
 }

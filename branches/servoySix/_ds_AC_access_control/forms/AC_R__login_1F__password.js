@@ -139,7 +139,7 @@ function FORM_on_show()
 elements.gfx_capslock.visible = false
 
 //read previous login from properties
-globals.AC_login_user = application.getUserProperty('sutraUser')
+globals.AC_login_user = application.getUserProperty('sutra' + application.getServerURL().substr(7) + 'User')
 
 //request focus on user field if empty
 if (!globals.AC_login_user) {
@@ -387,7 +387,7 @@ else {
 
 		//load found records onto FiD
 		forms.AC_P_group.controller.loadRecords(groupIDs)
-		application.showFormInDialog(
+		globals.CODE_form_in_dialog(
 					forms.AC_P_group,
 					-1,-1,200,300,
 					'Groups',
@@ -568,9 +568,9 @@ else {
 	//		2-5. add client info to the properties file on the local machine
 	// // //
 
-	application.setUserProperty('sutraUser',globals.AC_login_user)
-	application.setUserProperty('sutraGroup',groupID)
-	application.setUserProperty('sutraOrganization',organizationID)
+	application.setUserProperty('sutra' + application.getServerURL().substr(7) + 'User',globals.AC_login_user)
+	application.setUserProperty('sutra' + application.getServerURL().substr(7) + 'Group',groupID)
+	application.setUserProperty('sutra' + application.getServerURL().substr(7) + 'Organization',organizationID)
 
 
 	// // //
@@ -1271,7 +1271,10 @@ else {
 
 	//loop through all items in navPrefs and put each form in the main screen except for navigation preference items
 	if (solutionPrefs.config.prefs.formPreload) {
-
+		
+		//set flag that preload happening
+		solutionPrefs.config.prefs.formPreloading = true
+		
 		//we are using the transparent way
 		if (solutionPrefs.config.prefs.formPreloadGray) {
 			//figure out how many nav items we are looking at
@@ -1401,6 +1404,9 @@ else {
 		}
 
 		globals.TRIGGER_interface_lock(false)
+		
+		//remove flag that preload happening
+		delete solutionPrefs.config.prefs.formPreloading
 	}
 
 	// // //

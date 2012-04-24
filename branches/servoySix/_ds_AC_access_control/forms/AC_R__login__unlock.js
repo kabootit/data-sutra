@@ -168,7 +168,7 @@ function FORM_on_show()
 elements.gfx_capslock.visible = false
 
 //read previous login from properties
-globals.AC_login_user = application.getUserProperty('sutraUser')
+globals.AC_login_user = application.getUserProperty('sutra' + application.getServerURL().substr(7) + 'User')
 
 //request focus on user field if empty
 if (!globals.AC_login_user) {

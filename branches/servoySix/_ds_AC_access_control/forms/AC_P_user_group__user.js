@@ -19,7 +19,7 @@ if (!globals.CODE_hide_form) {
 	//enaable closing the form
 	globals.CODE_hide_form = 1
 	
-	application.closeFormDialog('accessAssignUsers')
+	globals.CODE_form_in_dialog_close('accessAssignUsers')
 }
 }
 
@@ -37,7 +37,7 @@ databaseManager.setAutoSave(true)
 //enaable closing the form
 globals.CODE_hide_form = 1
 
-application.closeFormDialog('accessAssignUsers')
+globals.CODE_form_in_dialog_close('accessAssignUsers')
 }
 
 /**

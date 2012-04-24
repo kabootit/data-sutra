@@ -131,7 +131,7 @@ switch (arguments[0]) {
 		forms.AC_P_valuelist.controller.loadRecords(ds)
 		
 		//show valuelist picker to choose which valuelists to bring over
-		application.showFormInDialog(
+		globals.CODE_form_in_dialog(
 			forms.AC_P_valuelist,
 			-1,-1,250,675,
 			' ',

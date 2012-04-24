@@ -33,7 +33,7 @@ if (!globals.CODE_hide_form) {
 	//enaable closing the form
 	globals.CODE_hide_form = 1
 	
-	application.closeFormDialog('accessPassEdit')
+	globals.CODE_form_in_dialog_close('accessPassEdit')
 }
 }
 
@@ -215,7 +215,7 @@ if (application.__parent__.solutionPrefs && solutionPrefs.access) {
 					//enaable closing the form
 					globals.CODE_hide_form = 1
 					
-					application.closeFormDialog('accessPassEdit')
+					globals.CODE_form_in_dialog_close('accessPassEdit')
 				}
 				//enter a new password
 				else {
@@ -231,7 +231,7 @@ else {
 	//enaable closing the form
 	globals.CODE_hide_form = 1
 	
-	application.closeFormDialog('accessPassEdit')
+	globals.CODE_form_in_dialog_close('accessPassEdit')
 }
 }
 
@@ -370,7 +370,7 @@ globals.AC_password_edit_1 = null
 globals.AC_password_edit_2 = null
 
 //show form in dialog
-application.showFormInDialog(
+globals.CODE_form_in_dialog(
 		forms.AC_P_password,
 		-1,-1,-1,-1,
 		'Password',
