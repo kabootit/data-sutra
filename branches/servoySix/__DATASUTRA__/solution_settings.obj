@@ -1,6 +1,6 @@
 firstFormID:"6773cbcc-5fc2-4c8d-8e72-d63d205de2a2",
 i18nDataSource:"db:/sutra/sutra_i18n",
-modulesNames:"__datasutra__connector,_ds_AC_access_control,_ds_CODE_resources,_ds_DEV_tools,_ds_MGR_resource_manager,_ds_NAV_engine,_ds_NSTL_installation,_dsa_sutra_TOOL_toolbar_sidebar",
+modulesNames:"__datasutra__connector,__datasutra_authenticator,__datasutra_login,_ds_AC_access_control,_ds_CODE_resources,_ds_DEV_tools,_ds_MGR_resource_manager,_ds_NAV_engine,_ds_NSTL_installation,_dsa_sutra_TOOL_toolbar_sidebar",
 onCloseMethodID:"3431c36a-d389-49ca-81f5-07e2ae81720e",
 onOpenMethodID:"0ECDA534-BDB1-406E-9611-FE2C89320F4C",
 typeid:43,
