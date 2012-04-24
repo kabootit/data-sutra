@@ -29,7 +29,7 @@ if (!globals.CODE_hide_form) {
 	
 	globals.NAV_search_valuelist = null
 	
-	application.closeFormDialog('findValuelist')
+	globals.CODE_form_in_dialog_close('findValuelist')
 }
 }
 
@@ -61,7 +61,7 @@ function ACTION_ok()
 globals.CODE_hide_form = 1
 
 //close FiD
-application.closeFormDialog('findValuelist')
+globals.CODE_form_in_dialog_close('findValuelist')
 
 //continue searching
 globals.DATASUTRA_find = globals.NAV_search_valuelist

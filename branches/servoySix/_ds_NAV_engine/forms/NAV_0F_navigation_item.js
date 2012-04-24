@@ -67,7 +67,7 @@ if (nav_navigation_item_to_navigation && nav_navigation_item_to_navigation.flag_
 	forms.NAV_0F_navigation_item_1F__detail.elements.fld_item_id.visible = false
 }
 else {
-	forms.NAV_0F_navigation_item_1F__detail.elements.lbl_registry.text = 'Registry'
+	forms.NAV_0F_navigation_item_1F__detail.elements.lbl_registry.text = 'Registry/URL'
 	forms.NAV_0F_navigation_item_1F__detail.elements.fld_config_type.visible = false
 	forms.NAV_0F_navigation_item_1F__detail.elements.fld_item_id.visible = true
 }

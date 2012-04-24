@@ -186,7 +186,7 @@ forms[windowName].id_navigation_item = id_navigation_item
 forms[windowName].table_or_relation = globals.NAV_column_relation
 forms[windowName].controller.search()
 
-application.showFormInDialog(forms[windowName], -1, -1, 200, 720 + 20,'Click to add column',true, false,'displayCols',false)
+globals.CODE_form_in_dialog(forms[windowName], -1, -1, 200, 720 + 20,'Click to add column',true, false,'displayCols',false)
 
 
 }

@@ -34,7 +34,7 @@ if (!globals.CODE_hide_form) {
 	globals.NAV_export_access = null
 	globals.NAV_import_access = null
 	
-	application.closeFormDialog('fwImportExport')
+	globals.CODE_form_in_dialog_close('fwImportExport')
 }
 }
 
@@ -69,7 +69,7 @@ if (globals.NAV_export_navset || globals.NAV_import_navset || globals.NAV_export
 	//clear out toggle all global
 	globals.NAV_P_all = null
 	
-	application.closeFormDialog('fwImportExport')
+	globals.CODE_form_in_dialog_close('fwImportExport')
 }
 else {
 	plugins.dialogs.showErrorDialog('Nothing selected', 'You must choose something','OK')

@@ -184,7 +184,7 @@ else {
 			//turn autosave off
 			databaseManager.setAutoSave(false)
 			
-			application.showFormInDialog(forms.NAV_P_action_item__valuelist,-1,-1,-1,-1,'Valuelist',false,false,'filterValuelist')
+			globals.CODE_form_in_dialog(forms.NAV_P_action_item__valuelist,-1,-1,-1,-1,'Valuelist',false,false,'filterValuelist')
 			
 			//trigger rec on select (pipes down correct action_item_filter onto forms
 			forms[listName].REC_on_select()

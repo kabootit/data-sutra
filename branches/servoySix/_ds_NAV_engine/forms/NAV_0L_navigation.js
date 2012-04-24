@@ -520,7 +520,7 @@ globals.TRIGGER_progressbar_start(0,'Exporting...')
 					forms.NAV_P_navigation.elements.fld_export_access.visible = false
 					forms.NAV_P_navigation.elements.fld_import_access.visible = false
 					forms.NAV_P_navigation.elements.lbl_header.text = 'Select what things to export'
-					application.showFormInDialog(
+					globals.CODE_form_in_dialog(
 								forms.NAV_P_navigation,
 								-1,-1,-1,-1,
 								'Export',
@@ -674,7 +674,7 @@ if (accessControl || blog || navEngine || reportRegistry || solConfig || toolbar
 							forms.NAV_P_navigation.elements.fld_export_access.visible = true
 							forms.NAV_P_navigation.elements.fld_import_access.visible = false
 							forms.NAV_P_navigation.elements.lbl_header.text = 'Select groups to export'
-							application.showFormInDialog(forms.NAV_P_navigation,-1,-1,-1,-1,'Export',false,false,'fwImportExport')
+							globals.CODE_form_in_dialog(forms.NAV_P_navigation,-1,-1,-1,-1,'Export',false,false,'fwImportExport')
 							
 							if (globals.NAV_export_access) {
 								groupIDs = globals.NAV_export_access.split('\n')
@@ -1365,7 +1365,7 @@ if (accessControl || blog || navEngine || reportRegistry || solConfig || toolbar
 								forms.NAV_P_navigation.elements.fld_export_access.visible = false
 								forms.NAV_P_navigation.elements.fld_import_access.visible = false
 								forms.NAV_P_navigation.elements.lbl_header.text = 'Select navigation sets to export'
-								application.showFormInDialog(forms.NAV_P_navigation,-1,-1,-1,-1,'Export',false,false,'fwImportExport')
+								globals.CODE_form_in_dialog(forms.NAV_P_navigation,-1,-1,-1,-1,'Export',false,false,'fwImportExport')
 								
 								if (globals.NAV_export_navset) {
 									navIDs = globals.NAV_export_navset.split('\n')
@@ -1398,7 +1398,7 @@ if (accessControl || blog || navEngine || reportRegistry || solConfig || toolbar
 				forms.NAV_P_navigation.elements.fld_export_access.visible = false
 				forms.NAV_P_navigation.elements.fld_import_access.visible = false
 				forms.NAV_P_navigation.elements.lbl_header.text = 'Select navigation sets to export'
-				application.showFormInDialog(forms.NAV_P_navigation,-1,-1,-1,-1,'Export',false,false,'fwImportExport')
+				globals.CODE_form_in_dialog(forms.NAV_P_navigation,-1,-1,-1,-1,'Export',false,false,'fwImportExport')
 				
 				if (globals.NAV_export_navset) {
 					navIDs = globals.NAV_export_navset.split('\n')
@@ -2279,7 +2279,7 @@ globals.TRIGGER_progressbar_start(0,'Exporting...')
 					forms.NAV_P_navigation.elements.fld_export_access.visible = false
 					forms.NAV_P_navigation.elements.fld_import_access.visible = false
 					forms.NAV_P_navigation.elements.lbl_header.text = 'Select what things to export'
-					application.showFormInDialog(
+					globals.CODE_form_in_dialog(
 								forms.NAV_P_navigation,
 								-1,-1,-1,-1,
 								'Export',
@@ -2433,7 +2433,7 @@ if (accessControl || blog || navEngine || reportRegistry || solConfig || toolbar
 							forms.NAV_P_navigation.elements.fld_export_access.visible = true
 							forms.NAV_P_navigation.elements.fld_import_access.visible = false
 							forms.NAV_P_navigation.elements.lbl_header.text = 'Select groups to export'
-							application.showFormInDialog(forms.NAV_P_navigation,-1,-1,-1,-1,'Export',false,false,'fwImportExport')
+							globals.CODE_form_in_dialog(forms.NAV_P_navigation,-1,-1,-1,-1,'Export',false,false,'fwImportExport')
 							
 							if (globals.NAV_export_access) {
 								groupIDs = globals.NAV_export_access.split('\n')
@@ -3124,7 +3124,7 @@ if (accessControl || blog || navEngine || reportRegistry || solConfig || toolbar
 								forms.NAV_P_navigation.elements.fld_export_access.visible = false
 								forms.NAV_P_navigation.elements.fld_import_access.visible = false
 								forms.NAV_P_navigation.elements.lbl_header.text = 'Select navigation sets to export'
-								application.showFormInDialog(forms.NAV_P_navigation,-1,-1,-1,-1,'Export',false,false,'fwImportExport')
+								globals.CODE_form_in_dialog(forms.NAV_P_navigation,-1,-1,-1,-1,'Export',false,false,'fwImportExport')
 								
 								if (globals.NAV_export_navset) {
 									navIDs = globals.NAV_export_navset.split('\n')
@@ -3157,7 +3157,7 @@ if (accessControl || blog || navEngine || reportRegistry || solConfig || toolbar
 				forms.NAV_P_navigation.elements.fld_export_access.visible = false
 				forms.NAV_P_navigation.elements.fld_import_access.visible = false
 				forms.NAV_P_navigation.elements.lbl_header.text = 'Select navigation sets to export'
-				application.showFormInDialog(forms.NAV_P_navigation,-1,-1,-1,-1,'Export',false,false,'fwImportExport')
+				globals.CODE_form_in_dialog(forms.NAV_P_navigation,-1,-1,-1,-1,'Export',false,false,'fwImportExport')
 				
 				if (globals.NAV_export_navset) {
 					navIDs = globals.NAV_export_navset.split('\n')
@@ -4664,7 +4664,7 @@ if (importFile) {
 				forms.NAV_P_navigation.elements.fld_export_access.visible = false
 				forms.NAV_P_navigation.elements.fld_import_access.visible = false
 				forms.NAV_P_navigation.elements.lbl_header.text = 'Select navigation sets to import'
-				application.showFormInDialog(forms.NAV_P_navigation,-1,-1,-1,-1,'Import',false,false,'fwImportExport')
+				globals.CODE_form_in_dialog(forms.NAV_P_navigation,-1,-1,-1,-1,'Import',false,false,'fwImportExport')
 			
 				if (globals.NAV_import_navset) {
 					var importNavSets = globals.NAV_import_navset.split('\n')
@@ -5390,7 +5390,7 @@ if (importFile) {
 	forms.NAV_P_navigation.elements.fld_export_access.visible = false
 	forms.NAV_P_navigation.elements.fld_import_access.visible = false
 	forms.NAV_P_navigation.elements.lbl_header.text = 'Select navigation sets to import'
-	application.showFormInDialog(forms.NAV_P_navigation,-1,-1,-1,-1,'Import',false,false,'fwImportExport')
+	globals.CODE_form_in_dialog(forms.NAV_P_navigation,-1,-1,-1,-1,'Import',false,false,'fwImportExport')
 
 	if (globals.NAV_import_navset) {
 		var importNavSets = globals.NAV_import_navset.split('\n')
@@ -6303,7 +6303,7 @@ if (importFile) {
 				forms.NAV_P_navigation.elements.fld_export_access.visible = false
 				forms.NAV_P_navigation.elements.fld_import_access.visible = false
 				forms.NAV_P_navigation.elements.lbl_header.text = 'Select navigation sets to import'
-				application.showFormInDialog(forms.NAV_P_navigation,-1,-1,-1,-1,'Import',false,false,'fwImportExport')
+				globals.CODE_form_in_dialog(forms.NAV_P_navigation,-1,-1,-1,-1,'Import',false,false,'fwImportExport')
 			
 				if (globals.NAV_import_navset) {
 					var importNavSets = globals.NAV_import_navset.split('\n')

@@ -265,7 +265,6 @@ if (globals.NAV_column_relation != '-') {
 			//find all non-assigned columns based on selected relation/table
 			forms[colFormName].controller.find()
 			forms[colFormName].id_navigation_item = navItem
-			forms[colFormName].status_find = '<1'
 			forms[colFormName].table_or_relation = globals.NAV_column_relation
 			var results = forms[colFormName].controller.search()
 	

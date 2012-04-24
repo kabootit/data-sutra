@@ -28,7 +28,7 @@ if (!globals.CODE_hide_form) {
 	globals.CODE_hide_form = 1
 	
 	globals.NAV_password = 'passwordDialogCancelled'
-	application.closeFormDialog('passwordOverride')
+	globals.CODE_form_in_dialog_close('passwordOverride')
 }
 }
 
@@ -59,7 +59,7 @@ function ACTION_ok()
 //enaable closing the form
 globals.CODE_hide_form = 1
 
-application.closeFormDialog('passwordOverride')
+globals.CODE_form_in_dialog_close('passwordOverride')
 }
 
 /**

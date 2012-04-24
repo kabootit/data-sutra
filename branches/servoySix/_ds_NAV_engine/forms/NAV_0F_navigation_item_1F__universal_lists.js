@@ -6,7 +6,7 @@ function FORM_on_hide()
 {
 
 //if column picker still visible, close it
-application.closeFormDialog('displayCols')
+globals.CODE_form_in_dialog_close('displayCols')
 
 }
 

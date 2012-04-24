@@ -45,7 +45,8 @@ if (application.__parent__.solutionPrefs) {
 		
 		application.setValueListItems('NAV_current_module_forms', formNames)
 	}
-	else {
+	//only show error message if trying to change a module with no record
+	else if (arguments[2]) {
 		plugins.dialogs.showErrorDialog(
 						'Tab error',
 						'You must create a record before you can choose a module'

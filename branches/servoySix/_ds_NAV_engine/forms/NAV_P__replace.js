@@ -28,7 +28,7 @@ if (!globals.CODE_hide_form) {
 	globals.CODE_hide_form = 1
 	
 	//close FiD
-	application.closeFormDialog('findPowerReplace')
+	globals.CODE_form_in_dialog_close('findPowerReplace')
 }
 }
 
@@ -143,7 +143,7 @@ if (application.__parent__.solutionPrefs && application.__parent__.navigationPre
 	globals.CODE_hide_form = 1
 	
 	//close FID
-	application.closeFormDialog('findPowerReplace')
+	globals.CODE_form_in_dialog_close('findPowerReplace')
 	
 }
 }

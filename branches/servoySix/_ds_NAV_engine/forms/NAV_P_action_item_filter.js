@@ -32,7 +32,7 @@ if (!globals.CODE_hide_form) {
 	//enaable closing the form
 	globals.CODE_hide_form = 1
 	
-	application.closeFormDialog('filterDetails')
+	globals.CODE_form_in_dialog_close('filterDetails')
 }
 }
 
@@ -70,7 +70,7 @@ if (!databaseManager.getAutoSave()) {
 //enaable closing the form
 globals.CODE_hide_form = 1
 
-application.closeFormDialog('filterDetails')
+globals.CODE_form_in_dialog_close('filterDetails')
 }
 
 /**
