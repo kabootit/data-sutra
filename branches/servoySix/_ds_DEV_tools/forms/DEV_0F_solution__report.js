@@ -45,7 +45,7 @@ function PRINT_overview_simple()
 //set today string
 globals.DEV_today = globals.CODE_date_format(new Date())
 
-application.showFormInDialog(forms.DEV_P_navigation, -1, -1, -1, -1, 'Choose navigation', false, false,'printOverviewSimple')
+globals.CODE_form_in_dialog(forms.DEV_P_navigation, -1, -1, -1, -1, 'Choose navigation', false, false,'printOverviewSimple')
 
 if (globals.DEV_P_navigation) {
 	var navIDs = globals.DEV_P_navigation.split('\n')
@@ -162,7 +162,7 @@ var relnNavSet = 'nav_navigation_item_to_navigation'
 //set today string
 globals.DEV_today = globals.CODE_date_format(new Date())
 
-application.showFormInDialog(forms.DEV_P_navigation, -1, -1, -1, -1, 'Choose navigation', false, false,'printOverviewSimple')
+globals.CODE_form_in_dialog(forms.DEV_P_navigation, -1, -1, -1, -1, 'Choose navigation', false, false,'printOverviewSimple')
 
 if (globals.DEV_P_navigation) {
 	var navIDs = globals.DEV_P_navigation.split('\n')
@@ -296,7 +296,7 @@ var relnNavSet = 'nav_navigation_item_to_navigation'
 //set today string
 globals.DEV_today = globals.CODE_date_format(new Date())
 
-application.showFormInDialog(forms.DEV_P_navigation, -1, -1, -1, -1, 'Choose navigation', false, false,'printOverviewSimple')
+globals.CODE_form_in_dialog(forms.DEV_P_navigation, -1, -1, -1, -1, 'Choose navigation', false, false,'printOverviewSimple')
 
 if (globals.DEV_P_navigation) {
 	var navIDs = globals.DEV_P_navigation.split('\n')

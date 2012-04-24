@@ -28,7 +28,7 @@ globals.CODE_hide_form = 1
 //clear all globals
 globals.DEV_P_navigation = null
 
-application.closeFormDialog('printOverviewSimple')
+globals.CODE_form_in_dialog_close('printOverviewSimple')
 }
 
 /**
@@ -59,7 +59,7 @@ if (globals.DEV_P_navigation) {
 	//enable closing the form
 	globals.CODE_hide_form = 1
 	
-	application.closeFormDialog('printOverviewSimple')
+	globals.CODE_form_in_dialog_close('printOverviewSimple')
 }
 else {
 	plugins.dialogs.showErrorDialog('Nothing selected', 'You must choose one or more navigation sets','OK')
