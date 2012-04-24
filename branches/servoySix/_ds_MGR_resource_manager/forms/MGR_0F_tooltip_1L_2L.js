@@ -135,7 +135,7 @@ if (foundset.getSize()) {
 				
 				//get title of form and compare with form of selected record
 				if (theTitle != form_name) {
-					application.closeFormDialog('toolTipPreview')
+					globals.CODE_form_in_dialog_close('toolTipPreview')
 					forms.MGR_0F_tooltip.POPUP_tooltip_form()
 				}
 			}

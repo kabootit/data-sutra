@@ -29,7 +29,7 @@ if (!globals.CODE_hide_form) {
 	//clear all globals
 	globals.MGR_tooltip__module = null
 	
-	application.closeFormDialog('printTipSimple')
+	globals.CODE_form_in_dialog_close('printTipSimple')
 }
 }
 
@@ -61,7 +61,7 @@ if (globals.MGR_tooltip__module) {
 	//enable closing the form
 	globals.CODE_hide_form = 1
 	
-	application.closeFormDialog('printTipSimple')
+	globals.CODE_form_in_dialog_close('printTipSimple')
 }
 else {
 	plugins.dialogs.showErrorDialog('Nothing selected', 'You must choose one or more modules','OK')
