@@ -466,7 +466,7 @@ else {
 	var loggedHost = solutionPrefs.clientInfo.hostName
 	var loggedUserIP = (solutionPrefs.clientInfo.externalIP == 'UNDEFINED' || utils.stringPatternCount(solutionPrefs.clientInfo.externalIP,'Error') || solutionPrefs.clientInfo.externalIP == 'UNKNOWN') ? solutionPrefs.clientInfo.internalIP : solutionPrefs.clientInfo.externalIP
 
-	globals.DATASUTRA_log_status = ((loggedUser) ? 'USER: ' + loggedUser + '    ' : '') + 'LOGIN TIME: ' + loggedIn // + '    HOST: ' + loggedHost 
+	forms[baseForm + '__footer'].elements.lbl_status.text = ((loggedUser) ? 'USER: ' + loggedUser + '    ' : '') + 'LOGIN TIME: ' + loggedIn // + '    HOST: ' + loggedHost 
 	var lblStatus = '<html><head></head><body>' +
 					'USER: ' + loggedUser + '<br>' +
 					'HOST: ' + loggedHost + '<br>' +
@@ -571,7 +571,13 @@ else {
 	application.setUserProperty('sutra' + application.getServerURL().substr(7) + 'User',globals.AC_login_user)
 	application.setUserProperty('sutra' + application.getServerURL().substr(7) + 'Group',groupID)
 	application.setUserProperty('sutra' + application.getServerURL().substr(7) + 'Organization',organizationID)
-
+		
+	//reset wrapper bean 2 to show header
+	forms[baseForm].elements.bean_wrapper_2.topComponent = forms[baseForm].elements.bean_header
+//	forms[baseForm].elements.bean_wrapper_2.bottomComponent = forms[baseForm].elements.bean_main
+	forms[baseForm].elements.bean_wrapper_2.dividerLocation = 44
+	
+	
 
 	// // //
 	//		5. load modes, toolbars, and logging prefs
