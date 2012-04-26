@@ -869,7 +869,7 @@ else {
 				var loggedHost = solutionPrefs.clientInfo.hostName
 				
 				var loggedIn = globals.CODE_date_format() + utils.dateFormat(new Date(),  " H:mm")
-				globals.DATASUTRA_log_status = 'HOST: ' + loggedHost + '    LOGIN TIME: ' + loggedIn
+				forms[baseForm + '__footer'].elements.lbl_status.text = 'HOST: ' + loggedHost + '    LOGIN TIME: ' + loggedIn
 				
 				var lblStatus = '<html><head></head><body>' +
 								'HOST: ' + loggedHost + '<br>' +
@@ -904,6 +904,12 @@ else {
 				//set newly logged in user info
 				application.addClientInfo(clientInfo)
 				solutionPrefs.clientInfo.adminPage = clientInfo
+			
+			//reset wrapper bean 2 to show header
+			forms[baseForm].elements.bean_wrapper_2.topComponent = forms[baseForm].elements.bean_header
+//			forms[baseForm].elements.bean_wrapper_2.bottomComponent = forms[baseForm].elements.bean_main
+			forms[baseForm].elements.bean_wrapper_2.dividerLocation = 44
+			
 			
 					
 			// //PART IV: Set window size/location and toolbars showing

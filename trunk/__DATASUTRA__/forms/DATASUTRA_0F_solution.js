@@ -81,7 +81,8 @@ if (application.getApplicationType() == APPLICATION_TYPES.SMART_CLIENT || applic
 		//wrapper bean 2
 		elements.bean_wrapper_2.topComponent = elements.bean_header
 		elements.bean_wrapper_2.bottomComponent = elements.bean_main
-		elements.bean_wrapper_2.dividerLocation = 44
+//		elements.bean_wrapper_2.dividerLocation = 44
+		elements.bean_wrapper_2.topComponent = null
 		
 		//header bean
 		elements.bean_header.topComponent = null
