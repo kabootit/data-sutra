@@ -6020,87 +6020,6 @@ function CODE_servoy_object_exists(methodName, formName) {
 		return false
 	}
 }
-<<<<<<< .working
-
-/**
- * Wrapper to aide in converting deprecated showFormInDialog calls
- * 
- * @param {Form} form
- * @param {Number} [x]
- * @param {Number} [y]
- * @param {Number} [width]
- * @param {Number} [height]
- * @param {String} [title]
- * @param {Boolean} [resizable=true]
- * @param {Boolean} [showText=false]
- * @param {String} [name]
- * @param {Boolean} [modal=true]
- * 
- * @properties={typeid:24,uuid:"95177CA4-C36C-4F0D-A076-45F78F7836F4"}
- */
-function CODE_form_in_dialog(form, x, y, width, height, title, resizable, showText, name, modal) {
-//	application.showFormInDialog(
-//		forms[formName],
-//		-1,-1,-1,-1,
-//		' ',
-//		false,
-//		false,
-//		'addressEdit'
-//	)
-
-	function getSize(value, defaultValue, noMinusOne) {
-		if (typeof value == 'number' && ((noMinusOne) ? value != -1 : true)) {
-			return value
-		}
-		else {
-			return defaultValue
-		}
-	}
-	
-	var smForm = solutionModel.getForm(form.controller.getName())
-	
-	var totalWidth = smForm.width
-	//offset for platform windowing
-	totalWidth += 0
-	
-	var totalHeight = 0
-	for (var i in smForm.getParts()) {
-		totalHeight += smForm.getParts()[i].height
-	}
-	//offset for platform windowing
-	totalHeight += 22
-	
-	if (typeof resizable != 'boolean') {
-		resizable = true
-	}
-	
-	if (typeof showText != 'boolean') {
-		showText = false
-	}
-	
-	if (typeof modal != 'boolean') {
-		modal = true
-	}
-	
-	var modality = modal ? JSWindow.MODAL_DIALOG : JSWindow.DIALOG
-	
-	//check to see if this FiD already exists and remove it
-	if (application.getWindow(name)) {
-		application.getWindow(name).destroy()
-	}
-	
-	var FiD = application.createWindow(name,modality)
-	FiD.setInitialBounds(
-					getSize(x,-1),
-					getSize(y,-1),
-					getSize(width,totalWidth,true),
-					getSize(height,totalHeight,true)
-				)
-	FiD.resizable = resizable
-	FiD.showTextToolbar(showText)
-	FiD.title = title
-	FiD.show(form)
-}=======
 
 /**
  * Wrapper to aide in converting deprecated showFormInDialog calls
@@ -6240,4 +6159,4 @@ function CODE_form_in_dialog_close(name) {
 	else {
 		application.getWindow(name).destroy()
 	}
-}>>>>>>> .merge-right.r256
+}
