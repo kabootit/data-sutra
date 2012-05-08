@@ -908,6 +908,7 @@ else {
 			//reset wrapper bean 2 to show header
 			forms[baseForm].elements.bean_wrapper_2.topComponent = forms[baseForm].elements.bean_header
 //			forms[baseForm].elements.bean_wrapper_2.bottomComponent = forms[baseForm].elements.bean_main
+			application.updateUI()
 			forms[baseForm].elements.bean_wrapper_2.dividerLocation = 44
 			
 			
