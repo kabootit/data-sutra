@@ -1,4 +1,6 @@
 /**
+ * @type {String}
+ *
  * @properties={typeid:35,uuid:"EDC06788-353E-443F-AF97-5CA703812218"}
  */
 var valuelistItems = null;
@@ -22,6 +24,7 @@ if (!globals.CODE_hide_form) {
 /**
  *
  * @properties={typeid:24,uuid:"38B72623-DA81-4D8D-9F60-258AD23AE7B3"}
+ * @AllowToRunInFind
  */
 function ACTION_ok(event, createLists)
 {
@@ -163,6 +166,7 @@ if (!utils.hasRecords(foundset)) {
  * @param {JSEvent} event the event that triggered the action
  *
  * @properties={typeid:24,uuid:"C82A6774-DD3D-41F0-80DE-EB35AA825C1C"}
+ * @AllowToRunInFind
  */
 function REC_on_select(event) {
 	var actualItems = new Array()

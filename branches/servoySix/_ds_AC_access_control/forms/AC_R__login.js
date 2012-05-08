@@ -1,6 +1,7 @@
 /**
  *
  * @properties={typeid:24,uuid:"e421e58a-3ca9-4d2a-9ee5-4e3bb5da0432"}
+ * @AllowToRunInFind
  */
 function FORM_on_show(firstShow)
 {

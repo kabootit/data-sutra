@@ -40,6 +40,7 @@ if (!globals.CODE_hide_form) {
 /**
  *
  * @properties={typeid:24,uuid:"9b14aac9-0712-49c1-9b08-929c5abf7fa1"}
+ * @AllowToRunInFind
  */
 function ACTION_ok()
 {
@@ -320,6 +321,7 @@ if (elements.gfx_capslock.visible != capStatus && 	!(application.getOSName() == 
 /**
  *
  * @properties={typeid:24,uuid:"ad9e99a4-cbc9-4d1c-8e58-45a942208c9b"}
+ * @AllowToRunInFind
  */
 function FORM_fid()
 {

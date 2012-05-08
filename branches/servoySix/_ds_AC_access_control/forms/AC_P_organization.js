@@ -101,6 +101,7 @@ globals.CODE_hide_form = 0
 /**
  *
  * @properties={typeid:24,uuid:"ad9e99a4-cbc9-4d1c-8e58-45a942208c9c"}
+ * @AllowToRunInFind
  */
 function FORM_fid()
 {

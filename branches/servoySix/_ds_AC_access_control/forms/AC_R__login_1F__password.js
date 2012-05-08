@@ -157,6 +157,7 @@ else {
 /**
  *
  * @properties={typeid:24,uuid:"72e21a43-7e05-4ab7-a8b7-c0d048fd9c8c"}
+ * @AllowToRunInFind
  */
 function LOGIN_user()
 {

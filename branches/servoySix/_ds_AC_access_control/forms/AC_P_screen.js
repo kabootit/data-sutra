@@ -459,6 +459,7 @@ else {
 /**
  *
  * @properties={typeid:24,uuid:"e79a5bff-51a2-4755-8563-4c56ee08a2d9"}
+ * @AllowToRunInFind
  */
 function FORM_on_show()
 {

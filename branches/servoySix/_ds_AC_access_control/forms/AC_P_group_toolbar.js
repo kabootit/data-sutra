@@ -1,4 +1,6 @@
 /**
+ * @type {Number}
+ *
  * @properties={typeid:35,uuid:"ACC5C60D-ABF7-4936-8DCD-C34ADCADA622",variableType:4}
  */
 var addSome = 0;
