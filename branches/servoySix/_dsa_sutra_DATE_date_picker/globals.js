@@ -1,35 +1,49 @@
 /**
+ * @type {Date}
+ *
  * @properties={typeid:35,uuid:"13ac385c-d2d3-445c-b326-b1445aa2241f",variableType:93}
  */
 var DATE_date_range_end;
 
 /**
- * @properties={typeid:35,uuid:"9fd5f3f9-6ea2-4573-8694-fb7696b9fd01"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"9fd5f3f9-6ea2-4573-8694-fb7696b9fd01",variableType:12}
  */
 var DATE_date_range_entry = '';
 
 /**
- * @properties={typeid:35,uuid:"7854b20f-d6b2-4e94-9d98-8df4edae8ee4"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"7854b20f-d6b2-4e94-9d98-8df4edae8ee4",variableType:12}
  */
 var DATE_date_range_field_name = '';
 
 /**
- * @properties={typeid:35,uuid:"498fed39-ea82-494e-9a5c-04c95f5ed59e"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"498fed39-ea82-494e-9a5c-04c95f5ed59e",variableType:12}
  */
 var DATE_date_range_search_form = '';
 
 /**
+ * @type {Date}
+ *
  * @properties={typeid:35,uuid:"cd073e4c-5749-4ca1-ba74-4b5340764528",variableType:93}
  */
 var DATE_date_range_start;
 
 /**
+ * @type {Date}
+ *
  * @properties={typeid:35,uuid:"323e0d44-6842-402c-9721-764e1d9f5302",variableType:93}
  */
 var DATE_date_range_track;
 
 /**
- * @properties={typeid:35,uuid:"9fe78f81-5ddc-4590-b78b-03f6a2853a81"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"9fe78f81-5ddc-4590-b78b-03f6a2853a81",variableType:12}
  */
 var DATE_date_range_type = 'Day';
 
