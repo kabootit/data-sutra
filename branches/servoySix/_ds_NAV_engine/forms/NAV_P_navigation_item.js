@@ -39,6 +39,7 @@ globals.CODE_form_in_dialog_close('inlineNavItem')
 /**
  *
  * @properties={typeid:24,uuid:"41a5d9c6-4c7f-42b6-86f6-34f3a00e704f"}
+ * @AllowToRunInFind
  */
 function ACTION_ok()
 {

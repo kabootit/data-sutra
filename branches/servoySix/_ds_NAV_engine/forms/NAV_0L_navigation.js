@@ -99,6 +99,7 @@ else {
 /**
  *
  * @properties={typeid:24,uuid:"2892a60a-fb20-42f6-b3df-d58ea49b352e"}
+ * @AllowToRunInFind
  */
 function ACTIONS_list_control()
 {
@@ -423,6 +424,7 @@ forms[formName].foundset.selectRecord(pkRecSelect)
 /**
  *
  * @properties={typeid:24,uuid:"7a9041c0-4bfb-49d2-b20f-d382f4b0665a"}
+ * @AllowToRunInFind
  */
 function EXPORT_engine()
 {
@@ -2195,6 +2197,7 @@ childElem.appendChild(exportXML.createTextNode("Child 1"))
 /**
  *
  * @properties={typeid:24,uuid:"fb27a700-d029-4fe5-9d70-99d65822859d"}
+ * @AllowToRunInFind
  */
 function EXPORT_engine__archive()
 {
@@ -3957,6 +3960,7 @@ childElem.appendChild(exportXML.createTextNode("Child 1"))
  * @param {JSEvent} event the event that triggered the action
  *
  * @properties={typeid:24,uuid:"2eac4e12-5271-42db-81bb-19a480c72455"}
+ * @AllowToRunInFind
  */
 function FORM_on_load(event)
 {
@@ -4061,6 +4065,7 @@ globals.TRIGGER_tooltip_set()
 /**
  *
  * @properties={typeid:24,uuid:"0cf435a6-a0ac-41f5-abce-448fa4535795"}
+ * @AllowToRunInFind
  */
 function IMPORT_engine()
 {
@@ -5278,6 +5283,7 @@ globals.TRIGGER_progressbar_stop()
 /**
  *
  * @properties={typeid:24,uuid:"bc6ff2d5-ee0e-468f-b10e-04224dcc03c6"}
+ * @AllowToRunInFind
  */
 function IMPORT_engine__ver2()
 {
@@ -5700,6 +5706,7 @@ globals.TRIGGER_progressbar_stop()
 /**
  *
  * @properties={typeid:24,uuid:"1c00a228-a974-4bd6-8d0b-1e93e4416005"}
+ * @AllowToRunInFind
  */
 function IMPORT_engine__ver3()
 {
@@ -6960,6 +6967,7 @@ if (navName) {
  * @param {JSEvent} event the event that triggered the action
  *
  * @properties={typeid:24,uuid:"ff3c6d3f-f3a6-495d-9b4a-6132c7e05763"}
+ * @AllowToRunInFind
  */
 function TOGGLE_config_set(event)
 {

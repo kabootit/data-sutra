@@ -110,6 +110,7 @@ if (initial_record && (initial_record_label == null || initial_record_label == '
 /**
  *
  * @properties={typeid:24,uuid:"75dbeb6a-e9fa-4382-908f-d066ce92e88d"}
+ * @AllowToRunInFind
  */
 function FLD_data_change__item_id()
 {

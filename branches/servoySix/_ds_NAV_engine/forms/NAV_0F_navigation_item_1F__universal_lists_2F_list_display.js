@@ -75,6 +75,7 @@ else {
 /**
  *
  * @properties={typeid:24,uuid:"3cce2ea1-d726-43f2-8f43-221122fc3cb9"}
+ * @AllowToRunInFind
  */
 function FILTER_find_fields()
 {
@@ -173,6 +174,7 @@ forms.NAV_0F_navigation_item_1F__universal_lists_2F_list_display__right.FILTER_f
 /**
  *
  * @properties={typeid:24,uuid:"7a5e97ca-a959-4f0f-8459-50b01befb8dd"}
+ * @AllowToRunInFind
  */
 function POPUP_field_chooser()
 {
@@ -295,6 +297,7 @@ else {
 /**
  *
  * @properties={typeid:24,uuid:"ef05c919-781f-4f00-8aa9-97364c31aedb"}
+ * @AllowToRunInFind
  */
 function REFRESH_columns()
 {

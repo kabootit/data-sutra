@@ -902,6 +902,7 @@ if (menuMain.length) {
 /**
  *
  * @properties={typeid:24,uuid:"E87B2803-802A-49FE-9484-53FD0BF89D81"}
+ * @AllowToRunInFind
  */
 function FILTERS_list_control()
 {
@@ -1580,6 +1581,7 @@ if (application.__parent__.solutionPrefs) {
 /**
  *
  * @properties={typeid:24,uuid:"C5E9A8BF-661D-415E-AAE2-3B79A8D2AAC6"}
+ * @AllowToRunInFind
  */
 function REPORTS_list()
 {

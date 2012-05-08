@@ -1,6 +1,6 @@
 /**
  *
- * @properties={typeid:24,uuid:"5d44ad48-9f35-4647-95e4-e229bf35c4a9"}
+ * @properties={typeid:24,uuid:"9A7014D3-E4C7-4417-BB1C-B4346AA45035"}
  */
 function CLEAR_custom_list()
 {
@@ -10,7 +10,7 @@ databaseManager.saveData()
 
 /**
  *
- * @properties={typeid:24,uuid:"fd0e18c7-3f1a-4bd2-a593-8a9fca630757"}
+ * @properties={typeid:24,uuid:"9B15CC4E-D0F2-4668-BB93-45B57BA05D97"}
  */
 function CLEAR_default_space()
 {
@@ -20,7 +20,7 @@ databaseManager.saveData()
 
 /**
  *
- * @properties={typeid:24,uuid:"0d53324c-05d4-4bb9-88d7-cdb9eb371feb"}
+ * @properties={typeid:24,uuid:"6022A030-166C-4BDE-8949-D3C734F92B15"}
  */
 function CLEAR_space_method()
 {
@@ -30,7 +30,7 @@ databaseManager.saveData()
 
 /**
  *
- * @properties={typeid:24,uuid:"d2c9fdca-3d8b-416e-87a9-44c53f1fd52f"}
+ * @properties={typeid:24,uuid:"89D19203-EBFF-4280-8F7A-4559888FAFA3"}
  */
 function FILTER_forms()
 {
@@ -99,7 +99,7 @@ application.setValueListItems('NAV_current_module_forms', formNames)
 
 /**
  *
- * @properties={typeid:24,uuid:"91bad264-dc94-490e-a999-98c651b3ce1b"}
+ * @properties={typeid:24,uuid:"4EB40797-4DC9-4152-80E0-DE7E50B4F225"}
  */
 function FLD_data_change__form_to_load()
 {
@@ -130,7 +130,7 @@ databaseManager.saveData()
 
 /**
  *
- * @properties={typeid:24,uuid:"176c7d10-5764-4ada-af9f-67811b454972"}
+ * @properties={typeid:24,uuid:"C94DB874-61C5-42D1-A707-128B6C4B54F2"}
  */
 function FLD_data_change__module_filter()
 {
@@ -145,7 +145,7 @@ form_to_load = null
 
 /**
  *
- * @properties={typeid:24,uuid:"fcca2dc6-0684-4ab0-9df3-f0eef12bfced"}
+ * @properties={typeid:24,uuid:"6B764287-3F5B-49C6-9F21-F970794B51D0"}
  */
 function FLD_data_change__space_available()
 {
@@ -157,7 +157,7 @@ SPACE_options()
 
 /**
  *
- * @properties={typeid:24,uuid:"c2e4b77f-f2c7-4d54-96c5-a6236bbe044a"}
+ * @properties={typeid:24,uuid:"37F8637A-EFA7-4017-925A-96D1B937421F"}
  */
 function FLD_data_change__use_fw_list()
 {
@@ -193,7 +193,7 @@ if (use_fw_list && !fw_list_title) {
 
 /**
  *
- * @properties={typeid:24,uuid:"9c42672f-8b35-43c7-8da5-0d9b418a0d56"}
+ * @properties={typeid:24,uuid:"BA5D2A80-EECC-454C-A6BC-65EA0AABC85D"}
  */
 function GOTO_form()
 {
@@ -215,7 +215,7 @@ if (form_to_load) {
 
 /**
  *
- * @properties={typeid:24,uuid:"de99c6a5-9808-40fc-9945-191831d36e73"}
+ * @properties={typeid:24,uuid:"06B6B9C1-631D-4E33-BADE-678CC3BBFC7F"}
  */
 function SPACE_list()
 {
@@ -266,7 +266,7 @@ if (elem != null) {
 
 /**
  *
- * @properties={typeid:24,uuid:"828054b3-3181-485a-a28b-7f438f042c5f"}
+ * @properties={typeid:24,uuid:"9FFC07F4-80CB-4196-ABBD-39135627697A"}
  */
 function SPACE_list_control()
 {
@@ -311,7 +311,7 @@ SPACE_options()
 
 /**
  *
- * @properties={typeid:24,uuid:"60330ba1-8406-409a-b8c9-e33a638b448d"}
+ * @properties={typeid:24,uuid:"2BA6CFC5-8905-47FA-8D6B-DD961AD7D039"}
  */
 function SPACE_options()
 {
@@ -354,7 +354,7 @@ if (utils.hasRecords(foundset)) {
 
 /**
  *
- * @properties={typeid:24,uuid:"cb68f7a5-5d37-4c7b-8e22-6389d17a5a7d"}
+ * @properties={typeid:24,uuid:"E1D4F0EC-9526-4174-9FD5-EDBCDF09EE26"}
  */
 function SHOW_sort()
 {
@@ -379,7 +379,7 @@ else {
 
 /**
  *
- * @properties={typeid:24,uuid:"88b40dc3-1a45-4ade-99ee-7635c9af5185"}
+ * @properties={typeid:24,uuid:"4A495CD9-0A2D-462A-88B5-C373637DAF40"}
  */
 function REC_on_select()
 {

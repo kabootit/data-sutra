@@ -1,6 +1,7 @@
 /**
  *
  * @properties={typeid:24,uuid:"2e0234f4-4b9f-4481-82f4-6c3a542ffc11"}
+ * @AllowToRunInFind
  */
 function FILTER_find_fields()
 {
@@ -53,6 +54,7 @@ if (forms.NAV_P_column) {
 /**
  *
  * @properties={typeid:24,uuid:"8c93f16c-4c2c-4033-b93b-f91f1b2600b6"}
+ * @AllowToRunInFind
  */
 function REFRESH_columns()
 {

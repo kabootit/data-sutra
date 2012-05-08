@@ -33,6 +33,7 @@ if (application.__parent__.solutionPrefs) {
 /**
  *
  * @properties={typeid:24,uuid:"f3928a37-b2f9-4309-bae1-cdb0f72afb02"}
+ * @AllowToRunInFind
  */
 function REC_on_select()
 {
