@@ -38,6 +38,7 @@ if (delRec == 'Yes') {
 /**
  *
  * @properties={typeid:24,uuid:"525d7f83-4145-4b46-ad0a-56c18ff0aa12"}
+ * @AllowToRunInFind
  */
 function REC_edit()
 {
@@ -75,6 +76,7 @@ globals.CODE_form_in_dialog(forms.CRM_P_addresses,-1,-1,-1,-1,'Edit',false,false
 /**
  *
  * @properties={typeid:24,uuid:"cd9bfe64-8dd7-4bea-887b-8787290bf8ec"}
+ * @AllowToRunInFind
  */
 function REC_new()
 {

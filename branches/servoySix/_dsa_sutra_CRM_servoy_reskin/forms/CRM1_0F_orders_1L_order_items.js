@@ -1,6 +1,7 @@
 /**
  *
  * @properties={typeid:24,uuid:"6fdd8c88-818b-4543-a637-e7c91f625cc0"}
+ * @AllowToRunInFind
  */
 function EDIT_order_item()
 {
