@@ -1,6 +1,7 @@
 /**
  *
  * @properties={typeid:24,uuid:"cb0bbd7f-ed7c-4b4d-9d1a-dfdfdf0b98ed"}
+ * @AllowToRunInFind
  */
 function ITEM_move_down()
 {
@@ -196,6 +197,7 @@ if (utils.hasRecords(fsNavItems) && solutionPrefs.config.currentFormID) {
 /**
  *
  * @properties={typeid:24,uuid:"ffe3749a-ad68-49d4-b2f5-9e821f3687e1"}
+ * @AllowToRunInFind
  */
 function ITEM_move_up()
 {
@@ -410,6 +412,7 @@ if (utils.hasRecords(fsNavItems) && solutionPrefs.config.currentFormID) {
 /**
  *
  * @properties={typeid:24,uuid:"a34144df-8d8a-4768-93b2-55615279582e"}
+ * @AllowToRunInFind
  */
 function ITEM_REC_delete()
 {
@@ -487,6 +490,7 @@ if (results) {
 /**
  *
  * @properties={typeid:24,uuid:"db193ea8-2d67-46ec-adbc-4840423d3ef2"}
+ * @AllowToRunInFind
  */
 function ITEM_REC_new()
 {
@@ -726,6 +730,7 @@ if (results) {
 /**
  *
  * @properties={typeid:24,uuid:"1af29e3d-b863-49b4-9203-1a7219ae00f0"}
+ * @AllowToRunInFind
  */
 function SET_REC_new()
 {

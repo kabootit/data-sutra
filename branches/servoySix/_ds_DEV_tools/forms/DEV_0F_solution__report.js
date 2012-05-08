@@ -19,6 +19,7 @@ plugins.dialogs.showInfoDialog('Coming soon','The detailed navigation reports is
 /**
  *
  * @properties={typeid:24,uuid:"4aa32ac5-1415-404a-9212-ec7c95dfdcb6"}
+ * @AllowToRunInFind
  */
 function PRINT_overview_simple()
 {
