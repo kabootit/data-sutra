@@ -845,6 +845,7 @@ return true;
 /**
  *
  * @properties={typeid:24,uuid:"578267B6-CE26-4886-B539-C8E6E73E57A3"}
+ * @AllowToRunInFind
  */
 function console_run()
 {
@@ -920,6 +921,7 @@ return bReturn;
 /**
  *
  * @properties={typeid:24,uuid:"6B80527D-CFC3-4D24-AED9-CE075878AA21"}
+ * @AllowToRunInFind
  */
 function console_schema()
 {
