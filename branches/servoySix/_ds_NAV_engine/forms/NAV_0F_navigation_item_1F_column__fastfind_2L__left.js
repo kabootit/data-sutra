@@ -97,6 +97,7 @@ databaseManager.saveData()
 /**
  *
  * @properties={typeid:24,uuid:"31637872-2e49-45ce-8148-e5924ff19ddd"}
+ * @AllowToRunInFind
  */
 function FLD_data_change__name_display()
 {

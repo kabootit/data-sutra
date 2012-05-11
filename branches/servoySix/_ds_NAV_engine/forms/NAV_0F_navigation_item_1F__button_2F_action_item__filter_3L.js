@@ -239,6 +239,7 @@ elements.fld_menu_name.requestFocus(false)
  * @param {JSEvent} event the event that triggered the action
  *
  * @properties={typeid:24,uuid:"ce57ebf2-d2ab-4fae-8ca4-cbd4902fced5"}
+ * @AllowToRunInFind
  */
 function REC_on_select(event)
 {

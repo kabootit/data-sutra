@@ -42,6 +42,7 @@ globals.CODE_cursor_busy(false)
 /**
  *
  * @properties={typeid:24,uuid:"336a45b8-f912-4aa6-aa83-e239a38347c7"}
+ * @AllowToRunInFind
  */
 function REC_open_close()
 {

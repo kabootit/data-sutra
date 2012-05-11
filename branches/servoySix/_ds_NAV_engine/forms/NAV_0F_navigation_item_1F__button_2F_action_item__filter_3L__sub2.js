@@ -234,6 +234,7 @@ elements.fld_menu_name.requestFocus(false)
 /**
  *
  * @properties={typeid:24,uuid:"5a5abbd9-06bd-4fc3-ba7e-046719f97bb5"}
+ * @AllowToRunInFind
  */
 function REC_on_select()
 {

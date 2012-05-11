@@ -1,6 +1,7 @@
 /**
  *
  * @properties={typeid:24,uuid:"bcf23384-d587-42b4-b391-5caa949e0fe3"}
+ * @AllowToRunInFind
  */
 function FILTER_replace_columns()
 {

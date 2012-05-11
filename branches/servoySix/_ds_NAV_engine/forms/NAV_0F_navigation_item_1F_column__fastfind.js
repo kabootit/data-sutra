@@ -1,6 +1,7 @@
 /**
  *
  * @properties={typeid:24,uuid:"323cb69f-2260-4e64-a310-3eed4cbbe67d"}
+ * @AllowToRunInFind
  */
 function FILTER_find_fields()
 {
@@ -135,6 +136,7 @@ FILTER_find_fields()
 /**
  *
  * @properties={typeid:24,uuid:"1289adc6-3c4b-40ea-b163-5bf68a16daca"}
+ * @AllowToRunInFind
  */
 function REFRESH_columns()
 {
