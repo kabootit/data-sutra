@@ -1,6 +1,7 @@
 /**
  *
  * @properties={typeid:24,uuid:"dadd13fb-9675-48cd-aa01-a77a80ab42f8"}
+ * @AllowToRunInFind
  */
 function FLD_data_change__company_id()
 {

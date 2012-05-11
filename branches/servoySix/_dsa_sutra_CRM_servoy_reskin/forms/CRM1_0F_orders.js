@@ -40,6 +40,7 @@ if (delRec == 'Yes') {
 /**
  *
  * @properties={typeid:24,uuid:"c4af2a08-f34c-4814-ae72-c6789a57f8e9"}
+ * @AllowToRunInFind
  */
 function FLD_data_change__company_id()
 {

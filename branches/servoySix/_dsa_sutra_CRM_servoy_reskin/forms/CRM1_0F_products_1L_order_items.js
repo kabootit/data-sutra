@@ -1,6 +1,7 @@
 /**
  *
  * @properties={typeid:24,uuid:"69ec64fd-2646-4515-90dc-4e9a5c0848f1"}
+ * @AllowToRunInFind
  */
 function GOTO_order()
 {

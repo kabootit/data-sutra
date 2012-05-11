@@ -124,6 +124,7 @@ elements[btnInvisible].setLocation(currentLocationX, currentLocationY)
 /**
  *
  * @properties={typeid:24,uuid:"64a94272-b2a9-4033-8436-12ce61c5f8ba"}
+ * @AllowToRunInFind
  */
 function FILTERS_list_control()
 {
