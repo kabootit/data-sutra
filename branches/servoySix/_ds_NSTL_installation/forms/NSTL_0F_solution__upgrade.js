@@ -243,6 +243,7 @@ if (answer) {
 /**
  *
  * @properties={typeid:24,uuid:"503ccb01-9d1b-46ab-96a5-91452a337ded"}
+ * @AllowToRunInFind
  */
 function UTIL_toolbar_upgrade()
 {

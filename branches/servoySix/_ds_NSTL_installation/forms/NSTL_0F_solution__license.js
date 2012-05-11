@@ -1420,6 +1420,7 @@ return messageDigest5Hash
 /**
  *
  * @properties={typeid:24,uuid:"f15f48dd-e0ac-4394-8d6a-0b536f65ae62"}
+ * @AllowToRunInFind
  */
 function LICENSE_purchased()
 {
@@ -1522,6 +1523,7 @@ function LICENSE_purchased()
 
 /**
  * @properties={typeid:24,uuid:"22E93E23-24B9-4745-9708-1A18813365FE"}
+ * @AllowToRunInFind
  */
 function LICENSE_community() {
 
