@@ -1,6 +1,7 @@
 /**
  *
  * @properties={typeid:24,uuid:"2277DD55-18DB-4FD8-9AA3-50B35D5428A3"}
+ * @AllowToRunInFind
  */
 function REC_on_select(event, vlName)
 {

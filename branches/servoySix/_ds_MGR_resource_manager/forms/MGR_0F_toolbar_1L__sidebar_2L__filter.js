@@ -1,6 +1,7 @@
 /**
  *
  * @properties={typeid:24,uuid:"CA24F478-8113-4F58-A72B-035844E0B32C"}
+ * @AllowToRunInFind
  */
 function ACTION_filter()
 {

@@ -130,6 +130,7 @@ function REC_duplicate()
 
 /**
  * @properties={typeid:24,uuid:"4131AC4A-845A-4838-9541-E5893B712D80"}
+ * @AllowToRunInFind
  */
 function REC_new_sub() {
 	var selectedIndex = foundset.getSelectedIndex()
@@ -240,6 +241,7 @@ function DIR_down(event) {
  * @param {JSEvent} event the event that triggered the action
  *
  * @properties={typeid:24,uuid:"96D7FD13-86E3-4CD7-B501-66C9E738EF9D"}
+ * @AllowToRunInFind
  */
 function PICK_relation_1(event) {
 	//fill valuelist with all "parent" options

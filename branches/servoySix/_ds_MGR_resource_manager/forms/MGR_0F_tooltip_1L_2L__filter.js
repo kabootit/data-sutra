@@ -1,6 +1,7 @@
 /**
  *
  * @properties={typeid:24,uuid:"FA266360-FFE9-4EFC-A4F2-A17B530CBB2E"}
+ * @AllowToRunInFind
  */
 function ACTION_filter()
 {
@@ -115,6 +116,7 @@ else if (application.getMethodTriggerElementName() == 'fld_MGR_tooltip_filter_fo
 /**
  *
  * @properties={typeid:24,uuid:"6C2D6F82-5248-4DD1-984E-9E9CC915C282"}
+ * @AllowToRunInFind
  */
 function ACTION_filter_elements()
 {
@@ -154,6 +156,7 @@ globals.MGR_tooltip_filter_selected		= null
 /**
  *
  * @properties={typeid:24,uuid:"5A6F0682-3B9E-4F9B-9EBA-0064D3CF2671"}
+ * @AllowToRunInFind
  */
 function ACTION_filter_flag_help()
 {
@@ -206,6 +209,7 @@ else {
 /**
  *
  * @properties={typeid:24,uuid:"A72AB21B-B479-4408-9BB0-E78D50E5A173"}
+ * @AllowToRunInFind
  */
 function ACTION_filter_inline_help()
 {
@@ -312,6 +316,7 @@ globals.MGR_tooltip_filter_inline_help	= null
 /**
  *
  * @properties={typeid:24,uuid:"76C85BFD-1D70-4FF0-881E-F992CED6E68F"}
+ * @AllowToRunInFind
  */
 function ACTION_filter_tooltip()
 {
@@ -400,6 +405,7 @@ application.updateUI()
 /**
  *
  * @properties={typeid:24,uuid:"48A0300B-2579-431B-83AA-8A8217D2B655"}
+ * @AllowToRunInFind
  */
 function ACTION_vl_elements()
 {
@@ -455,6 +461,7 @@ globals.MGR_tooltip_filter_tooltip		= null
 /**
  *
  * @properties={typeid:24,uuid:"292330CB-6826-41D2-B1FB-E6FDAD33CB6A"}
+ * @AllowToRunInFind
  */
 function ACTION_vl_forms()
 {
@@ -512,6 +519,7 @@ globals.MGR_tooltip_filter_tooltip		= null
 /**
  *
  * @properties={typeid:24,uuid:"9C9CD99B-4899-4F7B-875D-AED53AB8710F"}
+ * @AllowToRunInFind
  */
 function FILTER_clear()
 {

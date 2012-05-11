@@ -177,6 +177,7 @@ if (input && input.id_documentation) {
 /**
  *
  * @properties={typeid:24,uuid:"5B464FE1-B5B8-4D75-897B-7DBC378BC754"}
+ * @AllowToRunInFind
  */
 function FORM_on_load()
 {
@@ -273,6 +274,7 @@ MOVE_generic('down')
 /**
  *
  * @properties={typeid:24,uuid:"E09E60AE-1370-4A66-8080-30A735B256E1"}
+ * @AllowToRunInFind
  */
 function MOVE_generic()
 {
@@ -573,6 +575,7 @@ MOVE_generic('up')
 /**
  *
  * @properties={typeid:24,uuid:"EDACC42C-357F-4DDE-B03C-2FCA88E8A606"}
+ * @AllowToRunInFind
  */
 function REC_delete()
 {
@@ -659,6 +662,7 @@ else {
 /**
  *
  * @properties={typeid:24,uuid:"EE663758-31DB-4BEC-8BE6-5DEAE35A4D9D"}
+ * @AllowToRunInFind
  */
 function REC_duplicate()
 {
@@ -723,6 +727,7 @@ forms.MGR_0F_documentation.elements.fld_title.requestFocus(false)
 /**
  *
  * @properties={typeid:24,uuid:"A483DCFF-FDBB-4475-A797-5390A5BF4D4C"}
+ * @AllowToRunInFind
  */
 function REC_new()
 {
@@ -806,6 +811,7 @@ forms.MGR_0F_documentation.elements.fld_title.requestFocus(false)
 /**
  *
  * @properties={typeid:24,uuid:"7D471D1D-B0B7-4985-92F7-33E73A56ED44"}
+ * @AllowToRunInFind
  */
 function REC_on_select()
 {

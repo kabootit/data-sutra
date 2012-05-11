@@ -1,7 +1,7 @@
 /**
  * @type {String}
  *
- * @properties={typeid:35,uuid:"B432F559-7FCE-4F61-AC3E-F294C9B89ABC"}
+ * @properties={typeid:35,uuid:"B432F559-7FCE-4F61-AC3E-F294C9B89ABC",variableType:12}
  */
 var _vlTest = null;
 

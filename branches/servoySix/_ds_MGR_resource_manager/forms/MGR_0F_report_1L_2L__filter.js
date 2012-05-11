@@ -1,6 +1,7 @@
 /**
  *
  * @properties={typeid:24,uuid:"D056C61D-E05C-4B98-A134-559D9861A48F"}
+ * @AllowToRunInFind
  */
 function ACTION_filter()
 {
@@ -53,6 +54,7 @@ globals.MGR_report_filter_menu = null
 /**
  *
  * @properties={typeid:24,uuid:"A9F835D3-0B0E-4531-9BC0-596CD3AC3A0D"}
+ * @AllowToRunInFind
  */
 function FILTER_clear()
 {
