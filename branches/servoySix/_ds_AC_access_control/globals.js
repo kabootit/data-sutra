@@ -1,119 +1,167 @@
 /**
+ * @type {Number}
+ *
  * @properties={typeid:35,uuid:"0C31EF45-CF3A-494A-BD95-64CBF32B23F1",variableType:4}
  */
 var AC_preference_type = 1;
 
 /**
+ * @type {Number}
+ *
  * @properties={typeid:35,uuid:"716299f9-521c-4a7f-b7b3-4e4b40e54f10",variableType:4}
  */
 var AC_configuration = 12;
 
 /**
- * @properties={typeid:35,uuid:"ad7cb092-61d4-45ae-9f21-95469d08c88b"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"ad7cb092-61d4-45ae-9f21-95469d08c88b",variableType:12}
  */
 var AC_filter_action_id = '';
 
 /**
- * @properties={typeid:35,uuid:"b8ca920b-dede-438c-96af-e50e9ff8c92c"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"b8ca920b-dede-438c-96af-e50e9ff8c92c",variableType:12}
  */
 var AC_filter_action_name = '';
 
 /**
- * @properties={typeid:35,uuid:"0d9798dd-c0e5-4b41-8384-5d4148c21d28"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"0d9798dd-c0e5-4b41-8384-5d4148c21d28",variableType:12}
  */
 var AC_filter_description = '';
 
 /**
+ * @type {Number}
+ *
  * @properties={typeid:35,uuid:"774d0d2d-381a-4efd-b4e3-46af5d7f1759",variableType:4}
  */
 var AC_filter_type = 2;
 
 /**
+ * @type {Number}
+ *
  * @properties={typeid:35,uuid:"e944a331-f7ef-4dd6-9cd6-053a0a92f0c5",variableType:4}
  */
 var AC_filters_toggle;
 
 /**
- * @properties={typeid:35,uuid:"3f5e36c6-d9e9-4fd3-a980-f37c6c17bc97"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"3f5e36c6-d9e9-4fd3-a980-f37c6c17bc97",variableType:12}
  */
 var AC_group_password = 'Security Groups';
 
 /**
+ * @type {Number}
+ *
  * @properties={typeid:35,uuid:"b6c87bca-7327-47da-a1e8-e700d5a4e4bd",variableType:4}
  */
 var AC_group_selected;
 
 /**
- * @properties={typeid:35,uuid:"cadfb40f-048d-43e0-ba0e-3adfe692535f"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"cadfb40f-048d-43e0-ba0e-3adfe692535f",variableType:12}
  */
 var AC_html_blog = '';
 
 /**
- * @properties={typeid:35,uuid:"d18fb864-3cff-4bd6-bcb9-bd0dba742865"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"d18fb864-3cff-4bd6-bcb9-bd0dba742865",variableType:12}
  */
 var AC_html_misc = '';
 
 /**
- * @properties={typeid:35,uuid:"2afb0dfe-c864-4347-b2ef-fb5f84f87566"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"2afb0dfe-c864-4347-b2ef-fb5f84f87566",variableType:12}
  */
 var AC_html_qotd = '';
 
 /**
+ * @type {Number}
+ *
  * @properties={typeid:35,uuid:"860dfd6e-2bd0-4180-80ed-52249aa5ede2",variableType:4}
  */
 var AC_login_id = null;
 
 /**
+ * @type {String}
+ *
  * @properties={typeid:35,uuid:"f8ca97f8-e48f-47f3-a82f-5b16ebaaf4b7"}
  */
 var AC_login_password = null;
 
 /**
+ * @type {String}
+ *
  * @properties={typeid:35,uuid:"cf17d095-8d0a-4ba3-a0c6-21e92e451875"}
  */
 var AC_login_user = null;
 
 /**
+ * @type {String}
+ *
  * @properties={typeid:35,uuid:"d0842c14-93ef-472a-a1c3-4a503e2203d7"}
  */
 var AC_login_uuid = null;
 
 /**
+ * @type {Number}
+ *
  * @properties={typeid:35,uuid:"EF11D57D-7B66-46CE-BCC5-CD22B69F892D",variableType:4}
  */
 var AC_organization_selected = null;
 
 /**
+ * @type {Number}
+ *
  * @properties={typeid:35,uuid:"f8104528-20b5-4ba0-aadd-dcb2d81c4371",variableType:4}
  */
 var AC_P_flag = 0;
 
 /**
+ * @type {Number}
+ *
  * @properties={typeid:35,uuid:"fed299e6-6b97-40c5-a0a9-9a36548cd7a5",variableType:4}
  */
 var AC_P_group = null;
 
 /**
- * @properties={typeid:35,uuid:"818a7e8b-733e-4402-9194-ed16118660c6"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"818a7e8b-733e-4402-9194-ed16118660c6",variableType:12}
  */
 var AC_password_edit_1 = '';
 
 /**
- * @properties={typeid:35,uuid:"b5f44e2e-b717-4948-a77c-d6000ad67c91"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"b5f44e2e-b717-4948-a77c-d6000ad67c91",variableType:12}
  */
 var AC_password_edit_2 = '';
 
 /**
+ * @type {Number}
+ *
  * @properties={typeid:35,uuid:"60B5CD9C-B8DD-4A39-ACF0-5CB8FC3363CB",variableType:4}
  */
 var AC_staff_selected = null;
 
 /**
+ * @type {Number}
+ *
  * @properties={typeid:35,uuid:"9ee4fdf2-12bc-4f30-ba2b-cbd3b5347df8",variableType:4}
  */
 var AC_toolbar_type;
 
 /**
+ * @type {Number}
+ *
  * @properties={typeid:35,uuid:"4a23b939-b243-4ae8-bc23-445fc5687061",variableType:4}
  */
 var AC_user_selected;

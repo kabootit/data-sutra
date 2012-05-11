@@ -1,7 +1,7 @@
 /**
  * @type {String}
  *
- * @properties={typeid:35,uuid:"EDC06788-353E-443F-AF97-5CA703812218"}
+ * @properties={typeid:35,uuid:"EDC06788-353E-443F-AF97-5CA703812218",variableType:12}
  */
 var valuelistItems = null;
 

@@ -42,6 +42,7 @@ databaseManager.saveData()
 /**
  *
  * @properties={typeid:24,uuid:"2ed387a2-61e0-4d9d-b145-285ced5fc238"}
+ * @AllowToRunInFind
  */
 function FLD_data_change__login_nav_sub()
 {

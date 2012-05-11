@@ -1,6 +1,7 @@
 /**
  *
  * @properties={typeid:24,uuid:"187e324b-bebc-4849-b757-969b2750ec0d"}
+ * @AllowToRunInFind
  */
 function ACTION_filter()
 {
@@ -28,6 +29,7 @@ if (results) {
 /**
  *
  * @properties={typeid:24,uuid:"895acdc7-bf23-49a3-be3f-7a1f72fa1134"}
+ * @AllowToRunInFind
  */
 function FILTER_clear()
 {

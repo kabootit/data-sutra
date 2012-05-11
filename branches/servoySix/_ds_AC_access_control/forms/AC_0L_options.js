@@ -1,4 +1,6 @@
 /**
+ * @type {Number}
+ *
  * @properties={typeid:35,uuid:"75A4E59E-EF8E-410F-BC2B-BC290EFD34EE",variableType:4}
  */
 var _treeStatus = 1;

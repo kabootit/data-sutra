@@ -4,6 +4,7 @@
  * @param {JSEvent} event the event that triggered the action
  *
  * @properties={typeid:24,uuid:"9B5EC813-E920-4E50-8427-ABB5A8C10988"}
+ * @AllowToRunInFind
  */
 function REC_on_select(event,vlName) {
 	if (!vlName) {
@@ -40,6 +41,7 @@ function REC_on_select(event,vlName) {
  * @returns {Boolean} valid value
  *
  * @properties={typeid:24,uuid:"7E237ACB-DAD5-4E25-9680-3562470D9CE1"}
+ * @AllowToRunInFind
  */
 function FLD_data_change__name(oldValue, newValue, event) {
 	var fsValuelist = databaseManager.getFoundSet('sutra','sutra_valuelist')

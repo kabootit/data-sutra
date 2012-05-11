@@ -95,6 +95,7 @@ globals.TAB_change_grid_init()
 /**
  *
  * @properties={typeid:24,uuid:"305fa2e0-3da7-4fc9-b18f-43cdc4391e39"}
+ * @AllowToRunInFind
  */
 function FORM_on_show()
 {
@@ -291,6 +292,7 @@ elements.fld_group_name.requestFocus(false)
 /**
  *
  * @properties={typeid:24,uuid:"2d1e3d7e-6263-41f3-8359-0c80cd39bb39"}
+ * @AllowToRunInFind
  */
 function REC_on_select()
 {
