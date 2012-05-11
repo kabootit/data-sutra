@@ -2599,6 +2599,64 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 								}
 							}
 							
+							//add favorite column to universal list
+							if (solutionPrefs.access.accessControl && navSpecs.favoritable) {
+								//add calculation to show favorite star if hasn't been added already
+								var starCalc = solutionModel.getCalculation('sutra_favorite_badge', 'db:/' + serverName + '/' + tableName)
+								if (!starCalc) {
+									starCalc = solutionModel.newCalculation(
+											['function sutra_favorite_badge() {',
+												'var badge = "";',
+												'var record = foundset.getRecord(currentRecordIndex);',
+												'function favExists (item) {',
+													'return item && item.datasource == record.getDataSource() && item.pk == record.getPKs()[0];',
+												'}',
+												//this is a favorite, we need some kind of image
+												'if (solutionPrefs.access.favorites.some(favExists)) {',
+													'badge += \'<html><center><img src="media:///\';',
+													
+													//this row is selected
+													'if (foundset.getSelectedIndex() == foundset.getRecordIndex(record)) {',
+														'badge += "btn_favorite_selected.png";',
+													'}',
+													//row is not selected
+													'else {',
+														'badge += "btn_favorite_unselected.png";',
+													'}',
+													'badge += \'" width=15 height=20></center>\';',
+												'}',
+												'return badge;',
+											'}'].join(''), 
+											'db:/' + serverName + '/' + tableName
+										)
+								}
+								
+								var starField = myForm.newLabel(
+													'',						//text on label
+													i,						//x
+													0,						//y
+													20,						//width
+													20						//height
+												)
+					
+								starField.name = 'sutra_favorite_badge'
+								starField.dataProviderID = 'sutra_favorite_badge'
+								starField.onAction = solutionModel.getGlobalMethod('NAV_universal_list_favorite')
+								starField.onRightClick = solutionModel.getGlobalMethod('NAV_universal_list_right_click')
+								starField.anchors = SM_ANCHOR.DEFAULT
+								starField.horizontalAlignment = SM_ALIGNMENT.LEFT
+								starField.styleClass = 'tree'
+								starField.borderType = 'EmptyBorder,0,0,0,0'
+								starField.transparent = true
+								starField.displaysTags = true
+								starField.rolloverCursor = SM_CURSOR.HAND_CURSOR
+								//commented out because gets stuck on when updating a record
+//								starField.rolloverImageMedia = solutionModel.getMedia('btn_favorite_rollover.png')
+								starField.toolTipText = 'Toggle favorite'//'%%sutra_favorite_tooltip%%'
+								starField.showClick = false
+								starField.text = '<html><center><img src="media:///btn_favorite_dark.png" width=12 height=17></center>'
+							}
+							
 							//assign the secondary form to the main UL with buttons
 							if (navSpecs.barItemAdd || navSpecs.barItemAction || navSpecs.barItemFilter || navSpecs.barItemReport) {
 								forms.NAV_T_universal_list.elements.tab_ul.addTab(forms[newFormName],'UL Records',null,null,null,null)
@@ -3008,6 +3066,70 @@ function NAV_universal_list_right_click(input,elem,list,record) {
 	//checks if already exists
 	function favExists(item) {
 		return item && item.datasource == fave.datasource && item.pk == fave.pk
+	}
+}
+
+/**
+ * @properties={typeid:24,uuid:"D8C1845B-AE7B-4527-9875-5949CD470C28"}
+ */
+function NAV_universal_list_favorite(input,elem,list,record) {
+	//checks if already exists
+	function favExists(item) {
+		return item && item.datasource == fave.datasource && item.pk == fave.pk
+	}
+	
+	var currentNavItem = solutionPrefs.config.currentFormID
+	
+	//access and control turned on, this ul takes favorites
+	if (solutionPrefs.access.accessControl && navigationPrefs.byNavItemID[currentNavItem].navigationItem.favoritable) {
+		if (!record && input instanceof JSEvent) {
+			record = forms[input.getFormName()].foundset.getSelectedRecord()
+		}
+		
+		//get view of this record showing in UL
+		var displayItems = navigationPrefs.byNavItemID[currentNavItem].universalList.displays
+		//loop through display items to find the selected one
+		for (var i = 0; i < displayItems.length; i++) {
+			if (globals.DATASUTRA_display == displayItems[i].displayID) {
+				break
+			}
+		}
+		
+		var fave = {
+				navItemID : currentNavItem,
+				display : displayItems[i],
+				datasource : record.foundset.getDataSource(),
+				//won't work for compound pk
+				pkName : databaseManager.getTable(record).getRowIdentifierColumnNames()[0],
+				pk : record.getPKs()[0],
+				meta : {
+					dateCreated : application.getServerTimeStamp(),
+					createdBy : solutionPrefs.access.userID
+				}
+			}
+		
+		//new favorite, add to stack
+		if (!solutionPrefs.access.favorites.some(favExists)) {
+			solutionPrefs.access.favorites.push(fave)
+			var selectFave = solutionPrefs.access.favorites.length - 1
+		}
+		//remove favorite
+		else {
+			solutionPrefs.access.favorites.splice(solutionPrefs.access.favorites.map(favExists).indexOf(true),1)
+		}
+		
+		//assign back into record
+		solutionPrefs.access.user.record.favorites = solutionPrefs.access.favorites
+		databaseManager.saveData(solutionPrefs.access.user.record)
+		
+		//update display to show star
+		globals.NAV_universal_list_select__unhilite()
+		databaseManager.recalculate(record)
+		
+		//if in favorites mode, redraw
+		if (globals.DATASUTRA_navigation_set == 0) {
+			forms.NAV__navigation_tree__rows.LIST_redraw(null,null,true,false,true,selectFave)
+		}
 	}
 }
 
@@ -4668,8 +4790,13 @@ function NAV_universal_list_select()
 		var pkActedOn = 0
 	}
 	
-	//record not clicked on before, throw up busy bar and busy cursor
 	var record = forms[formName].foundset.getRecord(rowSelected)
+	
+	//recalc last selected and this row (to update favorite star)
+	databaseManager.recalculate(record)
+	databaseManager.recalculate(record.foundset.getRecord(navigationPrefs.byNavItemID[currentNavItem].listData.index.selected))
+	
+	//record not clicked on before, throw up busy bar and busy cursor
 	if (record && navigationPrefs.byNavItemID[currentNavItem].navigationItem.initialRecord && !navigationPrefs.byNavItemID[currentNavItem].listData.visitedPKs[record[pkName]]) {
 		var recNotLoaded = true
 		

@@ -257,6 +257,8 @@ if (application.__parent__.solutionPrefs) {
 	var syncRecords = arguments[7]
 	
 	var currentNavItem = solutionPrefs.config.currentFormID
+	var serverName = forms[solutionPrefs.config.currentFormName].controller.getServerName()
+	var tableName = forms[solutionPrefs.config.currentFormName].controller.getTableName()
 	
 	//set check box in display drop down
 	globals.DATASUTRA_display = theDisplayID
@@ -314,8 +316,8 @@ if (application.__parent__.solutionPrefs) {
 	var myForm = globals.NAV_universal_list_template_to_form(template,newFormName)
 	
 	//set datasource
-	myForm.serverName = forms[solutionPrefs.config.currentFormName].controller.getServerName()
-	myForm.tableName = forms[solutionPrefs.config.currentFormName].controller.getTableName()
+	myForm.serverName = serverName
+	myForm.tableName = tableName
 	
 	//set events
 	myForm.onShow = solutionModel.getGlobalMethod('NAV_universal_list_show')
@@ -362,20 +364,33 @@ if (application.__parent__.solutionPrefs) {
 			continue
 		}
 		
-		//create field
-		var myField = myForm.newTextField(
-						nameNameField,			//dataprovider
-						i,						//x
-						0,						//y
-						lineItem.width,			//width
-						20						//height
-					)
+		//create check field
+		if (lineItem.formatMask == 'Check') {
+			var myField = myForm.newCheck(
+							nameNameField,			//dataprovider
+							i,						//x
+							0,						//y
+							lineItem.width,			//width
+							20						//height
+						)
+		}
+		//create normal field
+		else {
+			var myField = myForm.newTextField(
+							nameNameField,			//dataprovider
+							i,						//x
+							0,						//y
+							lineItem.width,			//width
+							20						//height
+						)
+		}
 		
-		myField.setOnFocusGainedMethod(globals.NAV_universal_list_select__unhilite)
+		myField.name = application.getUUID().toString()
+		myField.onFocusGained = solutionModel.getGlobalMethod('NAV_universal_list_select__unhilite')
 		myField.anchors = SM_ANCHOR.ALL
 		myField.horizontalAlignment = horizAlign
 		myField.styleClass = 'customlist'
-		myField.editable = false
+		myField.editable = lineItem.editable
 		myField.borderType = 'EmptyBorder,0,0,0,0'
 		myField.margin = '0,4,0,4'
 		myField.scrollbars = 0
@@ -387,6 +402,71 @@ if (application.__parent__.solutionPrefs) {
 		if (fieldVL) {
 			myField.valuelist = solutionModel.getValueList(fieldVL)
 		}
+		
+		if (lineItem.editable) {
+			myField.onRightClick = solutionModel.getGlobalMethod('NAV_universal_list_edit')
+		}
+		else {
+			myField.onRightClick = solutionModel.getGlobalMethod('NAV_universal_list_right_click')
+		}
+	}
+	
+	//add favorite column to universal list
+	if (solutionPrefs.access.accessControl && navigationPrefs.byNavItemID[currentNavItem].navigationItem.favoritable) {
+		//add calculation to show favorite star if hasn't been added already
+		var starCalc = solutionModel.getCalculation('sutra_favorite_badge', 'db:/' + serverName + '/' + tableName)
+		if (!starCalc) {
+			starCalc = solutionModel.newCalculation(
+					['function sutra_favorite_badge() {',
+						'var badge = "";',
+						'var record = foundset.getRecord(currentRecordIndex);',
+						'function favExists (item) {',
+							'return item && item.datasource == record.getDataSource() && item.pk == record.getPKs()[0];',
+						'}',
+						//this is a favorite, we need some kind of image
+						'if (solutionPrefs.access.favorites.some(favExists)) {',
+							'badge += \'<html><center><img src="media:///\';',
+							
+							//this row is selected
+							'if (foundset.getSelectedIndex() == foundset.getRecordIndex(record)) {',
+								'badge += "btn_favorite_selected.png";',
+							'}',
+							//row is not selected
+							'else {',
+								'badge += "btn_favorite_unselected.png";',
+							'}',
+							'badge += \'" width=15 height=20></center>\';',
+						'}',
+						'return badge;',
+					'}'].join(''), 
+					'db:/' + serverName + '/' + tableName
+				)
+		}
+		
+		var starField = myForm.newLabel(
+							'',						//text on label
+							i,						//x
+							0,						//y
+							20,						//width
+							20						//height
+						)
+
+		starField.name = 'sutra_favorite_badge'
+		starField.dataProviderID = 'sutra_favorite_badge'
+		starField.onAction = solutionModel.getGlobalMethod('NAV_universal_list_favorite')
+		starField.onRightClick = solutionModel.getGlobalMethod('NAV_universal_list_right_click')
+		starField.anchors = SM_ANCHOR.DEFAULT
+		starField.horizontalAlignment = SM_ALIGNMENT.LEFT
+		starField.styleClass = 'tree'
+		starField.borderType = 'EmptyBorder,0,0,0,0'
+		starField.transparent = true
+		starField.displaysTags = true
+		starField.rolloverCursor = SM_CURSOR.HAND_CURSOR
+		//commented out because gets stuck on when updating a record
+//		starField.rolloverImageMedia = solutionModel.getMedia('btn_favorite_rollover.png')
+		starField.toolTipText = 'Toggle favorite'//'%%sutra_favorite_tooltip%%'
+		starField.showClick = false
+		starField.text = '<html><center><img src="media:///btn_favorite_dark.png" width=12 height=17></center>'
 	}
 	
 	//assign the secondary form to the main UL at the tab right behind where it used to be (when deleted, the others slid over to fill its spot)

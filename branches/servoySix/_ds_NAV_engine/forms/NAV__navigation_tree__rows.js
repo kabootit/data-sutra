@@ -202,6 +202,10 @@ function FAVE_right_click(input,fave,oldSelected) {
 		solutionPrefs.access.user.record.favorites = solutionPrefs.access.favorites
 		databaseManager.saveData(solutionPrefs.access.user.record)
 		
+		//update display to show/hide the star
+		var fsStar = forms[navigationPrefs.byNavItemID[fave.navItemID].listData.tabFormInstance].foundset
+		databaseManager.recalculate(fsStar)
+		
 		if (oldSelected && solutionPrefs.access.favorites.length < oldSelected + 1) {
 			oldSelected = solutionPrefs.access.favorites.length - 1
 		}
