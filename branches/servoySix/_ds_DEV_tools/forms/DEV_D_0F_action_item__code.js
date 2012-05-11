@@ -45,6 +45,7 @@ TOGGLE_elements()
 /**
  *
  * @properties={typeid:24,uuid:"1b20ad38-acf8-4986-b41c-51f3bd7ee146"}
+ * @AllowToRunInFind
  */
 function GET_action_record()
 {
@@ -81,6 +82,7 @@ if (application.__parent__.solutionPrefs) {
 /**
  *
  * @properties={typeid:24,uuid:"4494baed-9349-4740-bf10-51231d967542"}
+ * @AllowToRunInFind
  */
 function GET_add_record()
 {

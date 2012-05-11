@@ -41,6 +41,7 @@ if (formName != form_to_load) {
 /**
  *
  * @properties={typeid:24,uuid:"80e45fb6-2181-4a9c-b50a-1523f7dbc55e"}
+ * @AllowToRunInFind
  */
 function GET_record()
 {

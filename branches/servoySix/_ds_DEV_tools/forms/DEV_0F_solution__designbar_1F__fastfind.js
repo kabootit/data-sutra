@@ -8,6 +8,7 @@ function ACTION_configure()
 /**
  *
  * @properties={typeid:24,uuid:"c4739b5a-1c28-455f-ba57-6223f17890e8"}
+ * @AllowToRunInFind
  */
 function ACTION_default()
 {

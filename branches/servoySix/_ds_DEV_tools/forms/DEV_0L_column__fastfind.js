@@ -126,6 +126,7 @@ elements.fld_blank.requestFocus(false)
 /**
  *
  * @properties={typeid:24,uuid:"82997394-03f9-48c6-b7e4-c4aa17305ef4"}
+ * @AllowToRunInFind
  */
 function GET_record()
 {

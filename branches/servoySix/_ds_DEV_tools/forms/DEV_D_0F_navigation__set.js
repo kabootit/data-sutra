@@ -1,6 +1,7 @@
 /**
  *
  * @properties={typeid:24,uuid:"328953db-2657-45d7-8f5b-ec4d396d0a51"}
+ * @AllowToRunInFind
  */
 function ACTION_ok()
 {
@@ -133,6 +134,7 @@ if (results) {
 /**
  *
  * @properties={typeid:24,uuid:"486acac5-fca4-43b1-9b2c-aa0d7f1047f3"}
+ * @AllowToRunInFind
  */
 function GET_record()
 {

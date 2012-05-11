@@ -163,6 +163,7 @@ elements.fld_notes.requestFocus()
 /**
  *
  * @properties={typeid:24,uuid:"3465fe2c-091a-43c5-89bf-7e4135667662"}
+ * @AllowToRunInFind
  */
 function GET_record()
 {

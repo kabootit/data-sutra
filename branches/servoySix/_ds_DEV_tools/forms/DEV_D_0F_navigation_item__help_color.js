@@ -1,6 +1,7 @@
 /**
  *
  * @properties={typeid:24,uuid:"a0d45641-6566-4841-9e44-b997daf971bb"}
+ * @AllowToRunInFind
  */
 function ACTION_ok()
 {
@@ -78,6 +79,7 @@ if (solutionPrefs.config.helpMode) {
 /**
  *
  * @properties={typeid:24,uuid:"d3f49fc0-28e3-44cd-929d-68f4cf13ebcc"}
+ * @AllowToRunInFind
  */
 function GET_record()
 {

@@ -1,6 +1,7 @@
 /**
  *
  * @properties={typeid:24,uuid:"c5b87264-279f-4ce5-82af-751dcb970294"}
+ * @AllowToRunInFind
  */
 function ACTION_activate()
 {
@@ -62,6 +63,7 @@ function ACTION_edit()
 /**
  *
  * @properties={typeid:24,uuid:"34973f32-e732-43f9-a228-013e74266328"}
+ * @AllowToRunInFind
  */
 function ACTION_title()
 {

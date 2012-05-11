@@ -175,6 +175,7 @@ databaseManager.saveData()
 /**
  *
  * @properties={typeid:24,uuid:"42f61a14-1715-4e33-83f8-ceae4a6d8ebf"}
+ * @AllowToRunInFind
  */
 function GET_record()
 {

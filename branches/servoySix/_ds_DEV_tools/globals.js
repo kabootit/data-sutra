@@ -1,40 +1,56 @@
 /**
- * @properties={typeid:35,uuid:"5f3ab9ad-ae76-42f9-832a-7f142065daf4"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"5f3ab9ad-ae76-42f9-832a-7f142065daf4",variableType:12}
  */
 var DEV_designbar_engine = '';
 
 /**
- * @properties={typeid:35,uuid:"a2205ea2-0751-445b-a50e-877c6dfd0236"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"a2205ea2-0751-445b-a50e-877c6dfd0236",variableType:12}
  */
 var DEV_designbar_engine_button = '';
 
 /**
+ * @type {Number}
+ *
  * @properties={typeid:35,uuid:"89d297ad-447c-4dea-9fbf-1c9f341da002",variableType:4}
  */
 var DEV_filter_task = 1;
 
 /**
- * @properties={typeid:35,uuid:"1cda9c06-4302-4631-af5b-d497e615a541"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"1cda9c06-4302-4631-af5b-d497e615a541",variableType:12}
  */
 var DEV_help_description = '';
 
 /**
- * @properties={typeid:35,uuid:"73a74178-dcf6-494b-8779-e3a659dbd72a"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"73a74178-dcf6-494b-8779-e3a659dbd72a",variableType:12}
  */
 var DEV_html_global = '';
 
 /**
+ * @type {Number}
+ *
  * @properties={typeid:35,uuid:"b232f3ba-5a33-4fb2-b0f6-5d0b642fa71d",variableType:4}
  */
 var DEV_P_all;
 
 /**
- * @properties={typeid:35,uuid:"817e167c-5549-43b8-b0f1-b03cb3c9fca0"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"817e167c-5549-43b8-b0f1-b03cb3c9fca0",variableType:12}
  */
 var DEV_P_navigation = '';
 
 /**
- * @properties={typeid:35,uuid:"d51af929-dcde-4fd5-bf34-9bc896d49a86"}
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"d51af929-dcde-4fd5-bf34-9bc896d49a86",variableType:12}
  */
 var DEV_today = '';
 
@@ -989,6 +1005,7 @@ else {
 /**
  *
  * @properties={typeid:24,uuid:"660e5b08-c1f4-4843-a444-41f27a064304"}
+ * @AllowToRunInFind
  */
 function DEV_rebuild_navitem()
 {

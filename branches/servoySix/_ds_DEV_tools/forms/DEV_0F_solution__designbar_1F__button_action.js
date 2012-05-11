@@ -1,6 +1,7 @@
 /**
  *
  * @properties={typeid:24,uuid:"e6b7facc-cd3d-4ca1-8111-3fafa881efb9"}
+ * @AllowToRunInFind
  */
 function ACTION_activate()
 {
@@ -321,6 +322,7 @@ if (delRec == 'Yes') {
 /**
  *
  * @properties={typeid:24,uuid:"08e73def-9a3f-4839-ada8-cbafe8ec3cc0"}
+ * @AllowToRunInFind
  */
 function REC_edit()
 {

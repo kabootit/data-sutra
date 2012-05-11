@@ -99,6 +99,7 @@ else {
  * @param {JSEvent} event the event that triggered the action
  *
  * @properties={typeid:24,uuid:"db751e01-9471-4e3a-862a-3efb4d4a8608"}
+ * @AllowToRunInFind
  */
 function FILTERS_list(event)
 {
@@ -261,6 +262,7 @@ databaseManager.saveData()
 /**
  *
  * @properties={typeid:24,uuid:"d1167629-68ce-419c-9e40-aac85f1d8211"}
+ * @AllowToRunInFind
  */
 function GET_record()
 {

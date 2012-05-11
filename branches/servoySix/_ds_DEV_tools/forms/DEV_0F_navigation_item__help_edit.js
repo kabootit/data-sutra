@@ -139,6 +139,7 @@ navigationPrefs.byNavItemID[id_navigation_item].navigationItem.helpDescription =
 /**
  *
  * @properties={typeid:24,uuid:"ffa43c5e-e5cb-4365-a032-9e4b3db33458"}
+ * @AllowToRunInFind
  */
 function GET_record()
 {
