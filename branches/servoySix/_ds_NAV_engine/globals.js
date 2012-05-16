@@ -2655,6 +2655,9 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 								starField.toolTipText = 'Toggle favorite'//'%%sutra_favorite_tooltip%%'
 								starField.showClick = false
 								starField.text = '<html><center><img src="media:///btn_favorite_dark.png" width=12 height=17></center>'
+									
+								//override sort on form so that will toggle favorite mode on off for this field
+								myForm.onSortCmd = solutionModel.getGlobalMethod('NAV_universal_list_sort')
 							}
 							
 							//assign the secondary form to the main UL with buttons
@@ -3116,6 +3119,15 @@ function NAV_universal_list_favorite(input,elem,list,record) {
 		//remove favorite
 		else {
 			solutionPrefs.access.favorites.splice(solutionPrefs.access.favorites.map(favExists).indexOf(true),1)
+			
+			//in favorite mode, omit record
+			if (navigationPrefs.byNavItemID[currentNavItem].universalList.favoriteOnly) {
+				record.foundset.omitRecord()
+				
+				if (!utils.hasRecords(forms[input.getFormName()].foundset)) {
+					globals.TRIGGER_fastfind_display_set('No favorite records found')
+				}
+			}
 		}
 		
 		//assign back into record
@@ -4794,7 +4806,9 @@ function NAV_universal_list_select()
 	
 	//recalc last selected and this row (to update favorite star)
 	databaseManager.recalculate(record)
-	databaseManager.recalculate(record.foundset.getRecord(navigationPrefs.byNavItemID[currentNavItem].listData.index.selected))
+	if (navigationPrefs.byNavItemID[currentNavItem].listData.index.selected <= record.foundset.getSize()) {
+		databaseManager.recalculate(record.foundset.getRecord(navigationPrefs.byNavItemID[currentNavItem].listData.index.selected))
+	}
 	
 	//record not clicked on before, throw up busy bar and busy cursor
 	if (record && navigationPrefs.byNavItemID[currentNavItem].navigationItem.initialRecord && !navigationPrefs.byNavItemID[currentNavItem].listData.visitedPKs[record[pkName]]) {
@@ -6424,3 +6438,87 @@ var NAV_replace_step_increment = 1;
  * @properties={typeid:35,uuid:"d2946431-465e-4771-8e68-046c1ee4e080",variableType:4}
  */
 var NAV_replace_step_start = 1;
+
+/**
+ * Perform sort.
+ *
+ * @param {String}	columnName
+ * @param {Boolean}	sortDir Sort ascending [true] or descending [false]
+ * @param {JSEvent}	event
+ *
+ * @properties={typeid:24,uuid:"188AC750-4A9C-47DA-A259-7EBA20542735"}
+ * @AllowToRunInFind
+ */
+function NAV_universal_list_sort(columnName, sortDir, event) {
+	var formName = solutionPrefs.config.currentFormName
+	var thisNav = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID]
+	
+	//do normal sort
+	if (columnName != 'sutra_favorite_badge') {
+		forms[formName].foundset.sort(columnName + (sortDir ? ' asc' : ' desc'), false)
+	}
+	//toggle showing only favorites
+	else {
+		//working with a universal list, safe to toggle favorites
+		if (thisNav.universalList) {
+			
+			//toggle setting
+			thisNav.universalList.favoriteOnly = !thisNav.universalList.favoriteOnly
+			
+			globals.CODE_cursor_busy(true)
+			
+			//show only favorites
+			if (thisNav.universalList.favoriteOnly) {
+				function findFaves(item) {
+					if (item.datasource == forms[formName].foundset.getDataSource()) { 
+						return true
+					}
+					else {
+						return false
+					}
+				}
+				function getFaveID(item) {
+					return item.pk
+				}
+				
+				var faves = solutionPrefs.access.favorites.filter(findFaves)
+				
+				//we have favorites
+				if (faves.length) {
+					//get selected record
+					var selected = forms[formName].foundset.getSelectedRecord()
+					
+					//create foundset in memory so screen doesn't jump around
+					var fsNew = databaseManager.getFoundSet(forms[formName].foundset.getDataSource())
+					
+					fsNew.loadRecords(databaseManager.convertToDataSet(faves.map(getFaveID)))
+					
+					//restore initial sort
+					fsNew.sort(forms[formName].foundset.getCurrentSort())
+					
+					//try to reselect record previously on
+					fsNew.selectRecord(selected.getPKs()[0])
+					
+					//punch this down onto the form
+					forms[formName].foundset.loadRecords(fsNew)
+					
+					globals.TRIGGER_fastfind_display_set('Showing favorite records')
+				}
+				//clear form
+				else {
+					forms[formName].foundset.clear()
+					globals.TRIGGER_fastfind_display_set('No favorite records found')
+				}
+			}
+			//show everything
+			else {
+				globals.NAV_find_clear()
+				
+				//restore initial sort
+				forms[formName].foundset.sort(forms[formName].foundset.getCurrentSort())
+			}
+			
+			globals.CODE_cursor_busy(false)
+		}
+	}
+}
