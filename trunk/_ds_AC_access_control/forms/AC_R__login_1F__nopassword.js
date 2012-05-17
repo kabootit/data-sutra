@@ -27,6 +27,11 @@ function ACTION_continue()
 var baseForm = solutionPrefs.config.formNameBase
 var navigationList = 'NAV__navigation_tree'
 
+//reset wrapper bean 2 to show header
+forms[baseForm].elements.bean_wrapper_2.topComponent = forms[baseForm].elements.bean_header
+application.updateUI()
+forms[baseForm].elements.bean_wrapper_2.dividerLocation = 44
+
 //reset loginDisabled flag so that previews will show misc and qotd areas
 delete this.loginDisabled
 
