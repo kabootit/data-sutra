@@ -1,4 +1,4 @@
-/*
+/**
  *	TITLE    :	ds_WEB_desktop
  *			  	
  *	ABOUT    :	Data Sutra stylesheet for Web
@@ -420,7 +420,7 @@ label.standardtabunselect {
 
 label.fancytabselect, label.fancytabunselect {
 	font-weight: bold;
-	font-size: 13pt; 
+	font-size: 9px; 
 	font-family: TrebuchetMS; 
 	color: #333333; 
 	text-align: center; 
