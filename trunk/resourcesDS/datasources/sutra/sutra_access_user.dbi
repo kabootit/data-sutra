@@ -70,6 +70,14 @@ name:"id_staff"
 },
 {
 allowNull:true,
+creationOrderIndex:40,
+dataType:12,
+flags:4,
+length:50,
+name:"id_staff__uuid"
+},
+{
+allowNull:true,
 creationOrderIndex:22,
 dataType:4,
 name:"login_nav_main"
