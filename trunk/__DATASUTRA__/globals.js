@@ -905,13 +905,6 @@ else {
 				application.addClientInfo(clientInfo)
 				solutionPrefs.clientInfo.adminPage = clientInfo
 			
-			//reset wrapper bean 2 to show header
-			forms[baseForm].elements.bean_wrapper_2.topComponent = forms[baseForm].elements.bean_header
-			application.updateUI()
-			forms[baseForm].elements.bean_wrapper_2.dividerLocation = 44
-			
-			
-					
 			// //PART IV: Set window size/location and toolbars showing
 				//only runs on first time solution loaded if fullscreen isn't active
 			if (solutionPrefs.config.firstRun && (!solutionPrefs.screenAttrib.kiosk.fullScreen || solutionPrefs.clientInfo.typeServoy == 'developer')) {
