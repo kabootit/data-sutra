@@ -1,7 +1,7 @@
 /**
  * @properties={typeid:35,uuid:"D711A8F9-DB0C-4C1A-B62E-0FD72DC276C9",variableType:4}
  */
-var _faveMode = 0;
+var _faveMode = 1;
 
 /**
  * @properties={typeid:24,uuid:"835C298B-5875-4CDB-9C5F-B719F27951F6"}
