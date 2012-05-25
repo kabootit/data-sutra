@@ -1,7 +1,7 @@
 /**
  * @type {String}
  *
- * @properties={typeid:35,uuid:"78c3311e-2401-4b46-afbf-1f66d20c2d1b",variableType:12}
+ * @properties={typeid:35,uuid:"78c3311e-2401-4b46-afbf-1f66d20c2d1b"}
  */
 var DATASUTRA_display = null;
 
@@ -13,28 +13,28 @@ var DATASUTRA_feedback;
 /**
  * @type {String}
  *
- * @properties={typeid:35,uuid:"f30d47f9-1fbb-4c6c-abe4-fb8dd77c4c83",variableType:12}
+ * @properties={typeid:35,uuid:"f30d47f9-1fbb-4c6c-abe4-fb8dd77c4c83"}
  */
 var DATASUTRA_find = null;
 
 /**
  * @type {String}
  *
- * @properties={typeid:35,uuid:"1e40b95d-c1f9-412e-af82-63b6e4b860f7",variableType:12}
+ * @properties={typeid:35,uuid:"1e40b95d-c1f9-412e-af82-63b6e4b860f7"}
  */
 var DATASUTRA_find_field = '';
 
 /**
  * @type {String}
  *
- * @properties={typeid:35,uuid:"eee1d8a8-d004-43ff-b546-89ac718bfe9b",variableType:12}
+ * @properties={typeid:35,uuid:"eee1d8a8-d004-43ff-b546-89ac718bfe9b"}
  */
 var DATASUTRA_find_pretty = '';
 
 /**
  * @type {String}
  *
- * @properties={typeid:35,uuid:"28d6987c-cde4-4c1a-b2c6-3eac80aa1cd1",variableType:12}
+ * @properties={typeid:35,uuid:"28d6987c-cde4-4c1a-b2c6-3eac80aa1cd1"}
  */
 var DATASUTRA_log_status = '';
 
@@ -48,7 +48,7 @@ var DATASUTRA_navigation_set = null;
 /**
  * @type {String}
  *
- * @properties={typeid:35,uuid:"7b178c56-8131-4a29-a948-9cab3f772e44",variableType:12}
+ * @properties={typeid:35,uuid:"7b178c56-8131-4a29-a948-9cab3f772e44"}
  */
 var DATASUTRA_sort = null;
 
@@ -350,7 +350,15 @@ if (application.getApplicationType() == APPLICATION_TYPES.HEADLESS_CLIENT) {
 //normal startup
 else {
 	var prefForm = 'DATASUTRA_0F_solution__blank_4'
+	
+	//smart client base form
 	var baseForm = 'DATASUTRA_0F_solution'
+	//override for webclient
+	if (application.getApplicationType() == APPLICATION_TYPES.WEB_CLIENT) {
+		baseForm = 'DATASUTRA_WEB_0F'
+		var webClient = true
+	}
+	
 	var serverName = forms[prefForm].controller.getServerName()
 	
 	//bring in new data if necessary
@@ -398,99 +406,107 @@ else {
 		var verOS = (plugins.sutra) ? plugins.sutra.getOSVersion() : ''
 		var styleNames = new Array('_DATASUTRA_','ds_WIN','ds_MAC','ds_MAC_leopard','ds_LINUX')
 		
-		//grab the textual values for all style sheets from repository in <= 3.5.x or >= 4.x client
-		if ((utils.stringToNumber(application.getVersion()) < 4) ||
-			(utils.stringToNumber(application.getVersion()) >= 4 && application.getApplicationType() == 3) ||
-			(utils.stringToNumber(application.getVersion()) >= 5 && !application.isInDeveloper())) {
-			
-			//get root_element_id/revision
-			var repositoryServer = 'repository_server'
-			var args = styleNames
-			var query = "SELECT name, root_element_id, active_release FROM servoy_root_elements WHERE name IN (?"
-				for (var i = 1; i < styleNames.length ; i++) {
-					query += ', ?'
-				}
-				query += ') ' +
-						'AND object_type_id = 10' //only get styles
-			var dataset = databaseManager.getDataSetByQuery(
-							repositoryServer,
-							query,
-							args,
-							-1
-						)
-			
-			//overwrite style array so that in same order
-			dataset.sort(1,true)
-			var styleNames = new Object()
-			
-			for (var i = 1; i <= dataset.getMaxRowIndex(); i++) {
-				//get style text
-				query = "SELECT property_value FROM servoy_element_properties " +
-							"WHERE element_id = ? AND revision = " +
-								"(SELECT revision FROM servoy_releases where element_id = ? AND release_number = ?) " +
-							"AND content_id = 280"
-				args = [dataset.getValue(i,2),dataset.getValue(i,2),dataset.getValue(i,3)]
-				var datasetTwo = databaseManager.getDataSetByQuery(
+		if (webClient) {
+			application.overrideStyle('_DATASUTRA_','ds_WEB_desktop')
+			application.overrideStyle('ds_WIN','ds_WEB_desktop')
+			application.overrideStyle('ds_MAC','ds_WEB_desktop')
+			application.overrideStyle('ds_MAC_leopard','ds_WEB_desktop')
+			application.overrideStyle('ds_LINUX','ds_WEB_desktop')
+		}
+		else {
+			//grab the textual values for all style sheets from repository in <= 3.5.x or >= 4.x client
+			if ((utils.stringToNumber(application.getVersion()) < 4) ||
+				(utils.stringToNumber(application.getVersion()) >= 4 && application.getApplicationType() == 3) ||
+				(utils.stringToNumber(application.getVersion()) >= 5 && !application.isInDeveloper())) {
+				
+				//get root_element_id/revision
+				var repositoryServer = 'repository_server'
+				var args = styleNames
+				var query = "SELECT name, root_element_id, active_release FROM servoy_root_elements WHERE name IN (?"
+					for (var i = 1; i < styleNames.length ; i++) {
+						query += ', ?'
+					}
+					query += ') ' +
+							'AND object_type_id = 10' //only get styles
+				var dataset = databaseManager.getDataSetByQuery(
 								repositoryServer,
 								query,
 								args,
 								-1
 							)
 				
-				//we got the style's text, punch into object to check later
-				if (datasetTwo) {
-					styleNames[dataset.getValue(i,1)] = datasetTwo.getValue(1,1)
+				//overwrite style array so that in same order
+				dataset.sort(1,true)
+				var styleNames = new Object()
+				
+				for (var i = 1; i <= dataset.getMaxRowIndex(); i++) {
+					//get style text
+					query = "SELECT property_value FROM servoy_element_properties " +
+								"WHERE element_id = ? AND revision = " +
+									"(SELECT revision FROM servoy_releases where element_id = ? AND release_number = ?) " +
+								"AND content_id = 280"
+					args = [dataset.getValue(i,2),dataset.getValue(i,2),dataset.getValue(i,3)]
+					var datasetTwo = databaseManager.getDataSetByQuery(
+									repositoryServer,
+									query,
+									args,
+									-1
+								)
+					
+					//we got the style's text, punch into object to check later
+					if (datasetTwo) {
+						styleNames[dataset.getValue(i,1)] = datasetTwo.getValue(1,1)
+					}
 				}
 			}
-		}
-		//TODO: workspace based
-		else {
-			//not required so much because style bug fixed
-		}
-		
-		//swap stylesheets (expected behavior is that only _DATASUTRA_ has anything assigned to it, but to cover the old ID 10 T error....
-		if (application.getOSName() == 'Mac OS X') {
-			//special leopard stylesheet
-			if (utils.stringPatternCount(verOS,'10.5') || utils.stringPatternCount(verOS,'10.6')) {
+			//TODO: workspace based
+			else {
+				//not required so much because style bug fixed
+			}
+			
+			//swap stylesheets (expected behavior is that only _DATASUTRA_ has anything assigned to it, but to cover the old ID 10 T error....
+			if (application.getOSName() == 'Mac OS X') {
+				//special leopard stylesheet
+				if (utils.stringPatternCount(verOS,'10.5') || utils.stringPatternCount(verOS,'10.6') || utils.stringPatternCount(verOS,'10.7') || utils.stringPatternCount(verOS,'10.8')) {
+					//if _DATASUTRA_ is the same as *, don't swap (always swap when in developer)
+					if (styleNames['_DATASUTRA_'] != styleNames['ds_MAC_leopard'] || application.isInDeveloper()) {
+						application.overrideStyle('_DATASUTRA_','ds_MAC_leopard')
+					}
+					application.overrideStyle('ds_WIN','ds_MAC_leopard')
+					application.overrideStyle('ds_MAC','ds_MAC_leopard')
+					application.overrideStyle('ds_LINUX','ds_MAC_leopard')
+				}
+				//tiger, panther, jaguar or there isn't a fw plugin installed
+				else {
+					//if _DATASUTRA_ is the same as *, don't swap
+					if (styleNames['_DATASUTRA_'] != styleNames['ds_MAC'] || application.isInDeveloper()) {
+						application.overrideStyle('_DATASUTRA_','ds_MAC')
+					}
+					application.overrideStyle('ds_WIN','ds_MAC')
+					application.overrideStyle('ds_MAC_leopard','ds_MAC')
+					application.overrideStyle('ds_LINUX','ds_MAC')
+				}
+			}
+			//linux
+			else if (utils.stringPatternCount(application.getOSName(),'Linux')) {
 				//if _DATASUTRA_ is the same as *, don't swap
-				if (styleNames['_DATASUTRA_'] != styleNames['ds_MAC_leopard']) {
-					application.overrideStyle('_DATASUTRA_','ds_MAC_leopard')
+				if (styleNames['_DATASUTRA_'] != styleNames['ds_LINUX'] || application.isInDeveloper()) {
+					application.overrideStyle('_DATASUTRA_','ds_LINUX')
 				}
-				application.overrideStyle('ds_WIN','ds_MAC_leopard')
-				application.overrideStyle('ds_MAC','ds_MAC_leopard')
-				application.overrideStyle('ds_LINUX','ds_MAC_leopard')
+				application.overrideStyle('ds_MAC','ds_LINUX')
+				application.overrideStyle('ds_MAC_leopard','ds_LINUX')
+				application.overrideStyle('ds_WIN','ds_LINUX')
 			}
-			//tiger, panther, jaguar or there isn't a fw plugin installed
 			else {
 				//if _DATASUTRA_ is the same as *, don't swap
-				if (styleNames['_DATASUTRA_'] != styleNames['ds_MAC']) {
-					application.overrideStyle('_DATASUTRA_','ds_MAC')
+				if (styleNames['_DATASUTRA_'] != styleNames['ds_WIN'] || application.isInDeveloper()) {
+					application.overrideStyle('_DATASUTRA_','ds_WIN')
 				}
-				application.overrideStyle('ds_WIN','ds_MAC')
-				application.overrideStyle('ds_MAC_leopard','ds_MAC')
-				application.overrideStyle('ds_LINUX','ds_MAC')
+				application.overrideStyle('ds_MAC','ds_WIN')
+				application.overrideStyle('ds_MAC_leopard','ds_WIN')
+				application.overrideStyle('ds_LINUX','ds_WIN')
 			}
 		}
-		//linux
-		else if (utils.stringPatternCount(application.getOSName(),'Linux')) {
-			//if _DATASUTRA_ is the same as *, don't swap
-			if (styleNames['_DATASUTRA_'] != styleNames['ds_LINUX']) {
-				application.overrideStyle('_DATASUTRA_','ds_LINUX')
-			}
-			application.overrideStyle('ds_MAC','ds_LINUX')
-			application.overrideStyle('ds_MAC_leopard','ds_LINUX')
-			application.overrideStyle('ds_WIN','ds_LINUX')
-		}
-		else {
-			//if _DATASUTRA_ is the same as *, don't swap
-			if (styleNames['_DATASUTRA_'] != styleNames['ds_WIN']) {
-				application.overrideStyle('_DATASUTRA_','ds_WIN')
-			}
-			application.overrideStyle('ds_MAC','ds_WIN')
-			application.overrideStyle('ds_MAC_leopard','ds_WIN')
-			application.overrideStyle('ds_LINUX','ds_WIN')
-		}
-		
 		
 		
 		if (!forms.NSTL_0F_solution__license.ACTION_validate(true,true)) {
@@ -600,7 +616,7 @@ else {
 		}
 		
 		//running in serclipse using a workspace
-		if (solutionPrefs.clientInfo.typeServoy == 'developer' && utils.stringToNumber(solutionPrefs.clientInfo.verServoy) >= 4) {
+		if ((solutionPrefs.clientInfo.typeServoy == 'developer' || solutionPrefs.clientInfo.typeServoy == 'web client developer') && utils.stringToNumber(solutionPrefs.clientInfo.verServoy) >= 4) {
 			solutionPrefs.repository.workspace = new Object()
 			
 			//get everything in the workspace directory (forms and relations)
@@ -613,7 +629,7 @@ else {
 		//only get methods from repository in <= 3.5.x or >= 4.x client
 		else if (!solutionPrefs.repository.api) {
 			//when in developer, rebuild repositoryPrefs fresh each time
-			if (application.getApplicationType() == APPLICATION_TYPES.SMART_CLIENT && application.isInDeveloper()) {
+			if (application.getApplicationType() == APPLICATION_TYPES.SMART_CLIENT && application.isInDeveloper() || application.getApplicationType() == APPLICATION_TYPES.WEB_CLIENT) {
 				globals.NAV_meta_module_names()
 				solutionPrefs.repository.allModules = repositoryPrefs.allModules
 				
@@ -729,12 +745,6 @@ else {
 			}
 		}
 		
-		//in webclient, go to different base form
-		if (solutionPrefs.clientInfo.typeServoy == 'web client') {
-			//
-		}
-		
-		
 		// //PART X: check for included framework components
 			solutionPrefs.design = {
 							modes 	: {
@@ -783,235 +793,6 @@ else {
 		if (results) {
 			solutionPrefs.config.navigationSetID = navigationSet.id_navigation
 		}
-		
-		//hack to get rid of color flashing issues
-		var bkgndLight = new Packages.java.awt.Color(13752290)
-		forms[baseForm].elements.bean_wrapper_1.background = bkgndLight
-		forms[baseForm].elements.bean_wrapper_2.background = bkgndLight
-		
-		//access and control is bypassed --> running in single user mode
-		if (forms[prefForm].login_disabled) {
-			
-			//login form
-			forms.AC_R__login.elements.tab_login.tabIndex = 2
-			forms.AC_R__login.loginDisabled = true
-			forms[baseForm].elements.tab_content_C.addTab(forms.AC_R__login,'')
-			
-			//go to workflow maximized view
-			globals.DS_space_change('btn_space_7',true)
-			
-			//set up title toolbar
-			solutionPrefs.panel = globals.DS_panel_load(null,true)
-			
-			//set flag that access and control is disabled
-			solutionPrefs.access = new Object()
-			solutionPrefs.access.accessControl = false
-			
-			//create log entry for this user
-			var fsAccessLog = databaseManager.getFoundSet(serverName,'sutra_access_log')
-			
-			accessLog = fsAccessLog.getRecord(fsAccessLog.newRecord())
-		
-			accessLog.servoy_uuid = solutionPrefs.clientInfo.servoyUUID
-			accessLog.os_type = solutionPrefs.clientInfo.typeOS
-			accessLog.os_version = solutionPrefs.clientInfo.verOS
-			accessLog.java_version = solutionPrefs.clientInfo.verJava
-			accessLog.servoy_type = solutionPrefs.clientInfo.typeServoy
-			accessLog.servoy_version = solutionPrefs.clientInfo.verServoy
-			accessLog.laf_type = solutionPrefs.clientInfo.typeLAF
-			accessLog.host_name = solutionPrefs.clientInfo.hostName
-			accessLog.ip_internal = solutionPrefs.clientInfo.internalIP
-			accessLog.ip_external = solutionPrefs.clientInfo.externalIP
-			accessLog.time_difference = solutionPrefs.clientInfo.timeOffset
-			
-			databaseManager.saveData(accessLog)
-			
-			//save down the access record created
-			solutionPrefs.clientInfo.logID = accessLog.id_log
-			
-			
-			// //PART VII: load navigation sets
-			//navigation code global
-			navigationPrefs = solutionPrefs.config.navEngine = new Object()
-			
-			//when in developer, rebuild navigationPrefs fresh each time
-			if (true) {//solutionPrefs.clientInfo.typeServoy == 'developer') {
-				navigationPrefs.foundsetPool = {
-												recyclePKs : new Array(),
-												omitPKs : new Array(),
-												resetRequired : false
-											}
-				
-				//starting position
-				var dsUniversalList = databaseManager.getDataSetByQuery(
-										serverName, 
-										'SELECT id_universal_list FROM sutra_universal_list',
-										null,
-										1)
-				navigationPrefs.foundsetPool.nextFreePK = dsUniversalList.getValue(1,1)
-				
-				//build navigationPrefs with all navigation sets available
-				globals.NAV_navigation_load(true)
-				
-			}
-			//not in developer, use navigation_node
-			else if (forms[prefForm].navigation_node_date && forms[prefForm].navigation_node) {
-			//plugins.dialogs.showErrorDialog('client')
-				navigationPrefs = forms[prefForm].navigation_node
-				
-				//set value list used for changing navigation sets
-				var navSetNames = new Array()
-				var navigationSets = new Array()
-				
-				for (var i in navigationPrefs.byNavSetName) {
-					if (i != 'configPanes') {
-						navSetNames.push(navigationPrefs.byNavSetName[i].navSetName)
-						navigationSets.push(navigationPrefs.byNavSetName[i].navSetID)
-					}
-				}
-				
-				application.setValueListItems('NAV_navigation_set', navSetNames, navigationSets)
-			}
-			//something not set up correctly
-			else {
-				return
-			}
-			
-			// //PART VIII: set display status and client info
-			
-			// set lower right display logged in status
-				var loggedUserIP = (solutionPrefs.clientInfo.externalIP == 'UNDEFINED' || utils.stringPatternCount(solutionPrefs.clientInfo.externalIP,'Error') || solutionPrefs.clientInfo.externalIP == 'UNKNOWN') ? solutionPrefs.clientInfo.internalIP : solutionPrefs.clientInfo.externalIP
-				
-				var loggedHost = solutionPrefs.clientInfo.hostName
-				
-				var loggedIn = globals.CODE_date_format() + utils.dateFormat(new Date(),  " H:mm")
-				globals.DATASUTRA_log_status = 'HOST: ' + loggedHost + '    LOGIN TIME: ' + loggedIn
-				
-				var lblStatus = '<html><head></head><body>' +
-								'HOST: ' + loggedHost + '<br>' +
-								'IP: ' + loggedUserIP + '<br>' +
-								'</body></html>'
-				forms[baseForm + '__footer'].elements.lbl_status.toolTipText = lblStatus
-				
-		
-			// add client info to the server
-		
-				//clear current info
-				application.removeAllClientInfo()
-				
-				//flag that this client has been validated
-				application.addClientInfo('<strong>Data Sutra client</strong>')
-				
-				var clientInfo = '<!-- User information begin -->'+
-						'<table border="0" cellpadding="0" cellspacing="0" width="100%">\n'+
-						'<tr><td width="125">Operating system:</td><td>'+solutionPrefs.clientInfo.typeOS+'</td>\n'+
-						'<tr><td width="125">OS version:</td><td>'+solutionPrefs.clientInfo.verOS+'</td>\n'+
-						'<tr><td width="125">Java version:</td><td>'+solutionPrefs.clientInfo.verJava+'</td>\n'+
-						'<tr><td width="125">Servoy LAF:</td><td>'+solutionPrefs.clientInfo.typeLAF+'</td>\n'+
-						'<tr><td width="125">Host name:</td><td>'+solutionPrefs.clientInfo.hostName+'</td>\n'+
-						'<tr><td width="125">LAN IP:</td><td>'+solutionPrefs.clientInfo.internalIP+'</td>\n'+
-						'<tr><td width="125">WAN IP:</td><td>'+solutionPrefs.clientInfo.externalIP+'</td>\n'+
-						'<tr><td width="125">Server URL:</td><td>'+application.getServerURL()+'</td>\n'+
-						'<tr><td width="125">Time offset:</td><td>'+solutionPrefs.clientInfo.timeOffset+' seconds</td>\n'+
-						'<tr><td width="125">Log ID:</td><td>'+solutionPrefs.clientInfo.logID+'</td>\n'+
-				        '</table>' +
-						'<!-- User information end -->'
-						
-				//set newly logged in user info
-				application.addClientInfo(clientInfo)
-				solutionPrefs.clientInfo.adminPage = clientInfo
-			
-					
-			// //PART IV: Set window size/location and toolbars showing
-				//only runs on first time solution loaded if fullscreen isn't active
-			if (solutionPrefs.config.firstRun && (!solutionPrefs.screenAttrib.kiosk.fullScreen || solutionPrefs.clientInfo.typeServoy == 'developer')) {
-				application.setWindowSize(solutionPrefs.screenAttrib.initialScreenWidth,solutionPrefs.screenAttrib.initialScreenHeight)
-				
-				if (solutionPrefs.screenAttrib.locationCenter) {
-					application.setWindowLocation(-1,-1)
-				}
-				else {
-					application.setWindowLocation(solutionPrefs.screenAttrib.locationX,solutionPrefs.screenAttrib.locationY)
-				}
-			}
-			
-		}
-		//access and control
-		else {
-			//used to tack on password to actions list
-				//deprecated....set flag for FORM_on_load to finish loading in access/control pages
-			solutionPrefs.access = {accessControl : true}
-			
-			//login form
-			forms.AC_R__login.elements.tab_login.tabIndex = 1
-			forms[baseForm].elements.tab_content_C.addTab(forms.AC_R__login,'')
-			
-			//re-size screen if too small
-			if (application.getWindowWidth() < 950 || application.getWindowHeight() < 650) {
-				application.setWindowSize(solutionPrefs.screenAttrib.initialScreenWidth,solutionPrefs.screenAttrib.initialScreenHeight)
-				
-				if (solutionPrefs.screenAttrib.locationCenter) {
-					application.setWindowLocation(-1,-1)
-				}
-				else {
-					application.setWindowLocation(solutionPrefs.screenAttrib.locationX,solutionPrefs.screenAttrib.locationY)
-				}
-			}
-			
-			//go to workflow maximized view
-			globals.DS_space_change('btn_space_7',true)
-			
-			//	LOAD defaults for password
-			globals.AC_password_set()
-				
-			//set up title toolbar
-			solutionPrefs.panel = globals.DS_panel_load(null,true)
-			
-		}
-		
-		//	//PART XXXX: deactivate all buttons
-		forms[baseForm + '__header'].elements.btn_navset.visible = false
-		forms[baseForm + '__header'].elements.btn_space_1.visible = false
-		forms[baseForm + '__header'].elements.btn_space_2.visible = false
-		forms[baseForm + '__header'].elements.btn_space_3.visible = false
-		forms[baseForm + '__header'].elements.btn_space_4.visible = false
-		forms[baseForm + '__header'].elements.btn_space_5.visible = false
-		forms[baseForm + '__header'].elements.btn_space_6.visible = false
-		forms[baseForm + '__header'].elements.btn_space_7.visible = false
-		forms[baseForm + '__header'].elements.btn_space_8.visible = false
-		forms[baseForm + '__header'].elements.btn_space_9.visible = false
-		forms[baseForm + '__header'].elements.btn_space_10.visible = false
-		forms[baseForm + '__header'].elements.btn_space_11.visible = false
-		forms[baseForm + '__header'].elements.btn_space_12.visible = false
-		forms[baseForm + '__header'].elements.btn_space_13.visible = false
-		forms[baseForm + '__header'].elements.btn_space_14.visible = false
-		forms[baseForm + '__header'].elements.btn_space_dividers.visible = false
-		forms[baseForm + '__header__toolbar'].elements.btn_toolbar_toggle.visible = false
-		forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.visible = false
-		forms[baseForm + '__header__fastfind'].elements.btn_find.visible = false
-		forms[baseForm + '__header__fastfind'].elements.find_mid.visible = false
-		forms[baseForm + '__header__fastfind'].elements.find_end.visible = false
-		forms[baseForm + '__header__fastfind'].elements.fld_find.visible = false
-		forms[baseForm + '__header'].elements.btn_pref.visible = false
-		forms[baseForm + '__header'].elements.btn_fw_action.visible = false
-		forms[baseForm + '__header'].elements.btn_sidebar_expand.visible = false
-		forms[baseForm + '__footer'].elements.lbl_status.visible = false
-		
-		//no top border when... //TODO: really when no toolbars showing on mac
-			//mac client or >4 developer
-		if (solutionPrefs.clientInfo.typeOS == 'Mac OS X' && !(solutionPrefs.clientInfo.typeServoy == 'developer' && utils.stringToNumber(solutionPrefs.clientInfo.verServoy) < 4)) {
-			forms[baseForm + '__header'].elements.gfx_header.setBorder('MatteBorder,0,0,1,0,#333333')
-			forms.DATASUTRA__sidebar__header.elements.gfx_header.setBorder('MatteBorder,0,0,1,0,#333333')
-		}
-		//set top border on graphic when...
-		else {
-			forms[baseForm + '__header'].elements.gfx_header.setBorder('MatteBorder,1,0,1,0,#333333')
-			forms.DATASUTRA__sidebar__header.elements.gfx_header.setBorder('MatteBorder,1,0,1,0,#333333')
-		}
-			
-		// //PART IX: load up title toolbar
-		globals.DS_toolbar_load()
-		
 	}
 }
 
@@ -2651,6 +2432,7 @@ function DS_sidebar_toggle(sideToggle, sideWidth, sideExpand)
 		}
 		
 		var baseForm = solutionPrefs.config.formNameBase
+		var webClient = solutionPrefs.config.webClient
 		
 		var sideToggle = (typeof arguments[0] == 'boolean') ? arguments[0] : !solutionPrefs.screenAttrib.sidebar.status
 		var sideWidth = arguments[1] || solutionPrefs.screenAttrib.sidebar.currentSize
@@ -2660,8 +2442,8 @@ function DS_sidebar_toggle(sideToggle, sideWidth, sideExpand)
 			sideExpand = false
 		}
 		
-		var headerHeight = forms[baseForm].elements.bean_header.getHeight()
-		var mainHeight = forms[baseForm].elements.bean_main.getHeight()
+//		var headerHeight = forms[baseForm].elements.bean_header.getHeight()
+//		var mainHeight = forms[baseForm].elements.bean_main.getHeight()
 		
 		//developer windows
 		if (false) {
@@ -2699,32 +2481,42 @@ function DS_sidebar_toggle(sideToggle, sideWidth, sideExpand)
 		
 		//toggle on
 		if (sideToggle && sideWidth) {
-			
-			forms[baseForm].elements.bean_wrapper_1.leftComponent = forms[baseForm].elements.bean_wrapper_2
-			forms[baseForm].elements.bean_wrapper_1.rightComponent = forms[baseForm].elements.tab_content_D
-			forms[baseForm].elements.bean_wrapper_1.resizeWeight = 1
-			//sidebar makes window grow
-			if (sideExpand) {
-				var mainWidth = maxWidth - offset
-				maxWidth += sideWidth
-				application.setWindowSize(maxWidth,application.getWindowHeight(null),null)
+			//web client
+			if (webClient) {
+				forms[baseForm].elements.tab_wrapper.setRightForm(forms.DATASUTRA__sidebar)
 				
-				forms[baseForm].elements.bean_wrapper_1.dividerLocation = mainWidth
-				
-				//TODO: reset dividerlocation if dividers showing
-				//see DATASUTRA_0F_solution__header.SIDEBAR_expand()
-			}
-			//sidebar fits inside window
-			else {
+				//sidebar fits inside window
 				var mainWidth = maxWidth - sideWidth - offset
-				forms[baseForm].elements.bean_wrapper_1.dividerLocation = mainWidth
+				forms[baseForm].elements.tab_wrapper.dividerLocation = mainWidth
+			}
+			//smart client
+			else {
+				forms[baseForm].elements.bean_wrapper_1.leftComponent = forms[baseForm].elements.bean_wrapper_2
+				forms[baseForm].elements.bean_wrapper_1.rightComponent = forms[baseForm].elements.tab_content_D
+				forms[baseForm].elements.bean_wrapper_1.resizeWeight = 1
+				
+				//sidebar makes window grow
+				if (sideExpand) {
+					var mainWidth = maxWidth - offset
+					maxWidth += sideWidth
+					application.setWindowSize(maxWidth,application.getWindowHeight(null),null)
+					
+					forms[baseForm].elements.bean_wrapper_1.dividerLocation = mainWidth
+					
+					//TODO: reset dividerlocation if dividers showing
+					//see DATASUTRA_0F_solution__header.SIDEBAR_expand()
+				}
+				//sidebar fits inside window
+				else {
+					var mainWidth = maxWidth - sideWidth - offset
+					forms[baseForm].elements.bean_wrapper_1.dividerLocation = mainWidth
+				}
 			}
 			
 			solutionPrefs.screenAttrib.sidebar.status = true
 			
 			//hide toggle on graphic
 			forms[baseForm + '__header'].elements.btn_sidebar_expand.visible = false
-			//forms[baseForm + '__header'].elements.lbl_drag.visible = true
 			
 			//if first tab showing (help), enter help mode
 			if (forms.DATASUTRA__sidebar.elements.tab_content.tabIndex == 1) {
@@ -2734,22 +2526,29 @@ function DS_sidebar_toggle(sideToggle, sideWidth, sideExpand)
 			else if (solutionPrefs.config.helpMode) {
 				globals.DS_help(false)
 			}
-			
 		}
 		//toggle off
 		else {
-			//sidebar makes window shrink
-			if (sideExpand) {
-				var mainWidth = maxWidth - sideWidth
-				application.setWindowSize(mainWidth,application.getWindowHeight(null),null)
+			//web client
+			if (webClient) {
+				forms[baseForm].elements.tab_wrapper.setRightForm(forms.DATASUTRA_WEB__blank_1)
+				forms[baseForm].elements.tab_wrapper.dividerLocation = application.getWindow().getWidth()
 			}
-			//sidebar fits inside window
+			//smart client
 			else {
-				var mainWidth = maxWidth - offset
+				//sidebar makes window shrink
+				if (sideExpand) {
+					var mainWidth = maxWidth - sideWidth
+					application.setWindowSize(mainWidth,application.getWindowHeight(null),null)
+				}
+				//sidebar fits inside window
+				else {
+					var mainWidth = maxWidth - offset
+				}
+				
+				forms[baseForm].elements.bean_wrapper_1.leftComponent = forms[baseForm].elements.bean_wrapper_2
+				forms[baseForm].elements.bean_wrapper_1.rightComponent = null
 			}
-			
-			forms[baseForm].elements.bean_wrapper_1.leftComponent = forms[baseForm].elements.bean_wrapper_2
-			forms[baseForm].elements.bean_wrapper_1.rightComponent = null
 			
 			solutionPrefs.screenAttrib.sidebar.status = false
 			
@@ -2798,7 +2597,11 @@ function DS_space_change(event)
  *			  	
  */
 
-if (application.__parent__.solutionPrefs) {	
+//running webclient, push off to correct method
+if (solutionPrefs.config.webClient) {
+	forms.DATASUTRA_WEB_0F__header.ACTION_space_change(arguments[0],arguments[1],arguments[2],arguments[3],arguments[4],arguments[5])
+}
+else if (application.__parent__.solutionPrefs) {	
 
 //MEMO: need to somehow put this section in a Function of it's own
 //running in Tano...strip out jsevents for now
@@ -4194,6 +3997,11 @@ if (application.__parent__.solutionPrefs) {
 	var toolbars = solutionPrefs.panel.toolbar
 	var enabledToolbars = 0
 	
+	var cycleMethod = globals.DS_toolbar_cycle
+	if (solutionPrefs.config.webClient) {
+		cycleMethod = forms.DATASUTRA_WEB_0F__header__toolbar.DS_toolbar_cycle
+	}
+	
 	forms[baseForm + '__header__toolbar'].elements.tab_toolbar.visible = false
 	
 	//remove all tabs from toolbar and popdown
@@ -4230,11 +4038,11 @@ if (application.__parent__.solutionPrefs) {
 		}
 		
 		//select first tab
-		globals.DS_toolbar_cycle(4)
+		cycleMethod(4)
 	}
 	//select solution title tab
 	else {
-		globals.DS_toolbar_cycle(1)
+		cycleMethod(1)
 	}
 	
 	//turn tab panel back on
@@ -4879,7 +4687,7 @@ function DS_client_info_load()
 						break
 					
 					case 5:
-						servoyType = 'web client'
+						servoyType = 'web client developer'
 						break
 			}
 		}
@@ -4913,43 +4721,50 @@ function DS_client_info_load()
 		}
 	}
 	
-	//allow to go out on internet for weather toolbar, etc
-	if (solutionPrefs.config.internetAllowed) {
-		//test to see if internet connection — has a maximum delay of ~10 seconds
-			//MEMO: ip address used is D.root-servers.net. (aka terp.umd.edu); housed at my alma mater, the University of Maryland
-		if (utils.stringPatternCount(nameOS,'Windows')) {
-			var ping = application.executeProgram('ping','-n','4','-w','1000','128.8.10.90')
-			//check if ping successful
-			if (ping.length && !utils.stringPatternCount(ping, 'Ping request could not find host')) {
-				var pingPosn = utils.stringPosition(ping,'Received = ',0,1) + 11
-				var pingResult = utils.stringToNumber(utils.stringMiddle(ping,pingPosn,1))
+	//webclient
+	if (servoyType == 'web client') {
+		var pingResult = true
+		var ipExternal = 'WEBCLIENT'
+	}
+	else {
+		//allow to go out on internet for weather toolbar, etc
+		if (solutionPrefs.config.internetAllowed) {
+			//test to see if internet connection — has a maximum delay of ~10 seconds
+				//MEMO: ip address used is D.root-servers.net. (aka terp.umd.edu); housed at my alma mater, the University of Maryland
+			if (utils.stringPatternCount(nameOS,'Windows')) {
+				var ping = application.executeProgram('ping','-n','4','-w','1000','128.8.10.90')
+				//check if ping successful
+				if (ping.length && !utils.stringPatternCount(ping, 'Ping request could not find host')) {
+					var pingPosn = utils.stringPosition(ping,'Received = ',0,1) + 11
+					var pingResult = utils.stringToNumber(utils.stringMiddle(ping,pingPosn,1))
+				}
+				else {
+					var pingResult = false
+				}
 			}
 			else {
-				var pingResult = false
+				var ping = application.executeProgram('ping','-c','4','-o','128.8.10.90')
+				//check if ping successful
+				if (ping.length) {
+					var pingPosn = utils.stringPosition(ping,'packets received',0,1) - 2
+					var pingResult = utils.stringToNumber(utils.stringMiddle(ping,pingPosn,1))
+				}
+				else {
+					var pingResult = false
+				}
 			}
 		}
 		else {
-			var ping = application.executeProgram('ping','-c','4','-o','128.8.10.90')
-			//check if ping successful
-			if (ping.length) {
-				var pingPosn = utils.stringPosition(ping,'packets received',0,1) - 2
-				var pingResult = utils.stringToNumber(utils.stringMiddle(ping,pingPosn,1))
-			}
-			else {
-				var pingResult = false
-			}
+			var pingResult = false
 		}
-	}
-	else {
-		var pingResult = false
-	}
-	
-	//get external ip address if connection available
-	if (pingResult) {
-		var ipExternal = plugins.http.getPageData('http://automation.whatismyip.com/n09230945.asp')
-	}
-	if (!ipExternal || ipExternal.indexOf('Error',0) != -1) {
-		ipExternal = 'UNKNOWN'
+		
+		//get external ip address if connection available
+		if (pingResult) {
+			var ipExternal = plugins.http.getPageData('http://automation.whatismyip.com/n09230945.asp')
+		}
+		if (!ipExternal || ipExternal.indexOf('Error',0) != -1) {
+			ipExternal = 'UNKNOWN'
+		}
 	}
 	
 	//time difference between server and client (- means client ahead) (+ means server ahead)
