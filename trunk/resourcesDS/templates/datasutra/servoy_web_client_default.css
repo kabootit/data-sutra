@@ -1,0 +1,505 @@
+.field
+{
+	padding: 1px 1px 1px 1px;
+	margin: 0;
+	border-style: solid;
+	border-width: 1px 1px 1px 1px;
+	border-spacing: 0px 0px;
+	border-color: #AAAAAA;
+	background-color: #FFFFFF;
+}
+
+.label
+{
+	padding: 0px 0px 0px 0px
+}
+
+#mktipmsg
+{
+	padding: 2px;
+	background-color: #FFFFE1;
+	border: 1px solid #000000;
+	white-space: nowrap;
+	font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+	display: none;
+	position: absolute;left:0px;top:0px
+}
+
+.tableviewcell
+{
+	width: 100%;
+	height: 100%;
+	position: relative
+}
+
+body
+{
+	margin: 0px 0px 0px 0px
+}
+
+body, input, button, select, td, th, textarea
+{
+	font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;
+	font-size: 11px
+}
+
+button
+{
+}
+
+div.check div input
+{
+	vertical-align: middle;
+	margin: 2px;
+	padding: 0px;
+	width: 16px;
+	height: 16px
+}
+
+div.check div label
+{
+	vertical-align: middle
+}
+
+div.check div.inl
+{
+	display: inline;
+	white-space: nowrap;
+	float: left
+}
+
+div.check label
+{
+	vertical-align: super
+}
+
+div.field div input
+{
+	vertical-align: middle;
+	margin: 2px;
+	padding: 0px;
+	width: 16px;
+	height: 16px
+}
+
+div.field div label
+{
+	vertical-align: middle
+}
+
+div.field div.inl
+{
+	display: inline;
+	white-space: nowrap;
+	float: left
+}
+
+div.field label
+{
+	vertical-align: super
+}
+
+div.radio div input
+{
+	vertical-align: middle;
+	margin: 2px;
+	padding: 0px;
+	width: 16px;
+	height: 16px
+}
+
+div.radio div label
+{
+	vertical-align: middle
+}
+
+div.radio div.inl
+{
+	display: inline;
+	white-space: nowrap;
+	float: left
+}
+
+div.radio label
+{
+	vertical-align: super
+}
+
+div.tabs
+{
+	padding: 3px 0px 0px 2px;
+	margin: 2px 0px 0px 0px;
+	border-bottom: 1px solid #888888;
+	left: 0px;
+	right: 0px;
+	position: absolute
+}
+
+div.tabs div
+{
+	display: inline;
+	float: left;
+	clear: none
+}
+
+div.tabs div a
+{
+	color: #222222;
+	text-decoration: none;
+	text-shadow: #fff 0 1px 0;
+	padding: 3px 10px 3px 10px;
+	margin-top: 0.2em;
+	margin-left: 0.2em;
+	/* For Internet Explorer */
+		filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f5f5f5', endColorstr='#dedede');
+	/* For WebKit (Safari, Google Chrome etc) */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #f5f5f5), color-stop(1, #dedede));
+	/* For Mozilla/Gecko (Firefox etc) */
+	background: -moz-linear-gradient(top center, #f5f5f5 0%, #dedede 100%);
+	background-color: #ffffff;
+	background-position: center center;
+	border: 1px solid #888888;
+	border-bottom: 1px solid #dfdfdf;
+	float: left;
+	position: relative;
+	top: 1px;
+	-moz-border-radius: 0.5em 0.5em 0em 0em;
+	border-radius: 0.5em 0.5em 0em 0em;
+}
+
+div.tabs div a:hover
+{
+	color: #fff;
+	background-color: #c7cce7
+}
+
+div.tabs div.disabled_selected_tab a
+{
+	color: #222222;
+	background-color: #fff;
+	border-bottom: 1px solid #fff
+}
+
+div.tabs div.disabled_tab a
+{
+	color: #222222;
+	background-color: #e7e7f7
+}
+
+div.tabs div.selected_tab a
+{
+	color: #222222;
+	background-color: #fff;
+	border-bottom: 1px solid #fff;
+	background-image: none;
+}
+
+div:focus
+{
+	outline: none
+}
+
+td
+{
+	vertical-align: top
+}
+
+textarea
+{
+	resize: none
+}
+
+th.nosort
+{
+	padding: 1px 2px 1px 2px;
+	text-align: center;
+	vertical-align: top;
+/*	font-weight: bold;*/
+}
+
+th.sortable
+{
+	color: #333333;
+	text-shadow: #fff 0 1px 0;
+	padding: 1px 2px 1px 2px;
+	vertical-align: top;
+	border-right: 1px solid #c7c7c7;
+	border-bottom: 1px solid #c7c7c7;
+/*	border-top: 1px solid #c7c7c7;*/
+/*	font-weight: bold;*/
+}
+
+th.sortable a
+{
+	text-decoration: none;
+/*	font-weight: bold;*/
+	color: #333333;
+	text-shadow: #fff 0 1px 0;
+	background-position: right;
+	background-repeat: no-repeat;
+	display: block;
+}
+
+th.sortable a:hover
+{
+	text-decoration: underline;
+	color: #000000;
+	text-shadow: #fff 0 1px 0;
+/*	font-weight: bold;*/
+}
+
+th.sortable a:visited
+{
+	text-decoration: none;
+	color: #000000;
+	text-shadow: #fff 0 1px 0;
+/*	font-weight: bold;*/
+}
+
+tr.headerbuttons
+{
+	/* For Internet Explorer */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f5f5f5', endColorstr='#dedede');
+	/* For WebKit (Safari, Google Chrome etc) */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #f5f5f5), color-stop(1, #dedede));
+	/* For Mozilla/Gecko (Firefox etc) */
+	background: -moz-linear-gradient(top center, #f5f5f5 0%, #dedede 100%);
+	height: 12px;
+	background-color: #ffffff;
+	background-position: center center;
+	border-bottom: 1px solid #000000;
+/*	border-top: 1px solid #000000*/
+}
+
+a.navigatornumber, em span.navigatornumber, .navigatornext, .navigatorprev, .navigatorfirst, .navigatorlast
+{
+	/* For Internet Explorer */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#cccccc', endColorstr='#666666');
+	/* For WebKit (Safari, Google Chrome etc) */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #ccc), color-stop(1, #666));
+	/* For Mozilla/Gecko (Firefox etc) */
+	background: -moz-linear-gradient(top center, #ccc 0%, #666 100%);
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	border: 1px solid;
+	border-color: #666 #999 #fff;
+	color: #fff;
+	display: inline-block;
+	font-size: 12px;
+	font-weight: bold;
+	line-height: 16px;
+	margin: 8px 0 0;
+	overflow: hidden;
+	padding: 0 5px;
+	text-decoration: none;
+	text-shadow: rgba(0, 0, 0, 0.5) 0 -1px 0;
+	height: 18px;
+}
+em span.navigatornumber
+{
+	color: #ccc;
+	font-style: normal;
+}
+
+#infoPanel {
+	visibility: hidden;	
+}
+
+/*Utility class to make a child node as big as it's parent*/
+.max {
+	display: block;
+	position: absolute;
+	top: 0px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+}
+
+/*Utility class to show a dropShadow on a box*/
+.shadow {
+	-moz-box-shadow: 5px 5px 5px #ccc;
+	-webkit-box-shadow: 5px 5px 5px #ccc;
+	box-shadow: 5px 5px 5px #ccc;
+}
+
+/*Makes the form overlay when showing a dialog a bit darker*/
+div.wicket-mask-dark {
+	opacity: 0.3 !important;
+	-moz-opacity: 0.3 !important;
+	background-color: black !important;
+	filter: alpha(opacity = 30) !important;
+}
+
+/*Making all forms transparent by default*/
+div.webform,
+.servoy_page {
+	background-color: transparent;
+}
+
+/*Override Dialog styling*/
+div.wicket-modal div.w_blue {
+	border-radius: 0px 0px 0px 0px;
+	border: 0px solid white;
+	margin: -1px;
+	background-color: #cccccc;
+	/*background-color: rgba(10, 10, 10, 0.8);*/
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#cc0a0a0a,endColorstr=#cc0a0a0a);
+	-moz-box-shadow: 10px 10px 10px rgba(10, 10, 10, 0.5);
+	-webkit-box-shadow: 10px 10px 10px rgba(10, 10, 10, 0.5);
+	box-shadow: 10px 10px 10px rgba(10, 10, 10, 0.5);
+}
+
+/*Styling the draggable area of a dialog*/
+div.wicket-modal div.w_caption {
+	border: 0px solid #666;
+	border-bottom-width: 1px;
+	cursor: move;
+	/*text-shadow: 0 0 15px white, 0 0 15px white; */
+	font-size: 12px;
+	color: white;
+}
+
+/*Styling the dialog close button*/
+div.wicket-modal div.w_blue a.w_close {
+	background-image: url(/servoy-webclient/templates/custom/images/delete.png) !important;
+	background-image: url(/servoy-webclient/templates/custom/images/delete.png) !important;
+}
+
+/*disabling default dialog styling*/
+div.w_topLeft,
+div.w_topRight,
+div.w_top,
+div.w_caption,
+div.w_bottomRight,
+div.w_bottomLeft,
+div.w_bottom,
+div.w_left,
+div.w_right {
+	background-image: none !important;
+}
+
+div.w_caption {
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f5f5f5', endColorstr='#dedede') !important; /* for IE */
+	background: -webkit-gradient(linear, left top, left bottom, from(#f5f5f5), to(#dedede)) !important; /* for webkit browsers */
+	background: -moz-linear-gradient(top,  #f5f5f5,  #dedede) !important; /* for firefox 3.6+ */ 
+
+	height: 20px !important;
+	color: #333333 !important;
+	text-shadow: #fff 0 1px 0 !important;
+	padding: 5px 0px 0px 0px;
+}
+span.w_captionText {
+	margin-left: 10px !important;
+}
+
+div.w_right_1 {
+	margin-left: 1px !important;
+}
+div.w_content_1 {
+	margin-right: 1px !important;
+}
+div.w_bottom_1, div.w_bottomRight, div.bottomLeft  {
+	height: 1px !important;
+}
+div.w_top, div.w_topRight, div.w_topLeft  {
+	height: 1px !important;
+}
+
+/*disabling default dialog styling*/
+div.w_content_2,
+div.w_content_3 {
+	padding: 0px !important;
+	border: 0px !important;
+}
+
+/*disabling default dialog styling*/
+div.wicket-modal div.w_caption,
+div.wicket-modal div.w_content_2,
+div.wicket-modal div.w_content {
+	background-color: transparent !important;
+}
+
+.yuimenu {
+
+    background: #8b8b8b; /* for non-css3 browsers */
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#f5f5f5', endColorstr='#dedede') !important; /* for IE */
+	background: -webkit-gradient(linear, left top, left bottom, from(#f5f5f5), to(#dedede)) !important; /* for webkit browsers */
+	background: -moz-linear-gradient(top,  #f5f5f5,  #dedede) !important; /* for firefox 3.6+ */
+
+    border: solid 1px #6d6d6d !important;
+    padding:5px;
+	-moz-box-shadow: 10px 10px 10px rgba(10, 10, 10, 0.5);
+	-webkit-box-shadow: 10px 10px 10px rgba(10, 10, 10, 0.5);
+	box-shadow: 10px 10px 10px rgba(10, 10, 10, 0.5);
+	
+	-moz-border-radius: 0.5em 0.5em 0.5em 0.5em;
+	border-radius: 0.5em 0.5em 0.5em 0.5em;
+    
+}
+.yuimenuitem,
+.yuimenubaritem  {
+    text-shadow: #fff 0 1px 0;
+}
+
+.yuimenuitem a.selected,
+.yuimenubaritem a.selected {
+
+    background-color:#d1d1d1 !important;
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ebebeb', endColorstr='#a1a1a1') !important; /* for IE */
+	background: -webkit-gradient(linear, left top, left bottom, from(#ebebeb), to(#a1a1a1)) !important; /* for webkit browsers */
+	background: -moz-linear-gradient(top,  #ebebeb,  #a1a1a1) !important; /* for firefox 3.6+ */
+    text-decoration:none !important;
+    color:#000000 !important;
+	border: solid 1px #6d6d6d !important;
+
+}
+
+
+
+/* lozenges	*/
+.orange {
+	background-color: #eeb35e;
+	padding: 0;
+	width: 10px;
+	height: 22px;
+	border-radius: 20px;
+	-moz-box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.7);
+	-webkit-box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.7);
+	-o-box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.7);
+	box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+.green {
+	background-color: #B4D8B4;
+	width: 18px;
+	height: 20px;
+	line-height: 20px;
+	border-radius: 3px;
+	font-size: 9px;
+	color: white;
+	-moz-box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.4);
+	-webkit-box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.4);
+	-o-box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.4);
+	box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.4);
+	-moz-box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.3);
+	-webkit-box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.3);
+	-o-box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.3);
+	box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+
+/* split pane customizations */
+.yui-resize {
+	background-color: #A1B0CF;
+}
+
+.yui-resize-handle-b {
+	cursor: row-resize;
+}
+
+.yui-resize-handle-r {
+	cursor: col-resize;
+}
