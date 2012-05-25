@@ -1,0 +1,12 @@
+addEmptyValue:1,
+dataProviderID1:"id_group",
+dataProviderID2:"group_name",
+dataSource:"db:/sutra/sutra_access_group",
+name:"AC_group__blog_entry",
+returnDataProviders:1,
+separator:" ",
+showDataProviders:2,
+sortOptions:"group_name asc",
+typeid:34,
+uuid:"56356a5c-1068-41fb-8b97-b6b4805d85a2",
+valueListType:1

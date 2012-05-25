@@ -1,0 +1,8 @@
+foreignDataSource:"db:/sutra/sutra_access_group",
+items:[
+{foreignColumnName:"id_group",primaryDataProviderID:"id_group",typeid:23,uuid:"98c6cc4f-2561-4a6a-a6b5-23c9032e0721"}
+],
+name:"ac_access_user_group_to_access_group",
+primaryDataSource:"db:/sutra/sutra_access_user_group",
+typeid:22,
+uuid:"7149d642-23d3-4a7c-99eb-65c1f752e13e"

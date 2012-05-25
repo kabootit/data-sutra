@@ -1,0 +1,8 @@
+foreignDataSource:"db:/sutra/sutra_access_staff",
+items:[
+{foreignColumnName:"id_staff",primaryDataProviderID:"id_staff",typeid:23,uuid:"fa7a00a2-54b6-4b45-a8ee-a7ba7333b2b5"}
+],
+name:"ac_access_user_to_access_staff",
+primaryDataSource:"db:/sutra/sutra_access_user",
+typeid:22,
+uuid:"28663f00-073a-4c32-8bde-66bedf39291f"

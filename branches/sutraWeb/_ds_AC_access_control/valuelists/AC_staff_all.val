@@ -1,0 +1,13 @@
+addEmptyValue:1,
+dataProviderID1:"id_staff",
+dataProviderID2:"name_last",
+dataProviderID3:"name_first",
+dataSource:"db:/sutra/sutra_access_staff",
+name:"AC_staff_all",
+returnDataProviders:1,
+separator:", ",
+showDataProviders:6,
+sortOptions:"name_last asc, name_first asc",
+typeid:34,
+uuid:"7b3ec1cc-8f49-4c29-b91d-1439ae01c418",
+valueListType:1
