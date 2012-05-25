@@ -1,0 +1,10 @@
+allowCreationRelatedRecords:true,
+deleteRelatedRecords:true,
+foreignDataSource:"db:/sutra/sutra_documentation",
+items:[
+{foreignColumnName:"parent_id_documentation",primaryDataProviderID:"id_documentation",typeid:23,uuid:"4BF814E4-7AEF-466B-8950-5C537DEA6B76"}
+],
+name:"mgr_documentation_to_documentation__child",
+primaryDataSource:"db:/sutra/sutra_documentation",
+typeid:22,
+uuid:"C1AC30F5-E3B2-4A38-8FD6-29754D3112ED"
