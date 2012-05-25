@@ -1,0 +1,10 @@
+dataProviderID1:"company_industry",
+dataSource:"db:/sutra_example/companies",
+name:"CRM_company_industry",
+returnDataProviders:1,
+separator:" ",
+showDataProviders:1,
+sortOptions:"company_industry asc",
+typeid:34,
+uuid:"ba53d039-8ad4-4005-8057-d6fa5364b7c8",
+valueListType:1
