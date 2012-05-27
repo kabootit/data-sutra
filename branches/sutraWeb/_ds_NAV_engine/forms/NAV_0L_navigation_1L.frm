@@ -98,6 +98,7 @@ uuid:"f2448c75-64fd-44a0-b061-0319367b06e3"
 ],
 name:"NAV_0L_navigation_1L",
 onRecordSelectionMethodID:"29f4bc9f-782a-4b53-9df2-b461f06784b3",
+onRenderMethodID:"9AC601EA-D133-45B4-B9D6-E38F7A81E4B3",
 paperPrintScale:100,
 scrollbars:33,
 size:"150,20",

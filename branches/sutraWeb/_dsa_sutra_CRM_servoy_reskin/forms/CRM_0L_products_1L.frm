@@ -24,6 +24,7 @@ uuid:"9dc2911e-cdc3-4448-91bd-4db72ce4e18b"
 ],
 name:"CRM_0L_products_1L",
 onRecordSelectionMethodID:"7bd30b2d-fd62-4648-8095-19c2c8ca5d1c",
+onRenderMethodID:"9AC601EA-D133-45B4-B9D6-E38F7A81E4B3",
 onShowMethodID:"7bd30b2d-fd62-4648-8095-19c2c8ca5d1c",
 paperPrintScale:100,
 scrollbars:33,

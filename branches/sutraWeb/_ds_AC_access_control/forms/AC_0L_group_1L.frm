@@ -25,6 +25,7 @@ uuid:"713b41c5-1313-4a69-950e-2e99fa0dd6db"
 ],
 name:"AC_0L_group_1L",
 onRecordSelectionMethodID:"b8b6060b-4850-496e-a5b7-8e6754a330b7",
+onRenderMethodID:"9AC601EA-D133-45B4-B9D6-E38F7A81E4B3",
 paperPrintScale:100,
 scrollbars:33,
 size:"150,20",

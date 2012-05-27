@@ -173,6 +173,7 @@ uuid:"a5d8c90c-76e2-4106-8b60-077179df80c9"
 name:"NAV_0L_navigation_item_1L",
 onLoadMethodID:"166ffc65-8f3d-423b-9044-ecd63dec242c",
 onRecordSelectionMethodID:"9a9b30cd-8ca7-48ff-ba8e-ebbe5eee9f76",
+onRenderMethodID:"9AC601EA-D133-45B4-B9D6-E38F7A81E4B3",
 paperPrintScale:100,
 scrollbars:33,
 size:"120,20",

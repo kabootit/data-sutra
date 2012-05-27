@@ -52,6 +52,7 @@ verticalAlignment:1
 ],
 name:"TMPL_0L_example_1L",
 onRecordSelectionMethodID:"b2d6ccd4-4ef9-43f7-875b-47c397a65683",
+onRenderMethodID:"9AC601EA-D133-45B4-B9D6-E38F7A81E4B3",
 paperPrintScale:100,
 scrollbars:33,
 size:"120,20",

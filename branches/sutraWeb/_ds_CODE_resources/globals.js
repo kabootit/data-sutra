@@ -6167,3 +6167,17 @@ function CODE_form_in_dialog_close(name) {
 		application.getWindow(name).destroy()
 	}
 }
+
+/**
+ * Called before the form component is rendered.
+ *
+ * @param {JSRenderEvent} event the render event
+ *
+ * @properties={typeid:24,uuid:"9AC601EA-D133-45B4-B9D6-E38F7A81E4B3"}
+ */
+function CODE_row_background__list(event) {
+	event.getRenderable().bgcolor = '#D1D7E2'
+		
+	//ensure that it's false
+	event.getRenderable().transparent = false
+}
