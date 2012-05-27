@@ -261,9 +261,11 @@ field.fastfind
 	margin: 0px 0px 0px 0px; 
 }
 
-field.universallist
-{
-
+field.universallist, field.universallist_selected {
+	background-color: #D1D7E2;
+	border: 0px solid;
+	/*right margin nothing so that prematurely truncate end of field*/
+	margin: 0px 0px 0px 4px;
 }
 
 /* default settings for label */

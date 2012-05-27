@@ -2,6 +2,7 @@
  *	TITLE    :	ds_WEB_universal_list
  *			  	
  *	ABOUT    :	Data Sutra stylesheet for Web: Universal List
+ * @deprecated...onRender event takes care of everything
  */
 
 form {
@@ -38,6 +39,7 @@ field.customlist {
 }
 
 field.universallist, field.universallist_selected {
+	background-color: #D1D7E2;
 	border: 0px solid;
 	/*right margin nothing so that prematurely truncate end of field*/
 	margin: 0px 0px 0px 4px;
@@ -98,7 +100,6 @@ even {
 
 selected {
 	background-color: #2367A8;
-	
 }
 
 /* grid view */

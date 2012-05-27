@@ -2967,9 +2967,59 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
  * @properties={typeid:24,uuid:"59E571C5-E375-4758-AFF9-24B8B577C3A6"}
  */
 function NAV_universal_list_render(event) {
+	var renderable = event.getRenderable()
+	
+	//use mac settings when not running in the shell
+		//TODO: change to windows settings when deployed
+	var fontSelect = 'Verdana,1,10'
+	var fontUnselect = 'Verdana,0,10'
+	
+	//get font string (font,normal/bold/italic/bolditalic,size)
+	if (application.__parent__.solutionPrefs) {
+		//web client
+		if (solutionPrefs.config.webClient) {
+			fontSelect = 'Verdana,1,11'
+			fontUnselect = 'Verdana,0,11'	
+		}
+		//smart client
+		else {
+			//on a mac
+			if (solutionPrefs.clientInfo.typeOS == 'Mac OS X') {
+				fontSelect = 'Verdana,1,10'
+				fontUnselect = 'Verdana,0,10'
+			}
+			//on windows, linux, etc.
+			else if (solutionPrefs.clientInfo.typeOS == 'Windows') {
+				fontSelect = 'MS Sans Serif,1,12'
+				fontUnselect = 'MS Sans Serif,0,12'	
+			}
+			//on linux, etc.
+			else {
+				fontSelect = 'SansSerif.plain,1,11'
+				fontUnselect = 'SansSerif.plain,0,11'	
+			}
+		}
+	}
+	
+	
+	//selected
 	if (event.isRecordSelected()) {
-		event.getRenderable().fgcolor = '#ffffff'
-		event.getRenderable().font = 'Verdana,1,11'
+		//white
+		renderable.fgcolor = '#FFFFFF'
+		
+		//selected
+		renderable.bgcolor = '#2367A8'
+		
+		//bold
+		renderable.font = fontSelect
+	}
+	//other rows
+	else {
+		//non-selected
+		renderable.bgcolor = '#D1D7E2'
+		
+		//not bold
+		renderable.font = fontUnselect
 	}
 }
 
