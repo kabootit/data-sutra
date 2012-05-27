@@ -4113,18 +4113,6 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	//spaces configured
 	var spaceStatus = navigationPrefs.byNavItemID[prefNavID].spaceSetup
 	
-	//load navigation window
-	if (solutionPrefs.config.webClient) {
-		forms.DATASUTRA_WEB_0F__list.elements.tab_list.setLeftForm(forms[navTab])
-	}
-	else {
-		if (forms[baseForm].elements.tab_content_A.tabIndex > 0) {
-			forms[baseForm].elements.tab_content_A.removeTabAt(1)
-		}
-		forms[baseForm].elements.tab_content_A.addTab(forms[navTab],'',null,null,null,null)
-		forms[baseForm].elements.tab_content_A.tabIndex = forms[baseForm].elements.tab_content_A.getMaxTabIndex()
-	}
-	
 	//web client
 	if (solutionPrefs.config.webClient) {
 		//load navigation window if new one different than currently displayed one
@@ -4216,7 +4204,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 					//set events
 					myForm.onShow = solutionModel.getGlobalMethod('NAV_universal_list_show')
 					myForm.onRecordSelection = solutionModel.getGlobalMethod('NAV_universal_list_select')
-					myForm.rowBGColorCalculation = 'globals.NAV_row_background'
+					myForm.onRender = solutionModel.getGlobalMethod('NAV_universal_list_render')
 					
 					//get the UL data and set it up
 					var allULDisplays = navigationPrefs.byNavItemID[prefNavID].universalList.displays
@@ -4270,10 +4258,8 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 						myField.setOnFocusGainedMethod(globals.NAV_universal_list_select__unhilite)		
 						myField.anchors = SM_ANCHOR.ALL
 						myField.horizontalAlignment = horizAlign
-						myField.styleClass = 'customlist'
+						myField.styleClass = 'universallist'
 						myField.editable = false
-						myField.borderType = 'EmptyBorder,0,0,0,0'
-						myField.margin = '0,4,0,4'
 						myField.scrollbars = 0
 						myField.transparent = false
 						myField.text = (lineItem.header) ? lineItem.header : nameNameField
@@ -4313,7 +4299,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		else {
 			//assign to list tab panel
 			listTabForm.elements.tab_content_B.addTab(forms[listTab],'',null,null,null,null)
-//			forms[baseForm].elements.tab_content_B.tabIndex = forms[baseForm].elements.tab_content_B.getMaxTabIndex()
+			listTabForm.elements.tab_content_B.tabIndex = listTabForm.elements.tab_content_B.getMaxTabIndex()
 			
 			//save status info
 			navigationPrefs.byNavItemID[prefNavID].listData.tabNumber = listTabForm.elements.tab_content_B.tabIndex
