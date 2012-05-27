@@ -2530,8 +2530,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 							//set events
 							myForm.onShow = solutionModel.getGlobalMethod('NAV_universal_list_show')
 							myForm.onRecordSelection = solutionModel.getGlobalMethod('NAV_universal_list_select')
-							myForm.rowBGColorCalculation = 'globals.NAV_row_background'
-	//						myForm.getBodyPart().background = '#D1D7E2'
+							myForm.onRender = solutionModel.getGlobalMethod('NAV_universal_list_render')
 							
 							//get the UL data and set it up
 							var allULDisplays = navigationPrefs.byNavItemID[navigationItemID].universalList.displays
@@ -2598,10 +2597,8 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 								myField.onFocusGained = solutionModel.getGlobalMethod('NAV_universal_list_select__unhilite')
 								myField.anchors = SM_ANCHOR.ALL
 								myField.horizontalAlignment = horizAlign
-								myField.styleClass = 'customlist'
+								myField.styleClass = 'universallist'
 								myField.editable = lineItem.editable
-								myField.borderType = 'EmptyBorder,0,0,0,0'
-								myField.margin = '0,4,0,4'
 								myField.scrollbars = 0
 								myField.transparent = false
 								myField.text = (lineItem.header) ? lineItem.header : nameNameField
@@ -2960,6 +2957,20 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		}
 	}
 }
+}
+
+/**
+ * Style Universal list selected row
+ *
+ * @param {JSRenderEvent} event
+ *
+ * @properties={typeid:24,uuid:"59E571C5-E375-4758-AFF9-24B8B577C3A6"}
+ */
+function NAV_universal_list_render(event) {
+	if (event.isRecordSelected()) {
+		event.getRenderable().fgcolor = '#ffffff'
+		event.getRenderable().font = 'Verdana,1,11'
+	}
 }
 
 /**

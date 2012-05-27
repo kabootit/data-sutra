@@ -322,7 +322,7 @@ if (application.__parent__.solutionPrefs) {
 	//set events
 	myForm.onShow = solutionModel.getGlobalMethod('NAV_universal_list_show')
 	myForm.onRecordSelection = solutionModel.getGlobalMethod('NAV_universal_list_select')
-	myForm.rowBGColorCalculation = 'globals.NAV_row_background'
+	myForm.onRender = solutionModel.getGlobalMethod('NAV_universal_list_render')
 	
 	//get the UL data and set it up
 	var allULDisplays = navigationPrefs.byNavItemID[currentNavItem].universalList.displays
@@ -389,10 +389,8 @@ if (application.__parent__.solutionPrefs) {
 		myField.onFocusGained = solutionModel.getGlobalMethod('NAV_universal_list_select__unhilite')
 		myField.anchors = SM_ANCHOR.ALL
 		myField.horizontalAlignment = horizAlign
-		myField.styleClass = 'customlist'
+		myField.styleClass = 'universallist'
 		myField.editable = lineItem.editable
-		myField.borderType = 'EmptyBorder,0,0,0,0'
-		myField.margin = '0,4,0,4'
 		myField.scrollbars = 0
 		myField.transparent = false
 		myField.text = (lineItem.header) ? lineItem.header : nameNameField

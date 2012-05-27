@@ -1,0 +1,114 @@
+/*
+ *	TITLE    :	ds_WEB_universal_list
+ *			  	
+ *	ABOUT    :	Data Sutra stylesheet for Web: Universal List
+ */
+
+form {
+	background-color: #FFFFFF;
+	border: 0px solid;
+}
+
+form.list {
+	background-color: #D1D7E2;
+}
+
+label, button, field, combobox, check, radio {
+	font-family: Verdana,'Helvetica Neue', Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	border: 0px solid;
+	text-align: left;
+	font-color: black;
+	color: #000;
+}
+
+field {
+	background-color: #FFF;
+	border: 2px ridge #FFF;
+	margin: 1px 2px 0px 2px;
+}
+
+field.bold {
+	font-weight: bold;
+}
+
+field.customlist {
+	border: 0px solid;
+	margin: 0px 5px 0px 5px; 
+}
+
+field.universallist, field.universallist_selected {
+	border: 0px solid;
+	/*right margin nothing so that prematurely truncate end of field*/
+	margin: 0px 0px 0px 4px;
+}
+
+field.universallist_selected {
+	background-image: url("media:///row_selected.png");
+	background-repeat: repeat-x;
+/*	color: white;
+	font-weight: bold;*/
+}
+
+check {
+	text-align: center;
+}
+
+check.noborder {
+	text-align: left;
+	margin: 2px 0px 0px 4px;
+	border: 0px solid;
+}
+
+combobox {
+	background-color: #FFF;
+	margin: 0px 4px 0px 4px;
+}
+
+label {
+	text-align: left; 
+	color: black; 
+}
+
+label.bold, label.whitebold {
+	font-weight: bold;
+}
+
+label.list {
+	font-size: 8.5px;
+}
+
+label.white, label.whitebold {
+	color: white;
+}
+
+
+/* row background */
+odd, even, selected {
+	background-color: #D1D7E2;
+}
+
+odd {
+	/*background-color: #FFFFFF*/;
+}
+
+even {
+	/*background-color: #F7F8EF*/;
+}
+
+selected {
+	background-color: #2367A8;
+	
+}
+
+/* grid view */
+field.tableview, check.tableview, radio.tableview, listbox.tableview, 
+combobox.tableview, label.tableview, button.tableview {
+	border-style: dotted;
+	border-width: 1px;
+	/*border-bottom: 1px dotted #CBCBCB*/;
+}
+
+label.tableview {
+	margin: 1px 0px 0px 0px; 
+}
