@@ -6176,8 +6176,13 @@ function CODE_form_in_dialog_close(name) {
  * @properties={typeid:24,uuid:"9AC601EA-D133-45B4-B9D6-E38F7A81E4B3"}
  */
 function CODE_row_background__list(event) {
-	event.getRenderable().bgcolor = '#D1D7E2'
+	var renderable = event.getRenderable()
+	
+	//set background color
+	renderable.bgcolor = '#D1D7E2'
 		
-	//ensure that it's false
-	event.getRenderable().transparent = false
+	//ensure that not transparent for everything except checkboxes
+	if (renderable.getElementType() != 'CHECK') {
+		renderable.transparent = false
+	}
 }
