@@ -122,8 +122,7 @@ function LIST_expand_collapse(event, idNavItem, forceToggle, idNavSet) {
 function LIST_redraw(event,itemID,reScroll,skipLoadForms,favoriteMode,selected) {
 	//web client
 	if (solutionPrefs.config.webClient) {
-		LIST_redraw__smartclient(event,itemID,reScroll,skipLoadForms,favoriteMode,selected)
-//		LIST_redraw__webclient(event,itemID,reScroll,skipLoadForms,favoriteMode,selected)
+		LIST_redraw__webclient(event,itemID,reScroll,skipLoadForms,favoriteMode,selected)
 	}
 	//smart client
 	else {
@@ -405,38 +404,45 @@ function LIST_redraw__smartclient(event,itemID,reScroll,skipLoadForms,favoriteMo
  */
 function LIST_redraw__webclient(event,itemID,reScroll,skipLoadForms,favoriteMode,selected) {
 	if (application.__parent__.solutionPrefs && application.__parent__.navigationPrefs) {
+		//reset object used to store all info for part 2
+		_variableWC = {
+				itemID: itemID,
+				reScroll: reScroll,
+				skipLoadForms: skipLoadForms,
+				favoriteMode: favoriteMode,
+				selected: selected
+			}
+		
 		//triggered by clicking on element in list
 		if (event instanceof JSEvent) {
 			var selected = utils.stringToNumber(event.getElementName().split('_').pop())
 			var itemDetails = forms.NAV__navigation_tree._rows[selected]
-			itemID = itemDetails.navItemID
+			
+			_variableWC.itemID = itemDetails.navItemID
 			
 			//this is favorites
 			if (itemDetails.datasource) {
-				var favoriteMode = true
-			}			
-			
-			//null out object used to store all info
-			_variableWC = {
-					itemID: itemID,
-					reScroll: reScroll,
-					skipLoadForms: skipLoadForms,
-					favoriteMode: favoriteMode,
-					selected: selected
-				}
+				_variableWC.favoriteMode = true
+			}
 			
 			var getScroll = 'var scrollRows = $("#form_NAV__navigation_tree__rows").find(".formpart")[0].scrollTop;'
 			
 			//grab the current scroll position
 			plugins.WebClientUtils.executeClientSideJS(getScroll, LIST_redraw__webclient__continue, ['scrollRows'])
 		}
+		//continue redrawing the screen
+		else {
+			LIST_redraw__webclient__continue(0)
+		}
 	}
 }
 
 /**
+ * @param {Number} scrollTop
+ * 
  * @AllowToRunInFind
  *
- * @properties={typeid:24,uuid:"EF3C2382-852F-4F6F-8A31-EA3478C8F844"}
+ * @properties={typeid:24,uuid:"EF3C1382-852F-4F6F-8A31-EA3478C8F844"}
  */
 function LIST_redraw__webclient__continue(scrollTop) {
 	var itemDetails = forms.NAV__navigation_tree._rows[_variableWC.selected]
