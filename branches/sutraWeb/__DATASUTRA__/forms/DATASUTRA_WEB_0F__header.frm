@@ -429,7 +429,8 @@ size:"25,22",
 toolTipText:"Window metrics",
 transparent:true,
 typeid:7,
-uuid:"EF017BCD-13DD-4229-B64E-9DC9BB468F57"
+uuid:"EF017BCD-13DD-4229-B64E-9DC9BB468F57",
+visible:false
 },
 {
 borderType:"MatteBorder,0,0,0,1,#333333",
