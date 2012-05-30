@@ -5074,3 +5074,54 @@ function DATASUTRA_open(skipFontFix) {
 		globals.DS_font_fix()
 	}
 }
+
+/**
+ * URL driven navigation
+ * 
+ * @properties={typeid:24,uuid:"AF8DE8BA-7503-462B-B4B0-45B9A2DE7921"}
+ * 
+ */
+function DS_router() {
+	
+	// url object logic
+	var url = {}
+	for ( var item in arguments[1] ) {
+		if ( item == "argument" ) {
+			url.set = arguments[1][item]  // 1st slot is navigation set
+		}
+		else if ( item == "p1" ) {
+			url.item = arguments[1][item] // 2nd slot is navigation item
+		}
+		else if ( 1!=1 ) {
+			// additional slots (p2, p3, etc)
+		}
+	}
+	
+	// get nav object mapping
+	var nav = 	{ "crm" :
+					{ "customer"	: "1118",
+					"contacts"		: "1119",
+					"orders"		: "1120",
+					"products"		: "1121"
+				},
+				"templates" :
+					{ "blank"		: "299",
+					"yellow"		: "304",
+					"green"			: "306"
+					}
+				}
+	
+	var navItemID = nav[url.set][url.item]
+	// error checking
+	if ( !navItemID ) {
+		return  // TODO: return error code/page/whatever (something useful)
+	}
+	
+	// load workflow form and associated states
+	NAV_workflow_load(navItemID)
+	
+	// update nav
+	forms.NAV__navigation_tree.LIST_rescroll(navItemID); //TODO: select correct row
+	
+//	forms.DATASUTRA_WEB_0F.controller.show()
+}
