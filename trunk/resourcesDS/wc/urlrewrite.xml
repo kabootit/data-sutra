@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE urlrewrite 
+		PUBLIC "-//tuckey.org//DTD UrlRewrite 2.6//EN"
+		"http://www.tuckey.org/res/dtds/urlrewrite2.6.dtd">
+
+<!--
+	Configuration file for Sutra CMS by Data Mosaic
+	http://www.data-mosaic.com/sutra-cms
+
+	Rewriting provided by UrlRewriteFilter
+	http://www.tuckey.org/urlrewrite/
+-->
+
+<urlrewrite>
+	
+	<rule>
+		<name>DS js</name>
+		<note></note>
+		<from>^/ds/js/(.*)$</from>
+		<to last="true">/ds/js/$1</to>
+	</rule>
+
+	<rule>
+		<name>DS</name>
+		<note></note>
+		<from>^/ds/(.*)$</from>
+		<to last="true">/ds/index.html?path=$1</to>
+	</rule>
+
+	<rule>
+		<name>DS Test js</name>
+		<note></note>
+		<from>^/ds-test/js/(.*)$</from>
+		<to last="true">/ds-test/js/$1</to>
+	</rule>
+
+	<rule>
+		<name>DS Test</name>
+		<note></note>
+		<from>^/ds-test/(.*)$</from>
+		<to last="true">/ds-test/index.html?path=$1</to>
+	</rule>
+
+</urlrewrite>
+

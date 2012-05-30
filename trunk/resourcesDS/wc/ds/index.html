@@ -1,0 +1,77 @@
+<html>
+<head>
+<title>Web Playground</title>
+<meta http-equiv="Content-Type" content="text/html;">
+<script type="text/javascript" src="/ds/js/native.history.js"></script>
+</head>
+<body style="margin:0;">
+<div id="sutra-cms"></div>
+
+<script>
+	// set up history handling
+	(function(window,undefined){
+
+	    // Prepare
+	    var History = window.History;
+	    if ( !History.enabled ) {
+	        return false;
+	    }
+
+	    // listener for using browser back/forward buttons
+	    History.Adapter.bind(window,'statechange',function(){ 
+			var State = History.getState();
+			History.log(State.data, State.title, State.url);
+			if (!State.data.server) {
+				// run the router with history data instead of url
+				router(State.data.url);
+			}
+	    });
+
+	})(window);
+
+
+  	function router (data) {
+		// handle params
+		var append 		= "";
+		if ( data ) {
+			// params passed in
+			append = data;
+		}
+		else {
+			// params in URL
+			var iframeEl 	= document.getElementById('sutra-cms');
+			var url 		= window.location.pathname;
+			// strip trailing slash
+			url 			= ( url.charAt(url.length - 1) === "/" ) ? url.substr(0, url.length - 1) : url;
+			var urlElements = url.split('/').slice(2);
+			for (var x = 0; x < urlElements.length; x++) {
+				append += urlElements[x] + "/";
+				if ( x != urlElements.length - 1 ) {
+					append += "p" + (x + 1) + "/";
+				}
+			}
+		}
+	
+		// swc iframe setup
+		var iframeHeaderCell = document.getElementById('sutra-cms');
+		iframeHeaderCell.innerHTML = "";
+		var dynamicURL = "http://localhost:8080/servoy-webclient/ss/s/__DATASUTRA__/m/DS_router/a/" + append;
+		var iframeHeader = document.createElement('IFRAME');
+		iframeHeader.id = 'iframeHeader';
+		iframeHeader.src = dynamicURL ;
+		iframeHeader.width = '100%';
+		iframeHeader.height = '100%';
+		iframeHeader.scrolling = 'yes';
+		iframeHeader.frameBorder = 0;
+		// iframe load
+		iframeHeaderCell.appendChild(iframeHeader);	
+		
+	};
+	
+	// run router first time
+	router();	 	
+	
+</script>
+
+</body>
+</html>
