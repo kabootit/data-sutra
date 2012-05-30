@@ -5083,6 +5083,8 @@ function DATASUTRA_open(skipFontFix) {
  */
 function DS_router() {
 	
+	// TODO: go to login page if not logged in
+	
 	// url object logic
 	var url = {}
 	for ( var item in arguments[1] ) {
@@ -5098,6 +5100,8 @@ function DS_router() {
 	}
 	
 	// get nav object mapping
+	// TODO: add data points in navigation engine
+	// TODO: add object to navigation object (nav set > nav item > nav id)
 	var nav = 	{ "crm" :
 					{ "customer"	: "1118",
 					"contacts"		: "1119",
@@ -5117,11 +5121,13 @@ function DS_router() {
 		return  // TODO: return error code/page/whatever (something useful)
 	}
 	
+	// TODO: update current history with correct data
+	
 	// load workflow form and associated states
 	NAV_workflow_load(navItemID)
 	
 	// update nav
+	// TODO: go to correct nav set, nav item, set nav scroll
 	forms.NAV__navigation_tree.LIST_rescroll(navItemID); //TODO: select correct row
 	
-//	forms.DATASUTRA_WEB_0F.controller.show()
 }
