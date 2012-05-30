@@ -6161,10 +6161,14 @@ function CODE_form_in_dialog(form, x, y, width, height, title, resizable, showTe
 function CODE_form_in_dialog_close(name) {
 	//pre-6
 	if (utils.stringToNumber(application.getVersion()) < 6) {
-		application.closeFormDialog(name)
+		if (application.getWindow(name) != null) {
+			application.closeFormDialog(name)
+		}
 	}
 	else {
-		application.getWindow(name).destroy()
+		if (application.getWindow(name) != null) {
+			application.getWindow(name).destroy()
+		}
 	}
 }
 
