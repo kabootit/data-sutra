@@ -27,6 +27,9 @@ function FORM_on_load(event) {
 		//over ride client properties
 		application.putClientProperty(APP_WEB_PROPERTY.WEBCLIENT_TEMPLATES_DIR, 'datasutra')
 		application.putClientProperty(APP_UI_PROPERTY.TABLEVIEW_WC_DEFAULT_SCROLLABLE, true)
+		
+		//force inclusion of jquery
+		plugins.WebClientUtils.addJsReference(SERVOY_WEB_RESOURCES.JQUERY)
 	}
 }
 
