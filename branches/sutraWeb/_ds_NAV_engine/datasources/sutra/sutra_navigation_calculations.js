@@ -1,4 +1,16 @@
 /**
+ * @properties={type:12,typeid:36,uuid:"D54786BF-DB76-4AE7-B373-2453844473DF"}
+ */
+function url_path_tooltip() {
+	if (url_path) {
+		return '<html><body>Web client path: <b>' + url_path + '</b></body></html>'
+	}
+	else {
+		return 'No web client path set'
+	}
+}
+
+/**
  *
  * @properties={type:12,typeid:36,uuid:"7b7786eb-7639-4f28-b99e-fe79c86964f5"}
  */

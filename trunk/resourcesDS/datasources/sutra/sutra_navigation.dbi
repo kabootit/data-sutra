@@ -78,6 +78,13 @@ allowNull:true,
 creationOrderIndex:10,
 dataType:4,
 name:"order_by"
+},
+{
+allowNull:true,
+creationOrderIndex:11,
+dataType:12,
+length:255,
+name:"url_path"
 }
 ],
 name:"sutra_navigation",

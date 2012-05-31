@@ -34,6 +34,8 @@ var valueList = [
 		'Rename navigation set',
 		'Duplicate navigation set',
 		'-',
+		'Set web client path',
+		'-',
 		'Delete record'
 	] //,'Export framework settings','Import framework settings','-'
 
@@ -291,7 +293,15 @@ switch (arguments[0]) {
 		IMPORT_engine()
 		break
 	
-	case 3:	//delete record
+	case 3: //change path name
+		var urlPath = plugins.dialogs.showInputDialog('Change navigation set path', 'Enter new path:', url_path)
+		if (urlPath) {
+			url_path = urlPath
+			databaseManager.saveData()
+		}
+		break
+		
+	case 5:	//delete record
 		var delRec = plugins.dialogs.showWarningDialog('Delete set','Do you really want to delete this navigation set?','Yes','No')
 		var defaultDisplay = false
 		

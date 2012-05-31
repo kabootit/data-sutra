@@ -380,6 +380,13 @@ name:"ul_busy_indicator"
 },
 {
 allowNull:true,
+creationOrderIndex:55,
+dataType:12,
+length:255,
+name:"url_path"
+},
+{
+allowNull:true,
 autoEnterSubType:0,
 autoEnterType:3,
 creationOrderIndex:11,

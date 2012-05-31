@@ -5082,8 +5082,10 @@ function DATASUTRA_open(skipFontFix) {
  * 
  */
 function DS_router() {
-	
 	// TODO: go to login page if not logged in
+	if (false) {
+		//show me login page
+	}
 	
 	// url object logic
 	var url = {}
@@ -5100,34 +5102,40 @@ function DS_router() {
 	}
 	
 	// get nav object mapping
-	// TODO: add data points in navigation engine
-	// TODO: add object to navigation object (nav set > nav item > nav id)
-	var nav = 	{ "crm" :
-					{ "customer"	: "1118",
-					"contacts"		: "1119",
-					"orders"		: "1120",
-					"products"		: "1121"
-				},
-				"templates" :
-					{ "blank"		: "299",
-					"yellow"		: "304",
-					"green"			: "306"
-					}
-				}
+	var nav = navigationPrefs.siteMap
 	
-	var navItemID = nav[url.set][url.item]
+	// TODO: add object to navigation object (nav set > nav item > nav registry/id/details)
+//	var nav = 	{ "crm" :
+//					{ "customer"	: "1118",
+//					"contacts"		: "1119",
+//					"orders"		: "1120",
+//					"products"		: "1121"
+//				},
+//				"templates" :
+//					{ "blank"		: "299",
+//					"yellow"		: "304",
+//					"green"			: "306"
+//					}
+//				}
+	
+	var navItemRegistry = nav[url.set][url.item].registry
 	// error checking
-	if ( !navItemID ) {
-		return  // TODO: return error code/page/whatever (something useful)
+	if ( !navItemRegistry ) {
+		// TODO: return error code/page/whatever (something useful)
+		return  
 	}
 	
 	// TODO: update current history with correct data
 	
-	// load workflow form and associated states
-	NAV_workflow_load(navItemID)
+	// load in correct state of requested resource
+	globals.TRIGGER_navigation_set(navItemRegistry)
 	
-	// update nav
-	// TODO: go to correct nav set, nav item, set nav scroll
-	forms.NAV__navigation_tree.LIST_rescroll(navItemID); //TODO: select correct row
+	
+//	// load workflow form and associated states
+//	NAV_workflow_load(navItemID)
+//	
+//	// update nav
+//	// TODO: go to correct nav set, nav item, set nav scroll
+//	forms.NAV__navigation_tree.LIST_rescroll(navItemID); //TODO: select correct row
 	
 }
