@@ -254,13 +254,14 @@ if (utils.hasRecords(relnColumns)) {
 	}
 }
 
-form_to_load_table = forms[form_to_load].controller.getTableName()
-
-//create new associated column records if 1) new table or 2) no table
-if (application.getSolutionName() != 'ds_NAV_engine') {
-	forms.NAV_0L_navigation_item.UPDATE_table_columns()
+if (form_to_load) {
+	form_to_load_table = forms[form_to_load].controller.getTableName()
+	
+	//create new associated column records if 1) new table or 2) no table
+	if (application.getSolutionName() != 'ds_NAV_engine') {
+		forms.NAV_0L_navigation_item.UPDATE_table_columns()
+	}
 }
-
 }
 
 /**

@@ -242,12 +242,12 @@ if (globals.NAV_column_relation != '-') {
 						}
 						//columnName not in columnNameStored, so add to sutra_column
 						else {
-							forms[colFormName].controller.newRecord(false,true)
-							forms[colFormName].name_column = colName
-							forms[colFormName].type_column = colType
-							forms[colFormName].id_navigation_item = navItem
-							forms[colFormName].table_or_relation = tableReln
-							forms[colFormName].status_relation = statusReln
+							forms[colFormName].foundset.newRecord(false,true)
+							forms[colFormName].foundset.name_column = colName
+							forms[colFormName].foundset.type_column = colType
+							forms[colFormName].foundset.id_navigation_item = navItem
+							forms[colFormName].foundset.table_or_relation = tableReln
+							forms[colFormName].foundset.status_relation = statusReln
 						}
 					}
 				} //end "smart update"

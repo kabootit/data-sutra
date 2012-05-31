@@ -136,12 +136,16 @@ if (!utils.hasRecords(relnDisplay) && phone_flag_ul) {
 	if (displayDefault) {
 		record.display_default = 1
 	}
+	
+	//flag for this platform
+	record.flag_platform = application.getValueListArray('NAV_platform').Phone
+	
 	record.row_order = relnDisplay.getSize()
 }
 
 //pre-fill if not already filled in
 if (phone_flag_ul && !phone_list_title) {
-	phone_list_title = item_name
+	phone_list_title = fw_list_title || item_name
 	elements.fld_list_title.caretPosition = (phone_list_title) ? phone_list_title.length : 0
 	elements.fld_list_title.requestFocus()
 }

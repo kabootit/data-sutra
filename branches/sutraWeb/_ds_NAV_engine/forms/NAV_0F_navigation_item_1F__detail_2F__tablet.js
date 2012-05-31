@@ -136,12 +136,16 @@ if (!utils.hasRecords(relnDisplay) && tablet_flag_ul) {
 	if (displayDefault) {
 		record.display_default = 1
 	}
+	
+	//flag for this platform
+	record.flag_platform = application.getValueListArray('NAV_platform').Tablet
+	
 	record.row_order = relnDisplay.getSize()
 }
 
 //pre-fill if not already filled in
 if (tablet_flag_ul && !tablet_list_title) {
-	tablet_list_title = item_name
+	tablet_list_title = fw_list_title || item_name
 	elements.fld_list_title.caretPosition = (tablet_list_title) ? tablet_list_title.length : 0
 	elements.fld_list_title.requestFocus()
 }

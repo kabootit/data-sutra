@@ -180,6 +180,10 @@ if (!utils.hasRecords(relnDisplay) && use_fw_list) {
 	if (displayDefault) {
 		record.display_default = 1
 	}
+	
+	//flag for this platform
+	record.flag_platform = application.getValueListArray('NAV_platform').Desktop
+	
 	record.row_order = relnDisplay.getSize()
 }
 

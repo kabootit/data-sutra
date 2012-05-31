@@ -1380,20 +1380,23 @@ else {
 	
 	//get sorted array of columnNames from backend
 	var jsTable = databaseManager.getTable(serverName, tableName)
-	var aColumnName = jsTable.getColumnNames()
 	var columnNames = new Array()
-		
-	for ( var i = 0 ; i < aColumnName.length ; i++ ) {
-		var jsColumn = jsTable.getColumn(aColumnName[i])
-		var columnInfo = new Object()
-		
-		columnInfo['nameColumn'] = jsColumn.getSQLName().toLowerCase() //format as lower case
-		columnInfo['typeColumn'] = jsColumn.getTypeAsString().toUpperCase() //format as upper case
-		
-		columnNames[i] = columnInfo
-	}
-	columnNames.sort()
 	
+	//this form is based on a table, ok to proceed
+	if (jsTable) {
+		var aColumnName = jsTable.getColumnNames()
+		
+		for ( var i = 0 ; i < aColumnName.length ; i++ ) {
+			var jsColumn = jsTable.getColumn(aColumnName[i])
+			var columnInfo = new Object()
+			
+			columnInfo['nameColumn'] = jsColumn.getSQLName().toLowerCase() //format as lower case
+			columnInfo['typeColumn'] = jsColumn.getTypeAsString().toUpperCase() //format as upper case
+			
+			columnNames[i] = columnInfo
+		}
+		columnNames.sort()
+	}
 	
 	
 	//get current column values from in sutra_column (columnNamesStored)
