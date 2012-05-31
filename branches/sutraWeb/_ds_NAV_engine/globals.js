@@ -3317,7 +3317,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	//SINGLE USER
 	//get all active navigation sets
 	var args = null
-	var query = 'SELECT id_navigation, nav_name, nav_default ' +
+	var query = 'SELECT id_navigation, nav_name, nav_default, url_path ' +
 				'FROM sutra_navigation ' +
 				'WHERE nav_status = 1 ' +
 				'ORDER BY order_by ASC'
@@ -3326,6 +3326,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	var navigationSets = dataset.getColumnAsArray(1)
 	var navSetNames = dataset.getColumnAsArray(2)
 	var navSetDefault = dataset.getColumnAsArray(3)
+	var navSetPath = dataset.getColumnAsArray(4)
 
 	//ACCESS & CONTROL
 	if (groupID) {
@@ -3339,7 +3340,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		
 		//set value list with appropriate values
 		var args = new Array()
-		var query = 'SELECT id_navigation, nav_name, nav_default FROM sutra_navigation ' +
+		var query = 'SELECT id_navigation, nav_name, nav_default, url_path FROM sutra_navigation ' +
 				'WHERE id_navigation IN ('
 				for (var i = 0; i < groupOrderedNavigationSets.length; i++) {
 					query += '?'
@@ -3368,6 +3369,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		var groupNavigationSets = dataset.getColumnAsArray(1)
 		var groupNavSetNames = dataset.getColumnAsArray(2)
 		var groupNavSetDefault = dataset.getColumnAsArray(3)
+		var groupNavSetPath = dataset.getColumnAsArray(4)
 		
 		//nothing configured for this group, exit
 		if (!groupNavigationSets || groupNavigationSets.length == 0) {
@@ -3388,6 +3390,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 				groupNavigationSets.splice(i,1)
 				groupNavSetNames.splice(i,1)
 				groupNavSetDefault.splice(i,1)
+				groupNavSetPath.splice(i,1)
 			}
 		}
 		
@@ -3395,6 +3398,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		var navigationSets = new Array()
 		var navSetNames = new Array()
 		var navSetDefault = new Array()
+		var navSetPath = new Array()
 		
 		//order correctly
 		for (var i = 0; i < groupOrderedNavigationSets.length; i++) {
@@ -3405,6 +3409,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 					navigationSets.push(groupNavigationSets[j])
 					navSetNames.push(groupNavSetNames[j])
 					navSetDefault.push(groupNavSetDefault[j])
+					navSetPath.push(groupNavSetPath[j])
 				}
 			}
 		}
@@ -3420,20 +3425,26 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	navigationSets.push(solutionPrefs.config.navigationSetID)
 	navSetNames.push('configPanes')
 	navSetDefault.push(null)
+	navSetPath.push('sutra_admin')
 	
 	//add in favorites place holder
 	navigationSets.push(0)
 	navSetNames.push('favoriteRecords')
 	navSetDefault.push(null)
+	navSetPath.push('sutra_user_favorites')
 	
 	//create objects the first time around
 	if (initialLoad) {
 		navPrefs.byNavSetName = new Object()
 		navPrefs.byNavSetID = new Object()
 		navPrefs.byNavItemID = new Object()
+		navPrefs.siteMap = new Object()
 	}
 	//remove sets that are no longer present
 	else {
+		//rebuild sitemap fresh each time
+		navPrefs.siteMap = new Object()
+		
 		//byNavItemID nodes that are OK to keep
 		var processedNavItems = new Array()
 		
@@ -3499,6 +3510,11 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 						}
 		}
 		
+		//web client paths
+		if (navSetPath[i]) {
+			navPrefs.siteMap[navSetPath[i]] = new Object()
+		}
+		
 		//punch down which navigation set is the default
 		if (navSetDefault[i]) {
 			navPrefs.byNavSetID.defaultSet = navigationSets[i]
@@ -3525,11 +3541,27 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 					processedNavItems.push(record.id_navigation_item)
 				}
 				
-				//create nav item node(s)
-				navPrefs.byNavSetName[navSetNames[i]].itemsByName[record.item_name] = 
-				navPrefs.byNavSetName[navSetNames[i]].itemsByOrder[j-1] = 
-				navPrefs.byNavItemID[record.id_navigation_item] = 
-					globals.NAV_navigation_item_load(record,setExists)
+				//web client paths
+				if (navPrefs.siteMap[navSetPath[i]] && record.url_path) {
+					navPrefs.siteMap[navSetPath[i]][record.url_path] = {
+										registry	: record.item_id,
+										navItemID	: record.id_navigation_item
+									}
+					
+					//create nav item node(s) with path
+					navPrefs.byNavSetName[navSetNames[i]].itemsByName[record.item_name] = 
+					navPrefs.byNavSetName[navSetNames[i]].itemsByOrder[j-1] = 
+					navPrefs.byNavItemID[record.id_navigation_item] = 
+					navPrefs.siteMap[navSetPath[i]][record.url_path].details = 
+						globals.NAV_navigation_item_load(record,setExists)
+				}
+				//create nav item node(s) without path
+				else {
+					navPrefs.byNavSetName[navSetNames[i]].itemsByName[record.item_name] = 
+					navPrefs.byNavSetName[navSetNames[i]].itemsByOrder[j-1] = 
+					navPrefs.byNavItemID[record.id_navigation_item] = 
+						globals.NAV_navigation_item_load(record,setExists)
+				}
 			}
 			
 			//try to stay on the same navigation item if it is still available
