@@ -1189,7 +1189,7 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset) {
 			}
 		}
 	
-		//try to find navigaion item from selected set
+		//try to find navigation item from selected set
 		for (var i = 0; i < navItemID.length; i++) {
 			if (navigationPrefs.byNavItemID[navItemID[i]].navigationItem.idNavigation == globals.DATASUTRA_navigation_set) {
 				var found = true
