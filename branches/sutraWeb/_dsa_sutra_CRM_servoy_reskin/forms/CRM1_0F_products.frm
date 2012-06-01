@@ -583,7 +583,6 @@ uuid:"ff6165ff-4f67-4e81-9090-46cb61ccd44c"
 ],
 name:"CRM1_0F_products",
 navigatorID:"-1",
-onRecordEditStopMethodID:"50d8a27a-2321-4118-b4f7-db097f8c0f0a",
 onRecordSelectionMethodID:"8d2362f7-4fff-49f0-a276-02a60d0b34a3",
 paperPrintScale:100,
 size:"730,400",

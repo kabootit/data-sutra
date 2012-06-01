@@ -1115,7 +1115,6 @@ uuid:"efc43728-f728-415c-b2fd-5735b2944bff"
 ],
 name:"CRM1_0F_orders",
 navigatorID:"-1",
-onRecordEditStopMethodID:"50d8a27a-2321-4118-b4f7-db097f8c0f0a",
 onRecordSelectionMethodID:"7e268a70-66c9-4a9f-a333-dc2eefbdcabd",
 paperPrintScale:100,
 size:"590,600",

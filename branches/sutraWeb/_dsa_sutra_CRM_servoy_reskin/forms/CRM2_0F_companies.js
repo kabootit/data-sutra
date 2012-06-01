@@ -5,29 +5,6 @@
 function FORM_on_show()
 {
 
-/*
- *	TITLE    :	FORM_on_show
- *			  	
- *	MODULE   :	start_CRM_mosaic
- *			  	
- *	ABOUT    :	hides the default highlighter object
- *			  	
- *	INPUT    :	
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
- *	USAGE    :	FORM_on_show()
- *			  	
- *	MODIFIED :	July 31, 2008 -- Troy Elliott, Data Mosaic
- *			  	
- */
-
-//hide field highlighter
-globals.CODE_highlight_off('CRM2_0F_companies')
-
-
 }
 
 /**

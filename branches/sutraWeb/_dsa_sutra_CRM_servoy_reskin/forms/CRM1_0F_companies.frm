@@ -552,7 +552,6 @@ uuid:"ff6f375d-40a3-4002-86b6-073dfdf5fa8b"
 ],
 name:"CRM1_0F_companies",
 navigatorID:"-1",
-onRecordEditStopMethodID:"50d8a27a-2321-4118-b4f7-db097f8c0f0a",
 paperPrintScale:100,
 size:"710,400",
 styleName:"_DATASUTRA_",
