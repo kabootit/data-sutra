@@ -359,7 +359,7 @@ paperPrintScale:100,
 scrollbars:36,
 size:"100,180",
 styleClass:"list",
-styleName:"ds_MAC_leopard",
+styleName:"_DATASUTRA_",
 typeid:3,
 uuid:"676084E3-4BC3-4577-9AB4-5304E0E15290",
 view:5

@@ -473,3 +473,30 @@ function FORM_on_load()
 // load tooltips from tooltip module
 globals.TRIGGER_tooltip_set()
 }
+
+/**
+ * Handle changed data.
+ *
+ * @param {String} oldValue old value
+ * @param {String} newValue new value
+ * @param {JSEvent} event the event that triggered the action
+ *
+ * @properties={typeid:24,uuid:"503739E5-9E23-412F-A8EB-6618561C48B0"}
+ */
+function FLD_data_change__sort_string() {
+
+	databaseManager.saveData()
+	
+	var formSort = (form_to_load && forms[form_to_load]) ? forms[form_to_load].foundset.getCurrentSort() : 'ERROR! Workflow form not present'
+	var newSort = sort_string
+	
+	if (newSort != '') {
+		sort_string = newSort
+	}
+	else {
+		sort_string = formSort
+	}
+	
+	databaseManager.saveData()
+
+}

@@ -13,7 +13,7 @@ styleClass:"combobox",
 transparent:true,
 typeid:4,
 uuid:"35bae40c-d87e-42b3-84e9-8f08b6b7608c",
-valuelistID:"66828248-25BD-4E30-B464-5B40305E16C9"
+valuelistID:"732efaaa-b06d-4884-b821-7f4b5e96a885"
 },
 {
 anchors:3,
