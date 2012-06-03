@@ -152,3 +152,15 @@ if (id_navigation_item) {
 }
 
 }
+
+/**
+ * @properties={type:12,typeid:36,uuid:"D54786AF-DB76-4AE7-B373-2453844473DF"}
+ */
+function url_path_tooltip() {
+	if (url_path) {
+		return '<html><body>Web client path: <b>' + url_path + '</b></body></html>'
+	}
+	else {
+		return 'No web client path set'
+	}
+}
