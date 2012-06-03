@@ -1,4 +1,3 @@
-
 /**
  * Callback method when form is (re)loaded.
  *
@@ -18,5 +17,22 @@ function FORM_on_load(event) {
 	//show empty form
 	else {
 		forms.CODE__blank.controller.show()
+	}
+}
+/**
+ * Callback method for when form is shown.
+ *
+ * @param {Boolean} firstShow form is shown first time after load
+ * @param {JSEvent} event the event that triggered the action
+ *
+ * @properties={typeid:24,uuid:"030CC132-F4E5-466B-95CF-F863B4FAE949"}
+ */
+function FORM_on_show(firstShow, event) {
+	//these shenanigans have to do with switching to another form in the onload of the solutions default form
+	if (firstShow && (application.getApplicationType() == APPLICATION_TYPES.SMART_CLIENT || application.getApplicationType() == APPLICATION_TYPES.RUNTIME_CLIENT)) {
+		history.go(-2)
+		history.go(+1)
+		history.removeForm('DATASUTRA')
+		history.removeForm('DATASUTRA_0F_solution__blank_4')
 	}
 }

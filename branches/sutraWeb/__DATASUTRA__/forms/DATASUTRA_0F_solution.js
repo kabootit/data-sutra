@@ -72,7 +72,16 @@ if (application.getApplicationType() == APPLICATION_TYPES.SMART_CLIENT || applic
 	var formName = 'DATASUTRA_0F_solution'
 	
 	//continue setting things up if no error in login
-	if (currentcontroller.getName() == formName) {
+	if (currentcontroller.getName() != 'DATASUTRA__error') {
+		//see forms.DATASUTRA.FORM_on_show for more detail
+		if (history.getFormName(history.getCurrentIndex()) == formName) {
+			//remove datasutra if it is the last thing in the history stack so don't get two entries here
+			history.removeIndex(history.getCurrentIndex())
+		}
+		forms.DATASUTRA_0F_solution__blank_4.controller.show()
+		forms[formName].controller.show()
+	
+		//configure form (used to be part of DATASUTRA_init; broken out for parity with webclient
 		FORM_setup(formName,'DATASUTRA_0F_solution__blank_4')
 		
 		//wrapper bean 1
@@ -147,61 +156,14 @@ if (application.getApplicationType() == APPLICATION_TYPES.SMART_CLIENT || applic
 		//inliner tab panel
 		elements.tab_dialog.visible = false		
 		
-		//turn off loading hider
-		elements.gfx_curtain_blank.visible = false
+		//turn off loading hider (happens in onShow of AC_R__login)
+//		elements.gfx_curtain_blank.visible = false
 		
 		//tack on listener to my bean
 	//	var listener = new Packages.java.beans.PropertyChangeListener({propertyChange:popUp})
 	//	elements.bean_main.addPropertyChangeListener('dividerLocation',listener)
 		
-		/*
-		//maximize workflow and show splash/login screen
-		if (solutionPrefs.access && solutionPrefs.access.accessControl) {	
-			//load main window
-			if (elements.tab_content_C.tabIndex > 0) {
-				elements.tab_content_C.removeAllTabs()
-			}
-			elements.tab_content_C.addTab(forms.AC_R__login,'')
-			elements.tab_content_C.tabIndex = 1
-			
-			//re-size screen if too small
-			if (application.getWindowWidth() < 950 || application.getWindowHeight() < 650) {
-				application.setWindowSize(980,680)
-				application.setWindowLocation(-1,-1)
-			}
-			
-			//go to workflow maximized view
-			globals.DS_space_change('btn_space_7',true)
-		}
-		//else when no access and control, view determined fx_load_forms
-		*/
 		application.updateUI()
-		
-		
-		/*
-		//maximize workflow and show splash/login screen
-			
-			//login
-			if (solutionPrefs.access && solutionPrefs.access.accessControl) {	
-				elements.tab_content_C.addTab(forms.AC_R__login,'')
-			}
-			//splash
-			else {
-				elements.tab_content_C.addTab(forms.AC_R__login,'')
-			}
-			elements.tab_content_C.tabIndex = 1
-			
-			//re-size screen if too small
-			if (application.getWindowWidth() < 950 || application.getWindowHeight() < 650) {
-				application.setWindowSize(980,680)
-				application.setWindowLocation(-1,-1)
-			}
-			
-			//go to workflow maximized view
-			globals.DS_space_change('btn_space_7',true)
-		
-		application.updateUI()
-		*/
 	}
 }
 //run startup method specified in meta data for web client (for sutra cms)
