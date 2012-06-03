@@ -1231,6 +1231,7 @@ if (oArg.syntax)
 	var oSyntax = new Object();
 	oSyntax.description = "View information used by Data Sutra."
 	oSyntax.syntax = new Array();
+	oSyntax.syntax.push('sutra <i>sitemap</i></b> (View the sitemap for navigation items web-client configured)');
 	oSyntax.syntax.push('sutra <i>sol</i></b> (View the solutionPrefs object that stores all non-navigation meta-data)');
 	oSyntax.syntax.push('sutra <i>nav</i></b> (View the navigationPrefs object with all navigation and action meta-data)');
 	oSyntax.syntax.push('sutra <i>thisNav</i></b> (View the navigationPrefs node for the currently displayed form)');
@@ -1243,6 +1244,10 @@ if (oArg.syntax)
 }
 
 switch (oArg.arg) {
+	case 'sitemap':
+		globals.consoleInput = 'view navigationPrefs.siteMap';
+		processInput(true);
+		break
 	case 'sol':
 		globals.consoleInput = 'view solutionPrefs';
 		processInput(true);
