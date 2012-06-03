@@ -320,6 +320,7 @@ else {
 	elements.fld_misc.visible = true
 }
 
-
+//turn off loading hider
+forms.DATASUTRA_0F_solution.elements.gfx_curtain_blank.visible = false
 
 }
