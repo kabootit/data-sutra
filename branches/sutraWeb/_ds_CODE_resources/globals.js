@@ -1166,12 +1166,13 @@ function TRIGGER_navigation_filter_update(forceRefresh,itemID) {
  * @param	{String}	[itemID] The navigation item to jump to.
  * @param	{Boolean}	[setFoundset] Modify the foundset on the new navigation item.
  * @param	{JSFoundset|Number[]}	[useFoundset] Foundset or array of primary keys to restore on the destination form.
+ * @param	{Number}	[idNavigationItem] The pk for the navigation item to jump to. (will override itemID)
  *
  * @returns	{Boolean}	Success of loading the foundset requested.
  * 
  * @properties={typeid:24,uuid:"e58b6503-e021-452d-b2b1-075c79e44ddd"}
  */
-function TRIGGER_navigation_set(itemID, setFoundset, useFoundset) {
+function TRIGGER_navigation_set(itemID, setFoundset, useFoundset, idNavigationItem) {
 //TODO: when navitem filters on, record will not be preserved when new records loaded in
 	
 	//solutionPrefs defined and frameworks not in a locked status
@@ -1180,31 +1181,40 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset) {
 		var itemID = arguments[0]
 		var setFoundset = arguments[1]
 		var useFoundset = arguments[2]
-	
-		//loop through all available items, finding everything with this registry
-		var navItemID = new Array()
-		for (var i in navigationPrefs.byNavItemID) {
-			if (navigationPrefs.byNavItemID[i] && navigationPrefs.byNavItemID[i].navigationItem.itemId == itemID) {
-				navItemID.push(i)
+		var idNavigationItem = arguments[3]
+		
+		//navigate by registry
+		if (!idNavigationItem) {
+			//loop through all available items, finding everything with this registry
+			var navItemID = new Array()
+			for (var i in navigationPrefs.byNavItemID) {
+				if (navigationPrefs.byNavItemID[i] && navigationPrefs.byNavItemID[i].navigationItem.itemId == itemID) {
+					navItemID.push(i)
+				}
+			}
+		
+			//try to find navigation item from selected set
+			for (var i = 0; i < navItemID.length; i++) {
+				if (navigationPrefs.byNavItemID[navItemID[i]].navigationItem.idNavigation == globals.DATASUTRA_navigation_set) {
+					var found = true
+					break
+				}
+			}
+			
+			//prefer navigation item from selected set
+			if (found) {
+				var navItem = navigationPrefs.byNavItemID[navItemID[i]].navigationItem
+			}
+			//take first navigation item with passed registry
+			else if (navItemID.length) {
+				var navItem = navigationPrefs.byNavItemID[navItemID[0]].navigationItem
 			}
 		}
-	
-		//try to find navigation item from selected set
-		for (var i = 0; i < navItemID.length; i++) {
-			if (navigationPrefs.byNavItemID[navItemID[i]].navigationItem.idNavigation == globals.DATASUTRA_navigation_set) {
-				var found = true
-				break
-			}
+		//navigate by id_navigation_item
+		else {
+			var navItem = navigationPrefs.byNavItemID[idNavigationItem].navigationItem
 		}
-	
-		//prefer navigaion item from selected set
-		if (found) {
-			var navItem = navigationPrefs.byNavItemID[navItemID[i]].navigationItem
-		}
-		//take first navigation item with passed registry
-		else if (navItemID.length) {
-			var navItem = navigationPrefs.byNavItemID[navItemID[0]].navigationItem
-		}
+		
 	
 		if (navItem) {
 			var navSetID = navItem.idNavigation
