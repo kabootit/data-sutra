@@ -81,43 +81,6 @@ function FLEX(event) {
 }
 
 /**
- * Perform the element default action.
- *
- * @param {JSEvent} event the event that triggered the action
- *
- * @properties={typeid:24,uuid:"885482A0-CB2E-4C1D-AAE5-9DB798D4E653"}
- */
-function GRAB(event) {
-	//grab whatever is loaded on the main form
-	if (application.getApplicationType() == APPLICATION_TYPES.WEB_CLIENT) {
-		forms.DATASUTRA_WEB_0F__workflow.elements.tab_workflow.setLeftForm(forms.CRM2_0F_companies)
-	}
-	else {
-		//navigation
-		forms.DATASUTRA_WEB_0F__list.elements.tab_list.setLeftForm(forms.DATASUTRA_0F_solution.elements.tab_content_A.getTabFormNameAt(forms.DATASUTRA_0F_solution.elements.tab_content_A.tabIndex))
-		
-		//ul
-		forms.DATASUTRA_WEB_0F__list.elements.tab_list.setRightForm(forms.DATASUTRA_0F_solution.elements.tab_content_B.getTabFormNameAt(forms.DATASUTRA_0F_solution.elements.tab_content_B.tabIndex))
-		
-		//workflow
-		forms.DATASUTRA_WEB_0F__workflow.elements.tab_workflow.setLeftForm(forms.DATASUTRA_0F_solution.elements.tab_content_C.getTabFormNameAt(forms.DATASUTRA_0F_solution.elements.tab_content_C.tabIndex))
-		
-		//show sidebar
-		if (solutionPrefs.screenAttrib.sidebar.status) {
-			forms.DATASUTRA_WEB_0F__workflow.elements.tab_workflow.setRightForm(forms.DATASUTRA__sidebar.elements.tab_content.getTabNameAt(forms.DATASUTRA__sidebar.elements.tab_content.tabIndex))
-			
-			forms.DATASUTRA_WEB_0F__workflow.elements.tab_workflow.dividerLocation = forms.DATASUTRA_WEB_0F__workflow.elements.tab_workflow.getWidth() - solutionPrefs.screenAttrib.sidebar.currentSize
-		}
-		//hide sidebar
-		else {
-			forms.DATASUTRA_WEB_0F__workflow.elements.tab_workflow.setRightForm(forms.CODE__blank)
-			
-			forms.DATASUTRA_WEB_0F__workflow.elements.tab_workflow.dividerLocation = forms.DATASUTRA_WEB_0F__workflow.elements.tab_workflow.getWidth()
-		}
-	}
-}
-
-/**
  * @properties={typeid:24,uuid:"5F7AFB52-69FC-473C-AB8E-99D0408EFA16"}
  */
 function CURTAIN_action() {

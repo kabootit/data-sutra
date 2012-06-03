@@ -3,10 +3,6 @@
  * @properties={typeid:24,uuid:"3D120E24-1DA1-43FD-AAE8-305E57C35798"}
  */
 function FORM_on_load() {
-	//set up split bean
-	elements.split_tool_find.continuousLayout = true
-	elements.split_tool_find.transparent = true
-	
 	//turn trial mode off
 	forms.DATASUTRA_0F_solution__header__toolbar.elements.lbl_trial_mode.visible = false
 }
@@ -45,6 +41,11 @@ function SIDEBAR_expand() {
  */
 function FORM_on_show(firstShow, event) {
 	if (firstShow) {
+		//set up split bean
+		elements.split_tool_find.continuousLayout = true
+		elements.split_tool_find.transparent = true
+		elements.split_tool_find.resizeWeight = 1
+		elements.split_tool_find.dividerSize = 0
 		elements.split_tool_find.dividerLocation = application.getWindowWidth(null) - 580
 	}
 }
