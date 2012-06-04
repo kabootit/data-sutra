@@ -1,4 +1,11 @@
 /**
+ * @type {Array}
+ *
+ * @properties={typeid:35,uuid:"010DF121-E0C9-478C-B54D-B818ABF11B8E",variableType:-4}
+ */
+var DATASUTRA_router = new Array();
+
+/**
  * @type {String}
  *
  * @properties={typeid:35,uuid:"78c3311e-2401-4b46-afbf-1f66d20c2d1b"}
@@ -5078,64 +5085,143 @@ function DATASUTRA_open(skipFontFix) {
 /**
  * URL driven navigation
  * 
+ * @param {String}	p1		First argument passed in
+ * @param {Object}	params	Object of all arguments
+ * @param {Number}	itemID	Specified ID to go to
+ * 
  * @properties={typeid:24,uuid:"AF8DE8BA-7503-462B-B4B0-45B9A2DE7921"}
  * 
  */
-function DS_router() {
-	// TODO: go to login page if not logged in
-	if (false) {
-		//show me login page
+function DS_router(p1,params,itemID) {
+	var delay = 500	//number of ms to wait before replacing state
+	var routerCall = 'window.parent.History.replaceState'
+	
+	function getURL(alt) {
+		var urlString = '/ds/'
+		
+		// page specified
+		if (alt) {
+			urlString += alt
+		}
+		// we have a url, build it up
+		else if (url) {
+			if (url.set) {
+				urlString += url.set
+			}
+			if (url.item) {
+				urlString += '/' + url.item
+			}
+		}
+		// generic error
+		else {
+			urlString += 'error'
+		}
+		
+		return urlString
+	}
+	
+	function setError(code, message) {
+		forms.DATASUTRA_WEB__error._errorCode = code || 'ID-10-T'
+		forms.DATASUTRA_WEB__error._errorMessage = message || 'You\'re an idiot. :)'
 	}
 	
 	// url object logic
 	var url = {}
-	for ( var item in arguments[1] ) {
+	for ( var item in params ) {
 		if ( item == "argument" ) {
-			url.set = arguments[1][item]  // 1st slot is navigation set
+			url.set = params[item]  // 1st slot is navigation set
 		}
 		else if ( item == "p1" ) {
-			url.item = arguments[1][item] // 2nd slot is navigation item
+			url.item = params[item] // 2nd slot is navigation item
 		}
 		else if ( 1!=1 ) {
 			// additional slots (p2, p3, etc)
 		}
 	}
 	
-	// get nav object mapping
-	var nav = navigationPrefs.siteMap
+	// log this router request
+	globals.DATASUTRA_router.push({
+				path : url,
+				request : application.getUUID().toString()
+			})
 	
-	// TODO: add object to navigation object (nav set > nav item > nav registry/id/details)
-//	var nav = 	{ "crm" :
-//					{ "customer"	: "1118",
-//					"contacts"		: "1119",
-//					"orders"		: "1120",
-//					"products"		: "1121"
-//				},
-//				"templates" :
-//					{ "blank"		: "299",
-//					"yellow"		: "304",
-//					"green"			: "306"
-//					}
-//				}
-	
-	var navItemRegistry = nav[url.set][url.item].registry
-	// error checking
-	if ( !navItemRegistry ) {
-		// TODO: return error code/page/whatever (something useful)
-		return  
+	// go to login form if not already logged in
+	if (!application.__parent__.solutionPrefs) {
+		plugins.WebClientUtils.executeClientSideJS(routerCall + '(null,"Data Sutra: Login","' + getURL('login') + '");')
+//		forms.DATASUTRA.controller.show()
+		return
 	}
 	
-	// TODO: update current history with correct data
+	// check for special status codes
+	if (p1 == 'DSLogin') {
+		forms.DATASUTRA_WEB_0F.controller.show()
+		return
+	}
+	else if (p1 == 'DSHomeCall') {
+		itemID = navigationPrefs.byNavSetID[navigationPrefs.byNavSetID.defaultSet].itemsByOrder[0].navigationItem.idNavigationItem
+	}
+	else if (p1 == 'DSError_NoURL') {
+		setError('404','No page requested')
+		plugins.WebClientUtils.executeClientSideJS(routerCall + '(null,"Data Sutra: Error page: No URL","' + getURL('error') + '");')
+		return
+	}
+	// potentially valid url passed in; try to navigate here
+	else if (!itemID) {
+		// get nav object mapping
+		var nav = navigationPrefs.siteMap
+		
+		// navigate through history
+		if (p1 == 'DSHistory') {
+			//TODO: ability to specify which history item to go to
+			url = globals.DATASUTRA_router[globals.DATASUTRA_router.length - 2].path
+		}
+		
+		// particular item specified
+		if (url.set && url.item) {
+			// this item exists
+			if (nav[url.set][url.item]) {
+				itemID = nav[url.set][url.item].navItemID
+			}
+			else {
+				setError('13','Requested navigation item does not exist')
+				plugins.WebClientUtils.executeClientSideJS(routerCall + '(null,"Data Sutra: Error page","' + getURL('error') + '");')
+				return
+			}
+		}
+		// only nav set specified, grab first navigation item
+		else if (url.set && nav[url.set]) {
+			// don't really need a loop, but need to grab an element inside the set referenced
+			for (var i in nav[url.set]) {
+				itemID = navigationPrefs.byNavSetID[nav[url.set][i].details.navigationItem.idNavigation].itemsByOrder[0].navigationItem.idNavigationItem
+				break
+			}
+		}
+		// some sort of error, go to generic error page
+		else {
+			setError('14','Requested navigation set does not exist')
+			plugins.WebClientUtils.executeClientSideJS(routerCall + '(null,"Data Sutra: Error page","' + getURL('error') + '");')
+			return
+		}
+	}
 	
-	// load in correct state of requested resource
-	globals.TRIGGER_navigation_set(navItemRegistry)
-	
-	
-//	// load workflow form and associated states
-//	NAV_workflow_load(navItemID)
-//	
-//	// update nav
-//	// TODO: go to correct nav set, nav item, set nav scroll
-//	forms.NAV__navigation_tree.LIST_rescroll(navItemID); //TODO: select correct row
-	
+	// everything good, go there
+	if ( itemID ) {
+		// if actual url string matches generated, navigate; otherwise redirect
+		
+		// rewrite name of this page
+//		plugins.WebClientUtils.executeClientSideJS('setTimeout(function(){DS_universalList.scrollReset()},2000);')
+//		setTimeout(function(){DS_universalList.scrollHijack(newVal)},1500);
+
+//		plugins.WebClientUtils.executeClientSideJS('setTimeout(function(){' + routerCall + '(null,"' + navigationPrefs.byNavItemID[itemID]._about_ + '","' + getURL() + '")},2000);')
+		plugins.WebClientUtils.executeClientSideJS('window.parent.routerDelay(null,"' + navigationPrefs.byNavItemID[itemID]._about_ + '","' + getURL() + '",' + delay + ');')
+		
+		// load in correct state of requested resource
+		globals.TRIGGER_navigation_set(null,null,null,itemID)
+	}
+	// something happened, error out
+	else {
+		setError('404','No page found at requested URL')
+		plugins.WebClientUtils.executeClientSideJS(routerCall + '(null,"Data Sutra: Error page","' + getURL('error') + '");')
+		return  
+	}
 }
