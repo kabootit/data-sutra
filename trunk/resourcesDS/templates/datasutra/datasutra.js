@@ -166,3 +166,9 @@ var DS_universalList = {
     };
  
 })();
+
+
+//Give better resize indicators for all splitpanes
+// (function(){
+// 	$('head').append('<link rel="stylesheet" href="../servoy-webclient/templates/datasutra/servoy_web_client_bottom.css type="text/css" />');
+// })();

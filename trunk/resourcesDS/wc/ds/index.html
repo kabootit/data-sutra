@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Web Playground</title>
+<title>Data Sutra</title>
 <meta http-equiv="Content-Type" content="text/html;">
 <script type="text/javascript" src="/ds/js/native.history.js"></script>
 </head>
@@ -30,7 +30,11 @@
 	})(window);
 
 
-  	function router (data) {
+	function routerDelay(p1,p2,p3,p4) {
+		setTimeout(function(){History.replaceState(p1,p2,p3)},p4);
+	}
+
+  	function router(data) {
 		// handle params
 		var append 		= "";
 		if ( data ) {
@@ -51,11 +55,23 @@
 				}
 			}
 		}
-	
+		
+		// login url requested, specify what to do
+		if (append == 'login/') {
+			append = 'DSLogin/';
+		}
+		// check that append has a value, otherwise show error page
+		else if (!append) {
+			append = 'DSError_NoURL/';
+		}
+		
+		// temporary logging
+		// console.log(History.getState().data);
+		
 		// swc iframe setup
 		var iframeHeaderCell = document.getElementById('sutra-cms');
 		iframeHeaderCell.innerHTML = "";
-		var dynamicURL = "http://localhost:8080/servoy-webclient/ss/s/__DATASUTRA__/m/DS_router/a/" + append;
+		var dynamicURL = "/servoy-webclient/ss/s/__DATASUTRA__/m/DS_router/a/" + append;
 		var iframeHeader = document.createElement('IFRAME');
 		iframeHeader.id = 'iframeHeader';
 		iframeHeader.src = dynamicURL ;

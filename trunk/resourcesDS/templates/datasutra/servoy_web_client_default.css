@@ -489,17 +489,3 @@ div.wicket-modal div.w_content {
 	-o-box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.3);
 	box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.3);
 }
-
-
-/* split pane customizations */
-.yui-resize {
-	background-color: #A1B0CF;
-}
-
-.yui-resize-handle-b {
-	cursor: row-resize;
-}
-
-.yui-resize-handle-r {
-	cursor: col-resize;
-}
