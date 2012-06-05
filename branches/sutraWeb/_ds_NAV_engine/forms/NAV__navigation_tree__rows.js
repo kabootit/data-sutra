@@ -1,7 +1,7 @@
 /**
  * @properties={typeid:35,uuid:"90C2111C-4A1E-4642-B0CC-3E830147BBD5",variableType:-4}
  */
-var _variableWC;
+var _variableWC = new Object();
 
 /**
  * @type {Number}
@@ -404,6 +404,11 @@ function LIST_redraw__smartclient(event,itemID,reScroll,skipLoadForms,favoriteMo
  */
 function LIST_redraw__webclient(event,itemID,reScroll,skipLoadForms,favoriteMode,selected) {
 	if (application.__parent__.solutionPrefs && application.__parent__.navigationPrefs) {
+		//don't run again
+		if (_variableWC.pause) {
+			return
+		}
+		
 		//reset object used to store all info for part 2
 		_variableWC = {
 				itemID: itemID,
@@ -419,6 +424,12 @@ function LIST_redraw__webclient(event,itemID,reScroll,skipLoadForms,favoriteMode
 			var itemDetails = forms.NAV__navigation_tree._rows[selected]
 			
 			_variableWC.itemID = itemDetails.navItemID
+			
+			//call router to switch entire page
+			if (true) {
+				globals.DS_router(null,null,_variableWC.itemID)
+				return
+			}
 			
 			//this is favorites
 			if (itemDetails.datasource) {
@@ -474,6 +485,10 @@ function LIST_redraw__webclient__continue(scrollTop) {
 	
 	//go to selected form
 	if (!_variableWC.skipLoadForms) {
+//		//set flag to avoid infinite loop
+//		_variableWC.pause = true
+//		globals.DS_router(null,null,_variableWC.itemID)
+//		delete _variableWC.pause
 		globals.NAV_workflow_load(_variableWC.itemID)
 		
 		//make sure we're on the right record
