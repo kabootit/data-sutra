@@ -5093,7 +5093,10 @@ function DATASUTRA_open(skipFontFix) {
  * 
  */
 function DS_router(p1,params,itemID) {
-	var delay = 500	//number of ms to wait before replacing state
+	//number of ms to wait before replacing state
+	var delay = 0
+	
+	//
 	var routerCall = 'window.parent.History.replaceState'
 	
 	function getURL(alt) {
@@ -5154,7 +5157,11 @@ function DS_router(p1,params,itemID) {
 	
 	// check for special status codes
 	if (p1 == 'DSLogin') {
-		forms.DATASUTRA_WEB_0F.controller.show()
+		//show login
+		forms.AC_R__login_WEB__nopassword.controller.show()
+		
+		//force centering
+		forms.AC_R__login_WEB__nopassword.FORM_on_show()
 		return
 	}
 	else if (p1 == 'DSHomeCall') {
@@ -5165,8 +5172,21 @@ function DS_router(p1,params,itemID) {
 		plugins.WebClientUtils.executeClientSideJS(routerCall + '(null,"Data Sutra: Error page: No URL","' + getURL('error') + '");')
 		return
 	}
+	// called internally, replace url but don't navigate
+	else if (itemID) {
+		// web client paths correctly configured
+		if (navigationPrefs.byNavItemID[itemID].path) {
+			plugins.WebClientUtils.executeClientSideJS('window.parent.routerDelay(null,"' + navigationPrefs.byNavItemID[itemID]._about_ + '","' + getURL(navigationPrefs.byNavItemID[itemID].path) + '",' + delay + ');')
+		}
+		// path not set up correctly
+		else {
+			setError('15','Requested navigation item does not have a webclient path set')
+			plugins.WebClientUtils.executeClientSideJS(routerCall + '(null,"Data Sutra: Error page","' + getURL('error') + '");')
+		}
+		return
+	}
 	// potentially valid url passed in; try to navigate here
-	else if (!itemID) {
+	else {
 		// get nav object mapping
 		var nav = navigationPrefs.siteMap
 		
@@ -5213,7 +5233,7 @@ function DS_router(p1,params,itemID) {
 //		setTimeout(function(){DS_universalList.scrollHijack(newVal)},1500);
 
 //		plugins.WebClientUtils.executeClientSideJS('setTimeout(function(){' + routerCall + '(null,"' + navigationPrefs.byNavItemID[itemID]._about_ + '","' + getURL() + '")},2000);')
-		plugins.WebClientUtils.executeClientSideJS('window.parent.routerDelay(null,"' + navigationPrefs.byNavItemID[itemID]._about_ + '","' + getURL() + '",' + delay + ');')
+//		plugins.WebClientUtils.executeClientSideJS('window.parent.routerDelay(null,"' + navigationPrefs.byNavItemID[itemID]._about_ + '","' + getURL() + '",' + delay + ');')
 		
 		// load in correct state of requested resource
 		globals.TRIGGER_navigation_set(null,null,null,itemID)
