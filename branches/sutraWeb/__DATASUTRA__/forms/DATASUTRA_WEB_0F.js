@@ -49,6 +49,9 @@ function FORM_on_show(firstShow, event) {
 		elements.tab_wrapper.continuousLayout = true
 		elements.tab_wrapper.bgcolor = '#d1d7e2'
 		elements.tab_wrapper.resizeWeight = 1
+		
+		//go to login form
+		forms.AC_R__login_WEB__nopassword.controller.show()
 	}
 }
 
