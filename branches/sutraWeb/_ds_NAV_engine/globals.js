@@ -3657,6 +3657,11 @@ else {
 //TODO: (not)	NAV ITEM set/name information
 navItemObj._about_ = '[' + record[relationName].nav_name + '] ' + record.item_name
 
+//TODO: (not)	NAV ITEM webclient url path
+if (record[relationName].url_path && record.url_path) {
+	navItemObj.path = record[relationName].url_path + '/' + record.url_path
+}
+
 //TODO: (not)	SPACE information
 	//spaces configured
 	if (record.space_available) {
