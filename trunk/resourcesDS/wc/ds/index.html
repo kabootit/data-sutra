@@ -28,12 +28,19 @@
 	    });
 
 	})(window);
-
-
-	function routerDelay(p1,p2,p3,p4) {
-		setTimeout(function(){History.replaceState(p1,p2,p3)},p4);
+	
+	
+	// center login form
+	function centerForm(formName) {
+		window.frames['iframeHeader'].window.centerForm(formName)
 	}
-
+	
+	
+	// delay running of router until webclient form loaded in
+	function routerDelay(p1,p2,p3,p4) {
+		setTimeout(function(){History.pushState(p1,p2,p3)},p4);
+	}
+	
   	function router(data) {
 		// handle params
 		var append 		= "";

@@ -48,6 +48,27 @@ var DS_universalList = {
 					}
 			};
 
+//	Set flag that running with the router
+function routerMode() {
+	// TODO: alert the webclient that it should use router to change nav items
+}
+
+
+//	Center the login form
+function centerForm(formName) {
+	setTimeout(function(){
+		var selector = $("#form_" + formName);
+		
+		if (selector.length) {
+			selector.css({width: '50%', margin: '0px auto'});
+			console.log('CENTERED');
+		}
+		else {
+			console.log('CENTER: Nothing found here: ' + formName);
+		}
+	},100)
+}
+
 //	Attach listener to form name variable change
 (function() {
 	//allow me to watch for change state
