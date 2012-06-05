@@ -158,7 +158,7 @@ label.bold, label.whitebold {
 	font-weight: bold;
 }
 
-label.button {
+label.button, label.button_new {
 	font-weight: bold;
 	font-size: 10pt;
 	text-align: center; 

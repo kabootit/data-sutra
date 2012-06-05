@@ -148,6 +148,17 @@ label.button {
 	color: #323A4B;
 }
 
+label.button_new {
+	font-weight: bold;
+	/*font-size: 10pt;*/
+	text-align: center; 
+	color: #323A4B;
+	
+	border-radius: 3px;
+	border: 1px solid #5D5D5D;
+	background-image: linear-gradient(top, #F6F6F7, #A8A8A8);
+}
+
 label.developerbutton {
 	color: #333333;
 	font-family: TrebuchetMS;
