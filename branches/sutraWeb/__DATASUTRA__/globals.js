@@ -5151,17 +5151,16 @@ function DS_router(p1,params,itemID) {
 	// go to login form if not already logged in
 	if (!application.__parent__.solutionPrefs) {
 		plugins.WebClientUtils.executeClientSideJS(routerCall + '(null,"Data Sutra: Login","' + getURL('login') + '");')
-//		forms.DATASUTRA.controller.show()
 		return
 	}
 	
 	// check for special status codes
 	if (p1 == 'DSLogin') {
 		//show login
-		forms.AC_R__login_WEB__nopassword.controller.show()
+		forms.AC_R__login_WEB.controller.show()
 		
 		//force centering
-		forms.AC_R__login_WEB__nopassword.FORM_on_show()
+		forms.AC_R__login_WEB.FORM_on_show()
 		return
 	}
 	else if (p1 == 'DSHomeCall') {
