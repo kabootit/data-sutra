@@ -130,7 +130,7 @@ function RESET(event) {
  */
 function FORM_on_show(firstShow, event) {
 	if (firstShow) {
-		plugins.WebClientUtils.setExtraCssClass(elements.var_dialog, 'dialogDS');
+		plugins.WebClientUtils.setExtraCssClass(elements.var_dialog, 'dialogDS')
 	}
 	
 	// attach style to form to center it
