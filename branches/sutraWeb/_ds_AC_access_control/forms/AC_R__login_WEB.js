@@ -137,3 +137,21 @@ function FORM_on_show(firstShow, event) {
 	// $("#form_AC_R__login_WEB").css({width: '50%', margin: '0px auto'});
 	plugins.WebClientUtils.executeClientSideJS('centerForm("' + controller.getName() + '");')
 }
+
+/**
+ * Perform the element default action.
+ *
+ * @param {JSEvent} event the event that triggered the action
+ *
+ * @properties={typeid:24,uuid:"86418204-CDC1-403C-81DC-36A19F06F72A"}
+ */
+function DEMO(event) {
+	//continue method with a/c off
+	forms.AC_R__login_1F__nopassword.login_disabled = 1
+	forms.DATASUTRA_WEB_0F.FORM_setup('DATASUTRA_WEB_0F','DATASUTRA_0F_solution__blank_4')
+	forms.AC_R__login_1F__nopassword.ACTION_continue()
+	forms.AC_R__login_1F__nopassword.login_disabled = 0
+	
+	//go back to main screen form
+	history.go(-2)
+}

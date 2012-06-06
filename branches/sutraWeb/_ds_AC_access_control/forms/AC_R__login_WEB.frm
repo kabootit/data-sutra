@@ -1,7 +1,7 @@
 items:[
 {
 horizontalAlignment:2,
-location:"130,312",
+location:"130,342",
 size:"150,25",
 styleClass:"button",
 text:"Forgot Your Password?",
@@ -20,11 +20,23 @@ verticalAlignment:1
 {
 dataProviderID:"_userEmail",
 fontType:"Helvetica Neue,0,18",
-location:"130,360",
+location:"130,390",
 name:"var_userEmail",
 size:"200,30",
 typeid:4,
 uuid:"22299A51-C213-4B1B-B639-79D5DD003DB8"
+},
+{
+location:"260,285",
+onActionMethodID:"86418204-CDC1-403C-81DC-36A19F06F72A",
+rolloverCursor:12,
+showClick:false,
+showFocus:false,
+size:"70,30",
+styleClass:"button_new",
+text:"Demo!",
+typeid:7,
+uuid:"27C2EC04-0655-4DA6-B583-ED0AB954CBBF"
 },
 {
 dataProviderID:"_dialog",
@@ -51,7 +63,7 @@ typeid:7,
 uuid:"6FD1ED0C-5B3C-432F-81AA-A19CFFCE62FE"
 },
 {
-location:"150,405",
+location:"150,435",
 onActionMethodID:"ABCDFAF8-CFCB-4AFB-8267-1111535B8547",
 rolloverCursor:12,
 showClick:false,
@@ -63,7 +75,7 @@ typeid:7,
 uuid:"94854514-C968-4703-9FC5-EF8547D25983"
 },
 {
-location:"130,342",
+location:"130,372",
 size:"100,20",
 text:"Email Address",
 transparent:true,

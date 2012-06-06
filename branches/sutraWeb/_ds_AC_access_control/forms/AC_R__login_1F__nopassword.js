@@ -28,7 +28,6 @@ var baseForm = solutionPrefs.config.formNameBase
 var navigationList = 'NAV__navigation_tree'
 var navTabPanel = (solutionPrefs.config.webClient) ? forms.DATASUTRA_WEB_0F__list.elements.tab_list : forms[baseForm].elements.tab_content_A
 
-
 //reset loginDisabled flag so that previews will show misc and qotd areas
 delete this.loginDisabled
 
