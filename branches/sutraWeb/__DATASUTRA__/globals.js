@@ -1182,7 +1182,6 @@ for (var i = totalRecs; i < 100000; i++) {
  * @properties={typeid:24,uuid:"48174bfa-d0a4-4e64-935e-b4b73feffa12"}
  */
 function DS_actions(input) {
-	
 	//check license
 	forms.NSTL_0F_solution__license.ACTION_validate(true,true)
 	
@@ -1539,7 +1538,14 @@ function DS_actions(input) {
 			}
 			//check for non-standard prefpane logout
 			else if (itemClicked == 'Logout') {
-				security.logout(application.getSolutionName(),'DATASUTRA_open','true')
+				//webclient, redirect url
+				if (solutionPrefs.config.webClient) {
+					application.showURL('/ds/login','_top')
+					security.logout()
+				}
+				else {
+					security.logout(application.getSolutionName(),'DATASUTRA_open','true')
+				}
 			}
 			//check for non-standard prefpane lock session
 			else if (itemClicked == 'Lock session') {
@@ -1858,7 +1864,14 @@ function DS_actions(input) {
 					
 					//entering a preference for the first time
 					if (!solutionPrefs.config.prefs.preferenceMode) {
-						forms[baseForm].elements.sheetz.visible = false
+						//web client
+						if (solutionPrefs.config.webClient) {
+							forms[baseForm].elements.tab_toolbar_popdown.visible = false
+						}
+						//smart client
+						else {
+							forms[baseForm].elements.sheetz.visible = false
+						}
 						
 						//add preference flag
 						solutionPrefs.config.prefs.preferenceMode = true
@@ -1866,8 +1879,16 @@ function DS_actions(input) {
 						//save current toolbar tab
 						solutionPrefs.config.prefs.toolbarTabSelected = currentToolbar
 						
-						//save current sidebar tab
-						solutionPrefs.config.prefs.sidebarTabSelected = forms[baseForm].elements.tab_content_D.tabIndex
+						//web client
+						if (solutionPrefs.config.webClient) {
+							//save current sidebar tab
+							solutionPrefs.config.prefs.sidebarTabSelected = forms.DATASUTRA__sidebar.elements.tab_content.tabIndex
+						}
+						//smart client
+						else {
+							//save current sidebar tab
+							solutionPrefs.config.prefs.sidebarTabSelected = forms[baseForm].elements.tab_content_D.tabIndex
+						}
 						
 						//if sidebar showing, save it and turn off
 						if (solutionPrefs.screenAttrib.sidebar.status) {
@@ -5088,11 +5109,12 @@ function DATASUTRA_open(skipFontFix) {
  * @param {String}	p1		First argument passed in
  * @param {Object}	params	Object of all arguments
  * @param {Number}	itemID	Specified ID to go to
+ * @param {Boolean}	logout	Log out requested, redirect url
  * 
  * @properties={typeid:24,uuid:"AF8DE8BA-7503-462B-B4B0-45B9A2DE7921"}
  * 
  */
-function DS_router(p1,params,itemID) {
+function DS_router(p1,params,itemID,logout) {
 	//number of ms to wait before replacing state
 	var delay = 0
 	
@@ -5148,8 +5170,13 @@ function DS_router(p1,params,itemID) {
 				request : application.getUUID().toString()
 			})
 	
+	// if logout, redirect url
+	if (logout) {
+		plugins.WebClientUtils.executeClientSideJS('window.parent.routerDelay(null,"Data Sutra: Login","' + getURL('login') + '",0);')
+	}
+	
 	// go to login form if not already logged in
-	if (!application.__parent__.solutionPrefs) {
+	if (!application.__parent__.solutionPrefs || !application.__parent__.navigationPrefs) {
 		plugins.WebClientUtils.executeClientSideJS(routerCall + '(null,"Data Sutra: Login","' + getURL('login') + '");')
 		return
 	}
