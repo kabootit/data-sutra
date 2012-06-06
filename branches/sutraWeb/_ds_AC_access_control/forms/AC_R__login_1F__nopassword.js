@@ -54,7 +54,7 @@ if (application.__parent__.navigationPrefs) {
 	}
 	
 	//loop through all items in navPrefs and put each form in the main screen except for navigation preference items
-	if (solutionPrefs.config.prefs.formPreload) {
+	if (solutionPrefs.config.prefs.formPreload && !solutionPrefs.config.webClient) {
 		
 		//we are using the transparent way
 		if (solutionPrefs.config.prefs.formPreloadGray) {
@@ -162,7 +162,7 @@ if (solutionPrefs.screenAttrib.sidebar.status) {
 	globals.DS_sidebar_toggle(true,null,true)
 }
 
-if (solutionPrefs.config.prefs.formPreload) {
+if (solutionPrefs.config.prefs.formPreload && !solutionPrefs.config.webClient) {
 	//we are using the transparent way
 	if (solutionPrefs.config.prefs.formPreloadGray) {
 		globals.TRIGGER_progressbar_stop()
@@ -205,6 +205,6 @@ forms[baseForm + '__header'].elements.btn_pref.visible = true
 forms[baseForm + '__header'].elements.btn_fw_action.visible = true
 forms[baseForm + '__footer'].elements.lbl_status.visible = true
 
-
+//globals.DS_router('DSHistory')
 
 }

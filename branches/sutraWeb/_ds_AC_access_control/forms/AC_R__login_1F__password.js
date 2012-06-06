@@ -155,11 +155,15 @@ else {
 }
 
 /**
+ * @param {JSEvent} event the event that triggered the action
+ * @param {Function} alert Function that displays alert
  *
  * @properties={typeid:24,uuid:"72e21a43-7e05-4ab7-a8b7-c0d048fd9c8c"}
  * @AllowToRunInFind
+ * 
+ * @return {Boolean} Success of login call
  */
-function LOGIN_user()
+function LOGIN_user(event,alert)
 {
 
 /*
@@ -181,32 +185,47 @@ function LOGIN_user()
  *			  	
  */
 
-if (!globals.AC_login_user && !globals.AC_login_password) {
-	plugins.dialogs.showErrorDialog(
-				"Invalid login", 
-				"You must enter a username and password to log in"
-			)
-	elements.fld_AC_login_user.requestFocus()
+function dialog(title,text) {
+	if (alert) {
+		alert(title,text)
+	}
+	else {
+		plugins.dialogs.showErrorDialog(title,text)
+	}
 }
-else if (!globals.AC_login_user && globals.AC_login_password) {
-	plugins.dialogs.showErrorDialog(
-				"Empty user", 
-				"You must enter a username to log in"
-			)
-	elements.fld_AC_login_user.requestFocus()
+
+//called from this form
+if (event) {
+	if (!globals.AC_login_user && !globals.AC_login_password) {
+		dialog(
+			"Invalid login", 
+			"You must enter a username and password to log in"
+		)
+		elements.fld_AC_login_user.requestFocus()
+	}
+	else if (!globals.AC_login_user && globals.AC_login_password) {
+		dialog(
+			"Empty user", 
+			"You must enter a username to log in"
+		)
+		elements.fld_AC_login_user.requestFocus()
+	}
+	else if (globals.AC_login_user && !globals.AC_login_password) {
+		dialog(
+			"Empty password", 
+			"You must enter a password to log in"
+		)
+		elements.fld_AC_login_password.requestFocus()
+	}
 }
-else if (globals.AC_login_user && !globals.AC_login_password) {
-	plugins.dialogs.showErrorDialog(
-				"Empty password", 
-				"You must enter a password to log in"
-			)
-	elements.fld_AC_login_password.requestFocus()
-}
-else {
+
+// we have enough information to proceed
+if (globals.AC_login_user && globals.AC_login_password) {
 
 	var baseForm = solutionPrefs.config.formNameBase
 	var navigationList = 'NAV__navigation_tree'
-
+	var navTabPanel = (solutionPrefs.config.webClient) ? forms.DATASUTRA_WEB_0F__list.elements.tab_list : forms[baseForm].elements.tab_content_A
+	
 	// // //
 	//		1. validate login
 	// // //
@@ -233,13 +252,13 @@ else {
 
 	//if not one record returned = login error
 	if (dataset.getMaxRowIndex() != 1) {
-		plugins.dialogs.showErrorDialog(
-				"Login error",
-				"Login doesn't exist"
-			)
+		dialog(
+			"Login error",
+			"Login doesn't exist"
+		)
 		globals.AC_login_password = null
 		elements.fld_AC_login_password.requestFocus()
-		return
+		return 'Login doesn\'t exist'
 	}
 
 	// // //
@@ -283,10 +302,10 @@ else {
 		fsUser.loadRecords(dataset.getValue(1,27))
 	}
 	catch (error) {
-		plugins.dialogs.showErrorDialog(
-					"Login error", 
-					"Your account is not fully setup"
-				)
+		dialog(
+			"Login error", 
+			"Your account is not fully setup"
+		)
 		return
 	} 
 
@@ -296,10 +315,10 @@ else {
 
 	//
 	if (accountDisabled) {
-		plugins.dialogs.showErrorDialog(
-					"Account disabled", 
-					"Your login has been disabled."
-				)
+		dialog(
+			"Account disabled", 
+			"Your login has been disabled."
+		)
 		return	
 	}	
 
@@ -323,14 +342,14 @@ else {
 
 		//password expired, quit
 		if (expire <= 0 && !expirationNever) {
-			plugins.dialogs.showErrorDialog(
-						"Login error", 
-						"Your login has expired. Please see administrator."
-					)
+			dialog(
+				"Login error", 
+				"Your login has expired. Please see administrator."
+			)
 			return		
 		}
-		//password will expire in a week, prompt to change
-		else if (expire < 7 && !expirationNever) {
+		//password will expire in a week, prompt to change (only smart client)
+		else if (expire < 7 && !expirationNever && !solutionPrefs.config.webClient) {
 			var changePass = plugins.dialogs.showQuestionDialog(
 						'Password expiring',
 						'Your password will expire in '+expire+' days. Do you want to change it now?',
@@ -349,18 +368,18 @@ else {
 
 	//
 	if (changePassword) {
-		plugins.dialogs.showInfoDialog(
-					"Change password", 
-					"You must change your password."
-				)
+		dialog(
+			"Change password", 
+			"You must change your password."
+		)
 		forms.AC_P_password.FORM_fid(userID)
 
 		//password not changed
 		if (forms.AC_P_password.cancelled) {
-			plugins.dialogs.showErrorDialog(
-						"Login aborted", 
-						"You did not change your password.  Login will not continue."
-					)
+			dialog(
+				"Login aborted", 
+				"You did not change your password.  Login will not continue."
+			)
 			return
 		}
 		//reset requirement to change password at login
@@ -403,10 +422,10 @@ else {
 	}
 	//throw error
 	else {
-		plugins.dialogs.showErrorDialog(
-					"Login error",
-					"You are not a member of any group. Please see administrator."
-				)
+		dialog(
+			"Login error",
+			"You are not a member of any group. Please see administrator."
+		)
 		return
 	}
 
@@ -415,10 +434,10 @@ else {
 	}
 	//if no group selected, break
 	else {
-		plugins.dialogs.showErrorDialog(
-				"Login error", 
-				"You must choose a group in order to login"
-			)
+		dialog(
+			"Login error", 
+			"You must choose a group in order to login"
+		)
 		return
 	}
 
@@ -436,13 +455,12 @@ else {
 		var navSub = dataset.getValue(1,4)
 	}
 	catch (error) {
-		plugins.dialogs.showErrorDialog(
-					"Login error", 
-					"The group you are a member of has an error. Please see administrator."
-				)
+		dialog(
+			"Login error", 
+			"The group you are a member of has an error. Please see administrator."
+		)
 		return
 	} 
-
 
 	//TURN ON BUSY
 	globals.CODE_cursor_busy(true)
@@ -1271,7 +1289,7 @@ else {
 
 
 	//loop through all items in navPrefs and put each form in the main screen except for navigation preference items
-	if (solutionPrefs.config.prefs.formPreload) {
+	if (solutionPrefs.config.prefs.formPreload && !solutionPrefs.config.webClient) {
 		
 		//set flag that preload happening
 		solutionPrefs.config.prefs.formPreloading = true
@@ -1383,12 +1401,22 @@ else {
 		}
 
 		//load navigation list in
-		if (forms[baseForm].elements.tab_content_A.tabIndex > 0) {
-			forms[baseForm].elements.tab_content_A.removeAllTabs()
+		if (solutionPrefs.config.webClient) {
+			
+		}
+		else {
+			if (navTabPanel.tabIndex > 0) {
+				navTabPanel.removeAllTabs()
+			}
 		}
 
-		//use html based approach for navigation item navigation pane
-		forms[baseForm].elements.tab_content_A.addTab(forms[navigationList],'')
+		//use solution model based approach for navigation item navigation pane
+		if (solutionPrefs.config.webClient) {
+			navTabPanel.setLeftForm(forms[navigationList])
+		}
+		else {
+			navTabPanel.addTab(forms[navigationList],'')
+		}
 	}
 
 	// // //
@@ -1398,12 +1426,12 @@ else {
 	solutionPrefs.panel = globals.DS_panel_load(groupID)
 
 
-	if (solutionPrefs.config.prefs.formPreload) {
+	if (solutionPrefs.config.prefs.formPreload && !solutionPrefs.config.webClient) {
 		//we are using the transparent way
 		if (solutionPrefs.config.prefs.formPreloadGray) {
 			globals.TRIGGER_progressbar_set(null,'Finishing up...')
 		}
-
+		
 		globals.TRIGGER_interface_lock(false)
 		
 		//remove flag that preload happening
@@ -1415,11 +1443,11 @@ else {
 	// // //
 	/*
 	//load navigation list in
-	if (forms[baseForm].elements.tab_content_A.tabIndex > 0) {
-		forms[baseForm].elements.tab_content_A.removeTabAt(1)
+	if (navTabPanel.tabIndex > 0) {
+		navTabPanel.removeTabAt(1)
 	}
-	forms[baseForm].elements.tab_content_A.addTab(forms[listForm],'',null,null,null,null)
-	forms[baseForm].elements.tab_content_A.tabIndex = forms[baseForm].elements.tab_content_A.getMaxTabIndex()
+	navTabPanel.addTab(forms[listForm],'',null,null,null,null)
+	navTabPanel.tabIndex = navTabPanel.getMaxTabIndex()
 	*/
 
 	// // //
@@ -1556,6 +1584,9 @@ else {
 	if (designMode) {
 		globals.DEV_mode_toggle()
 	}
+	
+	//got this far, return success
+	return true
 }
 
 
