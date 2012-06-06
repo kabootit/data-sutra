@@ -2659,7 +2659,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 													'',						//text on label
 													i,						//x
 													0,						//y
-													20,						//width
+													23,						//width
 													20						//height
 												)
 					
@@ -2669,9 +2669,9 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 								starField.onRightClick = solutionModel.getGlobalMethod('NAV_universal_list_right_click')
 								starField.anchors = SM_ANCHOR.DEFAULT
 								starField.horizontalAlignment = SM_ALIGNMENT.LEFT
-								starField.styleClass = 'tree'
+								starField.styleClass = 'universallist'
 								starField.borderType = 'EmptyBorder,0,0,0,0'
-								starField.transparent = true
+								starField.transparent = false
 								starField.displaysTags = true
 								starField.rolloverCursor = SM_CURSOR.HAND_CURSOR
 								//commented out because gets stuck on when updating a record
