@@ -22,6 +22,9 @@ function FORM_on_load(event) {
 		solutionPrefs.config.webClient = true
 		solutionPrefs.config.activeSpace = 'standard'
 		
+		//set wc mode (running through router or not)
+		solutionPrefs.config.webClientRouter = globals.DATASUTRA_router_enable
+		
 		FORM_setup(controller.getName(),'DATASUTRA_0F_solution__blank_4')
 		
 		//over ride client properties

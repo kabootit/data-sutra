@@ -1,4 +1,11 @@
 /**
+ * @type {Boolean}
+ *
+ * @properties={typeid:35,uuid:"60B1BF82-3E32-4CD3-ABA4-C2848EF59FA6",variableType:-4}
+ */
+var DATASUTRA_router_enable = false;
+
+/**
  * @type {Array}
  *
  * @properties={typeid:35,uuid:"010DF121-E0C9-478C-B54D-B818ABF11B8E",variableType:-4}
@@ -1538,9 +1545,9 @@ function DS_actions(input) {
 			}
 			//check for non-standard prefpane logout
 			else if (itemClicked == 'Logout') {
-				//webclient, redirect url
-				if (solutionPrefs.config.webClient) {
-					application.showURL('/ds/login','_top')
+				//webclient in router, redirect url
+				if (solutionPrefs.config.webClientRouter) {
+					globals.DS_router(null,null,null,true)
 					security.logout()
 				}
 				else {
@@ -5172,22 +5179,28 @@ function DS_router(p1,params,itemID,logout) {
 	
 	// if logout, redirect url
 	if (logout) {
-		plugins.WebClientUtils.executeClientSideJS('window.parent.routerDelay(null,"Data Sutra: Login","' + getURL('login') + '",0);')
+		application.showURL(getURL('login'),'_top')
 	}
 	
 	// go to login form if not already logged in
-	if (!application.__parent__.solutionPrefs || !application.__parent__.navigationPrefs) {
+	if ((!application.__parent__.solutionPrefs || !application.__parent__.navigationPrefs) && url.set != 'DSLogin') {
 		plugins.WebClientUtils.executeClientSideJS(routerCall + '(null,"Data Sutra: Login","' + getURL('login') + '");')
 		return
 	}
 	
 	// check for special status codes
 	if (p1 == 'DSLogin') {
-		//show login
-		forms.AC_R__login_WEB.controller.show()
-		
-		//force centering
-		forms.AC_R__login_WEB.FORM_on_show()
+		// when logged in already, return to previous form
+		if (application.__parent__.navigationPrefs) {
+			//TODO: use DATASUTRA_router to navigate history stack
+			plugins.WebClientUtils.executeClientSideJS('window.parent.routerDelay(null,"' + navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID]._about_ + '","' + getURL(navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].path) + '",' + delay + ');')
+		}
+		else {
+			//actuall login form shown as result of client starting up
+			
+			//this must be called from the router and therefore we must be running in an iframe
+			globals.DATASUTRA_router_enable = true
+		}
 		return
 	}
 	else if (p1 == 'DSHomeCall') {
@@ -5263,6 +5276,11 @@ function DS_router(p1,params,itemID,logout) {
 		
 		// load in correct state of requested resource
 		globals.TRIGGER_navigation_set(null,null,null,itemID)
+		
+		// make sure on correct top level form
+		if (history.getFormName(history.getCurrentIndex()) != 'DATASUTRA_WEB_0F') {
+			history.go(-1)
+		}
 	}
 	// something happened, error out
 	else {
