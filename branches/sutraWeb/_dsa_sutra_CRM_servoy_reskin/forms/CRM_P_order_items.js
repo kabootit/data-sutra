@@ -9,7 +9,7 @@ function ACTION_done()
 //enaable closing the form
 globals.CODE_hide_form = 1
 
-globals.CODE_form_in_dialog_close()
+globals.CODE_form_in_dialog_close('crmOrderItem')
 }
 
 /**
