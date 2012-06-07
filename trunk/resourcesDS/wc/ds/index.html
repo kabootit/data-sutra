@@ -29,6 +29,22 @@
 
 	})(window);
 	
+	// set up switcheroo for initial 'Loading...' thing
+	(function() {
+		function checkStat() {
+			if (window.frames['iframeHeader'] && window.frames['iframeHeader'].window && window.frames['iframeHeader'].window.document.getElementsByTagName('body')[0].getAttribute('onload') == "javascript:submitform();") {
+				window.frames['iframeHeader'].window.document.getElementById('loading').innerHTML = 'Data Sutra :: Please wait...';
+			}
+			// keep running until changed once
+			else {
+				setTimeout(checkStat,50);
+			}
+		}
+		
+		// start first time
+		setTimeout(checkStat,25);
+	})();
+	
 	
 	// center login form
 	function centerForm(formName) {
