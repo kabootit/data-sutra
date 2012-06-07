@@ -25,6 +25,7 @@ editable:false,
 location:"10,35",
 scrollbars:32,
 size:"180,160",
+styleClass:"noborder",
 typeid:4,
 uuid:"DB1BDBF7-15A5-4FBD-98D6-972F214097E0"
 }
