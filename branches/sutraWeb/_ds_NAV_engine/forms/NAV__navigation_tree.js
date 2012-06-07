@@ -88,7 +88,7 @@ function ACTIONS_list(input) {
  */
 function FORM_on_show(firstShow, event) {
 	if (firstShow && application.__parent__.solutionPrefs && application.__parent__.navigationPrefs) {
-		var navItemID = navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].lastNavItem
+		var navItemID = navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].lastNavItem || navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].itemsByOrder[0].navigationItem.idNavigationItem
 		
 		//recreate list
 		var treeDepth = LIST_generate(navItemID)
@@ -104,7 +104,7 @@ function FORM_on_show(firstShow, event) {
 			
 			//go to selected form; notify load forms routine that this is the first one loaded
 			globals.NAV_workflow_load(
-								navItemID || navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].itemsByOrder[0].navigationItem.idNavigationItem,
+								navItemID,
 								null,
 								null,
 								true
