@@ -5201,7 +5201,10 @@ function DS_router(p1,params,itemID,logout) {
 			plugins.WebClientUtils.executeClientSideJS('window.parent.routerDelay(null,"' + navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID]._about_ + '","' + getURL(navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].path) + '",' + delay + ');')
 		}
 		else {
-			//actuall login form shown as result of client starting up
+			//actual login form shown as result of client starting up first time, this is just to recenter if called subsequent times
+			if (forms.AC_R__login_WEB && forms.AC_R__login_WEB._shown) {
+				forms.AC_R__login_WEB.FORM_on_show()
+			}
 			
 			//this must be called from the router and therefore we must be running in an iframe
 			globals.DATASUTRA_router_enable = true
