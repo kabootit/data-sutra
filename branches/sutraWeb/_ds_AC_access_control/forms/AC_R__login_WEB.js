@@ -26,6 +26,12 @@ var _userPass = null;
  */
 var _userName = null;
 
+/**
+ * @type {Boolean}
+ *
+ * @properties={typeid:35,uuid:"78DF5B61-BBED-40CF-A486-4A85AF584395",variableType:-4}
+ */
+var _shown = false;
 
 /**
  * Perform the element default action.
@@ -131,6 +137,7 @@ function RESET(event) {
 function FORM_on_show(firstShow, event) {
 	if (firstShow) {
 		plugins.WebClientUtils.setExtraCssClass(elements.var_dialog, 'dialogDS')
+		_shown = true
 	}
 	
 	// attach style to form to center it
