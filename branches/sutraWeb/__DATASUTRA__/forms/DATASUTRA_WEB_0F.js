@@ -23,7 +23,7 @@ function FORM_on_load(event) {
 		solutionPrefs.config.activeSpace = 'standard'
 		
 		//set wc mode (running through router or not)
-		solutionPrefs.config.webClientRouter = globals.DATASUTRA_router_enable
+//		solutionPrefs.config.webClientRouter = globals.DATASUTRA_router_enable
 		
 		FORM_setup(controller.getName(),'DATASUTRA_0F_solution__blank_4')
 		
@@ -145,7 +145,6 @@ function FORM_setup(baseForm,prefForm) {
 		
 		//save down the access record created
 		solutionPrefs.clientInfo.logID = accessLog.id_log
-		
 		
 		// //PART VII: load navigation sets
 		//navigation code global
