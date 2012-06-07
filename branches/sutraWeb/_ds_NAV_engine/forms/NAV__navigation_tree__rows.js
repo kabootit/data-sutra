@@ -426,7 +426,7 @@ function LIST_redraw__webclient(event,itemID,reScroll,skipLoadForms,favoriteMode
 			_variableWC.itemID = itemDetails.navItemID
 			
 			//call router to switch entire page
-			if (solutionPrefs.config.webClientRouter) {
+			if (globals.DATASUTRA_router_enable) {
 				globals.DS_router(null,null,_variableWC.itemID)
 				return
 			}

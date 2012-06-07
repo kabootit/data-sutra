@@ -94,7 +94,7 @@ function FORM_on_show(firstShow, event) {
 		var treeDepth = LIST_generate(navItemID)
 		
 		//call router to switch entire page
-		if (solutionPrefs.config.webClientRouter) {
+		if (globals.DATASUTRA_router_enable) {
 			globals.DS_router(null,null,navItemID)
 		}
 		//smart or straight-up web client
