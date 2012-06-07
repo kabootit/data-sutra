@@ -20,18 +20,6 @@ typeid:7,
 uuid:"000E57E6-0D13-4F93-91FC-7902037F84AB"
 },
 {
-dataProviderID:"_vlTest",
-displayType:2,
-editable:false,
-formIndex:10400,
-location:"752,166",
-size:"160,22",
-transparent:true,
-typeid:4,
-uuid:"1C850AD5-776B-4CAA-A68C-BD5444AEA7BC",
-valuelistID:"D7B4218E-32B3-41A9-8801-FC9B46436593"
-},
-{
 formIndex:11100,
 location:"10,25",
 mediaOptions:14,
@@ -57,29 +45,6 @@ size:"700,16",
 tabSeq:-1,
 typeid:7,
 uuid:"2F2441DF-B121-41A1-B6F0-371C7EE4B84D"
-},
-{
-fontType:"Verdana,0,10",
-formIndex:10500,
-location:"750,199",
-mediaOptions:14,
-size:"230,90",
-tabSeq:-1,
-text:"<html>
-  <head>
-    
-  <\/head>
-  <body>
-    <p style=\"margin-top: 0\">
-      TESTING:<br><br>Attach your newly created valuelist to the above 
-      combobox and drag it onto the layout<br>
-    <\/p>
-  <\/body>
-<\/html>",
-transparent:true,
-typeid:7,
-uuid:"3155D14A-7EEC-4EDB-90EA-1727A21B0170",
-verticalAlignment:1
 },
 {
 anchors:11,
@@ -170,68 +135,6 @@ size:"24,15",
 transparent:true,
 typeid:7,
 uuid:"A10AA2C7-EA48-43D6-8279-489423948236"
-},
-{
-fontType:"Verdana,0,10",
-formIndex:10200,
-location:"350,189",
-mediaOptions:14,
-showClick:false,
-showFocus:false,
-size:"370,130",
-tabSeq:-1,
-text:"<html>
-  <head>
-    
-  <\/head>
-  <body>
-    <p style=\"margin-top: 0\">
-      2/ implementation...<br>- create records with data in at least name and 
-      visible fields<br>- create a valuelist<br>
-    <\/p>
-    <ol>
-      <li>
-        name of valuelist must be what you named records
-      <\/li>
-      <li>
-        check option 'apply value list name as filter....'
-      <\/li>
-      <li>
-        set up appropriate visible and saved values
-      <\/li>
-      <li>
-        order_by is the column to set the order on
-      <\/li>
-    <\/ol>
-  <\/body>
-<\/html>",
-transparent:true,
-typeid:7,
-uuid:"AE4A48F1-497B-48B3-8317-705458BB1F0E",
-verticalAlignment:1
-},
-{
-fontType:"Verdana,0,10",
-formIndex:10100,
-location:"20,189",
-mediaOptions:14,
-size:"330,90",
-tabSeq:-1,
-text:"<html>
-  <head>
-    
-  <\/head>
-  <body>
-    <p style=\"margin-top: 0\">
-      NOTES on use:<br>1/ naming convention for value list names...<br>- 
-      prefix with primary business module name
-    <\/p>
-  <\/body>
-<\/html>",
-transparent:true,
-typeid:7,
-uuid:"B5186D17-B413-486F-8DCD-5F229CAC903E",
-verticalAlignment:1
 },
 {
 anchors:3,
