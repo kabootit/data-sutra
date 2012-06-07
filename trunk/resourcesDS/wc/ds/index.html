@@ -32,7 +32,7 @@
 	// set up switcheroo for initial 'Loading...' thing
 	(function() {
 		function checkStat() {
-			if (window.frames['iframeHeader'] && window.frames['iframeHeader'].window && window.frames['iframeHeader'].window.document.getElementsByTagName('body')[0].getAttribute('onload') == "javascript:submitform();") {
+			if (window.frames['iframeHeader'] && window.frames['iframeHeader'].window && window.frames['iframeHeader'].window.document && window.frames['iframeHeader'].window.document.getElementsByTagName('body').length &&  window.frames['iframeHeader'].window.document.getElementsByTagName('body')[0].getAttribute('onload') == "javascript:submitform();") {
 				window.frames['iframeHeader'].window.document.getElementById('loading').innerHTML = 'Data Sutra :: Please wait...';
 			}
 			// keep running until changed once
