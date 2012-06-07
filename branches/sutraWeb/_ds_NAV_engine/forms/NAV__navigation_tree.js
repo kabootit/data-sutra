@@ -93,16 +93,23 @@ function FORM_on_show(firstShow, event) {
 		//recreate list
 		var treeDepth = LIST_generate(navItemID)
 		
-		//update labels
-		LABEL_update(treeDepth > 1)
-		
-		//go to selected form; notify load forms routine that this is the first one loaded
-		globals.NAV_workflow_load(
-							navItemID || navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].itemsByOrder[0].navigationItem.idNavigationItem,
-							null,
-							null,
-							true
-						)
+		//call router to switch entire page
+		if (solutionPrefs.config.webClientRouter) {
+			globals.DS_router(null,null,navItemID)
+		}
+		//smart or straight-up web client
+		else {
+			//update labels
+			LABEL_update(treeDepth > 1)
+			
+			//go to selected form; notify load forms routine that this is the first one loaded
+			globals.NAV_workflow_load(
+								navItemID || navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].itemsByOrder[0].navigationItem.idNavigationItem,
+								null,
+								null,
+								true
+							)
+		}
 	}
 }
 
