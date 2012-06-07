@@ -92,6 +92,9 @@ function LOGIN(event) {
 		if (typeof status == 'boolean' && status) {
 			//go back to main screen form
 			history.go(-2)
+			
+			history.removeForm('DATASUTRA')
+			history.removeForm(controller.getName())
 		}
 		else {
 			_userName = globals.AC_login_user
