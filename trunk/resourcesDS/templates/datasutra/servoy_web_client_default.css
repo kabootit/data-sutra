@@ -459,7 +459,7 @@ div.wicket-modal div.w_content {
 
 
 
-/* lozenges	*/
+/* lozenges example	*/
 .orange {
 	background-color: #eeb35e;
 	padding: 0;
@@ -494,4 +494,10 @@ div.wicket-modal div.w_content {
 /* login form */
 .dialogDS {
 	display:none;
+}
+
+
+/*	fast find	*/
+input.fastFind:focus {
+    outline-width: 0;
 }

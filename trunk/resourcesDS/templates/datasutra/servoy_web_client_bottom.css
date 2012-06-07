@@ -1,12 +1,12 @@
 /* split pane customizations */
 .yui-resize {
-/*	background-color: #A1B0CF;*/
+	background-color: #A1B0CF;
 }
 
-.yui-resize-handle-b {
+.yui-resize .yui-resize-handle-b {
 	cursor: row-resize;
 }
 
-.yui-resize-handle-r {
+.yui-resize .yui-resize-handle-r {
 	cursor: col-resize;
 }
