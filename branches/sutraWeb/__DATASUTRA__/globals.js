@@ -5187,6 +5187,9 @@ function DS_router(p1,params,itemID,logout) {
 		application.showURL(getURL('login'),'_top')
 	}
 	
+	//this must be called from the router and therefore we must be running in an iframe
+	globals.DATASUTRA_router_enable = true
+	
 	// go to login form if not already logged in
 	if ((!application.__parent__.solutionPrefs || !application.__parent__.navigationPrefs) && url.set != 'DSLogin') {
 		plugins.WebClientUtils.executeClientSideJS(routerCall + '(null,"Data Sutra: Login","' + getURL('login') + '");')
@@ -5205,10 +5208,8 @@ function DS_router(p1,params,itemID,logout) {
 			if (forms.AC_R__login_WEB && forms.AC_R__login_WEB._shown) {
 				forms.AC_R__login_WEB.FORM_on_show()
 			}
-			
-			//this must be called from the router and therefore we must be running in an iframe
-			globals.DATASUTRA_router_enable = true
 		}
+		
 		return
 	}
 	else if (p1 == 'DSHomeCall') {
