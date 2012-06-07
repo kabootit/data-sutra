@@ -21,6 +21,6 @@ navigatorID:"-1",
 paperPrintScale:100,
 scrollbars:36,
 size:"1,170",
-styleName:"_DATASUTRA_",
+styleName:"ds_WEB_desktop",
 typeid:3,
 uuid:"61C7ADC8-5ACA-4F1C-A016-718F717F688B"
