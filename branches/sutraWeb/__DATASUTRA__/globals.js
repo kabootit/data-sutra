@@ -5165,14 +5165,17 @@ function DS_router(p1,params,itemID,logout) {
 	// url object logic
 	var url = {}
 	for ( var item in params ) {
+		// 1st slot is navigation set
 		if ( item == "argument" ) {
-			url.set = params[item]  // 1st slot is navigation set
+			url.set = params[item]  
 		}
+		// 2nd slot is navigation item
 		else if ( item == "p1" ) {
-			url.item = params[item] // 2nd slot is navigation item
+			url.item = params[item] 
 		}
-		else if ( 1!=1 ) {
-			// additional slots (p2, p3, etc)
+		// go to hix
+		else if ( item == "history" ) {
+			url.history = params[item]
 		}
 	}
 	
@@ -5241,7 +5244,7 @@ function DS_router(p1,params,itemID,logout) {
 		// navigate through history
 		if (p1 == 'DSHistory') {
 			//TODO: ability to specify which history item to go to
-			url = globals.DATASUTRA_router[globals.DATASUTRA_router.length - 2].path
+			url = globals.DATASUTRA_router[url.history].path
 		}
 		
 		// particular item specified
