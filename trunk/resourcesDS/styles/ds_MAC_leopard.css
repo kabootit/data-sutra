@@ -488,6 +488,8 @@ field.bold_table_textarea_bottom, field.bold_table_htmlarea_bottom {
 	border-color: #647B95;
 	margin: 1px 2px 0px 4px;
 	background-color: #F1F1F1;
+	
+	text-align: left;
 }
 
 field.bold_table, check.bold_table, combobox.bold_table, 

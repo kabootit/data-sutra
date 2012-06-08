@@ -29,10 +29,18 @@ form.workarea2 {
 	background-color: #D1D7E2;
 }
 
-label, button, field, combobox, check, radio {
+label, button, field, check, radio {
 	font-family: Verdana,'Helvetica Neue', Arial, Helvetica, sans-serif;
 	font-size: 11pt;
 	border: 0px solid;
+	text-align: left;
+	font-color: black;
+	color: #000;
+}
+
+combobox {
+	font-family: Verdana,'Helvetica Neue', Arial, Helvetica, sans-serif;
+	font-size: 11pt;
 	text-align: left;
 	font-color: black;
 	color: #000;
@@ -490,6 +498,8 @@ field.bold_table_textarea_bottom, field.bold_table_htmlarea_bottom {
 	border-color: #647B95;
 	margin: 1px 2px 0px 4px;
 	background-color: #F1F1F1;
+	
+	text-algin: left;
 }
 
 field.bold_table, check.bold_table, combobox.bold_table, 
