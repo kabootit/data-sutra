@@ -199,3 +199,20 @@ function EDIT_popdown(input) {
 	}
 		
 }
+
+/**
+ * @properties={typeid:24,uuid:"54C2B6D8-5BBC-4394-9201-AA18F017518B"}
+ */
+function RESET_favorites() {
+	var input = plugins.dialogs.showQuestionDialog(
+			'Reset favorites',
+			'Do you want to remove all favorites for this user?',
+			'Yes',
+			'No'
+		)
+		
+	if (input == 'Yes') {
+		favorites = null
+		databaseManager.saveData()
+	}
+}
