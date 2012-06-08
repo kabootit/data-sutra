@@ -88,9 +88,33 @@ function ACTIONS_list(input) {
  */
 function FORM_on_show(firstShow, event) {
 	if (firstShow && application.__parent__.solutionPrefs && application.__parent__.navigationPrefs) {
-		var navItemID = navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].lastNavItem || navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].itemsByOrder[0].navigationItem.idNavigationItem
+		//url was requested before login; go there now
+		if (globals.DATASUTRA_router.length && globals.DATASUTRA_router[0] && globals.DATASUTRA_router[0].path && globals.DATASUTRA_router[0].path.set != 'DSLogin') {
+			var nav = navigationPrefs.siteMap
+			var url = globals.DATASUTRA_router[0].path
+			var itemID
+			
+			//particular item specified
+			if (url.set && url.item) {
+				//this item exists
+				if (nav[url.set][url.item]) {
+					itemID = nav[url.set][url.item].navItemID
+				}
+			}
+			//only nav set specified, grab first navigation item
+			else if (url.set && nav[url.set]) {
+				//don't really need a loop, but need to grab an element inside the set referenced
+				for (var i in nav[url.set]) {
+					itemID = navigationPrefs.byNavSetID[nav[url.set][i].details.navigationItem.idNavigation].itemsByOrder[0].navigationItem.idNavigationItem
+					break
+				}
+			}
+		}
 		
-		//recreate list
+		//use 1st item in history for itemID or last item in this navigation set or default item for this navset
+		var navItemID = itemID || navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].lastNavItem || navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].itemsByOrder[0].navigationItem.idNavigationItem
+		
+		//create list
 		var treeDepth = LIST_generate(navItemID)
 		
 		//call router to switch entire page
