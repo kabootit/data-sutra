@@ -111,5 +111,5 @@ forms.CRM_P_addresses.address_id = addressID
 forms.CRM_P_addresses.controller.search()
 
 //show form in dialog
-globals.CODE_form_in_dialog(forms.CRM_P_addresses,-1,-1,-1,-1,'New address',false,false,false,'crmEditAddress')
+globals.CODE_form_in_dialog(forms.CRM_P_addresses,-1,-1,-1,-1,'New address',false,false,'crmEditAddress')
 }
