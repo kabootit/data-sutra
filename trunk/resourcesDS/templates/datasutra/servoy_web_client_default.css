@@ -439,9 +439,19 @@ div.wicket-modal div.w_content {
 	border-radius: 0.5em 0.5em 0.5em 0.5em;
     
 }
+
 .yuimenuitem,
 .yuimenubaritem  {
-    text-shadow: #fff 0 1px 0;
+/*    text-shadow: #fff 0 1px 0;*/
+}
+
+.yuimenuitem-selected,
+.yuimenubaritem-selected,
+.yuimenuitem-selected a,
+.yuimenubaritem-selected a  {
+	color: black;
+	text-decoration: none;
+	outline-width: 0;
 }
 
 .yuimenuitem a.selected,
@@ -457,7 +467,11 @@ div.wicket-modal div.w_content {
 
 }
 
-
+/*.yuimenuitemlabel {
+	font-size: 85%;
+	color: black;
+	text-decoration: none;
+}*/
 
 /* lozenges example	*/
 .orange {
@@ -496,8 +510,17 @@ div.wicket-modal div.w_content {
 	display:none;
 }
 
-
 /*	fast find	*/
 input.fastFind:focus {
     outline-width: 0;
+}
+
+/* input fields on servoy forms */
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px) {
+	input.field {
+	    -webkit-appearance: none;
+		border-radius: 0;
+	}
 }

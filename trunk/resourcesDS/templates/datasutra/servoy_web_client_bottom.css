@@ -10,3 +10,10 @@
 .yui-resize .yui-resize-handle-r {
 	cursor: col-resize;
 }
+
+.yuimenuitem-selected,
+.yuimenubaritem-selected,
+.yuimenuitem-selected a,
+.yuimenubaritem-selected a  {
+	background-color: transparent;
+}

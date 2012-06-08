@@ -19,9 +19,23 @@
 		<from>^/ds/js/(.*)$</from>
 		<to last="true">/ds/js/$1</to>
 	</rule>
+	
+	<rule>
+		<name>DS css</name>
+		<note></note>
+		<from>^/ds/css/(.*)$</from>
+		<to last="true">/ds/css/$1</to>
+	</rule>
+	
+	<rule>
+		<name>DS iOS icon</name>
+		<note></note>
+		<from>^/apple-touch-icon.png$</from>
+		<to last="true">/ds/apple-touch-icon.png</to>
+	</rule>
 
 	<rule>
-		<name>DS</name>
+		<name>DS no trailing slash</name>
 		<note></note>
 		<from>^/ds$</from>
 		<to>/ds/index.html</to>
