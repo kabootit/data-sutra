@@ -1,3 +1,4 @@
+dataSource:"db:/sutra/sutra_solution",
 items:[
 {
 horizontalAlignment:2,
@@ -55,12 +56,15 @@ uuid:"52B6469A-1AED-4E62-AB63-C6C98AAE860F"
 },
 {
 borderType:"SpecialMatteBorder,0.0,0.0,1.0,0.0,#000000,#000000,#cacaca,#000000,0.0,1.0",
+displaysTags:true,
 fontType:"Helvetica Neue,1,24",
 horizontalAlignment:2,
 location:"30,40",
+showClick:false,
+showFocus:false,
 size:"300,30",
 styleClass:"button",
-text:"Sign in to Data Sutra",
+text:"Sign in to %%solution_name%%",
 transparent:true,
 typeid:7,
 uuid:"6FD1ED0C-5B3C-432F-81AA-A19CFFCE62FE"
@@ -105,6 +109,17 @@ size:"200,30",
 tabSeq:1,
 typeid:4,
 uuid:"AF0928B1-DF46-49FC-B634-D95C0B399DD4"
+},
+{
+location:"164,665",
+onActionMethodID:"-1",
+onDoubleClickMethodID:"-1",
+onRightClickMethodID:"-1",
+rolloverCursor:12,
+size:"70,30",
+text:"button",
+typeid:7,
+uuid:"B4828071-070F-4FD3-A00C-A1C8D7E58E76"
 },
 {
 location:"260,235",
