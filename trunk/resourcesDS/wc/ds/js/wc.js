@@ -26,7 +26,7 @@ function centerForm(formName) {
 	//part 1
 	setTimeout(function(){
 		//load in resource
-		$('head').append('<script type="text/javascript" src="../../ds/js/activity-indicator.js"></script>');
+		$('head').append('<script type="text/javascript" src="/ds/js/activity-indicator.js"></script>');
 		
 		//remove infoPanel if present
 		$('#infoPanel').remove()
@@ -129,10 +129,15 @@ function centerForm(formName) {
     };
 })(jQuery);
 
-//  Give better resize indicators for all splitpanes
+//  Pump in extra stylesheets at the end of head so that overwrite existing 
 (function(){
-	//hopefully three seconds is long enough for web client to get itself loaded
+	var delayTime = 5000
+	
+	// setTimeout(function(){
+	// 	app.addPrefetchTags();
+	// },delayTime)
+	
 	setTimeout(function(){
-		$('head').append('<link rel="stylesheet" type="text/css" href="../servoy-webclient/templates/datasutra/servoy_web_client_bottom.css" />');
-	},3000)
+		$('head').append('<link rel="stylesheet" type="text/css" href="/servoy-webclient/templates/datasutra/servoy_web_client_bottom.css" />');
+	},delayTime)
 })();

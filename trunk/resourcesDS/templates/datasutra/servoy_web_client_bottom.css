@@ -11,9 +11,22 @@
 	cursor: col-resize;
 }
 
+/* popup menu overrides */
 .yuimenuitem-selected,
 .yuimenubaritem-selected,
 .yuimenuitem-selected a,
 .yuimenubaritem-selected a  {
 	background-color: transparent;
+}
+
+.yuimenuitem-selected:focus,
+.yuimenubaritem-selected:focus,
+.yuimenuitem-selected a:focus,
+.yuimenubaritem-selected a:focus {
+    outline-width: 0;
+}
+
+.yuimenuitemlabel, 
+.yuimenuitemlabel-selected {
+	font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;
 }

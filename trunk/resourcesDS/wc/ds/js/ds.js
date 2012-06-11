@@ -94,3 +94,11 @@ var DS_universalList = {
 			  }
 		);
 })();
+
+
+function preRender(path,description) {
+	$('head', window.parent.document).append('<link rel="prerender" type="text/css" href="' + path + '" />');
+	window.parent.routerDelay(null,description,path,400);
+	
+}
+

@@ -31,7 +31,7 @@
 {
 	width: 100%;
 	height: 100%;
-	position: relative
+	position: relative;
 }
 
 body
@@ -42,7 +42,7 @@ body
 body, input, button, select, td, th, textarea
 {
 	font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;
-	font-size: 11px
+	font-size: 11px;
 }
 
 button
@@ -515,7 +515,7 @@ input.fastFind:focus {
     outline-width: 0;
 }
 
-/* input fields on servoy forms */
+/* input fields on servoy forms for ipad */
 @media only screen
 and (min-device-width : 768px)
 and (max-device-width : 1024px) {
@@ -523,4 +523,7 @@ and (max-device-width : 1024px) {
 	    -webkit-appearance: none;
 		border-radius: 0;
 	}
+	
+	/*would be nice to import...but needs to be first in the stylesheet*/
+/*	@import url('/ds/css/ds.tablet.css')*/
 }
