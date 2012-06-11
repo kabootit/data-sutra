@@ -33,6 +33,7 @@ function FORM_on_load(event) {
 		
 		//force inclusion of jquery
 		plugins.WebClientUtils.addJsReference(SERVOY_WEB_RESOURCES.JQUERY)
+		plugins.WebClientUtils.addCssReference(SERVOY_WEB_RESOURCES.YUI_CSS_MENU)
 	}
 }
 
