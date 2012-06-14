@@ -68,6 +68,10 @@
 		setTimeout(function(){History.pushState(p1,p2,p3)},p4);
 	}
 	
+	function reloadPage() {
+		setTimeout(function(){window.location.reload(true)},2500);
+	}
+	
   	function router(data) {
 		// handle params
 		var append 		= "";
