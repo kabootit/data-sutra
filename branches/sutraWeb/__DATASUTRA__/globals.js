@@ -1308,19 +1308,23 @@ function DS_actions(input) {
 				user.navItemID.unshift(null)
 				user.itemDescription.unshift(flagHelp.tooltip)
 			}
-			//add option to change password if access and control enabled and password changing isn't disabled
-			if (solutionPrefs.access && solutionPrefs.access.accessControl && !solutionPrefs.access.passNoChange) {
-				user.itemName.push('Change password')
-				user.formName.push('AC_P_password')
-				user.navItemID.push(null)
-				user.itemDescription.push('Periodically change your password to ensure security')
-			}
-			//add option to set custom screen size if access and control
-			if (solutionPrefs.access && solutionPrefs.access.accessControl ) {
-				user.itemName.push('Save window metrics')
-				user.formName.push('AC_P_screen')
-				user.navItemID.push(null)
-				user.itemDescription.push('Set the current window size, position, and spaces as your new default')
+			
+			//don't allow from web client
+			if (!solutionPrefs.config.webClient) {
+				//add option to change password if access and control enabled and password changing isn't disabled
+				if (solutionPrefs.access && solutionPrefs.access.accessControl && !solutionPrefs.access.passNoChange) {
+					user.itemName.push('Change password')
+					user.formName.push('AC_P_password')
+					user.navItemID.push(null)
+					user.itemDescription.push('Periodically change your password to ensure security')
+				}
+				//add option to set custom screen size if access and control
+				if (solutionPrefs.access && solutionPrefs.access.accessControl ) {
+					user.itemName.push('Save window metrics')
+					user.formName.push('AC_P_screen')
+					user.navItemID.push(null)
+					user.itemDescription.push('Set the current window size, position, and spaces as your new default')
+				}
 			}
 			
 			//create arrays
@@ -1551,7 +1555,7 @@ function DS_actions(input) {
 			//check for non-standard prefpane logout
 			else if (itemClicked == 'Logout') {
 				//webclient in router, redirect url
-				if (solutionPrefs.config.webClientRouter) {
+				if (globals.DATASUTRA_router_enable) {
 					globals.DS_router(null,null,null,true)
 					security.logout()
 				}
@@ -5233,8 +5237,9 @@ function DS_router(p1,params,itemID,logout) {
 		}
 		// run logout portion of this script
 		else {
-//			globals.DS_actions('Logout')
-//			security.logout('__DATASUTRA__')
+			globals.DS_actions('Logout')
+//			application.showURL(getURL('login'),'_top')
+//			security.logout()
 			return
 		}
 	}
