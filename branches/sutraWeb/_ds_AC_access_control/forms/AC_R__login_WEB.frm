@@ -16,9 +16,12 @@ location:"30,302",
 margin:"0,5,0,0",
 size:"300,165",
 styleClass:"button",
-text:"<html><body>Email <a href=\"mailto:demo@data-mosaic.com?subject=DS Web Request&body=Please set me up with some login credentials!\">demo@data-mosaic.com<\/a>\tto get demo login credentials.<br />
+text:"<html><body>
+View a 7-minute intro to the Data Sutra web preview: <a href=\"http://www.youtube.com/watch?v=RIBetsn13M8\" target=\"_top\">youtube intro<\/a>.<br />
 <br /><br />
-For more information about Data Sutra, <br /><a href=\"http://www.data-mosaic.com/sutras/data-sutra/overview/\" location=\"_top\">www.data-mosaic.com/sutras/data-sutra/overview/<\/a>.
+Email <a href=\"mailto:demo@data-mosaic.com?subject=DS Web Request&body=Please set me up with some login credentials!\">demo@data-mosaic.com<\/a>\tto get demo login credentials.<br />
+<br /><br />
+For more information about Data Sutra, <br /><a href=\"http://www.data-mosaic.com/sutras/data-sutra/overview/\" target=\"_top\">www.data-mosaic.com/sutras/data-sutra/overview/<\/a>.<br />
 <br /><br />
 Recommended browsers: Chrome, Safari.
 <\/html>",
