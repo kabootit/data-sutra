@@ -2,13 +2,29 @@ dataSource:"db:/sutra/sutra_solution",
 items:[
 {
 horizontalAlignment:2,
-location:"130,342",
+location:"130,512",
 size:"150,25",
 styleClass:"button",
 text:"Forgot Your Password?",
 transparent:true,
 typeid:7,
 uuid:"05C41CC8-0806-4E4B-BE0C-26AE757C7279"
+},
+{
+horizontalAlignment:2,
+location:"30,302",
+margin:"0,5,0,0",
+size:"300,165",
+styleClass:"button",
+text:"<html><body>Email <a href=\"mailto:demo@data-mosaic.com?subject=DS Web Request&body=Please set me up with some login credentials!\">demo@data-mosaic.com<\/a>\tto get demo login credentials.<br />
+<br /><br />
+For more information about Data Sutra, <br /><a href=\"http://www.data-mosaic.com/sutras/data-sutra/overview/\" location=\"_top\">www.data-mosaic.com/sutras/data-sutra/overview/<\/a>.
+<br /><br />
+Recommended browsers: Chrome, Safari.
+<\/html>",
+transparent:true,
+typeid:7,
+uuid:"0F1BFB49-8CCA-429C-892F-D059738DF319"
 },
 {
 location:"130,162",
@@ -21,7 +37,7 @@ verticalAlignment:1
 {
 dataProviderID:"_userEmail",
 fontType:"Helvetica Neue,0,18",
-location:"130,390",
+location:"130,560",
 name:"var_userEmail",
 size:"200,30",
 tabSeq:3,
@@ -29,7 +45,7 @@ typeid:4,
 uuid:"22299A51-C213-4B1B-B639-79D5DD003DB8"
 },
 {
-location:"260,285",
+location:"260,685",
 onActionMethodID:"86418204-CDC1-403C-81DC-36A19F06F72A",
 rolloverCursor:12,
 showClick:false,
@@ -70,7 +86,7 @@ typeid:7,
 uuid:"6FD1ED0C-5B3C-432F-81AA-A19CFFCE62FE"
 },
 {
-location:"150,435",
+location:"150,605",
 onActionMethodID:"ABCDFAF8-CFCB-4AFB-8267-1111535B8547",
 rolloverCursor:12,
 showClick:false,
@@ -83,7 +99,7 @@ typeid:7,
 uuid:"94854514-C968-4703-9FC5-EF8547D25983"
 },
 {
-location:"130,372",
+location:"130,542",
 size:"100,20",
 text:"Email Address",
 transparent:true,
@@ -111,7 +127,7 @@ typeid:4,
 uuid:"AF0928B1-DF46-49FC-B634-D95C0B399DD4"
 },
 {
-location:"164,665",
+location:"164,735",
 onActionMethodID:"-1",
 onDoubleClickMethodID:"-1",
 onRightClickMethodID:"-1",

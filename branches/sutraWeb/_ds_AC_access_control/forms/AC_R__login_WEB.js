@@ -146,6 +146,8 @@ function FORM_on_show(firstShow, event) {
 	// attach style to form to center it
 	// $("#form_AC_R__login_WEB").css({width: '50%', margin: '0px auto'});
 	plugins.WebClientUtils.executeClientSideJS('centerForm("' + controller.getName() + '");')
+	
+	elements.var_userName.requestFocus()
 }
 
 /**
