@@ -1,15 +1,5 @@
 items:[
 {
-anchors:15,
-background:"#4000ff",
-location:"0,0",
-showClick:false,
-showFocus:false,
-size:"1,20",
-typeid:7,
-uuid:"2132374B-DE9B-4851-B645-9A575BBAC177"
-},
-{
 height:20,
 partType:5,
 typeid:19,

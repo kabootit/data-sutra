@@ -4,16 +4,6 @@ height:20,
 partType:5,
 typeid:19,
 uuid:"8A3EC3D3-3634-456D-ABBE-230CD92682CF"
-},
-{
-anchors:15,
-background:"#004e98",
-location:"0,0",
-showClick:false,
-showFocus:false,
-size:"1,20",
-typeid:7,
-uuid:"D3CE7820-3285-4E0A-A1C2-F53BE3F91514"
 }
 ],
 name:"DATASUTRA_WEB__blank_8",
