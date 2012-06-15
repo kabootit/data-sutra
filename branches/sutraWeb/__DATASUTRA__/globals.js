@@ -1418,7 +1418,7 @@ function DS_actions(input) {
 			
 			//add on exit preference if in one
 			if (inPref) {
-				valueList.push('-','<html><body><font color="#FF2823">Exit configuration</font></body></html>')
+				valueList.push('-',(solutionPrefs.config.webClient ? 'Exit configuration' : '<html><body><font color="#FF2823">Exit configuration</font></body></html>'))
 				formList.push(null,null)
 				navIDList.push(null,null)
 				descList.push(null,'Return to workflow')
@@ -1444,7 +1444,7 @@ function DS_actions(input) {
 			}
 			
 			//logout
-			valueList.push('<html><body><font color="#FF2823">Logout</font></body></html>')
+			valueList.push((solutionPrefs.config.webClient ? 'Logout' : '<html><body><font color="#FF2823">Logout</font></body></html>'))
 			formList.push(null)
 			navIDList.push(null)
 			descList.push('Re-open solution as a different user')
@@ -1584,21 +1584,24 @@ function DS_actions(input) {
 			}
 			//check for non-standard prefpane feedback
 			else if (itemClicked == 'Feedback') {
-				//get screensize of window
-				var x = application.getWindowX()
-				var y = application.getWindowY()
-				var width = application.getWindowWidth()
-				var height =  application.getWindowHeight()
-				
-				//make pop-up get out of the way
-				forms[baseForm + '__header'].elements.fld_constant.requestFocus(false)
-				application.sleep(175)
-				
-				//get screenshot
-				var screenShot = (new java.awt.Robot()).createScreenCapture(new java.awt.Rectangle(x,y,width,height))
-				var rawData = new java.io.ByteArrayOutputStream()
-				Packages.javax.imageio.ImageIO.write(screenShot,'png',rawData)
-				globals.DATASUTRA_feedback = rawData.toByteArray()
+				//not in webclient
+				if (!solutionPrefs.config.webClient) {
+					//get screensize of window
+					var x = application.getWindowX()
+					var y = application.getWindowY()
+					var width = application.getWindowWidth()
+					var height =  application.getWindowHeight()
+					
+					//make pop-up get out of the way
+					forms[baseForm + '__header'].elements.fld_constant.requestFocus(false)
+					application.sleep(175)
+					
+					//get screenshot
+					var screenShot = (new java.awt.Robot()).createScreenCapture(new java.awt.Rectangle(x,y,width,height))
+					var rawData = new java.io.ByteArrayOutputStream()
+					Packages.javax.imageio.ImageIO.write(screenShot,'png',rawData)
+					globals.DATASUTRA_feedback = rawData.toByteArray()
+				}
 				
 				//show popup dialog
 				globals.CODE_form_in_dialog(forms.DEV_P_feedback,-1,-1,-1,-1,'Submit feedback',false,false,'feedback',true)
@@ -5187,7 +5190,10 @@ function DS_router(p1,params,itemID,logout) {
 	
 	// if logout, redirect url
 	if (logout) {
+//		plugins.WebClientUtils.executeClientSideJS('window.parent.routerDelay(null,"Data Sutra: Login","' + getURL('login') + '",250);')
 		application.showURL(getURL('login'),'_top')
+//		plugins.WebClientUtils.executeClientSideJS('window.parent.reloadPage();')
+		return
 	}
 	
 	//this must be called from the router and therefore we must be running in an iframe
@@ -5204,7 +5210,12 @@ function DS_router(p1,params,itemID,logout) {
 		// when logged in already, return to previous form
 		if (application.__parent__.navigationPrefs) {
 			//TODO: use DATASUTRA_router to navigate history stack
-			plugins.WebClientUtils.executeClientSideJS('window.parent.routerDelay(null,"' + navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID]._about_ + '","' + getURL(navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].path) + '",' + delay + ');')
+//			if (globals.DATASUTRA_router.length) {
+//				var itemID = globals.DATASUTRA_router[globals.DATASUTRA_router.length - 1].itemID
+//			}
+			itemID = solutionPrefs.config.currentFormID
+			
+			plugins.WebClientUtils.executeClientSideJS('window.parent.routerDelay(null,"' + navigationPrefs.byNavItemID[itemID]._about_ + '","' + getURL(navigationPrefs.byNavItemID[itemID].path) + '",' + delay + ');')
 		}
 		else {
 			//actual login form shown as result of client starting up first time, this is just to recenter if called subsequent times
@@ -5214,6 +5225,18 @@ function DS_router(p1,params,itemID,logout) {
 		}
 		
 		return
+	}
+	else if (p1 == 'DSLogout') {
+		// when not logged in already, go to login form
+		if (!application.__parent__.navigationPrefs) {
+			application.showURL(getURL('login'),'_top')
+		}
+		// run logout portion of this script
+		else {
+//			globals.DS_actions('Logout')
+//			security.logout('__DATASUTRA__')
+			return
+		}
 	}
 	else if (p1 == 'DSHomeCall') {
 		itemID = navigationPrefs.byNavSetID[navigationPrefs.byNavSetID.defaultSet].itemsByOrder[0].navigationItem.idNavigationItem
@@ -5227,7 +5250,9 @@ function DS_router(p1,params,itemID,logout) {
 	else if (itemID) {
 		// web client paths correctly configured
 		if (navigationPrefs.byNavItemID[itemID].path) {
-			plugins.WebClientUtils.executeClientSideJS('window.parent.routerDelay(null,"' + navigationPrefs.byNavItemID[itemID]._about_ + '","' + getURL(navigationPrefs.byNavItemID[itemID].path) + '",' + delay + ');')
+			plugins.WebClientUtils.executeClientSideJS('preRender("' + navigationPrefs.byNavItemID[itemID]._about_ + '","' + getURL(navigationPrefs.byNavItemID[itemID].path) + '",' + delay + ');')
+//			plugins.WebClientUtils.executeClientSideJS('window.parent.routerDelay(null,"' + navigationPrefs.byNavItemID[itemID]._about_ + '","' + getURL(navigationPrefs.byNavItemID[itemID].path) + '",' + delay + ');')
+			return
 		}
 		// path not set up correctly
 		else {
