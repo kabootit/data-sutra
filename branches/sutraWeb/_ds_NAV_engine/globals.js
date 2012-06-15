@@ -4913,17 +4913,22 @@ function NAV_navigation_set_load()
 		}
 	}
 	
-	//first time set is viewed, collapse all pref enabled, and not favorites
-	if (initialLoad && solutionPrefs.config.navigationCollapse && itemID != 0) {
-		forms[formName + '__rows'].LIST_expand_collapse(null,itemID,true)
+	//call router to switch entire page
+	if (globals.DATASUTRA_router_enable) {
+		globals.DS_router(null,null,itemID)
 	}
-	//regenerate list
 	else {
-		forms[formName + '__rows'].LIST_redraw(null,itemID,true,skipLoadForms,favoriteMode)
+		//first time set is viewed, collapse all pref enabled, and not favorites
+		if (initialLoad && solutionPrefs.config.navigationCollapse && itemID != 0) {
+			forms[formName + '__rows'].LIST_expand_collapse(null,itemID,true)
+		}
+		//regenerate list
+		else {
+			forms[formName + '__rows'].LIST_redraw(null,itemID,true,skipLoadForms,favoriteMode)
+		}
+		
+		forms[formName].LABEL_update()
 	}
-	
-	forms[formName].LABEL_update()
-
 }
 
 /**
