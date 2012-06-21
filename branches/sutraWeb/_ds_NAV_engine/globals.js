@@ -2507,11 +2507,11 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 						//new form name (UL__set000_item000_CRM_0F_companies)
 						var newFormName = 'UL' + '__set' + navSpecs.idNavigation + '_item' + navSpecs.idNavigationItem + '_' + mainTab
 						
-						//hijack the scroller in webclient
-						if (solutionPrefs.config.webClient) {
-							plugins.WebClientUtils.executeClientSideJS('DS_universalList.setFormName("' + newFormName + '");')
-							plugins.WebClientUtils.executeClientSideJS('console.log("SERVER: ' + newFormName + '");')
-						}
+//						//hijack the scroller in webclient
+//						if (solutionPrefs.config.webClient) {
+//							plugins.WebClientUtils.executeClientSideJS('DS_universalList.setFormName("' + newFormName + '");')
+//							plugins.WebClientUtils.executeClientSideJS('console.log("SERVER: ' + newFormName + '");')
+//						}
 						
 						//if form not already defined or if button-status has changed, define
 						if (!forms[newFormName] ||
@@ -2753,11 +2753,11 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 				else if (utils.stringToNumber(solutionPrefs.clientInfo.verServoy) >= 4) {
 					//UL, set to 2 and then correct tab
 					if (navSpecs.useFwList) {
-						//hijack the scroller in webclient
-						if (solutionPrefs.config.webClient) {
-							plugins.WebClientUtils.executeClientSideJS('DS_universalList.setFormName("' + navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.tabFormInstance + '");')
-							plugins.WebClientUtils.executeClientSideJS('console.log("SERVER: ' + navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.tabFormInstance + '")')
-						}
+//						//hijack the scroller in webclient
+//						if (solutionPrefs.config.webClient) {
+//							plugins.WebClientUtils.executeClientSideJS('DS_universalList.setFormName("' + navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.tabFormInstance + '");')
+//							plugins.WebClientUtils.executeClientSideJS('console.log("SERVER: ' + navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.tabFormInstance + '")')
+//						}
 						
 						if (navigationPrefs.byNavItemID[navigationItemID].listData.withButtons) {
 							forms.NAV_T_universal_list.FORM_on_show(true)
@@ -4936,11 +4936,11 @@ function NAV_navigation_set_load()
  * @properties={typeid:24,uuid:"d16cc6ba-d5f1-4a30-8a22-45f4745f9e6b"}
  */
 function NAV_universal_list_select() {
-	//rescroll the client
-	if (solutionPrefs.config.webClient) {
-		plugins.WebClientUtils.executeClientSideJS('setTimeout(DS_universalList.scrollReset,1000);')
-		plugins.WebClientUtils.executeClientSideJS('console.log("SERVER UL SELECT: ' + navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.tabFormInstance + '")')
-	}
+//	//rescroll the client
+//	if (solutionPrefs.config.webClient) {
+//		plugins.WebClientUtils.executeClientSideJS('setTimeout(DS_universalList.scrollReset,1000);')
+//		plugins.WebClientUtils.executeClientSideJS('console.log("SERVER UL SELECT: ' + navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.tabFormInstance + '")')
+//	}
 	
 	var formName = solutionPrefs.config.currentFormName
 	var currentNavItem = solutionPrefs.config.currentFormID
