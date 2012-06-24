@@ -30,15 +30,6 @@ uuid:"20C7D6F1-BA2C-47C4-8E22-0B9186076919"
 {
 anchors:15,
 formIndex:10501,
-items:[
-{
-containsFormID:"3377F3AE-2842-4D89-8171-52392058D834",
-location:"79,0",
-text:"CRM_0IPAD_company",
-typeid:15,
-uuid:"06464DB2-6B1E-4A1E-BC50-C8A72619D94F"
-}
-],
 location:"40,0",
 name:"tab_toolbar_popdown",
 printable:false,
