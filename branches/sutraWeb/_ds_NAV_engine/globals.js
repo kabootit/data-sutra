@@ -2521,6 +2521,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 							
 							//create new forms
 							var template = globals.NAV_universal_list_form_to_template(uniList)
+//							var myForm = solutionModel.newForm(name, superForm)
 							var myForm = globals.NAV_universal_list_template_to_form(template,newFormName)
 							
 							//set datasource
@@ -2537,6 +2538,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 							myForm.onShow = solutionModel.getGlobalMethod('NAV_universal_list_show')
 							myForm.onRecordSelection = solutionModel.getGlobalMethod('NAV_universal_list_select')
 							myForm.onRender = solutionModel.getGlobalMethod('NAV_universal_list_render')
+//							myForm.rowBGColorCalculation = 'globals.NAV_universal_list_row_background'
 							
 							//get the UL data and set it up
 							var allULDisplays = navigationPrefs.byNavItemID[navigationItemID].universalList.displays
@@ -4254,6 +4256,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 					myForm.onShow = solutionModel.getGlobalMethod('NAV_universal_list_show')
 					myForm.onRecordSelection = solutionModel.getGlobalMethod('NAV_universal_list_select')
 					myForm.onRender = solutionModel.getGlobalMethod('NAV_universal_list_render')
+//					myForm.rowBGColorCalculation = 'globals.NAV_universal_list_row_background'
 					
 					//get the UL data and set it up
 					var allULDisplays = navigationPrefs.byNavItemID[prefNavID].universalList.displays
@@ -4952,7 +4955,7 @@ function NAV_universal_list_select() {
 	var logClick = (solutionPrefs.analytics && solutionPrefs.analytics.logging) ? solutionPrefs.analytics.logging.Record : false
 	
 	//show busy indicator while changing record
-	if (navigationPrefs.byNavItemID[currentNavItem].navigationItem.ulBusyIndicator) {
+	if (navigationPrefs.byNavItemID[currentNavItem].navigationItem.ulBusyIndicator && !solutionPrefs.config.webClient) {
 		var busyIndicator = true
 		
 		globals.CODE_cursor_busy(true)
@@ -4971,14 +4974,16 @@ function NAV_universal_list_select() {
 	
 	var record = forms[formName].foundset.getRecord(rowSelected)
 	
-	//recalc last selected and this row (to update favorite star)
-	databaseManager.recalculate(record)
-	if (navigationPrefs.byNavItemID[currentNavItem].listData.index.selected <= record.foundset.getSize()) {
-		databaseManager.recalculate(record.foundset.getRecord(navigationPrefs.byNavItemID[currentNavItem].listData.index.selected))
+	//recalc last selected and this row (to update favorite star) when favorite mode turned on
+	if (solutionPrefs.access.accessControl && navigationPrefs.byNavItemID[currentNavItem].navigationItem.favoritable && !solutionPrefs.config.webClient) {
+		databaseManager.recalculate(record)
+		if (navigationPrefs.byNavItemID[currentNavItem].listData.index.selected <= record.foundset.getSize()) {
+			databaseManager.recalculate(record.foundset.getRecord(navigationPrefs.byNavItemID[currentNavItem].listData.index.selected))
+		}
 	}
 	
 	//record not clicked on before, throw up busy bar and busy cursor
-	if (record && navigationPrefs.byNavItemID[currentNavItem].navigationItem.initialRecord && !navigationPrefs.byNavItemID[currentNavItem].listData.visitedPKs[record[pkName]]) {
+	if (record && navigationPrefs.byNavItemID[currentNavItem].navigationItem.initialRecord && !navigationPrefs.byNavItemID[currentNavItem].listData.visitedPKs[record[pkName]] && !solutionPrefs.config.webClient) {
 		var recNotLoaded = true
 		
 		//don't turn busy indicator on if it is already on
@@ -5002,23 +5007,23 @@ function NAV_universal_list_select() {
 	navigationPrefs.byNavItemID[currentNavItem].listData.index.selected = rowSelected
 	
 	//save time when pk of this record last accessed
-	navigationPrefs.byNavItemID[currentNavItem].listData.visitedPKs[(forms[formName][pkName] != 'repositoryAPINotImplemented') ? forms[formName][pkName] : 0] = application.getServerTimeStamp()
+	navigationPrefs.byNavItemID[currentNavItem].listData.visitedPKs[(pkName != 'repositoryAPINotImplemented') ? forms[formName][pkName] : pkActedOn] = application.getServerTimeStamp()
 	
 	//update record navigator
 	globals.TRIGGER_toolbar_record_navigator_set()
 	
-	//record was not in memory, turn off busy bar and busy cursor
-	if (recNotLoaded) {
-		globals.TRIGGER_progressbar_stop()
-		globals.CODE_cursor_busy(false)	
+	//no run in webclient
+	if (!solutionPrefs.config.webClient) {
+		//record was not in memory, turn off busy bar and busy cursor
+		if (recNotLoaded) {
+			globals.TRIGGER_progressbar_stop()
+			globals.CODE_cursor_busy(false)	
+		}
+		//changing record, finished turn off busy indicatar
+		else if (busyIndicator) {
+			globals.CODE_cursor_busy(false)	
+		}
 	}
-	//changing record, finished turn off busy indicatar
-	else if (busyIndicator) {
-		globals.CODE_cursor_busy(false)	
-	}
-	
-	//unhilite the current record (so highlighter spans entire row)
-//	globals.NAV_universal_list_select__unhilite()//navigationPrefs.byNavItemID[currentNavItem].listData.withButtons)
 	
 	//timed out, throw up error
 	if (solutionPrefs.config.prefs.thatsAllFolks) {
@@ -5039,16 +5044,17 @@ function NAV_universal_list_select() {
 function NAV_universal_list_select__unhilite()
 {
 	var withButtons = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.withButtons
-//		arguments[0]
 	
 	if (withButtons) {
 		//unhilite the current record (so highlighter spans entire row)
-		forms.NAV_T_universal_list.elements.fld_constant.requestFocus(false)
+		forms.NAV_T_universal_list.elements.fld_constant.requestFocus(true)
 	}
 	else {
 		//unhilite the current record (so highlighter spans entire row)
-		forms.NAV_T_universal_list__no_buttons.elements.fld_constant.requestFocus(false)
+		forms.NAV_T_universal_list__no_buttons.elements.fld_constant.requestFocus(true)
 	}
+	
+//	forms.DATASUTRA_WEB_0F__header.elements.fld_constant.requestFocus(false)
 }
 
 /**
@@ -6539,7 +6545,7 @@ function NAV_find_popdown_set(formName, hide) {
  *
  * @properties={typeid:24,uuid:"e4cac4d3-9c81-4dce-b624-dcbc788c8cbe"}
  */
-function NAV_row_background(index, selected, fieldType, fieldName, formName, fieldState)
+function NAV_universal_list_row_background(index, selected, fieldType, fieldName, formName, fieldState)
 {
 //	var index = arguments[0]
 //	var selected = arguments[1]

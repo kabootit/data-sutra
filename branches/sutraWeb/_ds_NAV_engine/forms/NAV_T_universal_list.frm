@@ -33,7 +33,7 @@ uuid:"1F4DD2D2-4ED2-4F88-B49F-23E09FCF683F"
 },
 {
 anchors:3,
-formIndex:12400,
+formIndex:5,
 imageMediaID:"da3ae159-9a0c-45f3-a85d-ece94f56c3e8",
 location:"103,2",
 mediaOptions:1,
@@ -52,10 +52,9 @@ uuid:"2E0FC287-86B6-40B3-AA18-46077F5700A9"
 {
 dataProviderID:"globals.CODE_constant_1",
 editable:false,
-formIndex:9999,
 location:"140,0",
 name:"fld_constant",
-onFocusGainedMethodID:"-1",
+onFocusGainedMethodID:"3559183E-6FFD-4EED-AB9D-AB758357C164",
 printable:false,
 size:"30,16",
 tabSeq:-2,
@@ -133,7 +132,7 @@ uuid:"3EECB3E9-F819-42A7-8025-AF2167789F6A"
 {
 anchors:11,
 borderType:"EmptyBorder,0,0,0,0",
-formIndex:10400,
+formIndex:2,
 imageMediaID:"50b57e9b-b95e-4188-bcfb-1f0f0936643d",
 location:"0,0",
 mediaOptions:6,
@@ -159,7 +158,7 @@ uuid:"4625EB99-A5E3-4942-AF29-5B7AE4253FE9"
 },
 {
 anchors:11,
-formIndex:10500,
+formIndex:3,
 location:"4,0",
 mediaOptions:14,
 name:"record_heading",
@@ -219,7 +218,7 @@ typeid:7,
 uuid:"73BB52AF-053F-4780-B2FC-ACD23885C4E8"
 },
 {
-formIndex:10900,
+formIndex:4,
 imageMediaID:"b36abb19-e724-42d1-ba87-ded2b2d8bf44",
 location:"4,2",
 mediaOptions:1,
@@ -242,7 +241,7 @@ typeid:19,
 uuid:"7C7816FF-4EEF-4CAD-AB1E-4A86055FB659"
 },
 {
-formIndex:10300,
+formIndex:1,
 location:"4,2",
 mediaOptions:14,
 name:"btn_display_down",
@@ -256,7 +255,6 @@ uuid:"87BDFD6A-EF71-4E4C-A879-161F6D2A2A8F"
 },
 {
 anchors:3,
-formIndex:10000,
 location:"103,2",
 mediaOptions:14,
 name:"btn_tabs_down",

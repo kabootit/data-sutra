@@ -2,10 +2,9 @@ items:[
 {
 dataProviderID:"globals.CODE_constant_1",
 editable:false,
-formIndex:9999,
 location:"140,0",
 name:"fld_constant",
-onFocusGainedMethodID:"-1",
+onFocusGainedMethodID:"C607E006-399A-497F-A290-A6C8612A4391",
 printable:false,
 size:"30,16",
 tabSeq:-2,
@@ -20,7 +19,6 @@ uuid:"3D6CF391-7CDD-45B6-8247-967A69B8DD0D"
 },
 {
 anchors:3,
-formIndex:10000,
 location:"103,2",
 mediaOptions:14,
 name:"btn_tabs_down",
@@ -33,7 +31,7 @@ typeid:7,
 uuid:"59D1A7EA-E870-4D1B-ADB4-BED718BE5F33"
 },
 {
-formIndex:10300,
+formIndex:1,
 location:"4,2",
 mediaOptions:14,
 name:"btn_display_down",
@@ -59,7 +57,7 @@ uuid:"7E4727B9-F103-404B-8630-3529F9437715"
 },
 {
 anchors:3,
-formIndex:12400,
+formIndex:5,
 imageMediaID:"da3ae159-9a0c-45f3-a85d-ece94f56c3e8",
 location:"103,2",
 mediaOptions:1,
@@ -77,7 +75,7 @@ uuid:"9B1B4617-932C-49B0-911A-1138A8043CE3"
 },
 {
 anchors:11,
-formIndex:10500,
+formIndex:3,
 location:"4,0",
 mediaOptions:14,
 name:"record_heading",
@@ -96,7 +94,7 @@ uuid:"AA72B568-8BD2-4F7F-B387-BFA71CA7A38E"
 {
 anchors:11,
 borderType:"EmptyBorder,0,0,0,0",
-formIndex:10400,
+formIndex:2,
 imageMediaID:"50b57e9b-b95e-4188-bcfb-1f0f0936643d",
 location:"0,0",
 mediaOptions:6,
@@ -109,7 +107,7 @@ typeid:7,
 uuid:"DC02C5F2-304E-4D30-A8BC-0A11A3B99D90"
 },
 {
-formIndex:10900,
+formIndex:4,
 imageMediaID:"b36abb19-e724-42d1-ba87-ded2b2d8bf44",
 location:"4,2",
 mediaOptions:1,

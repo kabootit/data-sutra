@@ -323,6 +323,7 @@ if (application.__parent__.solutionPrefs) {
 	myForm.onShow = solutionModel.getGlobalMethod('NAV_universal_list_show')
 	myForm.onRecordSelection = solutionModel.getGlobalMethod('NAV_universal_list_select')
 	myForm.onRender = solutionModel.getGlobalMethod('NAV_universal_list_render')
+//	myForm.rowBGColorCalculation = 'globals.NAV_universal_list_row_background'
 	
 	//get the UL data and set it up
 	var allULDisplays = navigationPrefs.byNavItemID[currentNavItem].universalList.displays
@@ -794,4 +795,16 @@ if (forms[formName]) {
 						formName
 						)
 }
+}
+
+/**
+ * Handle focus gained event of the element.
+ *
+ * @param {JSEvent} event the event that triggered the action
+ *
+ * @properties={typeid:24,uuid:"C607E006-399A-497F-A290-A6C8612A4391"}
+ */
+function UL_unfocus(event) {
+	elements.fld_constant.visible = false
+	elements.fld_constant.visible = true
 }
