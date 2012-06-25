@@ -2980,7 +2980,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
  *
  * @properties={typeid:24,uuid:"59E571C5-E375-4758-AFF9-24B8B577C3A6"}
  */
-function NAV_universal_list_render(event) {
+function NAV_universal_list_render(event) {return
 	var renderable = event.getRenderable()
 	
 	//use mac settings when not running in the shell
@@ -4944,7 +4944,7 @@ function NAV_universal_list_select() {
 //		plugins.WebClientUtils.executeClientSideJS('setTimeout(DS_universalList.scrollReset,1000);')
 //		plugins.WebClientUtils.executeClientSideJS('console.log("SERVER UL SELECT: ' + navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.tabFormInstance + '")')
 //	}
-	
+	return
 	var formName = solutionPrefs.config.currentFormName
 	var currentNavItem = solutionPrefs.config.currentFormID
 	var serverName = forms[formName].controller.getServerName()
@@ -5042,7 +5042,7 @@ function NAV_universal_list_select() {
  * @properties={typeid:24,uuid:"844fefbd-ae30-4c5f-897c-071fe0b21b7d"}
  */
 function NAV_universal_list_select__unhilite()
-{
+{return
 	var withButtons = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.withButtons
 	
 	if (withButtons) {
