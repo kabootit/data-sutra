@@ -591,7 +591,7 @@ if (application.__parent__.solutionPrefs) {
 	//set events
 	myForm.onShow = solutionModel.getGlobalMethod('NAV_universal_list_show')
 	myForm.onRecordSelection = solutionModel.getGlobalMethod('NAV_universal_list_select')
-	myForm.onRender = solutionModel.getGlobalMethod('NAV_universal_list_render')
+//	myForm.onRender = solutionModel.getGlobalMethod('NAV_universal_list_render')
 //	myForm.rowBGColorCalculation = 'globals.NAV_universal_list_row_background'
 	
 	//get the UL data and set it up

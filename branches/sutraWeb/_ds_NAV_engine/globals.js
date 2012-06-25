@@ -2537,7 +2537,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 							//set events
 							myForm.onShow = solutionModel.getGlobalMethod('NAV_universal_list_show')
 							myForm.onRecordSelection = solutionModel.getGlobalMethod('NAV_universal_list_select')
-							myForm.onRender = solutionModel.getGlobalMethod('NAV_universal_list_render')
+//							myForm.onRender = solutionModel.getGlobalMethod('NAV_universal_list_render')
 //							myForm.rowBGColorCalculation = 'globals.NAV_universal_list_row_background'
 							
 							//get the UL data and set it up
@@ -3021,16 +3021,16 @@ function NAV_universal_list_render(event) {
 		//white
 		renderable.fgcolor = '#FFFFFF'
 		
-		//selected
-		renderable.bgcolor = '#2367A8'
+		//selected (handled with style sheet)
+//		renderable.bgcolor = '#2367A8'
 		
 		//bold
 		renderable.font = fontSelect
 	}
 	//other rows
 	else {
-		//non-selected
-		renderable.bgcolor = '#D1D7E2'
+		//non-selected (handled with style sheet)
+//		renderable.bgcolor = '#D1D7E2'
 		
 		//not bold
 		renderable.font = fontUnselect
@@ -4255,7 +4255,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 					//set events
 					myForm.onShow = solutionModel.getGlobalMethod('NAV_universal_list_show')
 					myForm.onRecordSelection = solutionModel.getGlobalMethod('NAV_universal_list_select')
-					myForm.onRender = solutionModel.getGlobalMethod('NAV_universal_list_render')
+//					myForm.onRender = solutionModel.getGlobalMethod('NAV_universal_list_render')
 //					myForm.rowBGColorCalculation = 'globals.NAV_universal_list_row_background'
 					
 					//get the UL data and set it up
@@ -5041,8 +5041,7 @@ function NAV_universal_list_select() {
  *
  * @properties={typeid:24,uuid:"844fefbd-ae30-4c5f-897c-071fe0b21b7d"}
  */
-function NAV_universal_list_select__unhilite()
-{
+function NAV_universal_list_select__unhilite() {
 	var withButtons = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.withButtons
 	
 	if (withButtons) {
@@ -5053,8 +5052,6 @@ function NAV_universal_list_select__unhilite()
 		//unhilite the current record (so highlighter spans entire row)
 		forms.NAV_T_universal_list__no_buttons.elements.fld_constant.requestFocus(true)
 	}
-	
-//	forms.DATASUTRA_WEB_0F__header.elements.fld_constant.requestFocus(false)
 }
 
 /**
