@@ -1,24 +1,48 @@
 //	Update indicator to be new style
-function setIndicator() {
-	//$('#indicator' ).html('')
-	// 	
-	// 	//remove infoPanel if present
-	// 	$('#infoPanel').remove()
+function setIndicator(delay) {
+	var indicator = $('.indicator');
+	var toolbar = $("#form_DATASUTRA_WEB_0F__header__toolbar");
+	
+	//we have enough things loaded to actually run this method
+	if (toolbar.length && toolbar.width()) {
+		//280 is position of form, 20 is width of indicator, 15 is inset = 245
+		var offset = 245 + toolbar.width() + 'px';
+	
+		console.log('SET: ' + offset);
+	
+		//in the wrong place, readjust
+		if (indicator.css('margin-left') != offset) {
+			//put indicator into toolbar area
+			indicator.css('left','0px');
+			indicator.css('margin-left',offset);
+			indicator.css('margin-top','8px');
+		}
+	}
+	//run this function again until enough loaded
+	else {
+		setTimeout(function(){
+			setIndicator(delay)
+		},delay || 250)
+		console.log('SET waiting....');
+	}
 }
 
 //	Center the login form
 function centerForm(formName) {
-	setTimeout(function(){
-		var selector = $("#form_" + formName);
+	var selector = $("#form_" + formName);
+	
+	if (selector.length) {
+		selector.css({width: '50%', margin: '0px auto'});
+		console.log('CENTERED');
 		
-		if (selector.length) {
-			selector.css({width: '50%', margin: '0px auto'});
-			console.log('CENTERED');
+		//if running in wrapper
+		if (window.parent.viewForm) {
+			window.parent.viewForm(true);
 		}
-		else {
-			console.log('CENTER: Nothing found here: ' + formName);
-		}
-	},100)
+	}
+	else {
+		console.log('CENTER: Nothing found here: ' + formName);
+	}
 }
 
 //  Include spinny indicator after jquery is available
@@ -35,15 +59,18 @@ function centerForm(formName) {
 	//part 2: set up indicator
 	setTimeout(function(){
 		$('#indicator').html('');
+		$('#indicator').css('position','absolute');
+		$('#indicator').css('width','20px');
+		$('#indicator').css('height','20px');
+		$('#indicator').css('z-index','1000');
 		$('#indicator').activity({segments: 12, align: 'left', valign: 'top', steps: 3, width:2, space: 1, length: 3, color: '#030303', speed: 1.5});
 		// $('#indicator').activity({segments: 12, width: 5.5, space: 6, length: 13, color: '#252525', speed: 1.5, outside:true});
-		$('sutraBusy')
+		// sutraBusy is id for this indicator: $('#sutraBusy');
 	},1500)
 })();
 
 //	Extend jquery to be able to remove styles (http://stackoverflow.com/questions/2465158/possible-to-remove-inline-styles-with-jquery)
-(function($)
-{
+(function($) {
     $.fn.removeStyle = function(style)
     {
         var search = new RegExp(style + '[^;]+;?', 'g');

@@ -1,135 +1,39 @@
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>Data Sutra</title>
-<meta http-equiv="Content-Type" content="text/html;">
-<!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" /> -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <script type="text/javascript" src="/ds/js/native.history.js"></script>
+<script type="text/javascript" src="/ds/js/router.js"></script>
 <style type="text/css">
 	body {
 		margin: 0px;
 	}
+	#blocker {
+		position: absolute; 
+		left: 0px; 
+		right: 0px; 
+		top: 0px; 
+		bottom: 0px; 
+		z-index: 999999; 
+		background-color: #323A4B; 
+		opacity:0.6; 
+		filter:alpha(opacity=60); /* ie <=8 */
+		display: none;
+	}
+	#sutra {
+		position: absolute; 
+		left: 0px; 
+		right: 0px; 
+		top: 0px; 
+		bottom: 0px;
+/*		display: none;*/
+	}
 </style>
 </head>
 <body>
-<div id="sutra"></div>
-
-<script>
-	// set up history handling
-	(function(window,undefined){
-
-	    // Prepare
-	    var History = window.History;
-	    if ( !History.enabled ) {
-	        return false;
-	    }
-
-	    // listener for using browser back/forward buttons
-	    History.Adapter.bind(window,'statechange',function(){ 
-			var State = History.getState();
-			History.log(State.data, State.title, State.url);
-			if (!State.data.server) {
-				// run the router with history data instead of url
-				router(State.data.url);
-			}
-	    });
-
-	})(window);
-	
-	// set up switcheroo for initial 'Loading...' thing
-	(function() {
-		function checkStat() {
-			if (window.frames['wc'] && window.frames['wc'].window && window.frames['wc'].window.document && window.frames['wc'].window.document.getElementsByTagName('body').length &&  window.frames['wc'].window.document.getElementsByTagName('body')[0].getAttribute('onload') == "javascript:submitform();") {
-				window.frames['wc'].window.document.getElementById('loading').innerHTML = 'Data Sutra :: Please wait...';
-			}
-			// keep running until changed once
-			else {
-				setTimeout(checkStat,50);
-			}
-		}
-		
-		// start first time
-		setTimeout(checkStat,25);
-	})();
-	
-	
-	// center login form
-	function centerForm(formName) {
-		window.frames['wc'].window.centerForm(formName)
-	}
-	
-	// call method in iframe if doesn't exist
-	function triggerAjaxUpdate() {
-		window.frames['wc'].window.triggerAjaxUpdate(arguments[0],arguments[1],arguments[2],arguments[3])
-	}
-	
-	// delay running of router until webclient form loaded in
-	function routerDelay(p1,p2,p3,p4) {
-		setTimeout(function(){History.pushState(p1,p2,p3)},p4);
-	}
-	
-	function reloadPage() {
-		setTimeout(function(){window.location.reload(true)},2500);
-	}
-	
-  	function router(data) {
-		// handle params
-		var append 		= "";
-		if ( data ) {
-			// params passed in
-			append = data;
-		}
-		else {
-			// params in URL
-			var iframeEl 	= document.getElementById('sutra');
-			var url 		= window.location.pathname;
-			// strip trailing slash
-			url 			= ( url.charAt(url.length - 1) === "/" ) ? url.substr(0, url.length - 1) : url;
-			var urlElements = url.split('/').slice(2);
-			for (var x = 0; x < urlElements.length; x++) {
-				append += urlElements[x] + "/";
-				if ( x != urlElements.length - 1 ) {
-					append += "p" + (x + 1) + "/";
-				}
-			}
-		}
-		
-		// login url requested, specify what to do
-		if (append == 'login/') {
-			append = 'DSLogin/';
-		}
-		// login url requested, specify what to do
-		else if (append == 'logout/') {
-			append = 'DSLogout/';
-		}
-		// check that append has a value, otherwise show error page
-		else if (!append) {
-			append = 'DSError_NoURL/';
-		}
-		
-		// temporary logging
-		// console.log(History.getState().data);
-		
-		// swc iframe setup
-		var iframeHeaderCell = document.getElementById('sutra');
-		iframeHeaderCell.innerHTML = "";
-		var dynamicURL = "/servoy-webclient/ss/s/__DATASUTRA__/m/DS_router/a/" + append;
-		var iframeHeader = document.createElement('IFRAME');
-		iframeHeader.id = 'wc';
-		iframeHeader.src = dynamicURL ;
-		iframeHeader.width = '100%';
-		iframeHeader.height = '100%';
-		iframeHeader.scrolling = 'yes';
-		iframeHeader.frameBorder = 0;
-		// iframe load
-		iframeHeaderCell.appendChild(iframeHeader);	
-		
-	};
-	
-	// run router first time
-	router();	 	
-	
-</script>
-
+	<div id="blocker"></div>
+	<div id="sutra"></div>
 </body>
 </html>
