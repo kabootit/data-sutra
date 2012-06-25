@@ -5138,7 +5138,7 @@ function DS_router(p1,params,itemID,logout) {
 	var delay = 0
 	
 	//
-	var routerCall = 'window.parent.History.replaceState'
+	var routerCall = 'window.parent.routerReplace'
 	
 	function getURL(alt) {
 		var urlString = '/ds/'
@@ -5280,7 +5280,7 @@ function DS_router(p1,params,itemID,logout) {
 		// particular item specified
 		if (url.set && url.item) {
 			// this item exists
-			if (nav[url.set][url.item]) {
+			if (nav[url.set] && nav[url.set][url.item]) {
 				itemID = nav[url.set][url.item].navItemID
 			}
 			else {
@@ -5322,6 +5322,7 @@ function DS_router(p1,params,itemID,logout) {
 		// make sure on correct top level form
 		if (history.getFormName(history.getCurrentIndex()) != 'DATASUTRA_WEB_0F') {
 			history.go(-1)
+			history.clear()
 		}
 	}
 	// something happened, error out
