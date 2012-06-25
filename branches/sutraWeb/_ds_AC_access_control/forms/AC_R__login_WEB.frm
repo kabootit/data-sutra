@@ -142,6 +142,7 @@ uuid:"B4828071-070F-4FD3-A00C-A1C8D7E58E76"
 },
 {
 location:"260,235",
+name:"btn_login",
 onActionMethodID:"5B798C58-937C-4967-82CC-1C59FF1F5D95",
 rolloverCursor:12,
 showClick:false,

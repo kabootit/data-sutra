@@ -140,12 +140,15 @@ function RESET(event) {
 function FORM_on_show(firstShow, event) {
 	if (firstShow) {
 		plugins.WebClientUtils.setExtraCssClass(elements.var_dialog, 'dialogDS')
+		plugins.WebClientUtils.setExtraCssClass(elements.btn_login, 'loginDS')
 		_shown = true
 	}
 	
 	// attach style to form to center it
-	// $("#form_AC_R__login_WEB").css({width: '50%', margin: '0px auto'});
 	plugins.WebClientUtils.executeClientSideJS('centerForm("' + controller.getName() + '");')
+	
+	// move indicator to beside the login button
+	plugins.WebClientUtils.executeClientSideJS('loginIndicator(500);')
 	
 	elements.var_userName.requestFocus()
 }
