@@ -1,4 +1,4 @@
-//	Update indicator to be new style
+//	Update indicator to be new style (in the toolbar)
 function setIndicator(delay) {
 	var indicator = $('.indicator');
 	var toolbar = $("#form_DATASUTRA_WEB_0F__header__toolbar");
@@ -24,6 +24,28 @@ function setIndicator(delay) {
 			setIndicator(delay)
 		},delay || 250)
 		console.log('SET waiting....');
+	}
+}
+
+//	Update indicator to be new style (next to login button)
+function loginIndicator(delay) {
+	var indicator = $('.indicator');
+	var loginButton = $('.loginDS');
+	
+	//we have enough things loaded to actually run this method
+	if (loginButton.length && loginButton.offset()) {
+		//put indicator next to toolbar button
+		indicator.offset({
+				top: loginButton.offset().top, 
+				left: loginButton.offset().left - 30
+			})
+	}
+	//run this function again until enough loaded
+	else {
+		setTimeout(function(){
+			loginIndicator(delay)
+		},delay || 250)
+		console.log('LOGIN waiting....');
 	}
 }
 
