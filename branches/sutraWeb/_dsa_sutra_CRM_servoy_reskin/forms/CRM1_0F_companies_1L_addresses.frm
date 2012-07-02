@@ -157,7 +157,6 @@ valuelistID:"20963306-9a60-4bf6-a1c1-ce31da054f7b"
 ],
 name:"CRM1_0F_companies_1L_addresses",
 paperPrintScale:100,
-rowBGColorCalculation:"globals.CODE_row_background",
 scrollbars:33,
 size:"758,75",
 styleName:"_DATASUTRA_",

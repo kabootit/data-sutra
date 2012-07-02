@@ -58,7 +58,6 @@ uuid:"c30fdb57-2ab0-4396-a452-ea55b4f73b29"
 name:"CRM1_0F_contacts_1L_addresses",
 navigatorID:"-1",
 paperPrintScale:100,
-rowBGColorCalculation:"globals.CODE_row_background",
 scrollbars:33,
 size:"200,32",
 styleName:"_DATASUTRA_",

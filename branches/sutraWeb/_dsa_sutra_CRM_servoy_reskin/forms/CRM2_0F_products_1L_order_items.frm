@@ -149,7 +149,6 @@ uuid:"fd007ea9-bc3c-4693-89d8-b1da19601fa0"
 ],
 name:"CRM2_0F_products_1L_order_items",
 paperPrintScale:100,
-rowBGColorCalculation:"globals.CODE_row_background",
 scrollbars:33,
 size:"758,194",
 styleName:"_DATASUTRA_",

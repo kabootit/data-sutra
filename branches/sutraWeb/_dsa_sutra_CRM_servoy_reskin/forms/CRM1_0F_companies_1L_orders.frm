@@ -164,7 +164,6 @@ uuid:"c0a5f102-fd68-47f9-8879-f96b4739f17c"
 ],
 name:"CRM1_0F_companies_1L_orders",
 paperPrintScale:100,
-rowBGColorCalculation:"globals.CODE_row_background",
 scrollbars:33,
 size:"758,195",
 styleName:"_DATASUTRA_",

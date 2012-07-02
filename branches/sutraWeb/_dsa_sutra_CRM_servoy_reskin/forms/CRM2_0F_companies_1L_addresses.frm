@@ -130,7 +130,6 @@ uuid:"fbbfafc2-7c8a-48dd-8117-56bcc9944ac4"
 ],
 name:"CRM2_0F_companies_1L_addresses",
 paperPrintScale:100,
-rowBGColorCalculation:"globals.CODE_row_background",
 scrollbars:33,
 size:"758,75",
 styleName:"_DATASUTRA_",

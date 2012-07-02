@@ -164,7 +164,6 @@ uuid:"e53d54c2-99a2-41e7-a139-b177d9542566"
 ],
 name:"CRM1_0F_companies_1L_contacts",
 paperPrintScale:100,
-rowBGColorCalculation:"globals.CODE_row_background",
 scrollbars:33,
 size:"758,75",
 styleName:"_DATASUTRA_",
