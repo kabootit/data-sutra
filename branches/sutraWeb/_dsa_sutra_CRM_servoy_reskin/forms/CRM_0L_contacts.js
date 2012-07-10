@@ -59,7 +59,7 @@ function ACTIONS_list_control()
 
 switch (arguments[0]) {
 	case 0:	//adjust status
-		var newStatus = plugins.dialogs.showSelectDialog( 'Change contact status',  'Please set the contact status',  'Active', 'Inactive')
+		var newStatus = globals.DIALOGS.showSelectDialog( 'Change contact status',  'Please set the contact status',  'Active', 'Inactive')
 		if (newStatus == 'Active') {
 			is_active = 1
 		}
@@ -68,7 +68,7 @@ switch (arguments[0]) {
 		}
 		break
 	case 2:	//delete something
-		var delRec = plugins.dialogs.showWarningDialog('Delete record','Do you really want to delete this record?','Yes','No')
+		var delRec = globals.DIALOGS.showWarningDialog('Delete record','Do you really want to delete this record?','Yes','No')
 		if (delRec == 'Yes') {
 			controller.deleteRecord()
 		}		

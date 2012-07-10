@@ -59,7 +59,7 @@ function ACTIONS_list_control()
 
 switch (arguments[0]) {
 	case 0:	//adjust status
-		var newStatus = plugins.dialogs.showSelectDialog( 'Change product status',  'Please set the correct status',  'Active', 'Inactive')
+		var newStatus = globals.DIALOGS.showSelectDialog( 'Change product status',  'Please set the correct status',  'Active', 'Inactive')
 		if (newStatus == 'Active') {
 			is_active = 1
 		}
@@ -90,7 +90,7 @@ switch (arguments[0]) {
 					//there will be no display
 					image_thumbnail = null
 					//show error message!
-					plugins.dialogs.showWarningDialog('<html>This is<b> NOT an image file!</b><br>Please select a different file.</html>','OK')
+					globals.DIALOGS.showWarningDialog('<html>This is<b> NOT an image file!</b><br>Please select a different file.</html>','OK')
 					return
 				}
 				
@@ -109,7 +109,7 @@ switch (arguments[0]) {
 	case 2:	//delete image
 		if (product_image) {
 			//show a warning dialog
-			var delImage = plugins.dialogs.showWarningDialog('Delete image','Are you sure you want to delete this image?','Cancel','Delete')
+			var delImage = globals.DIALOGS.showWarningDialog('Delete image','Are you sure you want to delete this image?','Cancel','Delete')
 			if (delImage == 'Delete') {
 				image_mime_type = null
 				image_name = null
@@ -121,7 +121,7 @@ switch (arguments[0]) {
 		}
 		break
 	case 4:	//delete record
-		var delRec = plugins.dialogs.showWarningDialog('Delete record','Do you really want to delete this record?','Yes','No')
+		var delRec = globals.DIALOGS.showWarningDialog('Delete record','Do you really want to delete this record?','Yes','No')
 		if (delRec == 'Yes') {
 			controller.deleteRecord()
 		}		

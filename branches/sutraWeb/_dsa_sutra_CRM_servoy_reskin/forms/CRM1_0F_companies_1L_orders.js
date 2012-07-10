@@ -87,7 +87,7 @@ if (addrCnt && contCnt) {
 }
 else if (addrCnt == 0) {
 	//show error
-	plugins.dialogs.showErrorDialog(
+	globals.DIALOGS.showErrorDialog(
 					'Missing address',
 					'There needs to be at least one address defined for this customer before you can create an order.',
 					'OK')
@@ -96,7 +96,7 @@ else if (addrCnt == 0) {
 }
 else if (contCnt == 0) {
 	//show error
-	plugins.dialogs.showErrorDialog(
+	globals.DIALOGS.showErrorDialog(
 					'Missing contact',
 					'There needs to be at least one contact defined for this customer before you can create an order.',
 					'OK')

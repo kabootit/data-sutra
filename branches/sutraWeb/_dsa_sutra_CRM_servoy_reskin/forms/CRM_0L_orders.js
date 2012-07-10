@@ -59,7 +59,7 @@ function ACTIONS_list_control()
 
 switch (arguments[0]) {
 	case 0:	//toggle status
-		var newStatus = plugins.dialogs.showSelectDialog( 'Change order status',  'Please set the order status',  'Open', 'Closed')
+		var newStatus = globals.DIALOGS.showSelectDialog( 'Change order status',  'Please set the order status',  'Open', 'Closed')
 		if (newStatus == 'Open') {
 			is_active = 1
 		}
@@ -68,7 +68,7 @@ switch (arguments[0]) {
 		}		
 		break
 	case 2:	//delete something
-		var delRec = plugins.dialogs.showWarningDialog('Delete record','Do you really want to delete this record?','Yes','No')
+		var delRec = globals.DIALOGS.showWarningDialog('Delete record','Do you really want to delete this record?','Yes','No')
 		if (delRec == 'Yes') {
 			controller.deleteRecord()
 		}		
@@ -217,10 +217,10 @@ if (addrCnt && contCnt) {
 }
 else if(addrCnt == 0) {
 	//show error
-	plugins.dialogs.showErrorDialog('Missing address','There needs to be at least one address defined for this customer before you can create an order.',  'OK')
+	globals.DIALOGS.showErrorDialog('Missing address','There needs to be at least one address defined for this customer before you can create an order.',  'OK')
 }
 else if(contCnt == 0) {
 	//show error
-	plugins.dialogs.showErrorDialog('Missing contact','There needs to be at least one contact defined for this customer before you can create an order.',  'OK')
+	globals.DIALOGS.showErrorDialog('Missing contact','There needs to be at least one contact defined for this customer before you can create an order.',  'OK')
 }
 }

@@ -33,7 +33,7 @@ function REC_delete()
  *			  	
  */
 
-var delRec = plugins.dialogs.showWarningDialog(
+var delRec = globals.DIALOGS.showWarningDialog(
 				'Delete record',
 				'Do you really want to delete this contact?',
 				'Yes',
@@ -141,7 +141,7 @@ function STATUS_adjust()
  */
 
 if (utils.hasRecords(foundset)) {
-	var newStatus = plugins.dialogs.showSelectDialog(
+	var newStatus = globals.DIALOGS.showSelectDialog(
 						'Change contact status',
 						'Please set the contact status',
 						'Active',

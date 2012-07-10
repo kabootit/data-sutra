@@ -161,7 +161,7 @@ function REC_delete()
  *			  	
  */
 
-var delRec = plugins.dialogs.showWarningDialog(
+var delRec = globals.DIALOGS.showWarningDialog(
 				'Delete record',
 				'Do you really want to delete this order?',
 				'Yes',
@@ -235,14 +235,14 @@ if (addrCnt && contCnt) {
 }
 else if (addrCnt == 0) {
 	//show error
-	plugins.dialogs.showErrorDialog(
+	globals.DIALOGS.showErrorDialog(
 					'Missing address',
 					'There needs to be at least one address defined for this customer before you can create an order.',
 					'OK')
 }
 else if (contCnt == 0) {
 	//show error
-	plugins.dialogs.showErrorDialog(
+	globals.DIALOGS.showErrorDialog(
 					'Missing contact',
 					'There needs to be at least one contact defined for this customer before you can create an order.',
 					'OK')
@@ -319,7 +319,7 @@ function STATUS_adjust()
  */
 
 if (utils.hasRecords(foundset)) {
-	var newStatus = plugins.dialogs.showSelectDialog(
+	var newStatus = globals.DIALOGS.showSelectDialog(
 						'Change order status',
 						'Please set the correct status',
 						'Open',
