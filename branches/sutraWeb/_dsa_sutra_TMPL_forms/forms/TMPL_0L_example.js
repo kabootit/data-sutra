@@ -93,7 +93,7 @@ switch (arguments[0]) {
 		
 		break
 	case 3:	//delete something
-		var delRec = plugins.dialogs.showWarningDialog('Delete record','Do you really want to delete this record?','Yes','No')
+		var delRec = globals.DIALOGS.showWarningDialog('Delete record','Do you really want to delete this record?','Yes','No')
 		if (delRec == 'Yes') {
 			controller.deleteRecord()
 		}		
@@ -176,6 +176,7 @@ elements[btnInvisible].setLocation(currentLocationX, currentLocationY)
 /**
  *
  * @properties={typeid:24,uuid:"6cea1a83-9de1-4200-9b8c-507a090ba310"}
+ * @AllowToRunInFind
  */
 function FILTERS_list_control()
 {
