@@ -239,7 +239,7 @@ if (flag_done) {
 	date_completed = application.getServerTimeStamp()
 }
 else if (date_completed && !flag_done) {
-	var answer = plugins.dialogs.showWarningDialog(
+	var answer = globals.DIALOGS.showWarningDialog(
 						'Re-open task item?',
 						'The selected task item has already been closed.  Re-open?',
 						'Yes',

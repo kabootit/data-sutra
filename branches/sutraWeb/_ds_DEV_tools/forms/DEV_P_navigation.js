@@ -62,7 +62,7 @@ if (globals.DEV_P_navigation) {
 	globals.CODE_form_in_dialog_close('printOverviewSimple')
 }
 else {
-	plugins.dialogs.showErrorDialog('Nothing selected', 'You must choose one or more navigation sets','OK')
+	globals.DIALOGS.showErrorDialog('Nothing selected', 'You must choose one or more navigation sets','OK')
 }
 }
 

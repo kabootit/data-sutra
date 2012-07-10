@@ -32,14 +32,14 @@ if (utils.hasRecords(fsNote)) {
 	var record = fsNote.getRecord(fsNote.getSelectedIndex())
 	
 	//no file attached or ok to overwrite
-	if (!record.flag_file || plugins.dialogs.showWarningDialog('Overwrite file','This spec note already has an attached file.\nDo you want to overwrite it?','Yes','No') == 'Yes') {
+	if (!record.flag_file || globals.DIALOGS.showWarningDialog('Overwrite file','This spec note already has an attached file.\nDo you want to overwrite it?','Yes','No') == 'Yes') {
 		globals.CODE_file_import(null,record)
 		
 		forms.DEV_0L_specification.REC_on_select()
 	}
 }
 else {
-	plugins.dialogs.showErrorDialog(
+	globals.DIALOGS.showErrorDialog(
 			'Upload error',
 			'There are no specifications to upload a file to'
 		)
@@ -84,14 +84,14 @@ if (utils.hasRecords(fsNote)) {
 		globals.CODE_file_open(record.file_blob,record.file_name,record.file_ext)
 	}
 	else {
-		plugins.dialogs.showErrorDialog(
+		globals.DIALOGS.showErrorDialog(
 				'No file',
 				'There is not a file attached to this specification record'
 			)
 	}
 }
 else {
-	plugins.dialogs.showErrorDialog(
+	globals.DIALOGS.showErrorDialog(
 			'Record error',
 			'There are no specification note records'
 		)
@@ -138,7 +138,7 @@ function REC_delete()
 var fsNote = forms.DEV_0L_specification.foundset
 
 if (utils.hasRecords(fsNote)) {
-	var delRec = plugins.dialogs.showWarningDialog(
+	var delRec = globals.DIALOGS.showWarningDialog(
 					'Delete record',
 					'Do you really want to delete this record?',
 					'Yes',
@@ -150,7 +150,7 @@ if (utils.hasRecords(fsNote)) {
 	}
 }
 else {
-	plugins.dialogs.showErrorDialog(
+	globals.DIALOGS.showErrorDialog(
 			'Delete error',
 			'There are no records to delete'
 		)

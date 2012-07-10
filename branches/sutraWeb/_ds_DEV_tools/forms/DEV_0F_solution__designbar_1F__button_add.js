@@ -116,14 +116,14 @@ if (!results) {
 
 //disable adding a method to a divider
 if (forms[formName].menu_name && (forms[formName].menu_name == '-' || utils.stringPatternCount(forms[formName].menu_name, '---') > 0)) {
-	plugins.dialogs.showErrorDialog(
+	globals.DIALOGS.showErrorDialog(
 					'Divider error',
 					'You cannot assign code to a divider'
 				)
 }
 //check if it is possible to assign a method
 else if (!forms[formName].menu_name) {
-	plugins.dialogs.showErrorDialog(
+	globals.DIALOGS.showErrorDialog(
 				'Error',
 				'You must create and name a menu item first',
 				'OK'

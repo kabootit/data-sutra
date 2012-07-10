@@ -162,7 +162,7 @@ if (display_default) {
 }
 else {
 	display_default = 1
-	plugins.dialogs.showErrorDialog(
+	globals.DIALOGS.showErrorDialog(
 				'Missing default display', 
 				'There must be a default display when using the universal list', 
 				'OK'

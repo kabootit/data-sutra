@@ -127,14 +127,14 @@ if (utils.hasRecords(foundset)) {
 		globals.CODE_file_open(record.file_blob,record.file_name,record.file_ext)
 	}
 	else {
-		plugins.dialogs.showErrorDialog(
+		globals.DIALOGS.showErrorDialog(
 					'Attachment error',
 					'No file is attached to this specification item'
 				)
 	}
 }
 else {
-	plugins.dialogs.showErrorDialog(
+	globals.DIALOGS.showErrorDialog(
 				'No record error',
 				'No file is attached to this specification item'
 			)

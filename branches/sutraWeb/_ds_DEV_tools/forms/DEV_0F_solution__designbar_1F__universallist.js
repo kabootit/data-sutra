@@ -284,7 +284,7 @@ var relnName = 'nav_list_display_to_navigation_item'
 var fsListDisplay = forms.DEV_0L_list_display.foundset
 
 if (utils.hasRecords(fsListDisplay)) {
-	var delRec = plugins.dialogs.showWarningDialog(
+	var delRec = globals.DIALOGS.showWarningDialog(
 					'Delete record',
 					'Do you really want to delete this record?',
 					'Yes',
@@ -316,7 +316,7 @@ if (utils.hasRecords(fsListDisplay)) {
 	}
 }
 else {
-	plugins.dialogs.showErrorDialog(
+	globals.DIALOGS.showErrorDialog(
 			'Delete error',
 			'There are no records to delete'
 		)

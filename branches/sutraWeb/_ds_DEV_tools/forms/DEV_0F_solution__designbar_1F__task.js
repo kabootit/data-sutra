@@ -50,7 +50,7 @@ function REC_delete()
 var fsNote = forms.DEV_0L_task.foundset
 
 if (utils.hasRecords(fsNote)) {
-	var delRec = plugins.dialogs.showWarningDialog(
+	var delRec = globals.DIALOGS.showWarningDialog(
 					'Delete record',
 					'Do you really want to delete this record?',
 					'Yes',
@@ -62,7 +62,7 @@ if (utils.hasRecords(fsNote)) {
 	}
 }
 else {
-	plugins.dialogs.showErrorDialog(
+	globals.DIALOGS.showErrorDialog(
 			'Delete error',
 			'There are no records to delete'
 		)

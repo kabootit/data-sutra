@@ -4,7 +4,7 @@
  */
 function PRINT_feedback()
 {
-plugins.dialogs.showInfoDialog('Coming soon','The feedback report is coming soon...')
+globals.DIALOGS.showInfoDialog('Coming soon','The feedback report is coming soon...')
 }
 
 /**
@@ -13,7 +13,7 @@ plugins.dialogs.showInfoDialog('Coming soon','The feedback report is coming soon
  */
 function PRINT_overview_detailed()
 {
-plugins.dialogs.showInfoDialog('Coming soon','The detailed navigation reports is coming soon...')
+globals.DIALOGS.showInfoDialog('Coming soon','The detailed navigation reports is coming soon...')
 }
 
 /**
@@ -94,7 +94,7 @@ if (navIDs && navIDs.length) {
 	
 }
 else {
-	plugins.dialogs.showErrorDialog('No report','No navigation sets were selected to report on')
+	globals.DIALOGS.showErrorDialog('No report','No navigation sets were selected to report on')
 }
 }
 
@@ -257,11 +257,11 @@ if (navIDs && navIDs.length) {
 		forms.DEV_RPT_developer_notes__spec.controller.showPrintPreview()
 	}
 	else {
-		plugins.dialogs.showErrorDialog('No report','There are no specs for the selected navigation sets')
+		globals.DIALOGS.showErrorDialog('No report','There are no specs for the selected navigation sets')
 	}
 }
 else {
-	plugins.dialogs.showErrorDialog('No report','No navigation sets were selected to report on')
+	globals.DIALOGS.showErrorDialog('No report','No navigation sets were selected to report on')
 }
 }
 
@@ -402,11 +402,11 @@ if (navIDs && navIDs.length) {
 		forms.DEV_RPT_developer_notes__task.controller.showPrintPreview()
 	}
 	else {
-		plugins.dialogs.showErrorDialog('No report','There are no tasks for the selected navigation sets')
+		globals.DIALOGS.showErrorDialog('No report','There are no tasks for the selected navigation sets')
 	}
 }
 else {
-	plugins.dialogs.showErrorDialog('No report','No navigation sets were selected to report on')
+	globals.DIALOGS.showErrorDialog('No report','No navigation sets were selected to report on')
 }
 }
 
