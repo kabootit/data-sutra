@@ -59,7 +59,7 @@ if (solutionPrefs.clientInfo.typeServoy == 'developer') {
 	var input = 'Yes'
 }
 else {
-	var input = plugins.dialogs.showQuestionDialog('Restart now?','Servoy will automatically restart after creating the checksum.  Continue?','Yes','No')
+	var input = globals.DIALOGS.showQuestionDialog('Restart now?','Servoy will automatically restart after creating the checksum.  Continue?','Yes','No')
 	var restart = true
 }
 
@@ -163,7 +163,7 @@ if (navPrefs) {
 }
 //throw up warning
 else {
-	plugins.dialogs.showErrorDialog('Error','There has been an error with the '+group.group_name+' group')
+	globals.DIALOGS.showErrorDialog('Error','There has been an error with the '+group.group_name+' group')
 }
 
 

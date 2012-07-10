@@ -36,7 +36,7 @@ globals.TRIGGER_tooltip_set()
 function UTIL_convert_button_method()
 {
 
-var answer = plugins.dialogs.showQuestionDialog(
+var answer = globals.DIALOGS.showQuestionDialog(
 				'Update Buttons?',
 				'<html>Do you want to update all buttons to the new naming convention?<br>' +
 				'NOTE: This only needs to be done once.',
@@ -92,7 +92,7 @@ if (answer == 'Yes') {
 	//busy off
 	globals.CODE_cursor_busy(false)
 	
-	plugins.dialogs.showInfoDialog('Finished Button conversion','All your buttons have been updated.','OK')
+	globals.DIALOGS.showInfoDialog('Finished Button conversion','All your buttons have been updated.','OK')
 }
 }
 
@@ -103,7 +103,7 @@ if (answer == 'Yes') {
 function UTIL_convert_ul_to_percent()
 {
 
-var answer = plugins.dialogs.showQuestionDialog(
+var answer = globals.DIALOGS.showQuestionDialog(
 					'Update all ULs?',
 					'<html>Do you want to update all ULs to the new percentage based model?<br>' +
 					'NOTE: This only needs to be done once.',
@@ -119,7 +119,7 @@ if (answer == 'Yes') {
 		forms[formName].UTIL_convert_to_percent()
 	}
 	
-	plugins.dialogs.showInfoDialog('Finished UL conversion','All your ULs have been updated.','OK')
+	globals.DIALOGS.showInfoDialog('Finished UL conversion','All your ULs have been updated.','OK')
 }
 }
 
@@ -130,7 +130,7 @@ if (answer == 'Yes') {
 function UTIL_generate_uuid()
 {
 
-var answer = plugins.dialogs.showQuestionDialog(
+var answer = globals.DIALOGS.showQuestionDialog(
 				'Generate UUIDs?',
 				'<html>If no UUIDs have been assigned to the Data Sutra <br>' +
 				'meta data, they will be auto-generated.  Proceed?<br><br>' +
@@ -169,7 +169,7 @@ if (answer == 'Yes') {
 	//busy off
 	globals.CODE_cursor_busy(false)
 	
-	plugins.dialogs.showInfoDialog('Find defaults set','The default find column has been set to "' + defaultFind + '".','OK')
+	globals.DIALOGS.showInfoDialog('Find defaults set','The default find column has been set to "' + defaultFind + '".','OK')
 }
 
 
@@ -182,7 +182,7 @@ if (answer == 'Yes') {
 function UTIL_overwrite_find_default()
 {
 
-var answer = plugins.dialogs.showQuestionDialog(
+var answer = globals.DIALOGS.showQuestionDialog(
 				'Set find default?',
 				'<html>Do you want to overwrite the default find field for <br>' +
 				'all navigation items or only navigation items with no default find field?',
@@ -192,7 +192,7 @@ var answer = plugins.dialogs.showQuestionDialog(
 
 if (answer) {
 	
-	var defaultFind = plugins.dialogs.showQuestionDialog(
+	var defaultFind = globals.DIALOGS.showQuestionDialog(
 				'Default type',
 				'What should the default find type be?',
 				'All text',
@@ -234,7 +234,7 @@ if (answer) {
 	//busy off
 	globals.CODE_cursor_busy(false)
 	
-	plugins.dialogs.showInfoDialog('Find defaults set','The default find column has been set to "' + defaultFind + '".','OK')
+	globals.DIALOGS.showInfoDialog('Find defaults set','The default find column has been set to "' + defaultFind + '".','OK')
 }
 
 
@@ -248,7 +248,7 @@ if (answer) {
 function UTIL_toolbar_upgrade()
 {
 
-var answer = plugins.dialogs.showQuestionDialog(
+var answer = globals.DIALOGS.showQuestionDialog(
 				'Upgrade toolbars?',
 				'<html>Do you want to upgrade all existing toolbars <br>' +
 				'to be of type toolbar?',
@@ -275,7 +275,7 @@ if (answer == 'Yes') {
 	//busy off
 	globals.CODE_cursor_busy(false)
 	
-	plugins.dialogs.showInfoDialog('Toolbars upgraded','All toolbars have been upgraded to support sidebars','OK')
+	globals.DIALOGS.showInfoDialog('Toolbars upgraded','All toolbars have been upgraded to support sidebars','OK')
 }
 
 

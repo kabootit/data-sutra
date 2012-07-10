@@ -112,14 +112,14 @@ else if (license_type == 'Community') {
 	}
 }
 else if (license_type == 'Trial') {
-	plugins.dialogs.showErrorDialog(
+	globals.DIALOGS.showErrorDialog(
 					'Licensing error',
 					'Trial mode cannot be licensed'
 			)
 	return
 }
 else if (!license_type) {
-	plugins.dialogs.showErrorDialog(
+	globals.DIALOGS.showErrorDialog(
 					'Licensing error',
 					'Only a purchased license can have a key'
 			)
@@ -128,7 +128,7 @@ else if (!license_type) {
 
 //	/* for debugging
 application.setClipboardContent(licenseKey[0].toString())
-plugins.dialogs.showInfoDialog(
+globals.DIALOGS.showInfoDialog(
 	'License code',
 	license_name + ' keys: \n' + licenseKey.join('\n')
 )
@@ -380,7 +380,7 @@ if (utils.hasRecords(foundset)) {
 		solutionPrefs.config.trialMode = true
 		
 		if (!skipError) {
-			var restart = plugins.dialogs.showInfoDialog(
+			var restart = globals.DIALOGS.showInfoDialog(
 							'Trial mode',
 							'Running in trial mode. Timeout after 60 minutes of use.',
 							'OK'
@@ -442,7 +442,7 @@ if (utils.hasRecords(foundset)) {
 		}
 		//errors are allowed, throw up error box
 		else {
-			plugins.dialogs.showErrorDialog(
+			globals.DIALOGS.showErrorDialog(
 						'Incorrect company',
 						'Company name must match the Servoy licensed company'
 					)
@@ -473,14 +473,14 @@ if (utils.hasRecords(foundset)) {
 				
 				if (!skipError) {
 					if (license_type == 'Purchased') {
-						var restart = plugins.dialogs.showInfoDialog(
+						var restart = globals.DIALOGS.showInfoDialog(
 									'Success',
 									'Thank you for your purchase! Support lasts for one year from date of purchase.',
 									'OK'
 							)
 					}
 					else if (license_type == 'Community') {
-						var restart = plugins.dialogs.showInfoDialog(
+						var restart = globals.DIALOGS.showInfoDialog(
 									'Success',
 									'The community license was activated to: "' + license_name + '".',
 									'OK'
@@ -491,7 +491,7 @@ if (utils.hasRecords(foundset)) {
 		}
 		else {
 			if (!skipError && !solutionPrefs.config.trialMode) {
-				plugins.dialogs.showErrorDialog(
+				globals.DIALOGS.showErrorDialog(
 						'Invalid key',
 						'Please check that you have entered the correct registration information'
 					)
@@ -520,7 +520,7 @@ if (utils.hasRecords(foundset)) {
 			
 			//make sure that running in developer if trial
 			if (license_type == 'Trial' && !application.isInDeveloper()) {
-				plugins.dialogs.showErrorDialog(
+				globals.DIALOGS.showErrorDialog(
 						'Restricted',
 						'Trial mode only runs from Servoy Developer.'
 					)
@@ -538,7 +538,7 @@ if (utils.hasRecords(foundset)) {
 	}
 	//max clients exceeded
 	else if (!clientOK) {
-		plugins.dialogs.showErrorDialog(
+		globals.DIALOGS.showErrorDialog(
 				'User limit exceeded',
 				'Client will now close.'
 			)
@@ -694,7 +694,7 @@ if (utils.hasRecords(foundset)) {
 		}
 		else {
 			if (!skipError && !solutionPrefs.config.trialMode) {
-				plugins.dialogs.showErrorDialog(
+				globals.DIALOGS.showErrorDialog(
 						'Invalid key',
 						'Please check that you have entered the correct registration information'
 					)
@@ -711,7 +711,7 @@ if (utils.hasRecords(foundset)) {
 	}
 	//company name incorrect
 	else if (!companyOK) {
-		plugins.dialogs.showErrorDialog(
+		globals.DIALOGS.showErrorDialog(
 				'Licensee error',
 				'The company name for the Data Sutra license entered\n' +
 				'does not match the company name for your Servoy licenses.\n\n' +
@@ -722,7 +722,7 @@ if (utils.hasRecords(foundset)) {
 	}
 	//max clients exceeded
 	else if (!clientOK) {
-		plugins.dialogs.showErrorDialog(
+		globals.DIALOGS.showErrorDialog(
 				'Too many users',
 				'You have exceeded the amount of users that can use\n' +
 				'Data Sutra concurrently.\n\n' +
@@ -856,7 +856,7 @@ for (var i = 0; i < licenseNames.length; i++) {
 /*
 //throw up error dialog
 if (!companyOK) {
-	plugins.dialogs.showErrorDialog(
+	globals.DIALOGS.showErrorDialog(
 					'Company error',
 					'Company name must match the Servoy company name'
 			)
