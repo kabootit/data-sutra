@@ -479,7 +479,7 @@ else {
 	
 	if (!count) {
 	
-		plugins.dialogs.showInfoDialog(
+		globals.DIALOGS.showInfoDialog(
 			"Feedback",
 			"No records found. Previous foundset restored.",
 			"OK")
