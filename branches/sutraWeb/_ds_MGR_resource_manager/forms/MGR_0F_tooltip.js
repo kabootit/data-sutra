@@ -93,7 +93,7 @@ switch( arguments[0] ) {
 		}
 		//error message
 		else {
-			plugins.dialogs.showErrorDialog(
+			globals.DIALOGS.showErrorDialog(
 								'Tooltip error',
 								'No tooltip is selected'
 							)
@@ -102,7 +102,7 @@ switch( arguments[0] ) {
 	
 	//delete all
 	case  5:
-		var input = plugins.dialogs.showWarningDialog("Warning", "Delete all records?", "Yes", "No")
+		var input = globals.DIALOGS.showWarningDialog("Warning", "Delete all records?", "Yes", "No")
 		if (input == "Yes") {	
 			forms.MGR_0F_tooltip_1L.controller.deleteAllRecords()
 			
@@ -113,7 +113,7 @@ switch( arguments[0] ) {
 		
 	//delete selected records
 	case 6:
-		var input = plugins.dialogs.showWarningDialog("Warning", "Delete selected records?", "Yes", "No")
+		var input = globals.DIALOGS.showWarningDialog("Warning", "Delete selected records?", "Yes", "No")
 		if (input == "Yes") {
 			for ( var i = 0 ; i < forms.MGR_0F_tooltip_1L.foundset.getSize() ; i++ ) {
 			
@@ -197,7 +197,7 @@ if (application.__parent__.solutionPrefs) {
 	var dataset = application.getValueListItems('NAV_modules_included')
 	var displayValues = dataset.getColumnAsArray(1)
 	
-	var module = plugins.dialogs.showSelectDialog(
+	var module = globals.DIALOGS.showSelectDialog(
 						'Choose module',
 						'Select the module to retrieve all tooltips from',
 						displayValues
@@ -282,7 +282,7 @@ if (application.__parent__.solutionPrefs) {
 		databaseManager.saveData()
 	}
 	
-	plugins.dialogs.showInfoDialog("Info", "Process complete", "OK")
+	globals.DIALOGS.showInfoDialog("Info", "Process complete", "OK")
 }
 
 
@@ -339,7 +339,7 @@ if (formName && forms[formName] &&
 }
 //error message
 else {
-	plugins.dialogs.showErrorDialog(
+	globals.DIALOGS.showErrorDialog(
 						'Popup error',
 						'The selected form cannot be shown'
 					)
@@ -476,11 +476,11 @@ if (modules && modules.length) {
 		forms.MGR_RPT__tooltip.controller.showPrintPreview()
 	}
 	else {
-		plugins.dialogs.showErrorDialog('No report','There are no valid toolTips in the selected modules')
+		globals.DIALOGS.showErrorDialog('No report','There are no valid toolTips in the selected modules')
 	}
 }
 else {
-	plugins.dialogs.showErrorDialog('No report','No modules were selected to report on')
+	globals.DIALOGS.showErrorDialog('No report','No modules were selected to report on')
 }
 
 

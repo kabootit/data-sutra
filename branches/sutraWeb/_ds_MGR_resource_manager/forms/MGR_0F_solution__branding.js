@@ -38,7 +38,7 @@ if (forms.AC_R__login) {
 	forms.AC_R__login.introMode = false
 }
 else {
-	plugins.dialogs.showErrorDialog(
+	globals.DIALOGS.showErrorDialog(
 				'Error',
 				'Preview only available when in Data Sutra',
 				'OK'
@@ -206,7 +206,7 @@ function ICON_delete()
  *			  	
  */
 
-var iconDelete = plugins.dialogs.showQuestionDialog(
+var iconDelete = globals.DIALOGS.showQuestionDialog(
 				'Delete?',
 				'Do you really want to delete the icon used to brand this solution?',
 				'Yes',
@@ -269,7 +269,7 @@ if (file) {
 	var iconSize = plugins.file.getFileSize(file)
 	
 	if (iconSize > 1 * (1024 * 1024)) {
-		var proceed = plugins.dialogs.showQuestionDialog('Large file','The file selected is over 1 mb.  Continue?','Yes','No')
+		var proceed = globals.DIALOGS.showQuestionDialog('Large file','The file selected is over 1 mb.  Continue?','Yes','No')
 	}
 	else {
 		var proceed = 'Yes'

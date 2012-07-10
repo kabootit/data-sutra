@@ -110,7 +110,7 @@ function ACTIONS_list_control()
 with (forms.MGR_0L_valuelist_1L)	{
 	switch (arguments[0]) {
 		case 0:	//rename record
-			var newName = plugins.dialogs.showInputDialog(
+			var newName = globals.DIALOGS.showInputDialog(
 							'Rename valuelist', 
 							'Enter new name:', valuelist_name
 						)
@@ -121,7 +121,7 @@ with (forms.MGR_0L_valuelist_1L)	{
 			}
 		break
 		case 2:	//delete record
-			var delRec = plugins.dialogs.showWarningDialog(
+			var delRec = globals.DIALOGS.showWarningDialog(
 								'Delete record',
 								'Do you really want to delete the selected valuelist?',
 								'Yes',
@@ -205,7 +205,7 @@ function FORM_on_load(event) {
 function REC_new()
 {
 	with (forms.MGR_0L_valuelist_1L) {
-		var input = plugins.dialogs.showInputDialog(
+		var input = globals.DIALOGS.showInputDialog(
 						'Valuelist',
 						'What is the name of this valuelist?'
 				)

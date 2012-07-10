@@ -180,7 +180,7 @@ function HTML_convert()
 elements.fld_help.selectAll()
 
 if ('<html>'.equalsIgnoreCase(utils.stringLeft(elements.fld_help.getSelectedText(), 6))) {
-	plugins.dialogs.showErrorDialog('Error','This field already begins with <html>')
+	globals.DIALOGS.showErrorDialog('Error','This field already begins with <html>')
 	
 }
 else {

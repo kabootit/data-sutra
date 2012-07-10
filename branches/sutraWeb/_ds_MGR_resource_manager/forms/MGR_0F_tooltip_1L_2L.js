@@ -64,7 +64,7 @@ function REC_delete()
  *			  	
  */
 
-var input =	plugins.dialogs.showWarningDialog(
+var input =	globals.DIALOGS.showWarningDialog(
 			"Warning!",
 			"Delete this record?",
 			"Yes",

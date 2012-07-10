@@ -88,7 +88,7 @@ switch( arguments[0] ) {
 			}
 		}
 		else {
-			plugins.dialogs.showErrorDialog(
+			globals.DIALOGS.showErrorDialog(
 					'Configuration error',
 					'JasperReports is not correctly configured'
 			)
@@ -96,7 +96,7 @@ switch( arguments[0] ) {
 		break
 	
 	case 3:	//delete all
-		var input = plugins.dialogs.showWarningDialog("Warning", "Delete all records?", "Yes", "No")
+		var input = globals.DIALOGS.showWarningDialog("Warning", "Delete all records?", "Yes", "No")
 		if (input == "Yes") {	
 			forms.MGR_0F_report_1L_2L.controller.deleteAllRecords()
 		}

@@ -47,12 +47,12 @@ if ((application.getSolutionName() != '_ds_MGR_resource_manager') && application
 	}
 	//error that must be in that space to get the value
 	else {
-		plugins.dialogs.showErrorDialog('Incorrect space','You must be in the centered space to do this')
+		globals.DIALOGS.showErrorDialog('Incorrect space','You must be in the centered space to do this')
 	}
 }
 //throw error
 else {
-	plugins.dialogs.showErrorDialog('Not running in Data Sutra','You must be in Data Sutra to fill the split bean values')
+	globals.DIALOGS.showErrorDialog('Not running in Data Sutra','You must be in Data Sutra to fill the split bean values')
 }
 }
 
@@ -105,12 +105,12 @@ if ((application.getSolutionName() != '_ds_MGR_resource_manager') && application
 	}
 	//error that must be in that space to get the value
 	else {
-		plugins.dialogs.showErrorDialog('Incorrect space','You must be in the classic space to do this')
+		globals.DIALOGS.showErrorDialog('Incorrect space','You must be in the classic space to do this')
 	}
 }
 //throw error
 else {
-	plugins.dialogs.showErrorDialog('Not running in Data Sutra','You must be in Data Sutra to fill the split bean values')
+	globals.DIALOGS.showErrorDialog('Not running in Data Sutra','You must be in Data Sutra to fill the split bean values')
 }
 }
 
@@ -162,12 +162,12 @@ if ((application.getSolutionName() != '_ds_MGR_resource_manager') && application
 	}
 	//error that must be in that space to get the value
 	else {
-		plugins.dialogs.showErrorDialog('Incorrect space','You must be in the list space to do this')
+		globals.DIALOGS.showErrorDialog('Incorrect space','You must be in the list space to do this')
 	}
 }
 //throw error
 else {
-	plugins.dialogs.showErrorDialog('Not running in Data Sutra','You must be in Data Sutra to fill the split bean values')
+	globals.DIALOGS.showErrorDialog('Not running in Data Sutra','You must be in Data Sutra to fill the split bean values')
 }
 }
 
@@ -220,12 +220,12 @@ if ((application.getSolutionName() != '_ds_MGR_resource_manager') && application
 	}
 	//error that must be in that space to get the value
 	else {
-		plugins.dialogs.showErrorDialog('Incorrect space','You must be in the standard space to do this')
+		globals.DIALOGS.showErrorDialog('Incorrect space','You must be in the standard space to do this')
 	}
 }
 //throw error
 else {
-	plugins.dialogs.showErrorDialog('Not running in Data Sutra','You must be in Data Sutra to fill the split bean values')
+	globals.DIALOGS.showErrorDialog('Not running in Data Sutra','You must be in Data Sutra to fill the split bean values')
 }
 }
 
@@ -278,12 +278,12 @@ if ((application.getSolutionName() != '_ds_MGR_resource_manager') && application
 	}
 	//error that must be in that space to get the value
 	else {
-		plugins.dialogs.showErrorDialog('Incorrect space','You must be in the vertical space to do this')
+		globals.DIALOGS.showErrorDialog('Incorrect space','You must be in the vertical space to do this')
 	}
 }
 //throw error
 else {
-	plugins.dialogs.showErrorDialog('Not running in Data Sutra','You must be in Data Sutra to fill the split bean values')
+	globals.DIALOGS.showErrorDialog('Not running in Data Sutra','You must be in Data Sutra to fill the split bean values')
 }
 }
 
@@ -336,12 +336,12 @@ if ((application.getSolutionName() != '_ds_MGR_resource_manager') && application
 	}
 	//error that must be in that space to get the value
 	else {
-		plugins.dialogs.showErrorDialog('Incorrect space','You must be in the wide space to do this')
+		globals.DIALOGS.showErrorDialog('Incorrect space','You must be in the wide space to do this')
 	}
 }
 //throw error
 else {
-	plugins.dialogs.showErrorDialog('Not running in Data Sutra','You must be in Data Sutra to fill the split bean values')
+	globals.DIALOGS.showErrorDialog('Not running in Data Sutra','You must be in Data Sutra to fill the split bean values')
 }
 }
 

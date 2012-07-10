@@ -64,7 +64,7 @@ if (globals.MGR_tooltip__module) {
 	globals.CODE_form_in_dialog_close('printTipSimple')
 }
 else {
-	plugins.dialogs.showErrorDialog('Nothing selected', 'You must choose one or more modules','OK')
+	globals.DIALOGS.showErrorDialog('Nothing selected', 'You must choose one or more modules','OK')
 }
 }
 

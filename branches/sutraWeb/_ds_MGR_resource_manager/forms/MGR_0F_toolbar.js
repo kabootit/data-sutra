@@ -76,7 +76,7 @@ function ACTIONS_list_control()
 
 switch( arguments[0] ) {
 	case 0:	//delete all
-		var input = plugins.dialogs.showWarningDialog("Warning", "Delete all records?", "Yes", "No")
+		var input = globals.DIALOGS.showWarningDialog("Warning", "Delete all records?", "Yes", "No")
 		
 		switch (elements.tab_detail.tabIndex) {
 			case 1:

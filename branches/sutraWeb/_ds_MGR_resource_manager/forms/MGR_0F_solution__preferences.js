@@ -228,7 +228,7 @@ if ((application.getSolutionName() != '_ds_MGR_resource_manager') && application
 	
 	//check that not different than locale date setting
 	if (i18n.getDefaultDateFormat() != solutionPrefs.fastFind.dateFormat) {
-		var whatToDo = plugins.dialogs.showQuestionDialog(
+		var whatToDo = globals.DIALOGS.showQuestionDialog(
 					'Inconsistent date format',
 					'<html>The date format specified in the Locale Servoy Preference (' + i18n.getDefaultDateFormat() + ') is different from<br>'+
 					'the date format just entered (' + solutionPrefs.fastFind.dateFormat + ').  Do you want to keep the value you just entered<br>' +

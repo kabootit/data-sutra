@@ -25,7 +25,7 @@ function REC_delete()
  */
 
 	if (foundset.getSize() == 1) {
-		var delRec = plugins.dialogs.showWarningDialog(
+		var delRec = globals.DIALOGS.showWarningDialog(
 					'Delete valuelist',
 					'This is the last valuelist item.  Do you want to delete the valuelist?',
 					'Yes',
@@ -33,7 +33,7 @@ function REC_delete()
 				)
 	}
 	else {
-		var delRec = plugins.dialogs.showWarningDialog(
+		var delRec = globals.DIALOGS.showWarningDialog(
 					'Delete record',
 					'Do you really want to delete the selected valuelist item?',
 					'Yes',

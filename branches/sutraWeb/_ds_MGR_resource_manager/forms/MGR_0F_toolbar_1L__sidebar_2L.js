@@ -113,7 +113,7 @@ function REC_delete()
  *			  	
  */
 
-var delRec = plugins.dialogs.showWarningDialog('Delete record','Do you really want to delete this sidebar?','Yes','No')
+var delRec = globals.DIALOGS.showWarningDialog('Delete record','Do you really want to delete this sidebar?','Yes','No')
 if (delRec == 'Yes') {
 	var recSelect = controller.getSelectedIndex()
 	
@@ -153,7 +153,7 @@ function FLD_tab_name__data_change(oldValue, newValue, event) {
 	var results = fsDupe.search()
 	
 	if (results > 1) {
-		plugins.dialogs.showErrorDialog(
+		globals.DIALOGS.showErrorDialog(
 					'Error',
 					'The registry must be unique'
 			)

@@ -133,7 +133,7 @@ function HTML_convert()
 elements.fld_text.selectAll()
 
 if ('<html>'.equalsIgnoreCase(utils.stringLeft(elements.fld_text.getSelectedText(), 6))) {
-	plugins.dialogs.showErrorDialog('Error','This field already begins with <html>')
+	globals.DIALOGS.showErrorDialog('Error','This field already begins with <html>')
 }
 else {
 	var output 	= '<html><head></head><body>'
