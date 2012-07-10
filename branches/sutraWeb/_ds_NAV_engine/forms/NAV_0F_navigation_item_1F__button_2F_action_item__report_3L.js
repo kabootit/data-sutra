@@ -153,7 +153,7 @@ application.setValueListItems('NAV_report__all',valueListDisplay,valueListStored
 function REC_delete()
 {
 
-var delRec = plugins.dialogs.showWarningDialog('Delete record','Do you really want to delete this record?','Yes','No')
+var delRec = globals.DIALOGS.showWarningDialog('Delete record','Do you really want to delete this record?','Yes','No')
 
 if (delRec == 'Yes') {
 	

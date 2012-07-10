@@ -80,7 +80,7 @@ if (globals.NAV_filter_column && globals.NAV_filter_operator && globals.NAV_filt
 		
 	//check for existing records, prompt to delete
 	if (forms[formName].foundset.getSize()) {
-		var answer = plugins.dialogs.showQuestionDialog('Delete filters','There are existing filters in the current list.  Delete?','Yes','No')
+		var answer = globals.DIALOGS.showQuestionDialog('Delete filters','There are existing filters in the current list.  Delete?','Yes','No')
 		if (answer == 'Yes') {
 			//call to delete records from backend; can be replace with standard deleteAllRecords in the future
 			forms.NAV_0F_navigation_item_1F__button_2F_action_item__filter.ACTIONS_list_control('Delete all items','Yes')
@@ -96,13 +96,13 @@ if (globals.NAV_filter_column && globals.NAV_filter_operator && globals.NAV_filt
 	var valuelistReal = valuelist.getColumnAsArray(2)
 	
 	if (valuelistDisplay.length > 30 && valuelistDisplay.length <= 100) {
-		var answer = plugins.dialogs.showWarningDialog('Many items','The resulting filter list will be quite long.  Proceed?','Yes','No')
+		var answer = globals.DIALOGS.showWarningDialog('Many items','The resulting filter list will be quite long.  Proceed?','Yes','No')
 		if (answer != 'Yes') {
 			proceed = false
 		}
 	}
 	else if (valuelistDisplay.length > 100) {
-		plugins.dialogs.showErrorDialog('Too many items','The valuelist you have chosen has over 100 entries.  Unable to proceed.')
+		globals.DIALOGS.showErrorDialog('Too many items','The valuelist you have chosen has over 100 entries.  Unable to proceed.')
 		proceed = false
 	}
 	
@@ -140,7 +140,7 @@ if (globals.NAV_filter_column && globals.NAV_filter_operator && globals.NAV_filt
 	forms[formName].REC_on_select()
 }
 else {
-	plugins.dialogs.showErrorDialog('Not enough data', 'You must fill out all of the fields in order to create a valuelist','OK')
+	globals.DIALOGS.showErrorDialog('Not enough data', 'You must fill out all of the fields in order to create a valuelist','OK')
 }
 }
 

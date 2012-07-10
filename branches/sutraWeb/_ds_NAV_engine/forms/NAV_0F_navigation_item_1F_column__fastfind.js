@@ -177,7 +177,7 @@ if (globals.NAV_find_relation != '-') {
 	
 	//ask to refresh if records already exist
 	if (results) {
-		var newRecs = plugins.dialogs.showQuestionDialog('Get columns','Do you want to refresh the columns','Yes','No')
+		var newRecs = globals.DIALOGS.showQuestionDialog('Get columns','Do you want to refresh the columns','Yes','No')
 	}
 	else {
 		var newRecs = 'Yes'
@@ -191,7 +191,7 @@ if (globals.NAV_find_relation != '-') {
 		
 		//check if form_to_load is a valid entry
 		if (!forms[formLoad]) {
-			plugins.dialogs.showErrorDialog('Form missing','The selected form to load does not exist in this solution','OK')
+			globals.DIALOGS.showErrorDialog('Form missing','The selected form to load does not exist in this solution','OK')
 			return
 		}
 		else {

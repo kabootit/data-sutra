@@ -139,7 +139,7 @@ function REC_delete()
  *
  */
 
-var delRec = plugins.dialogs.showWarningDialog('Delete record','Do you really want to delete this list display?','Yes','No')
+var delRec = globals.DIALOGS.showWarningDialog('Delete record','Do you really want to delete this list display?','Yes','No')
 
 var formName = 'NAV_0F_navigation_item_1F__universal_lists'
 var relnName = 'nav_navigation_item_to_list_display'
@@ -216,7 +216,7 @@ if (record.display_default) {
 //no default display selected
 else if (false) {
 	record.display_default = 1
-	plugins.dialogs.showErrorDialog('Missing default display', 'There must be a default display when using the universal list', 'OK')
+	globals.DIALOGS.showErrorDialog('Missing default display', 'There must be a default display when using the universal list', 'OK')
 }
 
 databaseManager.saveData()

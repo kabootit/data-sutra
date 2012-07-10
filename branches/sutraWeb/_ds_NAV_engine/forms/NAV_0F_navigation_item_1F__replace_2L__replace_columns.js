@@ -39,7 +39,7 @@ for (var i = 1; i <= fsColumn.getSize() && unique; i ++) {
 	
 	if ((record.name_display) == name_display && (record.id_column != id_column)) {
 		unique = false
-		plugins.dialogs.showErrorDialog('Non-unique find','This display name is not unique.  Find may not work as expected if not fixed.')
+		globals.DIALOGS.showErrorDialog('Non-unique find','This display name is not unique.  Find may not work as expected if not fixed.')
 		foundset.selectRecord(record.id_column)
 		elements.fld_name_display.requestFocus(false)
 	}
@@ -83,7 +83,7 @@ databaseManager.saveData()
 if (!(record.replace_allowed || record.replace_resource)) {
 	record[fieldName] = 1
 	databaseManager.saveData()
-	plugins.dialogs.showErrorDialog('Error','One of the two check boxes must be checked.','OK')
+	globals.DIALOGS.showErrorDialog('Error','One of the two check boxes must be checked.','OK')
 }
 
 //what is the pk for this server/table
@@ -106,7 +106,7 @@ if (forms[nav_column_to_navigation_item.form_to_load]) {
 if (pk == name_column && record.replace_allowed) {
 	record.replace_allowed = 0
 	databaseManager.saveData()
-	plugins.dialogs.showErrorDialog('Error','The primary key for this table cannot be modified','OK')
+	globals.DIALOGS.showErrorDialog('Error','The primary key for this table cannot be modified','OK')
 }
 }
 

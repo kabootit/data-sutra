@@ -38,7 +38,7 @@ if (flag_default) {
 	else {
 		nav_column_to_navigation_item.find_default = null
 		//show error dialog
-		plugins.dialogs.showErrorDialog(
+		globals.DIALOGS.showErrorDialog(
 						'Default find error',
 						'You can not flag this fast find item as default because there is a valuelist assigned'
 					)
@@ -83,7 +83,7 @@ function FLD_data_change__flag_typeahead()
 databaseManager.saveData()
 
 if (flag_typeahead && !valuelist) {
-	plugins.dialogs.showErrorDialog(
+	globals.DIALOGS.showErrorDialog(
 				'Typeahead error',
 				'You can only use a typeahead field when specifying a valuelist'
 			)
@@ -135,7 +135,7 @@ for (var i = 1; i <= fsColumn.getSize() && unique; i ++) {
 	
 	if ((record.name_display) == name_display && (record.id_column != id_column) && (name_display != '' && name_display != null)) {
 		unique = false
-		plugins.dialogs.showErrorDialog('Non-unique find','This display name is not unique.  Find may not work as expected if not fixed.')
+		globals.DIALOGS.showErrorDialog('Non-unique find','This display name is not unique.  Find may not work as expected if not fixed.')
 		foundset.selectRecord(record.id_column)
 		elements.fld_name_display.requestFocus(false)
 	}
@@ -177,7 +177,7 @@ if (flag_default && valuelist) {
 	databaseManager.saveData()
 	
 	//show error dialog
-	plugins.dialogs.showErrorDialog(
+	globals.DIALOGS.showErrorDialog(
 					'Default find error',
 					'You can not assign a valuelist to the default fast find item'
 				)

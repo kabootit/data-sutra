@@ -253,14 +253,14 @@ if (application.__parent__.solutionPrefs && forms.NAV_0F_navigation_item_1F__but
 		}
 	}
 	else {
-		plugins.dialogs.showErrorDialog('Repository API Error','API calls not yet implemented.  This feature is unavailable')
+		globals.DIALOGS.showErrorDialog('Repository API Error','API calls not yet implemented.  This feature is unavailable')
 	}
 }
 else if (!forms.NAV_0F_navigation_item_1F__button.module_filter) {
-	plugins.dialogs.showErrorDialog('Module Filter Error', 'You must select the correct module form filter for this to work', 'OK')
+	globals.DIALOGS.showErrorDialog('Module Filter Error', 'You must select the correct module form filter for this to work', 'OK')
 }
 else {
-	plugins.dialogs.showErrorDialog('Solution Prefs Error', 'This will not work outside of the container module.\nRe-open solution or reinstantiate code globals.', 'OK')
+	globals.DIALOGS.showErrorDialog('Solution Prefs Error', 'This will not work outside of the container module.\nRe-open solution or reinstantiate code globals.', 'OK')
 }
 
 }

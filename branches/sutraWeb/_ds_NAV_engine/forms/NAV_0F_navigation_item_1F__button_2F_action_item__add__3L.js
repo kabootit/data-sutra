@@ -5,7 +5,7 @@
 function REC_delete()
 {
 
-var delRec = plugins.dialogs.showWarningDialog('Delete record','Do you really want to delete this record?','Yes','No')
+var delRec = globals.DIALOGS.showWarningDialog('Delete record','Do you really want to delete this record?','Yes','No')
 
 if (delRec == 'Yes') {
 	var recSelect = controller.getSelectedIndex()
@@ -37,7 +37,7 @@ var relnName = 'nav_navigation_item_to_action_item__add'
 
 //only allow one child record for add method
 if (forms[formName][relnName].getSize()) {
-	plugins.dialogs.showErrorDialog('Method already exists',"<html>Only one method can be assigned to the 'Add Record' button.<br>Please modify the current method or delete it and create another one.",'OK')
+	globals.DIALOGS.showErrorDialog('Method already exists',"<html>Only one method can be assigned to the 'Add Record' button.<br>Please modify the current method or delete it and create another one.",'OK')
 }
 else {
 	forms[formName][relnName].newRecord(false, true)

@@ -166,7 +166,7 @@ if (phone_form) {
 	}
 	//display error message
 	else {
-		plugins.dialogs.showErrorDialog('Form error',
+		globals.DIALOGS.showErrorDialog('Form error',
 			'<html><body>The workflow area, <font color="green">forms</font>.' + phone_form + ',<br>' +
 			'does not exist in this solution or any of its included modules.','OK')
 	}

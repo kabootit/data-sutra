@@ -36,7 +36,7 @@ else {
 
 //check if it is possible to assign a method
 if (!record.menu_name) {
-	plugins.dialogs.showErrorDialog(
+	globals.DIALOGS.showErrorDialog(
 				'Error',
 				'You must create and name a menu item first',
 				'OK'

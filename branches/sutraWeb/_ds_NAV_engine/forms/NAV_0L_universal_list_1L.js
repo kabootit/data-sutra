@@ -124,7 +124,7 @@ if (application.__parent__.solutionPrefs && this.configured) {
 	if (solutionPrefs.config.prefs.thatsAllFolks) {
 		forms.NSTL_0F_solution__license.ACTION_status()
 		
-		plugins.dialogs.showErrorDialog(
+		globals.DIALOGS.showErrorDialog(
 							'Trial expired',
 							'Trial time expired\n' +
 							'Please restart.'

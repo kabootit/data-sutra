@@ -125,7 +125,7 @@ switch (globals.NAV_filter_level) {
 
 //no record to act on, break
 if (!record) {
-	plugins.dialogs.showErrorDialog('No record','You must create a record before configuring its options.')
+	globals.DIALOGS.showErrorDialog('No record','You must create a record before configuring its options.')
 }
 //there is a record, proceed
 else {
@@ -209,7 +209,7 @@ else {
 					var delRec = 'Yes'
 				} 
 				else {
-					var delRec = plugins.dialogs.showWarningDialog('Delete records','Do you really want to delete all filter items?',  'Yes', 'No')
+					var delRec = globals.DIALOGS.showWarningDialog('Delete records','Do you really want to delete all filter items?',  'Yes', 'No')
 				}
 				
 				if (delRec == 'Yes') {
@@ -269,7 +269,7 @@ else {
 				}
 			}
 			else {
-				plugins.dialogs.showErrorDialog('Error','There are no records to delete')
+				globals.DIALOGS.showErrorDialog('Error','There are no records to delete')
 			}
 			break	
 	}

@@ -210,7 +210,7 @@ if (form_to_load) {
 	}
 	//display error message
 	else {
-		plugins.dialogs.showErrorDialog('Form error',
+		globals.DIALOGS.showErrorDialog('Form error',
 			'<html><body>The workflow area, <font color="green">forms</font>.' + form_to_load + ',<br>' +
 			'does not exist in this solution or any of its included modules.','OK')
 	}
@@ -365,7 +365,7 @@ function SHOW_sort()
 
 //show sort picker if form available
 if (form_to_load && forms[form_to_load]) {
-	//plugins.dialogs.showInfoDialog('Choose sort','<html>1- Specify the desired sort<br>2- Press the COPY button<br>3- Close the sort chooser')
+	//globals.DIALOGS.showInfoDialog('Choose sort','<html>1- Specify the desired sort<br>2- Press the COPY button<br>3- Close the sort chooser')
 	application.setClipboardContent('')
 	forms[form_to_load].controller.sortDialog(fw_sort_string)
 	var clip = application.getClipboardString()
@@ -375,7 +375,7 @@ if (form_to_load && forms[form_to_load]) {
 	}
 }
 else {
-	plugins.dialogs.showErrorDialog('Form error','The workflow form specified does not exist')
+	globals.DIALOGS.showErrorDialog('Form error','The workflow form specified does not exist')
 }
 
 

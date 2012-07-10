@@ -190,7 +190,7 @@ function SHOW_sort()
 if (nav_action_item_filter_to_action_item && nav_action_item_filter_to_action_item.nav_action_item_to_navigation_item) {
 	var formName = nav_action_item_filter_to_action_item.nav_action_item_to_navigation_item.form_to_load
 	if (forms[formName]) {
-		plugins.dialogs.showInfoDialog('Choose sort','<html>1- Specify the desired sort<br>2- Press the COPY button<br>3- Close the sort chooser')
+		globals.DIALOGS.showInfoDialog('Choose sort','<html>1- Specify the desired sort<br>2- Press the COPY button<br>3- Close the sort chooser')
 		application.setClipboardContent('')
 		forms[formName].controller.sortDialog(nav_action_item_filter_to_action_item.filter_sort)
 		var clip = application.getClipboardString()
@@ -200,7 +200,7 @@ if (nav_action_item_filter_to_action_item && nav_action_item_filter_to_action_it
 		}
 	}
 	else {
-		plugins.dialogs.showErrorDialog('Form error','The workflow form specified does not exist')
+		globals.DIALOGS.showErrorDialog('Form error','The workflow form specified does not exist')
 	}
 }
 

@@ -144,7 +144,7 @@ var results = navItems.search()
 if (results > 1 && item_id != '' && item_id != null) {
 //	item_id = null
 //	databaseManager.saveData()
-	plugins.dialogs.showWarningDialog(
+	globals.DIALOGS.showWarningDialog(
 				'Warning',
 				'This registry is not unique.\nAnother navigation item already has this one',
 				'OK')
@@ -235,7 +235,7 @@ if (utils.hasRecords(relnColumns)) {
 	}
 	//delete all column records if old and new table names are different
 	else {
-		var answer = plugins.dialogs.showWarningDialog(
+		var answer = globals.DIALOGS.showWarningDialog(
 							'Delete columns',
 							'<html>You have selected a form based on a different table.<br>' +
 								'All of the named columns will be deleted.<br>' +
@@ -282,7 +282,7 @@ function REC_delete()
  *
  */
 
-var delRec = plugins.dialogs.showWarningDialog('Delete record','Do you really want to delete this list display?','Yes','No')
+var delRec = globals.DIALOGS.showWarningDialog('Delete record','Do you really want to delete this list display?','Yes','No')
 
 var formName = 'NAV_0F_navigation_item_1F__detail'
 var relnName = 'nav_navigation_item_to_list_display'

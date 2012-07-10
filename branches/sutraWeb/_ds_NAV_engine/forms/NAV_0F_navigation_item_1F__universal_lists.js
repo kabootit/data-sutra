@@ -59,7 +59,7 @@ function REC_delete()
  *
  */
 
-var delRec = plugins.dialogs.showWarningDialog('Delete record','Do you really want to delete this list display?','Yes','No')
+var delRec = globals.DIALOGS.showWarningDialog('Delete record','Do you really want to delete this list display?','Yes','No')
 
 var formName = 'NAV_0F_navigation_item_1F__universal_lists'
 var relnName = 'nav_navigation_item_to_list_display'

@@ -195,7 +195,7 @@ switch (arguments[0]) {
 		break
 		
 	case 6: //refresh columns
-		var answer = plugins.dialogs.showQuestionDialog('Refresh','<html>Refresh column list with backend?<br>(Currently experimental - may hang system)','Yes','No')
+		var answer = globals.DIALOGS.showQuestionDialog('Refresh','<html>Refresh column list with backend?<br>(Currently experimental - may hang system)','Yes','No')
 		if (answer == 'Yes') {
 			UPDATE_table_columns()
 		}
@@ -266,7 +266,7 @@ function CHANGE_main_sub_main(itemID)
 				}
 			}
 			else {
-				plugins.dialogs.showErrorDialog(
+				globals.DIALOGS.showErrorDialog(
 							'Error',
 							'No navigation set selected'
 						)
@@ -320,7 +320,7 @@ function CHANGE_navigation_set(navID) {
 		}
 	}
 	else {
-		plugins.dialogs.showErrorDialog(
+		globals.DIALOGS.showErrorDialog(
 					'Error',
 					'No navigation set selected'
 				)
@@ -621,7 +621,7 @@ var formName = 'NAV_0L_navigation_item_1L'
 var relationName = 'nav_navigation_item_to_navigation_item__children__all'
 var relnAction = 'nav_navigation_item_to_action_item__filter'
 
-var delRec = plugins.dialogs.showWarningDialog('Delete item','Do you really want to delete this navigation item?','Yes','No')
+var delRec = globals.DIALOGS.showWarningDialog('Delete item','Do you really want to delete this navigation item?','Yes','No')
 if (delRec == 'Yes') {
 	
 	var record = (arguments[0]) ? arguments[0] : forms[formName].foundset.getRecord(forms[formName].foundset.getSelectedIndex())
@@ -631,7 +631,7 @@ if (delRec == 'Yes') {
 		if (utils.hasRecords(record[relationName]) && record[relationName].getSize() > 1) {
 			var childCheck = true
 			
-			var confirm = plugins.dialogs.showWarningDialog(
+			var confirm = globals.DIALOGS.showWarningDialog(
 							'Delete item',
 							'This navigation item has children.  They will all be deleted.  Continue?',
 							'Yes',
@@ -1357,7 +1357,7 @@ var tableReln = (arguments[0]) ? arguments[0] : forms[formName].form_to_load_tab
 
 //check if form_to_load is a valid entry
 if (!forms[formLoad]) {
-	plugins.dialogs.showErrorDialog('Form missing','The selected form to load does not exist in this solution','OK')
+	globals.DIALOGS.showErrorDialog('Form missing','The selected form to load does not exist in this solution','OK')
 	forms[formName].elements.fld_form_to_load.requestFocus(false)
 }
 else {

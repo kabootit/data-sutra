@@ -52,7 +52,7 @@ if (!(utils.stringWordCount(method) == 1 && utils.stringRight(method,2) == '()' 
 }
 //selected method name
 else {
-	plugins.dialogs.showErrorDialog('Method exists', 'You may not edit the text of a method that is not custom', 'OK')
+	globals.DIALOGS.showErrorDialog('Method exists', 'You may not edit the text of a method that is not custom', 'OK')
 }
 }
 

@@ -364,7 +364,7 @@ if (application.__parent__.solutionPrefs) {
 	}
 	//show all selected with value, show error
 	else if (globals.DATASUTRA_find_field == 'Show all' && globals.DATASUTRA_find) {
-		plugins.dialogs.showErrorDialog('Show all', 'Cannot search for '+globals.DATASUTRA_find+ ' when "Show all" item is selected.')
+		globals.DIALOGS.showErrorDialog('Show all', 'Cannot search for '+globals.DATASUTRA_find+ ' when "Show all" item is selected.')
 	}
 	//find field selected (or default find field set and fast find configured) and value present, search
 	else if (globals.DATASUTRA_find_field && globals.DATASUTRA_find_field != 'Show all' && navigationPrefs.byNavItemID[currentNavItem].fastFind && globals.DATASUTRA_find ) {
@@ -405,11 +405,11 @@ if (application.__parent__.solutionPrefs) {
 	//no finds set up
 	else if (!navigationPrefs.byNavItemID[currentNavItem].fastFind) {
 		globals.DATASUTRA_find = null
-		plugins.dialogs.showErrorDialog('Not configured', 'No search fields are enabled on this form.')
+		globals.DIALOGS.showErrorDialog('Not configured', 'No search fields are enabled on this form.')
 	}
 	//no field selected
 	else if (!globals.DATASUTRA_find_field && globals.DATASUTRA_find) {
-		plugins.dialogs.showWarningDialog('Alert', 'No find field selected...choose one.','OK')
+		globals.DIALOGS.showWarningDialog('Alert', 'No find field selected...choose one.','OK')
 		globals.NAV_find_fields()
 	}
 }
@@ -458,7 +458,7 @@ if (application.__parent__.solutionPrefs) {
 		
 		//no searchable items
 		if (findItems == null || (findItems && !findItems.length)) {
-			plugins.dialogs.showErrorDialog('No find fields!', 'No find fields have been defined in the configuration.', 'OK')
+			globals.DIALOGS.showErrorDialog('No find fields!', 'No find fields have been defined in the configuration.', 'OK')
 		}
 		//searchable items
 		else {
@@ -934,7 +934,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			}
 
 			//show dialog for value to be searched on
-			//var vlValue = plugins.dialogs.showSelectDialog('Valuelist','Choose item from valuelist.',vlDisplay)
+			//var vlValue = globals.DIALOGS.showSelectDialog('Valuelist','Choose item from valuelist.',vlDisplay)
 			globals.CODE_form_in_dialog(
 						forms.NAV_P__find,
 						-1,-1,-1,-1,
@@ -1204,7 +1204,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		}
 		
 		if (!findMode) {
-			plugins.dialogs.showErrorDialog(
+			globals.DIALOGS.showErrorDialog(
 					'Error',
 					'Outstanding unsaved data.  Find not performed.'
 				)
@@ -1304,7 +1304,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 				
 				//no new records found, throw up warning
 				if (databaseManager.getFoundSetCount(initialFS) == databaseManager.getFoundSetCount(forms[formName].foundset)) {
-					plugins.dialogs.showWarningDialog(
+					globals.DIALOGS.showWarningDialog(
 							'No more records', 
 							'<html><body>No additional records found using <strong>"'+searchValue+'"</strong><br>' + 
 							' to search the <strong>'+findName+'</strong> field</body></html>',
@@ -1404,7 +1404,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 					navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindValue = searchValue
 				}
 				
-				plugins.dialogs.showWarningDialog(
+				globals.DIALOGS.showWarningDialog(
 							dlgTitle, 
 							'<html><body>No records found for <strong>"'+searchValue+'"</strong>' + 
 							' while searching in <strong>'+findName+'</strong> field</body></html>',
@@ -5029,7 +5029,7 @@ function NAV_universal_list_select() {
 	if (solutionPrefs.config.prefs.thatsAllFolks) {
 		forms.NSTL_0F_solution__license.ACTION_status()
 		
-		plugins.dialogs.showErrorDialog(
+		globals.DIALOGS.showErrorDialog(
 							'Trial expired',
 							'Trial time expired\n' +
 							'Please restart.'
@@ -5685,7 +5685,7 @@ if (indexStart <= selected && selected <= indexEnd) {
 	//otherwise selected item in viewable area; no action necessary
 }
 else if (selected != 0) {
-	plugins.dialogs.showErrorDialog( 'ERROR',  "Selected index is not in the universal list", 'OK')
+	globals.DIALOGS.showErrorDialog( 'ERROR',  "Selected index is not in the universal list", 'OK')
 }
 
 //if no scrolling took place, return false
@@ -5907,7 +5907,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		}
 	}
 	else {
-		plugins.dialogs.showErrorDialog(
+		globals.DIALOGS.showErrorDialog(
 							'Error',
 							'Form global not ready yet'
 						)

@@ -72,7 +72,7 @@ if (globals.NAV_export_navset || globals.NAV_import_navset || globals.NAV_export
 	globals.CODE_form_in_dialog_close('fwImportExport')
 }
 else {
-	plugins.dialogs.showErrorDialog('Nothing selected', 'You must choose something','OK')
+	globals.DIALOGS.showErrorDialog('Nothing selected', 'You must choose something','OK')
 }
 }
 
@@ -160,7 +160,7 @@ for (var i = 0; i < allValues.length; i++) {
 }
 
 if (count > 1) {
-	plugins.dialogs.showErrorDialog( dialog_title,  msg,  button1,  [button2],  [buttonN])
+	globals.DIALOGS.showErrorDialog( dialog_title,  msg,  button1,  [button2],  [buttonN])
 }
 }
 

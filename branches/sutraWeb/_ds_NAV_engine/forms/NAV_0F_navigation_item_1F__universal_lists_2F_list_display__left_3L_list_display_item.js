@@ -95,7 +95,7 @@ databaseManager.saveData()
 
 if (total_width > 100) {
 	elements.lbl_footer.fgcolor = '#FF0000'
-	plugins.dialogs.showErrorDialog('Error','The column width must only equal 100%.  Please adjust')
+	globals.DIALOGS.showErrorDialog('Error','The column width must only equal 100%.  Please adjust')
 }
 else {
 	elements.lbl_footer.fgcolor = '#000000'
@@ -111,7 +111,7 @@ else {
 function REC_delete()
 {
 
-var delRec = plugins.dialogs.showWarningDialog('Delete record','Do you really want to delete this record?','Yes','No')
+var delRec = globals.DIALOGS.showWarningDialog('Delete record','Do you really want to delete this record?','Yes','No')
 if (delRec == 'Yes') {
 	var recSelect = controller.getSelectedIndex()
 
