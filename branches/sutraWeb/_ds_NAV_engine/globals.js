@@ -2602,7 +2602,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 								}
 								
 								myField.name = application.getUUID().toString()
-								myField.onFocusGained = solutionModel.getGlobalMethod('NAV_universal_list_select__unhilite')
+//								myField.onFocusGained = solutionModel.getGlobalMethod('NAV_universal_list_select__unhilite')
 								myField.anchors = SM_ANCHOR.ALL
 								myField.horizontalAlignment = horizAlign
 								myField.styleClass = 'universallist'
@@ -3231,7 +3231,7 @@ function NAV_universal_list_favorite(input,elem,list,record) {
 		databaseManager.saveData(solutionPrefs.access.user.record)
 		
 		//update display to show star
-		globals.NAV_universal_list_select__unhilite()
+//		globals.NAV_universal_list_select__unhilite()
 		databaseManager.recalculate(record)
 		
 		//if in favorites mode, redraw
@@ -4307,7 +4307,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 										20						//height
 									)
 						
-						myField.setOnFocusGainedMethod(globals.NAV_universal_list_select__unhilite)		
+//						myField.setOnFocusGainedMethod(globals.NAV_universal_list_select__unhilite)		
 						myField.anchors = SM_ANCHOR.ALL
 						myField.horizontalAlignment = horizAlign
 						myField.styleClass = 'universallist'

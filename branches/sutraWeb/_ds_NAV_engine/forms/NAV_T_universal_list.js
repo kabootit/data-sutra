@@ -656,7 +656,7 @@ if (application.__parent__.solutionPrefs) {
 		}
 		
 		myField.name = application.getUUID().toString()
-		myField.onFocusGained = solutionModel.getGlobalMethod('NAV_universal_list_select__unhilite')
+//		myField.onFocusGained = solutionModel.getGlobalMethod('NAV_universal_list_select__unhilite')
 		myField.anchors = SM_ANCHOR.ALL
 		myField.horizontalAlignment = horizAlign
 		myField.styleClass = 'universallist'
