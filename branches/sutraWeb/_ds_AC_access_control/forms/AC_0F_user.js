@@ -28,7 +28,7 @@ if (foundset) {
 	forms.AC_P_password.FORM_fid(id_user)
 }
 else {
-	plugins.dialogs.showErrorDialog('No records','Create a user record before assigning it a password','OK')
+	globals.DIALOGS.showErrorDialog('No records','Create a user record before assigning it a password','OK')
 }
 }
 
@@ -99,7 +99,7 @@ function REC_delete()
  *			  	
  */
 
-var delRec = plugins.dialogs.showWarningDialog('Delete record','Do you really want to delete the selected user?','Yes','No')
+var delRec = globals.DIALOGS.showWarningDialog('Delete record','Do you really want to delete the selected user?','Yes','No')
 
 if (delRec == 'Yes') {
 	controller.deleteRecord()
@@ -148,7 +148,7 @@ function EDIT_organization() {
 		forms.AC_P_organization.FORM_fid(id_user)
 	}
 	else {
-		plugins.dialogs.showErrorDialog(
+		globals.DIALOGS.showErrorDialog(
 						'No records',
 						'Create a user record before assigning it a password',
 						'OK'

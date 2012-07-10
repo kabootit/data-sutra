@@ -64,7 +64,7 @@ function FLD_data_change__name(oldValue, newValue, event) {
 //		return true
 	}
 	else {
-		plugins.dialogs.showErrorDialog(
+		globals.DIALOGS.showErrorDialog(
 					'Error',
 					'This valuelist exists solution-wide.\nIn order to override it, you must choose the option to\n"Modify existing" valuelist from the action wheel'
 			)
@@ -80,7 +80,7 @@ function FLD_data_change__name(oldValue, newValue, event) {
  * @properties={typeid:24,uuid:"5C317EB5-EA43-43C3-988A-EDF3EB982297"}
  */
 function REC_delete(event) {
-	var delRec = plugins.dialogs.showWarningDialog(
+	var delRec = globals.DIALOGS.showWarningDialog(
 					'Delete valuelist',
 					'Do you really want to delete the selected valuelist?\nNote: If this valuelist was modified, the original values will be used',  
 					'Yes', 

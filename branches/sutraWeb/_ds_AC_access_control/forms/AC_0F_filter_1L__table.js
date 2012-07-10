@@ -108,7 +108,7 @@ var dbFilter = (ac_access_filter_to_access_filter__database) ? ac_access_filter_
 var tblFilter = (ac_access_filter_to_access_filter__table) ? ac_access_filter_to_access_filter__table.total_active : 0
 
 if (dbFilter && filterOn) {
-	var disable = plugins.dialogs.showErrorDialog('Filter error','A database-wide filter is in effect. Should I turn it off?','Yes','No')
+	var disable = globals.DIALOGS.showErrorDialog('Filter error','A database-wide filter is in effect. Should I turn it off?','Yes','No')
 	if (disable == 'Yes') {
 		for (var i = 1; i <= ac_access_filter_to_access_filter__database.getSize(); i++) {
 			var record = ac_access_filter_to_access_filter__database.getRecord(i)
@@ -116,7 +116,7 @@ if (dbFilter && filterOn) {
 		}
 	}
 	else {
-		plugins.dialogs.showErrorDialog('Filter error','Database filters are enabled. Disabling selected table filter.')
+		globals.DIALOGS.showErrorDialog('Filter error','Database filters are enabled. Disabling selected table filter.')
 		filter_on = 0
 	}
 }
@@ -239,7 +239,7 @@ function REC_delete()
  *			  	
  */
 
-var delRec = plugins.dialogs.showWarningDialog('Delete record','Do you really want to delete the selected filter?','Yes','No')
+var delRec = globals.DIALOGS.showWarningDialog('Delete record','Do you really want to delete the selected filter?','Yes','No')
 
 if (delRec == 'Yes') {
 	controller.deleteRecord()

@@ -7,7 +7,7 @@
  */
 function REC_delete(event) {
 	if (foundset.getSize() == 1) {
-		var delRec = plugins.dialogs.showWarningDialog(
+		var delRec = globals.DIALOGS.showWarningDialog(
 					'Delete valuelist',
 					'This is the last valuelist item.  Do you want to delete the valuelist?',
 					'Yes',
@@ -15,7 +15,7 @@ function REC_delete(event) {
 				)
 	}
 	else {
-		var delRec = plugins.dialogs.showWarningDialog(
+		var delRec = globals.DIALOGS.showWarningDialog(
 					'Delete record',
 					'Do you really want to delete the selected valuelist item?',
 					'Yes',
@@ -109,7 +109,7 @@ function REC_new() {
 		elements.fld_visible.requestFocus()
 	}
 	else {
-		plugins.dialogs.showErrorDialog(
+		globals.DIALOGS.showErrorDialog(
 					'No valuelist',
 					'You must select a valuelist first'
 			)

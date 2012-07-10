@@ -60,7 +60,7 @@ function REC_delete()
  *			  	
  */
 
-var delRec = plugins.dialogs.showWarningDialog('Delete record','Do you really want to delete the selected quote of the day?','Yes','No')
+var delRec = globals.DIALOGS.showWarningDialog('Delete record','Do you really want to delete the selected quote of the day?','Yes','No')
 
 if (delRec == 'Yes') {
 	controller.deleteRecord()

@@ -74,12 +74,12 @@ if (application.__parent__.solutionPrefs && solutionPrefs.access) {
 	
 	//check that not empty
 	if (globals.AC_password_edit_1 == null) {
-		plugins.dialogs.showErrorDialog('Password error','The password cannot be empty')
+		globals.DIALOGS.showErrorDialog('Password error','The password cannot be empty')
 		elements.fld_AC_password_edit.requestFocus(false)
 	}
 	//check 1 against 2
 	else if (globals.AC_password_edit_1 != globals.AC_password_edit_2) {
-		plugins.dialogs.showErrorDialog('Password error','The two passwords entered do not match')
+		globals.DIALOGS.showErrorDialog('Password error','The two passwords entered do not match')
 		elements.fld_AC_password_edit.requestFocus(false)
 	}
 	else {
@@ -88,7 +88,7 @@ if (application.__parent__.solutionPrefs && solutionPrefs.access) {
 			if (user_name && user_name.toLowerCase() == globals.AC_password_edit_1.toLowerCase()) {
 				globals.AC_password_edit_1 = null
 				globals.AC_password_edit_2 = null
-				plugins.dialogs.showErrorDialog('Password error','Password cannot be the same as the user name')
+				globals.DIALOGS.showErrorDialog('Password error','Password cannot be the same as the user name')
 				elements.fld_AC_password_edit.requestFocus(false)
 				var userName = true
 			}
@@ -102,7 +102,7 @@ if (application.__parent__.solutionPrefs && solutionPrefs.access) {
 			if (alpha == -1 || number == -1) {
 				globals.AC_password_edit_1 = null
 				globals.AC_password_edit_2 = null
-				plugins.dialogs.showErrorDialog('Password error','Password must contain at least one letter and one number')
+				globals.DIALOGS.showErrorDialog('Password error','Password must contain at least one letter and one number')
 				elements.fld_AC_password_edit.requestFocus(false)
 				var alphaNumFailed = true
 			}
@@ -115,7 +115,7 @@ if (application.__parent__.solutionPrefs && solutionPrefs.access) {
 			if (non == -1) {
 				globals.AC_password_edit_1 = null
 				globals.AC_password_edit_2 = null
-				plugins.dialogs.showErrorDialog('Password error','Password must contain at least one non-alphanumeric character')
+				globals.DIALOGS.showErrorDialog('Password error','Password must contain at least one non-alphanumeric character')
 				elements.fld_AC_password_edit.requestFocus(false)
 				var nonAlphaFailed = true
 			}
@@ -129,7 +129,7 @@ if (application.__parent__.solutionPrefs && solutionPrefs.access) {
 			if (upperCase == -1 || lowerCase == -1) {
 				globals.AC_password_edit_1 = null
 				globals.AC_password_edit_2 = null
-				plugins.dialogs.showErrorDialog('Password error','Password must contain at least one upper case and one lower case letter')
+				globals.DIALOGS.showErrorDialog('Password error','Password must contain at least one upper case and one lower case letter')
 				elements.fld_AC_password_edit.requestFocus(false)
 				var camelCaseFailed = true
 			}
@@ -141,7 +141,7 @@ if (application.__parent__.solutionPrefs && solutionPrefs.access) {
 			if (lengthMin > length || lengthMax < length) {
 				globals.AC_password_edit_1 = null
 				globals.AC_password_edit_2 = null
-				plugins.dialogs.showErrorDialog('Password error','Password must be between '+lengthMin+' and '+lengthMax+' characters long')
+				globals.DIALOGS.showErrorDialog('Password error','Password must be between '+lengthMin+' and '+lengthMax+' characters long')
 				elements.fld_AC_password_edit.requestFocus(false)
 				var lengthFail = true
 			}
@@ -160,7 +160,7 @@ if (application.__parent__.solutionPrefs && solutionPrefs.access) {
 					if (testPassword == previous[i]) {
 						globals.AC_password_edit_1 = null
 						globals.AC_password_edit_2 = null
-						plugins.dialogs.showErrorDialog('Password error','You have used this as a password in the previous '+prevMatchCount+' passwords.')
+						globals.DIALOGS.showErrorDialog('Password error','You have used this as a password in the previous '+prevMatchCount+' passwords.')
 						elements.fld_AC_password_edit.requestFocus(false)
 						previousMatch = true
 					}
@@ -182,7 +182,7 @@ if (application.__parent__.solutionPrefs && solutionPrefs.access) {
 			
 			//not unique, throw error
 			if (results) {
-				plugins.dialogs.showErrorDialog('Password error','The chosen password is unacceptable')
+				globals.DIALOGS.showErrorDialog('Password error','The chosen password is unacceptable')
 				elements.fld_AC_password_edit.requestFocus(false)
 			}
 			//unique, accept
@@ -190,7 +190,7 @@ if (application.__parent__.solutionPrefs && solutionPrefs.access) {
 				//check to see that password is actually different
 				var proceed = 'No'
 				if (user_password == newPassword) {
-					proceed = plugins.dialogs.showWarningDialog(
+					proceed = globals.DIALOGS.showWarningDialog(
 									'Warning',
 									'The password you just entered is not different from your current password.\n' +
 									'This is NOT recommended.  Do you want to change your password again?',
@@ -209,7 +209,7 @@ if (application.__parent__.solutionPrefs && solutionPrefs.access) {
 					date_password_changed = application.getServerTimeStamp()
 					
 					pass_change_at_login = 0
-					plugins.dialogs.showInfoDialog('Password changed','The password has been successfully changed')
+					globals.DIALOGS.showInfoDialog('Password changed','The password has been successfully changed')
 					globals.AC_password_edit_1 = null
 					globals.AC_password_edit_2 = null
 					

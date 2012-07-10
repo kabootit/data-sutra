@@ -24,7 +24,7 @@ function REC_delete()
  *			  	
  */
 
-var delRec = plugins.dialogs.showWarningDialog('Delete record','Do you really want to delete the selected filter?','Yes','No')
+var delRec = globals.DIALOGS.showWarningDialog('Delete record','Do you really want to delete the selected filter?','Yes','No')
 
 if (delRec == 'Yes') {
 	controller.deleteRecord()

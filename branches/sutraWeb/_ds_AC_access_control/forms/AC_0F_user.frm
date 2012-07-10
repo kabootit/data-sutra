@@ -10,7 +10,7 @@ format:"M-d-yyyy",
 location:"136,150",
 scrollbars:36,
 size:"85,23",
-styleClass:"standard_table_bottom_noedit",
+styleClass:"standard_table_bottom",
 tabSeq:7,
 typeid:4,
 uuid:"09eee387-5099-41c9-b986-8dc4bc5c80bb"

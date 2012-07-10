@@ -37,7 +37,7 @@ if (application.__parent__.navigationPrefs) {
 	
 	//no default selected, choose the first non-config layout
 	if (!defaultNavSet) {
-		plugins.dialogs.showErrorDialog(
+		globals.DIALOGS.showErrorDialog(
 					'Error',
 					'No default navigation set defined\nReport to administrator'
 				)
@@ -130,7 +130,7 @@ if (application.__parent__.navigationPrefs) {
 	}
 }
 else {
-	plugins.dialogs.showErrorDialog(
+	globals.DIALOGS.showErrorDialog(
 				'Error',
 				'No navigation sets defined\nReport to administrator'
 		)

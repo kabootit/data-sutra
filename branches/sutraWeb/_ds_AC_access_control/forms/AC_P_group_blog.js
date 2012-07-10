@@ -40,7 +40,7 @@ for ( var i = 0 ; i < foundset.getSize() ; i++ ) {
 }
 
 if (blogsSelected > 1) {
-	plugins.dialogs.showErrorDialog('Too many blogs','Only one blog can be assigned to a group at a time')
+	globals.DIALOGS.showErrorDialog('Too many blogs','Only one blog can be assigned to a group at a time')
 }
 else {
 	databaseManager.saveData()

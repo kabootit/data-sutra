@@ -50,17 +50,17 @@ var tblFilter = (forms[formName].ac_access_group_to_access_filter__table) ? form
 
 //if not configured correctly at solution level, break
 if (dbFilterSolution && tblFilterSolution) {
-	plugins.dialogs.showErrorDialog('Error','Both table and database filters are enabled at the solution level.  Turn one off before proceeding.')
+	globals.DIALOGS.showErrorDialog('Error','Both table and database filters are enabled at the solution level.  Turn one off before proceeding.')
 	return
 }
 //if database filters at solution level, break
 if (dbFilterSolution) {
-	plugins.dialogs.showErrorDialog('Filter error','One or more solution database filters are in effect.  Turn off before proceeding.')
+	globals.DIALOGS.showErrorDialog('Filter error','One or more solution database filters are in effect.  Turn off before proceeding.')
 	return
 }
 //prompt to turn off table filters at group level
 if (dbFilter && filterOn) {
-	var disable = plugins.dialogs.showErrorDialog('Filter error','One or more group database filters are in effect. Should I turn them off?','Yes','No')
+	var disable = globals.DIALOGS.showErrorDialog('Filter error','One or more group database filters are in effect. Should I turn them off?','Yes','No')
 	if (disable == 'Yes') {
 		for (var i = 1; i <= forms[formName].ac_access_group_to_access_filter__database.getSize(); i++) {
 			var record = forms[formName].ac_access_group_to_access_filter__database.getRecord(i)
@@ -68,7 +68,7 @@ if (dbFilter && filterOn) {
 		}
 	}
 	else {
-		plugins.dialogs.showErrorDialog('Filter error','Database filters are enabled. Disabling selected table filter.')
+		globals.DIALOGS.showErrorDialog('Filter error','Database filters are enabled. Disabling selected table filter.')
 		filter_on = 0
 	}
 }
@@ -179,7 +179,7 @@ function REC_delete()
  *			  	
  */
 
-var delRec = plugins.dialogs.showWarningDialog('Delete record','Do you really want to delete the selected filter?','Yes','No')
+var delRec = globals.DIALOGS.showWarningDialog('Delete record','Do you really want to delete the selected filter?','Yes','No')
 
 if (delRec == 'Yes') {
 	controller.deleteRecord()

@@ -247,7 +247,7 @@ function REC_new_item(event) {
 	}
 	//no valuelist selected
 	else {
-		plugins.dialogs.showErrorDialog(
+		globals.DIALOGS.showErrorDialog(
 					'Error',
 					'Select valuelist in the left pane before proceeding'
 			)
@@ -287,7 +287,7 @@ switch (arguments[0]) {
 		forms.AC_0F_organization__valuelist_1L_valuelist__item.REC_new_sub();
 		break
 	case  3:	//delete all
-		var input = plugins.dialogs.showWarningDialog("Warning", "Delete all records?", "Yes", "No")
+		var input = globals.DIALOGS.showWarningDialog("Warning", "Delete all records?", "Yes", "No")
 		if (input == "Yes") {	
 			forms.MGR_0F_valuelist_1L.controller.deleteAllRecords()
 			

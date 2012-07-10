@@ -110,7 +110,7 @@ function ACTIONS_list_control()
 
 switch (arguments[0]) {
 	case 0:	//rename record
-		var orgName = plugins.dialogs.showInputDialog(
+		var orgName = globals.DIALOGS.showInputDialog(
 						'Rename SAAS organization', 
 						'Enter new name:', name_organization
 					)
@@ -121,7 +121,7 @@ switch (arguments[0]) {
 		}
 	break
 	case 2:	//delete record
-		var delRec = plugins.dialogs.showWarningDialog(
+		var delRec = globals.DIALOGS.showWarningDialog(
 							'Delete record',
 							'Do you really want to delete the selected organization?',
 							'Yes',
@@ -141,7 +141,7 @@ switch (arguments[0]) {
  */
 function REC_new()
 {
-	var input = plugins.dialogs.showInputDialog(
+	var input = globals.DIALOGS.showInputDialog(
 					'Organization',
 					'What is the name of this organization?'
 			)

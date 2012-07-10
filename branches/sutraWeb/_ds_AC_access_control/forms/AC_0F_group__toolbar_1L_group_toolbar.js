@@ -47,7 +47,7 @@ if (utils.hasRecords(foundset)) {
 	//if index = 1, exit (no more records of same node-level above)
 	var recordFirst = foundset.getRecord(1)
 	if (order_by == recordFirst.order_by) {
-		plugins.dialogs.showErrorDialog('Error','This record is at the top of the list.  It cannot move any higher')
+		globals.DIALOGS.showErrorDialog('Error','This record is at the top of the list.  It cannot move any higher')
 		return
 	}
 	
@@ -99,7 +99,7 @@ function REC_delete()
  *			  	
  */
 
-var delRec = plugins.dialogs.showWarningDialog('Delete record','Do you really want to remove the selected toolbar?','Yes','No')
+var delRec = globals.DIALOGS.showWarningDialog('Delete record','Do you really want to remove the selected toolbar?','Yes','No')
 
 if (delRec == 'Yes') {
 	var deletedIndex = foundset.getSelectedIndex()

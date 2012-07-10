@@ -24,7 +24,7 @@ function ACTION_rename()
  *			  	
  */
 
-var input = plugins.dialogs.showInputDialog('Blog title','Enter a new blog title',blog_name)
+var input = globals.DIALOGS.showInputDialog('Blog title','Enter a new blog title',blog_name)
 
 if (input) {
 	blog_name = input
@@ -128,7 +128,7 @@ function REC_delete()
  *			  	
  */
 
-var delRec = plugins.dialogs.showWarningDialog('Delete record','Do you really want to delete the selected blog?','Yes','No')
+var delRec = globals.DIALOGS.showWarningDialog('Delete record','Do you really want to delete the selected blog?','Yes','No')
 
 if (delRec == 'Yes') {
 	controller.deleteRecord()

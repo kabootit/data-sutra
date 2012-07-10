@@ -24,7 +24,7 @@ function REC_delete()
  *			  	
  */
 
-var delRec = plugins.dialogs.showWarningDialog('Delete record','Do you really want to remove the selected registered action?','Yes','No')
+var delRec = globals.DIALOGS.showWarningDialog('Delete record','Do you really want to remove the selected registered action?','Yes','No')
 
 if (delRec == 'Yes') {
 	controller.deleteRecord()
@@ -115,7 +115,7 @@ if (results) {
 	globals.CODE_form_in_dialog(forms.AC_P_group_action,-1,-1,-1,-1,"Actions",false,false,'accessGroupActions')
 }
 else {
-	plugins.dialogs.showInfoDialog('No actions','There are no actions that are not already assigned to this group')
+	globals.DIALOGS.showInfoDialog('No actions','There are no actions that are not already assigned to this group')
 }
 
 

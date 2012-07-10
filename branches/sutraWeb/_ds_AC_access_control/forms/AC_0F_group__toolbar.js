@@ -125,7 +125,7 @@ if (results) {
 	globals.CODE_form_in_dialog(forms.AC_P_group_toolbar,-1,-1,-1,-1,"Toolbars",false,false,'accessGroupToolbars')
 }
 else {
-	plugins.dialogs.showInfoDialog('No toolbars','There are no toolbars that are not already assigned to this group')
+	globals.DIALOGS.showInfoDialog('No toolbars','There are no toolbars that are not already assigned to this group')
 }
 
 

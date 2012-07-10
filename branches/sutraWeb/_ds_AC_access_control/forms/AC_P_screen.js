@@ -173,7 +173,7 @@ function ACTION_reset()
  *			  	
  */
 
-var input = plugins.dialogs.showQuestionDialog(
+var input = globals.DIALOGS.showQuestionDialog(
 					'Confirm reset',
 					'All custom window and space settings will be lost. Continue?',
 					'Yes',
@@ -234,12 +234,12 @@ if ((application.getSolutionName() != 'ds_AC_access_control') && application.__p
 	
 	databaseManager.saveData()
 	
-	plugins.dialogs.showInfoDialog('Success','You have successfully set new default dimensions for Centered')
+	globals.DIALOGS.showInfoDialog('Success','You have successfully set new default dimensions for Centered')
 	
 }
 //throw error
 else {
-	plugins.dialogs.showErrorDialog('Not running in Data Sutra','You must be in Data Sutra to fill the split bean values')
+	globals.DIALOGS.showErrorDialog('Not running in Data Sutra','You must be in Data Sutra to fill the split bean values')
 }
 }
 
@@ -277,11 +277,11 @@ if ((application.getSolutionName() != 'ds_AC_access_control') && application.__p
 	
 	databaseManager.saveData()
 	
-	plugins.dialogs.showInfoDialog('Success','You have successfully set new default dimensions for Classic')
+	globals.DIALOGS.showInfoDialog('Success','You have successfully set new default dimensions for Classic')
 }
 //throw error
 else {
-	plugins.dialogs.showErrorDialog('Not running in Data Sutra','You must be in Data Sutra to fill the split bean values')
+	globals.DIALOGS.showErrorDialog('Not running in Data Sutra','You must be in Data Sutra to fill the split bean values')
 }
 }
 
@@ -318,12 +318,12 @@ if ((application.getSolutionName() != 'ds_AC_access_control') && application.__p
 	
 	databaseManager.saveData()
 	
-	plugins.dialogs.showInfoDialog('Success','You have successfully set new default dimensions for List')
+	globals.DIALOGS.showInfoDialog('Success','You have successfully set new default dimensions for List')
 
 }
 //throw error
 else {
-	plugins.dialogs.showErrorDialog('Not running in Data Sutra','You must be in Data Sutra to fill the split bean values')
+	globals.DIALOGS.showErrorDialog('Not running in Data Sutra','You must be in Data Sutra to fill the split bean values')
 }
 }
 
@@ -361,12 +361,12 @@ if ((application.getSolutionName() != 'ds_AC_access_control') && application.__p
 	
 	databaseManager.saveData()
 	
-	plugins.dialogs.showInfoDialog('Success','You have successfully set new default dimensions for Standard')
+	globals.DIALOGS.showInfoDialog('Success','You have successfully set new default dimensions for Standard')
 
 }
 //throw error
 else {
-	plugins.dialogs.showErrorDialog('Not running in Data Sutra','You must be in Data Sutra to fill the split bean values')
+	globals.DIALOGS.showErrorDialog('Not running in Data Sutra','You must be in Data Sutra to fill the split bean values')
 }
 }
 
@@ -404,12 +404,12 @@ if ((application.getSolutionName() != 'ds_AC_access_control') && application.__p
 	
 	databaseManager.saveData()
 	
-	plugins.dialogs.showInfoDialog('Success','You have successfully set new default dimensions for Vertical')
+	globals.DIALOGS.showInfoDialog('Success','You have successfully set new default dimensions for Vertical')
 	
 }
 //throw error
 else {
-	plugins.dialogs.showErrorDialog('Not running in Data Sutra','You must be in Data Sutra to fill the split bean values')
+	globals.DIALOGS.showErrorDialog('Not running in Data Sutra','You must be in Data Sutra to fill the split bean values')
 }
 }
 
@@ -447,12 +447,12 @@ if ((application.getSolutionName() != 'ds_AC_access_control') && application.__p
 	
 	databaseManager.saveData()
 	
-	plugins.dialogs.showInfoDialog('Success','You have successfully set new default dimensions for Wide')
+	globals.DIALOGS.showInfoDialog('Success','You have successfully set new default dimensions for Wide')
 
 }
 //throw error
 else {
-	plugins.dialogs.showErrorDialog('Not running in Data Sutra','You must be in Data Sutra to fill the split bean values')
+	globals.DIALOGS.showErrorDialog('Not running in Data Sutra','You must be in Data Sutra to fill the split bean values')
 }
 }
 

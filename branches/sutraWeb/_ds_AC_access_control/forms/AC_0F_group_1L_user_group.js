@@ -80,7 +80,7 @@ if (results) {
 	globals.CODE_form_in_dialog(forms.AC_P_user_group__user,-1,-1,-1,-1,"Users",false,false,'accessAssignUsers')
 }
 else {
-	plugins.dialogs.showInfoDialog('No users','There are no users that are not already a member of this group')
+	globals.DIALOGS.showInfoDialog('No users','There are no users that are not already a member of this group')
 }
 
 
@@ -114,7 +114,7 @@ function REC_remove()
  */
 
 
-var delRec = plugins.dialogs.showWarningDialog('Delete record','Do you really want to remove the selected user?','Yes','No')
+var delRec = globals.DIALOGS.showWarningDialog('Delete record','Do you really want to remove the selected user?','Yes','No')
 
 if (delRec == 'Yes') {
 	flag_chosen = 0

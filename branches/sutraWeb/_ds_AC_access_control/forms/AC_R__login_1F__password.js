@@ -190,7 +190,7 @@ function dialog(title,text) {
 		alert(title,text)
 	}
 	else {
-		plugins.dialogs.showErrorDialog(title,text)
+		globals.DIALOGS.showErrorDialog(title,text)
 	}
 }
 
@@ -350,7 +350,7 @@ if (globals.AC_login_user && globals.AC_login_password) {
 		}
 		//password will expire in a week, prompt to change (only smart client)
 		else if (expire < 7 && !expirationNever && !solutionPrefs.config.webClient) {
-			var changePass = plugins.dialogs.showQuestionDialog(
+			var changePass = globals.DIALOGS.showQuestionDialog(
 						'Password expiring',
 						'Your password will expire in '+expire+' days. Do you want to change it now?',
 						'Yes',
@@ -1205,7 +1205,7 @@ if (globals.AC_login_user && globals.AC_login_password) {
 		globals.TRIGGER_progressbar_stop()
 		globals.CODE_cursor_busy(false)
 
-		plugins.dialogs.showErrorDialog(
+		globals.DIALOGS.showErrorDialog(
 					"Login error", 
 					"The group you are a member of has an error. Please see administrator."
 				)
@@ -1263,7 +1263,7 @@ if (globals.AC_login_user && globals.AC_login_password) {
 
 		//no default selected for group, choose the first non-config layout
 		if (!navSet) {
-			plugins.dialogs.showErrorDialog(
+			globals.DIALOGS.showErrorDialog(
 						'Error',
 						'No default navigation set defined\nReport to administrator'
 					)
@@ -1279,7 +1279,7 @@ if (globals.AC_login_user && globals.AC_login_password) {
 		}
 	}
 	else {
-		plugins.dialogs.showErrorDialog(
+		globals.DIALOGS.showErrorDialog(
 					'Error',
 					'No navigation sets defined\nReport to administrator'
 				)

@@ -36,7 +36,7 @@ var allBlogs = dataset.getColumnAsArray(1)
 
 //temporary hack until I can figure out how to merge blogs
 if (utils.hasRecords(foundset) && (allBlogs && allBlogs.length && allBlogs.length <= 1)) {
-	plugins.dialogs.showErrorDialog('Blog already assigned','Only one blog can be assigned to a group.')
+	globals.DIALOGS.showErrorDialog('Blog already assigned','Only one blog can be assigned to a group.')
 }
 //choose
 else {
@@ -86,7 +86,7 @@ else {
 		globals.CODE_form_in_dialog(forms.AC_P_group_blog,-1,-1,-1,-1,"Blogs",false,false,'accessGroupBlogs')
 	}
 	else {
-		plugins.dialogs.showInfoDialog('No blogs','There are no blogs that are not already assigned to this group')
+		globals.DIALOGS.showInfoDialog('No blogs','There are no blogs that are not already assigned to this group')
 	}
 	
 }	
