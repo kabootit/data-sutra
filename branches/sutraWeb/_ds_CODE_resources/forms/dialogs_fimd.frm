@@ -19,7 +19,7 @@ uuid:"4ECDDA76-40AA-4C94-BE61-5A0374964634"
 }
 ],
 name:"dialogs_fimd",
-onHideMethodID:"AE1807A8-0A73-4372-8668-FE583A78641B",
+onHideMethodID:"ADA45A14-2D8B-4589-B22B-D1F22C28727E",
 paperPrintScale:100,
 scrollbars:36,
 size:"200,110",

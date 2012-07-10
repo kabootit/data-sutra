@@ -4,7 +4,7 @@ items:[
 dataProviderID:"retVal",
 displayType:2,
 editable:false,
-location:"85,109",
+location:"90,10",
 name:"fldValue",
 size:"400,22",
 typeid:4,

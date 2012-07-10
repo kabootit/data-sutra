@@ -1,5 +1,5 @@
 /**
- * @properties={typeid:24,uuid:"D81D27BA-0DFB-41A5-9251-47C3EDA9F260"}
+ * @properties={typeid:24,uuid:"D0A17BEB-5CBE-4383-A008-F428CABCA540"}
  */
 function setupForm(_sFormName, _nWidth, _nHeight) {
 	elements.tplMain.setSize(_nWidth,_nHeight);
@@ -14,7 +14,7 @@ function setupForm(_sFormName, _nWidth, _nHeight) {
  *
  * @returns {Boolean}
  *
- * @properties={typeid:24,uuid:"AE1807A8-0A73-4372-8668-FE583A78641B"}
+ * @properties={typeid:24,uuid:"BB33B284-123A-4790-A0D5-C721174FEBDE"}
  */
 function onHide(event) {
 	elements.tplMain.removeAllTabs(); // workaround for an issue in 5.2.8 and below. Should be fixed in 5.2.9

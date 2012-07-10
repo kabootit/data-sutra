@@ -1,26 +1,45 @@
 /**
+ * @type {Function}
+ *
+ * @properties={typeid:35,uuid:"BB8E1242-F3D4-41C5-8616-24593C26F26A",variableType:-4}
+ */
+var bluePrintCleanupCallback;
+
+/**
  * @type {Number}
  *
- * @properties={typeid:35,uuid:"DCD5FB3A-5CE9-49A9-B7AD-282D0A1B4069",variableType:4}
+ * @private
+ *
+ * @properties={typeid:35,uuid:"C1D9840E-FFFF-456D-9BA0-98A8BB94660F",variableType:4}
  */
 var buttonCount = 0;
 
 /**
- * @properties={typeid:35,uuid:"EF3FD099-485C-4015-9592-3DF936D89721",variableType:-4}
+ * @type {Function}
+ * @protected
+ * @properties={typeid:35,uuid:"B544EB43-AD77-4AC6-9834-68A958497CBC",variableType:-4}
  */
 var callbackMethod = null;
 
 /**
- * @properties={typeid:35,uuid:"7791D0F4-E210-4FE6-B137-8359E6BB3152",variableType:-4}
+ * @type {Continuation}
+ *
+ * @properties={typeid:35,uuid:"5DFCFC69-E702-4873-B779-55298091CBA3",variableType:-4}
  */
 var continuation;
 
 /**
  * @type {String}
- *
- * @properties={typeid:35,uuid:"6F681452-1E7D-4320-AC85-9CFBB4B12030"}
+ * @properties={typeid:35,uuid:"08A434AB-9321-4579-8C53-C10FC0EF3929"}
  */
 var returnValue = '';
+
+/**
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"16654D34-8A96-44EF-972D-D25FE66789C2"}
+ */
+var windowName = '';
 
 /**
  * Handle hide window.
@@ -29,52 +48,62 @@ var returnValue = '';
  *
  * @returns {Boolean}
  *
- * @private
+ * @protected
  *
- * @properties={typeid:24,uuid:"ADA45A14-2D8B-4589-B22B-D1F22C28727E"}
+ * @properties={typeid:24,uuid:"26A90DE2-4775-4217-9E02-E73FDE97DB40"}
  */
 function onHide(event) {
-	plugins.scheduler.removeJob(controller.getName()); // shouldn't be necessary....
-	if (continuation) {
-		plugins.scheduler.addJob(controller.getName(), new Date(Date.now()), forms.dialogs_base.continueAndDestroy, 0, 0, null, [controller.getName(), continuation, returnValue]);
-	} else {
-		plugins.scheduler.addJob(controller.getName(), new Date(Date.now()), forms.dialogs_base.destroyWindow, 0, 0, null, [controller.getName()]);
+	bluePrintCleanupCallback(controller.getName())
+	
+	//Handling continuation here only when dismissing the dialog
+	//continuation variable is already set to null if a button was clicked
+	if (continuation) { 
+		continuation(returnValue)
 	}
-	application.sleep(100);
 	return true;
 }
 
 /**
  * @param {JSEvent} event
  *
- * @properties={typeid:24,uuid:"103B0923-620F-408A-BB23-ECA2B4E245B9"}
+ * @properties={typeid:24,uuid:"23D722D8-8988-4628-995A-6DA46E61240D"}
  */
 function onButtonAction(event) {
 	if (callbackMethod) {
 		callbackMethod(event);
 	}
-	application.closeForm();
+	
+	//Get Continuation object and store it locally, before closing the dialog, to prevent the execution of the continuation from within the onHide event
+	var c = continuation;
+	continuation = null;
+	var win = application.getWindow(windowName);
+	if (win) {
+		win.destroy();
+	}
+	c(returnValue);
 }
 
 /**
  * @param {Array} buttonArray
  * @param {Boolean} redraw
+ * @param {Number} dialogWidth
+ * @param {Number} dialogHeight
  *
  * @return {JSForm}
- * @properties={typeid:24,uuid:"F6D04F75-657A-4F47-B03A-97401A195681"}
+ * @properties={typeid:24,uuid:"A31449A0-DF7D-4254-829A-EA9FF2EA8D83"}
  */
 function setupButtons(buttonArray, redraw, dialogWidth, dialogHeight) {
 	var _oForm = solutionModel.getForm(controller.getName()),
 		_oMethod = solutionModel.getForm("dialogs_base").getFormMethod('onButtonAction'),
 		_oBtn,
 		_nBtnMinWidth = 80,
-		_nBtnWidth = _nBtnMinWidth,
+		_nBtnWidth, // = _nBtnMinWidth,
 		_nBtnHeight = 20,
 		_xOffset = dialogWidth - 20,
 		_yOffset = dialogHeight - _nBtnHeight - 20,
 		_aElement = elements.allnames,
 		_nDefaultCharWidth = 5,
-		_aGuesstimator = [[/[!il:;,\.]/, 3], [/[A-Z]/, 10]],
+		_aGuesstimator = [[/[!il:;,\.]/, 3], [/\w/, 10]],
 		i, j, k;
 
 	_oForm.newPart(JSPart.BODY, dialogHeight);
@@ -96,9 +125,9 @@ function setupButtons(buttonArray, redraw, dialogWidth, dialogHeight) {
 		for (j = 0; j < buttonArray[i].length; j++) {
 			for (k = 0; k < _aGuesstimator.length; k++) {
 				if (_aGuesstimator[k][0].test(buttonArray[i][j])) {
-					_nBtnWidth = _nBtnWidth + _aGuesstimator[k][1];
+					_nBtnWidth += _aGuesstimator[k][1];
 				} else if (k == _aGuesstimator.length - 1) {
-					_nBtnWidth = _nBtnWidth + _nDefaultCharWidth;
+					_nBtnWidth += _nDefaultCharWidth;
 				}
 			}
 		}
@@ -123,42 +152,12 @@ function setupButtons(buttonArray, redraw, dialogWidth, dialogHeight) {
  * Abstract method, to be overridden by childforms
  * @param {Array} _aArguments
  * @param {String} _sIconStyle
+ * 
+ * @SuppressWarnings('wrongparameters')
  *
- * @properties={typeid:24,uuid:"74DE135A-C68C-4CA4-B889-E77359CD9700"}
+ * @properties={typeid:24,uuid:"55CF8255-DE8E-4666-978A-CC9550EAE411"}
  */
 function setupForm(_aArguments, _sIconStyle) { }
-
-/**
- * @param {String} _sFormName
- * @param {Continuation} _oContinuation
- * @param {String} _sReturnValue
- *
- * @properties={typeid:24,uuid:"9448FAAA-1056-4C53-AA3B-C05EDB384F79"}
- */
-function continueAndDestroy(_sFormName, _oContinuation, _sReturnValue) {
-	// Continue the method that triggered this dialog
-	if (_oContinuation) {
-		_oContinuation(_sReturnValue);
-	}
-	destroyWindow(_sFormName);
-}
-
-/**
- * @param {String} _sFormName
- *
- * @properties={typeid:24,uuid:"9FA34C8D-8333-49E9-81B0-8C7296F42A97"}
- */
-function destroyWindow(_sFormName) {
-	if (history.removeForm(_sFormName)) {
-		if (!solutionModel.removeForm(_sFormName)) {
-			application.output("Can't remove dialog form '" + _sFormName + "'", LOGGINGLEVEL.ERROsR);
-		} else {
-			// application.output("Removed dialog form '" + _sFormName + "'", LOGGINGLEVEL.DEBUG);
-		}
-	} else {
-		application.output("Can't remove dialog form '" + _sFormName + "' from history", LOGGINGLEVEL.ERROR);
-	}
-}
 
 /**
  * Callback method for when form is shown.
@@ -168,7 +167,7 @@ function destroyWindow(_sFormName) {
  *
  * @private
  *
- * @properties={typeid:24,uuid:"B4DE3491-DFAF-4B5E-9E72-082991D5F107"}
+ * @properties={typeid:24,uuid:"449EAB6F-FDA9-4AC2-85E9-DAAA74503AC3"}
  */
 function onShow(firstShow, event) {
 	if (buttonCount) {

@@ -2,7 +2,7 @@ extendsID:"71CC730D-6658-42AB-9B03-F3421AFCC8C7",
 items:[
 {
 dataProviderID:"retVal",
-location:"85,110",
+location:"85,10",
 name:"fldValue",
 onActionMethodID:"337193E1-6AC6-44F6-B81D-47443EDC2283",
 size:"400,20",

@@ -1,7 +1,7 @@
 /**
  * @type {String}
  *
- * @properties={typeid:35,uuid:"97109D98-5F78-4A9E-97AF-B402668422CB"}
+ * @properties={typeid:35,uuid:"B1675FB3-E059-41CC-8F6C-F8425D08B783"}
  */
 var retVal = '';
 
@@ -12,7 +12,7 @@ var retVal = '';
  *
  * @private
  *
- * @properties={typeid:24,uuid:"3B06D392-0811-453F-A67D-1E8070EA7434"}
+ * @properties={typeid:24,uuid:"033A07B5-5894-4560-AAC1-D020FFA39F10"}
  */
 function handleButtonAction(event) {
 	if (event.getElementName() == 'fldValue' || (elements[event.getElementName()] ? elements[event.getElementName()].text : '') == i18n.getI18NMessage('servoy.button.ok')) {
@@ -25,15 +25,19 @@ function handleButtonAction(event) {
  * @param {Array} _aArguments
  * @param {String} _sIconStyle
  * @param {String} _initialValue
+ * @param {Number} _nDialogWidth
+ * @param {Number} _nDialogHeight
  *
- * @properties={typeid:24,uuid:"2693E5DA-09D0-4081-AB5E-4F4354D3CF6D"}
+ * @properties={typeid:24,uuid:"CD1EE405-A19C-425F-AF2B-208B08A1469E"}
  */
 function setupForm(_aArguments, _sIconStyle, _initialValue, _nDialogWidth, _nDialogHeight) {
 	var _aBtn = _aArguments.slice(1, _aArguments.length),
 		_oForm = setupButtons(_aBtn, false, _nDialogWidth, _nDialogHeight),
 		_oLabel = _oForm.newLabel("", 15, 15, 60, 60);
 	_oLabel.styleClass = _sIconStyle;
-	_oLabel = _oForm.newLabel("", 90, 15, 400, 90);
+	_oLabel.mediaOptions = SM_MEDIAOPTION.REDUCE | SM_MEDIAOPTION.KEEPASPECT;
+	
+	_oLabel = _oForm.newLabel("", 90, 15, _nDialogWidth - 100, 90);
 	_oLabel.styleClass = 'dialogs_message';
 	_oLabel.verticalAlignment = SM_ALIGNMENT.TOP;
 	_oLabel.text = '<html>' + utils.stringReplace(utils.stringReplace(utils.stringReplace(_aArguments[0], "\r\n", "<br />"), "\n", "<br />"), "\r", "<br />") + '</html>';
@@ -49,7 +53,7 @@ function setupForm(_aArguments, _sIconStyle, _initialValue, _nDialogWidth, _nDia
  *
  * @param {JSEvent} event the event that triggered the action
  *
- * @properties={typeid:24,uuid:"337193E1-6AC6-44F6-B81D-47443EDC2283"}
+ * @properties={typeid:24,uuid:"073DA07D-D2D5-45E6-9AB8-F3AC52262EC1"}
  */
 function onInputAction(event) {
 	_super.onButtonAction(event);
@@ -61,7 +65,7 @@ function onInputAction(event) {
  * @param {Boolean} firstShow form is shown first time after load
  * @param {JSEvent} event the event that triggered the action
  *
- * @properties={typeid:24,uuid:"A01D6297-D3B3-47C0-AAFA-23CAF1CAFF8E"}
+ * @properties={typeid:24,uuid:"314BDB33-0A1E-428C-B774-77399285F847"}
  */
 function onShow(firstShow, event) {
 	elements.fldValue.requestFocus();
