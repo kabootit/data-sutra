@@ -5,7 +5,7 @@
 function TEST_popup()
 {
 
-plugins.dialogs.showInfoDialog(
+globals.DIALOGS.showInfoDialog(
 			'Info',
 			'test'
 		)
