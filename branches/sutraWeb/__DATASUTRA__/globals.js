@@ -111,7 +111,7 @@ function DATASUTRA_close()
 		}
 		//go through proper logout
 		else {
-			var logOut = plugins.dialogs.showQuestionDialog(
+			var logOut = globals.DIALOGS.showQuestionDialog(
 							'Logout',
 							'Do you really want to log out?',
 							'Yes',
@@ -257,7 +257,7 @@ function DATASUTRA_close()
 			
 				if (logOut == 'Yes') {
 					//show info that logout canceled
-					plugins.dialogs.showErrorDialog(
+					globals.DIALOGS.showErrorDialog(
 							'Error',
 							'Log out aborted'
 					)
@@ -299,7 +299,7 @@ function DATASUTRA_error()
 	var y = arguments[1]
 	var z = arguments[2]
 	
-	plugins.dialogs.showErrorDialog('Error','Arguments: '+x)
+	globals.DIALOGS.showErrorDialog('Error','Arguments: '+x)
 	
 	/*
 	var error = arguments[0];
@@ -311,7 +311,7 @@ function DATASUTRA_error()
 		application.output('Errorcode: ' + error.getErrorCode())
 	  if (error.getErrorCode() == ServoyException.SAVE_FAILED)
 	  {
-		  plugins.dialogs.showErrorDialog( 'Error',  'It seems you did not fill in a required field')
+		  globals.DIALOGS.showErrorDialog( 'Error',  'It seems you did not fill in a required field')
 		  
 		  //Get the failed records after a save
 		  var array = databaseManager.getFailedRecords()
@@ -524,7 +524,7 @@ else {
 		
 		
 		if (!forms.NSTL_0F_solution__license.ACTION_validate(true,true)) {
-		/*	plugins.dialogs.showErrorDialog(
+		/*	globals.DIALOGS.showErrorDialog(
 							'Licensing error',
 							'The license entered has expired'
 						)
@@ -539,7 +539,7 @@ else {
 			}
 			//running in non-developer
 			else if (application.getApplicationType() != 3) {
-				plugins.dialogs.showErrorDialog(
+				globals.DIALOGS.showErrorDialog(
 						'Trial mode',
 						'Data Sutra is running in trial mode.\n\n' +
 						'Client will now close.'
@@ -1201,7 +1201,7 @@ function DS_actions(input) {
 		if (solutionPrefs.config.prefs.thatsAllFolks) {
 			forms.NSTL_0F_solution__license.ACTION_status()
 			
-			plugins.dialogs.showErrorDialog(
+			globals.DIALOGS.showErrorDialog(
 								'Trial expired',
 								'Trial time expired\n' +
 								'Please restart.'
@@ -2098,7 +2098,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		}
 	}
 	else {
-		plugins.dialogs.showWarningDialog('No help','There is no active help screen for this area')
+		globals.DIALOGS.showWarningDialog('No help','There is no active help screen for this area')
 		solutionPrefs.config.helpMode = false
 	}
 }
@@ -2209,7 +2209,7 @@ if (application.__parent__.solutionPrefs) {
 		}
 	}
 	else {
-		plugins.dialogs.showWarningDialog('No help','There is no active help screen for this area')
+		globals.DIALOGS.showWarningDialog('No help','There is no active help screen for this area')
 		solutionPrefs.config.helpMode = false
 	}
 }
@@ -2228,7 +2228,7 @@ function DS_navigation_set(input) {
 	if (solutionPrefs.config.prefs.thatsAllFolks) {
 		forms.NSTL_0F_solution__license.ACTION_status()
 		
-		plugins.dialogs.showErrorDialog(
+		globals.DIALOGS.showErrorDialog(
 							'Trial expired',
 							'Trial time expired\n' +
 							'Please restart.'
@@ -2471,7 +2471,7 @@ function DS_sidebar_toggle(sideToggle, sideWidth, sideExpand)
 		if (solutionPrefs.config.prefs.thatsAllFolks) {
 			forms.NSTL_0F_solution__license.ACTION_status()
 			
-			plugins.dialogs.showErrorDialog(
+			globals.DIALOGS.showErrorDialog(
 								'Trial expired',
 								'Trial time expired\n' +
 								'Please restart.'
@@ -2668,7 +2668,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	if (solutionPrefs.config.prefs.thatsAllFolks) {
 		forms.NSTL_0F_solution__license.ACTION_status()
 		
-		plugins.dialogs.showErrorDialog(
+		globals.DIALOGS.showErrorDialog(
 							'Trial expired',
 							'Trial time expired\n' +
 							'Please restart.'
@@ -3858,7 +3858,7 @@ function DS_toolbar_cycle(event) {
 		if (solutionPrefs.config.prefs.thatsAllFolks) {
 			forms.NSTL_0F_solution__license.ACTION_status()
 			
-			plugins.dialogs.showErrorDialog(
+			globals.DIALOGS.showErrorDialog(
 								'Trial expired',
 								'Trial time expired\n' +
 								'Please restart.'

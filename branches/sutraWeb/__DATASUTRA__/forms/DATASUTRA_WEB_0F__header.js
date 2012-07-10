@@ -64,7 +64,7 @@ function ACTION_navigation(input) {
 	if (solutionPrefs.config.prefs.thatsAllFolks) {
 		forms.NSTL_0F_solution__license.ACTION_status()
 		
-		plugins.dialogs.showErrorDialog(
+		globals.DIALOGS.showErrorDialog(
 							'Trial expired',
 							'Trial time expired\n' +
 							'Please restart.'
@@ -163,7 +163,7 @@ function ACTION_space_change(event) {
 		if (solutionPrefs.config.prefs.thatsAllFolks) {
 			forms.NSTL_0F_solution__license.ACTION_status()
 			
-			plugins.dialogs.showErrorDialog(
+			globals.DIALOGS.showErrorDialog(
 								'Trial expired',
 								'Trial time expired\n' +
 								'Please restart.'

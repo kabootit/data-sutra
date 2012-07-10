@@ -28,7 +28,7 @@ function DS_toolbar_cycle(event) {
  		if (solutionPrefs.config.prefs.thatsAllFolks) {
  			forms.NSTL_0F_solution__license.ACTION_status()
  			
- 			plugins.dialogs.showErrorDialog(
+ 			globals.DIALOGS.showErrorDialog(
  								'Trial expired',
  								'Trial time expired\n' +
  								'Please restart.'

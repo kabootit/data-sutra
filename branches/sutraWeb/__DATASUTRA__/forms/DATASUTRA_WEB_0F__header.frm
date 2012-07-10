@@ -19,6 +19,7 @@ uuid:"02229D7E-6314-41B8-99A4-3A0F1689B9B8"
 },
 {
 borderType:"MatteBorder,0,0,0,1,#333333",
+enabled:false,
 formIndex:16,
 imageMediaID:"bb316eef-e79f-4e7c-ae60-ce4bedcf2c35",
 location:"112,11",
@@ -58,6 +59,7 @@ verticalAlignment:0
 },
 {
 borderType:"MatteBorder,0,0,0,1,#333333",
+enabled:false,
 formIndex:15,
 imageMediaID:"4015824e-8507-4993-99cb-23779679651b",
 location:"86,11",
@@ -83,6 +85,7 @@ uuid:"315E92DC-84AB-4341-A9CE-DEBDF4DB01C8"
 },
 {
 borderType:"MatteBorder,0,0,0,1,#333333",
+enabled:false,
 formIndex:9,
 imageMediaID:"a91cd22f-c40f-4d99-a2c2-b05fa2af78ad",
 location:"112,11",
@@ -101,6 +104,7 @@ typeid:7,
 uuid:"3B829988-9619-4892-BDC2-C5BC343E81B5"
 },
 {
+enabled:false,
 formIndex:7,
 imageMediaID:"58f991a9-0d37-4736-9931-99da9ff4a949",
 location:"60,11",
@@ -120,6 +124,7 @@ uuid:"3E004D08-D16E-4120-8724-C38E53DE7306"
 },
 {
 borderType:"MatteBorder,0,0,0,1,#333333",
+enabled:false,
 formIndex:20,
 imageMediaID:"710078fb-1507-4b29-9cdc-778d8502fdda",
 location:"216,11",
@@ -218,6 +223,7 @@ uuid:"813CCA27-0245-4D55-A98C-BB204BB90642"
 },
 {
 borderType:"MatteBorder,0,0,0,1,#333333",
+enabled:false,
 formIndex:19,
 imageMediaID:"c0ede7a0-fa8c-45f2-94f3-772c76001f49",
 location:"190,11",
@@ -264,6 +270,7 @@ uuid:"824896C0-E0A9-447D-9D7E-957CC5B970A7"
 },
 {
 borderType:"MatteBorder,0,0,0,1,#333333",
+enabled:false,
 formIndex:12,
 imageMediaID:"478bb96e-6819-4e54-bb8e-5e4349e11b13",
 location:"190,11",
@@ -302,6 +309,7 @@ uuid:"8EDC260A-B8DD-4F94-A706-6CD2B14E3441"
 },
 {
 borderType:"MatteBorder,0,0,0,1,#333333",
+enabled:false,
 formIndex:17,
 imageMediaID:"f0e2bf71-8e93-4f20-9354-2315fffb5133",
 location:"138,11",
@@ -321,6 +329,7 @@ uuid:"93223FF1-A928-4AD7-8257-FF93D39A4EE2"
 },
 {
 borderType:"MatteBorder,0,0,0,1,#333333",
+enabled:false,
 formIndex:11,
 imageMediaID:"a9312558-0860-4459-b12b-92700e0300fc",
 location:"164,11",
@@ -340,6 +349,7 @@ uuid:"934F83DF-2882-4B69-9672-4F629EAF8007"
 },
 {
 borderType:"MatteBorder,0,0,0,1,#333333",
+enabled:false,
 formIndex:13,
 imageMediaID:"e9729332-3ad7-4c7d-9c02-b52c9482173c",
 location:"216,11",
@@ -359,6 +369,7 @@ uuid:"94D45DC1-1EDC-4CD7-B291-492832D22E2A"
 },
 {
 borderType:"MatteBorder,0,0,0,1,#333333",
+enabled:false,
 formIndex:10,
 imageMediaID:"5ac02af3-3cd4-4c9a-883b-a253547b69b0",
 location:"138,11",
@@ -398,6 +409,7 @@ uuid:"CADD88D3-E29D-4412-A098-D155A8575212"
 },
 {
 borderType:"MatteBorder,0,0,0,1,#333333",
+enabled:false,
 formIndex:18,
 imageMediaID:"cfa58e48-9991-40f7-8170-b442a0347b92",
 location:"164,11",
@@ -435,6 +447,7 @@ visible:false
 },
 {
 borderType:"MatteBorder,0,0,0,1,#333333",
+enabled:false,
 formIndex:8,
 imageMediaID:"9ca86728-4a79-4520-9261-e416e49ede72",
 location:"86,11",

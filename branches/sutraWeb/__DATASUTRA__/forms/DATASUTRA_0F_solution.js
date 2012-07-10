@@ -325,7 +325,7 @@ function FORM_setup(baseForm,prefForm) {
 		}
 		//not in developer, use navigation_node
 		else if (forms[prefForm].navigation_node_date && forms[prefForm].navigation_node) {
-		//plugins.dialogs.showErrorDialog('client')
+		//globals.DIALOGS.showErrorDialog('client')
 			navigationPrefs = forms[prefForm].navigation_node
 			
 			//set value list used for changing navigation sets
