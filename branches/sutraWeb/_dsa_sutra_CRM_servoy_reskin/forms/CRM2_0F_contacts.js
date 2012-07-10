@@ -144,8 +144,8 @@ if (utils.hasRecords(foundset)) {
 	var newStatus = globals.DIALOGS.showSelectDialog(
 						'Change contact status',
 						'Please set the contact status',
-						'Active',
-						'Inactive'
+						['Active',
+						'Inactive']
 					)
 	
 	if (newStatus == 'Active') {
