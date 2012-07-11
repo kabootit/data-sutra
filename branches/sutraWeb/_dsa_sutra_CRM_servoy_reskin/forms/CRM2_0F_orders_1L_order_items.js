@@ -25,12 +25,8 @@ function EDIT_order_item()
  *			  	
  */
 
-var orderItemID = orderitem_id
-
 //select the right row
-forms.CRM_P_order_items.controller.find()
-forms.CRM_P_order_items.orderitem_id = orderItemID
-forms.CRM_P_order_items.controller.search()
+forms.CRM_P_order_items.foundset.loadRecords(foundset)
 
 //show form in dialog
 globals.CODE_form_in_dialog(forms.CRM_P_order_items,-1,-1,-1,-1,'Edit',false,false,'crmOrderItem')
@@ -102,7 +98,7 @@ function REC_new()
  */
 
 //create a new record
-forms.CRM2_0F_orders.crm_orders_to_order_items.newRecord(false, true)
+foundset.newRecord(false, true)
 
 //edit newly created record
 EDIT_order_item()

@@ -176,11 +176,11 @@ function paid_display()
 {
 if(is_paid == 1)
 {
-	return "<HTML><table><td style='white-space: nowrap; overflow: hidden;'><font color='#009900'>PAID</font></td></table></HTML>"
+	return "PAID"
 }
 else
 {
-	return "<HTML><table><td style='white-space: nowrap; overflow: hidden;'><font color='#cc0000'>PENDING</font></td></table></HTML>"
+	return "PENDING"
 }
 }
 

@@ -50,7 +50,7 @@ typeid:4,
 uuid:"1a04b3ce-51bd-4ddb-8344-4240cbb43273"
 },
 {
-anchors:3,
+anchors:9,
 borderType:"SpecialMatteBorder,0.0,0.0,1.0,0.0,#000000,#000000,#999999,#000000,0.0,1.0",
 formIndex:15300,
 imageMediaID:"16c4d692-c1ea-4200-a078-1150b1da4d5f",

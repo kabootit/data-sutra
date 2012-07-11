@@ -25,7 +25,7 @@ function GOTO_order()
  */
 
 //change the selected navigation record
-globals.TRIGGER_navigation_set(14,true) //orders is 14
+globals.TRIGGER_navigation_set(14,true,foundset) //orders is 14
 
 }
 
@@ -60,7 +60,7 @@ var addrCnt = crm_orders_company_to_addresses.getSize()
 var contCnt = crm_order_company_to_contacts.getSize()
 
 if (addrCnt && contCnt) {
-	var record = forms.CRM2_0F_companies.crm_companies_to_orders.getRecord(forms.CRM2_0F_companies.crm_companies_to_orders.newRecord(false,true))
+	var record = foundset.getRecord(foundset.newRecord(false,true))
 	
 	//do the auto-enter stuff
 	//set the next order number
@@ -103,4 +103,21 @@ else if (contCnt == 0) {
 	//contact tab
 	globals.TAB_change_grid('CRM2_0F_companies_1L_orders','tab_d1')
 }
+}
+
+/**
+ * Called before the form component is rendered.
+ *
+ * @param {JSRenderEvent} event the render event
+ *
+ * @properties={typeid:24,uuid:"1AF3C75B-8F29-4459-AB40-59DA6DD72BEE"}
+ */
+function FLD_paid_display__on_render(event) {
+	// TODO Auto-generated method stub
+	// NOTE: a property set on the renderable, will be kept on the element only during onRender
+	if (is_paid) {
+		event.getRenderable().fgcolor = '#009900';
+	} else {
+		event.getRenderable().fgcolor = '#cc0000';
+	}
 }
