@@ -59,7 +59,7 @@ function ACTIONS_list_control()
 
 switch (arguments[0]) {
 	case 0:	//toggle status
-		var newStatus = globals.DIALOGS.showSelectDialog( 'Change order status',  'Please set the order status',  'Open', 'Closed')
+		var newStatus = globals.DIALOGS.showSelectDialog( 'Change order status',  'Please set the order status',  ['Open', 'Closed'])
 		if (newStatus == 'Open') {
 			is_active = 1
 		}

@@ -59,7 +59,7 @@ function ACTIONS_list_control()
 
 switch (arguments[0]) {
 	case 0:	//adjust status
-		var newStatus = globals.DIALOGS.showSelectDialog( 'Change contact status',  'Please set the contact status',  'Active', 'Inactive')
+		var newStatus = globals.DIALOGS.showSelectDialog( 'Change contact status',  'Please set the contact status',  ['Active', 'Inactive'])
 		if (newStatus == 'Active') {
 			is_active = 1
 		}

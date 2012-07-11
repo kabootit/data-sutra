@@ -322,8 +322,8 @@ if (utils.hasRecords(foundset)) {
 	var newStatus = globals.DIALOGS.showSelectDialog(
 						'Change order status',
 						'Please set the correct status',
-						'Open',
-						'Closed'
+						['Open',
+						'Closed']
 					)
 	
 	if (newStatus == 'Open') {
