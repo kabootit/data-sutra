@@ -22,7 +22,7 @@ function FORM_on_show(firstShow, event) {
 		//configure main tab
 		elements.tab_workflow.dividerSize = 0
 		//TODO: figure out the correct divider location dimesnions
-		elements.tab_workflow.dividerLocation = 700//elements.tab_workflow.getHeight()
+		elements.tab_workflow.dividerLocation = 3000//elements.tab_workflow.getHeight()
 		elements.tab_workflow.continuousLayout = true
 		elements.tab_workflow.bgcolor = '#d1d7e2'
 		elements.tab_workflow.resizeWeight = 1
