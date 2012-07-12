@@ -6,7 +6,7 @@
  * @properties={typeid:24,uuid:"DC4ED6D0-D2B6-4177-B429-9E4D6E8BA5F5"}
  */
 function FORM_on_load(event) {
-	
+	// something up here
 }
 
 /**
@@ -25,10 +25,9 @@ function FORM_on_show(firstShow, event) {
 		elements.tab_workflow.dividerLocation = 3000//elements.tab_workflow.getHeight()
 		elements.tab_workflow.continuousLayout = true
 		elements.tab_workflow.bgcolor = '#d1d7e2'
-		elements.tab_workflow.resizeWeight = 1
+		elements.tab_workflow.resizeWeight = 1		
 	}
 }
-
 /**
  * @properties={typeid:24,uuid:"A85181C0-9059-4283-99A0-F56EDAA24405"}
  */
