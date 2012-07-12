@@ -209,7 +209,7 @@ showClick:false,
 showFocus:false,
 size:"16,14",
 tabSeq:-2,
-toolTipText:"Add new order item",
+toolTipText:"New order item",
 transparent:true,
 typeid:7,
 uuid:"32f295f5-1f69-4f47-a7a5-2c6cfa8aa87c"

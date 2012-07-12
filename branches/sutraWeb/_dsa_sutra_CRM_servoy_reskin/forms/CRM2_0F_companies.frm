@@ -326,6 +326,7 @@ showClick:false,
 showFocus:false,
 size:"20,14",
 tabSeq:-2,
+toolTipText:"New record",
 transparent:true,
 typeid:7,
 uuid:"90193cee-9f9f-4afd-8abd-ec22004887f5"
