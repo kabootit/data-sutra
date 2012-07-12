@@ -28,3 +28,10 @@ function FORM_on_show(firstShow, event) {
 		elements.tab_workflow.resizeWeight = 1
 	}
 }
+
+/**
+ * @properties={typeid:24,uuid:"A85181C0-9059-4283-99A0-F56EDAA24405"}
+ */
+function reelTest() {
+	//some code
+}
