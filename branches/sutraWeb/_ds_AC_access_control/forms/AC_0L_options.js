@@ -305,8 +305,7 @@ function GO_generic(buttonName,formName,listName,listTitle) {
 		
 		//web client
 		if (solutionPrefs.config.webClient) {
-			//load main window
-			forms.DATASUTRA_WEB_0F__workflow.elements.tab_workflow.setLeftForm(forms[formName])
+			forms.DATASUTRA_WEB_0F__workflow.setForm(formName)
 		}
 		//smart client
 		else {

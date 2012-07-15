@@ -1556,20 +1556,11 @@ if (globals.AC_login_user && globals.AC_login_password) {
 	//turn all disabled elements back on
 	solutionPrefs.config.helpMode = false
 	forms[baseForm + '__header'].elements.btn_navset.visible = true
-	forms[baseForm + '__header'].elements.btn_space_1.visible = true
-	forms[baseForm + '__header'].elements.btn_space_2.visible = true
-	forms[baseForm + '__header'].elements.btn_space_3.visible = true
-	forms[baseForm + '__header'].elements.btn_space_4.visible = true
-	forms[baseForm + '__header'].elements.btn_space_5.visible = true
-	forms[baseForm + '__header'].elements.btn_space_6.visible = true
-	forms[baseForm + '__header'].elements.btn_space_7.visible = true
-	forms[baseForm + '__header'].elements.btn_space_8.visible = false
-	forms[baseForm + '__header'].elements.btn_space_9.visible = false
-	forms[baseForm + '__header'].elements.btn_space_10.visible = false
-	forms[baseForm + '__header'].elements.btn_space_11.visible = false
-	forms[baseForm + '__header'].elements.btn_space_12.visible = false
-	forms[baseForm + '__header'].elements.btn_space_13.visible = false
-	forms[baseForm + '__header'].elements.btn_space_14.visible = false
+	for (var i = 1; i <= 14; i++) {
+		if (forms[baseForm + '__header'].elements['btn_space_' + i] != undefined) {
+			forms[baseForm + '__header'].elements['btn_space_' + i].visible = true
+		}
+	}
 	forms[baseForm + '__header'].elements.btn_space_dividers.visible = true
 	forms[baseForm + '__header__fastfind'].elements.btn_find.visible = true
 	forms[baseForm + '__header__fastfind'].elements.find_mid.visible = true
