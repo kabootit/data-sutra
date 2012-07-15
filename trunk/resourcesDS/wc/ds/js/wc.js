@@ -1,32 +1,3 @@
-//	Update indicator to be new style (in the toolbar)
-function setIndicator(delay) {
-	var indicator = $('.indicator');
-	var toolbar = $("#form_DATASUTRA_WEB_0F__header__toolbar");
-	
-	//we have enough things loaded to actually run this method
-	if (toolbar.length && toolbar.width()) {
-		//280 is position of form, 20 is width of indicator, 15 is inset = 245
-		var offset = 245 + toolbar.width() + 'px';
-	
-		console.log('SET: ' + offset);
-	
-		//in the wrong place, readjust
-		if (indicator.css('margin-left') != offset) {
-			//put indicator into toolbar area
-			indicator.css('left','0px');
-			indicator.css('margin-left',offset);
-			indicator.css('margin-top','8px');
-		}
-	}
-	//run this function again until enough loaded
-	else {
-		setTimeout(function(){
-			setIndicator(delay)
-		},delay || 250)
-		console.log('SET waiting....');
-	}
-}
-
 //	Update indicator to be new style (next to login button)
 function loginIndicator(delay) {
 	var indicator = $('.indicator');
