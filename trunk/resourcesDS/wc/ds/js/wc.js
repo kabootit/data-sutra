@@ -90,3 +90,43 @@ function centerForm(formName) {
 		$('head').append('<link rel="stylesheet" type="text/css" href="/servoy-webclient/templates/datasutra/servoy_web_client_bottom.css" />');
 	},delayTime)
 })();
+
+//	Hook servoy's indicator to the mouse location
+(function(){
+	setTimeout(function(){
+		$('#servoy_page').click(function(e){
+		var position = [0,0];
+		position[0] = (e.pageX) ? e.pageX : 0;
+		position[1] = (e.pageY) ? e.pageY : 0;
+		Wicket.indicatorPosition = position;
+		})
+	},2000)	
+})()
+
+//	Override wicket calls to hide/show indicator
+Wicket.showIncrementally=function(e) {
+	var e=Wicket.$(e);
+	if (e==null) return;
+	var count=e.getAttribute("showIncrementallyCount");
+	count=parseInt((count==null)?0:count);
+	if (count>=0) Wicket.show(e);
+	e.setAttribute("showIncrementallyCount", count+1);
+
+	var clickPos = Wicket.indicatorPosition
+	if ( clickPos ) {
+		$('#indicator').css('top', clickPos[1] + 10).css('left', clickPos[0] + 10);
+	
+		$("#servoy_page").mousemove(function(event) {
+			$('#indicator').css('top', event.clientY+10).css('left', event.clientX+10);
+		});
+	}
+}
+Wicket.hideIncrementally=function(e) {
+	var e=Wicket.$(e);
+	if (e==null) return;
+	var count=e.getAttribute("showIncrementallyCount");
+	count=parseInt((count==null)?0:count-1);
+	if (count<=0) Wicket.hide(e);
+	e.setAttribute("showIncrementallyCount", count);
+	$('#servoy_page').unbind('mousemove');
+}
