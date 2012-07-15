@@ -2216,7 +2216,10 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].spaceStatus.lastSpace = solutionPrefs.config.activeSpace
 		
 		for (var i = 1; i <= 14; i++) {
-			navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].spaceStatus.push(forms[baseForm + '__header'].elements['btn_space_' + i].visible)
+			//check that this space is available (smart client has more spaces than web)
+			if (forms[baseForm + '__header'].elements['btn_space_' + i]) {
+				navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].spaceStatus.push(forms[baseForm + '__header'].elements['btn_space_' + i].visible)
+			}
 		}
 	}
 	//reset preferencemode indicator if coming form one
@@ -2275,7 +2278,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		//web client
 		if (solutionPrefs.config.webClient) {
 			//load main window
-			forms.DATASUTRA_WEB_0F__workflow.elements.tab_workflow.setLeftForm(forms[mainTab])
+			forms.DATASUTRA_WEB_0F__workflow.setForm(mainTab)
 		}
 		//smart client
 		else {
@@ -2414,9 +2417,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		//web client
 		if (solutionPrefs.config.webClient) {
 			//load main window if new one different than currently displayed one
-			if (forms.DATASUTRA_WEB_0F__workflow.elements.tab_workflow.getLeftForm().controller.getName() != mainTab) {
-				forms.DATASUTRA_WEB_0F__workflow.elements.tab_workflow.setLeftForm(forms[mainTab])
-			}
+			forms.DATASUTRA_WEB_0F__workflow.setForm(mainTab)
 		}
 		//smart client
 		else {
@@ -2900,9 +2901,11 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		var borderDisabled = 'MatteBorder,0,0,0,1,#797778'
 		//enabled status specified for different spaces
 		for (var i = 1; i <= 14; i++) {
-			forms[baseForm + '__header'].elements['btn_space_' + i].enabled = spacesOK[i-1]
+			if (forms[baseForm + '__header'].elements['btn_space_' + i] != undefined) {
+				forms[baseForm + '__header'].elements['btn_space_' + i].enabled = spacesOK[i-1]
+			}
 			
-			if (i != 1 && i != 8) {
+			if (!solutionPrefs.config.webClient && i != 1 && i != 8) {
 				forms[baseForm + '__header'].elements['btn_space_' + i].setBorder(spacesOK[i-1] ? borderEnabled : borderDisabled)
 			}
 		}
@@ -2910,34 +2913,39 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		//form visited before, use space setup as of the last visit
 		if (sessionSpaces) {
 			for (var i = 0; i < 14; i++) {
-				forms[baseForm + '__header'].elements['btn_space_'+(i+1)].visible = sessionSpaces[i]
+				if (forms[baseForm + '__header'].elements['btn_space_'+(i+1)] != undefined) {
+					forms[baseForm + '__header'].elements['btn_space_'+(i+1)].visible = sessionSpaces[i]
+				}
 			}
 		}
 		//decide which space options are showing first based on defaults for this form
 		else {
-			var flipPreference = (navSpecs.spaceFlip) ? true : false
-			
-			for (var i = 0, j = i + 7; i < 7; i++, j++) {
-				//both available, take spaceFlip preference
-				if (spacesOK[i] && spacesOK[j]) {
-					forms[baseForm + '__header'].elements['btn_space_'+(i+1)].visible = !flipPreference
-					forms[baseForm + '__header'].elements['btn_space_'+(j+1)].visible = flipPreference
-				}
-				//only flip available, show it
-				else if (spacesOK[j]) {
-					forms[baseForm + '__header'].elements['btn_space_'+(i+1)].visible = false
-					forms[baseForm + '__header'].elements['btn_space_'+(j+1)].visible = true
-				}
-				//only normal or neither available, show normal
-				else {
-					forms[baseForm + '__header'].elements['btn_space_'+(i+1)].visible = true
-					forms[baseForm + '__header'].elements['btn_space_'+(j+1)].visible = false
+			//smart client only
+			if (!solutionPrefs.config.webClient) {
+				var flipPreference = (navSpecs.spaceFlip) ? true : false
+				
+				for (var i = 0, j = i + 7; i < 7; i++, j++) {
+					//both available, take spaceFlip preference
+					if (spacesOK[i] && spacesOK[j]) {
+						forms[baseForm + '__header'].elements['btn_space_'+(i+1)].visible = !flipPreference
+						forms[baseForm + '__header'].elements['btn_space_'+(j+1)].visible = flipPreference
+					}
+					//only flip available, show it
+					else if (spacesOK[j]) {
+						forms[baseForm + '__header'].elements['btn_space_'+(i+1)].visible = false
+						forms[baseForm + '__header'].elements['btn_space_'+(j+1)].visible = true
+					}
+					//only normal or neither available, show normal
+					else {
+						forms[baseForm + '__header'].elements['btn_space_'+(i+1)].visible = true
+						forms[baseForm + '__header'].elements['btn_space_'+(j+1)].visible = false
+					}
 				}
 			}
 		}
 		
 		//make sure active space's button is showing
-		if (!forms[baseForm + '__header'].elements['btn_space_'+spacesOK[solutionPrefs.config.activeSpace]].visible) {
+		if (forms[baseForm + '__header'].elements['btn_space_'+spacesOK[solutionPrefs.config.activeSpace]] != undefined && !forms[baseForm + '__header'].elements['btn_space_'+spacesOK[solutionPrefs.config.activeSpace]].visible) {
 			//if not visible, turn on and do the opposite for it's complement
 			
 			//get other value
@@ -2949,7 +2957,9 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			}
 			
 			forms[baseForm + '__header'].elements['btn_space_'+spacesOK[solutionPrefs.config.activeSpace]].visible = true
-			forms[baseForm + '__header'].elements['btn_space_'+complement].visible = false
+			if (forms[baseForm + '__header'].elements['btn_space_'+complement] != undefined) {
+				forms[baseForm + '__header'].elements['btn_space_'+complement].visible = false
+			}
 		}
 		
 		//LOG navigation
@@ -4399,7 +4409,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		//web client
 		if (solutionPrefs.config.webClient) {
 			//load main window
-			forms.DATASUTRA_WEB_0F__workflow.elements.tab_workflow.setLeftForm(forms[mainTab])
+			forms.DATASUTRA_WEB_0F__workflow.setForm(mainTab)
 		}
 		//smart client
 		else {
@@ -4474,9 +4484,11 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	var borderDisabled = 'MatteBorder,0,0,0,1,#797778'
 	//enabled status specified for different spaces
 	for (var i = 1; i <= 14; i++) {
-		forms[baseForm + '__header'].elements['btn_space_' + i].enabled = spacesOK[i-1]
+		if (forms[baseForm + '__header'].elements['btn_space_' + i] != undefined) {
+			forms[baseForm + '__header'].elements['btn_space_' + i].enabled = spacesOK[i-1]
+		}
 		
-		if (i != 1 && i != 8) {
+		if (!solutionPrefs.config.webClient && i != 1 && i != 8) {
 			forms[baseForm + '__header'].elements['btn_space_' + i].setBorder(spacesOK[i-1] ? borderEnabled : borderDisabled)
 		}
 	}
