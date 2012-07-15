@@ -78,12 +78,10 @@ function FLEX(event) {
 	if (solutionPrefs.config.flexibleSpace) {
 		elements.tab_main.dividerSize = 9
 		forms.DATASUTRA_WEB_0F__list.elements.tab_list.dividerSize = 9
-		forms.DATASUTRA_WEB_0F__workflow.elements.tab_workflow.dividerSize = 9
 	}
 	else {
 		elements.tab_main.dividerSize = 0
 		forms.DATASUTRA_WEB_0F__list.elements.tab_list.dividerSize = 0
-		forms.DATASUTRA_WEB_0F__workflow.elements.tab_workflow.dividerSize = 0
 	}
 }
 
@@ -109,8 +107,7 @@ function FORM_setup(baseForm,prefForm) {
 		//login form
 		forms.AC_R__login.elements.tab_login.tabIndex = 2
 		forms.AC_R__login.loginDisabled = true
-		forms.DATASUTRA_WEB_0F__workflow.elements.tab_workflow.setLeftForm(forms.AC_R__login)
-//		forms.DATASUTRA_WEB_0F__workflow.elements.tab_workflow.dividerLocation = forms.DATASUTRA_WEB_0F__workflow.elements.tab_workflow.getHeight()
+		forms.DATASUTRA_WEB_0F__workflow.setForm('AC_R__login')
 		
 		//go to workflow maximized view
 //		forms.DATASUTRA_WEB_0F__header.ACTION_space_change('btn_space_7',true)
@@ -231,8 +228,7 @@ function FORM_setup(baseForm,prefForm) {
 		
 		//login form
 		forms.AC_R__login.elements.tab_login.tabIndex = 1
-		forms.DATASUTRA_WEB_0F__workflow.elements.tab_workflow.setLeftForm(forms.AC_R__login,'')
-//		forms.DATASUTRA_WEB_0F__workflow.elements.tab_workflow.dividerLocation = forms.DATASUTRA_WEB_0F__workflow.elements.tab_workflow.getHeight()
+		forms.DATASUTRA_WEB_0F__workflow.setForm('AC_R__login')
 		
 		//re-size screen if too small
 		if (application.getWindowWidth() < 950 || application.getWindowHeight() < 650) {
@@ -259,20 +255,11 @@ function FORM_setup(baseForm,prefForm) {
 	
 	//	//PART XXXX: deactivate all buttons
 	forms[baseForm + '__header'].elements.btn_navset.visible = false
-	forms[baseForm + '__header'].elements.btn_space_1.visible = false
-	forms[baseForm + '__header'].elements.btn_space_2.visible = false
-	forms[baseForm + '__header'].elements.btn_space_3.visible = false
-	forms[baseForm + '__header'].elements.btn_space_4.visible = false
-	forms[baseForm + '__header'].elements.btn_space_5.visible = false
-	forms[baseForm + '__header'].elements.btn_space_6.visible = false
-	forms[baseForm + '__header'].elements.btn_space_7.visible = false
-	forms[baseForm + '__header'].elements.btn_space_8.visible = false
-	forms[baseForm + '__header'].elements.btn_space_9.visible = false
-	forms[baseForm + '__header'].elements.btn_space_10.visible = false
-	forms[baseForm + '__header'].elements.btn_space_11.visible = false
-	forms[baseForm + '__header'].elements.btn_space_12.visible = false
-	forms[baseForm + '__header'].elements.btn_space_13.visible = false
-	forms[baseForm + '__header'].elements.btn_space_14.visible = false
+	for (var i = 1; i <= 14; i++) {
+		if (forms[baseForm + '__header'].elements['btn_space_' + i] != undefined) {
+			forms[baseForm + '__header'].elements['btn_space_' + i].visible = false
+		}
+	}
 	forms[baseForm + '__header'].elements.btn_space_dividers.visible = false
 	forms[baseForm + '__header__toolbar'].elements.btn_toolbar_toggle.visible = false
 	forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.visible = false

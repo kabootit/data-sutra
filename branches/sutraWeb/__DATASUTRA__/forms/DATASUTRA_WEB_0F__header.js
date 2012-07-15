@@ -788,7 +788,6 @@ function ACTION_space_flexible(event) {
 		elements.split_tool_find.dividerSize = dividerSize
 		forms.DATASUTRA_WEB_0F__list.elements.tab_list.dividerSize = dividerSize
 		forms.DATASUTRA_WEB_0F__main.elements.tab_main.dividerSize = dividerSize
-		forms.DATASUTRA_WEB_0F__workflow.elements.tab_workflow.dividerSize = dividerSize
 		
 		return
 		

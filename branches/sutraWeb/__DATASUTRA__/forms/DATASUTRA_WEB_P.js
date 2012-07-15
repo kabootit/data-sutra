@@ -79,9 +79,6 @@ function FORM_on_show(firstShow, event) {
 	_mainDivider = forms.DATASUTRA_WEB_0F__main.elements.tab_main.dividerLocation
 	_mainSize = forms.DATASUTRA_WEB_0F__main.elements.tab_main.getWidth() + ',' + forms.DATASUTRA_WEB_0F__main.elements.tab_main.getHeight()
 	
-	_workflowDivider = forms.DATASUTRA_WEB_0F__workflow.elements.tab_workflow.dividerLocation
-	_workflowSize = forms.DATASUTRA_WEB_0F__workflow.elements.tab_workflow.getWidth() + ',' + forms.DATASUTRA_WEB_0F__workflow.elements.tab_workflow.getHeight()
-	
 	_wrapperDivider = forms.DATASUTRA_WEB_0F.elements.tab_wrapper.dividerLocation
 	_wrapperSize = forms.DATASUTRA_WEB_0F.elements.tab_wrapper.getWidth() + ',' + forms.DATASUTRA_WEB_0F.elements.tab_wrapper.getHeight()
 }
@@ -97,9 +94,6 @@ function FORM_on_show(firstShow, event) {
  */
 function ACTION_divider(oldValue, newValue, event) {
 	switch (event.getElementName()) {
-		case 'dWorkflow':
-			forms.DATASUTRA_WEB_0F__workflow.elements.tab_workflow.dividerLocation = _workflowDivider
-			break
 		case 'dWrapper':
 			forms.DATASUTRA_WEB_0F.elements.tab_wrapper.dividerLocation = _wrapperDivider
 			break

@@ -10,7 +10,7 @@ name:"DATASUTRA_WEB__blank_6",
 navigatorID:"-1",
 paperPrintScale:100,
 scrollbars:36,
-size:"1,170",
+size:"0,20",
 styleName:"_DATASUTRA_",
 typeid:3,
 uuid:"4B4B908E-81EA-417B-B5C5-02F9228B9F43"
