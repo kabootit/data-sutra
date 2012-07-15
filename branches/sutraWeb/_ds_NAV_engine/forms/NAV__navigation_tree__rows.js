@@ -444,9 +444,6 @@ function LIST_redraw__webclient(event,itemID,reScroll,skipLoadForms,favoriteMode
 		//continue redrawing the screen
 		else {
 			LIST_redraw__webclient__continue(0)
-			
-			//put loading indicator into toolbar area
-			plugins.WebClientUtils.executeClientSideJS('setIndicator(1000);')
 		}
 	}
 }
