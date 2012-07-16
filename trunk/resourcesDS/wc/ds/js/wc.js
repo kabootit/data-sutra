@@ -64,18 +64,18 @@ function centerForm(formName) {
 
 //	Extend jquery to be able to remove styles (http://stackoverflow.com/questions/2465158)
 (function($) {
-    $.fn.removeStyle = function(style)
-    {
-        var search = new RegExp(style + '[^;]+;?', 'g');
+	$.fn.removeStyle = function(style)
+	{
+		var search = new RegExp(style + '[^;]+;?', 'g');
 
-        return this.each(function()
-        {
-            $(this).attr('style', function(i, style)
-            {
-                return style.replace(search, '');
-            });
-        });
-    };
+		return this.each(function()
+		{
+			$(this).attr('style', function(i, style)
+			{
+				return style.replace(search, '');
+			});
+		});
+	};
 })(jQuery);
 
 //  Pump in extra stylesheets at the end of head so that overwrite existing 
@@ -89,6 +89,23 @@ function centerForm(formName) {
 	setTimeout(function(){
 		$('head').append('<link rel="stylesheet" type="text/css" href="/servoy-webclient/templates/datasutra/servoy_web_client_bottom.css" />');
 	},delayTime)
+})();
+
+//	Disable backspace key unless in input field (turn off backspace to navigate browser history) (http://stackoverflow.com/questions/6309693)
+(function(){
+	$(document).keydown(function(e) {
+		var nodeName = e.target.nodeName.toLowerCase();
+
+		if (e.which === 8) {
+			if ((nodeName === 'input' && e.target.type === 'text') ||
+				nodeName === 'textarea') {
+				// do nothing
+			}
+			else {
+				e.preventDefault();
+			}
+		}
+	})
 })();
 
 //	Hook servoy's indicator to the mouse location
