@@ -344,6 +344,12 @@ var DIALOGS = new function() {
 	}
 };
 
+/**
+ * @type {Boolean}
+ *
+ * @properties={typeid:35,uuid:"E652B669-13C6-4D6F-A1FC-D9C32838DC5C",variableType:-4}
+ */
+var DS_web_cursor = false;
 
 /**
  * @type {Number}
@@ -6133,8 +6139,22 @@ function TRIGGER_ul_button_filter(event) {
  * @properties={typeid:24,uuid:"7AF6A8AA-44C4-4ABE-9A0B-18D379BD269A"}
  */
 function CODE_cursor_busy(busyCursor) {
+	//running in webclient and logged in, commandeer servoy indicator
+	if (globals.DS_web_cursor) {
+		//web client utils plugin available
+		if (plugins.WebClientUtils) {
+			//busy cursor requested
+			if (busyCursor) {
+				plugins.WebClientUtils.executeClientSideJS('busyCursor(Wicket.indicatorPosition,true);')
+			}
+			//busy cursor request to turn off
+			else {
+				plugins.WebClientUtils.executeClientSideJS('busyCursor();')
+			}
+		}
+	}
 	//data sutra plugin available
-	if (plugins.sutra) {
+	else if (plugins.sutra) {
 		//busy cursor requested and not already on
 		if (busyCursor && ! plugins.sutra.busyCursor) {
 			plugins.sutra.busyCursor = true
