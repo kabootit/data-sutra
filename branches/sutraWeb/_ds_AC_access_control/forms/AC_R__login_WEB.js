@@ -90,6 +90,9 @@ function LOGIN(event) {
 		var status = forms.AC_R__login_1F__password.LOGIN_user(null,dialog)
 		
 		if (typeof status == 'boolean' && status) {
+			//set global for busy cursor in webclient
+			globals.DATASUTRA_web_cursor = true
+			
 			//go back to main screen form
 			history.go(-2)
 			
