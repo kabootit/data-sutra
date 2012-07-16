@@ -62,7 +62,7 @@ function centerForm(formName) {
 	},1500)
 })();
 
-//	Extend jquery to be able to remove styles (http://stackoverflow.com/questions/2465158/possible-to-remove-inline-styles-with-jquery)
+//	Extend jquery to be able to remove styles (http://stackoverflow.com/questions/2465158)
 (function($) {
     $.fn.removeStyle = function(style)
     {
@@ -94,39 +94,64 @@ function centerForm(formName) {
 //	Hook servoy's indicator to the mouse location
 (function(){
 	setTimeout(function(){
-		$('#servoy_page').click(function(e){
-		var position = [0,0];
-		position[0] = (e.pageX) ? e.pageX : 0;
-		position[1] = (e.pageY) ? e.pageY : 0;
-		Wicket.indicatorPosition = position;
+			$('#servoy_page').click(function(e){
+			var position = [0,0];
+			position[0] = (e.pageX) ? e.pageX : 0;
+			position[1] = (e.pageY) ? e.pageY : 0;
+			Wicket.indicatorPosition = position;
 		})
-	},2000)	
+	},1500)	
 })()
-
-//	Override wicket calls to hide/show indicator
-Wicket.showIncrementally=function(e) {
-	var e=Wicket.$(e);
-	if (e==null) return;
-	var count=e.getAttribute("showIncrementallyCount");
-	count=parseInt((count==null)?0:count);
-	if (count>=0) Wicket.show(e);
-	e.setAttribute("showIncrementallyCount", count+1);
-
-	var clickPos = Wicket.indicatorPosition
-	if ( clickPos ) {
-		$('#indicator').css('top', clickPos[1] + 10).css('left', clickPos[0] + 10);
+function busyCursor(clickPos,turnOn) {
+	var selector = $("#servoy_page");
 	
-		$("#servoy_page").mousemove(function(event) {
-			$('#indicator').css('top', event.clientY+10).css('left', event.clientX+10);
-		});
+	//don't run on login form, we want the cursor in a specific location
+	if ($('.loginDS').length) {
+		return
+	}
+	
+	//we have a jquery selector
+	if (selector.length) {
+		//valid mouse location passed in
+		if ( clickPos ) {
+			$('#indicator').css('top', clickPos[1] + 10).css('left', clickPos[0] + 10);
+	
+			selector.mousemove(function(event) {
+				$('#indicator').css('top', event.clientY+10).css('left', event.clientX+10);
+			});
+			
+			//force indicator on (used for programmed busy)
+			if (turnOn) {
+				$('#indicator').show();
+			}
+		}
+		//no mouse location, remove listener
+		else {
+			selector.unbind('mousemove');
+			
+			//make sure that really turned off (sometimes gets stuck)
+			$('#indicator').hide();
+		}
 	}
 }
-Wicket.hideIncrementally=function(e) {
-	var e=Wicket.$(e);
-	if (e==null) return;
-	var count=e.getAttribute("showIncrementallyCount");
-	count=parseInt((count==null)?0:count-1);
-	if (count<=0) Wicket.hide(e);
-	e.setAttribute("showIncrementallyCount", count);
-	$('#servoy_page').unbind('mousemove');
+
+//	Extending Wicket...object to hold original calls
+var WicketDSExtend = new Object();
+
+//	Extend wicket calls to hide/show indicator so that follows mouse location
+WicketDSExtend.showIncrementally = Wicket.showIncrementally;
+Wicket.showIncrementally=function() {
+	//original call
+	WicketDSExtend.showIncrementally.apply(this,arguments);
+	
+	//override
+	busyCursor(Wicket.indicatorPosition);
+}
+WicketDSExtend.hideIncrementally = Wicket.hideIncrementally;
+Wicket.hideIncrementally=function() {
+	//original call
+	WicketDSExtend.hideIncrementally.apply(this,arguments);
+	
+	//override
+	busyCursor();
 }
