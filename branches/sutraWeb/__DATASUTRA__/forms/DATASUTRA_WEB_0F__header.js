@@ -190,8 +190,9 @@ function ACTION_space_change(event) {
 				case 'btn_space_1':
 					var spaceName = 'standard'
 					
-					var imageURL = 'media:///space_standard.png'
-					var imageActiveURL = 'media:///space_standard_active.png'
+					var imageURL = 'media:///spacew_standard.png'
+					var imageOverURL = 'media:///spacew_standard_over.png'
+					var imageActiveURL = 'media:///spacew_standard_active.png'
 					
 					var mainLevelOrient = SM_ALIGNMENT.SPLIT_HORIZONTAL
 					var mainLevelDivLocation = solutionPrefs.screenAttrib.spaces.standard.currentHorizontal
@@ -210,8 +211,9 @@ function ACTION_space_change(event) {
 				case 'btn_space_2':
 					var spaceName = 'list'
 					
-					var imageURL = 'media:///space_list.png'
-					var imageActiveURL = 'media:///space_list_active.png'
+					var imageURL = 'media:///spacew_list.png'
+					var imageOverURL = 'media:///spacew_list_over.png'
+					var imageActiveURL = 'media:///spacew_list_active.png'
 					
 					var mainLevelOrient = SM_ALIGNMENT.SPLIT_HORIZONTAL
 					var mainLevelDivLocation = solutionPrefs.screenAttrib.spaces.list.currentHorizontal
@@ -229,8 +231,9 @@ function ACTION_space_change(event) {
 				case 'btn_space_3':
 					var spaceName = 'vertical'
 					
-					var imageURL = 'media:///space_vertical.png'
-					var imageActiveURL = 'media:///space_vertical_active.png'
+					var imageURL = 'media:///spacew_vertical.png'
+					var imageOverURL = 'media:///spacew_vertical_over.png'
+					var imageActiveURL = 'media:///spacew_vertical_active.png'
 					
 					var mainLevelOrient = SM_ALIGNMENT.SPLIT_HORIZONTAL
 					var mainLevelDivLocation = solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalOne + solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalTwo
@@ -249,8 +252,8 @@ function ACTION_space_change(event) {
 //				case 'btn_space_4':
 //					var spaceName = 'centered'
 //					
-//					var imageURL = 'media:///space_centered.png'
-//					var imageActiveURL = 'media:///space_centered_active.png'
+//					var imageURL = 'media:///spacew_centered.png'
+//					var imageActiveURL = 'media:///spacew_centered_active.png'
 //					
 //					var mainLevel_A = 'bean_list'
 //					var mainLevel_B = 'bean_workflow'
@@ -277,8 +280,8 @@ function ACTION_space_change(event) {
 //				case 'btn_space_5':
 //					var spaceName = 'classic'
 //					
-//					var imageURL = 'media:///space_classic.png'
-//					var imageActiveURL = 'media:///space_classic_active.png'
+//					var imageURL = 'media:///spacew_classic.png'
+//					var imageActiveURL = 'media:///spacew_classic_active.png'
 //					
 //					var mainLevel_A = 'bean_list'
 //					var mainLevel_B = 'bean_workflow'
@@ -305,8 +308,8 @@ function ACTION_space_change(event) {
 //				case 'btn_space_6':
 //					var spaceName = 'wide'
 //					
-//					var imageURL = 'media:///space_wide.png'
-//					var imageActiveURL = 'media:///space_wide_active.png'
+//					var imageURL = 'media:///spacew_wide.png'
+//					var imageActiveURL = 'media:///spacew_wide_active.png'
 //					
 //					var mainLevel_A = 'bean_list'
 //					var mainLevel_B = 'bean_workflow'
@@ -333,8 +336,9 @@ function ACTION_space_change(event) {
 				case 'btn_space_7':
 					var spaceName = 'workflow'
 					
-					var imageURL = 'media:///space_workflow.png'
-					var imageActiveURL = 'media:///space_workflow_active.png'
+					var imageURL = 'media:///spacew_workflow.png'
+					var imageOverURL = 'media:///spacew_workflow_over.png'
+					var imageActiveURL = 'media:///spacew_workflow_active.png'
 					
 					var mainLevelOrient = SM_ALIGNMENT.SPLIT_HORIZONTAL
 					var mainLevelDivLocation = 0
@@ -352,8 +356,8 @@ function ACTION_space_change(event) {
 //				case 'btn_space_8':
 //					var spaceName = 'standard flip'
 //					
-//					var imageURL = 'media:///space_standard_flip.png'
-//					var imageActiveURL = 'media:///space_standard_flip_active.png'
+//					var imageURL = 'media:///spacew_standard_flip.png'
+//					var imageActiveURL = 'media:///spacew_standard_flip_active.png'
 //					
 //					var mainLevel_A = 'bean_list'
 //					var mainLevel_B = 'bean_workflow'
@@ -380,8 +384,9 @@ function ACTION_space_change(event) {
 				case 'btn_space_9':
 					var spaceName = 'list flip'
 					
-					var imageURL = 'media:///space_list_flip.png'
-					var imageActiveURL = 'media:///space_list_flip_active.png'
+					var imageURL = 'media:///spacew_navigation.png'
+					var imageOverURL = 'media:///spacew_navigation_over.png'
+					var imageActiveURL = 'media:///spacew_navigation_active.png'
 					
 					var mainLevelOrient = SM_ALIGNMENT.SPLIT_HORIZONTAL
 					var mainLevelDivLocation = solutionPrefs.screenAttrib.spaces.list.currentHorizontal
@@ -399,8 +404,8 @@ function ACTION_space_change(event) {
 //				case 'btn_space_10':
 //					var spaceName = 'vertical flip'
 //					
-//					var imageURL = 'media:///space_vertical_flip.png'
-//					var imageActiveURL = 'media:///space_vertical_flip_active.png'
+//					var imageURL = 'media:///spacew_vertical_flip.png'
+//					var imageActiveURL = 'media:///spacew_vertical_flip_active.png'
 //					
 //					var mainLevel_A = 'bean_list'
 //					var mainLevel_B = 'bean_workflow'
@@ -427,8 +432,8 @@ function ACTION_space_change(event) {
 //				case 'btn_space_11':
 //					var spaceName = 'centered flip'
 //					
-//					var imageURL = 'media:///space_centered_flip.png'
-//					var imageActiveURL = 'media:///space_centered_flip_active.png'
+//					var imageURL = 'media:///spacew_centered_flip.png'
+//					var imageActiveURL = 'media:///spacew_centered_flip_active.png'
 //					
 //					var mainLevel_A = 'bean_list'
 //					var mainLevel_B = 'bean_workflow'
@@ -455,8 +460,8 @@ function ACTION_space_change(event) {
 //				case 'btn_space_12':
 //					var spaceName = 'classic flip'
 //					
-//					var imageURL = 'media:///space_classic_flip.png'
-//					var imageActiveURL = 'media:///space_classic_flip_active.png'
+//					var imageURL = 'media:///spacew_classic_flip.png'
+//					var imageActiveURL = 'media:///spacew_classic_flip_active.png'
 //					
 //					var mainLevel_A = 'bean_list'
 //					var mainLevel_B = 'bean_workflow'
@@ -483,8 +488,8 @@ function ACTION_space_change(event) {
 //				case 'btn_space_13':
 //					var spaceName = 'wide flip'
 //					
-//					var imageURL = 'media:///space_wide_flip.png'
-//					var imageActiveURL = 'media:///space_wide_flip_active.png'
+//					var imageURL = 'media:///spacew_wide_flip.png'
+//					var imageActiveURL = 'media:///spacew_wide_flip_active.png'
 //					
 //					var mainLevel_A = 'bean_list'
 //					var mainLevel_B = 'bean_workflow'
@@ -511,8 +516,9 @@ function ACTION_space_change(event) {
 				case 'btn_space_14':
 					var spaceName = 'workflow flip'
 					
-					var imageURL = 'media:///space_workflow_flip.png'
-					var imageActiveURL = 'media:///space_workflow_flip_active.png'
+					var imageURL = 'media:///spacew_records.png'
+					var imageOverURL = 'media:///spacew_records_over.png'
+					var imageActiveURL = 'media:///spacew_records_active.png'
 					
 					var mainLevelOrient = SM_ALIGNMENT.SPLIT_HORIZONTAL
 					var mainLevelDivLocation = reallyBig
@@ -570,11 +576,6 @@ function ACTION_space_change(event) {
 						application.getWindowHeight()
 						)
 				
-				//set graphic to be depressed
-				if (forms[baseForm + '__header'].elements[elem] != undefined) {
-					forms[baseForm + '__header'].elements[elem].setImageURL(imageActiveURL)
-				}
-				
 				//DS_space_flexible method sets the correct border and turns off dividers if showing
 				ACTION_space_flexible(true,skipUI)
 					
@@ -600,17 +601,25 @@ function ACTION_space_change(event) {
 				}
 				
 				globals.CODE_cursor_busy(false)
+				
+				//set graphic to be depressed
+				if (forms[baseForm + '__header'].elements[elem] != undefined) {
+					forms[baseForm + '__header'].elements[elem].imageURL = imageActiveURL
+					forms[baseForm + '__header'].elements[elem].rolloverImageURL = imageActiveURL
+				}
 			}
 			//leave graphic on depressed state if same button clicked
 			else if (buttonName == elem && oldSpace == spaceName) {
 				if (forms[baseForm + '__header'].elements[elem] != undefined) {
-					forms[baseForm + '__header'].elements[elem].setImageURL(imageActiveURL)
+					forms[baseForm + '__header'].elements[elem].imageURL = imageActiveURL
+					forms[baseForm + '__header'].elements[elem].rolloverImageURL = imageActiveURL
 				}
 			}
 			//set graphic to normal state (non-depressed)
 			else {
 				if (forms[baseForm + '__header'].elements[elem] != undefined) {
-					forms[baseForm + '__header'].elements[elem].setImageURL(imageURL)
+					forms[baseForm + '__header'].elements[elem].imageURL = imageURL
+					forms[baseForm + '__header'].elements[elem].rolloverImageURL = imageOverURL
 				}
 			}		
 		}
