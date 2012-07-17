@@ -1412,7 +1412,8 @@ if (globals.AC_login_user && globals.AC_login_password) {
 
 		//use solution model based approach for navigation item navigation pane
 		if (solutionPrefs.config.webClient) {
-			navTabPanel.setLeftForm(forms[navigationList])
+//			navTabPanel.setLeftForm(forms[navigationList])
+			forms.DATASUTRA_WEB_0F__list.FORM_on_show(true)
 		}
 		else {
 			navTabPanel.addTab(forms[navigationList],'')
