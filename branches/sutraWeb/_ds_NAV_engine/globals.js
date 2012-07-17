@@ -2218,7 +2218,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		for (var i = 1; i <= 14; i++) {
 			//check that this space is available (smart client has more spaces than web)
 			if (forms[baseForm + '__header'].elements['btn_space_' + i]) {
-				navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].spaceStatus.push(forms[baseForm + '__header'].elements['btn_space_' + i].visible)
+				navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].spaceStatus.push(forms[baseForm + '__header'].elements['btn_space_' + i] ? forms[baseForm + '__header'].elements['btn_space_' + i].visible : false)
 			}
 		}
 	}
@@ -3684,6 +3684,9 @@ if (record[relationName].url_path && record.url_path) {
 		var availableSpaces = new Array()//1,2,3,4,5,6,7,8,9,10,11,12,13,14)
 	}
 	
+	//webclient space
+	var webClientSpaces = new Array(1,2,9,3,14,7)
+	
 	//convert to numbers so they'll sort
 	for (var i = 0; i < availableSpaces.length; i++) {
 		availableSpaces[i] = utils.stringToNumber(availableSpaces[i])
@@ -3705,7 +3708,22 @@ if (record[relationName].url_path && record.url_path) {
 		
 		if (availableSpaces.length > loop) {
 			if (availableSpaces[loop] == k + 1) {
-				setupSpaces[k] = true
+				//when webclient, only allow subset of spaces
+				if (solutionPrefs.config.webClient) {
+					//this space is an option
+					if (webClientSpaces.indexOf(availableSpaces[loop]) >= 0) {
+						setupSpaces[k] = true
+					}
+					//not an option
+					else {
+						setupSpaces[k] = false
+					}
+				}
+				//got this far, space is good
+				else {
+					setupSpaces[k] = true
+				}
+				
 				loop++
 			}
 			else {
