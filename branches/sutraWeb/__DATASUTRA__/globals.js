@@ -1685,7 +1685,7 @@ function DS_actions(input) {
 						navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].spaceStatus.lastSpace = solutionPrefs.config.activeSpace
 						
 						for (var i = 1; i <= 14; i++) {
-							navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].spaceStatus.push(forms[baseForm + '__header'].elements['btn_space_' + i].visible)
+							navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].spaceStatus.push(forms[baseForm + '__header'].elements['btn_space_' + i] ? forms[baseForm + '__header'].elements['btn_space_' + i].visible : false)
 						}
 					}
 					
@@ -1935,7 +1935,7 @@ function DS_actions(input) {
 							navigationPrefs.byNavItemID[solutionPrefs.config.prefs.workflowFormID].spaceStatus.lastSpace = solutionPrefs.config.prefs.workflowSpace
 							
 							for (var i = 1; i <= 14; i++) {
-								navigationPrefs.byNavItemID[solutionPrefs.config.prefs.workflowFormID].spaceStatus.push(forms[baseForm + '__header'].elements['btn_space_' + i].visible)
+								navigationPrefs.byNavItemID[solutionPrefs.config.prefs.workflowFormID].spaceStatus.push(forms[baseForm + '__header'].elements['btn_space_' + i] ? forms[baseForm + '__header'].elements['btn_space_' + i].visible : false)
 							}
 						}
 						
@@ -3291,7 +3291,11 @@ function DS_space_flexible(event)
  *			  	
  */
 
-if (application.__parent__.solutionPrefs) {
+//running webclient, push off to correct method
+if (solutionPrefs.config.webClient) {
+	forms.DATASUTRA_WEB_0F__header.ACTION_space_flexible(arguments[0],arguments[1],arguments[2],arguments[3],arguments[4],arguments[5])
+}
+else if (application.__parent__.solutionPrefs) {
 
 //MEMO: need to somehow put this section in a Function of it's own
 //running in Tano...strip out jsevents for now

@@ -242,9 +242,6 @@ function FORM_setup(baseForm,prefForm) {
 			}
 		}
 		
-		//go to workflow maximized view
-		forms.DATASUTRA_WEB_0F__header.ACTION_space_change('btn_space_7',true)
-		
 		//	LOAD defaults for password
 		globals.AC_password_set()
 			

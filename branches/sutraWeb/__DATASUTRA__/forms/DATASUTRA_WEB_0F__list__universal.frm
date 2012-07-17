@@ -1,4 +1,3 @@
-borderType:"MatteBorder,1,0,0,0,#333333",
 customProperties:"",
 items:[
 {

@@ -9,6 +9,9 @@ if (application.__parent__.solutionPrefs) {
 	var flexMethod = (solutionPrefs.config.webClient) ? forms.DATASUTRA_WEB_0F__header.ACTION_space_flexible : globals.DS_space_flexible
 	var sideBarMethod = (solutionPrefs.config.webClient) ? globals.DS_sidebar_toggle : globals.DS_sidebar_toggle
 	
+	var splitToolFind = forms.DATASUTRA_WEB_0F__header.elements.split_tool_find
+	var divLocation = splitToolFind.dividerLocation
+	
 	//in flexible spaces
 	var flexOn = solutionPrefs.config.flexibleSpace
 	
@@ -20,6 +23,10 @@ if (application.__parent__.solutionPrefs) {
 	
 	if (flexOn) {
 		flexMethod(null,true)
+	}
+	
+	if (solutionPrefs.config.webClient) {
+		splitToolFind.dividerLocation = divLocation + solutionPrefs.screenAttrib.sidebar.currentSize
 	}
 }
 }
@@ -151,6 +158,10 @@ function FORM_on_load()
 {
 //elements.btn_popin.visible = false
 elements.gfx_flexible.visible = false
+
+if (solutionPrefs.config.webClient) {
+	elements.btn_collapse.toolTipText = 'Collapse sidebar'
+}
 }
 
 /**
