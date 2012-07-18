@@ -142,13 +142,14 @@ function RESET(event) {
  */
 function FORM_on_show(firstShow, event) {
 	if (firstShow) {
-		//turn off auto-capitalize on ipad
-		plugins.WebClientUtils.executeClientSideJS('$("#' + plugins.WebClientUtils.getElementMarkupId(elements.var_userName) +'").attr("autocapitalize","off");')
-		
 		plugins.WebClientUtils.setExtraCssClass(elements.var_dialog, 'dialogDS')
 		plugins.WebClientUtils.setExtraCssClass(elements.btn_login, 'loginDS')
 		_shown = true
 	}
+
+	//turn off auto-capitalize on ipad
+	plugins.WebClientUtils.executeClientSideJS('$("#' + plugins.WebClientUtils.getElementMarkupId(elements.var_userName) +'").attr("autocapitalize","off");')
+//	plugins.WebClientUtils.executeClientSideJS('console.log($("#' + plugins.WebClientUtils.getElementMarkupId(elements.var_userName) +'").attr("autocapitalize","off"));')//ID is ' + plugins.WebClientUtils.getElementMarkupId(elements.var_userName) + '");')
 	
 	// attach style to form to center it
 	plugins.WebClientUtils.executeClientSideJS('centerForm("' + controller.getName() + '");')
