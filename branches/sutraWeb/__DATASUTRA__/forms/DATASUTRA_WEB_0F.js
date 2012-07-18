@@ -80,9 +80,6 @@ function FORM_setup(baseForm,prefForm) {
 		forms.AC_R__login.loginDisabled = true
 		forms.DATASUTRA_WEB_0F__workflow.setForm('AC_R__login')
 		
-		//go to workflow maximized view
-		forms.DATASUTRA_WEB_0F__header.ACTION_space_change('btn_space_1',true)
-		
 		//set up title toolbar
 		solutionPrefs.panel = globals.DS_panel_load(null,true)
 		
@@ -243,7 +240,10 @@ function FORM_setup(baseForm,prefForm) {
 	//set top border on graphic (commented out because then anchoring doesn't work)
 //	forms[baseForm + '__header'].elements.gfx_header.setBorder('MatteBorder,1,0,1,0,#333333')
 //	forms.DATASUTRA__sidebar__header.elements.gfx_header.setBorder('MatteBorder,1,0,1,0,#333333')
-		
+	
+	//trigger spaces (to fill images)
+	forms.DATASUTRA_WEB_0F__header.ACTION_space_change('btn_space_1',true)	
+	
 	// //PART IX: load up title toolbar
 	globals.DS_toolbar_load()
 }
