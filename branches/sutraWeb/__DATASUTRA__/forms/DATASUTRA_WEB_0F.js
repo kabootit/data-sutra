@@ -20,10 +20,7 @@ function FORM_on_load(event) {
 		globals.DATASUTRA_init()
 		
 		solutionPrefs.config.webClient = true
-		solutionPrefs.config.activeSpace = 'standard'
-		
-		//set wc mode (running through router or not)
-//		solutionPrefs.config.webClientRouter = globals.DATASUTRA_router_enable
+//		solutionPrefs.config.activeSpace = 'standard'
 		
 		FORM_setup(controller.getName(),'DATASUTRA_0F_solution__blank_4')
 		
@@ -60,32 +57,6 @@ function FORM_on_show(firstShow, event) {
 }
 
 /**
- * Perform the element default action.
- *
- * @param {JSEvent} event the event that triggered the action
- *
- * @properties={typeid:24,uuid:"8ADDF409-D936-46B2-AA21-59DA5F74453D"}
- */
-function FLEX(event) {
-	if (!application.__parent__.solutionPrefs) {
-		application.__parent__.solutionPrefs = new Object()
-		solutionPrefs.config = {
-					flexibleSpace : false
-				}
-	}
-	solutionPrefs.config.flexibleSpace = !solutionPrefs.config.flexibleSpace
-	
-	if (solutionPrefs.config.flexibleSpace) {
-		elements.tab_main.dividerSize = 9
-		forms.DATASUTRA_WEB_0F__list.elements.tab_list.dividerSize = 9
-	}
-	else {
-		elements.tab_main.dividerSize = 0
-		forms.DATASUTRA_WEB_0F__list.elements.tab_list.dividerSize = 0
-	}
-}
-
-/**
  * @properties={typeid:24,uuid:"5F7AFB52-69FC-473C-AB8E-99D0408EFA16"}
  */
 function CURTAIN_action() {
@@ -110,7 +81,7 @@ function FORM_setup(baseForm,prefForm) {
 		forms.DATASUTRA_WEB_0F__workflow.setForm('AC_R__login')
 		
 		//go to workflow maximized view
-//		forms.DATASUTRA_WEB_0F__header.ACTION_space_change('btn_space_7',true)
+		forms.DATASUTRA_WEB_0F__header.ACTION_space_change('btn_space_1',true)
 		
 		//set up title toolbar
 		solutionPrefs.panel = globals.DS_panel_load(null,true)

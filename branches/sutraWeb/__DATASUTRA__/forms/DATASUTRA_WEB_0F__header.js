@@ -1,14 +1,5 @@
 /**
  *
- * @properties={typeid:24,uuid:"3D120E24-1DA1-43FD-AAE8-305E57C35798"}
- */
-function FORM_on_load() {
-	//turn trial mode off
-	forms.DATASUTRA_0F_solution__header__toolbar.elements.lbl_trial_mode.visible = false
-}
-
-/**
- *
  * @properties={typeid:24,uuid:"E0887C17-8E9E-4FF6-AD2D-1100B3680C3D"}
  */
 function SIDEBAR_expand() {
@@ -249,90 +240,6 @@ function ACTION_space_change(event) {
 					
 					break
 				
-//				case 'btn_space_4':
-//					var spaceName = 'centered'
-//					
-//					var imageURL = 'media:///spacew_centered.png'
-//					var imageActiveURL = 'media:///spacew_centered_active.png'
-//					
-//					var mainLevel_A = 'bean_list'
-//					var mainLevel_B = 'bean_workflow'
-//					var mainLevelOrient = 1	//left-right orientation
-//					var mainLevelDivLocation = solutionPrefs.screenAttrib.spaces.centered.currentHorizontalOne
-//					
-//					var listLevel_A = 'tab_content_A'
-//					var listLevel_B = null
-//					var listLevelOrient = 0	//top-bottom orientation
-//					var listLevelDivLocation = 2000
-//					
-//					var workflowLevel_A = 'tab_content_C'
-//					var workflowLevel_B = 'tab_content_B'
-//					var workflowLevelOrient = 1	//left-right orientation
-//					var workflowLevelDivLocation = forms[baseForm].elements.bean_main.getWidth() - solutionPrefs.screenAttrib.spaces.centered.currentHorizontalOne - solutionPrefs.screenAttrib.spaces.centered.currentHorizontalTwo
-//					var workflowLevelResizeWeight = 1
-//					
-//					//needed for logging
-//					var dimensionOne = solutionPrefs.screenAttrib.spaces.centered.currentHorizontalOne
-//					var dimensionTwo = solutionPrefs.screenAttrib.spaces.centered.currentHorizontalTwo
-//					
-//					break
-//				
-//				case 'btn_space_5':
-//					var spaceName = 'classic'
-//					
-//					var imageURL = 'media:///spacew_classic.png'
-//					var imageActiveURL = 'media:///spacew_classic_active.png'
-//					
-//					var mainLevel_A = 'bean_list'
-//					var mainLevel_B = 'bean_workflow'
-//					var mainLevelOrient = 1	//left-right orientation
-//					var mainLevelDivLocation = solutionPrefs.screenAttrib.spaces.classic.currentHorizontal
-//					
-//					var listLevel_A = 'tab_content_A'
-//					var listLevel_B = null
-//					var listLevelOrient = 0	//top-bottom orientation
-//					var listLevelDivLocation = 2000
-//					
-//					var workflowLevel_A = 'tab_content_B'
-//					var workflowLevel_B = 'tab_content_C'
-//					var workflowLevelOrient =  0	//top-bottom orientation
-//					var workflowLevelDivLocation = solutionPrefs.screenAttrib.spaces.classic.currentVertical
-//					var workflowLevelResizeWeight = 1 / 4
-//					
-//					//needed for logging
-//					var dimensionOne = solutionPrefs.screenAttrib.spaces.classic.currentHorizontal
-//					var dimensionTwo = solutionPrefs.screenAttrib.spaces.classic.currentVertical
-//					
-//					break
-//				
-//				case 'btn_space_6':
-//					var spaceName = 'wide'
-//					
-//					var imageURL = 'media:///spacew_wide.png'
-//					var imageActiveURL = 'media:///spacew_wide_active.png'
-//					
-//					var mainLevel_A = 'bean_list'
-//					var mainLevel_B = 'bean_workflow'
-//					var mainLevelOrient = 0	//top-bottom orientation
-//					var mainLevelDivLocation = solutionPrefs.screenAttrib.spaces.wide.currentVertical
-//					
-//					var listLevel_A = 'tab_content_A'
-//					var listLevel_B = 'tab_content_B'
-//					var listLevelOrient = 1	//left-right orientation
-//					var listLevelDivLocation = solutionPrefs.screenAttrib.spaces.wide.currentHorizontal
-//					
-//					var workflowLevel_A = null
-//					var workflowLevel_B = 'tab_content_C'
-//					var workflowLevelOrient = 0	//top-bottom orientation
-//					var workflowLevelDivLocation = 0
-//					var workflowLevelResizeWeight = 0
-//					
-//					//needed for logging
-//					var dimensionOne = solutionPrefs.screenAttrib.spaces.wide.currentHorizontal
-//					var dimensionTwo = solutionPrefs.screenAttrib.spaces.wide.currentVertical
-//					
-//					break
-//				
 				case 'btn_space_7':
 					var spaceName = 'workflow'
 					
@@ -352,35 +259,7 @@ function ACTION_space_change(event) {
 					var dimensionOne = 0
 					
 					break
-//			
-//				case 'btn_space_8':
-//					var spaceName = 'standard flip'
-//					
-//					var imageURL = 'media:///spacew_standard_flip.png'
-//					var imageActiveURL = 'media:///spacew_standard_flip_active.png'
-//					
-//					var mainLevel_A = 'bean_list'
-//					var mainLevel_B = 'bean_workflow'
-//					var mainLevelOrient = 1	//left-right orientation
-//					var mainLevelDivLocation = solutionPrefs.screenAttrib.spaces.standard.currentHorizontal
-//					
-//					var listLevel_A = 'tab_content_B'
-//					var listLevel_B = 'tab_content_A'
-//					var listLevelOrient = 0	//top-bottom orientation
-//					var listLevelDivLocation = solutionPrefs.screenAttrib.spaces.standard.currentVertical
-//					
-//					var workflowLevel_A = null
-//					var workflowLevel_B = 'tab_content_C'
-//					var workflowLevelOrient = 0	//top-bottom orientation
-//					var workflowLevelDivLocation = 0
-//					var workflowLevelResizeWeight = 0
-//					
-//					//needed for logging
-//					var dimensionOne = solutionPrefs.screenAttrib.spaces.standard.currentHorizontal
-//					var dimensionTwo = solutionPrefs.screenAttrib.spaces.standard.currentVertical
-//					
-//					break
-//				
+				
 				case 'btn_space_9':
 					var spaceName = 'list flip'
 					
@@ -401,118 +280,6 @@ function ACTION_space_change(event) {
 					
 					break
 				
-//				case 'btn_space_10':
-//					var spaceName = 'vertical flip'
-//					
-//					var imageURL = 'media:///spacew_vertical_flip.png'
-//					var imageActiveURL = 'media:///spacew_vertical_flip_active.png'
-//					
-//					var mainLevel_A = 'bean_list'
-//					var mainLevel_B = 'bean_workflow'
-//					var mainLevelOrient = 1	//left-right orientation
-//					var mainLevelDivLocation = solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalOne + solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalTwo
-//					
-//					var listLevel_A = 'tab_content_B'
-//					var listLevel_B = 'tab_content_A'
-//					var listLevelOrient = 1	//left-right orientation
-//					var listLevelDivLocation = solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalOne
-//					
-//					var workflowLevel_A = null
-//					var workflowLevel_B = 'tab_content_C'
-//					var workflowLevelOrient = 0	//top-bottom orientation
-//					var workflowLevelDivLocation = 0
-//					var workflowLevelResizeWeight = 0
-//					
-//					//needed for logging
-//					var dimensionOne = solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalOne
-//					var dimensionTwo = solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalTwo
-//					
-//					break
-//				
-//				case 'btn_space_11':
-//					var spaceName = 'centered flip'
-//					
-//					var imageURL = 'media:///spacew_centered_flip.png'
-//					var imageActiveURL = 'media:///spacew_centered_flip_active.png'
-//					
-//					var mainLevel_A = 'bean_list'
-//					var mainLevel_B = 'bean_workflow'
-//					var mainLevelOrient = 1	//left-right orientation
-//					var mainLevelDivLocation = solutionPrefs.screenAttrib.spaces.centered.currentHorizontalOne
-//					
-//					var listLevel_A = 'tab_content_B'
-//					var listLevel_B = null
-//					var listLevelOrient = 0	//top-bottom orientation
-//					var listLevelDivLocation = 2000
-//					
-//					var workflowLevel_A = 'tab_content_C'
-//					var workflowLevel_B = 'tab_content_A'
-//					var workflowLevelOrient = 1	//left-right orientation
-//					var workflowLevelDivLocation = forms[baseForm].elements.bean_main.getWidth() - solutionPrefs.screenAttrib.spaces.centered.currentHorizontalOne - solutionPrefs.screenAttrib.spaces.centered.currentHorizontalTwo
-//					var workflowLevelResizeWeight = 1
-//					
-//					//needed for logging
-//					var dimensionOne = solutionPrefs.screenAttrib.spaces.centered.currentHorizontalOne
-//					var dimensionTwo = solutionPrefs.screenAttrib.spaces.centered.currentHorizontalTwo
-//					
-//					break
-//				
-//				case 'btn_space_12':
-//					var spaceName = 'classic flip'
-//					
-//					var imageURL = 'media:///spacew_classic_flip.png'
-//					var imageActiveURL = 'media:///spacew_classic_flip_active.png'
-//					
-//					var mainLevel_A = 'bean_list'
-//					var mainLevel_B = 'bean_workflow'
-//					var mainLevelOrient = 1	//left-right orientation
-//					var mainLevelDivLocation = solutionPrefs.screenAttrib.spaces.classic.currentHorizontal
-//					
-//					var listLevel_A = 'tab_content_B'
-//					var listLevel_B = null
-//					var listLevelOrient = 0	//top-bottom orientation
-//					var listLevelDivLocation = 2000
-//					
-//					var workflowLevel_A = 'tab_content_A'
-//					var workflowLevel_B = 'tab_content_C'
-//					var workflowLevelOrient =  0	//top-bottom orientation
-//					var workflowLevelDivLocation = solutionPrefs.screenAttrib.spaces.classic.currentVertical
-//					var workflowLevelResizeWeight = 1 / 4
-//					
-//					//needed for logging
-//					var dimensionOne = solutionPrefs.screenAttrib.spaces.classic.currentHorizontal
-//					var dimensionTwo = solutionPrefs.screenAttrib.spaces.classic.currentVertical
-//					
-//					break
-//				
-//				case 'btn_space_13':
-//					var spaceName = 'wide flip'
-//					
-//					var imageURL = 'media:///spacew_wide_flip.png'
-//					var imageActiveURL = 'media:///spacew_wide_flip_active.png'
-//					
-//					var mainLevel_A = 'bean_list'
-//					var mainLevel_B = 'bean_workflow'
-//					var mainLevelOrient = 0	//top-bottom orientation
-//					var mainLevelDivLocation = solutionPrefs.screenAttrib.spaces.wide.currentVertical
-//					
-//					var listLevel_A = 'tab_content_B'
-//					var listLevel_B = 'tab_content_A'
-//					var listLevelOrient = 1	//left-right orientation
-//					var listLevelDivLocation = solutionPrefs.screenAttrib.spaces.wide.currentHorizontal
-//					
-//					var workflowLevel_A = null
-//					var workflowLevel_B = 'tab_content_C'
-//					var workflowLevelOrient = 0	//top-bottom orientation
-//					var workflowLevelDivLocation = 0
-//					var workflowLevelResizeWeight = 0
-//					
-//					//needed for logging
-//					var dimensionOne = solutionPrefs.screenAttrib.spaces.wide.currentHorizontal
-//					var dimensionTwo = solutionPrefs.screenAttrib.spaces.wide.currentVertical
-//					
-//					break
-//				
 				case 'btn_space_14':
 					var spaceName = 'workflow flip'
 					
@@ -533,10 +300,30 @@ function ACTION_space_change(event) {
 					
 					break
 			}
+			
+			//update graphics shown
+			if (forms[baseForm + '__header'].elements[elem] != undefined) {
+				//set graphic to be depressed
+				if (buttonName == elem) {
+					forms[baseForm + '__header'].elements[elem].imageURL = imageActiveURL
+					forms[baseForm + '__header'].elements[elem].rolloverImageURL = imageActiveURL
+				}
+				//set graphic to normal state (non-depressed)
+				else {
+					forms[baseForm + '__header'].elements[elem].imageURL = imageURL
+					forms[baseForm + '__header'].elements[elem].rolloverImageURL = imageOverURL
+				}
+			}
+			
+			//don't press the same button twice
+			if (oldIndex + 1 == suffix) {
+				return
+			}
 				
 			//activate this space; only if the space switching to is different (unless forced to fire)
 			if (buttonName == elem && (oldSpace != spaceName || noFlip)) {
-				globals.CODE_cursor_busy(true)
+				
+//				globals.CODE_cursor_busy(true)
 				//SPLIT TAB PANEL SETUP
 					//top-level bean
 					var smMain = solutionModel.getForm(baseForm + '__main')
@@ -600,36 +387,9 @@ function ACTION_space_change(event) {
 					}
 				}
 				
-				globals.CODE_cursor_busy(false)
-				
-				//set graphic to be depressed
-				if (forms[baseForm + '__header'].elements[elem] != undefined) {
-					forms[baseForm + '__header'].elements[elem].imageURL = imageActiveURL
-					forms[baseForm + '__header'].elements[elem].rolloverImageURL = imageActiveURL
-				}
-			}
-			//leave graphic on depressed state if same button clicked
-			else if (buttonName == elem && oldSpace == spaceName) {
-				if (forms[baseForm + '__header'].elements[elem] != undefined) {
-					forms[baseForm + '__header'].elements[elem].imageURL = imageActiveURL
-					forms[baseForm + '__header'].elements[elem].rolloverImageURL = imageActiveURL
-				}
-			}
-			//set graphic to normal state (non-depressed)
-			else {
-				if (forms[baseForm + '__header'].elements[elem] != undefined) {
-					forms[baseForm + '__header'].elements[elem].imageURL = imageURL
-					forms[baseForm + '__header'].elements[elem].rolloverImageURL = imageOverURL
-				}
+//				globals.CODE_cursor_busy(false)
 			}		
 		}
-//		
-//		//refresh screen if required
-//		if (solutionPrefs.config.activeSpace != oldSpace) {
-//			application.updateUI()
-//		}
-
-		var z = ''
 	}
 
 }
@@ -717,6 +477,28 @@ function ACTION_space_flexible(event) {
 					
 					break
 					
+				case 'list flip':
+					var mainLevel = true
+					var listLevel = false
+					
+					var contentArea_A_Show = 'MatteBorder,0,1,0,0,#333333'
+					var contentArea_B_Show = borderEmpty
+					var contentArea_C_Show = 'MatteBorder,0,0,0,1,#333333'
+					
+					//override defaults when sidebar visible
+					if (sidebarStatus) {
+						contentArea_C_Show = 'MatteBorder,0,1,0,1,#333333'
+					}
+					
+					var contentArea_A_Hide = borderEmpty
+					var contentArea_B_Hide = borderEmpty
+					var contentArea_C_Hide = 'MatteBorder,0,0,0,1,#333333'
+					
+					var dimensionOneStart = (solutionPrefs.screenAttrib) ? solutionPrefs.screenAttrib.spaces.list.currentHorizontal : 0
+					var dimensionOneEnd = forms[baseForm + '__main'].elements.tab_main.dividerLocation
+					
+					break
+				
 				case 'list':
 					var mainLevel = true
 					var listLevel = false
@@ -762,249 +544,7 @@ function ACTION_space_flexible(event) {
 					var dimensionTwoEnd = forms[baseForm + '__main'].elements.tab_main.dividerLocation - forms[baseForm + '__list'].elements.tab_list.dividerLocation
 					
 					break
-					
-//				case 'centered':
-//					var mainLevel = true
-//					var listLevel = false
-//					
-//					var contentArea_A_Show = 'MatteBorder,0,1,0,0,#333333'
-//					var contentArea_B_Show = 'MatteBorder,0,0,0,1,#333333'
-//					var contentArea_C_Show = 'MatteBorder,0,1,0,1,#333333'
-//					
-//					//override defaults when sidebar visible
-//					if (sidebarStatus) {
-//						contentArea_B_Show = 'MatteBorder,0,1,0,1,#333333'
-//					}
-//					
-//					var contentArea_A_Hide = borderEmpty
-//					var contentArea_B_Hide = 'MatteBorder,0,0,0,1,#333333'
-//					var contentArea_C_Hide = 'MatteBorder,0,0,0,1,#333333'
-//					
-//					var dimensionOneStart = (solutionPrefs.screenAttrib) ? solutionPrefs.screenAttrib.spaces.centered.currentHorizontalOne : 0
-//					var dimensionTwoStart = (solutionPrefs.screenAttrib) ? solutionPrefs.screenAttrib.spaces.centered.currentHorizontalOne : 0
-//					var dimensionOneEnd = forms[baseForm + '__main'].elements.tab_main.dividerLocation
-//					var dimensionTwoEnd = forms[baseForm].elements.bean_main.getWidth() - forms[baseForm + '__main'].elements.tab_main.dividerLocation - forms[baseForm].elements.bean_workflow.dividerLocation
-//					
-//					break
-//					
-//				case 'classic':
-//					var mainLevel = true
-//					var listLevel = false
-//					var workflowLevel = true
-//					
-//					var contentArea_A_Show = 'MatteBorder,0,1,0,0,#333333'
-//					var contentArea_B_Show = 'MatteBorder,0,0,1,1,#333333'
-//					var contentArea_C_Show = 'MatteBorder,1,0,0,1,#333333'
-//					
-//					//override defaults when sidebar visible
-//					if (sidebarStatus) {
-//						contentArea_B_Show = 'MatteBorder,0,1,1,1,#333333'
-//						contentArea_C_Show = 'MatteBorder,1,1,0,1,#333333'
-//					}
-//					
-//					var contentArea_A_Hide = borderEmpty
-//					var contentArea_B_Hide = 'MatteBorder,0,0,0,1,#333333'
-//					var contentArea_C_Hide = 'MatteBorder,1,0,0,1,#333333'
-//					
-//					var dimensionOneStart = (solutionPrefs.screenAttrib) ? solutionPrefs.screenAttrib.spaces.classic.currentHorizontal : 0
-//					var dimensionTwoStart = (solutionPrefs.screenAttrib) ? solutionPrefs.screenAttrib.spaces.classic.currentVertical : 0
-//					var dimensionOneEnd = forms[baseForm].elements.bean_main.dividerLocation
-//					var dimensionTwoEnd = forms[baseForm].elements.bean_workflow.dividerLocation
-//					
-//					break
-//					
-//				case 'wide':
-//					var mainLevel = true
-//					var listLevel = true
-//					var workflowLevel = false
-//					
-//					var contentArea_A_Show = 'MatteBorder,0,1,1,0,#333333'
-//					var contentArea_B_Show = 'MatteBorder,0,0,1,1,#333333'
-//					var contentArea_C_Show = 'MatteBorder,1,0,0,0,#333333'
-//					
-//					//override defaults when sidebar visible
-//					if (sidebarStatus) {
-//						contentArea_B_Show = 'MatteBorder,0,1,1,1,#333333'
-//						contentArea_C_Show = 'MatteBorder,1,1,0,0,#333333'
-//					}
-//					
-//					var contentArea_A_Hide = borderEmpty
-//					var contentArea_B_Hide = 'MatteBorder,0,0,0,1,#333333'
-//					var contentArea_C_Hide = 'MatteBorder,1,0,0,0,#333333'
-//					
-//					var dimensionOneStart = (solutionPrefs.screenAttrib) ? solutionPrefs.screenAttrib.spaces.wide.currentVertical : 0
-//					var dimensionTwoStart = (solutionPrefs.screenAttrib) ? solutionPrefs.screenAttrib.spaces.wide.currentHorizontal : 0
-//					var dimensionOneEnd = forms[baseForm].elements.bean_main.dividerLocation
-//					var dimensionTwoEnd = forms[baseForm].elements.bean_list.dividerLocation
-//					
-//					break
-					
-				case 'workflow':
-					var mainLevel = false
-					var listLevel = false
-					
-					var contentArea_A_Show = borderEmpty
-					var contentArea_B_Show = borderEmpty
-					var contentArea_C_Show = borderEmpty
-					
-					//override defaults when sidebar visible
-					if (sidebarStatus) {
-						contentArea_C_Show = 'MatteBorder,0,1,0,0,#333333'
-					}
-					
-					var contentArea_A_Hide = borderEmpty
-					var contentArea_B_Hide = borderEmpty
-					var contentArea_C_Hide = borderEmpty
-					
-					break
 				
-//				case 'standard flip':
-//					var mainLevel = true
-//					var listLevel = true
-//					
-//					var contentArea_A_Show = 'MatteBorder,1,1,0,0,#333333'
-//					var contentArea_B_Show = 'MatteBorder,0,1,1,0,#333333'
-//					var contentArea_C_Show = 'MatteBorder,0,0,0,1,#333333'
-//					
-//					//override defaults when sidebar visible
-//					if (sidebarStatus) {
-//						contentArea_C_Show = 'MatteBorder,0,1,0,1,#333333'
-//					}
-//					
-//					var contentArea_A_Hide = 'MatteBorder,1,0,0,0,#333333'
-//					var contentArea_B_Hide = borderEmpty
-//					var contentArea_C_Hide = 'MatteBorder,0,0,0,1,#333333'
-//					
-//					var dimensionOneStart = (solutionPrefs.screenAttrib) ? solutionPrefs.screenAttrib.spaces.standard.currentHorizontal : 0
-//					var dimensionTwoStart = (solutionPrefs.screenAttrib) ? solutionPrefs.screenAttrib.spaces.standard.currentVertical : 0
-//					var dimensionOneEnd = forms[baseForm + '__main'].elements.tab_main.dividerLocation
-//					var dimensionTwoEnd = forms[baseForm + '__list'].elements.tab_list.dividerLocation
-//					
-//					break
-					
-				case 'list flip':
-					var mainLevel = true
-					var listLevel = false
-					
-					var contentArea_A_Show = 'MatteBorder,0,1,0,0,#333333'
-					var contentArea_B_Show = borderEmpty
-					var contentArea_C_Show = 'MatteBorder,0,0,0,1,#333333'
-					
-					//override defaults when sidebar visible
-					if (sidebarStatus) {
-						contentArea_C_Show = 'MatteBorder,0,1,0,1,#333333'
-					}
-					
-					var contentArea_A_Hide = borderEmpty
-					var contentArea_B_Hide = borderEmpty
-					var contentArea_C_Hide = 'MatteBorder,0,0,0,1,#333333'
-					
-					var dimensionOneStart = (solutionPrefs.screenAttrib) ? solutionPrefs.screenAttrib.spaces.list.currentHorizontal : 0
-					var dimensionOneEnd = forms[baseForm + '__main'].elements.tab_main.dividerLocation
-					
-					break
-					
-//				case 'vertical flip':
-//					var mainLevel = true
-//					var listLevel = true
-//					
-//					var contentArea_A_Show = 'MatteBorder,0,1,0,1,#333333'
-//					var contentArea_B_Show = 'MatteBorder,0,1,0,0,#333333'
-//					var contentArea_C_Show = 'MatteBorder,0,0,0,1,#333333'
-//					
-//					//override defaults when sidebar visible
-//					if (sidebarStatus) {
-//						contentArea_C_Show = 'MatteBorder,0,1,0,1,#333333'
-//					}
-//					
-//					var contentArea_A_Hide = 'MatteBorder,0,0,0,1,#333333'
-//					var contentArea_B_Hide = borderEmpty
-//					var contentArea_C_Hide = 'MatteBorder,0,0,0,1,#333333'
-//					
-//					var dimensionOneStart = (solutionPrefs.screenAttrib) ? solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalOne : 0
-//					var dimensionTwoStart = (solutionPrefs.screenAttrib) ? solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalTwo : 0
-//					var dimensionOneEnd = forms[baseForm].elements.bean_list.dividerLocation
-//					var dimensionTwoEnd = forms[baseForm].elements.bean_main.dividerLocation - forms[baseForm].elements.bean_list.dividerLocation
-//					
-//					break
-//					
-//				case 'centered flip':
-//					var mainLevel = true
-//					var listLevel = false
-//					var workflowLevel = true
-//					
-//					var contentArea_A_Show = 'MatteBorder,0,0,0,1,#333333'
-//					var contentArea_B_Show = 'MatteBorder,0,1,0,0,#333333'
-//					var contentArea_C_Show = 'MatteBorder,0,1,0,1,#333333'
-//					
-//					//override defaults when sidebar visible
-//					if (sidebarStatus) {
-//						contentArea_A_Show = 'MatteBorder,0,1,0,1,#333333'
-//					}
-//					
-//					var contentArea_A_Hide = 'MatteBorder,0,0,0,1,#333333'
-//					var contentArea_B_Hide = borderEmpty
-//					var contentArea_C_Hide = 'MatteBorder,0,0,0,1,#333333'
-//					
-//					var dimensionOneStart = (solutionPrefs.screenAttrib) ? solutionPrefs.screenAttrib.spaces.centered.currentHorizontalOne : 0
-//					var dimensionTwoStart = (solutionPrefs.screenAttrib) ? solutionPrefs.screenAttrib.spaces.centered.currentHorizontalOne : 0
-//					var dimensionOneEnd = forms[baseForm].elements.bean_main.dividerLocation
-//					var dimensionTwoEnd = forms[baseForm].elements.bean_main.getWidth() - forms[baseForm].elements.bean_main.dividerLocation - forms[baseForm].elements.bean_workflow.dividerLocation
-//					
-//					break
-//					
-//				case 'classic flip':
-//					var mainLevel = true
-//					var listLevel = false
-//					var workflowLevel = true
-//					
-//					var contentArea_A_Show = 'MatteBorder,0,0,1,1,#333333'
-//					var contentArea_B_Show = 'MatteBorder,0,1,0,0,#333333'
-//					var contentArea_C_Show = 'MatteBorder,1,0,0,1,#333333'
-//					
-//					//override defaults when sidebar visible
-//					if (sidebarStatus) {
-//						contentArea_A_Show = 'MatteBorder,0,1,1,1,#333333'
-//						contentArea_C_Show = 'MatteBorder,1,1,0,1,#333333'
-//					}
-//					
-//					var contentArea_A_Hide = 'MatteBorder,0,0,0,1,#333333'
-//					var contentArea_B_Hide = borderEmpty
-//					var contentArea_C_Hide = 'MatteBorder,1,0,0,1,#333333'
-//					
-//					var dimensionOneStart = (solutionPrefs.screenAttrib) ? solutionPrefs.screenAttrib.spaces.classic.currentHorizontal : 0
-//					var dimensionTwoStart = (solutionPrefs.screenAttrib) ? solutionPrefs.screenAttrib.spaces.classic.currentVertical : 0
-//					var dimensionOneEnd = forms[baseForm].elements.bean_main.dividerLocation
-//					var dimensionTwoEnd = forms[baseForm].elements.bean_workflow.dividerLocation
-//					
-//					break
-//					
-//				case 'wide flip':
-//					var mainLevel = true
-//					var listLevel = true
-//					var workflowLevel = false
-//					
-//					var contentArea_A_Show = 'MatteBorder,0,0,1,1,#333333'
-//					var contentArea_B_Show = 'MatteBorder,0,1,1,0,#333333'
-//					var contentArea_C_Show = 'MatteBorder,1,0,0,0,#333333'
-//					
-//					//override defaults when sidebar visible
-//					if (sidebarStatus) {
-//						contentArea_A_Show = 'MatteBorder,0,1,1,1,#333333'
-//						contentArea_C_Show = 'MatteBorder,1,1,0,0,#333333'
-//					}
-//					
-//					var contentArea_A_Hide = 'MatteBorder,0,0,0,1,#333333'
-//					var contentArea_B_Hide = borderEmpty
-//					var contentArea_C_Hide = 'MatteBorder,1,0,0,0,#333333'
-//					
-//					var dimensionOneStart = (solutionPrefs.screenAttrib) ? solutionPrefs.screenAttrib.spaces.wide.currentVertical : 0
-//					var dimensionTwoStart = (solutionPrefs.screenAttrib) ? solutionPrefs.screenAttrib.spaces.wide.currentHorizontal : 0
-//					var dimensionOneEnd = forms[baseForm].elements.bean_main.dividerLocation
-//					var dimensionTwoEnd = forms[baseForm].elements.bean_list.dividerLocation
-//					
-//					break
-					
 				case 'workflow flip':
 					var mainLevel = false
 					var listLevel = false
@@ -1016,6 +556,25 @@ function ACTION_space_flexible(event) {
 					//override defaults when sidebar visible
 					if (sidebarStatus) {
 						contentArea_B_Show = 'MatteBorder,0,1,0,0,#333333'
+					}
+					
+					var contentArea_A_Hide = borderEmpty
+					var contentArea_B_Hide = borderEmpty
+					var contentArea_C_Hide = borderEmpty
+					
+					break					
+				
+				case 'workflow':
+					var mainLevel = false
+					var listLevel = false
+					
+					var contentArea_A_Show = borderEmpty
+					var contentArea_B_Show = borderEmpty
+					var contentArea_C_Show = borderEmpty
+					
+					//override defaults when sidebar visible
+					if (sidebarStatus) {
+						contentArea_C_Show = 'MatteBorder,0,1,0,0,#333333'
 					}
 					
 					var contentArea_A_Hide = borderEmpty
@@ -1040,7 +599,6 @@ function ACTION_space_flexible(event) {
 			//pseudo-border in header
 			forms[baseForm + '__main'].elements.tab_header.border = borderEmpty
 			forms.DATASUTRA__sidebar__header.elements.gfx_flexible.visible = false
-//			forms[baseForm].elements.gfx_flexible.visible = false
 			
 			//status of flexible spaces
 			solutionPrefs.config.flexibleSpace = false
@@ -1064,24 +622,6 @@ function ACTION_space_flexible(event) {
 							solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalOne = forms[baseForm + '__list'].elements.tab_list.dividerLocation
 							solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalTwo = forms[baseForm + '__main'].elements.tab_main.dividerLocation - forms[baseForm + '__list'].elements.tab_list.dividerLocation
 							break
-								
-//					case 'centered' :
-//					case 'centered flip' : 
-//							solutionPrefs.screenAttrib.spaces.centered.currentHorizontalOne = forms[baseForm + '__main'].elements.tab_main.dividerLocation
-//							solutionPrefs.screenAttrib.spaces.centered.currentHorizontalTwo = forms[baseForm].elements.bean_main.getWidth() - forms[baseForm].elements.bean_main.dividerLocation - forms[baseForm].elements.bean_workflow.dividerLocation
-//							break
-//								
-//					case 'classic' : 
-//					case 'classic flip' : 
-//							solutionPrefs.screenAttrib.spaces.classic.currentHorizontal = forms[baseForm + '__main'].elements.tab_main.dividerLocation
-//							solutionPrefs.screenAttrib.spaces.classic.currentVertical = forms[baseForm].elements.bean_workflow.dividerLocation
-//							break
-//								
-//					case 'wide' : 
-//					case 'wide flip' : 
-//							solutionPrefs.screenAttrib.spaces.wide.currentVertical = forms[baseForm + '__main'].elements.tab_main.dividerLocation
-//							solutionPrefs.screenAttrib.spaces.wide.currentHorizontal = forms[baseForm + '__list'].elements.tab_list.dividerLocation
-//							break
 				}
 				
 				if (sidebarStatus) {
@@ -1098,7 +638,7 @@ function ACTION_space_flexible(event) {
 						dimensionTwoEnd,
 						application.getWindow(null).getWidth(),
 						application.getWindow(null).getHeight()
-						)
+					)
 				
 				//TODO: only do if changed spaces have different dimensions; can remove this tweak once interior anchoring working better in webclient
 				//re-fire UL if configured and changing spaces
@@ -1155,7 +695,6 @@ function ACTION_space_flexible(event) {
 			if (sidebarStatus) {
 				forms[baseForm + '__main'].elements.tab_header.border = 'MatteBorder,0,1,0,0,#757575'
 				forms.DATASUTRA__sidebar__header.elements.gfx_flexible.visible = true
-			//	forms[baseForm].elements.gfx_flexible.visible = true
 			}
 			
 			//status of flexible spaces
@@ -1174,10 +713,10 @@ function ACTION_space_flexible(event) {
 			forms[baseForm + '__header'].elements.split_tool_find.dividerSize = 8
 		}
 		
-		//don't fire when exiting design mode and going into preference
-		if (!skipUI) {
-			application.updateUI()
-		}
+//		//don't fire when exiting design mode and going into preference
+//		if (!skipUI) {
+//			application.updateUI()
+//		}
 		
 		//in design mode and locked, update lock
 		if (solutionPrefs.design.statusDesign && solutionPrefs.design.statusLockWorkflow) {
