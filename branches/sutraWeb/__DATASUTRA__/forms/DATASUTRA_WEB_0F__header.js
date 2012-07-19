@@ -608,19 +608,29 @@ function ACTION_space_flexible(event) {
 			//save status, log current view, and refresh UL if not forceHidden
 			if (!forceHide) {
 				switch (solutionPrefs.config.activeSpace) {
-					case 'standard' : 
-					case 'standard flip' : 
+					case 'standard' :  
 							solutionPrefs.screenAttrib.spaces.standard.currentHorizontal = forms[baseForm + '__main'].elements.tab_main.dividerLocation
 							solutionPrefs.screenAttrib.spaces.standard.currentVertical = forms[baseForm + '__list'].elements.tab_list.dividerLocation
+							
+							solutionPrefs.screenAttrib.spaces.list.currentHorizontal = forms[baseForm + '__main'].elements.tab_main.dividerLocation
+							
+							solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalOne = forms[baseForm + '__main'].elements.tab_main.dividerLocation
 							break
 								
 					case 'list' : 
 					case 'list flip' : 
+							solutionPrefs.screenAttrib.spaces.standard.currentHorizontal = forms[baseForm + '__main'].elements.tab_main.dividerLocation
+					
 							solutionPrefs.screenAttrib.spaces.list.currentHorizontal = forms[baseForm + '__main'].elements.tab_main.dividerLocation
+							
+							solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalOne = forms[baseForm + '__main'].elements.tab_main.dividerLocation
 							break
 								
 					case 'vertical' : 
-					case 'vertical flip' : 
+							solutionPrefs.screenAttrib.spaces.standard.currentHorizontal = forms[baseForm + '__main'].elements.tab_main.dividerLocation
+							
+							solutionPrefs.screenAttrib.spaces.list.currentHorizontal = forms[baseForm + '__main'].elements.tab_main.dividerLocation
+							
 							solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalOne = forms[baseForm + '__list'].elements.tab_list.dividerLocation
 							solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalTwo = forms[baseForm + '__main'].elements.tab_main.dividerLocation - forms[baseForm + '__list'].elements.tab_list.dividerLocation
 							break
@@ -647,7 +657,11 @@ function ACTION_space_flexible(event) {
 //				if (solutionPrefs.config.currentFormID && navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID]) {
 //					var currentNavItem = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID]
 //					if (currentNavItem.navigationItem.useFwList) {
-//						currentNavItem.listData.withButtons ? forms.NAV_T_universal_list.DISPLAY_cycle(true) : forms.NAV_T_universal_list__no_buttons.DISPLAY_cycle(true)
+//						var methodRefresh = currentNavItem.listData.withButtons ? forms.NAV_T_universal_list.DISPLAY_cycle : forms.NAV_T_universal_list__no_buttons.DISPLAY_cycle
+//						
+//						var callback = plugins.WebClientUtils.generateCallbackScript(methodRefresh, ['true']);
+//						var jsCallback = 'function repaintUL(){alert(\'peek a boo\');};'// + callback + '}';
+//						plugins.WebClientUtils.executeClientSideJS('refreshUL(' + jsCallback + ');')
 //					}
 //				}
 				
