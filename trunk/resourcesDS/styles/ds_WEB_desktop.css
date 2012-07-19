@@ -177,7 +177,7 @@ label.button_new {
 
 label.developerbutton {
 	color: #333333;
-	font-family: TrebuchetMS;
+	font-family: TrebuchetMS, 'Trebuchet MS';
 	font-size: 8px;
 	font-weight: bold;
 	text-align: center;
@@ -189,14 +189,14 @@ label.developerbutton {
 label.fidaction {
 	font-weight: bold;
 	font-size: 10px; 
-	font-family: TrebuchetMS; 
+	font-family: TrebuchetMS, 'Trebuchet MS'; 
 	color: white; 
 	text-align: center; 
 }
 
 label.header {
 	font-weight: bold;
-	font-family: TrebuchetMS;
+	font-family: TrebuchetMS, 'Trebuchet MS';
 	color: #333333;
 	text-align: center;
 	vertical-align: bottom;
@@ -204,7 +204,7 @@ label.header {
 
 label.heading1 {
 	font-weight: bold;
-	font-family: TrebuchetMS;
+	font-family: TrebuchetMS, 'Trebuchet MS';
 	font-size: 12px;
 	text-align: center;
 	color: white;
@@ -225,14 +225,14 @@ label.list {
 }
 
 label.recordnavigator, label.solutionlogstatus, label.solutionsubheader {
-	font-family: TrebuchetMS;
+	font-family: TrebuchetMS, 'Trebuchet MS';
 	color: #333333;
 	text-align: center;
 }
 
 label.solutionheader {
 	font-weight: bold;
-	font-family: TrebuchetMS;
+	font-family: TrebuchetMS, 'Trebuchet MS';
 	font-size: 14px;
 	color: #404040;
 	text-align: center;
@@ -451,7 +451,7 @@ label.standardtabunselect {
 label.fancytabselect, label.fancytabunselect {
 	font-weight: bold;
 	font-size: 13pt; 
-	font-family: TrebuchetMS; 
+	font-family: TrebuchetMS, 'Trebuchet MS'; 
 	color: #333333; 
 	text-align: center; 
 }
