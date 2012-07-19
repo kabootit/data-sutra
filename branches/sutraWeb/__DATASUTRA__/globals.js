@@ -2580,6 +2580,11 @@ function DS_sidebar_toggle(sideToggle, sideWidth, sideExpand)
 			if (webClient) {
 				forms[baseForm].elements.tab_wrapper.setRightForm(forms.DATASUTRA_WEB__blank_1)
 				forms[baseForm].elements.tab_wrapper.dividerLocation = application.getWindow().getWidth()
+				
+				//in list space, readjust list position
+				if (solutionPrefs.config.activeSpace == 'workflow flip') {
+					forms[baseForm + '__main'].elements.tab_main.dividerLocation = application.getWindow().getWidth()
+				}
 			}
 			//smart client
 			else {
