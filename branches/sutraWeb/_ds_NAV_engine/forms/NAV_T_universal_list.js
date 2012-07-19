@@ -670,6 +670,10 @@ if (application.__parent__.solutionPrefs) {
 		if (fieldVL) {
 			myField.valuelist = solutionModel.getValueList(fieldVL)
 		}
+		//on right column, give a small margin
+		if (i == initialUL.length - 1) {
+			myField.margin = '0,4,0,4'
+		}
 		
 		if (lineItem.editable) {
 			myField.onRightClick = solutionModel.getGlobalMethod('NAV_universal_list_edit')

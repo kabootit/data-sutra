@@ -2197,6 +2197,12 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	arguments = Arguments.filter(globals.CODE_jsevent_remove)
 }
 	
+	//first time a navigation item visited in webclient
+	if (solutionPrefs.config.webClient && forms.DATASUTRA_WEB_0F.elements.gfx_curtain_login.visible) {
+		//hide the shield
+		forms.DATASUTRA_WEB_0F.elements.gfx_curtain_login.visible = false
+	}
+
 	var navigationItemID = arguments[0] || null
 	var historyPosition = arguments[1]
 	var clearHistory = arguments[2]
@@ -2616,6 +2622,10 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 								}
 								if (fieldVL) {
 									myField.valuelist = solutionModel.getValueList(fieldVL)
+								}
+								//on right column, give a small margin
+								if (i == initialUL.length - 1) {
+									myField.margin = '0,4,0,4'
 								}
 								
 								if (lineItem.editable) {
