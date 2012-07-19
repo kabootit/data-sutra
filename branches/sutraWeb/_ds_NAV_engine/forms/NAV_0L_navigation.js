@@ -294,7 +294,7 @@ switch (arguments[0]) {
 		break
 	
 	case 3: //change path name
-		var urlPath = globals.DIALOGS.showInputDialog('Change navigation set path', 'Enter new path:', url_path)
+		var urlPath = globals.DIALOGS.showInputDialog('Change navigation set path', 'Enter new path:', url_path || '')
 		if (urlPath) {
 			url_path = urlPath
 			databaseManager.saveData()
