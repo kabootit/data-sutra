@@ -272,7 +272,7 @@ function ACTION_space_change(event) {
 					var mainLevelResizeWeight = 0
 					
 					var listLevelOrient = SM_ALIGNMENT.SPLIT_VERTICAL
-					var listLevelDivLocation = reallyBig
+					var listLevelDivLocation = forms.DATASUTRA_WEB_0F.elements.tab_wrapper.getHeight() - 45  //wrapper - header - 1px for bordering
 					var listLevelResizeWeight = 1
 					
 					//needed for logging
@@ -288,7 +288,7 @@ function ACTION_space_change(event) {
 					var imageActiveURL = 'media:///spacew_records_active.png'
 					
 					var mainLevelOrient = SM_ALIGNMENT.SPLIT_HORIZONTAL
-					var mainLevelDivLocation = reallyBig
+					var mainLevelDivLocation = forms.DATASUTRA_WEB_0F__main.elements.tab_main.getWidth()
 					var mainLevelResizeWeight = 1
 					
 					var listLevelOrient = SM_ALIGNMENT.SPLIT_VERTICAL
@@ -305,13 +305,15 @@ function ACTION_space_change(event) {
 			if (forms[baseForm + '__header'].elements[elem] != undefined) {
 				//set graphic to be depressed
 				if (buttonName == elem) {
-					forms[baseForm + '__header'].elements[elem].imageURL = imageActiveURL
-					forms[baseForm + '__header'].elements[elem].rolloverImageURL = imageActiveURL
+//					forms[baseForm + '__header'].elements[elem].imageURL = imageActiveURL
+//					forms[baseForm + '__header'].elements[elem].rolloverImageURL = imageActiveURL
+					forms[baseForm + '__header'].elements[elem].enabled = false
 				}
 				//set graphic to normal state (non-depressed)
 				else {
-					forms[baseForm + '__header'].elements[elem].imageURL = imageURL
-					forms[baseForm + '__header'].elements[elem].rolloverImageURL = imageOverURL
+//					forms[baseForm + '__header'].elements[elem].imageURL = imageURL
+//					forms[baseForm + '__header'].elements[elem].rolloverImageURL = imageOverURL
+					forms[baseForm + '__header'].elements[elem].enabled = true
 				}
 			}
 			
