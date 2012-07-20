@@ -717,7 +717,7 @@ if (application.__parent__.solutionPrefs) {
 		
 		var starField = myForm.newLabel(
 							'',						//text on label
-							i,						//x
+							i++,					//x
 							0,						//y
 							20,						//width
 							20						//height
@@ -740,6 +740,51 @@ if (application.__parent__.solutionPrefs) {
 		starField.showClick = false
 		starField.text = '<html><center><img src="media:///btn_favorite_dark.png" width=12 height=17></center>'
 	}
+	
+	//add detail button for workflow when in maximized list view
+	var detailView = myForm.newLabel(
+						'',						//text on label
+						i++,					//x
+						0,						//y
+						24,						//width
+						20						//height
+					)
+	
+	var detailCalc = solutionModel.getCalculation('sutra_detail_view', 'db:/' + serverName + '/' + tableName)
+	if (!detailCalc) {
+		detailCalc = solutionModel.newCalculation(
+				['function sutra_detail_view() {',
+					'var badge = \'<html><center><img src="media:///\';',
+//					'var record = foundset.getRecord(currentRecordIndex);',
+//					//this row is selected
+//					'if (foundset.getSelectedIndex() == foundset.getRecordIndex(record)) {',
+//						'badge += "arrow_round_light.png";',
+//					'}',
+//					//row is not selected
+//					'else {',
+						'badge += "arrow_round.png";',
+//					'}',
+					'badge += \'" width=14 height=14 vspace=3></center>\';',
+					'return badge;',
+				'}'].join(''), 
+				'db:/' + serverName + '/' + tableName
+			)
+	}
+	
+	detailView.name = 'sutra_detail_view'
+	detailView.dataProviderID = 'sutra_detail_view'
+	detailView.onAction = solutionModel.getGlobalMethod('NAV_universal_list_detail_view')
+	detailView.anchors = SM_ANCHOR.DEFAULT
+	detailView.horizontalAlignment = SM_ALIGNMENT.LEFT
+	detailView.styleClass = 'universallist'
+	detailView.borderType = 'EmptyBorder,0,0,0,0'
+	detailView.transparent = false
+	detailView.displaysTags = true
+	detailView.rolloverCursor = SM_CURSOR.HAND_CURSOR
+	detailView.toolTipText = 'View details'
+	detailView.showClick = false
+//	detailView.text = '<html><center><img src="media:///arrow_round.png" width=14 height=14 vspace=3></center>'
+	detailView.visible = solutionPrefs.config.activeSpace == 'workflow flip'
 	
 	//assign the secondary form to the main UL at the tab right behind where it used to be (when deleted, the others slid over to fill its spot)
 	elements.tab_ul.addTab(forms[newFormName],'UL Record: ' + theDisplayPosn,null,null,null,null,null,null,newFormTab - 1)

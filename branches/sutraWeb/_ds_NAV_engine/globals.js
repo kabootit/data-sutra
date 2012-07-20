@@ -2670,7 +2670,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 								
 								var starField = myForm.newLabel(
 													'',						//text on label
-													i,						//x
+													i++,					//x
 													0,						//y
 													23,						//width
 													20						//height
@@ -2696,6 +2696,51 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 								//override sort on form so that will toggle favorite mode on off for this field
 								myForm.onSortCmd = solutionModel.getGlobalMethod('NAV_universal_list_sort')
 							}
+							
+							//add detail button for workflow when in maximized list view
+							var detailView = myForm.newLabel(
+												'',						//text on label
+												i++,					//x
+												0,						//y
+												24,						//width
+												20						//height
+											)
+							
+							var detailCalc = solutionModel.getCalculation('sutra_detail_view', 'db:/' + serverName + '/' + tableName)
+							if (!detailCalc) {
+								detailCalc = solutionModel.newCalculation(
+										['function sutra_detail_view() {',
+											'var badge = \'<html><center><img src="media:///\';',
+//											'var record = foundset.getRecord(currentRecordIndex);',
+//											//this row is selected
+//											'if (foundset.getSelectedIndex() == foundset.getRecordIndex(record)) {',
+//												'badge += "arrow_round_light.png";',
+//											'}',
+//											//row is not selected
+//											'else {',
+												'badge += "arrow_round.png";',
+//											'}',
+											'badge += \'" width=14 height=14 vspace=3></center>\';',
+											'return badge;',
+										'}'].join(''), 
+										'db:/' + serverName + '/' + tableName
+									)
+							}
+							
+							detailView.name = 'sutra_detail_view'
+							detailView.dataProviderID = 'sutra_detail_view'
+							detailView.onAction = solutionModel.getGlobalMethod('NAV_universal_list_detail_view')
+							detailView.anchors = SM_ANCHOR.DEFAULT
+							detailView.horizontalAlignment = SM_ALIGNMENT.LEFT
+							detailView.styleClass = 'universallist'
+							detailView.borderType = 'EmptyBorder,0,0,0,0'
+							detailView.transparent = false
+							detailView.displaysTags = true
+							detailView.rolloverCursor = SM_CURSOR.HAND_CURSOR
+							detailView.toolTipText = 'View details'
+							detailView.showClick = false
+//							detailView.text = '<html><center><img src="media:///arrow_round.png" width=14 height=14 vspace=3></center>'
+							detailView.visible = solutionPrefs.config.activeSpace == 'workflow flip'
 							
 							//assign the secondary form to the main UL with buttons
 							if (navSpecs.barItemAdd || navSpecs.barItemAction || navSpecs.barItemFilter || navSpecs.barItemReport) {
@@ -3258,6 +3303,16 @@ function NAV_universal_list_favorite(input,elem,list,record) {
 		if (globals.DATASUTRA_navigation_set == 0) {
 			forms.NAV__navigation_tree__rows.LIST_redraw(null,null,true,false,true,selectFave)
 		}
+	}
+}
+
+/**
+ * @properties={typeid:24,uuid:"2C397AF7-191D-4D2A-9582-CE84FCBCFF2D"}
+ */
+function NAV_universal_list_detail_view(event) {
+	//something was clicked, go to workflow max view
+	if (event) {
+		globals.TRIGGER_spaces_set('workflow')
 	}
 }
 
