@@ -5328,6 +5328,17 @@ function DS_router(p1,params,itemID,logout) {
 		// load in correct state of requested resource
 		globals.TRIGGER_navigation_set(null,null,null,itemID)
 		
+		//disable selected spaces button
+		var spaceConversion = {
+				standard: 1,
+				'list flip': 9,
+				list: 2,
+				'workflow flip': 14,
+				'workflow': 7
+			}
+		var elemID = plugins.WebClientUtils.getElementMarkupId(forms.DATASUTRA_WEB_0F__header.elements['btn_space_' + spaceConversion[solutionPrefs.config.activeSpace]])
+		plugins.WebClientUtils.executeClientSideJS('dimSpace("' + elemID +'");')
+		
 		// make sure on correct top level form
 		if (history.getFormName(history.getCurrentIndex()) != 'DATASUTRA_WEB_0F') {
 			history.go(-1)

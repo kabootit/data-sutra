@@ -220,11 +220,11 @@ function FORM_setup(baseForm,prefForm) {
 	
 	//	//PART XXXX: deactivate all buttons
 	forms[baseForm + '__header'].elements.btn_navset.visible = false
-	for (var i = 1; i <= 14; i++) {
-		if (forms[baseForm + '__header'].elements['btn_space_' + i] != undefined) {
-			forms[baseForm + '__header'].elements['btn_space_' + i].visible = false
-		}
-	}
+//	for (var i = 1; i <= 14; i++) {
+//		if (forms[baseForm + '__header'].elements['btn_space_' + i] != undefined) {
+//			forms[baseForm + '__header'].elements['btn_space_' + i].visible = false
+//		}
+//	}
 	forms[baseForm + '__header'].elements.btn_space_dividers.visible = false
 	forms[baseForm + '__header__toolbar'].elements.btn_toolbar_toggle.visible = false
 	forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.visible = false
@@ -241,8 +241,8 @@ function FORM_setup(baseForm,prefForm) {
 //	forms[baseForm + '__header'].elements.gfx_header.setBorder('MatteBorder,1,0,1,0,#333333')
 //	forms.DATASUTRA__sidebar__header.elements.gfx_header.setBorder('MatteBorder,1,0,1,0,#333333')
 	
-	//trigger spaces (to fill images)
-	forms.DATASUTRA_WEB_0F__header.ACTION_space_change('btn_space_1',true)	
+	//trigger spaces (to fill images and set bordering lines)
+	forms.DATASUTRA_WEB_0F__header.ACTION_space_change('btn_space_1',true)
 	
 	// //PART IX: load up title toolbar
 	globals.DS_toolbar_load()

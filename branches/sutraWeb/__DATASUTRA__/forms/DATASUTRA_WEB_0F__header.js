@@ -154,7 +154,6 @@ function ACTION_space_change(event) {
 		var prefix = 'btn_space_'
 		var suffix = utils.stringToNumber(buttonName.substr(prefix.length))
 		var oldSpace = solutionPrefs.config.activeSpace
-		var reallyBig = 5000
 		
 		//the only implemented spaces are standard, list, list flip, vertical, workflow flip, workflow
 		var spaceRealNames = [	'standard','list','vertical','centered','classic','wide','workflow',
@@ -652,19 +651,6 @@ function ACTION_space_flexible(event) {
 						application.getWindow(null).getHeight()
 					)
 				
-				//TODO: only do if changed spaces have different dimensions; can remove this tweak once interior anchoring working better in webclient
-				//re-fire UL if configured and changing spaces
-//				if (solutionPrefs.config.currentFormID && navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID]) {
-//					var currentNavItem = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID]
-//					if (currentNavItem.navigationItem.useFwList) {
-//						var methodRefresh = currentNavItem.listData.withButtons ? forms.NAV_T_universal_list.DISPLAY_cycle : forms.NAV_T_universal_list__no_buttons.DISPLAY_cycle
-//						
-//						var callback = plugins.WebClientUtils.generateCallbackScript(methodRefresh, ['true']);
-//						var jsCallback = 'function repaintUL(){alert(\'peek a boo\');};'// + callback + '}';
-//						plugins.WebClientUtils.executeClientSideJS('refreshUL(' + jsCallback + ');')
-//					}
-//				}
-				
 				//TODO: only do if changed spaces have different dimensions
 				//favorites mode on, refresh so get full width available
 				if (globals.DATASUTRA_navigation_set == 0) {
@@ -695,6 +681,19 @@ function ACTION_space_flexible(event) {
 			
 			//header tool/find bean
 			forms[baseForm + '__header'].elements.split_tool_find.dividerSize = 0
+			
+			//TODO: only do if changed spaces have different dimensions; can remove this tweak once interior anchoring working better in webclient
+			//re-fire UL if configured and changing spaces
+			if (solutionPrefs.config.currentFormID && navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID]) {
+				var currentNavItem = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID]
+				if (currentNavItem.navigationItem.useFwList) {
+					var methodRefresh = currentNavItem.listData.withButtons ? forms.NAV_T_universal_list.DISPLAY_cycle : forms.NAV_T_universal_list__no_buttons.DISPLAY_cycle
+					
+					var callback = plugins.WebClientUtils.generateCallbackScript(methodRefresh, ['true']);
+					var jsCallback = 'function repaintUL(){' + callback + '}';
+					plugins.WebClientUtils.executeClientSideJS('refreshUL(' + jsCallback + ');')
+				}
+			}
 		}
 		//show dividers
 		else {
