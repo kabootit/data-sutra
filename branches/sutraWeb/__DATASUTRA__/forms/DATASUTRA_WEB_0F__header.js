@@ -352,6 +352,25 @@ function ACTION_space_change(event) {
 				//save down which space we are in
 				solutionPrefs.config.activeSpace = spaceName
 				
+				//using ul
+				if (solutionPrefs.config.currentFormID && navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID]) {
+					var currentNavItem = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID]
+					
+					//when in workflow flip, show click through	//MEMO: this isn't currently firing because we need to force a UL refresh
+//					if (spaceName == 'workflow flip') {
+//						if (currentNavItem.navigationItem.useFwList) {
+//							if (forms[currentNavItem.listData.tabFormInstance].elements.sutra_detail_view) {
+//								forms[currentNavItem.listData.tabFormInstance].elements.sutra_detail_view.visible = true
+//							}
+//						}
+//					}
+//					else {
+//						if (forms[currentNavItem.listData.tabFormInstance].elements.sutra_detail_view) {
+//							forms[currentNavItem.listData.tabFormInstance].elements.sutra_detail_view.visible = false
+//						}
+//					}
+				}
+				
 				//LOG windowing
 				globals.TRIGGER_log_create('Flexible windowing',
 						oldSpace,
