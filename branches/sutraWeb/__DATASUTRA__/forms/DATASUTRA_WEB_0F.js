@@ -72,6 +72,23 @@ function CURTAIN_action() {
 function FORM_setup(baseForm,prefForm) {
 	var serverName = 'sutra'
 	
+	//solutionModel to replace out subheader images
+	var smForms = solutionModel.getForms()
+	for (var i = 0; i < smForms.length; i++) {
+		var smForm = smForms[i]
+		var smLabels = smForm.getLabels()
+		
+		for (var j = 0; j < smLabels.length; j++) {
+			var smLabel = smLabels[j]
+			
+			if (smLabel.imageMedia && smLabel.imageMedia.getName() == 'bck_subheader.png') {
+				smLabel.imageMedia = null
+				smLabel.styleClass = 'gfx_subheader'
+				smLabel.borderType = SM_DEFAULTS.DEFAULT
+			}
+		}
+	}
+	
 	//access and control is bypassed --> running in single user mode
 	if (forms[prefForm].login_disabled) {
 		

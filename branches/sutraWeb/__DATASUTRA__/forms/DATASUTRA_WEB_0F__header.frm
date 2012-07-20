@@ -230,13 +230,13 @@ uuid:"5E9A2B97-6F36-4E62-A005-1E16A39DF0A3"
 {
 anchors:11,
 formIndex:2,
-imageMediaID:"f4bbdd1d-b403-4842-a2c0-3c579fe5652e",
 location:"0,0",
 mediaOptions:4,
 name:"gfx_header",
 showClick:false,
 showFocus:false,
 size:"600,44",
+styleClass:"gfx_header",
 tabSeq:-1,
 typeid:7,
 uuid:"73E71C36-DA86-439F-9673-681F02B5181A"

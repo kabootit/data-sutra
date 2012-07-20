@@ -25,13 +25,13 @@ uuid:"32267289-E51F-406D-AF8C-9ED3E940C9B2"
 {
 anchors:14,
 formIndex:10000,
-imageMediaID:"095bc925-4a9b-4315-88a1-bcc9243fd38f",
 location:"0,0",
 mediaOptions:6,
 name:"gfx_footer",
 showClick:false,
 showFocus:false,
 size:"400,16",
+styleClass:"gfx_footer",
 typeid:7,
 uuid:"DF295056-5E02-48EB-8953-82E9CFE4C4F7"
 }

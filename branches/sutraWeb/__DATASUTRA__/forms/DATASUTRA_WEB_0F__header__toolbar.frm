@@ -49,13 +49,13 @@ uuid:"B1D3DDDD-82AF-4F3D-A68D-424ADDCEE6E0"
 },
 {
 anchors:11,
-imageMediaID:"f4bbdd1d-b403-4842-a2c0-3c579fe5652e",
 location:"0,0",
 mediaOptions:4,
 name:"gfx_header",
 showClick:false,
 showFocus:false,
 size:"140,44",
+styleClass:"gfx_header",
 typeid:7,
 uuid:"C2A5F6B4-BE3A-48F6-8FFB-235680DB574C"
 },
