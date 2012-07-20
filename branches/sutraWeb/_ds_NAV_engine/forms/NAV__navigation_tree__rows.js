@@ -102,6 +102,9 @@ function LIST_expand_collapse(event, idNavItem, forceToggle, idNavSet) {
 				
 				//redraw list
 				LIST_redraw(null,idNavItem,true)
+				
+				//re set up the screen
+				globals.DS_router_recreateUI()
 			}
 		}
 	}
