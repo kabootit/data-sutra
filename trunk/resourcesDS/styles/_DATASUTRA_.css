@@ -288,6 +288,23 @@ label.color_white {
 	background-color: #FFFFFF;
 }
 
+/* gradients */
+label.gfx_header {
+	
+}
+
+label.gfx_subheader {
+	
+}
+
+label.gfx_tableheader {
+	
+}
+
+label.gfx_footer {
+	
+}
+
 /* tree styling for navigation item list */
 label.tree, label.tree_header, label.tree_arrow_close, label.tree_arrow_open,  
 label.tree_select, label.tree_select_arrow_close, label.tree_select_arrow_open {

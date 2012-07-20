@@ -200,6 +200,7 @@ label.header {
 	color: #333333;
 	text-align: center;
 	vertical-align: bottom;
+	margin-bottom: 1px;
 }
 
 label.heading1 {
@@ -287,6 +288,28 @@ label.color_light {
 
 label.color_white {
 	background-color: #FFFFFF;
+}
+
+/* gradients */
+label.gfx_header {
+	background-image: linear-gradient(top, #C9CBCA, #848485);
+}
+
+label.gfx_subheader {
+	border: 0px solid #999999;
+	border-bottom-width: 1px;
+	background-image: linear-gradient(top, #E1E1E1, #ACACAC);
+}
+
+label.gfx_tableheader {
+	background-image: linear-gradient(top, #FFFFFF, #DEDEDE);
+}
+
+label.gfx_footer {
+	border: 1px solid #404040;
+	border-left-width: 0px;
+	border-right-width: 0px;
+	background-image: linear-gradient(top, #BBBCBA, #808080);
 }
 
 /* tree styling for navigation item list */
