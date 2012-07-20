@@ -2544,8 +2544,10 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 							//set events
 							myForm.onShow = solutionModel.getGlobalMethod('NAV_universal_list_show')
 							myForm.onRecordSelection = solutionModel.getGlobalMethod('NAV_universal_list_select')
-//							myForm.onRender = solutionModel.getGlobalMethod('NAV_universal_list_render')
-//							myForm.rowBGColorCalculation = 'globals.NAV_universal_list_row_background'
+							if (!solutionPrefs.config.webClient) {
+								myForm.onRender = solutionModel.getGlobalMethod('NAV_universal_list_render')
+								myForm.rowBGColorCalculation = 'globals.NAV_universal_list_row_background'
+							}
 							
 							//get the UL data and set it up
 							var allULDisplays = navigationPrefs.byNavItemID[navigationItemID].universalList.displays
@@ -4348,8 +4350,10 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 					//set events
 					myForm.onShow = solutionModel.getGlobalMethod('NAV_universal_list_show')
 					myForm.onRecordSelection = solutionModel.getGlobalMethod('NAV_universal_list_select')
-//					myForm.onRender = solutionModel.getGlobalMethod('NAV_universal_list_render')
-//					myForm.rowBGColorCalculation = 'globals.NAV_universal_list_row_background'
+					if (!solutionPrefs.config.webClient) {
+						myForm.onRender = solutionModel.getGlobalMethod('NAV_universal_list_render')
+						myForm.rowBGColorCalculation = 'globals.NAV_universal_list_row_background'
+					}
 					
 					//get the UL data and set it up
 					var allULDisplays = navigationPrefs.byNavItemID[prefNavID].universalList.displays
