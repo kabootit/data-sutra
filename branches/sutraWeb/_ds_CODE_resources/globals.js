@@ -2034,18 +2034,21 @@ function TRIGGER_spaces_set(spaceName,alwaysFire,skipUI) {
 		if ((newSpace != oldSpace || alwaysFire) && found) {
 			var baseForm = solutionPrefs.config.formNameBase
 			
-			//hide complement and show current
-			if (i < 8) {
-				var complement = i + 7
+			if (!solutionPrefs.config.webClient) {
+				//hide complement and show current
+				if (i < 8) {
+					var complement = i + 7
+				}
+				else {
+					var complement = i - 7
+				}
+				forms[baseForm + '__header'].elements['btn_space_'+i].visible = true
+				forms[baseForm + '__header'].elements['btn_space_'+complement].visible = false
 			}
-			else {
-				var complement = i - 7
-			}
-			forms[baseForm + '__header'].elements['btn_space_'+i].visible = true
-			forms[baseForm + '__header'].elements['btn_space_'+complement].visible = false
 			
-			//fire space changer	
-			globals.DS_space_change('btn_space_'+i,true,alwaysFire,skipUI)
+			//fire space changer
+			var spaceMethod = solutionPrefs.config.webClient ? forms.DATASUTRA_WEB_0F__header.ACTION_space_change : globals.DS_space_change
+			spaceMethod('btn_space_'+i,true,alwaysFire,skipUI)
 			
 			return true
 		}
