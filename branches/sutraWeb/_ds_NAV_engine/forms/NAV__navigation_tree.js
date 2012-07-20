@@ -95,7 +95,7 @@ function FORM_on_show(firstShow, event) {
 			var itemID
 			
 			//particular item specified
-			if (url.set && url.item) {
+			if (url.set && nav[url.set] && url.item) {
 				//this item exists
 				if (nav[url.set][url.item]) {
 					itemID = nav[url.set][url.item].navItemID
