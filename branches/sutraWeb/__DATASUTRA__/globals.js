@@ -5174,8 +5174,8 @@ function DS_router(p1,params,itemID,logout) {
 	}
 	
 	function setError(code, message) {
-		forms.DATASUTRA_WEB__error._errorCode = code || 'ID-10-T'
-		forms.DATASUTRA_WEB__error._errorMessage = message || 'You\'re an idiot. :)'
+		forms.DATASUTRA_WEB__error._errorCode = code || ''
+		forms.DATASUTRA_WEB__error._errorMessage = message || ''
 	}
 	
 	// url object logic
@@ -5328,6 +5328,12 @@ function DS_router(p1,params,itemID,logout) {
 		// load in correct state of requested resource
 		globals.TRIGGER_navigation_set(null,null,null,itemID)
 		
+		// make sure on correct top level form
+		if (history.getFormName(history.getCurrentIndex()) != 'DATASUTRA_WEB_0F') {
+			history.go(-1)
+			history.clear()
+		}
+		
 		//disable selected spaces button
 		var spaceConversion = {
 				standard: 1,
@@ -5339,11 +5345,8 @@ function DS_router(p1,params,itemID,logout) {
 		var elemID = plugins.WebClientUtils.getElementMarkupId(forms.DATASUTRA_WEB_0F__header.elements['btn_space_' + spaceConversion[solutionPrefs.config.activeSpace]])
 		plugins.WebClientUtils.executeClientSideJS('dimSpace("' + elemID +'");')
 		
-		// make sure on correct top level form
-		if (history.getFormName(history.getCurrentIndex()) != 'DATASUTRA_WEB_0F') {
-			history.go(-1)
-			history.clear()
-		}
+		//update fast find box with correct stuff
+		globals.TRIGGER_fastfind_display_set(null,null,null,true)
 	}
 	// something happened, error out
 	else {
