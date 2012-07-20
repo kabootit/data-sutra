@@ -22,7 +22,9 @@
 .yuimenuitem-selected:focus,
 .yuimenubaritem-selected:focus,
 .yuimenuitem-selected a:focus,
-.yuimenubaritem-selected a:focus {
+.yuimenubaritem-selected a:focus,
+.yuimenuitemlabel:focus, 
+.yuimenuitemlabel-selected:focus {
     outline-width: 0;
 }
 
