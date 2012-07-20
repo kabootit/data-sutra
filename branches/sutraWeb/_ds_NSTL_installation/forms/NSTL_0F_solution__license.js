@@ -260,7 +260,15 @@ else if (solutionPrefs.config.trialMode) {
 	}
 	//more than an hour
 	else {
-		var status = '<html><body><font color="red">Trial time expired.  Please restart.</font></body></html>'
+		var status = ''
+		
+		if (application.getApplicationType() != APPLICATION_TYPES.WEB_CLIENT) {
+			status += '<html><body><font color="red">'
+		}
+		status += 'Trial time expired.  Please restart.'
+		if (application.getApplicationType() != APPLICATION_TYPES.WEB_CLIENT) {
+			status += '</font></body></html>'
+		}
 		
 		//turn on flag for really annoying popups
 		solutionPrefs.config.prefs.thatsAllFolks = true
@@ -282,8 +290,12 @@ else if (solutionPrefs.config.trialMode) {
 }
 //no longer trial mode, set status text
 else {
+	var status = ''
+	if (application.getApplicationType() != APPLICATION_TYPES.WEB_CLIENT) {
+		status += '<html><body>&nbsp;</body></html>'
+	}
 	application.setStatusText(
-				'<html><body>&nbsp;</body></html>',
+				status,
 				null
 			)
 	
