@@ -420,21 +420,36 @@ var consoleOutput = '';
  * @param	{String}	findText Text to display in the fast find field.
  * @param	{String}	[findTooltip] Tooltip to display on hover of the fast find field.
  * @param	{String}	[findCheck] Column name to check in the fast find field pop-up menu.
+ * @param	{Boolean}	[setDefault=false] Fill default fast find value for this space
  *
  * @properties={typeid:24,uuid:"f329a2ea-8dbe-40fa-a8dd-75a01b623979"}
  */
-function TRIGGER_fastfind_display_set(findText,findTooltip,findCheck) {
+function TRIGGER_fastfind_display_set(findText,findTooltip,findCheck,setDefault) {
 	//solutionPrefs defined and frameworks not in a locked status
 	if (application.__parent__.solutionPrefs && !solutionPrefs.config.lockStatus) {
 	
 		var findText = arguments[0]
 		var findTooltip = arguments[1]
 		var findCheck = arguments[2]
+		var setDefault = arguments[3]
 		var baseForm = solutionPrefs.config.formNameBase
 		var currentNavItem = solutionPrefs.config.currentFormID
 		
 		if (findCheck == undefined) {
 			findCheck = true
+		}
+		
+		//reset fast find to whatever is supposed to be in there
+		if (setDefault) {
+			findText = ''
+			findCheck = ''
+			findTooltip = ''
+			
+			if (navigationPrefs.byNavItemID[currentNavItem].fastFind) {
+				findText = navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindValue
+				findCheck = navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindField
+				findTooltip = navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindTip
+			}
 		}
 		
 		//set text in fast find area
@@ -499,7 +514,6 @@ function TRIGGER_fastfind_display_set(findText,findTooltip,findCheck) {
 		if (findTooltip != null) {
 			forms[baseForm + '__header__fastfind'].elements.fld_find.toolTipText = findTooltip
 		}
-	
 	}
 }
 
@@ -1639,7 +1653,13 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset, idNavigationIt
 					//show that only a portion of current foundset selected
 					globals.DATASUTRA_find = 'Related subset'
 					globals.DATASUTRA_find_field = null
-				//	forms[solutionPrefs.config.formNameBase].elements.find_end.setImageURL('media:///find_stop.png')
+					
+					//fast find is enabled, track
+					if (navigationPrefs.byNavItemID[navItem.idNavigationItem].fastFind) {
+						navigationPrefs.byNavItemID[navItem.idNavigationItem].fastFind.lastFindValue = globals.DATASUTRA_find
+						navigationPrefs.byNavItemID[navItem.idNavigationItem].fastFind.lastFindField = null
+						navigationPrefs.byNavItemID[navItem.idNavigationItem].fastFind.lastFindTip = null
+					}
 	
 					//using UL, refresh
 					if (navItem.useFwList) {
