@@ -426,6 +426,8 @@ else {
 			application.overrideStyle('ds_MAC','ds_WEB_desktop')
 			application.overrideStyle('ds_MAC_leopard','ds_WEB_desktop')
 			application.overrideStyle('ds_LINUX','ds_WEB_desktop')
+			
+			solutionModel.getForm('NAV_T_universal_list_1L').styleName = 'ds_WEB_universal_list'
 		}
 		else {
 			//grab the textual values for all style sheets from repository in <= 3.5.x or >= 4.x client
@@ -489,6 +491,8 @@ else {
 					application.overrideStyle('ds_WIN','ds_MAC_leopard')
 					application.overrideStyle('ds_MAC','ds_MAC_leopard')
 					application.overrideStyle('ds_LINUX','ds_MAC_leopard')
+					
+//					solutionModel.getForm('NAV_T_universal_list_1L').styleName = 'ds_MAC_universal_list'
 				}
 				//tiger, panther, jaguar or there isn't a fw plugin installed
 				else {
@@ -499,6 +503,8 @@ else {
 					application.overrideStyle('ds_WIN','ds_MAC')
 					application.overrideStyle('ds_MAC_leopard','ds_MAC')
 					application.overrideStyle('ds_LINUX','ds_MAC')
+					
+//					solutionModel.getForm('NAV_T_universal_list_1L').styleName = 'ds_MAC_universal_list'
 				}
 			}
 			//linux
@@ -510,6 +516,8 @@ else {
 				application.overrideStyle('ds_MAC','ds_LINUX')
 				application.overrideStyle('ds_MAC_leopard','ds_LINUX')
 				application.overrideStyle('ds_WIN','ds_LINUX')
+				
+//				solutionModel.getForm('NAV_T_universal_list_1L').styleName = 'ds_LINUX_universal_list'
 			}
 			else {
 				//if _DATASUTRA_ is the same as *, don't swap
@@ -519,6 +527,8 @@ else {
 				application.overrideStyle('ds_MAC','ds_WIN')
 				application.overrideStyle('ds_MAC_leopard','ds_WIN')
 				application.overrideStyle('ds_LINUX','ds_WIN')
+				
+//				solutionModel.getForm('NAV_T_universal_list_1L').styleName = 'ds_WIN_universal_list'
 			}
 		}
 		

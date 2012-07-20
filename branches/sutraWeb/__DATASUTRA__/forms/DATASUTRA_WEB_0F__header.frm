@@ -12,7 +12,7 @@ showClick:false,
 showFocus:false,
 size:"35,22",
 tabSeq:1,
-toolTipText:"Navigation sets",
+toolTipText:"Workspaces",
 transparent:true,
 typeid:7,
 uuid:"02229D7E-6314-41B8-99A4-3A0F1689B9B8"
