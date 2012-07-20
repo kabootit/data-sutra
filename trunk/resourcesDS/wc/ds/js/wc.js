@@ -80,7 +80,7 @@ function centerForm(formName) {
 
 //  Pump in extra stylesheets at the end of head so that overwrite existing 
 (function(){
-	var delayTime = 5000
+	var delayTime = 3500
 	
 	// setTimeout(function(){
 	// 	app.addPrefetchTags();
@@ -98,7 +98,8 @@ function centerForm(formName) {
 
 		if (e.which === 8) {
 			if ((nodeName === 'input' && e.target.type === 'text') ||
-				nodeName === 'textarea') {
+				nodeName === 'textarea' || 
+				(nodeName === 'input' && e.target.type === 'password')) {
 				// do nothing
 			}
 			else {
@@ -157,7 +158,7 @@ var WicketDSExtend = new Object();
 
 //	Extend wicket calls to hide/show indicator so that follows mouse location
 WicketDSExtend.showIncrementally = Wicket.showIncrementally;
-Wicket.showIncrementally=function() {
+Wicket.showIncrementally = function() {
 	//original call
 	WicketDSExtend.showIncrementally.apply(this,arguments);
 	
@@ -165,10 +166,37 @@ Wicket.showIncrementally=function() {
 	busyCursor(Wicket.indicatorPosition);
 }
 WicketDSExtend.hideIncrementally = Wicket.hideIncrementally;
-Wicket.hideIncrementally=function() {
+Wicket.hideIncrementally = function() {
 	//original call
 	WicketDSExtend.hideIncrementally.apply(this,arguments);
 	
 	//override
 	busyCursor();
+}
+
+//	Refresh UL list
+function refreshUL(source) {
+	setTimeout(function(){
+		var script = document.createElement('script');
+		script.type = 'text/javascript';
+		script.text = source;
+		$("#servoy_page").append(script);
+		repaintUL();
+	},250)
+}
+
+//	Dim out 1st space on first load
+function dimSpace(id) {
+	setTimeout(function(){
+		var selector = $('#'+id);
+	
+		if (selector.length) {
+			selector.css({
+				'cursor': 'default',
+				'filter': 'alpha(opacity=50)',
+				'-moz-opacity': '.50',
+				'opacity': '.50'
+			});
+		}
+	},250);
 }
