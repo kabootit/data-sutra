@@ -31,8 +31,8 @@ function ACTIONS_list()
 
 //get menu list from a value list
 var valueList = [
-		'Rename navigation set',
-		'Duplicate navigation set',
+		'Rename workspace',
+		'Duplicate workspace',
 		'-',
 		'Set web client path',
 		'-',

@@ -11,7 +11,7 @@ showFocus:false,
 size:"110,15",
 styleClass:"header",
 tabSeq:-2,
-text:"NAVIGATION SET",
+text:"WORKSPACE",
 transparent:true,
 typeid:7,
 uuid:"0d472b41-8889-47c5-be32-3cd152a29ab6"
