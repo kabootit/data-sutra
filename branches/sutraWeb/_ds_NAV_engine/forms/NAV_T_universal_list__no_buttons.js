@@ -495,9 +495,9 @@ if (application.__parent__.solutionPrefs) {
 //					'}',
 //					//row is not selected
 //					'else {',
-						'badge += "arrow_round.png";',
+						'badge += "arrow_right.png";',
 //					'}',
-					'badge += \'" width=14 height=14 vspace=3></center>\';',
+					'badge += \'" width=20 height=20></center>\';',
 					'return badge;',
 				'}'].join(''), 
 				'db:/' + serverName + '/' + tableName
