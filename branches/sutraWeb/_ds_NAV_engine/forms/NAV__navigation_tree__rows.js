@@ -506,4 +506,18 @@ function LIST_redraw__webclient__continue(scrollTop) {
 			}
 		}
 	}
+	
+	//not running through wrapper router, need to call this for straight up webclient
+	if (!globals.DATASUTRA_router_enable) {
+		//disable selected spaces button
+		var spaceConversion = {
+				standard: 1,
+				'list flip': 9,
+				list: 2,
+				'workflow flip': 14,
+				'workflow': 7
+			}
+		var elemID = plugins.WebClientUtils.getElementMarkupId(forms.DATASUTRA_WEB_0F__header.elements['btn_space_' + spaceConversion[solutionPrefs.config.activeSpace]])
+		plugins.WebClientUtils.executeClientSideJS('dimSpace("' + elemID +'");')
+	}
 }

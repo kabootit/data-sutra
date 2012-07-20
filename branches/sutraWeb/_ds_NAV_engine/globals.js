@@ -2920,39 +2920,39 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			}
 		}
 		
-		//form visited before, use space setup as of the last visit
-		if (sessionSpaces) {
-			for (var i = 0; i < 14; i++) {
-				if (forms[baseForm + '__header'].elements['btn_space_'+(i+1)] != undefined) {
-					forms[baseForm + '__header'].elements['btn_space_'+(i+1)].visible = sessionSpaces[i]
-				}
-			}
-		}
-		//decide which space options are showing first based on defaults for this form
-		else {
-			//smart client only
-			if (!solutionPrefs.config.webClient) {
-				var flipPreference = (navSpecs.spaceFlip) ? true : false
-				
-				for (var i = 0, j = i + 7; i < 7; i++, j++) {
-					//both available, take spaceFlip preference
-					if (spacesOK[i] && spacesOK[j]) {
-						forms[baseForm + '__header'].elements['btn_space_'+(i+1)].visible = !flipPreference
-						forms[baseForm + '__header'].elements['btn_space_'+(j+1)].visible = flipPreference
-					}
-					//only flip available, show it
-					else if (spacesOK[j]) {
-						forms[baseForm + '__header'].elements['btn_space_'+(i+1)].visible = false
-						forms[baseForm + '__header'].elements['btn_space_'+(j+1)].visible = true
-					}
-					//only normal or neither available, show normal
-					else {
-						forms[baseForm + '__header'].elements['btn_space_'+(i+1)].visible = true
-						forms[baseForm + '__header'].elements['btn_space_'+(j+1)].visible = false
-					}
-				}
-			}
-		}
+//		//form visited before, use space setup as of the last visit
+//		if (sessionSpaces) {
+//			for (var i = 0; i < 14; i++) {
+//				if (forms[baseForm + '__header'].elements['btn_space_'+(i+1)] != undefined) {
+//					forms[baseForm + '__header'].elements['btn_space_'+(i+1)].visible = sessionSpaces[i]
+//				}
+//			}
+//		}
+//		//decide which space options are showing first based on defaults for this form
+//		else {
+//			//smart client only
+//			if (!solutionPrefs.config.webClient) {
+//				var flipPreference = (navSpecs.spaceFlip) ? true : false
+//				
+//				for (var i = 0, j = i + 7; i < 7; i++, j++) {
+//					//both available, take spaceFlip preference
+//					if (spacesOK[i] && spacesOK[j]) {
+//						forms[baseForm + '__header'].elements['btn_space_'+(i+1)].visible = !flipPreference
+//						forms[baseForm + '__header'].elements['btn_space_'+(j+1)].visible = flipPreference
+//					}
+//					//only flip available, show it
+//					else if (spacesOK[j]) {
+//						forms[baseForm + '__header'].elements['btn_space_'+(i+1)].visible = false
+//						forms[baseForm + '__header'].elements['btn_space_'+(j+1)].visible = true
+//					}
+//					//only normal or neither available, show normal
+//					else {
+//						forms[baseForm + '__header'].elements['btn_space_'+(i+1)].visible = true
+//						forms[baseForm + '__header'].elements['btn_space_'+(j+1)].visible = false
+//					}
+//				}
+//			}
+//		}
 		
 		//make sure active space's button is showing
 		if (forms[baseForm + '__header'].elements['btn_space_'+spacesOK[solutionPrefs.config.activeSpace]] != undefined && !forms[baseForm + '__header'].elements['btn_space_'+spacesOK[solutionPrefs.config.activeSpace]].visible) {
