@@ -1,6 +1,13 @@
 /**
  * @type {Boolean}
  *
+ * @properties={typeid:35,uuid:"1D9C5394-432B-4D99-AA21-DAE924A7C00A",variableType:-4}
+ */
+var DATASUTRA_router_login = false;
+
+/**
+ * @type {Boolean}
+ *
  * @properties={typeid:35,uuid:"60B1BF82-3E32-4CD3-ABA4-C2848EF59FA6",variableType:-4}
  */
 var DATASUTRA_router_enable = false;
@@ -5344,19 +5351,7 @@ function DS_router(p1,params,itemID,logout) {
 			history.clear()
 		}
 		
-		//disable selected spaces button
-		var spaceConversion = {
-				standard: 1,
-				'list flip': 9,
-				list: 2,
-				'workflow flip': 14,
-				'workflow': 7
-			}
-		var elemID = plugins.WebClientUtils.getElementMarkupId(forms.DATASUTRA_WEB_0F__header.elements['btn_space_' + spaceConversion[solutionPrefs.config.activeSpace]])
-		plugins.WebClientUtils.executeClientSideJS('dimSpace("' + elemID +'");')
-		
-		//update fast find box with correct stuff
-		globals.TRIGGER_fastfind_display_set(null,null,null,true)
+		globals.DS_router_recreateUI()
 	}
 	// something happened, error out
 	else {
@@ -5364,4 +5359,24 @@ function DS_router(p1,params,itemID,logout) {
 		plugins.WebClientUtils.executeClientSideJS(routerCall + '(null,"Data Sutra: Error page","' + getURL('error') + '");')
 		return  
 	}
+}
+
+/**
+ * Until recreateUI gets fixed, things that need to happen everytime one of them happens
+ * @properties={typeid:24,uuid:"BEF91922-AC33-4BB4-8CD6-8F77AB522B20"}
+ */
+function DS_router_recreateUI() {
+	//disable selected spaces button
+	var spaceConversion = {
+			standard: 1,
+			'list flip': 9,
+			list: 2,
+			'workflow flip': 14,
+			'workflow': 7
+		}
+	var elemID = plugins.WebClientUtils.getElementMarkupId(forms.DATASUTRA_WEB_0F__header.elements['btn_space_' + spaceConversion[solutionPrefs.config.activeSpace]])
+	plugins.WebClientUtils.executeClientSideJS('dimSpace("' + elemID +'");')
+	
+	//update fast find box with correct stuff
+	globals.TRIGGER_fastfind_display_set(null,null,null,true)
 }
