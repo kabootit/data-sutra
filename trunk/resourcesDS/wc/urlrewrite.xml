@@ -29,6 +29,13 @@
 	</rule>
 	
 	<rule>
+		<name>DS favicon</name>
+		<note></note>
+		<from>^/favicon.ico$</from>
+		<to last="true">/ds/favicon.ico</to>
+	</rule>
+	
+	<rule>
 		<name>DS iOS icon</name>
 		<note></note>
 		<from>^/apple-touch-icon.png$</from>
