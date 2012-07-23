@@ -1,4 +1,11 @@
 /**
+ * @type {Object}
+ * 
+ * @properties={typeid:35,uuid:"55B654A5-8EF3-453C-89A7-36F547D07B43",variableType:-4}
+ */
+var DATASUTRA_router_payload = new Object();
+
+/**
  * @type {String}
  *
  * @properties={typeid:35,uuid:"A64600C5-CEE8-4839-95B6-13CEE6A505C2"}
@@ -5381,9 +5388,15 @@ function DS_router(p1,params,itemID,logout) {
 
 //		plugins.WebClientUtils.executeClientSideJS('setTimeout(function(){' + routerCall + '(null,"' + navigationPrefs.byNavItemID[itemID]._about_ + '","' + getURL() + '")},2000);')
 //		plugins.WebClientUtils.executeClientSideJS('window.parent.routerDelay(null,"' + navigationPrefs.byNavItemID[itemID]._about_ + '","' + getURL() + '",' + delay + ');')
-		
+
+		//something was specified to navigate to, load it up
+		var payload = globals.DATASUTRA_router_payload
+
 		// load in correct state of requested resource
-		globals.TRIGGER_navigation_set(null,null,null,itemID)
+		globals.TRIGGER_navigation_set(payload.itemID,payload.setFoundset,payload.useFoundset,itemID)
+		
+		//reset payload (values only used immediately after set)
+		globals.DATASUTRA_router_payload = solutionModel.getGlobalVariable('globals','DATASUTRA_router_payload').defaultValue
 		
 		// make sure on correct top level form
 		if (history.getFormName(history.getCurrentIndex()) != 'DATASUTRA_WEB_0F') {
