@@ -200,3 +200,14 @@ function dimSpace(id) {
 		}
 	},250);
 }
+
+//	Resize screen after login form
+function resetBeanSizes(source) {
+	setTimeout(function(){
+		var script = document.createElement('script');
+		script.type = 'text/javascript';
+		script.text = source;
+		$("#servoy_page").append(script);
+		resetBeans();
+	},500)
+}

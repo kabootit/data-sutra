@@ -1,3 +1,6 @@
+// the domain that webclient is accessible on
+var sutraWC = '';	//'http://servlets:8081';
+
 // set up switcheroo for initial 'Loading...' thing
 (function() {
 	var timeOut = 1
@@ -54,20 +57,22 @@ function centerForm(formName) {
 
 // center login form
 function viewForm(toggle) {
-	//unlock the screen
-	if (toggle) {
-		//show the iframe
-		document.getElementById('sutra').style.display = 'block';
+	if (document.getElementById('sutra') && document.getElementById('blocker')) {
+		//unlock the screen
+		if (toggle) {
+			//show the iframe
+			document.getElementById('sutra').style.display = 'block';
 	
-		//unlock screen
-		document.getElementById('blocker').style.display = 'none';
-	}
-	else {
-		//lock screen
-		document.getElementById('blocker').style.display = 'block';
+			//unlock screen
+			document.getElementById('blocker').style.display = 'none';
+		}
+		else {
+			//lock screen
+			document.getElementById('blocker').style.display = 'block';
 		
-		//hide the iframe
-		document.getElementById('sutra').style.display = 'none';
+			//hide the iframe
+			document.getElementById('sutra').style.display = 'none';
+		}
 	}
 }
 
@@ -116,17 +121,35 @@ function router(data) {
 		}
 	}
 	
-	// login url requested, specify what to do
+	// login url requested
 	if (append == 'login/') {
-		append = 'DSLogin/';
+		// login box on web site
+		if (window && window.frameElement && window.frameElement.id == 'ds_website') {
+			append = 'DSLoginSmall/';
+			// append += 'refer' + window.parent.location.pathname
+		}
+		// normal login
+		else {
+			append = 'DSLogin/';
+		}
 	}
 	// login url requested, specify what to do
 	else if (append == 'logout/') {
 		append = 'DSLogout/';
 	}
+	// redirect to pop out of inline form
+	else if (append == 'launchingDS/') {
+		append = 'DSHomeCall/';
+	}
 	// check that append has a value, otherwise show error page
 	else if (!append) {
 		append = 'DSError_NoURL/';
+	}
+	
+	//tack on referrer
+	if (window.parent.location) {
+		// append += 'refer?' + window.parent.location.pathname.substr(1)
+		// encodeURIComponent(document.referrer) + '/'
 	}
 	
 	// temporary logging
@@ -135,7 +158,7 @@ function router(data) {
 	// swc iframe setup
 	var iframeHeaderCell = document.getElementById('sutra');
 	iframeHeaderCell.innerHTML = "";
-	var dynamicURL = "/servoy-webclient/ss/s/__DATASUTRA__/m/DS_router/a/" + append;
+	var dynamicURL = sutraWC + "/servoy-webclient/ss/s/__DATASUTRA__/m/DS_router/a/" + append;
 	
 	var iframeHeader = document.createElement('IFRAME');
 	iframeHeader.id = 'wc';

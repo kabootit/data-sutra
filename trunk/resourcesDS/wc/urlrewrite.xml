@@ -4,8 +4,8 @@
 		"http://www.tuckey.org/res/dtds/urlrewrite2.6.dtd">
 
 <!--
-	Configuration file for Sutra CMS by Data Mosaic
-	http://www.data-mosaic.com/sutra-cms
+	Configuration file for Data Sutra by Data Mosaic
+	http://www.data-mosaic.com/data-sutra/
 
 	Rewriting provided by UrlRewriteFilter
 	http://www.tuckey.org/urlrewrite/
@@ -13,6 +13,7 @@
 
 <urlrewrite>
 	
+	<!-- DS WebClient with /ds/ prefix -->
 	<rule>
 		<name>DS js</name>
 		<note></note>
