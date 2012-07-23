@@ -133,7 +133,11 @@ function router(data) {
 			append = 'DSLogin/';
 		}
 	}
-	// login url requested, specify what to do
+	// login inline url requested
+	else if (append == 'loginInline/') {
+		append = 'DSLoginSmall/';
+	}
+ 	// login url requested, specify what to do
 	else if (append == 'logout/') {
 		append = 'DSLogout/';
 	}
