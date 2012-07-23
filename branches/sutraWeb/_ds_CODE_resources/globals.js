@@ -1595,14 +1595,19 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset, idNavigationIt
 			if (globals.DATASUTRA_router_enable && !idNavigationItem) {
 				globals.DS_router(null,null,navItem.idNavigationItem)
 				
-				//TODO: insert delay here so that form loads before monkeying with foundset
+				//fill global to be used on second pass through this method (after url is rewritten)
+				globals.DATASUTRA_router_payload = {
+						itemID : itemID,
+						setFoundset : setFoundset,
+						useFoundset : useFoundset
+					}
 			}
 			else {
 				//if from a different navigation set
 				if (globals.DATASUTRA_navigation_set != navSetID) {
 					navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].lastNavItem = lastItem
 					globals.DATASUTRA_navigation_set = navSetID
-		
+					
 					//update text display
 					forms.NAV__navigation_tree.LABEL_update()
 				}
@@ -1666,8 +1671,10 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset, idNavigationIt
 						//serclipse 4
 						if (utils.stringToNumber(solutionPrefs.clientInfo.verServoy) >= 4) {
 							var formUL = navigationPrefs.byNavItemID[navItem.idNavigationItem].listData.tabFormInstance
-	
-							forms[formUL].controller.loadRecords(modifiedFoundset.unrelate())
+							
+							if (forms[formUL]) {
+								forms[formUL].controller.loadRecords(modifiedFoundset.unrelate())
+							}
 						}
 						//3.5
 						else {
