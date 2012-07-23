@@ -1,4 +1,11 @@
 /**
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"A64600C5-CEE8-4839-95B6-13CEE6A505C2"}
+ */
+var DATASUTRA_router_referrer = null;
+
+/**
  * @type {Boolean}
  *
  * @properties={typeid:35,uuid:"1D9C5394-432B-4D99-AA21-DAE924A7C00A",variableType:-4}
@@ -1571,11 +1578,17 @@ function DS_actions(input) {
 			}
 			//check for non-standard prefpane logout
 			else if (itemClicked == 'Logout') {
+				//webclient in inline router, redirect url back to wherever called from
+				if (globals.DATASUTRA_router_referrer) {
+					application.showURL(globals.DATASUTRA_router_referrer,'_top')
+					security.logout()
+				}
 				//webclient in router, redirect url
-				if (globals.DATASUTRA_router_enable) {
+				else if (globals.DATASUTRA_router_enable) {
 					globals.DS_router(null,null,null,true)
 					security.logout()
 				}
+				//straight up webclient or smart client
 				else {
 					security.logout(application.getSolutionName(),'DATASUTRA_open','true')
 				}
@@ -5191,8 +5204,10 @@ function DS_router(p1,params,itemID,logout) {
 	}
 	
 	function setError(code, message) {
-		forms.DATASUTRA_WEB__error._errorCode = code || ''
-		forms.DATASUTRA_WEB__error._errorMessage = message || ''
+		if (forms.DATASUTRA_WEB__error) {
+			forms.DATASUTRA_WEB__error._errorCode = code || ''
+			forms.DATASUTRA_WEB__error._errorMessage = message || ''
+		}
 	}
 	
 	// url object logic
@@ -5209,6 +5224,10 @@ function DS_router(p1,params,itemID,logout) {
 		// go to hix
 		else if ( item == "history" ) {
 			url.history = params[item]
+		}
+		// store referrer
+		else if ( item == "refer" ) {
+			url.referrer = params[item]
 		}
 	}
 	
@@ -5229,14 +5248,29 @@ function DS_router(p1,params,itemID,logout) {
 	//this must be called from the router and therefore we must be running in an iframe
 	globals.DATASUTRA_router_enable = true
 	
-	// go to login form if not already logged in
-	if ((!application.__parent__.solutionPrefs || !application.__parent__.navigationPrefs) && url.set != 'DSLogin') {
+	// go to login form if not already logged in or in the process of logging in
+	if ((!application.__parent__.solutionPrefs || !application.__parent__.navigationPrefs) && !(url.set == 'DSLogin' || url.set == 'DSLoginSmall')) {
 		plugins.WebClientUtils.executeClientSideJS(routerCall + '(null,"Data Sutra: Login","' + getURL('login') + '");')
 		return
 	}
 	
 	// check for special status codes
-	if (p1 == 'DSLogin') {
+	if (p1 == 'DSLoginSmall') {
+		globals.DATASUTRA_router_login = true
+		
+		//url to redirect to on successful logout
+		globals.DATASUTRA_router_referrer = 'http://www.data-mosaic.com/sutras/data-sutra/news/data-sutra-news-2012-07-22/'
+		
+		// when logged in already, force a logout to prevent from showing full client in tiny login iframe spot
+		if (application.__parent__.navigationPrefs) {
+			globals.DATASUTRA_router_referrer = 'http://www.data-mosaic.com/sutras/data-sutra/home/'
+//			application.getServerURL() + '/' + url.referrer
+			globals.DS_actions('Logout')
+		}
+		
+		return
+	}
+	else if (p1 == 'DSLogin') {
 		// when logged in already, return to previous form
 		if (application.__parent__.navigationPrefs) {
 			//TODO: use DATASUTRA_router to navigate history stack
@@ -5271,6 +5305,12 @@ function DS_router(p1,params,itemID,logout) {
 	}
 	else if (p1 == 'DSHomeCall') {
 		itemID = navigationPrefs.byNavSetID[navigationPrefs.byNavSetID.defaultSet].itemsByOrder[0].navigationItem.idNavigationItem
+		
+		//redirect to correct url
+		if (navigationPrefs.byNavItemID[itemID].path) {
+			plugins.WebClientUtils.executeClientSideJS('preRender("' + navigationPrefs.byNavItemID[itemID]._about_ + '","' + getURL(navigationPrefs.byNavItemID[itemID].path) + '",' + delay + ');')
+			return
+		}
 	}
 	else if (p1 == 'DSError_NoURL') {
 		setError('404','No page requested')
@@ -5363,6 +5403,7 @@ function DS_router(p1,params,itemID,logout) {
 
 /**
  * Until recreateUI gets fixed, things that need to happen everytime one of them happens
+ * 
  * @properties={typeid:24,uuid:"BEF91922-AC33-4BB4-8CD6-8F77AB522B20"}
  */
 function DS_router_recreateUI() {
@@ -5379,4 +5420,27 @@ function DS_router_recreateUI() {
 	
 	//update fast find box with correct stuff
 	globals.TRIGGER_fastfind_display_set(null,null,null,true)
+	
+	//things that must be resized after small login
+	if (globals.DATASUTRA_router_login) {
+		var callback = plugins.WebClientUtils.generateCallbackScript(globals.DS_router_bean_resize);
+		var jsCallback = 'function resetBeans(){' + callback + '}';
+		plugins.WebClientUtils.executeClientSideJS('resetBeanSizes(' + jsCallback + ');')
+		
+		//make sure this only runs one time
+		globals.DATASUTRA_router_login = false
+	}
+
+}
+
+/**
+ * @properties={typeid:24,uuid:"0B2BB8C2-D76A-42AF-995C-1B12768EFFE3"}
+ */
+function DS_router_bean_resize() {
+	//resize window appropriately
+	//this does not account for sidebar being opened
+	forms.DATASUTRA_WEB_0F.elements.tab_wrapper.dividerLocation = forms.DATASUTRA_WEB_0F.elements.tab_wrapper.getWidth()
+	
+	//reset split between toolbar and fastfind
+	forms.DATASUTRA_WEB_0F__header.FORM_on_show(true)
 }

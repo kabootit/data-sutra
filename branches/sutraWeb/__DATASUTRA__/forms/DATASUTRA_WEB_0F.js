@@ -51,8 +51,14 @@ function FORM_on_show(firstShow, event) {
 		elements.tab_wrapper.bgcolor = '#d1d7e2'
 		elements.tab_wrapper.resizeWeight = 1
 		
-		//go to login form
-		forms.AC_R__login_WEB.controller.show()
+		//go to small login form
+		if (globals.DATASUTRA_router_login) {
+			forms.AC_R__login_WEB__small.controller.show()
+		}
+		//go to big login form
+		else {
+			forms.AC_R__login_WEB.controller.show()
+		}
 	}
 }
 
