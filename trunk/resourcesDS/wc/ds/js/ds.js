@@ -11,6 +11,7 @@ function preRender(description,path,delay) {
 			window.parent.routerDelay(null,description,path,250);
 		}
 		//called from our wrapper, redirect to top
+			//NOTE: won't work cross-domiain
 		else if (window.parent && window.parent.window && window.parent.window.frameElement && window.parent.window.frameElement.id == 'ds_website') {
 			window.top.location = 'http://demo.data-sutra.com/ds/launchingDS'
 		}
