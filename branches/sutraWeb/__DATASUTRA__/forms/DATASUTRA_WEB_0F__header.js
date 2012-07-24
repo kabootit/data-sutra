@@ -68,7 +68,7 @@ function ACTION_navigation(input) {
 	var vlReal = vlItems.getColumnAsArray(2)
 	
 	//are there favorites?
-	if (application.__parent__.solutionPrefs && solutionPrefs.access && solutionPrefs.access.favorites && solutionPrefs.access.favorites.length) {
+	if (application.__parent__.solutionPrefs && !solutionPrefs.config.webClient && solutionPrefs.access && solutionPrefs.access.favorites && solutionPrefs.access.favorites.length) {
 		vlDisplay.push('-','Favorites')
 		vlReal.push(null,0)
 	}
