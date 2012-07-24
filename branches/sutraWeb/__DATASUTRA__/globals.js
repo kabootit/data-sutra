@@ -2277,6 +2277,13 @@ function DS_navigation_set(input) {
 	var vlDisplay = vlItems.getColumnAsArray(1)
 	var vlReal = vlItems.getColumnAsArray(2)
 	
+	//don't show error navigation set
+	var errorIndex = vlDisplay.indexOf('WC: Error')
+	if (solutionPrefs.config.webClient && errorIndex != -1) {
+		vlDisplay.splice(errorIndex,1)
+		vlReal.splice(errorIndex,1)
+	}
+	
 	//are there favorites?
 	if (application.__parent__.solutionPrefs && solutionPrefs.access && solutionPrefs.access.favorites && solutionPrefs.access.favorites.length) {
 		vlDisplay.push('-','Favorites')
