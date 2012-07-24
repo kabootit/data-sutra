@@ -6550,6 +6550,9 @@ function CODE_form_in_dialog(form, x, y, width, height, title, resizable, showTe
 		
 		//check to see if this FiD already exists and remove it
 		if (application.getWindow(name)) {
+			//allow any FiDs to be hidden
+				//needed for case when FiD shown and then navigated to other part of solution before closing
+			globals.CODE_hide_form = 1
 			application.getWindow(name).destroy()
 		}
 		
