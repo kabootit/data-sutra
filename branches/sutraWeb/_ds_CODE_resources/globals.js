@@ -6485,6 +6485,10 @@ function CODE_form_in_dialog(form, x, y, width, height, title, resizable, showTe
 			}
 		}
 		
+		var smForm = solutionModel.getForm(form.controller.getName())
+		
+		var autoSave = databaseManager.getAutoSave()
+		
 		//didn't take window size into account unless resizable enabled; manually calculate window dimensions
 		if (utils.stringToNumber(utils.stringReplace(application.getVersion(),'.','')) < 605) {
 			var offset = 0
@@ -6513,8 +6517,6 @@ function CODE_form_in_dialog(form, x, y, width, height, title, resizable, showTe
 			else {
 				titleBar = 22
 			}
-			
-			var smForm = solutionModel.getForm(form.controller.getName())
 			
 			var totalWidth = smForm.width
 			
@@ -6550,10 +6552,23 @@ function CODE_form_in_dialog(form, x, y, width, height, title, resizable, showTe
 		
 		//check to see if this FiD already exists and remove it
 		if (application.getWindow(name)) {
+			
+			//run on hide method //must destroy window in onhide
+			if (smForm.onHide.getName() && form[smForm.onHide.getName()]) {
+				form[smForm.onHide.getName()]()
+				
+				//on hide changed the status of autosave, reset
+				if (autoSave != databaseManager.getAutoSave()) {
+					databaseManager.setAutoSave(autoSave)
+				}
+			}
 			//allow any FiDs to be hidden
+			else {
 				//needed for case when FiD shown and then navigated to other part of solution before closing
-			globals.CODE_hide_form = 1
-			application.getWindow(name).destroy()
+				globals.CODE_hide_form = 1
+				
+				application.getWindow(name).destroy()
+			}
 		}
 		
 		var FiD = application.createWindow(name,modality)
