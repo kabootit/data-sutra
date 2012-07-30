@@ -1,7 +1,7 @@
 /**
  * @type {String}
  *
- * @properties={typeid:35,uuid:"693A9CE6-C31F-4FE8-9660-86752500ECCF"}
+ * @properties={typeid:35,uuid:"3ABD8DCE-2582-4300-AEFF-A4224EA7CBFD"}
  */
 var retVal = '';
 
@@ -12,7 +12,7 @@ var retVal = '';
  *
  * @private
  *
- * @properties={typeid:24,uuid:"32655896-9275-4A11-AD27-191B22DED083"}
+ * @properties={typeid:24,uuid:"79110A53-6384-4BE9-B69E-DD380D894D9E"}
  */
 function handleButtonAction(event) {
 	if ( (elements[event.getElementName()] ? elements[event.getElementName()].text : '') == i18n.getI18NMessage('servoy.button.ok')) {
@@ -26,7 +26,7 @@ function handleButtonAction(event) {
  * @param {Number} _nDialogWidth
  * @param {Number} _nDialogHeight
  *
- * @properties={typeid:24,uuid:"E6017C04-E0D4-4EDB-980F-72180959D7A4"}
+ * @properties={typeid:24,uuid:"5A45A550-05F0-4C2B-AC29-B7736E5E6995"}
  */
 function setupForm(_aArguments, _sIconStyle, _nDialogWidth, _nDialogHeight) {
 	var _aBtn = _aArguments.slice(2, _aArguments.length),
@@ -53,7 +53,7 @@ function setupForm(_aArguments, _sIconStyle, _nDialogWidth, _nDialogHeight) {
  * @param {Boolean} firstShow form is shown first time after load
  * @param {JSEvent} event the event that triggered the action
  *
- * @properties={typeid:24,uuid:"AD7ABB7B-2704-4C05-BEB6-440748F3C5EE"}
+ * @properties={typeid:24,uuid:"7B82CF74-2CFE-4BC7-B5B2-801E28F91A0F"}
  */
 function onShow(firstShow, event) {
 	elements.fldValue.requestFocus();

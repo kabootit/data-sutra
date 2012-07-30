@@ -1,7 +1,7 @@
 /**
  * @type {Function}
  *
- * @properties={typeid:35,uuid:"BB8E1242-F3D4-41C5-8616-24593C26F26A",variableType:-4}
+ * @properties={typeid:35,uuid:"CEA81BE6-E579-4222-92A2-2518659CC26C",variableType:-4}
  */
 var bluePrintCleanupCallback;
 
@@ -10,34 +10,34 @@ var bluePrintCleanupCallback;
  *
  * @private
  *
- * @properties={typeid:35,uuid:"C1D9840E-FFFF-456D-9BA0-98A8BB94660F",variableType:4}
+ * @properties={typeid:35,uuid:"DCD5FB3A-5CE9-49A9-B7AD-282D0A1B4069",variableType:4}
  */
 var buttonCount = 0;
 
 /**
  * @type {Function}
  * @protected
- * @properties={typeid:35,uuid:"B544EB43-AD77-4AC6-9834-68A958497CBC",variableType:-4}
+ * @properties={typeid:35,uuid:"EF3FD099-485C-4015-9592-3DF936D89721",variableType:-4}
  */
 var callbackMethod = null;
 
 /**
  * @type {Continuation}
  *
- * @properties={typeid:35,uuid:"5DFCFC69-E702-4873-B779-55298091CBA3",variableType:-4}
+ * @properties={typeid:35,uuid:"7791D0F4-E210-4FE6-B137-8359E6BB3152",variableType:-4}
  */
 var continuation;
 
 /**
  * @type {String}
- * @properties={typeid:35,uuid:"08A434AB-9321-4579-8C53-C10FC0EF3929"}
+ * @properties={typeid:35,uuid:"6F681452-1E7D-4320-AC85-9CFBB4B12030"}
  */
 var returnValue = '';
 
 /**
  * @type {String}
  *
- * @properties={typeid:35,uuid:"16654D34-8A96-44EF-972D-D25FE66789C2"}
+ * @properties={typeid:35,uuid:"EC0A188F-684C-4DCC-817B-AA573B9DD8FA"}
  */
 var windowName = '';
 
@@ -50,7 +50,7 @@ var windowName = '';
  *
  * @protected
  *
- * @properties={typeid:24,uuid:"26A90DE2-4775-4217-9E02-E73FDE97DB40"}
+ * @properties={typeid:24,uuid:"ADA45A14-2D8B-4589-B22B-D1F22C28727E"}
  */
 function onHide(event) {
 	bluePrintCleanupCallback(controller.getName())
@@ -66,7 +66,7 @@ function onHide(event) {
 /**
  * @param {JSEvent} event
  *
- * @properties={typeid:24,uuid:"23D722D8-8988-4628-995A-6DA46E61240D"}
+ * @properties={typeid:24,uuid:"103B0923-620F-408A-BB23-ECA2B4E245B9"}
  */
 function onButtonAction(event) {
 	if (callbackMethod) {
@@ -90,7 +90,7 @@ function onButtonAction(event) {
  * @param {Number} dialogHeight
  *
  * @return {JSForm}
- * @properties={typeid:24,uuid:"A31449A0-DF7D-4254-829A-EA9FF2EA8D83"}
+ * @properties={typeid:24,uuid:"F6D04F75-657A-4F47-B03A-97401A195681"}
  */
 function setupButtons(buttonArray, redraw, dialogWidth, dialogHeight) {
 	var _oForm = solutionModel.getForm(controller.getName()),
@@ -155,7 +155,7 @@ function setupButtons(buttonArray, redraw, dialogWidth, dialogHeight) {
  * 
  * @SuppressWarnings('wrongparameters')
  *
- * @properties={typeid:24,uuid:"55CF8255-DE8E-4666-978A-CC9550EAE411"}
+ * @properties={typeid:24,uuid:"74DE135A-C68C-4CA4-B889-E77359CD9700"}
  */
 function setupForm(_aArguments, _sIconStyle) { }
 
@@ -167,7 +167,7 @@ function setupForm(_aArguments, _sIconStyle) { }
  *
  * @private
  *
- * @properties={typeid:24,uuid:"449EAB6F-FDA9-4AC2-85E9-DAAA74503AC3"}
+ * @properties={typeid:24,uuid:"B4DE3491-DFAF-4B5E-9E72-082991D5F107"}
  */
 function onShow(firstShow, event) {
 	if (buttonCount) {

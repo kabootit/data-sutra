@@ -1,7 +1,7 @@
 /**
  * @type {String}
  *
- * @properties={typeid:35,uuid:"B1675FB3-E059-41CC-8F6C-F8425D08B783"}
+ * @properties={typeid:35,uuid:"97109D98-5F78-4A9E-97AF-B402668422CB"}
  */
 var retVal = '';
 
@@ -12,7 +12,7 @@ var retVal = '';
  *
  * @private
  *
- * @properties={typeid:24,uuid:"033A07B5-5894-4560-AAC1-D020FFA39F10"}
+ * @properties={typeid:24,uuid:"3B06D392-0811-453F-A67D-1E8070EA7434"}
  */
 function handleButtonAction(event) {
 	if (event.getElementName() == 'fldValue' || (elements[event.getElementName()] ? elements[event.getElementName()].text : '') == i18n.getI18NMessage('servoy.button.ok')) {
@@ -28,7 +28,7 @@ function handleButtonAction(event) {
  * @param {Number} _nDialogWidth
  * @param {Number} _nDialogHeight
  *
- * @properties={typeid:24,uuid:"CD1EE405-A19C-425F-AF2B-208B08A1469E"}
+ * @properties={typeid:24,uuid:"2693E5DA-09D0-4081-AB5E-4F4354D3CF6D"}
  */
 function setupForm(_aArguments, _sIconStyle, _initialValue, _nDialogWidth, _nDialogHeight) {
 	var _aBtn = _aArguments.slice(1, _aArguments.length),
@@ -53,7 +53,7 @@ function setupForm(_aArguments, _sIconStyle, _initialValue, _nDialogWidth, _nDia
  *
  * @param {JSEvent} event the event that triggered the action
  *
- * @properties={typeid:24,uuid:"073DA07D-D2D5-45E6-9AB8-F3AC52262EC1"}
+ * @properties={typeid:24,uuid:"337193E1-6AC6-44F6-B81D-47443EDC2283"}
  */
 function onInputAction(event) {
 	_super.onButtonAction(event);
@@ -65,7 +65,7 @@ function onInputAction(event) {
  * @param {Boolean} firstShow form is shown first time after load
  * @param {JSEvent} event the event that triggered the action
  *
- * @properties={typeid:24,uuid:"314BDB33-0A1E-428C-B774-77399285F847"}
+ * @properties={typeid:24,uuid:"A01D6297-D3B3-47C0-AAFA-23CAF1CAFF8E"}
  */
 function onShow(firstShow, event) {
 	elements.fldValue.requestFocus();

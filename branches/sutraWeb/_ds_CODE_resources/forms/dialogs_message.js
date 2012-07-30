@@ -5,7 +5,7 @@
  *
  * @private
  *
- * @properties={typeid:24,uuid:"DD1E8D0F-947C-462B-A52B-83C9E3E1E089"}
+ * @properties={typeid:24,uuid:"A5ACB396-0C2A-4180-8E56-D989A828259E"}
  */
 function handleButtonAction(event) {
 	returnValue = elements[event.getElementName()] ? elements[event.getElementName()].text : ''; // button clicked (if any)
@@ -18,7 +18,7 @@ function handleButtonAction(event) {
  * @param {Number} _nDialogWidth
  * @param {Number} _nDialogHeight
  *
- * @properties={typeid:24,uuid:"DD0FAF8D-0F66-467F-A6FE-632CE8DDE400"}
+ * @properties={typeid:24,uuid:"A5DBD403-02D5-4764-8330-D885B4C3DFAA"}
  */
 function setupForm(_aArguments, _sIconStyle, _nDialogWidth, _nDialogHeight) {
 	var _aBtn = _aArguments.slice(2, _aArguments.length),
