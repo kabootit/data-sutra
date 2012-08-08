@@ -2055,7 +2055,7 @@ var itemName = arguments[1]
 var tabSelected = arguments[2]
 var baseForm = solutionPrefs.config.formNameBase
 var prefName = 'Custom tab ' + solutionPrefs.config.currentFormID + ': ' + formName
-var listTabForm = (solutionPrefs.config.webClient) ? forms.DATASUTRA_WEB_0F__list__universal : forms.DATASUTRA_0F_solution
+var listTabForm = (solutionPrefs.config.webClient) ? 'DATASUTRA_WEB_0F__list__universal' : 'DATASUTRA_0F_solution'
 
 if (forms[formName]) {
 	//set global that end users use in their code

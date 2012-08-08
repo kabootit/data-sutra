@@ -397,15 +397,16 @@ function LIST_redraw__smartclient(event,itemID,reScroll,skipLoadForms,favoriteMo
  * Redraws the fake list
  * 
  * @param	{JSEvent}	event The event that triggered the action.
- * @param	{Number}	itemID Which navigation item was clicked.
- * @param	{Boolean}	reScroll Set the scroll position afterwards.
- * @param	{Boolean}	skipLoadForms Do not reload the workflow and list area forms.
- * @param	{Boolean}	favoriteMode Work on favorites.
+ * @param	{Number}	idItem Which navigation item was clicked.
+ * @param	{Boolean}	scrollRe Set the scroll position afterwards.
+ * @param	{Boolean}	loadFormsSkip Do not reload the workflow and list area forms.
+ * @param	{Boolean}	modeFavorite Work on favorites.
+ * @param 	{Number}	selector Selected index.
  *
  * @properties={typeid:24,uuid:"4E970329-B660-4626-867E-8183F4A445CF"}
  * @AllowToRunInFind
  */
-function LIST_redraw__webclient(event,itemID,reScroll,skipLoadForms,favoriteMode,selected) {
+function LIST_redraw__webclient(event,idItem,scrollRe,loadFormsSkip,modeFavorite,selector) {
 	if (application.__parent__.solutionPrefs && application.__parent__.navigationPrefs) {
 		//don't run again
 		if (_variableWC.pause) {
@@ -414,11 +415,11 @@ function LIST_redraw__webclient(event,itemID,reScroll,skipLoadForms,favoriteMode
 		
 		//reset object used to store all info for part 2
 		_variableWC = {
-				itemID: itemID,
-				reScroll: reScroll,
-				skipLoadForms: skipLoadForms,
-				favoriteMode: favoriteMode,
-				selected: selected
+				itemID: idItem,
+				reScroll: scrollRe,
+				skipLoadForms: loadFormsSkip,
+				favoriteMode: modeFavorite,
+				selected: selector
 			}
 		
 		//triggered by clicking on element in list

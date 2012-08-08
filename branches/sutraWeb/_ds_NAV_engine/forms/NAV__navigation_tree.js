@@ -539,7 +539,7 @@ function LIST_toggle_all() {
 					//find parent
 					for (var i = found; i >= 0; i--) {
 						if (!navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].itemsByOrder[i].navigationItem.nodeTwo) {
-							forms.NAV__navigation_tree__rows.LIST_redraw(navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].itemsByOrder[i].navigationItem.idNavigationItem,true)
+							forms.NAV__navigation_tree__rows.LIST_redraw(null,navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].itemsByOrder[i].navigationItem.idNavigationItem,true)
 							break
 						}
 					}
