@@ -16,7 +16,7 @@ location:"0,0",
 scrollbars:33,
 selectOnEnter:true,
 size:"200,100",
-styleClass:"textareanoborder",
+styleClass:"nobordertextarea",
 tabSeq:2,
 typeid:4,
 uuid:"e575e5ec-32f9-4c49-9e20-7a97668a4e4e"
