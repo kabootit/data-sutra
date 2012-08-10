@@ -85,10 +85,12 @@ if (staticIntro || (preview && !blogRecord) || ((!blogRecord || !fsPrefs.blog_en
 	//set banner text
 	elements.lbl_banner.text = fsPrefs.initial_splash_header
 	
+	var thisYear = utils.dateFormat(new Date(),'yyyy')
+	
 	//show footer
 	if (fsPrefs.initial_splash_header == 'Welcome to Data Sutra!') {
 		elements.lbl_footer_left.text = 'Data Sutra'
-		elements.lbl_footer_right.text = '<html><head></head><body>Data Mosaic &#8212; Copyright &#169; 2006-2011</body></html>'
+		elements.lbl_footer_right.text = '<html><head></head><body>Data Mosaic &#8212; Copyright &#169; 2006-' + thisYear + '</body></html>'
 		
 		elements.lbl_footer.visible = true
 		elements.lbl_footer_left.visible = true
@@ -100,7 +102,7 @@ if (staticIntro || (preview && !blogRecord) || ((!blogRecord || !fsPrefs.blog_en
 	}
 	else if (fsPrefs.initial_splash_header == 'Welcome to Sutra CMS!') {
 		elements.lbl_footer_left.text = 'Sutra CMS'
-		elements.lbl_footer_right.text = '<html><head></head><body>Data Mosaic &#8212; Copyright &#169; 2011, MIT Licensed</body></html>'
+		elements.lbl_footer_right.text = '<html><head></head><body>Data Mosaic &#8212; Copyright &#169; 2011-' + thisYear + ', MIT Licensed</body></html>'
 		
 		elements.lbl_footer.visible = true
 		elements.lbl_footer_left.visible = true
