@@ -211,11 +211,9 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	var expanded = arguments[0]
 	
 	var baseForm = solutionPrefs.config.formNameBase
-	var statusStartX = forms[baseForm + '__header'].elements.split_tool_find.getX()
+	var statusStartX = forms[baseForm + '__header'].elements.split_tool_find.getLocationX()
 	var statusWidth = forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getWidth()
-	var rollSize = 30
 	var indent = 40
-	var numRolls = 13
 	var tabWidth = statusWidth-(indent*2)
 	var tabHeight = 390
 	
@@ -230,18 +228,18 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		
 		//location offset for design mode
 		if (solutionPrefs.design.statusDesign) {
-			var y = 42 + 44
+			var y = 42 + 45
 		}
 		else {
-			var y = 0 + 44
+			var y = 0 + 45
 		}
 		
 		tabWidth = (downPop.width) ? downPop.width : tabWidth
-		tabHeight = (downPop.height) ? downPop.height + 40 : tabHeight
+		tabHeight = (downPop.height) ? downPop.height + 20 : tabHeight
 		
 		//check if larger than current window
 		if (tabHeight >= (application.getWindowHeight() - (50 + y))) {
-			tabHeight = application.getWindowHeight() - 130
+			tabHeight = application.getWindowHeight() - 42
 		}	
 		indent = (statusWidth-tabWidth)/2
 		
@@ -266,37 +264,12 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			forms[baseForm].elements.tab_toolbar_popdown.setLocation(statusStartX+indent,y)
 			forms[baseForm].elements.tab_toolbar_popdown.setSize(tabWidth,tabHeight)
 			forms[baseForm].elements.tab_toolbar_popdown.visible = true
-			
-			//activate correct tab and make viewable
-//			forms[baseForm].elements.sheetz.layeredPane
-//			forms[baseForm].elements.sheetz.visible = true
-			
-//			forms[baseForm].elements.sheetz.reshape(statusStartX+indent,y+11,tabWidth,tabHeight)
-			
-			/*
-			//roll down (bottom fixed)
-			for (var i = 1; i <= numRolls; i++) {
-				forms[baseForm].elements.sheetz.reshape(statusStartX+indent,-(rollSize*(numRolls-i))+11,tabWidth,tabHeight)
-				application.updateUI()
-			}
-			*/
-			
 		}
 		//roll up
 		else {
 			//set to up/down status to current status
 			forms[tabParent].popDown = 'hide'
 			forms[baseForm].elements.tab_toolbar_popdown.visible = false
-			
-			/*
-			//roll up (top fixed)
-			for (var i = 1; i <= numRolls; i++) {
-				forms[baseForm].elements.sheetz.reshape(statusStartX+indent,y+11,tabWidth,tabHeight-(rollSize*i))
-				application.updateUI()
-			}
-			*/
-			
-//			forms[baseForm].elements.sheetz.visible = false
 		}
 		
 		var statusTab = statusTabs[currentTab - 4]

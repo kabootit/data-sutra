@@ -111,6 +111,12 @@ if (sideBar) {
 	
 	//do the gradient
 	forms.DATASUTRA__sidebar.elements.gfx_gradient.visible = sideBar.gradient
+	
+	//set title if more than one sidebar
+	if (solutionPrefs.panel.sidebar.length > 1) {
+		forms.DATASUTRA__sidebar__header.elements.lbl_heading.text = (sideBar.tabName) ? sideBar.tabName.toUpperCase() : ''
+		forms.DATASUTRA__sidebar__header.elements.lbl_heading.toolTipText = (sideBar.tabName) ? sideBar.tabName : ''
+	}
 }
 
 //toggle add record button
@@ -195,163 +201,132 @@ function REC_new(event)
  *
  * @properties={typeid:24,uuid:"286DE741-A810-484B-92F5-0CCEE7BB65B9"}
  */
-function TAB_popdown(event)
-{
-	
-/*
- *	TITLE    :	TAB_popdown
- *			  	
- *	MODULE   :	rsrc_TOOL_toolbar
- *			  	
- *	ABOUT    :	
- *			  	
- *	INPUT    :	
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
- *	USAGE    :	TAB_popdown()
- *			  	
- *	MODIFIED :	September 11, 2009 -- Troy Elliott, Data Mosaic
- *			  	
- */
-
-//running in frameworks and their are sidebars
-if (application.__parent__.solutionPrefs && solutionPrefs.panel && solutionPrefs.panel.sidebar && solutionPrefs.panel.sidebar.length) {
-	
-	var input = arguments[0]
-	var baseForm = solutionPrefs.config.formNameBase
-	var sideForm = 'DATASUTRA__sidebar'
-	var noName = '*Sidebar without name*'
-	
-	var currentNavItem = solutionPrefs.config.currentFormID
-	
-	/*
-	//help available?
-	//TODO: switch away from navigation item based help
-	if (navigationPrefs.byNavItemID[currentNavItem] && navigationPrefs.byNavItemID[currentNavItem].navigationItem) {
-		var helpForm = navigationPrefs.byNavItemID[currentNavItem].navigationItem.helpFormToLoad
-		var helpList = navigationPrefs.byNavItemID[currentNavItem].navigationItem.helpListToLoad
-		var helpDesc = navigationPrefs.byNavItemID[currentNavItem].navigationItem.helpDescription
+function TAB_popdown(input) {
+	//running in frameworks and there are sidebars
+	if (application.__parent__.solutionPrefs && solutionPrefs.panel && solutionPrefs.panel.sidebar && solutionPrefs.panel.sidebar.length) {
+		var sideForm = 'DATASUTRA__sidebar'
+		var noName = '*Sidebar without name*'
 		
-		var helpAvailable = helpForm || helpList || helpDesc
-	}
-	*/	var helpAvailable
-	
-	//create arrays
-	var valueList = new Array()
-	var descList = new Array()
-	var argList = new Array()
-	
-	/*
-	//help is available
-	if (helpAvailable) {
-		valueList.push('Help','-')
-		descList.push('Inline help guide','')
-		argList.push(1,null)
-	}
-	*/
-	
-	//punch down all active sidebars
-	for (var i = 0; i < solutionPrefs.panel.sidebar.length; i++) {
-		valueList.push((solutionPrefs.panel.sidebar[i].tabName) ? solutionPrefs.panel.sidebar[i].tabName : noName)
-		descList.push(solutionPrefs.panel.sidebar[i].description)
-		argList.push((helpAvailable) ? argList.length : argList.length + 1)
-	}
-	
-	//called to depress menu
-	if (input instanceof JSEvent) {
-		//set up menu with arguments
-		var menu = new Array()
+		/*
+		var currentNavItem = solutionPrefs.config.currentFormID
 		
-		for ( var i = 0 ; i < valueList.length ; i++ ) {
+		//help available?
+		//TODO: switch away from navigation item based help
+		if (navigationPrefs.byNavItemID[currentNavItem] && navigationPrefs.byNavItemID[currentNavItem].navigationItem) {
+			var helpForm = navigationPrefs.byNavItemID[currentNavItem].navigationItem.helpFormToLoad
+			var helpList = navigationPrefs.byNavItemID[currentNavItem].navigationItem.helpListToLoad
+			var helpDesc = navigationPrefs.byNavItemID[currentNavItem].navigationItem.helpDescription
 			
-			//create checked menu item
-			if (forms[sideForm].elements.tab_content.tabIndex == ((helpAvailable) ? argList[i] : argList[i] + 1)) {
-				menu[i] = plugins.popupmenu.createCheckboxMenuItem(valueList[i] + "", TAB_popdown)
-				menu[i].setSelected(true)	
-			}
-			//create a normal menu item
-			else {
-				menu[i] = plugins.popupmenu.createMenuItem(valueList[i] + "", TAB_popdown)
-			}
-			
-			//pass arguments (tab number)
-			menu[i].setMethodArguments(argList[i])
-			
-			//set tooltip, if there is one
-//			if (descList[i]) {
-//				menu[i].setToolTipText(descList[i])
-//			}
-			
-			//disable dividers
-			if (valueList[i] == '-') {
-				menu[i].setEnabled(false)
-			}
+			var helpAvailable = helpForm || helpList || helpDesc
 		}
+		*/
+		var helpAvailable
 		
-		//popup
-		var elem = elements[application.getMethodTriggerElementName()]
-		if (elem != null && menu.length) {
-			plugins.popupmenu.showPopupMenu(elem, menu)
-		}
-	}
-	//menu shown and item chosen
-	else {
+		//create arrays
+		var valueList = new Array()
+		var descList = new Array()
+		var argList = new Array()
+		
+		/*
+		//help is available
 		if (helpAvailable) {
-			var thisSidebar = solutionPrefs.panel.sidebar[input - 2]
-			
-			var index = input
+			valueList.push('Help','-')
+			descList.push('Inline help guide','')
+			argList.push(1,null)
 		}
+		*/
+		
+		//punch down all active sidebars
+		for (var i = 0; i < solutionPrefs.panel.sidebar.length; i++) {
+			valueList.push((solutionPrefs.panel.sidebar[i].tabName) ? solutionPrefs.panel.sidebar[i].tabName : noName)
+			descList.push(solutionPrefs.panel.sidebar[i].description)
+			argList.push((helpAvailable) ? argList.length : argList.length + 1)
+		}
+		
+		//called to depress menu
+		if (input instanceof JSEvent) {
+			//set up menu with arguments
+			var menu = new Array()
+			
+			for ( var i = 0 ; i < valueList.length ; i++ ) {
+				
+				//create checked menu item
+				if (forms[sideForm].elements.tab_content.tabIndex == ((helpAvailable) ? argList[i] : argList[i] + 1)) {
+					menu[i] = plugins.popupmenu.createCheckboxMenuItem(valueList[i] + "", TAB_popdown)
+					menu[i].setSelected(true)	
+				}
+				//create a normal menu item
+				else {
+					menu[i] = plugins.popupmenu.createMenuItem(valueList[i] + "", TAB_popdown)
+				}
+				
+				//pass arguments (tab number)
+				menu[i].setMethodArguments(argList[i])
+				
+				//set tooltip, if there is one
+	//			if (descList[i]) {
+	//				menu[i].setToolTipText(descList[i])
+	//			}
+				
+				//disable dividers
+				if (valueList[i] == '-') {
+					menu[i].setEnabled(false)
+				}
+			}
+			
+			//popup
+			var elem = elements.btn_tab
+			if (elem != null && menu.length) {
+				plugins.popupmenu.showPopupMenu(elem, menu)
+			}
+		}
+		//menu shown and item chosen
 		else {
-			var thisSidebar = solutionPrefs.panel.sidebar[input - 1]
+			if (helpAvailable) {
+				var thisSidebar = solutionPrefs.panel.sidebar[input - 2]
+				
+				var index = input
+			}
+			else {
+				var thisSidebar = solutionPrefs.panel.sidebar[input - 1]
+				
+				var index = input + 1
+			}
 			
-			var index = input + 1
+			//only change if tab different
+			if (forms[sideForm].elements.tab_content.tabIndex != index) {
+				forms[sideForm].elements.tab_content.tabIndex = index
+				
+				solutionPrefs.panel.sidebar.selectedTab = index
+				
+				BUTTONS_toggle()
+			}
+			
+			//help doesn't have a popdown
+			if (thisSidebar) {
+				//toggle popout button
+			//	forms[sideForm + '__header'].elements.btn_popout.visible = (thisSidebar.popDown) ? true : false
+				
+				//name
+				var sideName = thisSidebar.tabName
+			}
+			else {
+				//toggle popout button
+			//	forms[sideForm + '__header'].elements.btn_popout.visible = true
+				
+				//name
+				var sideName = 'Help'
+				
+				solutionPrefs.config.helpMode = true
+			}
+			
+			if (!sideName) {
+				var sideName = 'Sidebar'
+			}
+			
+			//show sidebar
+			globals.DS_sidebar_toggle(true,null,true)
 		}
-		
-		//only change if tab different
-		if (forms[sideForm].elements.tab_content.tabIndex != index) {
-			forms[sideForm].elements.tab_content.tabIndex = index
-			
-			solutionPrefs.panel.sidebar.selectedTab = index
-			
-			BUTTONS_toggle()
-		}
-		
-		//help doesn't have a popdown
-		if (thisSidebar) {
-			//toggle popout button
-		//	forms[sideForm + '__header'].elements.btn_popout.visible = (thisSidebar.popDown) ? true : false
-			
-			//name
-			var sideName = thisSidebar.tabName
-		}
-		else {
-			//toggle popout button
-		//	forms[sideForm + '__header'].elements.btn_popout.visible = true
-			
-			//name
-			var sideName = 'Help'
-			
-			solutionPrefs.config.helpMode = true
-		}
-		
-		if (!sideName) {
-			var sideName = 'Sidebar'
-		}
-		
-		//set title
-		//forms[sideForm + '__header'].elements.lbl_header.text = sideName.toUpperCase()
-		
-		//show sidebar
-		globals.DS_sidebar_toggle(true,null,true)
+	
 	}
-
-}
-
-
-
-
-
 }

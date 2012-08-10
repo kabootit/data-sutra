@@ -708,7 +708,7 @@ function ACTION_space_flexible(event) {
 				if (currentNavItem.navigationItem.useFwList) {
 					var methodRefresh = currentNavItem.listData.withButtons ? forms.NAV_T_universal_list.DISPLAY_cycle : forms.NAV_T_universal_list__no_buttons.DISPLAY_cycle
 					
-					var callback = plugins.WebClientUtils.generateCallbackScript(methodRefresh, ['true']);
+					var callback = plugins.WebClientUtils.generateCallbackScript(methodRefresh, ['true'])
 					var jsCallback = 'function repaintUL(){' + callback + '}';
 					plugins.WebClientUtils.executeClientSideJS('refreshUL(' + jsCallback + ');')
 				}

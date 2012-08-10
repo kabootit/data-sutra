@@ -1878,7 +1878,7 @@ function DS_actions(input) {
 							forms[baseForm].elements.tab_content_B.tabIndex = navigationPrefs.byNavSetName.configPanes.itemsByName['Custom tab ' + solutionPrefs.config.currentFormID + ': ' + solutionPrefs.config.currentFormName].listData.tabNumber
 						}
 						//retrigger the shown UL to reload
-						else {
+						else if (navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].navigationItem.useFwList) {
 							//with buttons
 							if (navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.withButtons) {
 								forms.NAV_T_universal_list.DISPLAY_cycle(true)
@@ -1895,6 +1895,10 @@ function DS_actions(input) {
 								forms[baseForm].elements.tab_content_B.tabIndex = 3
 								forms.NAV_T_universal_list__no_buttons.elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.tabNumber
 							}
+						}
+						//show blank tab
+						else {
+							forms[baseForm].elements.tab_content_B.tabIndex = 1
 						}
 					}
 					
@@ -2457,15 +2461,12 @@ if (application.__parent__.solutionPrefs) {
 		forms[sideForm].elements.tab_content.tabIndex = 2
 		solutionPrefs.panel.sidebar.selectedTab = forms[sideForm].elements.tab_content.tabIndex
 		
-		/*
 		//if first tab, set title
-		if (sidebars.length && sidebars[0].tabName) {
-			forms[sideForm + '__header'].elements.lbl_header.text = sidebars[0].tabName.toUpperCase()
-		}
-		else {
-			forms[sideForm + '__header'].elements.lbl_header.text = 'Sidebar'.toUpperCase()
+		if (sidebars.length > 1 && sidebars[0].tabName) {
+			forms[sideForm + '__header'].elements.lbl_heading.text = sidebars[0].tabName.toUpperCase()
 		}
 		
+		/*
 		//if first tab has pop-out, show it
 		if (sidebars.length && sidebars[0].popOut) {
 			forms[sideForm + '__header'].elements.btn_popout.visible = true
@@ -4317,9 +4318,10 @@ if (utils.hasRecords(fsToolbar)) {
 			solutionPrefs.repository[repoType][moduleFilter][record.pop_down_form] &&
 			solutionPrefs.repository[repoType][moduleFilter][record.pop_down_form].formSize) {
 			
+			//extra width/height added to compensate for border gradient
 			var sizeSplit = solutionPrefs.repository[repoType][moduleFilter][record.pop_down_form].formSize.split(',')
-			var sizeWidth = utils.stringToNumber(sizeSplit[0])
-			var sizeHeight = utils.stringToNumber(sizeSplit[1])
+			var sizeWidth = utils.stringToNumber(sizeSplit[0]) + 40
+			var sizeHeight = utils.stringToNumber(sizeSplit[1]) + 20
 		}
 		
 		//only add tabs that have a form assigned
@@ -4411,9 +4413,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	var baseForm = solutionPrefs.config.formNameBase
 	var statusStartX = forms[baseForm + '__header'].elements.split_tool_find.getX()
 	var statusWidth = forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getWidth()
-	var rollSize = 30
 	var indent = 40
-	var numRolls = 13
 	var tabWidth = statusWidth-(indent*2)
 	var tabHeight = 390
 	
@@ -4442,7 +4442,6 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			tabHeight = application.getWindowHeight() - 130
 		}	
 		indent = (statusWidth-tabWidth)/2
-		numRolls = Math.ceil(tabHeight/rollSize)
 		
 		//first time popDown called
 		if (! forms[tabParent].popDown) {
@@ -4455,10 +4454,6 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			forms[baseForm].elements.tab_toolbar_popdown.setLocation(statusStartX+indent,y)
 			forms[baseForm].elements.tab_toolbar_popdown.setSize(tabWidth,tabHeight)
 			forms[baseForm].elements.tab_toolbar_popdown.visible = true
-			
-//			forms[baseForm].elements.sheetz.reshape(statusStartX+indent,y+11,tabWidth,tabHeight)
-//			forms[baseForm].elements.sheetz.visible = true
-//			application.updateUI()
 		}
 		//roll down
 		else if (forms[tabParent].popDown == 'hide') {
@@ -4469,37 +4464,12 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			forms[baseForm].elements.tab_toolbar_popdown.setLocation(statusStartX+indent,y)
 			forms[baseForm].elements.tab_toolbar_popdown.setSize(tabWidth,tabHeight)
 			forms[baseForm].elements.tab_toolbar_popdown.visible = true
-			
-			//activate correct tab and make viewable
-//			forms[baseForm].elements.sheetz.layeredPane
-//			forms[baseForm].elements.sheetz.visible = true
-			
-//			forms[baseForm].elements.sheetz.reshape(statusStartX+indent,y+11,tabWidth,tabHeight)
-			
-			/*
-			//roll down (bottom fixed)
-			for (var i = 1; i <= numRolls; i++) {
-				forms[baseForm].elements.sheetz.reshape(statusStartX+indent,-(rollSize*(numRolls-i))+11,tabWidth,tabHeight)
-				application.updateUI()
-			}
-			*/
-			
 		}
 		//roll up
 		else {
 			//set to up/down status to current status
 			forms[tabParent].popDown = 'hide'
 			forms[baseForm].elements.tab_toolbar_popdown.visible = false
-			
-			/*
-			//roll up (top fixed)
-			for (var i = 1; i <= numRolls; i++) {
-				forms[baseForm].elements.sheetz.reshape(statusStartX+indent,y+11,tabWidth,tabHeight-(rollSize*i))
-				application.updateUI()
-			}
-			*/
-			
-//			forms[baseForm].elements.sheetz.visible = false
 		}
 		
 		var statusTab = statusTabs[currentTab - 4]
