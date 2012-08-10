@@ -424,8 +424,8 @@ function LIST_redraw__webclient(event,idItem,scrollRe,loadFormsSkip,modeFavorite
 		
 		//triggered by clicking on element in list
 		if (event instanceof JSEvent) {
-			var selected = utils.stringToNumber(event.getElementName().split('_').pop())
-			var itemDetails = forms.NAV__navigation_tree._rows[selected]
+			var selectedRow = utils.stringToNumber(event.getElementName().split('_').pop())
+			var itemDetails = forms.NAV__navigation_tree._rows[selectedRow]
 			
 			_variableWC.itemID = itemDetails.navItemID
 			
