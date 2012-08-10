@@ -298,9 +298,9 @@ function LIST_generate(selected) {
 					lblTriangle.onAction = thisForm.getFormMethod('LIST_expand_collapse')
 					lblTriangle.rolloverCursor = SM_CURSOR.HAND_CURSOR
 					lblTriangle.toolTipText = 'Collapse'
-					if (solutionPrefs.config.webClient) {
+//					if (solutionPrefs.config.webClient) {
 						lblTriangle.imageMedia = solutionModel.getMedia('row_expanded.png')
-					}
+//					}
 //					lblTriangle.rolloverImageMedia = "media:///row_selected.png"
 				}
 				//parent collapsed (not expanded with children)
@@ -317,9 +317,9 @@ function LIST_generate(selected) {
 					lblTriangle.onAction = thisForm.getFormMethod('LIST_expand_collapse')
 					lblTriangle.rolloverCursor = SM_CURSOR.HAND_CURSOR
 					lblTriangle.toolTipText = 'Expand'
-					if (solutionPrefs.config.webClient) {
+//					if (solutionPrefs.config.webClient) {
 						lblTriangle.imageMedia = solutionModel.getMedia('row_collapsed.png')
-					}
+//					}
 //					lblTriangle.rolloverImageMedia = "media:///row_selected.png"
 				}
 				
@@ -328,7 +328,10 @@ function LIST_generate(selected) {
 				lblData.anchors = SM_ANCHOR.NORTH | SM_ANCHOR.EAST | SM_ANCHOR.WEST
 				lblData.formIndex = 10
 				lblData.name = 'lbl_row_' + i
-				lblData.onAction = thisForm.getFormMethod('LIST_redraw')
+				//put action on the text in webclient, but not smart client
+				if (solutionPrefs.config.webClient) {
+					lblData.onAction = thisForm.getFormMethod('LIST_redraw')
+				}
 				lblData.showClick = false
 				lblData.showFocus = false
 				lblData.transparent = true
@@ -364,17 +367,17 @@ function LIST_generate(selected) {
 					if (triangleOpen) {
 //						<a href="javascript:LIST_expand_collapse(' + details.navItemID + ')">
 						lblTriangle.styleClass = 'tree_select_arrow_open'
-						if (solutionPrefs.config.webClient) {
+//						if (solutionPrefs.config.webClient) {
 							lblTriangle.imageMedia = solutionModel.getMedia('row_expanded_selected.png')
-						}
+//						}
 //						lblTriangle.rolloverImageMedia = "media:///row_selected.png"
 					}
 					//parent collapsed (not expanded with children)
 					else if (triangleClosed) {
 						lblTriangle.styleClass = 'tree_select_arrow_close'
-						if (solutionPrefs.config.webClient) {
+//						if (solutionPrefs.config.webClient) {
 							lblTriangle.imageMedia = solutionModel.getMedia('row_collapsed_selected.png')
-						}
+//						}
 //						lblTriangle.rolloverImageMedia = "media:///row_selected.png"
 					}
 					
