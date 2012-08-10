@@ -172,6 +172,8 @@ uuid:"EC6B8963-5744-4BC1-A817-12E49862F143"
 ],
 name:"MGR_0F_toolbar_1L__toolbar_2L",
 navigatorID:"-1",
+onHideMethodID:"B2BBAC2B-54BE-4752-BDE2-30B9B915DAB1",
+onRecordSelectionMethodID:"2A9277A5-C15B-4DF4-871B-DD69DC2182D7",
 paperPrintScale:100,
 rowBGColorCalculation:"globals.CODE_row_background",
 scrollbars:34,
