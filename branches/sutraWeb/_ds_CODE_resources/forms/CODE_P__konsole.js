@@ -2506,6 +2506,10 @@ if (sReplace == null)
 {
 	sReplace = '';
 }
+//TSE mod 8/10/2012
+else if (typeof sReplace == 'boolean' || sReplace instanceof Date) {
+	sReplace = sReplace.toString()
+}
 
 var sReturn = utils.stringReplace(sString, sSearch, sReplace);
 

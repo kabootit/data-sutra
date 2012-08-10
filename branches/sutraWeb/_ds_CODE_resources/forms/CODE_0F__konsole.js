@@ -336,7 +336,7 @@ oHTML.table = 	"<table cellpadding=0 cellspacing=2 border=0>\n" +
 				"</table>";
 				
 oHTML.header = 	"	<tr>\n" +
-				"		<td width=100><b><<cmd>></b></td><td><<description>></td>\n" +
+				"		<td width=100%><b><<cmd>></b></td><td><<description>></td>\n" +
 				"	</tr>\n";
 				
 oHTML.syntax = 	"	<tr>\n" +
@@ -461,43 +461,9 @@ var formName = solutionPrefs.config.formNameBase
 var tabParent = solutionPrefs.panel.toolbar[solutionPrefs.panel.toolbar.selectedTab - 4].formName
 
 if (forms[tabParent].popDown == 'show') {
-	var statusStartX = forms[formName + '__header__toolbar'].elements.tab_toolbar.getLocationX()
-	var statusWidth = forms[formName + '__header__toolbar'].elements.tab_toolbar.getWidth()
-	var rollSize = 30
-	var numLines = utils.stringPatternCount(globals.consoleOutput,'\n')
-	var indent = 0
-	var tabWidth = statusWidth-(indent*2)
-	var tabHeight = numLines * 15 + 25
-	//check if larger than current window
-	if (tabHeight >= (application.getWindowHeight() - 50)) {
-		tabHeight = application.getWindowHeight() - 130
-		
-		//save down new values
-		cmdVarBin.miniWindowSize = new Object()
-		cmdVarBin.miniWindowSize.width = forms[formName + '__header__toolbar'].elements.tab_toolbar.getWidth()
-		cmdVarBin.miniWindowSize.height = application.getWindowHeight() - 130
-	}
-	var numRolls = Math.ceil(tabHeight/rollSize)
-	
 	//set up/down status to hide
 	forms[tabParent].popDown = 'hide'
-	
-	/*
-	//roll up (top fixed)
-	for (var i = 1; i <= numRolls; i++) {
-		forms[formName].elements.sheetz.reshape(statusStartX+indent,+11,tabWidth,tabHeight-(rollSize*i))
-		application.updateUI()
-	}
-	*/
-//	forms[formName].elements.sheetz.reshape(statusStartX+indent,+11,tabWidth,tabHeight)
-//	
-//	forms[formName].elements.sheetz.visible = false
-//	
-	
-	//resize and show tabpanel
-	forms[formName].elements.tab_toolbar_popdown.setLocation(statusStartX+indent,y)
-	forms[formName].elements.tab_toolbar_popdown.setSize(tabWidth,tabHeight)
-	forms[formName].elements.tab_toolbar_popdown.visible = true
+	forms[formName].elements.tab_toolbar_popdown.visible = false
 	
 	//flag to keep from reopening
 	cmdVarBin.hidden = true
@@ -1602,47 +1568,6 @@ cmdVarBin.miniWindowSize = new Object()
 cmdVarBin.miniWindowSize.width = forms[solutionPrefs.config.formNameBase + '__header__toolbar'].elements.tab_toolbar.getWidth()
 cmdVarBin.miniWindowSize.height = utils.stringPatternCount(globals.consoleOutput,'\n') * 15 + 25
 
-/*
-var newHeight = utils.stringPatternCount(globals.consoleOutput,'\n') * 15 + 25
-var origHeight = cmdVarBin.miniWindowSize.height
-var formName = solutionPrefs.config.formNameBase
-var tabWidth = cmdVarBin.miniWindowSize.width
-
-var statusStartX = forms[formName].elements.tab_toolbar.getLocationX()
-var rollSize = 30
-var indent = 0
-
-//the heights are different and the form is currently showing
-if (newHeight != origHeight && forms[solutionPrefs.panel.toolbar[solutionPrefs.panel.toolbar.selectedTab - 4].formName].popDown == 'show') {
-	//negative number means that needs to go up, positive, go down
-	var difference = origHeight - newHeight
-	
-	//check if larger than current window
-	if (difference + origHeight >= (application.getWindowHeight() - 50)) {
-		difference = (application.getWindowHeight() - 110) - newHeight
-		
-		//save down new values
-		cmdVarBin.miniWindowSize = new Object()
-		cmdVarBin.miniWindowSize.width = forms[formName].elements.tab_toolbar.getWidth()
-		cmdVarBin.miniWindowSize.height = application.getWindowHeight() - 110
-	}
-	var numRolls = Math.ceil(difference/rollSize)
-	
-	//roll up/down (top fixed)
-	if (numRolls > 0) {
-		for (var i = 0 ; i < numRolls ; i++) {
-			forms[formName].elements.sheetz.reshape(statusStartX+indent,+20,tabWidth,newHeight+(rollSize*i))
-			application.updateUI()
-		}
-	}
-	else {
-		for (var i = 0 ; i >= numRolls ; i--) {
-			forms[formName].elements.sheetz.reshape(statusStartX+indent,+20,tabWidth,newHeight+(rollSize*i))
-			application.updateUI()
-		}
-	}
-}
-*/
 }
 
 /**
@@ -1975,7 +1900,7 @@ initialize();
  *
  * @properties={typeid:24,uuid:"F2873B2D-D7E5-4EC7-8917-D6182C860079"}
  */
-function onShow()
+function onShow(firstShow,event)
 {
 /********************************************************************************
 	@method: onShow()
@@ -1989,7 +1914,9 @@ function onShow()
 	@history:	07/26/2006	JAG Created
 ********************************************************************************/
 
-
+if (firstShow) {
+	plugins.WebClientUtils.setExtraCssClass(elements.fldInput, 'noWebkitOutline')
+}
 
 elements.fldInput.requestFocus();
 
@@ -2129,14 +2056,23 @@ if (! forms[tabParent].popDown) {
 if (cmdVarBin.hidden != true && sInput != 'hide') {
 		
 	var formName = solutionPrefs.config.formNameBase
-	var statusStartX = forms[formName + '__header'].elements.split_tool_find.geLocationtX()
+	var statusStartX = (solutionPrefs.config.webClient) ? forms[formName + '__header'].elements.split_tool_find.getLocationX() : forms[formName + '__header'].elements.split_tool_find.getX()
 	var statusWidth = forms[formName + '__header__toolbar'].elements.tab_toolbar.getWidth()
-	var rollSize = 30
 	var indent = 0
 	var tabWidth = statusWidth-(indent*2)
 	var tabHeight = numLines * 15 + 25
+	var headerHeight = (solutionPrefs.config.webClient) ? 45 : 44
+	
+	//location offset for design mode
+	if (solutionPrefs.design.statusDesign) {
+		var y = 42 + headerHeight
+	}
+	else {
+		var y = 0 + headerHeight
+	}
+	
 	//check if larger than current window
-	if (tabHeight >= (application.getWindowHeight() - 50)) {
+	if (tabHeight >= (application.getWindowHeight() - 50 + y)) {
 		tabHeight = application.getWindowHeight() - 130
 		
 		//save down new values
@@ -2144,34 +2080,12 @@ if (cmdVarBin.hidden != true && sInput != 'hide') {
 		cmdVarBin.miniWindowSize.width = forms[formName + '__header'].elements.tab_toolbar.getWidth()
 		cmdVarBin.miniWindowSize.height = tabHeight
 	}
-	var numRolls = Math.ceil(tabHeight/rollSize)
-	
-	//location offset for design mode
-	if (solutionPrefs.design.statusDesign) {
-		var y = 42 + 44
-	}
-	else {
-		var y = 0 + 44
-	}	
 	
 	//roll down
 	if (forms[tabParent].popDown == 'hide') {
 		//set to up/down status to current status
 		forms[tabParent].popDown = 'show'
 		
-//		//activate correct tab and make viewable
-//		forms[formName].elements.sheetz.layeredPane
-//		forms[formName].elements.sheetz.visible = true
-//		
-//		/*
-//		//roll down (bottom fixed)
-//		for (var i = 1; i <= numRolls; i++) {
-//			forms[formName].elements.sheetz.reshape(statusStartX+indent,-(rollSize*(numRolls-i))+11,tabWidth,tabHeight)
-//			application.updateUI()
-//		}
-//		*/
-//		forms[formName].elements.sheetz.reshape(statusStartX+indent,+11,tabWidth,tabHeight)
-//		
 		//resize and show tabpanel
 		forms[formName].elements.tab_toolbar_popdown.setLocation(statusStartX+indent,y)
 		forms[formName].elements.tab_toolbar_popdown.setSize(tabWidth,tabHeight)
@@ -2187,7 +2101,7 @@ if (cmdVarBin.hidden != true && sInput != 'hide') {
 		var difference = cmdVarBin.miniWindowSize.height - miniHeight
 		
 		//check if larger than current window
-		if (difference + miniHeight >= (application.getWindowHeight() - 50)) {
+		if (difference + miniHeight >= (application.getWindowHeight() - 50 + y)) {
 			difference = (application.getWindowHeight() - 130) - miniHeight
 			
 			//save down new values
@@ -2195,29 +2109,11 @@ if (cmdVarBin.hidden != true && sInput != 'hide') {
 			cmdVarBin.miniWindowSize.width = forms[formName + '__header__toolbar'].elements.tab_toolbar.getWidth()
 			cmdVarBin.miniWindowSize.height = application.getWindowHeight() - 130
 		}
-		numRolls = Math.ceil(difference/rollSize)
 		
 		//resize and show tabpanel
 		forms[formName].elements.tab_toolbar_popdown.setLocation(statusStartX+indent,y)
 		forms[formName].elements.tab_toolbar_popdown.setSize(tabWidth,tabHeight)
 		forms[formName].elements.tab_toolbar_popdown.visible = true
-		
-//		forms[formName].elements.sheetz.reshape(statusStartX+indent,+11,tabWidth,tabHeight)
-		/*
-		//roll up/down (top fixed)
-		if (numRolls > 0) {
-			for (var i = 0 ; i < numRolls ; i++) {
-				forms[formName].elements.sheetz.reshape(statusStartX+indent,+11,tabWidth,miniHeight+(rollSize*i))
-				application.updateUI()
-			}
-		}
-		else {
-			for (var i = 0 ; i >= numRolls ; i--) {
-				forms[formName].elements.sheetz.reshape(statusStartX+indent,+11,tabWidth,miniHeight+(rollSize*i))
-				application.updateUI()
-			}
-		}
-		*/
 	}
 }
 
@@ -2603,6 +2499,10 @@ if (sReplace == null)
 {
 	sReplace = '';
 }
+//TSE mod 8/10/2012
+else if (typeof sReplace == 'boolean' || sReplace instanceof Date) {
+	sReplace = sReplace.toString()
+}
 
 var sReturn = utils.stringReplace(sString, sSearch, sReplace);
 
@@ -2667,7 +2567,7 @@ var aTree = arguments[0];
 var aNode;
 var oVal;
 
-var sLeafTpl   = "<tr><td width=10></td><td width=1 nowrap><<index>></td><td width=10></td><td><<value>></td></tr>\n";
+var sLeafTpl   = "<tr><td width=10></td><td width=1 nowrap><<index>></td><td width=10></td><td width=80%><<value>></td></tr>\n";
 var sBranchTpl = "<tr><td colspan=4><a class=nodeToggle href=" + '"javascript:forms.' + formName + '.view_toggleNode(<<path>>)"' + "><<state>></a> <<index>></td></tr>\n";
 var sExpandTpl = "<tr><td width=10></td><td colspan=3><<branch>></td></tr>\n";
 
