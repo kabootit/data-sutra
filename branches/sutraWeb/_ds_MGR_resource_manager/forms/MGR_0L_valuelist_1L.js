@@ -30,7 +30,7 @@ function REC_on_select(event, vlName)
 	var results = forms[formName].foundset.search()
 	
 	if (results) {
-		forms[formName].foundset.sort('order_by asc')
+		forms[formName].foundset.sort('valuelist_name asc, relation_1 asc, relation_2 asc, order_by asc')
 	}
 	
 	if (highlight) {

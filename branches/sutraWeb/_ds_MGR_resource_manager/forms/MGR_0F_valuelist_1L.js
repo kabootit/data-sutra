@@ -314,3 +314,23 @@ function PICK_relation_1(event) {
 function REC_on_select(event) {
 
 }
+
+/**
+ * Perform sort.
+ *
+ * @param {String} dataProviderID element data provider
+ * @param {Boolean} asc sort ascending [true] or descending [false]
+ * @param {JSEvent} event the event that triggered the action
+ *
+ * @properties={typeid:24,uuid:"D6579C74-BE01-4554-BDA2-2D44CC2B8FF3"}
+ */
+function SORT(dataProviderID, asc, event) {
+	if (dataProviderID == 'order_by' || dataProviderID == 'relation_1') {
+		var sortFields = ['valuelist_name','relation_1','relation_2','order_by']
+		var sortString = sortFields.map(function(item) {return item + (asc ? ' asc' : ' desc')}).join(', ')
+		controller.sort(sortString)
+	}
+	else {
+		controller.sort(dataProviderID + (asc ? ' asc' : ' desc'), false)
+	}
+}

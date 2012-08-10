@@ -243,6 +243,7 @@ uuid:"F1E2C3C3-8E9A-412B-97D8-D183FFAFAC30"
 name:"MGR_0F_valuelist_1L",
 namedFoundSet:"separate",
 onRecordSelectionMethodID:"18938107-B26E-4EF4-AD60-5140A7E18478",
+onSortCmdMethodID:"D6579C74-BE01-4554-BDA2-2D44CC2B8FF3",
 paperPrintScale:100,
 rowBGColorCalculation:"globals.CODE_row_background",
 scrollbars:34,

@@ -171,7 +171,7 @@ function ACTION_load(selectVL) {
 	    // Load the desired records into a form's foundset using the PK's from ds_pk
 	    controller.loadRecords(datasetPK)
     	
-	    controller.sort('valuelist_name asc')
+	    controller.sort('valuelist_name asc, relation_1 asc, relation_2 asc, order_by asc')
 		
 	    //record to select passed in, select it
 	    if (selectVL) {
