@@ -1,3 +1,22 @@
+/**
+ * 	Copyright (C) 2006 - 2012 Data Mosaic
+ *	http://www.data-mosaic.com
+ *	All rights reserved 
+ *
+ *	The copyright of the computer program(s) herein is 
+ *	the property of Data Mosaic. The program(s) may be used/copied 
+ *	only with the written permission of the owner or in 
+ *	accordance with the terms and conditions stipulated in 
+ *	the agreement/contract under which the program(s) have 
+ *	been supplied.
+ */
+
+/*
+ *	This file is for functions that are used by the data sutra
+ *	application platform in standalone webclient mode or when it is
+ *	run in an iframe.
+ */
+
 //	Update indicator to be new style (next to login button)
 function loginIndicator(delay) {
 	var indicator = $('.indicator');
@@ -209,5 +228,16 @@ function resetBeanSizes(source) {
 		script.text = source;
 		$("#servoy_page").append(script);
 		resetBeans();
+	},500)
+}
+
+//	Re-fire toolbar navigator on first show so that elements are sized appropriately
+function recordNavigatorFirstShow(source) {
+	setTimeout(function(){
+		var script = document.createElement('script');
+		script.type = 'text/javascript';
+		script.text = source;
+		$("#servoy_page").append(script);
+		recNavFirstShow();
 	},500)
 }

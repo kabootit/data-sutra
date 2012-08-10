@@ -1,3 +1,22 @@
+/**
+ * 	Copyright (C) 2006 - 2012 Data Mosaic
+ *	http://www.data-mosaic.com
+ *	All rights reserved 
+ *
+ *	The copyright of the computer program(s) herein is 
+ *	the property of Data Mosaic. The program(s) may be used/copied 
+ *	only with the written permission of the owner or in 
+ *	accordance with the terms and conditions stipulated in 
+ *	the agreement/contract under which the program(s) have 
+ *	been supplied.
+ */
+
+/*
+ *	This file is for functions that are used only for the data sutra
+ *	application platform when it is run in an iframe from the router/wrapper.
+ */
+
+//try to pre-render page before shown to minimize flicker as dom rewritten
 function preRender(description,path,delay) {
 	//if running in chrome, try to prerender page and then navigate there
 	if (false) {
@@ -13,7 +32,7 @@ function preRender(description,path,delay) {
 		//called from our wrapper, redirect to top
 			//NOTE: won't work cross-domiain
 		else if (window.parent && window.parent.window && window.parent.window.frameElement && window.parent.window.frameElement.id == 'ds_website') {
-			window.top.location = 'http://demo.data-sutra.com/ds/launchingDS'
+			window.top.location = 'http://servlets:8081/ds/launchingDS'
 		}
 	}
 }
