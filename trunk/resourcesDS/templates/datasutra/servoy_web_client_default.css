@@ -510,8 +510,8 @@ div.wicket-modal div.w_content {
 	display:none;
 }
 
-/*	fast find	*/
-input.fastFind:focus {
+/*	fast find, toolbar konsole, and other no-outline fields	*/
+input.noWebkitOutline:focus {
     outline-width: 0;
 }
 
