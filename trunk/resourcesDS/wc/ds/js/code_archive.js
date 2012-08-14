@@ -16,6 +16,12 @@
  *	An easy reference instead of digging back through past SVN revisions.
  */
 
+//	Useful frame speak
+window.parent && 
+window.parent.window && 
+window.parent.window.frameElement && 
+window.parent.window.frameElement.id == 'ds_website'
+
 //	Update indicator to be new style (in the toolbar)
 	// this really shows how to repeatedly run a function until what it is waiting for has loaded
 function setIndicator(delay) {

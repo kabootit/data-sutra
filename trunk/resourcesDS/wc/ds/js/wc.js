@@ -45,7 +45,7 @@ function centerForm(formName) {
 	
 	if (selector.length) {
 		selector.css({width: '50%', margin: '0px auto'});
-		console.log('CENTERED');
+		// console.log('CENTERED');
 		
 		//if running in wrapper
 		if (window.parent.viewForm) {
@@ -110,7 +110,7 @@ function centerForm(formName) {
 	},delayTime)
 })();
 
-//	Disable backspace key unless in input field (turn off backspace to navigate browser history) (http://stackoverflow.com/questions/6309693)
+//	Disable backspace key unless in text or password input fields (turn off backspace to navigate browser history) (http://stackoverflow.com/questions/6309693)
 (function(){
 	$(document).keydown(function(e) {
 		var nodeName = e.target.nodeName.toLowerCase();

@@ -17,8 +17,20 @@
  */
 
 
-// the domain that webclient is accessible on
-var sutraWC = '';	//'http://servlets:8081';
+// the domain that webclient is accessible on (same as the one this wrapper is served from)
+var dsDomain = '';	//'http://servlets:8081';
+
+// the parent domain that the small login page is served from
+var dsLoginDomain = 'http://localhost:8081'
+
+// porthole so able to speak with any parent iframe
+var windowProxy;
+window.onload=function(){ 
+	// Porthole.trace("onload"); 
+	
+	// Create a proxy window to send to and receive message from the iframe
+	windowProxy = new Porthole.WindowProxy(dsLoginDomain + '/ds/external/proxy.html');
+};
 
 // set up switcheroo for initial 'Loading...' thing
 (function() {
@@ -50,21 +62,21 @@ var sutraWC = '';	//'http://servlets:8081';
 // set up history handling
 (function(window,undefined) {
 
-    // Prepare
-    var History = window.History;
-    if ( !History.enabled ) {
-        return false;
-    }
+	// Prepare
+	var History = window.History;
+	if ( !History.enabled ) {
+		return false;
+	}
 
-    // listener for using browser back/forward buttons
-    History.Adapter.bind(window,'statechange',function(){ 
+	// listener for using browser back/forward buttons
+	History.Adapter.bind(window,'statechange',function(){ 
 		var State = History.getState();
 		// History.log(State.data, State.title, State.url);
 		if (!State.data.server) {
 			// run the router with history data instead of url
 			router(State.data.url);
 		}
-    });
+	});
 
 })(window);
 
@@ -181,7 +193,7 @@ function router(data) {
 	// swc iframe setup
 	var iframeHeaderCell = document.getElementById('sutra');
 	iframeHeaderCell.innerHTML = "";
-	var dynamicURL = sutraWC + "/servoy-webclient/ss/s/__DATASUTRA__/m/DS_router/a/" + append;
+	var dynamicURL = dsDomain + "/servoy-webclient/ss/s/__DATASUTRA__/m/DS_router/a/" + append;
 	
 	var iframeHeader = document.createElement('IFRAME');
 	iframeHeader.id = 'wc';

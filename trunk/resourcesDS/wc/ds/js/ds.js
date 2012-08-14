@@ -29,10 +29,12 @@ function preRender(description,path,delay) {
 		if (window.top.routerDelay) {
 			window.parent.routerDelay(null,description,path,250);
 		}
-		//called from our wrapper, redirect to top
-			//NOTE: won't work cross-domiain
-		else if (window.parent && window.parent.window && window.parent.window.frameElement && window.parent.window.frameElement.id == 'ds_website') {
-			window.top.location = 'http://servlets:8081/ds/launchingDS'
-		}
+	}
+}
+
+//break out of parent iframe and start application
+function launchApp() {
+	if (window.parent && window.parent.windowProxy) {
+		window.parent.windowProxy.post({path:true});
 	}
 }
