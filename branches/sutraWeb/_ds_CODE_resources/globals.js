@@ -2177,7 +2177,9 @@ function TRIGGER_toolbar_record_navigator_set(status) {
 		
 		//record navigator status
 		if (typeof arguments[0] == 'boolean') {
-			var rnStatus = solutionPrefs.config.recordNavigatorStatus = arguments[0]
+			var rnStatus = 
+			solutionPrefs.config.recordNavigatorStatus = 
+				arguments[0]
 		}
 		else {
 			var rnStatus = solutionPrefs.config.recordNavigatorStatus
@@ -5891,10 +5893,17 @@ function CODE_license_insert() {
 	//prompt for a workspace directory, go through all .js files and insert a block of text with licensing info at the top
 	
 	//generic verbage
+	var thisYear = utils.dateFormat(new Date(),'yyyy')
+	
 	var licenseTop = "/**\n * @properties={typeid:35,uuid:\"DA7AE05A-1C00-"
 	var licenseStuffing = "\"}\n */\nvar _license_"
-	var licenseEnd = " = 'Copyright (C) 2006 - 2011 Data Mosaic \\\n\t\t\t\t\t\t\t\t\tAll rights reserved \\\n\t\t\t\t\t\t\t\t\t\\\n\t\t\t\t\t\t\t\t\tThe copyright of the computer program(s) herein is \\\n\t\t\t\t\t\t\t\t\tthe property of Data Mosaic. The program(s) may be used/copied \\\n\t\t\t\t\t\t\t\t\tonly with the written permission of the owner or in \\\n\t\t\t\t\t\t\t\t\taccordance with the terms and conditions stipulated in \\\n\t\t\t\t\t\t\t\t\tthe agreement/contract under which the program(s) have \\\n\t\t\t\t\t\t\t\t\tbeen supplied.';\n\n"
+	var licenseEnd = " = 'Copyright (C) 2006 - " + thisYear + " Data Mosaic \\\n\t\t\t\t\t\t\t\t\tAll rights reserved \\\n\t\t\t\t\t\t\t\t\t\\\n\t\t\t\t\t\t\t\t\tThe copyright of the computer program(s) herein is \\\n\t\t\t\t\t\t\t\t\tthe property of Data Mosaic. The program(s) may be used/copied \\\n\t\t\t\t\t\t\t\t\tonly with the written permission of the owner or in \\\n\t\t\t\t\t\t\t\t\taccordance with the terms and conditions stipulated in \\\n\t\t\t\t\t\t\t\t\tthe agreement/contract under which the program(s) have \\\n\t\t\t\t\t\t\t\t\tbeen supplied.';\n\n"
+	var licenseSixPlus = '/**\n * \tCopyright (C) 2006 - ' + thisYear + ' Data Mosaic \n *\tAll rights reserved \n *\n *\tThe copyright of the computer program(s) herein is \n *\tthe property of Data Mosaic. The program(s) may be used/copied \n *\tonly with the written permission of the owner or in \n *\taccordance with the terms and conditions stipulated in \n *\tthe agreement/contract under which the program(s) have \n *\tbeen supplied.\n */\n\n'
+	
 	var cnt = 1
+	var contentJS
+	
+	var servoyVersion = utils.stringToNumber(application.getVersion())
 	
 	function padLast(sequence) {
 		var length = 12 - sequence.length
@@ -5910,13 +5919,15 @@ function CODE_license_insert() {
 	var L33T = {
 			__DATASUTRA__		: 'DA7A',
 			__datasutra__connector	: 'DAC0',
+			__datasutra_authenticator	: 'DAA0',
+			__datasutra_login		: 'DA10',
 			_ds_AC_access_control	: 'AC00',
 			_ds_CODE_resources		: 'C0DE',
 			_ds_DEV_tools			: 'DEB0',
-			_ds_NSTL_installation		: 'D470',
 			_ds_MGR_resource_manager	: 'E640',
 			_ds_NAV_engine		: '4AB0',
-			_dsa_sutra_CRM_servoy_resking	: 'C4E0',
+			_ds_NSTL_installation		: 'D470',
+			_dsa_sutra_CRM_servoy_reskin	: 'C4E0',
 			_dsa_sutra_DATE_date_picker		: 'DA1E',
 			_dsa_sutra_TMPL_forms :	 '1E47',
 			_dsa_sutra_TOOL_toolbar_sidebar	: '1007'
@@ -5937,11 +5948,19 @@ function CODE_license_insert() {
 			
 			//if this 'module' has globals
 			if (globalJS) {
-				//C0DE-1111-00000000000001
-				var sequence = utils.numberFormat(cnt++,'#')
-				var twenty = L33T[moduleName] + '-' + '1111' + '-' + padLast(sequence)
-				
-				var contentJS = licenseTop + twenty + licenseStuffing + moduleName + licenseEnd + globalJS
+				//insert license as form variable
+				if (servoyVersion < 6) {
+					//C0DE-1111-00000000000001
+					var sequence = utils.numberFormat(cnt++,'#')
+					var twenty = L33T[moduleName] + '-' + '1111' + '-' + padLast(sequence)
+					
+					contentJS = licenseTop + twenty + licenseStuffing + moduleName + licenseEnd + globalJS
+				}
+				//insert license as comment, like it should be
+				else {
+					contentJS = licenseSixPlus + globalJS
+					cnt++
+				}
 				
 				plugins.file.writeTXTFile(module.getAbsolutePath() + '/globals.js',contentJS)
 			}
@@ -5952,11 +5971,19 @@ function CODE_license_insert() {
 				for (var j = 0; j < formsJS.length; j++) {
 					var formJS = formsJS[j]
 					
-					//C0DE-1111-00000000000001
-					var sequence = utils.numberFormat(cnt++,'#')
-					var twenty = L33T[moduleName] + '-' + '1111' + '-' + padLast(sequence)
-					
-					var contentJS = licenseTop + twenty + licenseStuffing + moduleName + licenseEnd + plugins.file.readTXTFile(formJS)
+					//insert license as form variable
+					if (servoyVersion < 6) {
+						//C0DE-1111-00000000000001
+						var sequence = utils.numberFormat(cnt++,'#')
+						var twenty = L33T[moduleName] + '-' + '1111' + '-' + padLast(sequence)
+						
+						contentJS = licenseTop + twenty + licenseStuffing + moduleName + licenseEnd + plugins.file.readTXTFile(formJS)
+					}
+					//insert license as comment, like it should be
+					else {
+						contentJS = licenseSixPlus + plugins.file.readTXTFile(formJS)
+						cnt++
+					}
 					
 					plugins.file.writeTXTFile(formJS,contentJS)
 				}
