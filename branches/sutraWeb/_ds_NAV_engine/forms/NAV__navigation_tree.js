@@ -119,7 +119,8 @@ function FORM_on_show(firstShow, event) {
 		
 		//call router to switch entire page
 		if (globals.DATASUTRA_router_enable) {
-			globals.DS_router(null,null,navItemID)
+			//4th param is special case for embedded login from external site
+			globals.DS_router(null,null,navItemID,globals.DATASUTRA_router_login)
 		}
 		//smart or straight-up web client
 		else {
