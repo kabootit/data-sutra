@@ -1592,7 +1592,7 @@ function DS_actions(input) {
 				}
 				//webclient in router, redirect url
 				else if (globals.DATASUTRA_router_enable) {
-					globals.DS_router(null,null,null,true)
+					globals.DS_router(null,null,null,null,true)
 					security.logout()
 				}
 				//straight up webclient or smart client
@@ -5151,12 +5151,13 @@ function DATASUTRA_open(skipFontFix) {
  * @param {String}	p1		First argument passed in
  * @param {Object}	params	Object of all arguments
  * @param {Number}	itemID	Specified ID to go to
+ * @param {Boolean}	login	Log in requested, redirect url to avoid cross domain
  * @param {Boolean}	logout	Log out requested, redirect url
  * 
  * @properties={typeid:24,uuid:"AF8DE8BA-7503-462B-B4B0-45B9A2DE7921"}
  * 
  */
-function DS_router(p1,params,itemID,logout) {
+function DS_router(p1,params,itemID,login,logout) {
 	//number of ms to wait before replacing state
 	var delay = 0
 	
@@ -5218,6 +5219,7 @@ function DS_router(p1,params,itemID,logout) {
 	// log this router request
 	globals.DATASUTRA_router.push({
 				path : url,
+				navItemID: itemID,
 				request : application.getUUID().toString()
 			})
 	
@@ -5305,8 +5307,15 @@ function DS_router(p1,params,itemID,logout) {
 	else if (itemID) {
 		// web client paths correctly configured
 		if (navigationPrefs.byNavItemID[itemID].path) {
-			plugins.WebClientUtils.executeClientSideJS('preRender("' + navigationPrefs.byNavItemID[itemID]._about_ + '","' + getURL(navigationPrefs.byNavItemID[itemID].path) + '",' + delay + ');')
-//			plugins.WebClientUtils.executeClientSideJS('window.parent.routerDelay(null,"' + navigationPrefs.byNavItemID[itemID]._about_ + '","' + getURL(navigationPrefs.byNavItemID[itemID].path) + '",' + delay + ');')
+			//need to break out of current frame stack in, navigate to default url
+			if (login) {
+				plugins.WebClientUtils.executeClientSideJS('launchApp();')
+			}
+			//normal call to rewrite history stack
+			else {
+				plugins.WebClientUtils.executeClientSideJS('preRender("' + navigationPrefs.byNavItemID[itemID]._about_ + '","' + getURL(navigationPrefs.byNavItemID[itemID].path) + '",' + delay + ');')
+	//			plugins.WebClientUtils.executeClientSideJS('window.parent.routerDelay(null,"' + navigationPrefs.byNavItemID[itemID]._about_ + '","' + getURL(navigationPrefs.byNavItemID[itemID].path) + '",' + delay + ');')
+			}
 			return
 		}
 		// path not set up correctly
