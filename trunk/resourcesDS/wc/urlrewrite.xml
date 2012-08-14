@@ -16,21 +16,28 @@
 	<!-- DS WebClient with /ds/ prefix -->
 	<rule>
 		<name>DS js</name>
-		<note></note>
+		<note>Pass all ds/js </note>
 		<from>^/ds/js/(.*)$</from>
 		<to last="true">/ds/js/$1</to>
 	</rule>
 	
 	<rule>
+		<name>DS external</name>
+		<note>Pass all ds/external</note>
+		<from>^/ds/external/(.*)$</from>
+		<to last="true">/ds/external/$1</to>
+	</rule>
+	
+	<rule>
 		<name>DS css</name>
-		<note></note>
+		<note>Pass all ds/css</note>
 		<from>^/ds/css/(.*)$</from>
 		<to last="true">/ds/css/$1</to>
 	</rule>
 	
 	<rule>
 		<name>DS favicon</name>
-		<note></note>
+		<note>Favicon</note>
 		<from>^/favicon.ico$</from>
 		<to last="true">/ds/favicon.ico</to>
 	</rule>
