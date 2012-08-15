@@ -4,6 +4,9 @@
  */
 function FORM_on_show()
 {
+	var wicketID = plugins.WebClientUtils.getElementMarkupId(elements.fld_company_name)	
+	var js = "$('#" + wicketID + "').attr('placeholder', 'Enter company name...')"	
+	plugins.WebClientUtils.executeClientSideJS(js)
 
 }
 
