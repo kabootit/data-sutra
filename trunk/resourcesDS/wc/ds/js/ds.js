@@ -38,3 +38,14 @@ function launchApp() {
 		window.parent.windowProxy.post({path:true});
 	}
 }
+
+// helper function to refresh the contents of iframe, making it hold the active connection to servoy server
+function refreshOnShow() {
+	setTimeout(function() {
+		//reload the visible iframe
+		window.parent.document.getElementById('wc_application').src = window.parent.document.getElementById('wc_application').src;
+		
+		//trash chatter iframe
+		window.parent.removeChatter()
+	},10);
+}

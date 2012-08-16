@@ -32,6 +32,80 @@ window.onload=function(){
 	windowProxy = new Porthole.WindowProxy(dsLoginDomain + '/ds/external/proxy.html');
 };
 
+// alert when window's focus gained/lost
+function handleVisibilityChange() {
+	//get iframe to send call back to server
+	var iframeHeader = document.getElementById('wc_chatter');
+	
+	//start call
+	var dynamicURL = dsDomain + "/servoy-webclient/ss/s/__DATASUTRA__/m/DS_router_visibility/a/";
+	
+	//alert server that this tab no longer has focus
+	if (document.webkitHidden) {
+		dynamicURL += 'true/';
+		// console.log('hidden at: ' + new Date());
+	}
+	//poll server to get an active connection again
+	else {
+		dynamicURL += 'false/';
+		// console.log('shown at: ' + new Date());
+	}
+	
+	//iframe created, null it out
+	if (iframeHeader) {
+		iframeHeader.src = '';
+	}
+	//iframe not created yet, create it
+	else {
+		// iframe setup
+		var iframeHeaderCell = document.getElementById('sutra');
+		
+		var iframeHeader = document.createElement('IFRAME');
+		iframeHeader.id = 'wc_chatter';
+		iframeHeader.width = 0;
+		iframeHeader.height = 0;
+		iframeHeader.scrolling = 'no';
+		iframeHeader.frameBorder = 0;
+		iframeHeader.style = 'visibility:hidden';
+	
+		// iframe load
+		iframeHeaderCell.appendChild(iframeHeader);
+	}
+	
+	//tack on pathname
+	if (window.location.pathname) {
+		//replace all slashes out with backspace characters because servoy is de-encoding at some point
+		var path = window.location.pathname.replace(/\//g,'%09');
+		
+		dynamicURL += 'path/' + path + '/';
+	}
+	
+	//when switching tabs, the show of the one you're going to fires before the hide of the one you left...try to get this firing in the right order...actually not, breakpoints were throwing me off
+	// fire hide event now
+	if (document.webkitHidden) {
+		iframeHeader.src = dynamicURL;
+	}
+	//fire show event in the future
+	else {
+		setTimeout(function() {
+			iframeHeader.src = dynamicURL;
+		},100);
+	}
+	// iframeHeader.src = dynamicURL;
+}
+document.addEventListener("webkitvisibilitychange", handleVisibilityChange, false);
+
+// clean up function to remove additional 'chatter' iframe
+function removeChatter() {
+	//get iframe used to send call back to server
+	var iframeHeader = document.getElementById('wc_chatter');
+	
+	//delete it
+	if (iframeHeader) {
+		iframeHeader.parentNode.removeChild(iframeHeader);
+	}
+}
+
 // set up switcheroo for initial 'Loading...' thing
 (function() {
 	var timeOut = 1
@@ -154,25 +228,18 @@ function router(data) {
 	
 	// login url requested
 	if (append == 'login/') {
-		// login box on web site
-		if (window && window.frameElement && window.frameElement.id == 'ds_website') {
-			append = 'DSLoginSmall/';
-			// append += 'refer' + window.parent.location.pathname
-		}
-		// normal login
-		else {
-			append = 'DSLogin/';
-		}
+		append = 'DSLogin/';
 	}
 	// login inline url requested
 	else if (append == 'loginInline/') {
 		append = 'DSLoginSmall/';
 	}
- 	// login url requested, specify what to do
+ 	// logout url requested
 	else if (append == 'logout/') {
 		append = 'DSLogout/';
 	}
 	// redirect to pop out of inline form
+		// special url needed so that client-side javascript can fire to get anchoring to work again
 	else if (append == 'launchingDS/') {
 		append = 'DSHomeCall/';
 	}
@@ -182,9 +249,11 @@ function router(data) {
 	}
 	
 	//tack on referrer
-	if (window.parent.location) {
-		// append += 'refer?' + window.parent.location.pathname.substr(1)
-		// encodeURIComponent(document.referrer) + '/'
+	if (document.referrer) {
+		//replace all slashes out with backspace characters because servoy is de-encoding at some point
+		var refer = document.referrer.replace(/\//g,'%09')
+		
+		append += 'refer/' + refer + '/';
 	}
 	
 	// temporary logging
@@ -196,7 +265,7 @@ function router(data) {
 	var dynamicURL = dsDomain + "/servoy-webclient/ss/s/__DATASUTRA__/m/DS_router/a/" + append;
 	
 	var iframeHeader = document.createElement('IFRAME');
-	iframeHeader.id = 'wc';
+	iframeHeader.id = 'wc_application';
 	iframeHeader.src = dynamicURL ;
 	iframeHeader.width = '100%';
 	iframeHeader.height = '100%';
