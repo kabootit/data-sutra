@@ -98,6 +98,10 @@ function LOGIN(event) {
 			
 			history.removeForm('DATASUTRA')
 			history.removeForm(controller.getName())
+			
+			//add on the you're already logged in, dummy form
+			forms.AC_R__login_WEB__small_loggedIn.controller.show()
+			history.go(-1)
 		}
 		else {
 			_userName = globals.AC_login_user
