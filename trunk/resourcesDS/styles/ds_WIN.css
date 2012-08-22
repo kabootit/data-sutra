@@ -30,8 +30,6 @@ form.workarea2 {
 label, button, field, combobox, check, radio {
 	font-family: 'MS Sans Serif','Helvetica Neue', Arial, Helvetica, sans-serif;
 	font-size: 12pt;
-	border: 1px solid;
-	border-color: #829DBB;
 	text-align: left;
 	font-color: black;
 	color: #000;
@@ -221,11 +219,6 @@ label.recordnavigator, label.solutionheader, label.solutionlogstatus, label.solu
 
 label.solutionheader {
 	font-weight: bold;
-	font-size: 20pt;
-	color: #5A5B5A;
-}
-
-label.solutionsubheader {
 	font-size: 20pt;
 	color: #5A5B5A;
 }
