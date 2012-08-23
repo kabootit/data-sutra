@@ -2,7 +2,7 @@ dataSource:"db:/sutra/sutra_solution",
 items:[
 {
 horizontalAlignment:2,
-location:"130,512",
+location:"130,632",
 size:"150,25",
 styleClass:"button",
 text:"Forgot Your Password?",
@@ -12,16 +12,14 @@ uuid:"05C41CC8-0806-4E4B-BE0C-26AE757C7279"
 },
 {
 horizontalAlignment:2,
-location:"30,302",
+location:"30,412",
 margin:"0,5,0,0",
-size:"300,165",
+size:"300,125",
 styleClass:"button",
 text:"<html><body>
 View a 7-minute intro to the Data Sutra web preview: <a href=\"http://www.youtube.com/watch?v=RIBetsn13M8\" target=\"_top\">youtube intro<\/a>.<br />
 <br /><br />
-Email <a href=\"mailto:demo@data-mosaic.com?subject=DS Web Request&body=Please set me up with some login credentials!\">demo@data-mosaic.com<\/a>\tto get demo login credentials.<br />
-<br /><br />
-For more information about Data Sutra, <br /><a href=\"http://www.data-mosaic.com/sutras/data-sutra/overview/\" target=\"_top\">www.data-mosaic.com/sutras/data-sutra/overview/<\/a>.<br />
+For more information about Data Sutra, <br /><a href=\"http://www.data-mosaic.com/sutras/data-sutra/overview/\" target=\"_top\">www.data-mosaic.com/data-sutra<\/a>.<br />
 <br /><br />
 Recommended browsers: Chrome, Safari.
 <\/html>",
@@ -30,17 +28,9 @@ typeid:7,
 uuid:"0F1BFB49-8CCA-429C-892F-D059738DF319"
 },
 {
-location:"130,162",
-text:"Password",
-transparent:true,
-typeid:7,
-uuid:"1690EA71-717A-44D5-91FD-B6B1C29F52C4",
-verticalAlignment:1
-},
-{
 dataProviderID:"_userEmail",
 fontType:"Helvetica Neue,0,18",
-location:"130,560",
+location:"130,680",
 name:"var_userEmail",
 size:"200,30",
 tabSeq:3,
@@ -48,7 +38,7 @@ typeid:4,
 uuid:"22299A51-C213-4B1B-B639-79D5DD003DB8"
 },
 {
-location:"260,685",
+location:"260,805",
 onActionMethodID:"86418204-CDC1-403C-81DC-36A19F06F72A",
 rolloverCursor:12,
 showClick:false,
@@ -61,11 +51,37 @@ typeid:7,
 uuid:"27C2EC04-0655-4DA6-B583-ED0AB954CBBF"
 },
 {
+dataProviderID:"_newPass",
+displayType:6,
+location:"100,290",
+name:"var_newPass",
+onActionMethodID:"5AADF1F9-D7A2-4F65-BD40-4A98CC385F6E",
+onDataChangeMethodID:"D3E23C6B-CBEE-44DD-8EE1-52779CEE571A",
+size:"230,30",
+styleClass:"web",
+toolTipText:"Password",
+typeid:4,
+uuid:"2F256807-5D1E-46B4-8E43-421ADB8CB867"
+},
+{
+location:"260,330",
+name:"btn_signup",
+onActionMethodID:"5AADF1F9-D7A2-4F65-BD40-4A98CC385F6E",
+rolloverCursor:12,
+showClick:false,
+showFocus:false,
+size:"70,30",
+styleClass:"button_web",
+text:"Sign up",
+typeid:7,
+uuid:"4D6D5A22-E578-4F06-94AB-BCD3F478FD43"
+},
+{
 dataProviderID:"_dialog",
 displayType:8,
 editable:false,
 fontType:"Helvetica Neue,0,14",
-location:"400,100",
+location:"400,80",
 name:"var_dialog",
 size:"180,290",
 styleClass:"noborderhtml",
@@ -89,7 +105,23 @@ typeid:7,
 uuid:"6FD1ED0C-5B3C-432F-81AA-A19CFFCE62FE"
 },
 {
-location:"150,605",
+horizontalAlignment:2,
+location:"100,157",
+margin:"0,5,0,0",
+onActionMethodID:"ABCDFAF8-CFCB-4AFB-8267-1111535B8547",
+rolloverCursor:12,
+showClick:false,
+showFocus:false,
+size:"120,16",
+text:"<html><body>
+<u>Forgot password?<\/u>
+<\/html>",
+transparent:true,
+typeid:7,
+uuid:"8D9E6540-62FE-43B4-8789-D979A63F9623"
+},
+{
+location:"150,725",
 onActionMethodID:"ABCDFAF8-CFCB-4AFB-8267-1111535B8547",
 rolloverCursor:12,
 showClick:false,
@@ -102,7 +134,7 @@ typeid:7,
 uuid:"94854514-C968-4703-9FC5-EF8547D25983"
 },
 {
-location:"130,542",
+location:"130,662",
 size:"100,20",
 text:"Email Address",
 transparent:true,
@@ -111,26 +143,19 @@ uuid:"A1D0FF8A-A31D-44A9-95B1-9E5F080CCE10",
 verticalAlignment:1
 },
 {
-location:"130,82",
-text:"Username",
-transparent:true,
-typeid:7,
-uuid:"A5446B2A-7216-4805-AA3F-D4503FCCF0BA",
-verticalAlignment:1
-},
-{
 dataProviderID:"_userName",
-fontType:"Helvetica Neue,0,18",
-location:"130,100",
+location:"100,80",
 name:"var_userName",
 onActionMethodID:"5B798C58-937C-4967-82CC-1C59FF1F5D95",
-size:"200,30",
+onDataChangeMethodID:"D3E23C6B-CBEE-44DD-8EE1-52779CEE571A",
+size:"230,30",
+styleClass:"web",
 tabSeq:1,
 typeid:4,
 uuid:"AF0928B1-DF46-49FC-B634-D95C0B399DD4"
 },
 {
-location:"164,735",
+location:"164,855",
 onActionMethodID:"-1",
 onDoubleClickMethodID:"-1",
 onRightClickMethodID:"-1",
@@ -141,21 +166,21 @@ typeid:7,
 uuid:"B4828071-070F-4FD3-A00C-A1C8D7E58E76"
 },
 {
-location:"260,235",
+location:"260,120",
 name:"btn_login",
 onActionMethodID:"5B798C58-937C-4967-82CC-1C59FF1F5D95",
 rolloverCursor:12,
 showClick:false,
 showFocus:false,
 size:"70,30",
-styleClass:"button_new",
+styleClass:"button_web",
 tabSeq:-2,
-text:"Sign In",
+text:"Sign in",
 typeid:7,
 uuid:"C70358CD-6AD3-4C3B-8630-2F9B3A4E8B14"
 },
 {
-height:500,
+height:550,
 partType:5,
 typeid:19,
 uuid:"CEFB7BEB-61D9-455A-85C5-82FB8B01838A"
@@ -163,20 +188,49 @@ uuid:"CEFB7BEB-61D9-455A-85C5-82FB8B01838A"
 {
 dataProviderID:"_userPass",
 displayType:6,
-fontType:"Helvetica Neue,0,18",
-location:"130,180",
+location:"100,120",
 name:"var_userPass",
 onActionMethodID:"5B798C58-937C-4967-82CC-1C59FF1F5D95",
-size:"200,30",
+onDataChangeMethodID:"D3E23C6B-CBEE-44DD-8EE1-52779CEE571A",
+size:"150,30",
+styleClass:"web",
 tabSeq:2,
 typeid:4,
 uuid:"DBB13E7B-1CE0-4450-8187-7DE7E8E6CA39"
+},
+{
+dataProviderID:"_newUser",
+location:"100,250",
+name:"var_newUser",
+onActionMethodID:"5AADF1F9-D7A2-4F65-BD40-4A98CC385F6E",
+onDataChangeMethodID:"D3E23C6B-CBEE-44DD-8EE1-52779CEE571A",
+size:"230,30",
+styleClass:"web",
+toolTipText:"Email",
+typeid:4,
+uuid:"EB079DDB-6C3E-440B-94D7-65579F4717EF"
+},
+{
+borderType:"SpecialMatteBorder,0.0,0.0,1.0,0.0,#000000,#000000,#cacaca,#000000,0.0,1.0",
+displaysTags:true,
+fontType:"Helvetica Neue,0,20",
+horizontalAlignment:2,
+location:"30,210",
+showClick:false,
+showFocus:false,
+size:"300,30",
+styleClass:"button",
+text:"New to %%solution_name%%? Sign up",
+transparent:true,
+typeid:7,
+uuid:"F5D39941-299A-41DB-9806-6684AC561478"
 }
 ],
 name:"AC_R__login_WEB",
 navigatorID:"-1",
 onShowMethodID:"F9A8228A-2929-476D-846C-BE8A6E74B256",
+scrollbars:32,
 size:"600,500",
-styleName:"_DATASUTRA_",
+styleName:"ds_WEB_desktop",
 typeid:3,
 uuid:"3E5801B5-4ED0-4EDE-84A1-B9FC97641C2F"

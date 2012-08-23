@@ -1,6 +1,20 @@
 /**
  * @type {String}
  *
+ * @properties={typeid:35,uuid:"FEC77D88-9590-4D66-A80F-21779CDE918C"}
+ */
+var _newPass = null;
+
+/**
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"95303ECF-EAE3-488B-AD32-E35DE0A2BE43"}
+ */
+var _newUser = null;
+
+/**
+ * @type {String}
+ *
  * @properties={typeid:35,uuid:"2A4594E7-5296-4234-8BA4-ECC847C3582D"}
  */
 var _dialog = null;
@@ -133,7 +147,8 @@ function RESET(event) {
 		var msg = 'Not a valid email address'
 	}
 	
-	plugins.WebClientUtils.executeClientSideJS('alert("' + msg + '");')
+//	plugins.WebClientUtils.executeClientSideJS('alert("' + msg + '");')
+	plugins.WebClientUtils.executeClientSideJS('alert("Email your username or email to reset@data-mosaic.com");')
 }
 
 /**
@@ -148,18 +163,34 @@ function FORM_on_show(firstShow, event) {
 	if (firstShow) {
 		plugins.WebClientUtils.setExtraCssClass(elements.var_dialog, 'dialogDS')
 		plugins.WebClientUtils.setExtraCssClass(elements.btn_login, 'loginDS')
+		plugins.WebClientUtils.setExtraCssClass(elements.btn_signup, 'signupDS')
+		
 		_shown = true
 	}
-
-	//turn off auto-capitalize on ipad
+	
+	//fill place holder texts
+	var elems = [
+		plugins.WebClientUtils.getElementMarkupId(elements.var_userName),
+		plugins.WebClientUtils.getElementMarkupId(elements.var_userPass),
+		plugins.WebClientUtils.getElementMarkupId(elements.var_newUser),
+		plugins.WebClientUtils.getElementMarkupId(elements.var_newPass)
+	]
+	var texts = [
+		'Username / Email',
+		'Password',
+		'Email',
+		'Password'
+	]
+	plugins.WebClientUtils.executeClientSideJS('setPlaceHolders(' + JSON.stringify(elems) + ',' + JSON.stringify(texts) + ');')
+	
+	//turn off auto-capitalize on iOS
 	plugins.WebClientUtils.executeClientSideJS('$("#' + plugins.WebClientUtils.getElementMarkupId(elements.var_userName) +'").attr("autocapitalize","off");')
-//	plugins.WebClientUtils.executeClientSideJS('console.log($("#' + plugins.WebClientUtils.getElementMarkupId(elements.var_userName) +'").attr("autocapitalize","off"));')//ID is ' + plugins.WebClientUtils.getElementMarkupId(elements.var_userName) + '");')
 	
 	// attach style to form to center it
 	plugins.WebClientUtils.executeClientSideJS('centerForm("' + controller.getName() + '");')
 	
 	// move indicator to beside the login button
-	plugins.WebClientUtils.executeClientSideJS('loginIndicator(500);')
+	INDICATOR()
 	
 	elements.var_userName.requestFocus()
 }
@@ -180,4 +211,43 @@ function DEMO(event) {
 	
 	//go back to main screen form
 	history.go(-(history.size() - 1))
+}
+
+/**
+ * Perform the element default action.
+ *
+ * @param {JSEvent} event the event that triggered the action
+ *
+ * @properties={typeid:24,uuid:"5AADF1F9-D7A2-4F65-BD40-4A98CC385F6E"}
+ */
+function CREATE(event) {
+	globals.DIALOGS.showInfoDialog('Coming soon','Before you know it...')
+	
+	//email validation
+	
+	//create new SaaS org and populate with data
+	
+	
+	//send email with successful blah
+	
+}
+
+/**
+ * Handle changed data.
+ *
+ * @param {String} [oldValue] old value
+ * @param {String} [newValue] new value
+ * @param {JSEvent} [event] the event that triggered the action
+ *
+ * @properties={typeid:24,uuid:"D3E23C6B-CBEE-44DD-8EE1-52779CEE571A"}
+ */
+function INDICATOR(oldValue, newValue, event) {
+	//put indicator next to sign up
+	if (event && utils.stringPatternCount(event.getElementName(),'new')) {
+		plugins.WebClientUtils.executeClientSideJS('loginIndicator(true);')
+	}
+	//indicator next to sign in
+	else {
+		plugins.WebClientUtils.executeClientSideJS('loginIndicator();')
+	}
 }
