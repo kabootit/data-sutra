@@ -1,4 +1,11 @@
 /**
+ * @type {Boolean}
+ *
+ * @properties={typeid:35,uuid:"274F26D5-592C-43A1-BB30-AD7482FA748E",variableType:-4}
+ */
+var DATASUTRA_router_firstRun = false;
+
+/**
  * @type {String}
  *
  * @properties={typeid:35,uuid:"3E9471C0-7E37-4091-A818-51D87522BFFE"}
@@ -1606,8 +1613,9 @@ function DS_actions(input) {
 				}
 				//webclient in router, redirect url
 				else if (globals.DATASUTRA_router_enable) {
-					globals.DS_router(null,null,null,null,true)
-					security.logout()
+					plugins.WebClientUtils.executeClientSideJS('reLogin();')
+				//	globals.DS_router(null,null,null,null,true)
+				//	security.logout()
 				}
 				//straight up webclient or smart client
 				else {
@@ -5165,19 +5173,40 @@ function DATASUTRA_open(skipFontFix) {
  * @param {String}	p1		First argument passed in
  * @param {Object}	params	Object of all arguments
  * @param {Number}	itemID	Specified ID to go to
- * @param {Boolean}	login	Log in requested, redirect url to avoid cross domain
+ * @param {Boolean}	launch	Launch app requested (break out of iframe)
  * @param {Boolean}	logout	Log out requested, redirect url
  * 
  * @properties={typeid:24,uuid:"AF8DE8BA-7503-462B-B4B0-45B9A2DE7921"}
  * 
  */
-function DS_router(p1,params,itemID,login,logout) {
+function DS_router(p1,params,itemID,launch,logout) {
 	//number of ms to wait before replacing state
 	var delay = 0
 	
-	//
+	//call to switch around the iframe
 	var routerCall = 'window.parent.routerReplace'
 	
+	//check history for form
+	function historyCheck(formName) {
+		var location = history.getCurrentIndex()
+		
+		for (var i = 1; i <= history.size(); i++) {
+			var item = history.getFormName(i)
+			
+			//found this form in the history stack
+			if (formName == item) {
+				//not currently on the form
+				if (i != location) {
+					//return out the amount needed to navigate from current form
+					return - (location - i)
+				}
+				//on the form; don't need to load in
+				return true
+			}
+		}
+	}
+	
+	//helper function to return url of navitem to be navigated to
 	function getURL(alt) {
 		var urlString = '/ds/'
 		
@@ -5230,12 +5259,21 @@ function DS_router(p1,params,itemID,login,logout) {
 		}
 	}
 	
-	// log this router request
-	globals.DATASUTRA_router.push({
+	// log this router request unless special requests
+	var specialRequests = [
+						'DSLogin',
+						'DSLoginSmall',
+						'DSLogout',
+						'DSHomeCall',
+						'DSError_NoURL'
+					]
+	if (specialRequests.indexOf(url.set) == -1) {
+		globals.DATASUTRA_router.push({
 				path : url,
 				navItemID: itemID,
 				request : application.getUUID().toString()
 			})
+	}
 	
 	// if logout, redirect url
 	if (logout) {
@@ -5249,16 +5287,53 @@ function DS_router(p1,params,itemID,login,logout) {
 	globals.DATASUTRA_router_enable = true
 	
 	// external login form requested and already logged in, show something to this effect
-		//TODO: need better check for if logged in (currently just if this form has been shown)
-	if (p1 == 'DSLoginSmall' && application.__parent__.solutionPrefs && solutionPrefs.access && solutionPrefs.access.userID) {
+	if (url.set == 'DSLoginSmall' && application.__parent__.solutionPrefs && solutionPrefs.access && solutionPrefs.access.userID) {
 		history.go(+1)
-//		plugins.WebClientUtils.executeClientSideJS(routerCall + '(null,"Data Sutra: Login","' + getURL('loggedIn') + '");')
 		return
 	}
 	// go to login form if not already logged in or in the process of logging in
-	else if ((!application.__parent__.solutionPrefs || !application.__parent__.navigationPrefs) && !(url.set == 'DSLogin' || url.set == 'DSLoginSmall')) {
-		plugins.WebClientUtils.executeClientSideJS(routerCall + '(null,"Data Sutra: Login","' + getURL('login') + '");')
-		return
+	else if ((!application.__parent__.solutionPrefs || !application.__parent__.navigationPrefs)) {
+		// this method has been run once, go back to login form
+		if (globals.DATASUTRA_router_firstRun) {
+			if (url.set == 'DSLogin') {
+				var goHere = historyCheck('AC_R__login_WEB')
+				//navigate to the form
+				if (typeof goHere == 'number') {
+					history.go(goHere)
+				}
+				//form already showing, recenter
+				else if (goHere) {
+					if (forms.AC_R__login_WEB._shown) {
+						forms.AC_R__login_WEB.FORM_on_show()
+					}
+				}
+				//show form
+				else {
+					forms.AC_R__login_WEB.controller.show()
+				}
+				return
+			}
+			else if (url.set == 'DSLoginSmall') {
+				var goHere = historyCheck('AC_R__login_WEB__small')
+				//navigate to the form
+				if (typeof goHere == 'number') {
+					history.go(goHere)
+				}
+				//show form
+				else if (!goHere) {
+					forms.AC_R__login_WEB__small.controller.show()
+				}
+				return
+			}
+		}
+		// specific navitem requested, go to login page first
+		else if (!(url.set == 'DSLogin' || url.set == 'DSLoginSmall')) {
+			plugins.WebClientUtils.executeClientSideJS(routerCall + '(null,"Data Sutra: Login","' + getURL('login') + '");')
+			
+			//we've run once
+			globals.DATASUTRA_router_firstRun
+			return
+		}
 	}
 	
 	// check for special status codes
@@ -5270,13 +5345,8 @@ function DS_router(p1,params,itemID,login,logout) {
 			globals.DATASUTRA_router_referrer = url.referrer || 'http://www.data-mosaic.com/data-sutra'
 		}
 		
-//		// when logged in already, force a logout to prevent from showing full client in tiny login iframe spot
-//		if (application.__parent__.navigationPrefs) {
-//			globals.DATASUTRA_router_referrer = 'http://www.data-mosaic.com/sutras/data-sutra/home/'
-////			application.getServerURL() + '/' + url.referrer
-//			globals.DS_actions('Logout')
-//		}
-		
+		//we've run once
+		globals.DATASUTRA_router_firstRun = true
 		return
 	}
 	else if (p1 == 'DSLogin') {
@@ -5298,6 +5368,8 @@ function DS_router(p1,params,itemID,login,logout) {
 			}
 		}
 		
+		//we've run once
+		globals.DATASUTRA_router_firstRun = true
 		return
 	}
 	else if (p1 == 'DSLogout') {
@@ -5313,8 +5385,16 @@ function DS_router(p1,params,itemID,login,logout) {
 			return
 		}
 	}
+	//special case call for when changing dimensions -- like from external login form to full blown app
 	else if (p1 == 'DSHomeCall') {
-		itemID = navigationPrefs.byNavSetID[navigationPrefs.byNavSetID.defaultSet].itemsByOrder[0].navigationItem.idNavigationItem
+		//take last item in history stack
+		if (globals.DATASUTRA_router.length) {
+			itemID = globals.DATASUTRA_router[globals.DATASUTRA_router.length - 1].navItemID
+		}
+		//go to initial landing spot
+		else {
+			itemID = navigationPrefs.byNavSetID[navigationPrefs.byNavSetID.defaultSet].itemsByOrder[0].navigationItem.idNavigationItem
+		}
 		
 		//redirect to correct url
 		if (navigationPrefs.byNavItemID[itemID].path) {
@@ -5332,7 +5412,7 @@ function DS_router(p1,params,itemID,login,logout) {
 		// web client paths correctly configured
 		if (navigationPrefs.byNavItemID[itemID].path) {
 			//need to break out of current frame stack in, navigate to default url
-			if (login) {
+			if (launch) {
 				plugins.WebClientUtils.executeClientSideJS('launchApp();')
 			}
 			//normal call to rewrite history stack
@@ -5352,7 +5432,7 @@ function DS_router(p1,params,itemID,login,logout) {
 	// potentially valid url passed in; try to navigate here
 	else {
 		// get nav object mapping
-		var nav = navigationPrefs.siteMap
+		var nav = (application.__parent__.navigationPrefs) ? navigationPrefs.siteMap : new Object()
 		
 		// navigate through history
 		if (p1 == 'DSHistory') {
@@ -5409,9 +5489,14 @@ function DS_router(p1,params,itemID,login,logout) {
 		globals.DATASUTRA_router_payload = solutionModel.getGlobalVariable('globals','DATASUTRA_router_payload').defaultValue
 		
 		// make sure on correct top level form
-		if (history.getFormName(history.getCurrentIndex()) != 'DATASUTRA_WEB_0F') {
-			history.go(-1)
-//			history.clear()
+		var goHere = historyCheck('DATASUTRA_WEB_0F')
+		//navigate to the form
+		if (typeof goHere == 'number') {
+			history.go(goHere)
+		}
+		//show form
+		else if (!goHere) {
+			forms.DATASUTRA_WEB_0F.controller.show()
 		}
 		
 		globals.DS_router_recreateUI()
@@ -5427,12 +5512,22 @@ function DS_router(p1,params,itemID,login,logout) {
 /**
  * Callback method to alert when tab hidden/shown
  * 
- * @param {Boolean}	hidden	Tab is hidden
- * @param {Object}	params	Object of all arguments (for now, we're just using referrer)
+ * @param {String}	hidden	Tab is hidden (string true/false)
+ * @param {Object}	params	Object of all arguments (for now, we're just using path)
  * 
  * @properties={typeid:24,uuid:"2185D40F-A2C8-459A-A960-86C7D916E27C"}
  */
 function DS_router_visibility(hidden,params) {
+	//when debugging in non-chrome, uncomment this line to turn off visibility snatching your baby out of the iframe
+//	return
+	
+	// if not logged in, throw back to login page
+		// on page hide/show will let this situation arise where ping back to server and that client is dead
+//	if ((!application.__parent__.solutionPrefs || !application.__parent__.navigationPrefs)) {
+//		plugins.WebClientUtils.executeClientSideJS('window.parent.routerReplace(null,"Data Sutra: Login","/ds/loginInline");')
+//		return
+//	}
+	
 	// cast first param to boolean
 	hidden = eval(hidden)
 	
@@ -5447,11 +5542,11 @@ function DS_router_visibility(hidden,params) {
 	
 	//there is at least one other form hidden, need to start refreshing
 	//TODO: but not if this is the first time this form has been loaded
-	if (globals.DATASUTRA_router_invisible.length && globals.DATASUTRA_router_invisible != path) {
+	if (globals.DATASUTRA_router_invisible && globals.DATASUTRA_router_invisible != path) {
 		globals.DATASUTRA_router_refresh = true
 	}
 	
-	//we're showing an important form and has it been hidden before
+	//need to refresh a form that has been hidden before
 	if (globals.DATASUTRA_router_refresh && !hidden) {
 		//set global that coming from small login screen to big one, need to rejiggle the beans
 		if (path != '/ds/loginInline') {
@@ -5461,7 +5556,10 @@ function DS_router_visibility(hidden,params) {
 		plugins.WebClientUtils.executeClientSideJS('refreshOnShow();')
 		application.output((hidden ? 'Hiding, ' : 'Showing, ') + 'Refreshing: ' + path)
 	}
+	//trash chatter iframe
 	else {
+		plugins.WebClientUtils.executeClientSideJS('window.parent.removeChatter();')
+		
 		application.output((hidden ? 'Hiding, ' : 'Showing, ') + 'Not refreshing: ' + path)
 	}
 	
@@ -5518,4 +5616,11 @@ function DS_router_bean_resize() {
 	
 	//reset split between toolbar and fastfind
 	forms.DATASUTRA_WEB_0F__header.FORM_on_show(true)
+}
+
+/**
+ * @properties={typeid:24,uuid:"19A40ED8-225A-42E5-80F8-421610D8A279"}
+ */
+function DS_router_logout() {
+	security.logout()
 }
