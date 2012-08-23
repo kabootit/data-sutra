@@ -5170,11 +5170,11 @@ function DATASUTRA_open(skipFontFix) {
 /**
  * URL driven navigation
  * 
- * @param {String}	p1		First argument passed in
- * @param {Object}	params	Object of all arguments
- * @param {Number}	itemID	Specified ID to go to
- * @param {Boolean}	launch	Launch app requested (break out of iframe)
- * @param {Boolean}	logout	Log out requested, redirect url
+ * @param {String}	[p1]		First argument passed in
+ * @param {Object}	[params]	Object of all arguments
+ * @param {Number}	[itemID]	Specified ID to go to
+ * @param {Boolean}	[launch]	Launch app requested (break out of iframe)
+ * @param {Boolean}	[logout]	Log out requested, redirect url
  * 
  * @properties={typeid:24,uuid:"AF8DE8BA-7503-462B-B4B0-45B9A2DE7921"}
  * 
@@ -5277,13 +5277,11 @@ function DS_router(p1,params,itemID,launch,logout) {
 	
 	// if logout, redirect url
 	if (logout) {
-//		plugins.WebClientUtils.executeClientSideJS('window.parent.routerDelay(null,"Data Sutra: Login","' + getURL('login') + '",250);')
 		application.showURL(getURL('login'),'_top')
-//		plugins.WebClientUtils.executeClientSideJS('window.parent.reloadPage();')
 		return
 	}
 	
-	//this must be called from the router and therefore we must be running in an iframe
+	//this must be called from the router and therefore we must be running in the iframe router wrapper
 	globals.DATASUTRA_router_enable = true
 	
 	// external login form requested and already logged in, show something to this effect
@@ -5325,13 +5323,18 @@ function DS_router(p1,params,itemID,launch,logout) {
 				}
 				return
 			}
+			//no url specified and still not logged in, redirect again
+			else if (url.set == 'DSError_NoURL') {
+				plugins.WebClientUtils.executeClientSideJS(routerCall + '(null,"Data Sutra: Login","' + getURL('login') + '");')
+				return
+			}
 		}
 		// specific navitem requested, go to login page first
 		else if (!(url.set == 'DSLogin' || url.set == 'DSLoginSmall')) {
 			plugins.WebClientUtils.executeClientSideJS(routerCall + '(null,"Data Sutra: Login","' + getURL('login') + '");')
 			
 			//we've run once
-			globals.DATASUTRA_router_firstRun
+			globals.DATASUTRA_router_firstRun = true
 			return
 		}
 	}
@@ -5380,8 +5383,6 @@ function DS_router(p1,params,itemID,launch,logout) {
 		// run logout portion of this script
 		else {
 			globals.DS_actions('Logout')
-//			application.showURL(getURL('login'),'_top')
-//			security.logout()
 			return
 		}
 	}
@@ -5391,8 +5392,9 @@ function DS_router(p1,params,itemID,launch,logout) {
 		if (globals.DATASUTRA_router.length) {
 			itemID = globals.DATASUTRA_router[globals.DATASUTRA_router.length - 1].navItemID
 		}
-		//go to initial landing spot
-		else {
+		
+		//go to initial landing spot if not valid itemID
+		if (!itemID) {
 			itemID = navigationPrefs.byNavSetID[navigationPrefs.byNavSetID.defaultSet].itemsByOrder[0].navigationItem.idNavigationItem
 		}
 		
@@ -5418,7 +5420,6 @@ function DS_router(p1,params,itemID,launch,logout) {
 			//normal call to rewrite history stack
 			else {
 				plugins.WebClientUtils.executeClientSideJS('preRender("' + navigationPrefs.byNavItemID[itemID]._about_ + '","' + getURL(navigationPrefs.byNavItemID[itemID].path) + '",' + delay + ');')
-	//			plugins.WebClientUtils.executeClientSideJS('window.parent.routerDelay(null,"' + navigationPrefs.byNavItemID[itemID]._about_ + '","' + getURL(navigationPrefs.byNavItemID[itemID].path) + '",' + delay + ');')
 			}
 			return
 		}
@@ -5473,11 +5474,10 @@ function DS_router(p1,params,itemID,launch,logout) {
 		// if actual url string matches generated, navigate; otherwise redirect
 		
 		// rewrite name of this page
+		
+		// reset scroll of ul
 //		plugins.WebClientUtils.executeClientSideJS('setTimeout(function(){DS_universalList.scrollReset()},2000);')
 //		setTimeout(function(){DS_universalList.scrollHijack(newVal)},1500);
-
-//		plugins.WebClientUtils.executeClientSideJS('setTimeout(function(){' + routerCall + '(null,"' + navigationPrefs.byNavItemID[itemID]._about_ + '","' + getURL() + '")},2000);')
-//		plugins.WebClientUtils.executeClientSideJS('window.parent.routerDelay(null,"' + navigationPrefs.byNavItemID[itemID]._about_ + '","' + getURL() + '",' + delay + ');')
 
 		//something was specified to navigate to, load it up
 		var payload = globals.DATASUTRA_router_payload
@@ -5519,7 +5519,8 @@ function DS_router(p1,params,itemID,launch,logout) {
  */
 function DS_router_visibility(hidden,params) {
 	//when debugging in non-chrome, uncomment this line to turn off visibility snatching your baby out of the iframe
-//	return
+		//turned off for now because this feature shelved until supported more widely
+	return
 	
 	// if not logged in, throw back to login page
 		// on page hide/show will let this situation arise where ping back to server and that client is dead
@@ -5603,7 +5604,6 @@ function DS_router_recreateUI() {
 		//make sure this only runs one time
 		globals.DATASUTRA_router_login = false
 	}
-
 }
 
 /**
