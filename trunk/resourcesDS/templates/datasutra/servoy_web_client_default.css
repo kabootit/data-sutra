@@ -506,7 +506,7 @@ div.wicket-modal div.w_content {
 
 
 /* login form */
-.dialogDS {
+.dialogDS, .newSuccessDS {
 	display:none;
 }
 
