@@ -15,38 +15,17 @@
 	
 	<!-- DS WebClient with /ds/ prefix -->
 	<rule>
-		<name>DS js</name>
-		<note>Pass all ds/js </note>
-		<from>^/ds/js/(.*)$</from>
-		<to last="true">/ds/js/$1</to>
+		<name>DS resources</name>
+		<note>Pass all datasutra wc resources through untouched</note>
+		<from>^/ds/(config|css|external|js)/(.*)$</from>
+		<to last="true">/ds/$1/$2</to>
 	</rule>
 	
 	<rule>
-		<name>DS external</name>
-		<note>Pass all ds/external</note>
-		<from>^/ds/external/(.*)$</from>
-		<to last="true">/ds/external/$1</to>
-	</rule>
-	
-	<rule>
-		<name>DS css</name>
-		<note>Pass all ds/css</note>
-		<from>^/ds/css/(.*)$</from>
-		<to last="true">/ds/css/$1</to>
-	</rule>
-	
-	<rule>
-		<name>DS favicon</name>
-		<note>Favicon</note>
-		<from>^/favicon.ico$</from>
-		<to last="true">/ds/favicon.ico</to>
-	</rule>
-	
-	<rule>
-		<name>DS iOS icon</name>
-		<note></note>
-		<from>^/apple-touch-icon.png$</from>
-		<to last="true">/ds/apple-touch-icon.png</to>
+		<name>DS favicons</name>
+		<note>Regular favicon and iOS icon</note>
+		<from>^/(favicon.ico|apple-touch-icon.png)$</from>
+		<to last="true">/ds/$1</to>
 	</rule>
 
 	<rule>
