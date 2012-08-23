@@ -121,6 +121,15 @@ field.universallist, field.universallist_selected {
 	margin: 0px 0px 0px 4px;
 }
 
+field.web {
+	font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;
+	font-size: 18pt;
+	margin: 0px 6px 0px 6px;
+	
+	border-radius: 3px;
+	border: 1px solid #5D5D5D;
+}
+
 check {
 	text-align: center;
 }
@@ -164,7 +173,7 @@ label.button {
 	color: #323A4B;
 }
 
-label.button_new {
+label.button_web {
 	font-weight: bold;
 	/*font-size: 10pt;*/
 	text-align: center; 

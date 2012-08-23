@@ -47,7 +47,7 @@ combobox {
 	color: #000;
 }
 
-field, field.date {
+field, field.date, field.web {
 	background-color: #FFF;
 	border: 2px ridge #FFF;
 	margin: 1px 2px 0px 2px;
@@ -167,7 +167,7 @@ label.bold, label.whitebold {
 	font-weight: bold;
 }
 
-label.button, label.button_new {
+label.button, label.button_web {
 	font-weight: bold;
 	font-size: 10pt;
 	text-align: center; 
