@@ -1,6 +1,13 @@
 /**
  * @type {String}
  *
+ * @properties={typeid:35,uuid:"E413ED4B-CD8E-4B83-9B56-5C277E2C9AC4"}
+ */
+var _newName = null;
+
+/**
+ * @type {String}
+ *
  * @properties={typeid:35,uuid:"FEC77D88-9590-4D66-A80F-21779CDE918C"}
  */
 var _newPass = null;
@@ -48,6 +55,29 @@ var _userName = null;
 var _shown = false;
 
 /**
+ * @param {String} title
+ * @param {String} text
+ *
+ * @properties={typeid:24,uuid:"6F78801C-6F8C-42A0-B58A-0BA353ECEB0F"}
+ */
+function SET_dialog(title,text) {
+	var html = '<html><body>'
+	
+	html += '<strong>' + (title || 'Login error') + '</strong><br/><br/>'
+	if (text) {
+		html += '<font color="#B00D00">' + text + '</font>'
+	}
+	
+	html += '</body></html>'
+	
+	_dialog = html
+	
+	//show dialog after page renders, hide it 4 seconds later
+	plugins.WebClientUtils.executeClientSideJS('setTimeout(function(){$(".dialogDS").fadeIn("medium")},250);')
+	plugins.WebClientUtils.executeClientSideJS('setTimeout(function(){$(".dialogDS").fadeOut("slow")},4500);')
+}
+
+/**
  * Perform the element default action.
  *
  * @param {JSEvent} event the event that triggered the action
@@ -55,41 +85,22 @@ var _shown = false;
  * @properties={typeid:24,uuid:"5B798C58-937C-4967-82CC-1C59FF1F5D95"}
  */
 function LOGIN(event) {
-	function dialog(title,text) {
-		var html = '<html><body>'
-		
-		html += '<strong>' + (title || 'Login error') + '</strong><br/><br/>'
-		if (text) {
-			html += '<font color="#B00D00">' + text + '</font>'
-		}
-		
-		html += '</body></html>'
-		
-		_dialog = html
-		
-		//show dialog after page renders, hide it 4 seconds later
-		//$('.dialogDS').fadeIn('medium')
-		//$('.dialogDS').fadeOut('slow')
-		plugins.WebClientUtils.executeClientSideJS('setTimeout(function(){$(".dialogDS").fadeIn("medium")},250);')
-		plugins.WebClientUtils.executeClientSideJS('setTimeout(function(){$(".dialogDS").fadeOut("slow")},4500);')
-	}
-	
 	if (!_userName && !_userPass) {
-		dialog(
+		SET_dialog(
 			"Invalid login", 
 			"You must enter a username and password to log in"
 		)
 		elements.var_userName.requestFocus()
 	}
 	else if (!_userName && _userPass) {
-		dialog(
+		SET_dialog(
 			"Empty user", 
 			"You must enter a username to log in"
 		)
 		elements.var_userName.requestFocus()
 	}
 	else if (_userName && !_userPass) {
-		dialog(
+		SET_dialog(
 			"Empty password", 
 			"You must enter a password to log in"
 		)
@@ -101,7 +112,7 @@ function LOGIN(event) {
 		globals.AC_login_password = _userPass
 		
 		//continue method
-		var status = forms.AC_R__login_1F__password.LOGIN_user(null,dialog)
+		var status = forms.AC_R__login_1F__password.LOGIN_user(null,SET_dialog)
 		
 		if (typeof status == 'boolean' && status) {
 			//set global for busy cursor in webclient
@@ -146,7 +157,7 @@ function RESET(event) {
 	else {
 		var msg = 'Not a valid email address'
 	}
-	
+
 //	plugins.WebClientUtils.executeClientSideJS('alert("' + msg + '");')
 	plugins.WebClientUtils.executeClientSideJS('alert("Email your username or email to reset@data-mosaic.com");')
 }
@@ -161,7 +172,16 @@ function RESET(event) {
  */
 function FORM_on_show(firstShow, event) {
 	if (firstShow) {
+		//css classes for transitions
 		plugins.WebClientUtils.setExtraCssClass(elements.var_dialog, 'dialogDS')
+		plugins.WebClientUtils.setExtraCssClass(elements.lbl_new, 'newDS')
+		plugins.WebClientUtils.setExtraCssClass(elements.var_newName, 'newDS')
+		plugins.WebClientUtils.setExtraCssClass(elements.var_newUser, 'newDS')
+		plugins.WebClientUtils.setExtraCssClass(elements.var_newPass, 'newDS')
+		plugins.WebClientUtils.setExtraCssClass(elements.btn_signup, 'newDS')		
+		plugins.WebClientUtils.setExtraCssClass(elements.lbl_new_success, 'newSuccessDS')
+		
+		//css classes for positioning of indicator spinner
 		plugins.WebClientUtils.setExtraCssClass(elements.btn_login, 'loginDS')
 		plugins.WebClientUtils.setExtraCssClass(elements.btn_signup, 'signupDS')
 		
@@ -172,12 +192,14 @@ function FORM_on_show(firstShow, event) {
 	var elems = [
 		plugins.WebClientUtils.getElementMarkupId(elements.var_userName),
 		plugins.WebClientUtils.getElementMarkupId(elements.var_userPass),
+		plugins.WebClientUtils.getElementMarkupId(elements.var_newName),
 		plugins.WebClientUtils.getElementMarkupId(elements.var_newUser),
 		plugins.WebClientUtils.getElementMarkupId(elements.var_newPass)
 	]
 	var texts = [
 		'Username / Email',
 		'Password',
+		'Full name',
 		'Email',
 		'Password'
 	]
@@ -219,17 +241,99 @@ function DEMO(event) {
  * @param {JSEvent} event the event that triggered the action
  *
  * @properties={typeid:24,uuid:"5AADF1F9-D7A2-4F65-BD40-4A98CC385F6E"}
+ * @AllowToRunInFind
  */
 function CREATE(event) {
-	globals.DIALOGS.showInfoDialog('Coming soon','Before you know it...')
-	
-	//email validation
-	
-	//create new SaaS org and populate with data
-	
-	
-	//send email with successful blah
-	
+	if (_newName && _newUser && _newPass) {
+		/** @type {JSFoundset<db:/sutra/sutra_access_user>} */
+		var fsUser = databaseManager.getFoundSet('sutra','sutra_access_user')
+		
+		//check to make sure this user/pass doesn't already exist
+		fsUser.find()
+		fsUser.user_name = _newUser
+		fsUser.user_password = plugins.sutra.encrypt(_newPass)
+		var results = fsUser.search()
+		
+		//already have a user/pass comobo here...make up some error
+		if (results) {
+			SET_dialog(
+				"Password error",
+				"The password you entered is not cryptographic enough.<br><br>Please try a different one."
+			)
+			return
+		}
+		
+		//email validation
+		
+		
+		//do we have a first and last name?
+		var myName = _newName.split('_')
+		if (myName.length > 1) {
+			var lastName = myName[myName.length - 1]
+			myName.pop()
+			var firstName = myName.join(' ')
+		}
+		else {
+			var lastName = _newName
+			var firstName = ''
+		}
+		
+		//create new SaaS org and populate with data
+		
+		/** @type {JSFoundset<db:/sutra/sutra_access_organization>} */
+		var fsOrg = databaseManager.getFoundSet('sutra','sutra_access_organization')
+		var newOrg = fsOrg.getRecord(fsOrg.newRecord(false,true))
+		newOrg.name_organization = _newUser
+		
+		var newStaff = newOrg.ac_access_organization_to_access_staff.getRecord(newOrg.ac_access_organization_to_access_staff.newRecord(false,true))
+		newStaff.email = _newUser
+		newStaff.name_last = lastName
+		newStaff.name_first = firstName
+		
+		var newUser = fsUser.getRecord(fsUser.newRecord(false,true))
+		newUser.id_organization = newOrg.id_organization
+		newUser.user_name = _newUser
+		//MEMO: all password rules are bypassed...we just take whatever they give us
+		newUser.user_password = plugins.sutra.encrypt(_newPass)
+		//hard coded everybody to developer group
+		newUser.id_group = 3
+		newUser.id_staff = newStaff.id_staff
+		newUser.pass_never_expires = 1
+		newUser.date_password_changed = application.getServerTimeStamp()
+		
+		var userGroup = newUser.ac_access_user_to_access_user_group.getRecord(newUser.ac_access_user_to_access_user_group.newRecord(false,true))
+		//hard coded everybody to developer group
+		userGroup.id_group = 3
+		userGroup.id_user = newUser.id_user
+		userGroup.flag_chosen = 1
+		
+		databaseManager.saveData()
+		
+		//create sample dataset
+		SAMPLE_data()
+		
+		_userName = _newUser
+		_userPass = null
+		elements.var_userPass.requestFocus()
+		
+		//send email with successful blah
+		
+		
+		//go ahead and prefill user name
+		SET_dialog(
+			"Success",
+			"Please re-enter your password..."
+		)
+		
+		plugins.WebClientUtils.executeClientSideJS('setTimeout(function(){$(".newSuccessDS").fadeIn("medium")},250);')
+		plugins.WebClientUtils.executeClientSideJS('setTimeout(function(){$(".newDS").fadeOut("slow")},250);')
+	}
+	else {
+		SET_dialog(
+			"Blank values",
+			"You must enter your name, email, and password"
+		)
+	}
 }
 
 /**
@@ -250,4 +354,12 @@ function INDICATOR(oldValue, newValue, event) {
 	else {
 		plugins.WebClientUtils.executeClientSideJS('loginIndicator();')
 	}
+}
+
+/**
+ * @properties={typeid:24,uuid:"A9DFC6F5-75D2-45D1-B519-044B1EEF9D60"}
+ */
+function SAMPLE_data() {
+	//blow in sample crm data
+	
 }
