@@ -47,7 +47,9 @@ function refreshOnShow() {
 		window.parent.document.getElementById('wc_application').src = window.parent.document.getElementById('wc_application').src;
 		
 		//trash chatter iframe
-		window.parent.removeChatter()
+		if (window.parent.removeChatter) {
+			window.parent.removeChatter()
+		}
 	},10);
 }
 
@@ -99,7 +101,7 @@ function reLogin(smallForm) {
 		}
 		//for standalone logout, blow out the whole page
 		else {
-			window.top.location = '/ds/login'
+			window.top.location = '/ds'
 		}
-	},1000);
+	},500);
 }

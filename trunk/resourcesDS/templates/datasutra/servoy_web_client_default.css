@@ -515,7 +515,7 @@ input.noWebkitOutline:focus {
     outline-width: 0;
 }
 
-/* input fields on servoy forms for ipad */
+/* input fields on servoy forms for ipad2 */
 @media only screen
 and (min-device-width : 768px)
 and (max-device-width : 1024px) {
