@@ -62,7 +62,7 @@ function centerForm(formName) {
 	//part 1
 	setTimeout(function(){
 		//load in resource
-		$('head').append('<script type="text/javascript" src="/ds/js/activity-indicator.js"></script>');
+		$('head').append('<script type="text/javascript" src="/ds/js/lib/activity-indicator.js"></script>');
 		
 		//remove infoPanel if present
 			//this throws error with servoy code...should probably seek to remove another way

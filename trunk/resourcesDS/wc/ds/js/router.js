@@ -16,13 +16,6 @@
  *	to maintain the history stack, configure the iframe, etc.
  */
 
-
-// the domain that webclient is accessible on (same as the one this wrapper is served from)
-var dsDomain = '';	//'http://servlets:8081';
-
-// the parent domain that the small login page is served from
-var dsLoginDomain = 'http://localhost:8081'
-
 // porthole so able to speak with any parent iframe
 var windowProxy;
 window.onload=function(){ 
@@ -33,7 +26,9 @@ window.onload=function(){
 };
 
 // alert when window's focus gained/lost
-function handleVisibilityChange() {
+function handleVisibilityChange(e, state) {
+	var tabHidden = state == 'hidden'
+	
 	//get iframe to send call back to server
 	var iframeHeader = document.getElementById('wc_chatter');
 	
@@ -41,19 +36,17 @@ function handleVisibilityChange() {
 	var dynamicURL = dsDomain + "/servoy-webclient/ss/s/__DATASUTRA__/m/DS_router_visibility/a/";
 	
 	//alert server that this tab no longer has focus
-	if (document.webkitHidden) {
+	if (tabHidden) {
 		dynamicURL += 'true/';
-		// console.log('hidden at: ' + new Date());
 	}
 	//poll server to get an active connection again
 	else {
 		dynamicURL += 'false/';
-		// console.log('shown at: ' + new Date());
 	}
 	
 	//iframe created, null it out
 	if (iframeHeader) {
-		iframeHeader.src = '';
+		iframeHeader.src = 'about:blank';
 	}
 	//iframe not created yet, create it
 	else {
@@ -66,6 +59,7 @@ function handleVisibilityChange() {
 		iframeHeader.height = 0;
 		iframeHeader.scrolling = 'no';
 		iframeHeader.frameBorder = 0;
+		iframeHeader.seamless = 'seamless';
 		iframeHeader.style = 'visibility:hidden';
 	
 		// iframe load
@@ -80,9 +74,9 @@ function handleVisibilityChange() {
 		dynamicURL += 'path/' + path + '/';
 	}
 	
-	//when switching tabs, the show of the one you're going to fires before the hide of the one you left...try to get this firing in the right order...actually not, breakpoints were throwing me off
+	//when switching tabs, the show of the one you're going to fires before the hide of the one you left...try to get this firing in the right order
 	// fire hide event now
-	if (document.webkitHidden) {
+	if (tabHidden) {
 		iframeHeader.src = dynamicURL;
 	}
 	//fire show event in the future
@@ -93,7 +87,7 @@ function handleVisibilityChange() {
 	}
 	// iframeHeader.src = dynamicURL;
 }
-document.addEventListener("webkitvisibilitychange", handleVisibilityChange, false);
+Visibility.change(handleVisibilityChange);
 
 // clean up function to remove additional 'chatter' iframe
 function removeChatter() {
@@ -115,12 +109,12 @@ function removeChatter() {
 		// console.log('CHECK STAT: ' + timeOut);
 		
 		// only the Please wait has loaded
-		if (window.frames['wc'] && window.frames['wc'].window && window.frames['wc'].window.document && 
-			window.frames['wc'].window.document.getElementsByTagName('body').length && 
-			(window.frames['wc'].window.document.getElementsByTagName('body')[0].getAttribute('onload') == "javascript:submitform();" || 
-			window.frames['wc'].window.document.getElementsByTagName('body')[0].getAttribute('onload') == "window.setTimeout(submitform,50);")) {
+		if (window.frames['wc_application'] && window.frames['wc_application'].window && window.frames['wc_application'].window.document && 
+			window.frames['wc_application'].window.document.getElementsByTagName('body').length && 
+			(window.frames['wc_application'].window.document.getElementsByTagName('body')[0].getAttribute('onload') == "javascript:submitform();" || 
+			window.frames['wc_application'].window.document.getElementsByTagName('body')[0].getAttribute('onload') == "window.setTimeout(submitform,50);")) {
 			
-			window.frames['wc'].window.document.getElementById('loading').innerHTML = '';
+			window.frames['wc_application'].window.document.getElementById('loading').innerHTML = '';
 		}
 		// keep running for 5 seconds or until changed once
 			//will not get changed if really slow network or if webclient already started
@@ -157,10 +151,12 @@ function removeChatter() {
 // center login form
 function centerForm(formName) {
 	//center the form (will recall this method to actually unlock the screen)
-	window.frames['wc'].window.centerForm(formName)
+	if (window.frames['wc_application'] && window.frames['wc_application'].window && window.frames['wc_application'].window.centerForm) {
+		window.frames['wc_application'].window.centerForm(formName)
+	}
 }
 
-// center login form
+// unblock the screen
 function viewForm(toggle) {
 	if (document.getElementById('sutra') && document.getElementById('blocker')) {
 		//unlock the screen
@@ -183,7 +179,9 @@ function viewForm(toggle) {
 
 // call method in iframe if doesn't exist
 function triggerAjaxUpdate() {
-	window.frames['wc'].window.triggerAjaxUpdate(arguments[0],arguments[1],arguments[2],arguments[3])
+	if (window.frames['wc_application'] && window.frames['wc_application'].window && window.frames['wc_application'].window.triggerAjaxUpdate) {
+		window.frames['wc_application'].window.triggerAjaxUpdate.apply(arguments)
+	}
 }
 
 
@@ -239,7 +237,7 @@ function router(data) {
 		append = 'DSLogout/';
 	}
 	// redirect to pop out of inline form
-		// special url needed so that client-side javascript can fire to get anchoring to work again
+		// MEMO: special url needed so that client-side javascript can fire to get anchoring to work again
 	else if (append == 'launchingDS/') {
 		append = 'DSHomeCall/';
 	}
@@ -271,6 +269,7 @@ function router(data) {
 	iframeHeader.height = '100%';
 	iframeHeader.scrolling = 'yes';
 	iframeHeader.frameBorder = 0;
+	iframeHeader.seamless = 'seamless';
 	
 	// iframe load
 	iframeHeaderCell.appendChild(iframeHeader);	

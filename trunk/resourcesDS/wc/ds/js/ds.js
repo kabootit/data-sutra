@@ -16,7 +16,7 @@
  *	application platform when it is run in an iframe from the router/wrapper.
  */
 
-//try to pre-render page before shown to minimize flicker as dom rewritten
+// try to pre-render page before shown to minimize flicker as dom rewritten
 function preRender(description,path,delay) {
 	//if running in chrome, try to prerender page and then navigate there
 	if (false) {
@@ -32,10 +32,11 @@ function preRender(description,path,delay) {
 	}
 }
 
-//break out of parent iframe and start application
-function launchApp() {
+// break out of parent iframe and start application
+function launchApp(landingPage) {
 	if (window.parent && window.parent.windowProxy) {
-		window.parent.windowProxy.post({path:true});
+		var url = landingPage || true
+		window.parent.windowProxy.post({path:url});
 	}
 }
 
@@ -48,4 +49,57 @@ function refreshOnShow() {
 		//trash chatter iframe
 		window.parent.removeChatter()
 	},10);
+}
+
+// show login inline after inline logout
+function reLogin(smallForm) {
+	//disconnect visibility methods
+	if (window.parent.Visibility) {
+		window.parent.Visibility.change(function(){});
+	}
+	
+	//call logout method in iframe
+	//get iframe to send call back to server
+	var iframeHeader = window.parent.document.getElementById('wc_chatter');
+	
+	//iframe created already, null it out
+	if (iframeHeader) {
+		iframeHeader.src = 'about:blank';
+	}
+	//iframe not created yet, create it
+	else {
+		// iframe setup
+		var iframeHeaderCell = window.parent.document.getElementById('sutra');
+		
+		var iframeHeader = window.parent.document.createElement('IFRAME');
+		iframeHeader.id = 'wc_chatter';
+		iframeHeader.width = 0;
+		iframeHeader.height = 0;
+		iframeHeader.scrolling = 'no';
+		iframeHeader.frameBorder = 0;
+		iframeHeader.seamless = 'seamless';
+		iframeHeader.style = 'visibility:hidden';
+		iframeHeader.src = "/servoy-webclient/ss/s/__DATASUTRA__/m/DS_router_logout/";
+		
+		// load logout in secondary iframe
+		iframeHeaderCell.appendChild(iframeHeader);
+	}
+	
+	//redirect to login page after logout has time (hopefully) to finish running
+	setTimeout(function() {
+		// load a blank in the main iframe
+		window.parent.document.getElementById('wc_application').src = 'about:blank'
+		
+		//for external logout, only want to refresh that iframe
+		if (smallForm) {
+			//remove out the extra iframe
+			window.parent.removeChatter()
+					
+			window.parent.document.getElementById('wc_application').src = '/ds/loginInline'
+		}
+		//for standalone logout, blow out the whole page
+		else {
+			window.top.location = '/ds/login'
+		}
+	},1000);
 }

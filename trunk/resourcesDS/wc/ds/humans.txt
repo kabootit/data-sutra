@@ -1,0 +1,33 @@
+/* TEAM */
+
+	Main Brain: David Workman
+	Contact: info [at] data-mosaic.com
+	Site: http://www.data-mosai.com/
+	Twitter: @DataMosaic
+	Location: Washington, D.C., USA
+	
+	Programmer: Troy Elliott
+	Site: http://www.data-mosai.com/
+	Twitter: @troyselliott
+	Location: Takoma Park, MD, USA
+	
+	Hosting: Lachlan Dunlop
+	Site: http://www.lach.net/
+	Twitter: @lachness
+	Location: St. Paul, MN, USA
+	
+
+/* THANKS */
+
+	Hosting: Lachlan Dunlop
+	Site: http://www.lach.net/
+	Twitter: @lachness
+	Location: St. Paul, MN, USA
+	
+
+/* SITE */
+
+	Language: English
+	Standards: HTML5
+	Components: jQuery, Servoy
+	Software: Servoy, TextMate, Chrome, Photoshop

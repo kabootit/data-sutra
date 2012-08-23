@@ -16,6 +16,14 @@
  *	An easy reference instead of digging back through past SVN revisions.
  */
 
+// what domain are we running on?
+function getDomain() {
+	var url = window.location.href;
+	var arr = url.split("/");
+	var result = arr[0] + "//" + arr[2];
+	return result;
+}
+
 //	Useful frame speak
 window.parent && 
 window.parent.window && 
