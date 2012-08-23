@@ -94,12 +94,12 @@ function LOGIN(event) {
 			globals.DATASUTRA_web_cursor = true
 			
 			//go back to main screen form
-			history.go(-2)
+			history.go(-(history.size() - 1))
 			
 			history.removeForm('DATASUTRA')
 			history.removeForm(controller.getName())
 			
-			//add on the you're already logged in, dummy form
+			//add on the "you're already logged in, dummy form"
 			forms.AC_R__login_WEB__small_loggedIn.controller.show()
 			history.go(-1)
 		}
@@ -179,5 +179,5 @@ function DEMO(event) {
 	forms.AC_R__login_1F__nopassword.login_disabled = 0
 	
 	//go back to main screen form
-	history.go(-2)
+	history.go(-(history.size() - 1))
 }

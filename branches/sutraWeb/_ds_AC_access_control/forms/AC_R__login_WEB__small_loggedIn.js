@@ -19,7 +19,7 @@ var _shown = false;
  *
  * @properties={typeid:24,uuid:"D0C059DE-8AA5-4217-A81F-A96CCF3CF48D"}
  */
-function LOGIN(event) {
+function TEST(event) {
 	function dialog(title,text) {
 		var html = '<html><body>'
 		
@@ -64,11 +64,33 @@ function FORM_on_show(firstShow, event) {
 		_shown = true
 	}
 	
-	_dialog = 'mbolton is already logged in\nhello world!'
+	_dialog = solutionPrefs.access.userName + ' is logged in.'
 	
 	// attach style to form to center it
 	plugins.WebClientUtils.executeClientSideJS('centerForm("' + controller.getName() + '");')
 	
 	// move indicator to beside the login button
 	plugins.WebClientUtils.executeClientSideJS('loginIndicator(500);')
+}
+
+/**
+ * Perform the element default action.
+ *
+ * @param {JSEvent} event the event that triggered the action
+ *
+ * @properties={typeid:24,uuid:"E604DACC-EACD-4B19-A288-F0954A541F36"}
+ */
+function LOGOUT(event) {
+	plugins.WebClientUtils.executeClientSideJS('reLogin(true);')
+}
+
+/**
+ * Perform the element default action.
+ *
+ * @param {JSEvent} event the event that triggered the action
+ *
+ * @properties={typeid:24,uuid:"FE4F9514-776E-4F83-87A3-B86119E0C7A6"}
+ */
+function CONT(event) {
+	globals.DS_router(null,null,solutionPrefs.config.currentFormID,true)
 }
