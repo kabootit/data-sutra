@@ -18,24 +18,35 @@
  */
 
 //	Update indicator to be new style (next to login button)
-function loginIndicator(delay) {
+function loginIndicator(signup) {
 	var indicator = $('.indicator');
-	var loginButton = $('.loginDS');
+	// sign up button
+	if (signup) {
+		var button = $('.signupDS');
+		var offsetTop = 2;
+		var offsetLeft = -30;
+	}
+	// log in button
+	else {
+		var button = $('.loginDS');
+		var offsetTop = 2;
+		var offsetLeft = -38;
+	}
 	
 	//we have enough things loaded to actually run this method
-	if (loginButton.length && loginButton.offset()) {
+	if (button.length && button.offset()) {
 		//put indicator next to toolbar button
 		indicator.offset({
-				top: loginButton.offset().top, 
-				left: loginButton.offset().left - 30
+				top: button.offset().top + offsetTop, 
+				left: button.offset().left + offsetLeft
 			})
 	}
 	//run this function again until enough loaded
 	else {
 		setTimeout(function(){
-			loginIndicator(delay)
-		},delay || 250)
-		console.log('LOGIN waiting....');
+			loginIndicator(signup)
+		},500)
+		// console.log('LOGIN indicator waiting....');
 	}
 }
 
@@ -241,4 +252,33 @@ function recordNavigatorFirstShow(source) {
 		$("#servoy_page").append(script);
 		recNavFirstShow();
 	},500)
+}
+
+//	Fill placeholder text for one element
+function setPlaceHolderText(elem,text) {
+	var selector = $("#" + elem);
+	
+	//we have a jquery selector
+	if (elem && selector.length) {
+		selector.attr('placeholder', text || '');
+	}
+}
+
+//	Fill placeholder texts on a form after optional delay
+function setPlaceHolders(elements,texts,delay) {
+	// elements = elements ? JSON.parse(elements) : new Array();
+	// texts = texts ? JSON.parse(texts) : new Array();
+	
+	if (!elements instanceof Array) {
+		elements = new Array()
+	}
+	if (!texts instanceof Array) {
+		texts = new Array()
+	}
+	
+	setTimeout(function(){
+		for (var i = 0; i < elements.length; i++) {
+			setPlaceHolderText(elements[i],texts[i]);
+		}
+	},delay || 0)
 }
