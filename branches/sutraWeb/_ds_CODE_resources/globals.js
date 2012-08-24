@@ -4857,8 +4857,41 @@ function CODE_workspace_data()
 	var workspace = plugins.sutra.getWorkspace().substr(5)
 	var modules = plugins.file.getFolderContents(workspace, null, 2)
 	
+	
+	//loop over all modules and find the currently activated one
 	for (var i = 0; i < modules.length; i++) {
 		var module = modules[i]
+		if (module.getName() == application.getSolutionName()) {
+			var parentModule = module
+			
+			//get child modules to loop over
+			var settings = plugins.file.readTXTFile(parentModule.getAbsolutePath() + '/solution_settings.obj')
+			
+			settings = settings.split(',\n')
+			
+			for (var k = 0; k < settings.length; k++) {
+				if (utils.stringPosition(settings[k], 'modulesNames:"', 0, 1) == 1) {
+					var childModules = settings[k].substring(14,settings[k].length - 1)
+					childModules = childModules.split(',')
+					
+					//tack on parent module
+					childModules.unshift(parentModule.getName())
+					break
+				}
+			}
+			
+			break
+		}
+	}
+	
+	for (var i = 0; i < modules.length; i++) {
+		var module = modules[i]
+		
+		//check to make sure that we're only working with child modules
+//		if (childModules && childModules.indexOf(module.getName()) == -1) {
+//			continue
+//		}
+		
 		//var contents = plugins.file.getFolderContents(module)
 		
 		if (tano) {
@@ -5990,7 +6023,11 @@ function CODE_license_insert() {
 			}
 		}
 		
-		globals.DIALOGS.showInfoDialog('Completed','Licensing text has been inserted in all ' + cnt - 1 + '.js files.')
+		if (application.isInDeveloper() && application.getApplicationType() == APPLICATION_TYPES.SMART_CLIENT) {
+			plugins.dialogs.showInfoDialog('Completed','Licensing text has been inserted in all ' + cnt - 1 + '.js files.')
+		}
+		//bug with continuations and file plugin?
+//		globals.DIALOGS.showInfoDialog('Completed','Licensing text has been inserted in all ' + cnt - 1 + '.js files.')
 	}
 }
 
