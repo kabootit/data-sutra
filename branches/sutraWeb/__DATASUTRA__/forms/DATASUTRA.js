@@ -48,8 +48,15 @@ function FORM_on_show(firstShow, event) {
 	//these shenanigans have to do with switching to another form in the onload of the solutions default form
 	if (firstShow && (application.getApplicationType() == APPLICATION_TYPES.SMART_CLIENT || application.getApplicationType() == APPLICATION_TYPES.RUNTIME_CLIENT)) {
 		history.go(-2)
-		history.go(+1)
+
+		if (history.getFormName(history.getCurrentIndex()) == 'DATASUTRA__error') {
+			history.removeForm('DATASUTRA_0F_solution')			
+		}
+		else {
+			history.go(+1)
+		}
+
 		history.removeForm('DATASUTRA')
-		history.removeForm('DATASUTRA_0F_solution__blank_4')
+		history.removeForm('DATASUTRA_0F_solution__blank_4')		
 	}
 }
