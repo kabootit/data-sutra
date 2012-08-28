@@ -94,6 +94,14 @@ name:"order_description"
 },
 {
 allowNull:true,
+autoEnterType:5,
+creationOrderIndex:20,
+dataType:4,
+lookupValue:"scopes.globals.AC_current_organization",
+name:"organization_id"
+},
+{
+allowNull:true,
 creationOrderIndex:12,
 dataType:8,
 length:22,

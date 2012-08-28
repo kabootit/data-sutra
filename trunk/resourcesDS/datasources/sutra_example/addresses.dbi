@@ -126,6 +126,14 @@ name:"modification_user"
 },
 {
 allowNull:true,
+autoEnterType:5,
+creationOrderIndex:23,
+dataType:4,
+lookupValue:"scopes.globals.AC_current_organization",
+name:"organization_id"
+},
+{
+allowNull:true,
 creationOrderIndex:17,
 dataType:12,
 length:20,

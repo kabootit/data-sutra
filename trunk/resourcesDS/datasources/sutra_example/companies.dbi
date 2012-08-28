@@ -120,6 +120,14 @@ allowNull:true,
 creationOrderIndex:14,
 dataType:4,
 name:"order_item_id"
+},
+{
+allowNull:true,
+autoEnterType:5,
+creationOrderIndex:17,
+dataType:4,
+lookupValue:"scopes.globals.AC_current_organization",
+name:"organization_id"
 }
 ],
 name:"companies",

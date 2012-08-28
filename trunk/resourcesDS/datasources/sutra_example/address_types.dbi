@@ -42,6 +42,14 @@ allowNull:true,
 creationOrderIndex:3,
 dataType:4,
 name:"modification_user"
+},
+{
+allowNull:true,
+autoEnterType:5,
+creationOrderIndex:6,
+dataType:4,
+lookupValue:"scopes.globals.AC_current_organization",
+name:"organization_id"
 }
 ],
 name:"address_types",

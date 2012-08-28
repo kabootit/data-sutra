@@ -206,6 +206,14 @@ name:"one"
 },
 {
 allowNull:true,
+autoEnterType:5,
+creationOrderIndex:43,
+dataType:4,
+lookupValue:"scopes.globals.AC_current_organization",
+name:"organization_id"
+},
+{
+allowNull:true,
 creationOrderIndex:29,
 dataType:12,
 length:100,

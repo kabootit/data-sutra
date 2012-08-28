@@ -171,6 +171,14 @@ name:"orderdate"
 },
 {
 allowNull:true,
+autoEnterType:5,
+creationOrderIndex:46,
+dataType:4,
+lookupValue:"scopes.globals.AC_current_organization",
+name:"organization_id"
+},
+{
+allowNull:true,
 creationOrderIndex:16,
 dataType:93,
 name:"paid_date"

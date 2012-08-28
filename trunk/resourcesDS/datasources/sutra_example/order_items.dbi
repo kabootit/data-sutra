@@ -61,6 +61,14 @@ name:"order_id"
 },
 {
 allowNull:true,
+autoEnterType:5,
+creationOrderIndex:12,
+dataType:4,
+lookupValue:"scopes.globals.AC_current_organization",
+name:"organization_id"
+},
+{
+allowNull:true,
 creationOrderIndex:2,
 dataType:8,
 length:22,
@@ -74,6 +82,7 @@ name:"product_id"
 },
 {
 allowNull:true,
+compatibleColumnTypes:"[[3,19,2]]",
 creationOrderIndex:0,
 dataType:3,
 length:19,
