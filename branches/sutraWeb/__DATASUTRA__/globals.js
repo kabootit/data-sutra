@@ -5231,6 +5231,35 @@ function DS_router(p1,params,itemID,launch,logout) {
 		return urlString
 	}
 	
+	//helper function to get node, if not already defined
+	var dataNode = new Object()
+	function getNode(pathO, pathS, navI, req) {
+//		dataNode = {
+//			pathObject : url,
+//			pathString : getURL(),
+//			navItemID: itemID,
+//			request : application.getUUID().toString()
+//		}
+		
+		if (pathO || !dataNode.pathObject) {
+			dataNode.pathObject = url
+		}
+		
+		if (pathS || !dataNode.pathString) {
+			dataNode.pathString = getURL(pathS)
+		}
+		
+		if (navI || !dataNode.navItemID) {
+			dataNode.navItemID = itemID
+		}
+		
+		if (req || !dataNode.request) {
+			dataNode.request = application.getUUID().toString()
+		}
+		
+		return dataNode
+	}
+	
 	function setError(code, message) {
 		if (forms.DATASUTRA_WEB__error) {
 			forms.DATASUTRA_WEB__error._errorCode = code || ''
@@ -5268,11 +5297,7 @@ function DS_router(p1,params,itemID,launch,logout) {
 						'DSError_NoURL'
 					]
 	if (specialRequests.indexOf(url.set) == -1) {
-		globals.DATASUTRA_router.push({
-				path : url,
-				navItemID: itemID,
-				request : application.getUUID().toString()
-			})
+		globals.DATASUTRA_router.push(getNode())
 	}
 	
 	// if logout, redirect url
@@ -5400,7 +5425,7 @@ function DS_router(p1,params,itemID,launch,logout) {
 		
 		//redirect to correct url
 		if (navigationPrefs.byNavItemID[itemID].path) {
-			plugins.WebClientUtils.executeClientSideJS('preRender("' + navigationPrefs.byNavItemID[itemID]._about_ + '","' + getURL(navigationPrefs.byNavItemID[itemID].path) + '",' + delay + ');')
+			plugins.WebClientUtils.executeClientSideJS('preRender(null,"' + navigationPrefs.byNavItemID[itemID]._about_ + '","' + getURL(navigationPrefs.byNavItemID[itemID].path) + '",' + delay + ');')
 			return
 		}
 	}
@@ -5419,7 +5444,7 @@ function DS_router(p1,params,itemID,launch,logout) {
 			}
 			//normal call to rewrite history stack
 			else {
-				plugins.WebClientUtils.executeClientSideJS('preRender("' + navigationPrefs.byNavItemID[itemID]._about_ + '","' + getURL(navigationPrefs.byNavItemID[itemID].path) + '",' + delay + ');')
+				plugins.WebClientUtils.executeClientSideJS('preRender(null,"' + navigationPrefs.byNavItemID[itemID]._about_ + '","' + getURL(navigationPrefs.byNavItemID[itemID].path) + '",' + delay + ');')
 			}
 			return
 		}
@@ -5438,7 +5463,7 @@ function DS_router(p1,params,itemID,launch,logout) {
 		// navigate through history
 		if (p1 == 'DSHistory') {
 			//TODO: ability to specify which history item to go to
-			url = globals.DATASUTRA_router[url.history].path
+			url = globals.DATASUTRA_router[url.history].pathObject
 		}
 		
 		// particular item specified
@@ -5623,4 +5648,55 @@ function DS_router_bean_resize() {
  */
 function DS_router_logout() {
 	security.logout()
+}
+
+/**
+ * @properties={typeid:24,uuid:"75330960-68A3-4298-9BE2-074A78F5B819"}
+ */
+function DS_router_callback(path) {
+	//get url using callback
+	if (!path) {
+		plugins.WebClientUtils.executeClientSideJS('var path = window.parent.location.pathname;', DS_router_callback, ['path'])
+	}
+	//have path, figure out where to navigate to
+	else {
+		path = path.split('/')
+		//pop off first/last and ds
+		if (!path[0]) {
+			path.splice(0,1)
+		}
+		path.splice(0,1)
+		if (!path[path.length - 1]) {
+			path.pop()
+		}
+		
+		var url = {
+			set : path[0],
+			item : path[1]
+		}
+		
+		// get nav object mapping
+		var nav = (application.__parent__.navigationPrefs) ? navigationPrefs.siteMap : new Object()
+		var itemID
+		
+		// particular item specified
+		if (url.set && url.item) {
+			// this item exists
+			if (nav[url.set] && nav[url.set][url.item]) {
+				itemID = nav[url.set][url.item].navItemID
+			}
+		}
+		// only nav set specified, grab first navigation item
+		else if (url.set && nav[url.set]) {
+			// don't really need a loop, but need to grab an element inside the set referenced
+			for (var i in nav[url.set]) {
+				itemID = navigationPrefs.byNavSetID[nav[url.set][i].details.navigationItem.idNavigation].itemsByOrder[0].navigationItem.idNavigationItem
+				break
+			}
+		}
+		
+		if (itemID) {
+			globals.TRIGGER_navigation_set(null,null,null,itemID)
+		}
+	}
 }
