@@ -429,7 +429,7 @@ function LIST_redraw__webclient(event,idItem,scrollRe,loadFormsSkip,modeFavorite
 			
 			_variableWC.itemID = itemDetails.navItemID
 			
-			//call router to switch entire page
+			//call router to push history state
 			if (globals.DATASUTRA_router_enable) {
 				globals.DS_router(null,null,_variableWC.itemID)
 				return
