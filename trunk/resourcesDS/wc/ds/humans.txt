@@ -2,12 +2,12 @@
 
 	Main Brain: David Workman
 	Contact: info [at] data-mosaic.com
-	Site: http://www.data-mosai.com/
+	Site: http://www.data-mosaic.com/
 	Twitter: @DataMosaic
 	Location: Washington, D.C., USA
 	
 	Programmer: Troy Elliott
-	Site: http://www.data-mosai.com/
+	Site: http://www.data-mosaic.com/
 	Twitter: @troyselliott
 	Location: Takoma Park, MD, USA
 	

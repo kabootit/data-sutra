@@ -282,3 +282,13 @@ function setPlaceHolders(elements,texts,delay) {
 		}
 	},delay || 0)
 }
+
+//	Callback to setup navigation
+function navigateConfig(source) {
+	var script = document.createElement('script');
+	script.type = 'text/javascript';
+	script.text = source;
+	$("#servoy_page").append(script);
+	
+	//method is called navigate()
+}

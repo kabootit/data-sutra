@@ -17,52 +17,75 @@
  */
 
 // set up switcheroo for initial 'Loading...' thing
-(function() {
-	var timeOut = 1
-	
-	function checkStat() {
-		timeOut++;
-		// console.log('CHECK STAT: ' + timeOut);
-		
-		// only the Please wait has loaded
-		if (window.frames['wc_application'] && window.frames['wc_application'].window && window.frames['wc_application'].window.document && 
-			window.frames['wc_application'].window.document.getElementsByTagName('body').length && 
-			(window.frames['wc_application'].window.document.getElementsByTagName('body')[0].getAttribute('onload') == "javascript:submitform();" || 
-			window.frames['wc_application'].window.document.getElementsByTagName('body')[0].getAttribute('onload') == "window.setTimeout(submitform,50);")) {
-			
-			window.frames['wc_application'].window.document.getElementById('loading').innerHTML = '';
-		}
-		// keep running for 5 seconds or until changed once
-			//will not get changed if really slow network or if webclient already started
-		else if (timeOut < 100) {
-			setTimeout(checkStat,50);
-		}
-	}
-	
-	// start first time
-	setTimeout(checkStat,25);
-})();
+// (function() {
+// 	var timeOut = 1
+// 	
+// 	function checkStat() {
+// 		timeOut++;
+// 		// console.log('CHECK STAT: ' + timeOut);
+// 		
+// 		// only the Please wait has loaded
+// 		if (window.frames['wc_application'] && window.frames['wc_application'].window && window.frames['wc_application'].window.document && 
+// 			window.frames['wc_application'].window.document.getElementsByTagName('body').length && 
+// 			(window.frames['wc_application'].window.document.getElementsByTagName('body')[0].getAttribute('onload') == "javascript:submitform();" || 
+// 			window.frames['wc_application'].window.document.getElementsByTagName('body')[0].getAttribute('onload') == "window.setTimeout(submitform,50);")) {
+// 			
+// 			window.frames['wc_application'].window.document.getElementById('loading').innerHTML = '';
+// 		}
+// 		// keep running for 5 seconds or until changed once
+// 			//will not get changed if really slow network or if webclient already started
+// 		else if (timeOut < 100) {
+// 			setTimeout(checkStat,50);
+// 		}
+// 	}
+// 	
+// 	// start first time
+// 	setTimeout(checkStat,25);
+// })();
 
 // set up history handling
 (function(window,undefined) {
 
 	// Prepare
 	var History = window.History;
-	if ( !History.enabled ) {
+	if (!History.enabled) {
 		return false;
 	}
+	
+	function stateChange() {
+		console.log('state change: ' + History.getState().url);
+		router2(History.getState().url);
+	}
+	
+	function domLoad() {
+		console.log('on dom load: ' + History.getState().url);
+		router2(History.getState().url);
+	}
+	
+	History.Adapter.bind(window, 'statechange', stateChange);
+	History.Adapter.onDomLoad(domLoad);
 
 	// listener for using browser back/forward buttons
-	History.Adapter.bind(window,'statechange',function(){ 
-		var State = History.getState();
-		// History.log(State.data, State.title, State.url);
-		if (!State.data.server) {
-			// run the router with history data instead of url
-			router(State.data.url);
-		}
-	});
+	// History.Adapter.bind(window,'statechange',function(){ 
+	// 	var State = History.getState();
+	// 	// History.log(State.data, State.title, State.url);
+	// 	if (!State.data.server) {
+	// 		// run the router with history data instead of url
+	// 		router(State.data.url);
+	// 	}
+	// });
 
 })(window);
+
+function router2(input) {
+	//TODO: determine if called using history buttons and turn on indicator in fixed location
+	console.log('routerTWO: ' + input);
+	
+	//navigate
+	if (window.frames['wc_application'] && window.frames['wc_application'].window && window.frames['wc_application'].window.navigate) {
+		window.frames['wc_application'].window.navigate()
+	}
+}
 
 // center login form
 function centerForm(formName) {
@@ -73,25 +96,25 @@ function centerForm(formName) {
 }
 
 // unblock the screen
-function viewForm(toggle) {
-	if (document.getElementById('sutra') && document.getElementById('blocker')) {
-		//unlock the screen
-		if (toggle) {
-			//show the iframe
-			document.getElementById('sutra').style.display = 'block';
-	
-			//unlock screen
-			document.getElementById('blocker').style.display = 'none';
-		}
-		else {
-			//lock screen
-			document.getElementById('blocker').style.display = 'block';
-		
-			//hide the iframe
-			document.getElementById('sutra').style.display = 'none';
-		}
-	}
-}
+// function viewForm(toggle) {
+// 	if (document.getElementById('sutra') && document.getElementById('blocker')) {
+// 		//unlock the screen
+// 		if (toggle) {
+// 			//show the iframe
+// 			document.getElementById('sutra').style.display = 'block';
+// 	
+// 			//unlock screen
+// 			document.getElementById('blocker').style.display = 'none';
+// 		}
+// 		else {
+// 			//lock screen
+// 			document.getElementById('blocker').style.display = 'block';
+// 		
+// 			//hide the iframe
+// 			document.getElementById('sutra').style.display = 'none';
+// 		}
+// 	}
+// }
 
 // call method in iframe if doesn't exist
 function triggerAjaxUpdate() {
@@ -111,10 +134,10 @@ function routerDelay(p1,p2,p3,p4) {
 function routerReplace(p1,p2,p3) {
 	History.replaceState(p1,p2,p3)
 }
-
-function reloadPage() {
-	setTimeout(function(){window.location.reload(true)},2500);
-}
+// 
+// function reloadPage() {
+// 	setTimeout(function(){window.location.reload(true)},2500);
+// }
 
 function router(data) {
 	// handle params
@@ -176,7 +199,8 @@ function router(data) {
 	// swc iframe setup
 	var iframeHeaderCell = document.getElementById('sutra');
 	iframeHeaderCell.innerHTML = "";
-	var dynamicURL = dsDomain + "/servoy-webclient/ss/s/__DATASUTRA__/m/DS_router/a/" + append;
+	// var dynamicURL = dsDomain + "/servoy-webclient/ss/s/__DATASUTRA__/m/DS_router/a/" + append;
+	var dynamicURL = "/servoy-webclient/ss/s/__DATASUTRA__/m/DS_router/a/" + append;
 	
 	var iframeHeader = document.createElement('IFRAME');
 	iframeHeader.id = 'wc_application';

@@ -17,17 +17,17 @@
  */
 
 // try to pre-render page before shown to minimize flicker as dom rewritten
-function preRender(description,path,delay) {
+function preRender(data,description,path,delay) {
 	//if running in chrome, try to prerender page and then navigate there
 	if (false) {
 		$('head', window.parent.document).append('<link rel="prerender" type="text/css" href="' + path + '" />');
-		window.parent.routerDelay(null,description,path,delay || 500);
+		window.parent.routerDelay(data,description,path,delay || 500);
 	}
 	//not chrome, just go there
 	else {
 		//called from data sutra wrapper
 		if (window.top.routerDelay) {
-			window.parent.routerDelay(null,description,path,250);
+			window.parent.routerDelay(data,description,path,250);
 		}
 	}
 }
