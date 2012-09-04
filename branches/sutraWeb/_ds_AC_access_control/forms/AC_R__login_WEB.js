@@ -361,5 +361,5 @@ function INDICATOR(oldValue, newValue, event) {
  */
 function SAMPLE_data() {
 	//blow in sample crm data
-	
+	globals.AC_sample_data()
 }

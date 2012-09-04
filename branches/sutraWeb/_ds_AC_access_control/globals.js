@@ -227,3 +227,10 @@ if (forms[formName].foundset.getSize()) {
 	password.idle = forms[formName].idle_flag
 */
 }
+
+/**
+ * @properties={typeid:24,uuid:"2D27600D-720B-4095-9CF1-8882A69B66EB"}
+ */
+function AC_sample_data() {
+	
+}
