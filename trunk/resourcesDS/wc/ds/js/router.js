@@ -54,12 +54,12 @@
 	
 	function stateChange() {
 		console.log('state change: ' + History.getState().url);
-		router2(History.getState().url);
+		router(History.getState().url);
 	}
 	
 	function domLoad() {
 		console.log('on dom load: ' + History.getState().url);
-		router2(History.getState().url);
+		router(History.getState().url);
 	}
 	
 	History.Adapter.bind(window, 'statechange', stateChange);
@@ -71,19 +71,20 @@
 	// 	// History.log(State.data, State.title, State.url);
 	// 	if (!State.data.server) {
 	// 		// run the router with history data instead of url
-	// 		router(State.data.url);
+	// 		routerIframe(State.data.url);
 	// 	}
 	// });
 
 })(window);
 
-function router2(input) {
+function router(input) {
 	//TODO: determine if called using history buttons and turn on indicator in fixed location
-	console.log('routerTWO: ' + input);
 	
 	//navigate
 	if (window.frames['wc_application'] && window.frames['wc_application'].window && window.frames['wc_application'].window.navigate) {
 		window.frames['wc_application'].window.navigate()
+		
+		console.log('routerTWO: ' + input);
 	}
 }
 
@@ -134,12 +135,12 @@ function routerDelay(p1,p2,p3,p4) {
 function routerReplace(p1,p2,p3) {
 	History.replaceState(p1,p2,p3)
 }
-// 
-// function reloadPage() {
-// 	setTimeout(function(){window.location.reload(true)},2500);
-// }
 
-function router(data) {
+function reloadPage() {
+	setTimeout(function(){window.location.reload(true)},2500);
+}
+
+function routerIframe(data) {
 	// handle params
 	var append = "";
 	
@@ -217,4 +218,4 @@ function router(data) {
 };
 
 // run router first time
-setTimeout(router,0);
+setTimeout(routerIframe,0);
