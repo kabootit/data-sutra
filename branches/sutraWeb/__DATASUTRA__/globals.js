@@ -5309,6 +5309,12 @@ function DS_router(p1,params,itemID,launch,logout) {
 	//this must be called from the router and therefore we must be running in the iframe router wrapper
 	globals.DATASUTRA_router_enable = true
 	
+	//set up callback on form for navigating when in router wrapper -- see DATASUTRA_WEB_0F.FORM_on_show
+		//MEMO: only needed when url manually typed in
+	var callback = plugins.WebClientUtils.generateCallbackScript(globals.DS_router_callback,null,false)
+	var jsCallback = 'function navigate(){' + callback + '}';
+	plugins.WebClientUtils.executeClientSideJS('navigateConfig(' + jsCallback + ');')
+	
 	// external login form requested and already logged in, show something to this effect
 	if (url.set == 'DSLoginSmall' && application.__parent__.solutionPrefs && solutionPrefs.access && solutionPrefs.access.userID) {
 		history.go(+1)
@@ -5695,6 +5701,7 @@ function DS_router_callback(path) {
 			}
 		}
 		
+		//navigate to the correct form
 		if (itemID) {
 			globals.TRIGGER_navigation_set(null,null,null,itemID)
 		}

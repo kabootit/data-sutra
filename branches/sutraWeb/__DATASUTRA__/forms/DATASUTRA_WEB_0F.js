@@ -61,7 +61,7 @@ function FORM_on_show(firstShow, event) {
 		}
 	}
 	
-	//set up callback on form for navigating when in router wrapper
+	//set up callback on form for navigating when in router wrapper -- see globals.DS_router
 	if (globals.DATASUTRA_router_enable) {
 		var callback = plugins.WebClientUtils.generateCallbackScript(globals.DS_router_callback,null,false)
 		var jsCallback = 'function navigate(){' + callback + '}';
