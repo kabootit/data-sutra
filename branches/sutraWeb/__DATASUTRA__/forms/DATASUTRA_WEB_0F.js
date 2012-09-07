@@ -25,8 +25,9 @@ function FORM_on_load(event) {
 		FORM_setup(controller.getName(),'DATASUTRA_0F_solution__blank_4')
 		
 		//over ride client properties
-		application.putClientProperty(APP_WEB_PROPERTY.WEBCLIENT_TEMPLATES_DIR, 'datasutra')
-		application.putClientProperty(APP_UI_PROPERTY.TABLEVIEW_WC_DEFAULT_SCROLLABLE, true)
+		application.putClientProperty(APP_WEB_PROPERTY.WEBCLIENT_TEMPLATES_DIR,'datasutra')
+		application.putClientProperty(APP_UI_PROPERTY.TABLEVIEW_WC_DEFAULT_SCROLLABLE,true)
+		application.putClientProperty(APP_UI_PROPERTY.TABLEVIEW_WC_SCROLLABLE_KEEP_LOADED_ROWS,true)
 		
 		//force inclusion of jquery
 		plugins.WebClientUtils.addJsReference(SERVOY_WEB_RESOURCES.JQUERY)
