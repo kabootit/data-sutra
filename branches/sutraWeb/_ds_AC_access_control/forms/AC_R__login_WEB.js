@@ -81,11 +81,27 @@ function SET_dialog(title,text) {
  * Perform the element default action.
  *
  * @param {JSEvent} event the event that triggered the action
+ * @param {Boolean} isWebkit Flag that ok to proceed with login
  *
  * @properties={typeid:24,uuid:"5B798C58-937C-4967-82CC-1C59FF1F5D95"}
  */
-function LOGIN(event) {
-	if (!_userName && !_userPass) {
+function LOGIN(event,webkit) {
+	//browser sniffing
+	if (typeof webkit == 'string') {
+		webkit = eval(webkit)
+	}
+	else {
+		plugins.WebClientUtils.executeClientSideJS('var isWebkit = $.browser.webkit;',LOGIN,[null,'isWebkit'])
+		return
+	}
+	
+	if (!webkit) {
+		SET_dialog(
+			"Unsupported browser", 
+			"You are using an unsupported browser and cannot log in.<br><br>Please try again with Chrome or Safari."
+		)
+	}
+	else if (!_userName && !_userPass) {
 		SET_dialog(
 			"Invalid login", 
 			"You must enter a username and password to log in"
@@ -310,7 +326,7 @@ function CREATE(event) {
 		databaseManager.saveData()
 		
 		//create sample dataset
-		SAMPLE_data()
+		globals.AC_sample_data(newOrg)
 		
 		_userName = _newUser
 		_userPass = null
@@ -322,11 +338,13 @@ function CREATE(event) {
 		//go ahead and prefill user name
 		SET_dialog(
 			"Success",
-			"Please re-enter your password..."
+			"Your account has been created.<br>Please enter your password to login..."
 		)
 		
+		//toggle elements showing
 		plugins.WebClientUtils.executeClientSideJS('setTimeout(function(){$(".newSuccessDS").fadeIn("medium")},250);')
 		plugins.WebClientUtils.executeClientSideJS('setTimeout(function(){$(".newDS").fadeOut("slow")},250);')
+		plugins.WebClientUtils.executeClientSideJS('setTimeout(function(){$(".signupDS").fadeOut("slow")},250);')
 	}
 	else {
 		SET_dialog(
@@ -354,12 +372,4 @@ function INDICATOR(oldValue, newValue, event) {
 	else {
 		plugins.WebClientUtils.executeClientSideJS('loginIndicator();')
 	}
-}
-
-/**
- * @properties={typeid:24,uuid:"A9DFC6F5-75D2-45D1-B519-044B1EEF9D60"}
- */
-function SAMPLE_data() {
-	//blow in sample crm data
-	globals.AC_sample_data()
 }

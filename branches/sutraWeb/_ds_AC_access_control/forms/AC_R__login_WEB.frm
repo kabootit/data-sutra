@@ -1,16 +1,6 @@
 dataSource:"db:/sutra/sutra_solution",
 items:[
 {
-horizontalAlignment:2,
-location:"130,632",
-size:"150,25",
-styleClass:"button",
-text:"Forgot Your Password?",
-transparent:true,
-typeid:7,
-uuid:"05C41CC8-0806-4E4B-BE0C-26AE757C7279"
-},
-{
 borderType:"SpecialMatteBorder,0.0,0.0,1.0,0.0,#000000,#000000,#cacaca,#000000,0.0,1.0",
 displaysTags:true,
 fontType:"Helvetica Neue,0,20",
@@ -27,23 +17,13 @@ typeid:7,
 uuid:"0AAAE14C-0C0C-4CA6-AD2C-EB38C94D5FF3"
 },
 {
-dataProviderID:"_userEmail",
-fontType:"Helvetica Neue,0,18",
-location:"130,680",
-name:"var_userEmail",
-size:"200,30",
-tabSeq:3,
-typeid:4,
-uuid:"22299A51-C213-4B1B-B639-79D5DD003DB8"
-},
-{
-location:"260,805",
+location:"260,505",
 onActionMethodID:"86418204-CDC1-403C-81DC-36A19F06F72A",
 rolloverCursor:12,
 showClick:false,
 showFocus:false,
 size:"70,30",
-styleClass:"button_new",
+styleClass:"button_web",
 tabSeq:-2,
 text:"Demo!",
 typeid:7,
@@ -91,6 +71,7 @@ typeid:4,
 uuid:"52B6469A-1AED-4E62-AB63-C6C98AAE860F"
 },
 {
+anchors:11,
 borderType:"SpecialMatteBorder,0.0,0.0,1.0,0.0,#000000,#000000,#cacaca,#000000,0.0,1.0",
 displaysTags:true,
 fontType:"Helvetica Neue,1,24",
@@ -123,19 +104,6 @@ typeid:7,
 uuid:"8D9E6540-62FE-43B4-8789-D979A63F9623"
 },
 {
-location:"150,725",
-onActionMethodID:"ABCDFAF8-CFCB-4AFB-8267-1111535B8547",
-rolloverCursor:12,
-showClick:false,
-showFocus:false,
-size:"180,30",
-styleClass:"button_new",
-tabSeq:-2,
-text:"Reset & Email Password",
-typeid:7,
-uuid:"94854514-C968-4703-9FC5-EF8547D25983"
-},
-{
 dataProviderID:"_newName",
 location:"100,250",
 name:"var_newName",
@@ -149,15 +117,6 @@ typeid:4,
 uuid:"9566D0C0-01C5-41CC-B6BC-60C94B348895"
 },
 {
-location:"130,662",
-size:"100,20",
-text:"Email Address",
-transparent:true,
-typeid:7,
-uuid:"A1D0FF8A-A31D-44A9-95B1-9E5F080CCE10",
-verticalAlignment:1
-},
-{
 dataProviderID:"_userName",
 location:"100,80",
 name:"var_userName",
@@ -168,18 +127,6 @@ styleClass:"web",
 tabSeq:1,
 typeid:4,
 uuid:"AF0928B1-DF46-49FC-B634-D95C0B399DD4"
-},
-{
-location:"164,855",
-onActionMethodID:"-1",
-onDoubleClickMethodID:"-1",
-onRightClickMethodID:"-1",
-rolloverCursor:12,
-size:"70,30",
-tabSeq:-2,
-text:"button",
-typeid:7,
-uuid:"B4828071-070F-4FD3-A00C-A1C8D7E58E76"
 },
 {
 location:"260,120",
@@ -228,6 +175,7 @@ typeid:4,
 uuid:"EB079DDB-6C3E-440B-94D7-65579F4717EF"
 },
 {
+anchors:11,
 borderType:"SpecialMatteBorder,0.0,0.0,1.0,0.0,#000000,#000000,#cacaca,#000000,0.0,1.0",
 displaysTags:true,
 fontType:"Helvetica Neue,0,20",
