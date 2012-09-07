@@ -17,41 +17,42 @@
  */
 
 // set up switcheroo for initial 'Loading...' thing
-// (function() {
-// 	var timeOut = 1
-// 	
-// 	function checkStat() {
-// 		timeOut++;
-// 		// console.log('CHECK STAT: ' + timeOut);
-// 		
-// 		// only the Please wait has loaded
-// 		if (window.frames['wc_application'] && window.frames['wc_application'].window && window.frames['wc_application'].window.document && 
-// 			window.frames['wc_application'].window.document.getElementsByTagName('body').length && 
-// 			(window.frames['wc_application'].window.document.getElementsByTagName('body')[0].getAttribute('onload') == "javascript:submitform();" || 
-// 			window.frames['wc_application'].window.document.getElementsByTagName('body')[0].getAttribute('onload') == "window.setTimeout(submitform,50);")) {
-// 			
-// 			window.frames['wc_application'].window.document.getElementById('loading').innerHTML = '';
-// 		}
-// 		// keep running for 5 seconds or until changed once
-// 			//will not get changed if really slow network or if webclient already started
-// 		else if (timeOut < 100) {
-// 			setTimeout(checkStat,50);
-// 		}
-// 	}
-// 	
-// 	// start first time
-// 	setTimeout(checkStat,25);
-// })();
+(function() {
+	var timeOut = 1
+	
+	function checkStat() {
+		timeOut++;
+		// console.log('CHECK STAT: ' + timeOut);
+		
+		// only the Please wait has loaded
+		if (window.frames['wc_application'] && window.frames['wc_application'].window && window.frames['wc_application'].window.document && 
+			window.frames['wc_application'].window.document.getElementsByTagName('body').length && 
+			(window.frames['wc_application'].window.document.getElementsByTagName('body')[0].getAttribute('onload') == "javascript:submitform();" || 
+			window.frames['wc_application'].window.document.getElementsByTagName('body')[0].getAttribute('onload') == "window.setTimeout(submitform,50);")) {
+			
+			window.frames['wc_application'].window.document.getElementById('loading').innerHTML = '';
+		}
+		// keep running for 5 seconds or until changed once
+			//will not get changed if really slow network or if webclient already started
+		else if (timeOut < 100) {
+			setTimeout(checkStat,50);
+		}
+	}
+	
+	// start first time
+	setTimeout(checkStat,25);
+})();
 
 // set up history handling
 (function(window,undefined) {
 
-	// Prepare
+	// prepare History.js
 	var History = window.History;
 	if (!History.enabled) {
 		return false;
 	}
 	
+	// functions that listen for history navigation and hard refreshes
 	function stateChange() {
 		console.log('state change: ' + History.getState().url);
 		router(History.getState().url);
@@ -65,16 +66,6 @@
 	History.Adapter.bind(window, 'statechange', stateChange);
 	History.Adapter.onDomLoad(domLoad);
 
-	// listener for using browser back/forward buttons
-	// History.Adapter.bind(window,'statechange',function(){ 
-	// 	var State = History.getState();
-	// 	// History.log(State.data, State.title, State.url);
-	// 	if (!State.data.server) {
-	// 		// run the router with history data instead of url
-	// 		routerIframe(State.data.url);
-	// 	}
-	// });
-
 })(window);
 
 function router(input) {
@@ -82,9 +73,8 @@ function router(input) {
 	
 	//navigate
 	if (window.frames['wc_application'] && window.frames['wc_application'].window && window.frames['wc_application'].window.navigate) {
-		window.frames['wc_application'].window.navigate()
-		
 		console.log('routerTWO: ' + input);
+		window.frames['wc_application'].window.navigate()
 	}
 }
 
@@ -140,6 +130,7 @@ function reloadPage() {
 	setTimeout(function(){window.location.reload(true)},2500);
 }
 
+// use iframe to drive servoy webclient
 function routerIframe(data) {
 	// handle params
 	var append = "";

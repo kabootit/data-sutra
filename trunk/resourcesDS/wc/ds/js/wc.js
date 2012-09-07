@@ -292,3 +292,8 @@ function navigateConfig(source) {
 	
 	//method is called navigate()
 }
+
+//	Sniff browser used and disallow login from 'bad' browsers
+function browserCheck() {
+	return $.browser.webkit
+}
