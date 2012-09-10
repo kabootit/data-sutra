@@ -113,9 +113,7 @@ else if (contCnt == 0) {
  * @properties={typeid:24,uuid:"1AF3C75B-8F29-4459-AB40-59DA6DD72BEE"}
  */
 function FLD_paid_display__on_render(event) {
-	// TODO Auto-generated method stub
-	// NOTE: a property set on the renderable, will be kept on the element only during onRender
-	if (is_paid) {
+	if (event.getRecord().is_paid) {
 		event.getRenderable().fgcolor = '#009900';
 	} else {
 		event.getRenderable().fgcolor = '#cc0000';
