@@ -243,6 +243,18 @@ function AC_sample_data(org) {
 		globals.AC_current_organization = org.id_organization
 	}
 	
+	//many rows
+	var fsSample = databaseManager.getFoundSet('sutra_example','sutra_example')
+	
+	for (var i = 1; i < 10000; i++) {
+		fsSample.newRecord(false,false)
+		
+		//save data periodically to avoid lockup at the end
+		if (i % 100 == 0) {
+			databaseManager.saveData()
+		}
+	}
+	
 	//products
 	/** @type {JSFoundset<db:/sutra_example/products>} */
 	var fsProduct = databaseManager.getFoundSet('sutra_example','products')
