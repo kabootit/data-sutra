@@ -46,3 +46,12 @@ var CRM_orders_selected;
  * @properties={typeid:35,uuid:"59afa78d-7506-4ca9-8c71-a843742ac50d",variableType:4}
  */
 var CRM_products_selected;
+
+/**
+ * Callback method for when solution is opened.
+ *
+ * @properties={typeid:24,uuid:"A0AF7373-7BCC-469A-B839-2BC1B6700AA8"}
+ */
+function onSolutionOpen() {
+	application.setUIProperty(APP_WEB_PROPERTY.WEBCLIENT_TEMPLATES_DIR, 'datasutra')
+}
