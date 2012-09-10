@@ -264,6 +264,20 @@ function CREATE(event) {
 		/** @type {JSFoundset<db:/sutra/sutra_access_user>} */
 		var fsUser = databaseManager.getFoundSet('sutra','sutra_access_user')
 		
+		//check to make sure this email doesn't already have an account
+		fsUser.find()
+		fsUser.user_name = _newUser
+		var results = fsUser.search()
+		
+		if (results) {
+			SET_dialog(
+				"Account exists",
+				"An account already exists for this email address."
+			)
+			elements.var_newUser.requestFocus()
+			return
+		}
+		
 		//check to make sure this user/pass doesn't already exist
 		fsUser.find()
 		fsUser.user_name = _newUser
