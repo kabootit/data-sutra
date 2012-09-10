@@ -5,7 +5,11 @@
  */
 function FORM_on_show(firstShow)
 {
-
+	//don't run anything on this form when in web client
+	if (application.getApplicationType() == APPLICATION_TYPES.WEB_CLIENT) {
+		return
+	}
+	
 /*
  *	TITLE    :	FORM_on_show
  *			  	
