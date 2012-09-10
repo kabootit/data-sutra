@@ -102,6 +102,20 @@ selected {
 	background-color: #487AC8;
 }
 
+grid_header {
+	background-image: linear-gradient(top, #F6F6F7, #BBBBBB);
+	
+	border: 0px solid;
+	border-right: 1px solid gray;
+	
+	/*font-size: 11pt;
+	font-weight: bold;
+	font-style: normal;
+	text-align: left;*/
+	vertical-align: center;
+	color: #333333;
+}
+
 /* grid view */
 field.tableview, check.tableview, radio.tableview, listbox.tableview, 
 combobox.tableview, label.tableview, button.tableview {

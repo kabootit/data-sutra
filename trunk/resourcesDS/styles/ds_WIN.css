@@ -334,6 +334,10 @@ selected {
 	background-color: #BED7F7;
 }
 
+grid_header {
+	
+}
+
 /* grid view */
 field.tableview, check.tableview, radio.tableview, listbox.tableview, 
 combobox.tableview, label.tableview, button.tableview {
