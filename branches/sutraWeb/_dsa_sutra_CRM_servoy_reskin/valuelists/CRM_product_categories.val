@@ -1,5 +1,5 @@
 addEmptyValue:1,
-dataProviderID1:"stored",
+dataProviderID1:"saved",
 dataProviderID2:"visible",
 dataSource:"db:/sutra/sutra_valuelist",
 name:"CRM_product_categories",
