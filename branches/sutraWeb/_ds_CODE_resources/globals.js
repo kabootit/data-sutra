@@ -1,4 +1,14 @@
 /**
+ * @properties={typeid:35,uuid:"B35E0445-3ECA-4323-8C87-BF0E5E9DEAD4",variableType:-4}
+ */
+var CODE_continuation = null;
+
+/**
+ * @properties={typeid:35,uuid:"E2514F5F-B542-4B9E-9423-5AF5CD8C129D",variableType:-4}
+ */
+var CODE_continuation_value = null;
+
+/**
  * @properties={typeid:35,uuid:"284F41A2-1873-48DF-ACD0-AF015D374D59",variableType:-4}
  */
 var DIALOGS = new function() {
@@ -1591,8 +1601,10 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset, idNavigationIt
 			
 			var lastItem = solutionPrefs.config.currentFormID
 			
+			//not using iframe to drive jump betweens now; may in the future (deeplinked related records?)
+			if (false) {
 			//call router to switch entire page when not called from router
-			if (globals.DATASUTRA_router_enable && !idNavigationItem) {
+//			if (globals.DATASUTRA_router_enable && !idNavigationItem) {
 				globals.DS_router(null,null,navItem.idNavigationItem)
 				
 				//fill global to be used on second pass through this method (after url is rewritten)
@@ -5511,91 +5523,86 @@ else {
 //activate correct tab and flip tab buttons
 for ( var i = 1 ; i <= tabTotal ; i++ ) {	
 	var tabName = prefix + i
-	if (buttonName == tabName) {
+	
+	if (tabName == buttonName) {
 		forms[formName].elements[tabName].fgcolor = foreSelect
 		forms[formName].elements[tabName].bgcolor = backSelect
 		forms[formName].elements[tabName].setFont(fontSelect)
-		
-		//set tab index
-		forms[formName].elements[tabPanelName].tabIndex = i
-		
-		//set tooltip text if element can take a tooltip, tooltip is not already set, and tab has text
-		if (typeof forms[formName].elements[tabName].toolTipText != undefined && 
-			!forms[formName].elements[tabName].toolTipText && 
-			typeof forms[formName].elements[tabName].text != undefined && 
-			forms[formName].elements[tabName].text) {
-			
-			forms[formName].elements[tabName].toolTipText = forms[formName].elements[tabName].text
-		}
-		
-		//show/hide + button
-		var tabFormName = forms[formName].elements[tabPanelName].getTabFormNameAt(i)
-		if (forms[tabFormName]) {
-			var showAdd = (forms[tabFormName].REC_new) ? true : false
-			var showActions = (forms[tabFormName].ACTIONS_list) ? true : false
-			var showDivider = showAdd && showActions
-			var showHelp = false
-			if (application.__parent__.solutionPrefs && solutionPrefs.i18n && solutionPrefs.config.language && solutionPrefs.i18n[solutionPrefs.config.language][tabFormName]) {
-				showHelp = true
-				
-				//get the bloody tooltip
-				for (var k in solutionPrefs.i18n[solutionPrefs.config.language][tabFormName]) {
-					//only get the first help tip
-					if (!helpTip) {
-						var helpTip = solutionPrefs.i18n[solutionPrefs.config.language][tabFormName][k].toolTip
-					}
-				}	
-			}
-			
-			if (forms[formName].elements[btnAdd]) {
-				forms[formName].elements[btnAdd].visible = showAdd
-			}
-			if (forms[formName].elements[btnActions]) {
-				forms[formName].elements[btnActions].visible = showActions
-			}
-			if (forms[formName].elements[btnHelp]) {
-				forms[formName].elements[btnHelp].visible = showHelp
-				
-				//showHelp enabled and element can take a tooltip, set tooltip text
-				if (showHelp && typeof forms[formName].elements[btnHelp].toolTipText != undefined) {
-					forms[formName].elements[btnHelp].toolTipText = helpTip
-				}
-			}
-			if (forms[formName].elements[lblDivider]) {
-				forms[formName].elements[lblDivider].visible = showDivider
-			}
-		}
-		
-		/*	//TODO: what to do if there is a title header?
-		//put line on tab panel if tab's form is in solution and type is table
-		var tabFormName = forms[formName].elements[tabPanelName].getTabFormNameAt(i)
-		if (forms[tabFormName] && forms[tabFormName].controller.view == 3) {
-			forms[formName].elements[tabPanelName].setBorder('MatteBorder,1,0,0,0,#808080')
-		}
-		//set default border type
-		else {
-			forms[formName].elements[tabPanelName].setBorder('EmptyBorder,0,0,0,0')
-		}
-		*/
 	}
 	else {
 		forms[formName].elements[tabName].fgcolor = foreUnselect
 		forms[formName].elements[tabName].bgcolor = backUnselect
 		forms[formName].elements[tabName].setFont(fontUnselect)
+	}
+	
+	//set tooltip text if element can take a tooltip, tooltip is not already set, and tab has text
+	if (typeof forms[formName].elements[tabName].toolTipText != undefined && 
+		!forms[formName].elements[tabName].toolTipText && 
+		typeof forms[formName].elements[tabName].text != undefined && 
+		forms[formName].elements[tabName].text) {
 		
-		//set tooltip text if element can take a tooltip, tooltip is not already set, and tab has text
-		if (typeof forms[formName].elements[tabName].toolTipText != undefined && 
-			!forms[formName].elements[tabName].toolTipText && 
-			typeof forms[formName].elements[tabName].text != undefined && 
-			forms[formName].elements[tabName].text) {
-			
-			forms[formName].elements[tabName].toolTipText = forms[formName].elements[tabName].text
-		}
-		
-	}				
+		forms[formName].elements[tabName].toolTipText = forms[formName].elements[tabName].text
+	}
 }
 
-
+if (buttonName) {
+	//set up quickvars
+	i = utils.stringToNumber(buttonName)
+	tabName = prefix + i
+	
+	//set tab index
+	forms[formName].elements[tabPanelName].tabIndex = i
+	
+	//show/hide + button
+	var tabFormName = forms[formName].elements[tabPanelName].getTabFormNameAt(i)
+	if (forms[tabFormName]) {
+		var showAdd = (forms[tabFormName].REC_new) ? true : false
+		var showActions = (forms[tabFormName].ACTIONS_list) ? true : false
+		var showDivider = showAdd && showActions
+		var showHelp = false
+		if (application.__parent__.solutionPrefs && solutionPrefs.i18n && solutionPrefs.config.language && solutionPrefs.i18n[solutionPrefs.config.language][tabFormName]) {
+			showHelp = true
+			
+			//get the bloody tooltip
+			for (var k in solutionPrefs.i18n[solutionPrefs.config.language][tabFormName]) {
+				//only get the first help tip
+				if (!helpTip) {
+					var helpTip = solutionPrefs.i18n[solutionPrefs.config.language][tabFormName][k].toolTip
+				}
+			}	
+		}
+		
+		if (forms[formName].elements[btnAdd]) {
+			forms[formName].elements[btnAdd].visible = showAdd
+		}
+		if (forms[formName].elements[btnActions]) {
+			forms[formName].elements[btnActions].visible = showActions
+		}
+		if (forms[formName].elements[btnHelp]) {
+			forms[formName].elements[btnHelp].visible = showHelp
+			
+			//showHelp enabled and element can take a tooltip, set tooltip text
+			if (showHelp && typeof forms[formName].elements[btnHelp].toolTipText != undefined) {
+				forms[formName].elements[btnHelp].toolTipText = helpTip
+			}
+		}
+		if (forms[formName].elements[lblDivider]) {
+			forms[formName].elements[lblDivider].visible = showDivider
+		}
+	}
+	
+	/*	//TODO: what to do if there is a title header?
+	//put line on tab panel if tab's form is in solution and type is table
+	var tabFormName = forms[formName].elements[tabPanelName].getTabFormNameAt(i)
+	if (forms[tabFormName] && forms[tabFormName].controller.view == 3) {
+		forms[formName].elements[tabPanelName].setBorder('MatteBorder,1,0,0,0,#808080')
+	}
+	//set default border type
+	else {
+		forms[formName].elements[tabPanelName].setBorder('EmptyBorder,0,0,0,0')
+	}
+	*/
+}
 
 }
 
@@ -6687,4 +6694,35 @@ function CODE_row_background__list(event) {
 	if (renderable.getElementType() != 'CHECK') {
 		renderable.transparent = false
 	}
+}
+/**
+ * @properties={typeid:24,uuid:"3EDF79FA-588A-4755-9B44-CCE19BEB0143"}
+ */
+function CODE_appserver_get(hostName) {
+//	var appURL = ''
+//		
+//	if (application.getApplicationType() == APPLICATION_TYPES.WEB_CLIENT) {
+//		//get url using callback
+//		if (!hostName) {
+//			plugins.WebClientUtils.executeClientSideJS('var host = window.top.location.host;', globals.CODE_appserver_get, ['host'])
+//			var kont = new Continuation()
+//			application.output(kont)
+//			return kont
+//		}
+////		//have path, figure out where to navigate to
+////		else {
+////			if (globals.CODE_continuation) {
+////				var c = globals.CODE_continuation
+////				globals.CODE_continuation = null
+////				globals.CODE_continuation_value = hostName
+////				c()
+////			}
+////		}
+////	}
+//	else {
+//		appURL = application.getServerURL().substr(7)
+//	}
+//	
+//	application.output(appURL)
+//	return appURL
 }
