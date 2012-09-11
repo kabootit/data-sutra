@@ -239,8 +239,11 @@ function FORM_on_show(firstShow, event) {
 	]
 	plugins.WebClientUtils.executeClientSideJS('setPlaceHolders(' + JSON.stringify(elems) + ',' + JSON.stringify(texts) + ');')
 	
-	//turn off auto-capitalize on iOS
-	plugins.WebClientUtils.executeClientSideJS('$("#' + plugins.WebClientUtils.getElementMarkupId(elements.var_userName) +'").attr("autocapitalize","off");')
+	//turn off auto-capitalize on iOS and set to use email keyboard
+	var id = plugins.WebClientUtils.getElementMarkupId(elements.var_userName)
+	plugins.WebClientUtils.executeClientSideJS('$("#' + id +'").get(0).type = "email";')
+	plugins.WebClientUtils.executeClientSideJS('$("#' + id +'").attr("autocapitalize","off");')
+	
 	
 	// attach style to form to center it
 	plugins.WebClientUtils.executeClientSideJS('centerForm("' + controller.getName() + '");')
