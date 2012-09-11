@@ -3037,6 +3037,11 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			forms[navigationPrefs.byNavItemID[navigationItemID].listData.tabFormInstance + '_1L'].configured = true
 		}
 	}
+	
+	if (globals.DS_web_pulse) {
+		globals.DS_web_pulse = false
+		plugins.WebClientUtils.executeClientSideJS('pulseOff();')
+	}
 }
 }
 
