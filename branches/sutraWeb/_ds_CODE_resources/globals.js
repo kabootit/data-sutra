@@ -1,4 +1,11 @@
 /**
+ * @type {Boolean}
+ *
+ * @properties={typeid:35,uuid:"972592B3-0B0B-47D7-A674-BD6B309C9D5C",variableType:-4}
+ */
+var DS_web_pulse = false;
+
+/**
  * @properties={typeid:35,uuid:"B35E0445-3ECA-4323-8C87-BF0E5E9DEAD4",variableType:-4}
  */
 var CODE_continuation = null;
