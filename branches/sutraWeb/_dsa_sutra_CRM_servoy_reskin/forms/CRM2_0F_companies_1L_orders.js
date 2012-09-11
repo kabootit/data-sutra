@@ -25,7 +25,7 @@ function GOTO_order()
  */
 
 //change the selected navigation record
-globals.TRIGGER_navigation_set(14,true,foundset) //orders is 14
+globals.TRIGGER_navigation_set(14,true) //orders is 14
 
 }
 
@@ -82,7 +82,7 @@ if (addrCnt && contCnt) {
 	//change the selected navigation record
 	GOTO_order()
 	
-	forms.CRM2_0F_orders.foundset.selectRecord(record.order_id)
+//	forms.CRM2_0F_orders.foundset.selectRecord(record.order_id)
 	forms.CRM2_0F_orders.elements.fld_order_number.requestFocus(false)
 }
 else if (addrCnt == 0) {
@@ -113,7 +113,7 @@ else if (contCnt == 0) {
  * @properties={typeid:24,uuid:"1AF3C75B-8F29-4459-AB40-59DA6DD72BEE"}
  */
 function FLD_paid_display__on_render(event) {
-	if (event.getRecord().is_paid) {
+	if (event.getRecord() && event.getRecord().is_paid) {
 		event.getRenderable().fgcolor = '#009900';
 	} else {
 		event.getRenderable().fgcolor = '#cc0000';

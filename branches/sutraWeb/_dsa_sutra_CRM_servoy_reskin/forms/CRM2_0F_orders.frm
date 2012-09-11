@@ -77,7 +77,7 @@ uuid:"161f0fd2-5f82-4603-b236-3ea190a43649"
 {
 dataProviderID:"pct_tax",
 formIndex:15300,
-format:"#%|#",
+format:"#.##%|#.####",
 location:"111,113",
 name:"fld_pct_tax",
 scrollbars:36,

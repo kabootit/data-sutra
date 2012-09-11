@@ -25,7 +25,7 @@ function GOTO_contact()
  */
 
 //change the selected navigation record
-globals.TRIGGER_navigation_set(13,true,foundset) //contacts is 13
+globals.TRIGGER_navigation_set(13,true) //contacts is 13
 
 }
 
@@ -59,6 +59,6 @@ var record = foundset.getRecord(foundset.newRecord(false,true))
 databaseManager.saveData()
 GOTO_contact()
 
-forms.CRM2_0F_contacts.foundset.selectRecord(record.contact_id)
+//forms.CRM2_0F_contacts.foundset.selectRecord(record.contact_id)
 forms.CRM2_0F_contacts.elements.fld_name_first.requestFocus(false)
 }
