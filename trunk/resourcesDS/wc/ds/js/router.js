@@ -54,12 +54,12 @@
 	
 	// functions that listen for history navigation and hard refreshes
 	function stateChange() {
-		console.log('state change: ' + History.getState().url);
+		// console.log('state change: ' + History.getState().url);
 		router(History.getState().url);
 	}
 	
 	function domLoad() {
-		console.log('on dom load: ' + History.getState().url);
+		// console.log('on dom load: ' + History.getState().url);
 		router(History.getState().url);
 	}
 	
@@ -73,7 +73,7 @@ function router(input) {
 	
 	//navigate
 	if (window.frames['wc_application'] && window.frames['wc_application'].window && window.frames['wc_application'].window.navigate) {
-		console.log('routerTWO: ' + input);
+		// console.log('routerTWO: ' + input);
 		window.frames['wc_application'].window.navigate()
 	}
 }
