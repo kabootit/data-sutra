@@ -138,6 +138,9 @@ function LOGIN(event,webkit) {
 		var status = forms.AC_R__login_1F__password.LOGIN_user(null,SET_dialog)
 		
 		if (typeof status == 'boolean' && status) {
+			globals.DS_web_pulse = true
+			plugins.WebClientUtils.executeClientSideJS('pulseOn();')
+			
 			//set global for busy cursor in webclient
 			globals.DATASUTRA_web_cursor = true
 			
@@ -150,6 +153,11 @@ function LOGIN(event,webkit) {
 			//add on the "you're already logged in, dummy form"
 			forms.AC_R__login_WEB__small_loggedIn.controller.show()
 			history.go(-1)
+			
+			//go to nav item requested
+//			if (globals.DATASUTRA_router.length && globals.DATASUTRA_router[0].pathObject && globals.DATASUTRA_router[0].pathObject.hasOwnProperty('set')) {
+//				globals.DS_router('DSHistory')
+//			}
 		}
 		else {
 			_userName = globals.AC_login_user
@@ -241,7 +249,7 @@ function FORM_on_show(firstShow, event) {
 	
 	//turn off auto-capitalize on iOS and set to use email keyboard
 	var id = plugins.WebClientUtils.getElementMarkupId(elements.var_userName)
-	plugins.WebClientUtils.executeClientSideJS('$("#' + id +'").get(0).type = "email";')
+//	plugins.WebClientUtils.executeClientSideJS('$("#' + id +'").get(0).type = "email";')
 	plugins.WebClientUtils.executeClientSideJS('$("#' + id +'").attr("autocapitalize","off");')
 	
 	
@@ -393,15 +401,13 @@ function CREATE(event) {
 }
 
 /**
- * Handle changed data.
+ * Set indicator in appropriate place.
  *
- * @param {String} [oldValue] old value
- * @param {String} [newValue] new value
  * @param {JSEvent} [event] the event that triggered the action
  *
  * @properties={typeid:24,uuid:"D3E23C6B-CBEE-44DD-8EE1-52779CEE571A"}
  */
-function INDICATOR(oldValue, newValue, event) {
+function INDICATOR(event) {
 	//put indicator next to sign up
 	if (event && utils.stringPatternCount(event.getElementName(),'new')) {
 		plugins.WebClientUtils.executeClientSideJS('loginIndicator(true);')
