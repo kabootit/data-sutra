@@ -1,4 +1,11 @@
 /**
+ * @type {Number}
+ *
+ * @properties={typeid:35,uuid:"B73D027C-6242-4823-96E3-6A44CBD08A64",variableType:4}
+ */
+var _rememberMe = 0;
+
+/**
  * @type {String}
  *
  * @properties={typeid:35,uuid:"E413ED4B-CD8E-4B83-9B56-5C277E2C9AC4"}
@@ -201,6 +208,17 @@ function FORM_on_show(firstShow, event) {
 		plugins.WebClientUtils.setExtraCssClass(elements.btn_login, 'loginDS')
 		plugins.WebClientUtils.setExtraCssClass(elements.btn_signup, 'signupDS')
 		
+		//css class for underline hover behavior
+		plugins.WebClientUtils.setExtraCssClass(elements.lbl_forgot_password, 'forgotPass')
+		
+		//retrieve user name
+		var user = application.getUserProperty('sutra' + application.getServerURL().substr(7) + 'User')
+		if (user) {
+			_rememberMe = 1
+			_userName = user
+			elements.var_userPass.requestFocus()
+		}
+		
 		_shown = true
 	}
 	
@@ -230,7 +248,10 @@ function FORM_on_show(firstShow, event) {
 	// move indicator to beside the login button
 	INDICATOR()
 	
-	elements.var_userName.requestFocus()
+	// request focus in username field unless prefilled
+	if (!user) {
+		elements.var_userName.requestFocus()
+	}
 }
 
 /**
@@ -386,4 +407,43 @@ function INDICATOR(oldValue, newValue, event) {
 	else {
 		plugins.WebClientUtils.executeClientSideJS('loginIndicator();')
 	}
+}
+
+/**
+ * Perform the element default action.
+ *
+ * @param {JSEvent} event the event that triggered the action
+ *
+ * @properties={typeid:24,uuid:"DD76B361-CB7E-4F15-9FFE-472AEBB9E65C"}
+ */
+function SET_remember(event) {
+	//MEHERE
+	//remember user
+	if (_rememberMe) {
+		application.setUserProperty('sutra' + application.getServerURL().substr(7) + 'User',_userName)
+	}
+	//forget user
+	else {
+		if (application.getUserProperty('sutra' + application.getServerURL().substr(7) + 'User')) {
+			application.setUserProperty('sutra' + application.getServerURL().substr(7) + 'User','')
+		}
+	}
+}
+
+/**
+ * Perform the element default action.
+ *
+ * @param {JSEvent} event the event that triggered the action
+ *
+ * @properties={typeid:24,uuid:"E30E75E2-F861-43A9-A855-C35991723B38"}
+ */
+function asdf(event) {
+	var k = globals.CODE_appserver_get()
+	if (k instanceof Continuation) {
+	  application.output("k is a continuation");
+	    k(200);
+	 } else {
+		 application.output("k is now a " + typeof(k));
+	 }
+	 application.output(k);
 }
