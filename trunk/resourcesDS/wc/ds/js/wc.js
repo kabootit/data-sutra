@@ -35,11 +35,13 @@ function loginIndicator(signup) {
 	
 	//we have enough things loaded to actually run this method
 	if (button.length && button.offset()) {
+	//	indicator.show()
 		//put indicator next to toolbar button
 		indicator.offset({
 				top: button.offset().top + offsetTop, 
 				left: button.offset().left + offsetLeft
 			})
+	//	indicator.hide()
 	}
 	//run this function again until enough loaded
 	else {

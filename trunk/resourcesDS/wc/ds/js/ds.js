@@ -105,3 +105,13 @@ function reLogin(smallForm) {
 		}
 	},500);
 }
+
+function pulseOn() {
+	$('#blocker',window.parent.document).show()
+	$('#blocker',window.parent.document).delay(200).fadeOut('slow').delay(50).fadeIn('slow',pulseOn);
+}
+
+function pulseOff() {
+	//TODO: make so can be reused later
+	$('#blocker',window.parent.document).remove()
+}
