@@ -52,6 +52,14 @@ name:"order_by"
 },
 {
 allowNull:true,
+autoEnterType:5,
+creationOrderIndex:10,
+dataType:4,
+lookupValue:"scopes.globals.AC_current_organization",
+name:"organization_id"
+},
+{
+allowNull:true,
 creationOrderIndex:3,
 dataType:4,
 name:"parent_id_documentation"
