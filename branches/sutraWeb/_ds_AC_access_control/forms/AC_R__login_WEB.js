@@ -217,6 +217,7 @@ function FORM_on_show(firstShow, event) {
 		plugins.WebClientUtils.setExtraCssClass(elements.btn_signup, 'signupDS')
 		
 		//css class for underline hover behavior
+		plugins.WebClientUtils.setExtraCssClass(elements.var_rememberMe, 'rememberMe')
 		plugins.WebClientUtils.setExtraCssClass(elements.lbl_forgot_password, 'forgotPass')
 		
 		//retrieve user name
@@ -251,7 +252,6 @@ function FORM_on_show(firstShow, event) {
 	var id = plugins.WebClientUtils.getElementMarkupId(elements.var_userName)
 //	plugins.WebClientUtils.executeClientSideJS('$("#' + id +'").get(0).type = "email";')
 	plugins.WebClientUtils.executeClientSideJS('$("#' + id +'").attr("autocapitalize","off");')
-	
 	
 	// attach style to form to center it
 	plugins.WebClientUtils.executeClientSideJS('centerForm("' + controller.getName() + '");')
