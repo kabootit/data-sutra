@@ -5294,7 +5294,8 @@ function DS_router(p1,params,itemID,launch,logout) {
 						'DSLoginSmall',
 						'DSLogout',
 						'DSHomeCall',
-						'DSError_NoURL'
+						'DSError_NoURL',
+						'DSHistory'
 					]
 	if (specialRequests.indexOf(url.set) == -1) {
 		globals.DATASUTRA_router.push(getNode())
@@ -5468,8 +5469,36 @@ function DS_router(p1,params,itemID,launch,logout) {
 		
 		// navigate through history
 		if (p1 == 'DSHistory') {
+			var slot = (url && url.history) ? url.history : 0
 			//TODO: ability to specify which history item to go to
-			url = globals.DATASUTRA_router[url.history].pathObject
+			url = globals.DATASUTRA_router[slot].pathObject
+			
+			//going to first item after logged in, do a hard redirect driven by the iframe
+			if (slot == 0) {
+				if (url.set && url.item) {
+					itemID = nav[url.set][url.item].navItemID
+				}
+				else if (url.set) {
+					// don't really need a loop, but need to grab an element inside the set referenced
+					for (var i in nav[url.set]) {
+						itemID = navigationPrefs.byNavSetID[nav[url.set][i].details.navigationItem.idNavigation].itemsByOrder[0].navigationItem.idNavigationItem
+						break
+					}
+				}
+				
+				plugins.WebClientUtils.executeClientSideJS('window.parent.routerDelay(null,"' + navigationPrefs.byNavItemID[itemID]._about_ + '","' + getURL(navigationPrefs.byNavItemID[itemID].path) + '",' + delay + ');')
+				
+//				if (url.set && url.item) {
+//					var pass = url.set + '/p1/' + url.item + '/'
+//				}
+//				else if (url.set) {
+//					var pass = url.set + '/'
+//				}
+//				
+//				plugins.WebClientUtils.executeClientSideJS('window.parent.routerIframe(' + pass + ');')
+
+				return
+			}
 		}
 		
 		// particular item specified
@@ -5511,7 +5540,7 @@ function DS_router(p1,params,itemID,launch,logout) {
 //		setTimeout(function(){DS_universalList.scrollHijack(newVal)},1500);
 
 		//something was specified to navigate to, load it up
-		var payload = globals.DATASUTRA_router_payload
+		var payload = globals.DATASUTRA_router_payload || new Object()
 
 		// load in correct state of requested resource
 		globals.TRIGGER_navigation_set(payload.itemID,payload.setFoundset,payload.useFoundset,itemID)
