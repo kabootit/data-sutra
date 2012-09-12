@@ -107,8 +107,13 @@ function reLogin(smallForm) {
 }
 
 function pulseOn() {
-	$('#blocker',window.parent.document).show()
-	$('#blocker',window.parent.document).delay(200).fadeOut('slow').delay(50).fadeIn('slow',pulseOn);
+	var block = $('#blocker',window.parent.document)
+	
+	if (!block.is(':visible')) {
+		block.show()
+	}
+	
+	block.delay(250).fadeOut(2000).delay(50).fadeIn(1500,pulseOn);
 }
 
 function pulseOff() {

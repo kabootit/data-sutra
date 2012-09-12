@@ -1,6 +1,13 @@
+body, input, button, select, td, th, textarea
+{
+	font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;
+	font-size: 11px;
+}
+
 body {
 	margin: 0px;
 }
+
 #blocker {
 	position: absolute; 
 	left: 0px; 
@@ -12,7 +19,11 @@ body {
 	opacity:0.6; 
 	filter:alpha(opacity=60); /* ie <=8 */
 	display: none;
+	
+	text-align: center;
+	padding-top: 20%;
 }
+
 #sutra {
 	position: absolute; 
 	left: 0px; 
@@ -21,4 +32,11 @@ body {
 	bottom: 0px;
 /*	display: none;*/
 	overflow: hidden; /* hidden so that chatter iframe removal doesn't cause scrollbar to show up */
+}
+
+h1 {
+	color: white;
+	font-variant: small-caps;
+	letter-spacing: 8px;
+	text-shadow: black 0.1em 0.1em 0.2em;
 }
