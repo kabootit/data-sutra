@@ -101,7 +101,6 @@ uuid:"6FD1ED0C-5B3C-432F-81AA-A19CFFCE62FE"
 {
 dataProviderID:"_rememberMe",
 displayType:4,
-enabled:false,
 location:"100,157",
 margin:"0,0,0,0",
 onDataChangeMethodID:"DD76B361-CB7E-4F15-9FFE-472AEBB9E65C",
@@ -115,7 +114,6 @@ uuid:"8BABD4BD-87A8-41C3-9B7B-46DB14E7FCAB",
 valuelistID:"04CDAD7F-728A-4821-B5FF-260810A3BEB0"
 },
 {
-enabled:false,
 horizontalAlignment:2,
 location:"205,158",
 margin:"0,5,0,0",
