@@ -515,6 +515,14 @@ div.wicket-modal div.w_content {
 	text-decoration: underline;
 }
 
+.rememberMe {
+	
+}
+
+div.check div label {
+	vertical-align: -10%;
+}
+
 /*	fast find, toolbar konsole, and other no-outline fields	*/
 input.noWebkitOutline:focus {
     outline-width: 0;
