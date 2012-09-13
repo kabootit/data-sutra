@@ -3,9 +3,6 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Data Sutra :: Timed out</title>
-		<noscript>
-			<meta http-equiv="refresh" content="5;url=/" />
-		</noscript>
 		<style>
 			::-moz-selection {
 				background: #b3d4fc;
@@ -83,7 +80,7 @@
 				setInterval(
 					function(){
 						if (seconds <= 1) {
-							window.location = '/';
+							window.top.location = '/ds/';
 						}
 						else {
 							document.getElementById('seconds').innerHTML = --seconds;
