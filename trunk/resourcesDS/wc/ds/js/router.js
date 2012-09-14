@@ -206,6 +206,17 @@ function routerIframe(data) {
 	// iframe load
 	iframeHeaderCell.appendChild(iframeHeader);	
 	
+	//	try to manage the session
+	// var oldSession = localStorage.dsCookie;
+	// document.cookie="JSESSIONID=" + oldSession;
+	// window.frames['wc_application'].window.document.cookie="JSESSIONID=" + oldSession;
+	// 
+	// var newSession = 'Nothing yet'
+	// var cookieHelp = unescape(document.cookie).split(';').filter(function(item){return item.substr(0,10) == 'JSESSIONID' || item.substr(0,11) == ' JSESSIONID'});
+	// if (cookieHelp && cookieHelp.length) {
+	// 	newSession = cookieHelp[0].substr(cookieHelp[0].indexOf('=') + 1)
+	// }
+	// alert('Old: ' + oldSession + '\nNew: ' + newSession);
 };
 
 // run router first time
