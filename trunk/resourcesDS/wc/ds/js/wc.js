@@ -111,6 +111,14 @@ function centerForm(formName) {
 	};
 })(jQuery);
 
+//	Extend jquery to handle cookies (https://github.com/carhartl/jquery-cookie)
+(function($) {
+	setTimeout(function(){
+		//load in resource
+		$('head').append('<script type="text/javascript" src="/ds/js/lib/jquery.cookie.js"></script>');
+	},1000)
+})(jQuery);
+
 //  Pump in extra stylesheets at the end of head so that overwrite existing 
 (function(){
 	var delayTime = 3500
@@ -298,4 +306,11 @@ function navigateConfig(source) {
 //	Sniff browser used and disallow login from 'bad' browsers
 function browserCheck() {
 	return $.browser.webkit
+}
+
+//	Form factor used
+function dsFactor() {
+	if (window.parent.dsFactor) {
+		return window.parent.dsFactor();
+	}
 }
