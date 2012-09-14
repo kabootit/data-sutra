@@ -24,19 +24,34 @@
 	<rule>
 		<name>DS favicons</name>
 		<note>Regular favicon and iOS icon</note>
-		<from>^/(favicon.ico|apple-touch-icon.png)$</from>
-		<to last="true">/ds/$1</to>
+		<from>^/(favicon.ico|apple-touch-icon.png|startup.png)$</from>
+		<to last="true">/ds/img/$1</to>
 	</rule>
 
 	<rule>
 		<name>DS no trailing slash</name>
 		<note></note>
 		<from>^/ds$</from>
-		<to>/ds/index.html</to>
+		<to last="false">/ds/</to>
 	</rule>
-
+	
 	<rule>
-		<name>DS</name>
+		<name>DS iPhone/iTouch</name>
+		<condition name="user-agent" next="or">^.*iPhone.*$</condition>
+		<condition name="user-agent">^.*iPod.*$</condition>
+		<from>^/ds/(.*)$</from>
+		<to last="true">/ds/index.iphone.html?path=$1</to>
+	</rule>
+	
+	<rule>
+		<name>DS iPad</name>
+		<condition name="user-agent">^.*iPad.*$</condition>
+		<from>^/ds/(.*)$</from>
+		<to last="true">/ds/index.ipad.html?path=$1</to>
+	</rule>
+	
+	<rule>
+		<name>DS desktop</name>
 		<note></note>
 		<from>^/ds/(.*)$</from>
 		<to last="true">/ds/index.html?path=$1</to>
