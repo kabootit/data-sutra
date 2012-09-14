@@ -2611,7 +2611,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 								}
 								
 								myField.name = application.getUUID().toString()
-//								myField.onFocusGained = solutionModel.getGlobalMethod('NAV_universal_list_select__unhilite')
+								myField.onFocusGained = solutionModel.getGlobalMethod('NAV_universal_list_select__unhilite')
 								myField.anchors = SM_ANCHOR.ALL
 								myField.horizontalAlignment = horizAlign
 								myField.styleClass = 'universallist'
@@ -3038,9 +3038,15 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		}
 	}
 	
+	// web client hooks on login
 	if (globals.DS_web_pulse) {
+		//turn off pulsating
 		globals.DS_web_pulse = false
 		plugins.WebClientUtils.executeClientSideJS('pulseOff();')
+		
+		//prompt to add to homescreen
+		plugins.WebClientUtils.executeClientSideJS('if (window.parent.addToHome) window.parent.addToHome.show();')
+		plugins.WebClientUtils.executeClientSideJS('var needsZoom = dsFactor() == "iPhone";',scopes.DS.addToHome_zoom,[null,'needsZoom'])
 	}
 }
 }
@@ -5152,11 +5158,11 @@ function NAV_universal_list_select__unhilite() {
 	
 	if (withButtons) {
 		//unhilite the current record (so highlighter spans entire row)
-		forms.NAV_T_universal_list.elements.fld_constant.requestFocus(true)
+		forms.NAV_T_universal_list.elements.fld_constant.requestFocus(false)
 	}
 	else {
 		//unhilite the current record (so highlighter spans entire row)
-		forms.NAV_T_universal_list__no_buttons.elements.fld_constant.requestFocus(true)
+		forms.NAV_T_universal_list__no_buttons.elements.fld_constant.requestFocus(false)
 	}
 }
 
