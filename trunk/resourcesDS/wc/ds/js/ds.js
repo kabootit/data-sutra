@@ -113,7 +113,7 @@ function pulseOn() {
 		block.show()
 	}
 	
-	block.delay(250).fadeOut(2000).delay(50).fadeIn(1500,pulseOn);
+	block.delay(250).fadeOut(4000).delay(50).fadeIn(2500,pulseOn);
 }
 
 function pulseOff() {
