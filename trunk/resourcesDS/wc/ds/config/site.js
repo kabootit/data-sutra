@@ -16,7 +16,24 @@
  */
 
 // the domain that webclient is accessible on (same as the one the /ds/ wrapper is served from)
-var dsDomain = 'http://servlets:8081';
+function dsDomain() {
+	return 'http://servlets:8081';
+}
 
 // the parent domain that the external login page is served from
-var dsLoginDomain = 'http://localhost:8081';
+function dsLoginDomain() {
+	return 'http://localhost:8081';
+}
+
+// what kind of device are we being accessed from
+function dsFactor() {
+	if (navigator.userAgent.match(/iPad/i)) {
+		return 'iPad';
+	}
+	else if (navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPod/i)) {
+		return 'iPhone';
+	}
+	else {
+		return 'Desktop';
+	}
+}
