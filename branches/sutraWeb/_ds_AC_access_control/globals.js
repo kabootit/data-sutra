@@ -245,13 +245,17 @@ function AC_sample_data(org) {
 	
 	//many rows
 	var fsSample = databaseManager.getFoundSet('sutra_example','sutra_example')
+	fsSample.loadAllRecords()
 	
-	for (var i = 1; i < 10000; i++) {
-		fsSample.newRecord(false,false)
-		
-		//save data periodically to avoid lockup at the end
-		if (i % 100 == 0) {
-			databaseManager.saveData()
+	//only create lots of records for first sign up
+	if (databaseManager.getFoundSetCount(fsSample) < 9000) {
+		for (var i = 1; i < 10000; i++) {
+			fsSample.newRecord(false,false)
+			
+			//save data periodically to avoid lockup at the end
+			if (i % 100 == 0) {
+				databaseManager.saveData()
+			}
 		}
 	}
 	
