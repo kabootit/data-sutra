@@ -16,6 +16,25 @@
  *	An easy reference instead of digging back through past SVN revisions.
  */
 
+//	cookie status on MainPage.html
+<script>
+	var oldSession = localStorage.dsCookie;
+	var newSession = 'Nothing yet'
+	var cookieHelp = unescape(document.cookie).split(';').filter(function(item){return item.substr(0,10) == 'JSESSIONID' || item.substr(0,11) == ' JSESSIONID'});
+	if (cookieHelp && cookieHelp.length) {
+		newSession = cookieHelp[0].substr(cookieHelp[0].indexOf('=') + 1)
+		localStorage.dsCookie = newSession
+	}
+	
+	console.log('Old: ' + oldSession + '\nNew: ' + newSession);
+</script>
+
+
+//	snippet to auto-load weinre on page
+<script src="http://trojalia.local:8088/target/target-script-min.js#anonymous"></script>
+
+<!-- https://gist.github.com/472519 has more info on all ios specific flags in html file -->
+
 // what domain are we running on?
 function getDomain() {
 	var url = window.location.href;
