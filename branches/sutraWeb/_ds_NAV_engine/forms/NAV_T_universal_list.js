@@ -658,7 +658,7 @@ if (application.__parent__.solutionPrefs) {
 		}
 		
 		myField.name = application.getUUID().toString()
-//		myField.onFocusGained = solutionModel.getGlobalMethod('NAV_universal_list_select__unhilite')
+		myField.onFocusGained = solutionModel.getGlobalMethod('NAV_universal_list_select__unhilite')
 		myField.anchors = SM_ANCHOR.ALL
 		myField.horizontalAlignment = horizAlign
 		myField.styleClass = 'universallist'
@@ -1929,7 +1929,20 @@ else if (formName && forms[formName]) {
 		forms[formName].controller.loadRecords(fsToPrint)
 	}
 	
-	forms[formName].controller.showPrintPreview()
+	//webclient, create pdf, show it inline
+	if (false && solutionPrefs.config.webClient) {
+		var printFile = plugins.file.createTempFile('sutraPreview-' + formName + '-', '.pdf')
+		forms[formName].controller.print(false, false, plugins.pdf_output.getPDFPrinter(printFile.getAbsolutePath()))
+		
+		//TODO: move this file into webserver root so can be served
+		
+		//TODO: tack on this embed into a div/overlay (with close button)
+//		<embed width="100%" height="100%" name="plugin" src="file:///var/folders/eR/eRvq7WnVH2OWuRZ2VGV9A++++TI/-Tmp-/sutraPreview-MGR_RPT__tooltip-1346108977305885092.pdf" type="application/pdf">
+	}
+	//smart client, use standard print preview
+	else {
+		forms[formName].controller.showPrintPreview()
+	}
 	
 	var onlyPreview = true
 }
