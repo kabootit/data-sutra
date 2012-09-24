@@ -290,12 +290,12 @@ label.tree {
 }
 
 label.tree_arrow_close {
-	background-image: 'media:///row_collapsed.png';
+	background-image: url('media:///row_collapsed.png');
 	text-align: right;
 }
 
 label.tree_arrow_open {
-	background-image: 'media:///row_expanded.png';
+	background-image: url('media:///row_expanded.png');
 	text-align: right;
 }
 
@@ -314,12 +314,12 @@ label.tree_select {
 }
 
 label.tree_select_arrow_close {
-	background-image: 'media:///row_collapsed_selected.png';
+	background-image: url('media:///row_collapsed_selected.png');
 	text-align: right;
 }
 
 label.tree_select_arrow_open {
-	background-image: 'media:///row_expanded_selected.png';
+	background-image: url('media:///row_expanded_selected.png');
 	text-align: right;
 }
 

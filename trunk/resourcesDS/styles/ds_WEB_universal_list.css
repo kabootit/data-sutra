@@ -46,7 +46,7 @@ field.universallist, field.universallist_selected {
 }
 
 field.universallist_selected {
-	background-image: url("media:///row_selected.png");
+	background-image: url('media:///row_selected.png');
 	background-repeat: repeat-x;
 /*	color: white;
 	font-weight: bold;*/
