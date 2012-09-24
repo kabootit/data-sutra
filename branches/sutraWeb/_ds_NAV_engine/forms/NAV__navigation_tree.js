@@ -299,9 +299,6 @@ function LIST_generate(selected) {
 					lblTriangle.onAction = thisForm.getFormMethod('LIST_expand_collapse')
 					lblTriangle.rolloverCursor = SM_CURSOR.HAND_CURSOR
 					lblTriangle.toolTipText = 'Collapse'
-//					if (solutionPrefs.config.webClient) {
-						lblTriangle.imageMedia = solutionModel.getMedia('row_expanded.png')
-//					}
 //					lblTriangle.rolloverImageMedia = "media:///row_selected.png"
 				}
 				//parent collapsed (not expanded with children)
@@ -318,9 +315,6 @@ function LIST_generate(selected) {
 					lblTriangle.onAction = thisForm.getFormMethod('LIST_expand_collapse')
 					lblTriangle.rolloverCursor = SM_CURSOR.HAND_CURSOR
 					lblTriangle.toolTipText = 'Expand'
-//					if (solutionPrefs.config.webClient) {
-						lblTriangle.imageMedia = solutionModel.getMedia('row_collapsed.png')
-//					}
 //					lblTriangle.rolloverImageMedia = "media:///row_selected.png"
 				}
 				
@@ -368,17 +362,11 @@ function LIST_generate(selected) {
 					if (triangleOpen) {
 //						<a href="javascript:LIST_expand_collapse(' + details.navItemID + ')">
 						lblTriangle.styleClass = 'tree_select_arrow_open'
-//						if (solutionPrefs.config.webClient) {
-							lblTriangle.imageMedia = solutionModel.getMedia('row_expanded_selected.png')
-//						}
 //						lblTriangle.rolloverImageMedia = "media:///row_selected.png"
 					}
 					//parent collapsed (not expanded with children)
 					else if (triangleClosed) {
 						lblTriangle.styleClass = 'tree_select_arrow_close'
-//						if (solutionPrefs.config.webClient) {
-							lblTriangle.imageMedia = solutionModel.getMedia('row_collapsed_selected.png')
-//						}
 //						lblTriangle.rolloverImageMedia = "media:///row_selected.png"
 					}
 					
