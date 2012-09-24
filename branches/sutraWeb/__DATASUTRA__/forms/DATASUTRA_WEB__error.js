@@ -12,3 +12,14 @@ var _errorCode = null;
  */
 var _errorMessage = null;
 
+
+/**
+ * Perform the element default action.
+ *
+ * @param {JSEvent} event the event that triggered the action
+ *
+ * @properties={typeid:24,uuid:"8C80426C-5464-4C98-952C-6875B8EFADF2"}
+ */
+function LOGOUT(event) {
+	globals.DS_actions('Logout')
+}
