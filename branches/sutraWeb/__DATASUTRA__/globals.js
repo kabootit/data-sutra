@@ -2305,7 +2305,7 @@ function DS_navigation_set(input) {
 	
 	//don't show error navigation set
 	var errorIndex = vlDisplay.indexOf('WC: Error')
-	if (solutionPrefs.config.webClient && errorIndex != -1) {
+	if (errorIndex != -1) {
 		vlDisplay.splice(errorIndex,1)
 		vlReal.splice(errorIndex,1)
 	}
