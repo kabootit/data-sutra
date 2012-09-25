@@ -6697,8 +6697,11 @@ function CODE_row_background__list(event) {
 	//set background color
 	renderable.bgcolor = '#D1D7E2'
 		
+	if (!solutionPrefs.config.webClient && renderable.getElementType() == 'CHECK') {
+		renderable.transparent = true
+	}
 	//ensure that not transparent for everything except checkboxes
-	if (renderable.getElementType() != 'CHECK') {
+	else if (renderable.getElementType() != 'CHECK') {
 		renderable.transparent = false
 	}
 }
