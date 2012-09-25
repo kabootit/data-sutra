@@ -98,7 +98,7 @@ function setupButtons(buttonArray, redraw, dialogWidth, dialogHeight) {
 		_oBtn,
 		_nBtnMinWidth = 80,
 		_nBtnWidth, // = _nBtnMinWidth,
-		_nBtnHeight = 20,
+		_nBtnHeight = 30,
 		_xOffset = dialogWidth - 20,
 		_yOffset = dialogHeight - _nBtnHeight - 20,
 		_aElement = elements.allnames,
@@ -135,9 +135,13 @@ function setupButtons(buttonArray, redraw, dialogWidth, dialogHeight) {
 		_nBtnWidth = Math.ceil( ( (_nBtnWidth + 10) / 10)) * 10;
 		// If the button is less than the minimum width use the minimum width instead
 		_nBtnWidth = (_nBtnWidth < _nBtnMinWidth ? _nBtnMinWidth : _nBtnWidth)
-
-		_oBtn = _oForm.newButton(buttonArray[i], (_xOffset - _nBtnWidth), _yOffset, _nBtnWidth, _nBtnHeight, _oMethod);
+		
+		_oBtn = _oForm.newLabel(buttonArray[i], (_xOffset - _nBtnWidth), _yOffset, _nBtnWidth, _nBtnHeight, _oMethod);
 		_oBtn.name = "btn_" + (i + 1);
+		_oBtn.styleClass = 'button_web';
+		_oBtn.showClick = false;
+//		_oBtn.showFocus = false;
+		_oBtn.rolloverCursor = SM_CURSOR.HAND_CURSOR;
 		_xOffset = _xOffset - _nBtnWidth - 16;
 	}
 
@@ -171,6 +175,6 @@ function setupForm(_aArguments, _sIconStyle) { }
  */
 function onShow(firstShow, event) {
 	if (buttonCount) {
-		elements["btn_" + (application.getOSName().match("Mac") ? 1 : buttonCount)].requestFocus();
+//		elements["btn_" + (application.getOSName().match("Mac") ? 1 : buttonCount)].requestFocus();
 	}
 }
