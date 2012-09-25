@@ -228,6 +228,9 @@ function FORM_on_show(firstShow, event) {
 			elements.var_userPass.requestFocus()
 		}
 		
+		//store down if an ipad/iphone/desktop experience
+		plugins.WebClientUtils.executeClientSideJS('var dsFormFactor = dsFactor();',scopes.DS.setFactor,['dsFormFactor'])
+		
 		_shown = true
 	}
 	
@@ -248,7 +251,7 @@ function FORM_on_show(firstShow, event) {
 	]
 	plugins.WebClientUtils.executeClientSideJS('setPlaceHolders(' + JSON.stringify(elems) + ',' + JSON.stringify(texts) + ');')
 	
-	//turn off auto-capitalize on iOS and set to use email keyboard
+	//turn off auto-capitalize on iOS and set to use email keyboard (<-- this breaks servoys tie-in)
 	var id = plugins.WebClientUtils.getElementMarkupId(elements.var_userName)
 //	plugins.WebClientUtils.executeClientSideJS('$("#' + id +'").get(0).type = "email";')
 	plugins.WebClientUtils.executeClientSideJS('$("#' + id +'").attr("autocapitalize","off");')
