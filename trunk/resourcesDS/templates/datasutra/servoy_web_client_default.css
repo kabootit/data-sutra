@@ -45,6 +45,12 @@ body, input, button, select, td, th, textarea
 	font-size: 11px;
 }
 
+td, th
+{
+	font-family: Verdana, 'Helvetica Neue', Arial, Helvetica, sans-serif;
+	font-size: 10px;
+}
+
 button
 {
 }
@@ -203,7 +209,9 @@ div:focus
 
 td
 {
-	vertical-align: top
+	vertical-align: top;
+	height: 16px;
+	line-height: 16px;
 }
 
 textarea
