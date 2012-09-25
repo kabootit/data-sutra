@@ -61,9 +61,11 @@ function display_user_name()
 if (id_user) {
 	var itemName = (user_name) ? user_name : 'UNKNOWN'
 	
+	var height = (solutionPrefs.config.webClient) ? '16px' : '20'
+	
 	var html = '<html><head><style type="text/css" media="screen"><!--'
 	html += 'table { table-layout: fixed; width: 100%; border-spacing: 0px; border: 0px; }'
-	html += 'td  { text-indent: 5px; white-space: nowrap; overflow: hidden; border: 0px; padding: 2px; height: 20; line-height: 20; }'
+	html += 'td  { text-indent: 5px; white-space: nowrap; overflow: hidden; border: 0px; padding: 2px; height: ' + height + '; line-height: ' + height + '; }'
 	html += '.rowSelected  { color: white; text-decoration: none; font-weight: bold; background-image: url("media:///row_selected.png"); }'
 	html += 'td.rowSelected a { color: white; text-decoration: none; }'
 	html += '--></style></head>'

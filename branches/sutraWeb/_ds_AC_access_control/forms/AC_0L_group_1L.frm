@@ -12,7 +12,6 @@ scrollbars:36,
 size:"150,20",
 styleClass:"customlist",
 tabSeq:-2,
-transparent:true,
 typeid:4,
 uuid:"52fdc731-a080-40f2-96d0-622c7b4140bc"
 },

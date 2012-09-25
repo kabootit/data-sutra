@@ -182,7 +182,7 @@ uuid:"19f92ae2-ed11-4044-bd67-03f2f575a604"
 location:"6,18",
 name:"tab_list",
 printable:false,
-size:"447,22",
+size:"447,232",
 styleClass:"grid_secondary",
 tabOrientation:-1,
 typeid:16,

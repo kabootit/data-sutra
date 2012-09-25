@@ -189,6 +189,8 @@ function GO_onethree() {
  * @properties={typeid:24,uuid:"045645CF-C5B8-48A5-A0F6-C620ACD684D4"}
  */
 function GO_generic(buttonName,formName,listName,listTitle) {
+	var listTabForm = (solutionPrefs.config.webClient) ? forms.DATASUTRA_WEB_0F__list__universal : forms.DATASUTRA_0F_solution
+	
 	//highlighter map
 	var highlightNotree = {
 			one : 0,
@@ -279,32 +281,40 @@ function GO_generic(buttonName,formName,listName,listTitle) {
 		if (listName) {
 			if (!navigationPrefs.byNavSetName.configPanes.itemsByName[listTitle]) {
 				//assign to list tab panel
-				forms[baseForm].elements.tab_content_B.addTab(forms[listName],'')
-				forms[baseForm].elements.tab_content_B.tabIndex = forms[baseForm].elements.tab_content_B.getMaxTabIndex()
+				listTabForm.elements.tab_content_B.addTab(forms[listName],'')
+				listTabForm.elements.tab_content_B.tabIndex = listTabForm.elements.tab_content_B.getMaxTabIndex()
 				
 				//save status info
 				navigationPrefs.byNavSetName.configPanes.itemsByName[listTitle] = {
 											listData : {
-												tabNumber : forms[baseForm].elements.tab_content_B.tabIndex,
+												tabNumber : listTabForm.elements.tab_content_B.tabIndex,
 												dateAdded : application.getServerTimeStamp()
 											}
 									}
 			}
 			//set tab to this preference
 			else {
-				forms[baseForm].elements.tab_content_B.tabIndex = navigationPrefs.byNavSetName.configPanes.itemsByName[listTitle].listData.tabNumber
+				listTabForm.elements.tab_content_B.tabIndex = navigationPrefs.byNavSetName.configPanes.itemsByName[listTitle].listData.tabNumber
 			}
 		}
 		//blank list window
 		else {
-			forms[baseForm].elements.tab_content_B.tabIndex = 1
+			listTabForm.elements.tab_content_B.tabIndex = 1
 		}
 		
-		//load main window
-		if (forms[baseForm].elements.tab_content_C.tabIndex > 0) {
-			forms[baseForm].elements.tab_content_C.removeTabAt(1)
+		//web client
+		if (solutionPrefs.config.webClient) {
+			//load main window
+			forms.DATASUTRA_WEB_0F__workflow.setForm(formName)
 		}
-		forms[baseForm].elements.tab_content_C.addTab(forms[formName],'')
-		forms[baseForm].elements.tab_content_C.tabIndex = forms[baseForm].elements.tab_content_C.getMaxTabIndex()
+		//smart client
+		else {
+			//load main window
+			if (forms[baseForm].elements.tab_content_C.tabIndex > 0) {
+				forms[baseForm].elements.tab_content_C.removeTabAt(1)
+			}
+			forms[baseForm].elements.tab_content_C.addTab(forms[formName],'')
+			forms[baseForm].elements.tab_content_C.tabIndex = forms[baseForm].elements.tab_content_C.getMaxTabIndex()
+		}
 	}
 }

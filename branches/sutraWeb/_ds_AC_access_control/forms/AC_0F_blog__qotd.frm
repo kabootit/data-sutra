@@ -41,7 +41,7 @@ uuid:"268e4a69-7c7a-40e4-b213-5e48a378d519",
 verticalAlignment:0
 },
 {
-height:44,
+height:104,
 partType:5,
 typeid:19,
 uuid:"30b54421-2c6b-4c7b-b206-b4b9e5f04ff4"
@@ -97,7 +97,7 @@ uuid:"77cf91de-d349-48ef-b03e-e0f84004088c"
 location:"459,18",
 name:"tab_detail",
 printable:false,
-size:"305,22",
+size:"305,82",
 styleClass:"grid_secondary",
 tabOrientation:-1,
 typeid:16,
@@ -120,7 +120,7 @@ uuid:"bc8a26b8-20a4-4fee-915d-c0df9d44743d"
 location:"6,18",
 name:"tab_list",
 printable:false,
-size:"447,22",
+size:"447,182",
 styleClass:"grid_secondary",
 tabOrientation:-1,
 typeid:16,

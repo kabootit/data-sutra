@@ -107,7 +107,6 @@ showClick:false,
 showFocus:false,
 size:"150,22",
 tabSeq:-1,
-text:"type",
 transparent:true,
 typeid:7,
 uuid:"47F57003-6919-41D2-A73B-FBAD172D4EFA"
