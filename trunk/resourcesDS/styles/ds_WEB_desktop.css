@@ -719,3 +719,11 @@ label.edit_label_singleton {
 field.edit_label_singleton, combobox.edit_label_singleton {
 	border-radius: 0px 10px 10px 0px;
 }
+
+/* dialog styling from dialogs module (https://www.servoyforge.net/projects/mod-dialog) */
+label.dialogs_message {
+}
+label.dialogs_icon_generic { background-image: url('media:///dialogs_icon_generic.png'); }
+label.dialogs_icon_info { background-image: url('media:///dialogs_icon_info.png'); }
+label.dialogs_icon_warning { background-image: url('media:///dialogs_icon_warning.png'); }
+label.dialogs_icon_error { background-image: url('media:///dialogs_icon_error.png'); }
