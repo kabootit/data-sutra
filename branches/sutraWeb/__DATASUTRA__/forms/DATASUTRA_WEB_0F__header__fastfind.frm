@@ -1,5 +1,14 @@
 dataSource:"db:/sutra/sutra_solution",
 extendsID:"E19935F1-EBF4-4C8A-AA4D-215CAB43E4F7",
+items:[
+{
+extendsID:"5F54A740-C499-4621-AA14-68D8BD71DE57",
+onFocusGainedMethodID:"-1",
+onFocusLostMethodID:"-1",
+typeid:4,
+uuid:"244F31CE-4EED-4BE4-BC34-25D3617EAA42"
+}
+],
 name:"DATASUTRA_WEB_0F__header__fastfind",
 onShowMethodID:"5CD2ACB2-FA5C-48FF-9809-727E3A21739F",
 typeid:3,
