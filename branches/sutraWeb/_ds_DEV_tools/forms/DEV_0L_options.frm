@@ -85,6 +85,12 @@ typeid:7,
 uuid:"906f1e9a-baab-4d0a-8dc1-ae464e33394b"
 },
 {
+height:16,
+partType:1,
+typeid:19,
+uuid:"CE4038C1-5D77-433B-9767-533457F0EF65"
+},
+{
 anchors:11,
 borderType:"EmptyBorder,0,0,0,0",
 formIndex:10000,
@@ -128,7 +134,6 @@ showClick:false,
 showFocus:false,
 size:"150,22",
 tabSeq:-1,
-text:"type",
 transparent:true,
 typeid:7,
 uuid:"eadbdd06-701c-4ac4-865f-a67ef77b2c8d"
