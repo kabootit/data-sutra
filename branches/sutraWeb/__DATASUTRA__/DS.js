@@ -1,13 +1,18 @@
+/**
+ * Valid values are Desktop, iPad, iPhone
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"780AFC6C-1B34-4D59-B6DE-EAAE9C393BD6"}
+ */
+var deviceFactor = 'Desktop';
 
 /**
- * Increase the size of loading please wait verbage on mobile phones when viewing the desktop version of data sutra
+ * @param {String} device The device factor used to view Data Sutra
  * 
- * @param {String} zoom String representation of bool/null value that lets us know if running on a mobile phone
- * 
- * @properties={typeid:24,uuid:"543ECEB0-3CC4-4447-9B03-8523E850DA97"}
+ * @properties={typeid:24,uuid:"A7441E3D-7529-4930-8597-968C00F5948C"}
  */
-function addToHome_zoom(zoom) {
-	if (eval(zoom)) {
-		plugins.WebClientUtils.executeClientSideJS('$("#addToHomeScreen", window.parent.document).css("zoom","300%");')
+function setFactor(device) {
+	if (device && device != 'null') {
+		deviceFactor = device
 	}
 }
