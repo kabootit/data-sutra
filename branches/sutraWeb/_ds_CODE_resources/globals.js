@@ -22,7 +22,7 @@ var DIALOGS = new function() {
 	/**
 	 * @type String
 	 */
-	var _sStyleSheet = 'dialogs_default'; // forms.dialogs_stylesheet is there to make sure any export of the module will bring along this stylesheet
+	var _sStyleSheet = 'ds_WEB_desktop';
 
 	/**
 	 * @type Number
