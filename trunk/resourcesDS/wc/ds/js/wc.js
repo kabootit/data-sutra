@@ -155,12 +155,12 @@ function mobileIndicator(delay) {
 (function(){
 	var delayTime = 3500
 	
-	// setTimeout(function(){
-	// 	app.addPrefetchTags();
-	// },delayTime)
-	
 	setTimeout(function(){
+		//our overrides for servoy stuff
 		$('head').append('<link rel="stylesheet" type="text/css" href="/servoy-webclient/templates/datasutra/servoy_web_client_bottom.css" />');
+		
+		//custom overrides on a client by client basis
+		$('head').append('<link rel="stylesheet" type="text/css" href="/ds/css/ds.custom.css" />');
 	},delayTime)
 })();
 
