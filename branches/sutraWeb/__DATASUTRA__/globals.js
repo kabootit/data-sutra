@@ -1361,15 +1361,16 @@ function DS_actions(input) {
 				user.itemDescription.unshift(flagHelp.tooltip)
 			}
 			
+			//add option to change password if access and control enabled and password changing isn't disabled
+			if (solutionPrefs.access && solutionPrefs.access.accessControl && !solutionPrefs.access.passNoChange) {
+				user.itemName.push('Change password')
+				user.formName.push('AC_P_password')
+				user.navItemID.push(null)
+				user.itemDescription.push('Periodically change your password to ensure security')
+			}
+			
 			//don't allow from web client
 			if (!solutionPrefs.config.webClient) {
-				//add option to change password if access and control enabled and password changing isn't disabled
-				if (solutionPrefs.access && solutionPrefs.access.accessControl && !solutionPrefs.access.passNoChange) {
-					user.itemName.push('Change password')
-					user.formName.push('AC_P_password')
-					user.navItemID.push(null)
-					user.itemDescription.push('Periodically change your password to ensure security')
-				}
 				//add option to set custom screen size if access and control
 				if (solutionPrefs.access && solutionPrefs.access.accessControl ) {
 					user.itemName.push('Save window metrics')
@@ -1385,73 +1386,43 @@ function DS_actions(input) {
 			var navIDList = new Array()
 			var descList = new Array()
 			var typeList = new Array()
+				
+			//design mode toggle
+			if (!inPref) {
+				//design mode is an option, show it
+				if (designMode) {
+					valueList[valueList.length] = '<html><body><strong>' + ((designMode.name) ? designMode.name : noName) + '</strong></body></html>'
+					formList[formList.length] = ''
+					navIDList[navIDList.length] = ''
+					descList[descList.length] = designMode.tooltip
+					typeList.push(null)
+				}
+				
+				//divider required
+				if (designMode && ((admin.itemName && admin.itemName.length) || (user.itemName && user.itemName.length))) {
+					valueList[valueList.length] = '-'
+					formList[formList.length] = ''
+					navIDList[navIDList.length] = ''
+					descList[descList.length] = ''
+					typeList.push(null)
+				}
+			}
 			
-			//don't allow admin preferences from web client
-			if (!solutionPrefs.config.webClient) {
-				
-				//design mode toggle
-				if (!inPref) {
-					//design mode is an option, show it
-					if (designMode) {
-						valueList[valueList.length] = '<html><body><strong>' + ((designMode.name) ? designMode.name : noName) + '</strong></body></html>'
-						formList[formList.length] = ''
-						navIDList[navIDList.length] = ''
-						descList[descList.length] = designMode.tooltip
-						typeList.push(null)
-					}
-					
-					//divider required
-					if (designMode && ((admin.itemName && admin.itemName.length) || (user.itemName && user.itemName.length))) {
-						valueList[valueList.length] = '-'
-						formList[formList.length] = ''
-						navIDList[navIDList.length] = ''
-						descList[descList.length] = ''
-						typeList.push(null)
-					}
+			//admin screens
+			if (admin.itemName && admin.itemName.length) {
+				for (var i = 0; i < admin.itemName.length; i++) {
+					valueList[valueList.length] = ((admin.itemName[i]) ? admin.itemName[i] : noName)
+					formList[formList.length] = admin.formName[i]
+					navIDList[navIDList.length] = admin.navItemID[i]
+					descList[descList.length] = admin.itemDescription[i]
+					typeList.push('Admin')
 				}
-				
-				//admin screens
+			}
+			
+		/*	//sidebars
+			if (!inPref && solutionPrefs.panel.sidebar && solutionPrefs.panel.sidebar.length) {
+				//there are admin modes, show divider
 				if (admin.itemName && admin.itemName.length) {
-					for (var i = 0; i < admin.itemName.length; i++) {
-						valueList[valueList.length] = ((admin.itemName[i]) ? admin.itemName[i] : noName)
-						formList[formList.length] = admin.formName[i]
-						navIDList[navIDList.length] = admin.navItemID[i]
-						descList[descList.length] = admin.itemDescription[i]
-						typeList.push('Admin')
-					}
-				}
-				
-			/*	//sidebars
-				if (!inPref && solutionPrefs.panel.sidebar && solutionPrefs.panel.sidebar.length) {
-					//there are admin modes, show divider
-					if (admin.itemName && admin.itemName.length) {
-						valueList[valueList.length] = '-'
-						formList[formList.length] = ''
-						navIDList[navIDList.length] = ''
-						descList[descList.length] = ''
-						typeList.push(null)
-					}
-					
-					//punch down all active sidebars
-					for (var i = 0; i < solutionPrefs.panel.sidebar.length; i++) {
-						valueList[valueList.length] = (solutionPrefs.panel.sidebar[i].tabName) ? solutionPrefs.panel.sidebar[i].tabName : noName
-						formList[formList.length] = solutionPrefs.panel.sidebar[i].formName
-						navIDList[navIDList.length] = i + 1
-						descList[descList.length] = solutionPrefs.panel.sidebar[i].description
-						typeList.push('Sidebar')
-					}
-					
-					//there are user modes, show divider
-					if (user.itemName && user.itemName.length) {
-						valueList[valueList.length] = '-'
-						formList[formList.length] = ''
-						navIDList[navIDList.length] = ''
-						descList[descList.length] = ''
-						typeList.push(null)
-					}
-				}
-				//there are admin modes and user modes, show divider
-				else*/ if (admin.itemName && admin.itemName.length && user.itemName && user.itemName.length) {
 					valueList[valueList.length] = '-'
 					formList[formList.length] = ''
 					navIDList[navIDList.length] = ''
@@ -1459,6 +1430,31 @@ function DS_actions(input) {
 					typeList.push(null)
 				}
 				
+				//punch down all active sidebars
+				for (var i = 0; i < solutionPrefs.panel.sidebar.length; i++) {
+					valueList[valueList.length] = (solutionPrefs.panel.sidebar[i].tabName) ? solutionPrefs.panel.sidebar[i].tabName : noName
+					formList[formList.length] = solutionPrefs.panel.sidebar[i].formName
+					navIDList[navIDList.length] = i + 1
+					descList[descList.length] = solutionPrefs.panel.sidebar[i].description
+					typeList.push('Sidebar')
+				}
+				
+				//there are user modes, show divider
+				if (user.itemName && user.itemName.length) {
+					valueList[valueList.length] = '-'
+					formList[formList.length] = ''
+					navIDList[navIDList.length] = ''
+					descList[descList.length] = ''
+					typeList.push(null)
+				}
+			}
+			//there are admin modes and user modes, show divider
+			else*/ if (admin.itemName && admin.itemName.length && user.itemName && user.itemName.length) {
+				valueList[valueList.length] = '-'
+				formList[formList.length] = ''
+				navIDList[navIDList.length] = ''
+				descList[descList.length] = ''
+				typeList.push(null)
 			}
 			
 			//user screens
