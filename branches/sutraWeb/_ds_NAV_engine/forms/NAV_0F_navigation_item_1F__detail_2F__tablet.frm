@@ -179,10 +179,10 @@ uuid:"D7C5F42A-83C2-4173-9279-65207A531050"
 dataProviderID:"tablet_flag_ul",
 displayType:4,
 formIndex:15300,
-location:"108,72",
+location:"103,72",
 name:"fld_use_fw_list",
 onDataChangeMethodID:"6764D15A-B8F2-4F17-936B-169E8E9D63BD",
-size:"20,20",
+size:"25,20",
 transparent:true,
 typeid:4,
 uuid:"F1E11960-027E-4429-864F-66806CA753D5"

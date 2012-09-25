@@ -611,6 +611,9 @@ function LIST_favorites(selected) {
 		var formName = controller.getName() + '__rows'
 		var thisForm = solutionModel.getForm(formName)
 		
+		//grab width
+		var newWidth = 200//forms[formName].controller.getFormWidth()
+		
 		//remove all elements from target form
 		var allComponents = thisForm.getComponents()
 		for (var i = 0; i < allComponents.length; i++) {
@@ -634,7 +637,7 @@ function LIST_favorites(selected) {
 				
 				//put in headings
 				if (faveHeaders && faveHeaders[details.datasource] == i) {
-					var lblHeadBack = thisForm.newLabel('',0,i * 20 + headingOffset,thisForm.width,20)
+					var lblHeadBack = thisForm.newLabel('',0,i * 20 + headingOffset,newWidth,20)
 					lblHeadBack.anchors = SM_ANCHOR.NORTH | SM_ANCHOR.EAST | SM_ANCHOR.WEST
 					lblHeadBack.formIndex = 1
 					lblHeadBack.name = 'lbl_group_' + details.datasource.split('/').pop() + '_back'
@@ -644,7 +647,7 @@ function LIST_favorites(selected) {
 					lblHeadBack.mediaOptions = SM_MEDIAOPTION.REDUCE | SM_MEDIAOPTION.ENLARGE
 					lblHeadBack.imageMedia = solutionModel.getMedia("row_selected_dark.png")
 					
-					var lblHead = thisForm.newLabel(navigationPrefs.byNavItemID[details.navItemID].navigationItem.fwListTitle,0,i * 20 + headingOffset,thisForm.width,20)
+					var lblHead = thisForm.newLabel(navigationPrefs.byNavItemID[details.navItemID].navigationItem.fwListTitle,0,i * 20 + headingOffset,newWidth,20)
 					lblHead.anchors = SM_ANCHOR.NORTH | SM_ANCHOR.EAST | SM_ANCHOR.WEST
 					lblHead.formIndex = 2
 					lblHead.name = 'lbl_group_' + details.datasource.split('/').pop()
@@ -727,7 +730,7 @@ function LIST_favorites(selected) {
 				}
 				
 				//HIGHLIGHT
-				var lblClick = thisForm.newLabel('',0,i * 20 + headingOffset,thisForm.width,20)
+				var lblClick = thisForm.newLabel('',0,i * 20 + headingOffset,newWidth,20)
 				lblClick.anchors = SM_ANCHOR.NORTH | SM_ANCHOR.EAST | SM_ANCHOR.WEST
 				lblClick.formIndex = 1
 				lblClick.name = 'lbl_rowback_' + i

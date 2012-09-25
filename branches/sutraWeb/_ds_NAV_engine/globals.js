@@ -4216,7 +4216,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	var mainTab
 	
 	//save information about current config space setup, but not the first time (it would punch down on workflow instead)
-	if (solutionPrefs.config.prefs.workflowFormID && solutionPrefs.config.currentFormID && solutionPrefs.config.prefs.workflowFormID != solutionPrefs.config.currentFormID && navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID]) {
+	if (!solutionPrefs.config.webClient && solutionPrefs.config.prefs.workflowFormID && solutionPrefs.config.currentFormID && solutionPrefs.config.prefs.workflowFormID != solutionPrefs.config.currentFormID && navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID]) {
 		navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].spaceStatus = new Array()
 		navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].spaceStatus.lastSpace = solutionPrefs.config.activeSpace
 		
@@ -4346,7 +4346,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 					navigationPrefs.byNavItemID[prefNavID].listData.foundsets.blueprint = pkUL
 					navigationPrefs.byNavItemID[prefNavID].listData.foundsets.current = forms[newFormName+'_1L'].foundset
 					navigationPrefs.byNavItemID[prefNavID].listData.tabFormInstance = newFormName
-					navigationPrefs.byNavItemID[prefNavID].listData.tabNumber = forms[baseForm].elements.tab_content_B.getMaxTabIndex()
+					navigationPrefs.byNavItemID[prefNavID].listData.tabNumber = listTabForm.elements.tab_content_B.getMaxTabIndex()
 					navigationPrefs.byNavItemID[prefNavID].listData.dateAdded = application.getServerTimeStamp()
 				}
 			}
@@ -4460,7 +4460,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 					
 					//switch to this tab
 					forms.NAV_T_universal_list.FORM_on_show(true)
-					forms[baseForm].elements.tab_content_B.tabIndex = 2
+					listTabForm.elements.tab_content_B.tabIndex = 2
 					forms.NAV_T_universal_list.elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[prefNavID].listData.tabNumber
 				}
 			}
@@ -4562,88 +4562,90 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		forms[baseForm + '__header'].elements.find_end.setImageURL('media:///find_end.png')
 	}	*/
 	
-	//SPACES setup
-	var spacesOK = navigationPrefs.byNavItemID[prefNavID].spaceSetup
-	var sessionSpaces = navigationPrefs.byNavItemID[prefNavID].spaceStatus
-	
-	//activate default space if there is one, it is different than current space;  do this on first time form loaded and all subsequent times until space changed while on this navItem
-	if (navSpecs.spaceDefault && spacesOK['space_' + (navSpecs.spaceDefault)] != solutionPrefs.config.activeSpace && (!sessionSpaces || ((sessionSpaces && sessionSpaces.lastSpace && sessionSpaces.lastSpace == spacesOK['space_' + navSpecs.spaceDefault]) ? true : false))) {
-		globals.DS_space_change('btn_space_'+navSpecs.spaceDefault,true)
-	}
-	//current space is not allowed for this item, 
-	else if (solutionPrefs.config.activeSpace && !spacesOK[spacesOK[solutionPrefs.config.activeSpace] - 1]) {
-		//activate last space on for this item
-		if (sessionSpaces && sessionSpaces.lastSpace && sessionSpaces.lastSpace != solutionPrefs.config.activeSpace) {
-			globals.DS_space_change('btn_space_'+spacesOK[sessionSpaces.lastSpace],true)
+	//SPACES setup for smart client
+	if (!solutionPrefs.config.webClient) {
+		var spacesOK = navigationPrefs.byNavItemID[prefNavID].spaceSetup
+		var sessionSpaces = navigationPrefs.byNavItemID[prefNavID].spaceStatus
+		
+		//activate default space if there is one, it is different than current space;  do this on first time form loaded and all subsequent times until space changed while on this navItem
+		if (navSpecs.spaceDefault && spacesOK['space_' + (navSpecs.spaceDefault)] != solutionPrefs.config.activeSpace && (!sessionSpaces || ((sessionSpaces && sessionSpaces.lastSpace && sessionSpaces.lastSpace == spacesOK['space_' + navSpecs.spaceDefault]) ? true : false))) {
+			globals.DS_space_change('btn_space_'+navSpecs.spaceDefault,true)
 		}
-		//activate first allowable space
-		else {
-			var escape = false
-			for (var i = 0; i < spacesOK.length && !escape; i++) {
-				if (spacesOK[i]) {
-					escape = true
-					globals.DS_space_change('btn_space_' + (i+1),true)
+		//current space is not allowed for this item, 
+		else if (solutionPrefs.config.activeSpace && !spacesOK[spacesOK[solutionPrefs.config.activeSpace] - 1]) {
+			//activate last space on for this item
+			if (sessionSpaces && sessionSpaces.lastSpace && sessionSpaces.lastSpace != solutionPrefs.config.activeSpace) {
+				globals.DS_space_change('btn_space_'+spacesOK[sessionSpaces.lastSpace],true)
+			}
+			//activate first allowable space
+			else {
+				var escape = false
+				for (var i = 0; i < spacesOK.length && !escape; i++) {
+					if (spacesOK[i]) {
+						escape = true
+						globals.DS_space_change('btn_space_' + (i+1),true)
+					}
 				}
 			}
 		}
-	}
-	
-	var borderEnabled = 'MatteBorder,0,0,0,1,#333333'
-	var borderDisabled = 'MatteBorder,0,0,0,1,#797778'
-	//enabled status specified for different spaces
-	for (var i = 1; i <= 14; i++) {
-		if (forms[baseForm + '__header'].elements['btn_space_' + i] != undefined) {
-			forms[baseForm + '__header'].elements['btn_space_' + i].enabled = spacesOK[i-1]
-		}
 		
-		if (!solutionPrefs.config.webClient && i != 1 && i != 8) {
-			forms[baseForm + '__header'].elements['btn_space_' + i].setBorder(spacesOK[i-1] ? borderEnabled : borderDisabled)
-		}
-	}
-	
-	//form visited before, use space setup as of the last visit
-	if (sessionSpaces) {
-		for (var i = 0; i < 14; i++) {
-			forms[baseForm + '__header'].elements['btn_space_'+(i+1)].visible = sessionSpaces[i]
-		}
-	}
-	//decide which space options are showing first based on defaults for this form
-	else {
-		var flipPreference = (navSpecs.spaceFlip) ? true : false
-		
-		for (var i = 0, j = i + 7; i < 7; i++, j++) {
-			//both available, take spaceFlip preference
-			if (spacesOK[i] && spacesOK[j]) {
-				forms[baseForm + '__header'].elements['btn_space_'+(i+1)].visible = !flipPreference
-				forms[baseForm + '__header'].elements['btn_space_'+(j+1)].visible = flipPreference
+		var borderEnabled = 'MatteBorder,0,0,0,1,#333333'
+		var borderDisabled = 'MatteBorder,0,0,0,1,#797778'
+		//enabled status specified for different spaces
+		for (var i = 1; i <= 14; i++) {
+			if (forms[baseForm + '__header'].elements['btn_space_' + i] != undefined) {
+				forms[baseForm + '__header'].elements['btn_space_' + i].enabled = spacesOK[i-1]
 			}
-			//only flip available, show it
-			else if (spacesOK[j]) {
-				forms[baseForm + '__header'].elements['btn_space_'+(i+1)].visible = false
-				forms[baseForm + '__header'].elements['btn_space_'+(j+1)].visible = true
-			}
-			//only normal or neither available, show normal
-			else {
-				forms[baseForm + '__header'].elements['btn_space_'+(i+1)].visible = true
-				forms[baseForm + '__header'].elements['btn_space_'+(j+1)].visible = false
+			
+			if (!solutionPrefs.config.webClient && i != 1 && i != 8) {
+				forms[baseForm + '__header'].elements['btn_space_' + i].setBorder(spacesOK[i-1] ? borderEnabled : borderDisabled)
 			}
 		}
-	}
-	
-	//make sure active space's button is showing
-	if (!forms[baseForm + '__header'].elements['btn_space_'+spacesOK[solutionPrefs.config.activeSpace]].visible) {
-		//if not visible, turn on and do the opposite for it's complement
 		
-		//get other value
-		if (spacesOK[solutionPrefs.config.activeSpace] < 8) {
-			var complement = spacesOK[solutionPrefs.config.activeSpace] + 7
+		//form visited before, use space setup as of the last visit
+		if (sessionSpaces) {
+			for (var i = 0; i < 14; i++) {
+				forms[baseForm + '__header'].elements['btn_space_'+(i+1)].visible = sessionSpaces[i]
+			}
 		}
+		//decide which space options are showing first based on defaults for this form
 		else {
-			var complement = spacesOK[solutionPrefs.config.activeSpace] - 7
+			var flipPreference = (navSpecs.spaceFlip) ? true : false
+			
+			for (var i = 0, j = i + 7; i < 7; i++, j++) {
+				//both available, take spaceFlip preference
+				if (spacesOK[i] && spacesOK[j]) {
+					forms[baseForm + '__header'].elements['btn_space_'+(i+1)].visible = !flipPreference
+					forms[baseForm + '__header'].elements['btn_space_'+(j+1)].visible = flipPreference
+				}
+				//only flip available, show it
+				else if (spacesOK[j]) {
+					forms[baseForm + '__header'].elements['btn_space_'+(i+1)].visible = false
+					forms[baseForm + '__header'].elements['btn_space_'+(j+1)].visible = true
+				}
+				//only normal or neither available, show normal
+				else {
+					forms[baseForm + '__header'].elements['btn_space_'+(i+1)].visible = true
+					forms[baseForm + '__header'].elements['btn_space_'+(j+1)].visible = false
+				}
+			}
 		}
 		
-		forms[baseForm + '__header'].elements['btn_space_'+spacesOK[solutionPrefs.config.activeSpace]].visible = true
-		forms[baseForm + '__header'].elements['btn_space_'+complement].visible = false
+		//make sure active space's button is showing
+		if (!forms[baseForm + '__header'].elements['btn_space_'+spacesOK[solutionPrefs.config.activeSpace]].visible) {
+			//if not visible, turn on and do the opposite for it's complement
+			
+			//get other value
+			if (spacesOK[solutionPrefs.config.activeSpace] < 8) {
+				var complement = spacesOK[solutionPrefs.config.activeSpace] + 7
+			}
+			else {
+				var complement = spacesOK[solutionPrefs.config.activeSpace] - 7
+			}
+			
+			forms[baseForm + '__header'].elements['btn_space_'+spacesOK[solutionPrefs.config.activeSpace]].visible = true
+			forms[baseForm + '__header'].elements['btn_space_'+complement].visible = false
+		}
 	}
 	
 	//LOG configuration

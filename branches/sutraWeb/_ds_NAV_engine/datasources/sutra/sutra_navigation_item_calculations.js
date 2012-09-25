@@ -8,9 +8,11 @@ function display_item_id()
 if (id_navigation_item) {
 	var itemName = item_id
 	
+	var height = (solutionPrefs.config.webClient) ? '16px' : '20'
+	
 	var html = '<html><head><style type="text/css" media="screen"><!--'
 	html += 'table { table-layout: fixed; width: 100%; border-spacing: 0px; border: 0px; }'
-	html += 'td  { text-indent: 5px; white-space: nowrap; overflow: hidden; border: 0px; padding: 2px; height: 20; line-height: 20; }'
+	html += 'td  { text-indent: 5px; white-space: nowrap; overflow: hidden; border: 0px; padding: 2px; height: ' + height + '; line-height: ' + height + '; }'
 	html += '.rowSelected  { color: white; text-decoration: none; font-weight: bold; background-image: url("media:///row_selected.png"); }'
 	html += 'td.rowSelected a { color: white; text-decoration: none; }'
 	html += '--></style></head>'
@@ -39,9 +41,11 @@ if (id_navigation_item) {
 	var itemName = (item_name) ? item_name : '*Assign name in prefs*'
 	itemName = utils.stringReplace(itemName, '<', '&lt;')
 	
+	var height = (solutionPrefs.config.webClient) ? '16px' : '20'
+	
 	var html = '<html><head><style type="text/css" media="screen"><!--'
 	html += 'table { table-layout: fixed; width: 100%; border-spacing: 0px; border: 0px; }'
-	html += 'td  { text-indent: 2px; white-space: nowrap; overflow: hidden; border: 0px; padding: 1px; height: 20; line-height: 20; }'
+	html += 'td  { text-indent: 5px; white-space: nowrap; overflow: hidden; border: 0px; padding: 2px; height: ' + height + '; line-height: ' + height + '; }'
 	html += '.rowSelected  { color: white; text-decoration: none; font-weight: bold; background-image: url("media:///row_selected.png"); }'
 	html += '.rowSelectedIndent  { background-image: url("media:///row_selected.png"); width: 10px; }'
 	html += '.rowIndent  { width: 10px; }'
@@ -83,9 +87,11 @@ function display_triangle()
 if (id_navigation_item) {
 	var itemName = ''
 	
+	var height = (solutionPrefs.config.webClient) ? '16px' : '20'
+	
 	var html = '<html><head><style type="text/css" media="screen"><!--'
 	html += 'table { table-layout: fixed; width: 100%; border-spacing: 0px; border: 0px; }'
-	html += 'td  { text-indent: 1px; white-space: nowrap; overflow: hidden; border: 0px; padding: 1px; height: 20; line-height: 20; }'
+	html += 'td  { text-indent: 5px; white-space: nowrap; overflow: hidden; border: 0px; padding: 1px; height: ' + height + '; line-height: ' + height + '; }'
 	html += '.rowSelectedFill  { background-image: url("media:///row_selected.png"); width: 10px; }'
 	html += '.expanded  { background-image: url("media:///row_expanded.png"); background-repeat: no-repeat; width: 10px; }'
 	html += '.expandedSelected  { background-image: url("media:///row_expanded_selected.png"); background-repeat: no-repeat; width: 10px; }'

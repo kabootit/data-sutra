@@ -101,10 +101,10 @@ uuid:"4E290137-563B-499C-815C-8F17F3C28EE1"
 dataProviderID:"phone_flag_ul",
 displayType:4,
 formIndex:15300,
-location:"108,72",
+location:"103,72",
 name:"fld_use_fw_list",
 onDataChangeMethodID:"E528D414-529C-4401-94A2-D4D01FBF6302",
-size:"20,20",
+size:"25,20",
 transparent:true,
 typeid:4,
 uuid:"62A4EA83-DCE0-419F-B701-283127EAE290"

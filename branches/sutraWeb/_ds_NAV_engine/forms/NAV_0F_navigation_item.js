@@ -260,7 +260,7 @@ else {
 var tab_num = forms[formName].elements[tabPanelName].getMaxTabIndex()
 
 var orig = btnClicked.split("_")
-orig = utils.stringToNumber(orig[1])
+orig = utils.stringToNumber(orig[orig.length - 1])
 
 var max = 6
 
