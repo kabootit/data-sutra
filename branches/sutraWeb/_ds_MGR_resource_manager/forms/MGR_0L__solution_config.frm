@@ -10,7 +10,6 @@ showClick:false,
 showFocus:false,
 size:"150,22",
 tabSeq:-1,
-text:"type",
 transparent:true,
 typeid:7,
 uuid:"264ACB99-1948-4741-9F6B-B9AED0C211B9"
@@ -32,6 +31,12 @@ text:"Branding",
 transparent:true,
 typeid:7,
 uuid:"3EF63906-7CB2-46CB-8177-0D00F95E8EBD"
+},
+{
+height:16,
+partType:1,
+typeid:19,
+uuid:"44E0C0EE-8CDE-4F7E-B230-5E061C51A2C4"
 },
 {
 height:140,
