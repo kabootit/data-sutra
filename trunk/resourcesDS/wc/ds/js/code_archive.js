@@ -16,6 +16,36 @@
  *	An easy reference instead of digging back through past SVN revisions.
  */
 
+<!-- https://gist.github.com/1042167, 1042026 -->
+<script type="text/javascript">
+	(function(document,navigator,standalone) {
+		// prevents links from apps from oppening in mobile safari
+		// this javascript must be the first script in your <head>
+		if ((standalone in navigator) && navigator[standalone]) {
+			var curnode, location=document.location, stop=/^(a|html)$/i;
+			document.addEventListener('click', function(e) {
+				curnode=e.target;
+				while (!(stop).test(curnode.nodeName)) {
+					curnode=curnode.parentNode;
+				}
+				// Condidions to do this only on links to your own app
+				// if you want all links, use if('href' in curnode) instead.
+				if ('href' in curnode && // is a link
+					 // is not an anchor
+					(chref=curnode.href).replace(location.href,'').indexOf('#') &&
+					// either does not have a proper scheme (relative links)
+					(	!(/^[a-z\+\.\-]+:/i).test(chref) ||         
+					// or is in the same protocol and domain              
+						chref.indexOf(location.protocol+'//'+location.host)===0 ) 
+				) {
+					e.preventDefault();
+					location.href = curnode.href;
+				}
+			},false);
+		}
+	})(document,window.navigator,'standalone');
+</script>
+
 //	cookie status on MainPage.html
 <script>
 	var oldSession = localStorage.dsCookie;
