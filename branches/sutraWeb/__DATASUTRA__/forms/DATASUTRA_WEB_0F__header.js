@@ -32,12 +32,18 @@ function SIDEBAR_expand() {
  */
 function FORM_on_show(firstShow, event) {
 	if (firstShow) {
+		var splitOffset = 580
+		//determine split between fast find and toolbar
+		if (scopes.DS.deviceFactor == 'iPad') {
+			splitOffset = 500
+		}
+		
 		//set up split bean
 		elements.split_tool_find.continuousLayout = true
 		elements.split_tool_find.transparent = true
 		elements.split_tool_find.resizeWeight = 1
 		elements.split_tool_find.dividerSize = 0
-		elements.split_tool_find.dividerLocation = application.getWindowWidth(null) - 580
+		elements.split_tool_find.dividerLocation = application.getWindowWidth(null) - splitOffset
 	}
 }
 
