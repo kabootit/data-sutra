@@ -21,7 +21,7 @@ function handleButtonAction(event) {
  * @properties={typeid:24,uuid:"A5DBD403-02D5-4764-8330-D885B4C3DFAA"}
  */
 function setupForm(_aArguments, _sIconStyle, _nDialogWidth, _nDialogHeight) {
-	var _aBtn = _aArguments.slice(2, _aArguments.length),
+	var _aBtn = _aArguments.length > 2 ?_aArguments.slice(2, _aArguments.length) : [i18n.getI18NMessage('servoy.button.ok')],
 		_oForm = setupButtons(_aBtn, false, _nDialogWidth, _nDialogHeight),
 		_oLabel = _oForm.newLabel("", 15, 15, 60, 60);
 
