@@ -17,9 +17,28 @@
  *	run in an iframe.
  */
 
+//	Center the login form
+function centerForm(formName) {
+	var selector = $("#form_" + formName);
+
+	if (selector.length) {
+		selector.css({width: '50%', margin: '0px auto'});
+		// console.log('CENTERED');
+
+		//if running in wrapper
+		if (window.parent.viewForm) {
+			window.parent.viewForm(true);
+		}
+	}
+	else {
+		console.log('CENTER: Nothing found here: ' + formName);
+	}
+}
+
 //	Update indicator to be new style (next to login button)
 function loginIndicator(signup) {
-	var indicator = $('.indicator');
+	var indicator = $('#indicator');
+	
 	// sign up button
 	if (signup) {
 		var button = $('.signupDS');
@@ -35,13 +54,11 @@ function loginIndicator(signup) {
 	
 	//we have enough things loaded to actually run this method
 	if (button.length && button.offset()) {
-	//	indicator.show()
 		//put indicator next to toolbar button
 		indicator.offset({
 				top: button.offset().top + offsetTop, 
 				left: button.offset().left + offsetLeft
 			})
-	//	indicator.hide()
 	}
 	//run this function again until enough loaded
 	else {
@@ -52,21 +69,35 @@ function loginIndicator(signup) {
 	}
 }
 
-//	Center the login form
-function centerForm(formName) {
-	var selector = $("#form_" + formName);
-	
-	if (selector.length) {
-		selector.css({width: '50%', margin: '0px auto'});
-		// console.log('CENTERED');
-		
-		//if running in wrapper
-		if (window.parent.viewForm) {
-			window.parent.viewForm(true);
+//	Update indicator to be new style (in the toolbar)
+function mobileIndicator(delay) {
+	var indicator = $('#indicator');
+	var fastfind = $("#form_DATASUTRA_WEB_0F__header__fastfind");
+
+	//we have enough things loaded to actually run this method
+	if (fastfind.length && fastfind.width()) {
+		//68 is position of form from right edge, 20 is width of indicator = 215
+		var offset = fastfind.width() + 60 + 20 + 'px';
+
+		console.log('SET: ' + offset);
+
+		//in the wrong place, readjust
+		if (indicator.css('margin-right') != offset) {
+			//reset left fixation
+			indicator.removeStyle('margin-left');
+			indicator.removeStyle('left');
+			//put indicator into toolbar area
+			indicator.css('right','0px');
+			indicator.css('margin-right',offset);
+			indicator.css('margin-top','8px');
 		}
 	}
+	//run this function again until enough loaded
 	else {
-		console.log('CENTER: Nothing found here: ' + formName);
+		setTimeout(function(){
+			mobileIndicator(delay)
+		},delay || 250)
+		console.log('SET waiting....');
 	}
 }
 
@@ -84,13 +115,14 @@ function centerForm(formName) {
 	
 	//part 2: set up indicator
 	setTimeout(function(){
-		$('#indicator').html('');
-		$('#indicator').css('position','absolute');
-		$('#indicator').css('width','20px');
-		$('#indicator').css('height','20px');
-		$('#indicator').css('z-index','1000');
-		$('#indicator').activity({segments: 12, align: 'left', valign: 'top', steps: 3, width:2, space: 1, length: 3, color: '#030303', speed: 1.5});
-		// $('#indicator').activity({segments: 12, width: 5.5, space: 6, length: 13, color: '#252525', speed: 1.5, outside:true});
+		var indicator = $('#indicator');
+		indicator.html('');
+		indicator.css('position','absolute');
+		indicator.css('width','20px');
+		indicator.css('height','20px');
+		indicator.css('z-index','1000');
+		indicator.activity({segments: 12, align: 'left', valign: 'top', steps: 3, width:2, space: 1, length: 3, color: '#030303', speed: 1.5});
+		// indicator.activity({segments: 12, width: 5.5, space: 6, length: 13, color: '#252525', speed: 1.5, outside:true});
 		// sutraBusy is id for this indicator: $('#sutraBusy');
 	},1500)
 })();
@@ -150,8 +182,9 @@ function centerForm(formName) {
 	})
 })();
 
-//	Hook servoy's indicator to the mouse location
-(function(){
+//	Hook servoy's indicator to the mouse location when running in Desktop moode (doesn't make sense on touch screens)
+if (dsFactor() == 'Desktop') {
+	//track location of mouse cursor
 	setTimeout(function(){
 			$('#servoy_page').click(function(e){
 			var position = [0,0];
@@ -159,60 +192,62 @@ function centerForm(formName) {
 			position[1] = (e.pageY) ? e.pageY : 0;
 			Wicket.indicatorPosition = position;
 		})
-	},1500)	
-})()
-function busyCursor(clickPos,turnOn) {
-	var selector = $("#servoy_page");
+	},1500)
 	
-	//don't run on login form, we want the cursor in a specific location
-	if ($('.loginDS').length) {
-		return
-	}
+	function busyCursor(clickPos,turnOn) {
+		var selector = $("#servoy_page");
 	
-	//we have a jquery selector
-	if (selector.length) {
-		//valid mouse location passed in
-		if ( clickPos ) {
-			$('#indicator').css('top', clickPos[1] + 10).css('left', clickPos[0] + 10);
+		//don't run on login form, we want the cursor in a specific location
+		if ($('.loginDS').length) {
+			return
+		}
 	
-			selector.mousemove(function(event) {
-				$('#indicator').css('top', event.clientY+10).css('left', event.clientX+10);
-			});
+		//we have a jquery selector
+		if (selector.length) {
+			var indicator = $('#indicator')
+			//valid mouse location passed in
+			if ( clickPos ) {
+				indicator.css('top', clickPos[1] + 10).css('left', clickPos[0] + 10);
+	
+				selector.mousemove(function(event) {
+					indicator.css('top', event.clientY+10).css('left', event.clientX+10);
+				});
 			
-			//force indicator on (used for programmed busy)
-			if (turnOn) {
-				$('#indicator').show();
+				//force indicator on (used for programmed busy)
+				if (turnOn) {
+					indicator.show();
+				}
+			}
+			//no mouse location, remove listener
+			else {
+				selector.unbind('mousemove');
+			
+				//make sure that really turned off (sometimes gets stuck)
+				indicator.hide();
 			}
 		}
-		//no mouse location, remove listener
-		else {
-			selector.unbind('mousemove');
-			
-			//make sure that really turned off (sometimes gets stuck)
-			$('#indicator').hide();
-		}
 	}
-}
 
-//	Extending Wicket...object to hold original calls
-var WicketDSExtend = new Object();
+	//	Extending Wicket...object to hold original calls
+	var WicketDSExtend = new Object();
 
-//	Extend wicket calls to hide/show indicator so that follows mouse location
-WicketDSExtend.showIncrementally = Wicket.showIncrementally;
-Wicket.showIncrementally = function() {
-	//original call
-	WicketDSExtend.showIncrementally.apply(this,arguments);
+	//	Extend wicket calls to hide/show indicator so that follows mouse location
+	WicketDSExtend.showIncrementally = Wicket.showIncrementally;
+	Wicket.showIncrementally = function() {
+		//original call
+		WicketDSExtend.showIncrementally.apply(this,arguments);
 	
-	//override
-	busyCursor(Wicket.indicatorPosition);
-}
-WicketDSExtend.hideIncrementally = Wicket.hideIncrementally;
-Wicket.hideIncrementally = function() {
-	//original call
-	WicketDSExtend.hideIncrementally.apply(this,arguments);
+		//override
+		busyCursor(Wicket.indicatorPosition);
+	}
+	WicketDSExtend.hideIncrementally = Wicket.hideIncrementally;
+	Wicket.hideIncrementally = function() {
+		//original call
+		WicketDSExtend.hideIncrementally.apply(this,arguments);
 	
-	//override
-	busyCursor();
+		//override
+		busyCursor();
+	}
 }
 
 //	Refresh UL list
