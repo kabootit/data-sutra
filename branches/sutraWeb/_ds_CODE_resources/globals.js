@@ -462,10 +462,21 @@ function TRIGGER_fastfind_display_set(findText,findTooltip,findCheck,setDefault)
 			findCheck = ''
 			findTooltip = ''
 			
-			if (navigationPrefs.byNavItemID[currentNavItem].fastFind) {
+			var findInitial = navigationPrefs.byNavItemID[currentNavItem].navigationItem.findDefault
+			
+			if (navigationPrefs.byNavItemID[currentNavItem].fastFind && navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindField) {
 				findText = navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindValue
 				findCheck = navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindField
 				findTooltip = navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindTip
+			}
+			else if (findInitial) {
+				findCheck = findInitial
+				
+				//get pretty name for chosen column
+				var prettyFind = navigationPrefs.byNavItemID[currentNavItem].fastFind.filter(function(item){return item.columnName == findInitial})
+				if (prettyFind.length) {
+					findTooltip = 'Searching in "' + prettyFind[0].findName
+				}
 			}
 		}
 		
@@ -1676,12 +1687,12 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset, idNavigationIt
 	
 					//show that only a portion of current foundset selected
 					globals.DATASUTRA_find = 'Related subset'
-					globals.DATASUTRA_find_field = null
+//					globals.DATASUTRA_find_field = null
 					
 					//fast find is enabled, track
 					if (navigationPrefs.byNavItemID[navItem.idNavigationItem].fastFind) {
 						navigationPrefs.byNavItemID[navItem.idNavigationItem].fastFind.lastFindValue = globals.DATASUTRA_find
-						navigationPrefs.byNavItemID[navItem.idNavigationItem].fastFind.lastFindField = null
+						navigationPrefs.byNavItemID[navItem.idNavigationItem].fastFind.lastFindField = globals.DATASUTRA_find_field
 						navigationPrefs.byNavItemID[navItem.idNavigationItem].fastFind.lastFindTip = null
 					}
 	
@@ -5159,7 +5170,7 @@ function CODE_workspace_data()
 	
 	//save it
 		if (application.__parent__.solutionPrefs && solutionPrefs.repository && solutionPrefs.repository.workspace && 
-			((/*nonRef &&*/ solutionPrefs.clientInfo.typeServoy == 'developer') ? true : false)
+			((/*nonRef &&*/ (solutionPrefs.clientInfo.typeServoy == 'developer' || solutionPrefs.clientInfo.typeServoy == 'web client developer')) ? true : false)
 			) {
 		solutionPrefs.repository.workspace = vlForm
 		solutionPrefs.repository.relations = vlReln
