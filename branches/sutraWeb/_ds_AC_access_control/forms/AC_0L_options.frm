@@ -175,7 +175,6 @@ showClick:false,
 showFocus:false,
 size:"150,22",
 tabSeq:-1,
-text:"type",
 transparent:true,
 typeid:7,
 uuid:"ca4a1e32-ddc6-4f7a-a508-13542a5c7ff3"
