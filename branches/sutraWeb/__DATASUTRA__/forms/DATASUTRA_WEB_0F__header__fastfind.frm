@@ -7,9 +7,16 @@ onFocusGainedMethodID:"-1",
 onFocusLostMethodID:"-1",
 typeid:4,
 uuid:"244F31CE-4EED-4BE4-BC34-25D3617EAA42"
+},
+{
+extendsID:"BF501C28-9EB7-44E2-9DB8-2C77861CEA9D",
+toolTipText:"Clear search",
+typeid:7,
+uuid:"EAB6C2A0-D8AF-4D2B-B074-1F1C04D477C9"
 }
 ],
 name:"DATASUTRA_WEB_0F__header__fastfind",
 onShowMethodID:"5CD2ACB2-FA5C-48FF-9809-727E3A21739F",
+styleName:"ds_WEB_desktop",
 typeid:3,
 uuid:"1744593E-EC68-45B1-A3AC-F83BAA136BA8"
