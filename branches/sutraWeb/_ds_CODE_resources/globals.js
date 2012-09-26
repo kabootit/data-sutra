@@ -475,7 +475,7 @@ function TRIGGER_fastfind_display_set(findText,findTooltip,findCheck,setDefault)
 				//get pretty name for chosen column
 				var prettyFind = navigationPrefs.byNavItemID[currentNavItem].fastFind.filter(function(item){return item.columnName == findInitial})
 				if (prettyFind.length) {
-					findTooltip = 'Searching in "' + prettyFind[0].findName
+					findTooltip = 'Searching in "' + prettyFind[0].findName + '"'
 				}
 			}
 		}
@@ -6565,112 +6565,129 @@ function CODE_form_in_dialog(form, x, y, width, height, title, resizable, showTe
 	}
 	//post-6
 	else {
-		function getSize(value, defaultValue, noMinusOne) {
-			if (typeof value == 'number' && ((noMinusOne) ? value != -1 : true)) {
-				return value
-			}
-			else {
-				return defaultValue
-			}
+		//TODO: in webclient, use dialog plugin for FiDs so continuations baked in
+		if (false && solutionPrefs.config.webClient) {
+			globals.DIALOGS.showFormInModalDialog(
+					form.controller.getName(), 
+					x,
+					y,
+					width,
+					height, 
+					title, 
+					resizable, 
+					showText, 
+					name
+				)
 		}
-		
-		var smForm = solutionModel.getForm(form.controller.getName())
-		
-		var autoSave = databaseManager.getAutoSave()
-		
-		//didn't take window size into account unless resizable enabled; manually calculate window dimensions
-		if (utils.stringToNumber(utils.stringReplace(application.getVersion(),'.','')) < 605) {
-			var offset = 0
-			var titleBar = 0
-			//windows
-			if (utils.stringPatternCount(solutionPrefs.clientInfo.typeOS,'Windows')) {
-				var theme = plugins.sutra.getWindowsTheme()
-				
-				//todo: figure out specifically
-				titleBar = 30
-				
-				//aero
-				if (utils.stringToNumber(solutionPrefs.clientInfo.verOS) > 6 && theme != 'Classic') {
-					offset = 16
-				}
-				//luna
-				else if (utils.stringPatternCount(solutionPrefs.clientInfo.verOS,'5.1') && theme == 'Luna') {
-					offset = 8
-				}
-				//classic
-				else {
-					offset = 8
-				}
-			}
-			//mac
-			else {
-				titleBar = 22
-			}
-			
-			var totalWidth = smForm.width
-			
-			//offset for platform windowing
-			totalWidth += offset
-			
-			var totalHeight = 0
-			for (var i in smForm.getParts()) {
-				totalHeight += smForm.getParts()[i].height
-			}
-			//offset for platform windowing
-			totalHeight += titleBar + offset
-		}
-		//can auto-calculate height-width
 		else {
-			totalWidth = -1
-			totalHeight = -1
-		}
-		
-		if (typeof resizable != 'boolean') {
-			resizable = true
-		}
-		
-		if (typeof showText != 'boolean') {
-			showText = false
-		}
-		
-		if (typeof modal != 'boolean') {
-			modal = true
-		}
-		
-		var modality = modal ? JSWindow.MODAL_DIALOG : JSWindow.DIALOG
-		
-		//check to see if this FiD already exists and remove it
-		if (application.getWindow(name)) {
-			
-			//run on hide method //must destroy window in onhide
-			if (smForm.onHide.getName() && form[smForm.onHide.getName()]) {
-				form[smForm.onHide.getName()]()
-				
-				//on hide changed the status of autosave, reset
-				if (autoSave != databaseManager.getAutoSave()) {
-					databaseManager.setAutoSave(autoSave)
+			function getSize(value, defaultValue, noMinusOne) {
+				if (typeof value == 'number' && ((noMinusOne) ? value != -1 : true)) {
+					return value
+				}
+				else {
+					return defaultValue
 				}
 			}
-			//allow any FiDs to be hidden
-			else {
-				//needed for case when FiD shown and then navigated to other part of solution before closing
-				globals.CODE_hide_form = 1
+			
+			var smForm = solutionModel.getForm(form.controller.getName())
+			
+			var autoSave = databaseManager.getAutoSave()
+			
+			//didn't take window size into account unless resizable enabled; manually calculate window dimensions
+			if (utils.stringToNumber(utils.stringReplace(application.getVersion(),'.','')) < 605) {
+				var offset = 0
+				var titleBar = 0
+				//windows
+				if (utils.stringPatternCount(solutionPrefs.clientInfo.typeOS,'Windows')) {
+					var theme = plugins.sutra.getWindowsTheme()
+					
+					//todo: figure out specifically
+					titleBar = 30
+					
+					//aero
+					if (utils.stringToNumber(solutionPrefs.clientInfo.verOS) > 6 && theme != 'Classic') {
+						offset = 16
+					}
+					//luna
+					else if (utils.stringPatternCount(solutionPrefs.clientInfo.verOS,'5.1') && theme == 'Luna') {
+						offset = 8
+					}
+					//classic
+					else {
+						offset = 8
+					}
+				}
+				//mac
+				else {
+					titleBar = 22
+				}
 				
-				application.getWindow(name).destroy()
+				var totalWidth = smForm.width
+				
+				//offset for platform windowing
+				totalWidth += offset
+				
+				var totalHeight = 0
+				for (var i in smForm.getParts()) {
+					totalHeight += smForm.getParts()[i].height
+				}
+				//offset for platform windowing
+				totalHeight += titleBar + offset
 			}
-		}
+			//can auto-calculate height-width
+			else {
+				totalWidth = -1
+				totalHeight = -1
+			}
+			
+			if (typeof resizable != 'boolean') {
+				resizable = true
+			}
+			
+			if (typeof showText != 'boolean') {
+				showText = false
+			}
+			
+			if (typeof modal != 'boolean') {
+				modal = true
+			}
+			
+			var modality = modal ? JSWindow.MODAL_DIALOG : JSWindow.DIALOG
+			
+			//check to see if this FiD already exists and remove it
+			if (application.getWindow(name)) {
+				
+				//run on hide method //must destroy window in onhide
+				if (smForm.onHide.getName() && form[smForm.onHide.getName()]) {
+					form[smForm.onHide.getName()]()
+					
+					//on hide changed the status of autosave, reset
+					if (autoSave != databaseManager.getAutoSave()) {
+						databaseManager.setAutoSave(autoSave)
+					}
+				}
+				//allow any FiDs to be hidden
+				else {
+					//needed for case when FiD shown and then navigated to other part of solution before closing
+					globals.CODE_hide_form = 1
+					
+					application.getWindow(name).destroy()
+				}
+			}
 		
-		var FiD = application.createWindow(name,modality)
-		FiD.setInitialBounds(
-						getSize(x,-1),
-						getSize(y,-1),
-						getSize(width,totalWidth,true),
-						getSize(height,totalHeight,true)
-					)
-		FiD.resizable = resizable
-		FiD.showTextToolbar(showText)
-		FiD.title = title
-		FiD.show(form)
+		
+			var FiD = application.createWindow(name,modality)
+			FiD.setInitialBounds(
+							getSize(x,-1),
+							getSize(y,-1),
+							getSize(width,totalWidth,true),
+							getSize(height,totalHeight,true)
+						)
+			FiD.resizable = resizable
+			FiD.showTextToolbar(showText)
+			FiD.title = title
+			FiD.show(form)
+		}
 	}
 }
 
