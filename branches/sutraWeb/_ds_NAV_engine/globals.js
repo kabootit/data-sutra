@@ -409,7 +409,7 @@ if (application.__parent__.solutionPrefs) {
 	}
 	//no field selected
 	else if (!globals.DATASUTRA_find_field && globals.DATASUTRA_find) {
-		globals.DIALOGS.showWarningDialog('Alert', 'No find field selected...choose one.','OK')
+		globals.DIALOGS.showWarningDialog('Alert', 'No find field selected...choose one.')
 		globals.NAV_find_fields()
 	}
 }
@@ -542,6 +542,7 @@ if (application.__parent__.solutionPrefs) {
 			for (var i = 0; i < user.itemName.length ; i++) {
 				if (user.itemName[i] == 'Power Replace') {
 					replace = true
+					break
 				}
 			}
 			if (replace && navigationPrefs.byNavItemID[currentNavItem].powerReplace) {
@@ -555,7 +556,7 @@ if (application.__parent__.solutionPrefs) {
 				}
 			}
 			
-//			//add suffices
+//			//add suffices: disabled because of performance hit
 //				//divider
 //				if (addDate || addNum || addText) {
 //					findItems.push(blankObject)
@@ -2870,6 +2871,16 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			forms[navigationPrefs.byNavItemID[navigationItemID].listData.tabFormInstance].UL_fill_data()
 		}
 		
+		
+		//when fast find not configured, disable data entry
+		var findOn = navigationPrefs.byNavItemID[navigationItemID].fastFind ? true : false
+		if (findOn != forms[baseForm + '__header__fastfind'].elements.fld_find.enabled) {
+			forms[baseForm + '__header__fastfind'].elements.btn_find.enabled = findOn
+			forms[baseForm + '__header__fastfind'].elements.find_mid.enabled = findOn
+			forms[baseForm + '__header__fastfind'].elements.find_end.enabled = findOn
+			forms[baseForm + '__header__fastfind'].elements.fld_find.enabled = findOn
+		}
+		
 		//if field to search by, the search string, tooltip text, or selected display are present on a form,
 		//prepopulate the appropriate globals, otherwise set to null
 		
@@ -2900,6 +2911,9 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		var findInitial = navSpecs.findDefault
 		if (findInitial && !globals.DATASUTRA_find_field) {
 			globals.DATASUTRA_find_field = findInitial
+			//get pretty name for chosen column
+			var prettyFind = navigationPrefs.byNavItemID[navigationItemID].fastFind.filter(function(item){return item.columnName == findInitial})
+			forms[baseForm + '__header__fastfind'].elements.fld_find.toolTipText = 'Searching in "' + (prettyFind.length ? prettyFind[0].findName : findInitial) + '"'
 		}
 		
 		//set check on display pop-down
