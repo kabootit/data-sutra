@@ -1758,11 +1758,22 @@ function DS_actions(input) {
 					solutionPrefs.config.currentFormID = solutionPrefs.config.prefs.workflowFormID
 					
 					//load navigation set list back in
-					if (forms[baseForm].elements.tab_content_A.tabIndex > 0) {
-						forms[baseForm].elements.tab_content_A.removeTabAt(1)
+					if (solutionPrefs.config.webClient) {
+						var tabPanel = forms.DATASUTRA_WEB_0F__list.elements.tab_list
+						var navName = 'NAV__navigation_tree'
+						//remove main window if new one different than currently displayed one
+						if (tabPanel.getLeftForm().controller.getName() != navName) {
+							tabPanel.setLeftForm(forms[navName])
+						}
 					}
-					forms[baseForm].elements.tab_content_A.addTab(forms.NAV__navigation_tree)
-					forms[baseForm].elements.tab_content_A.tabIndex = forms[baseForm].elements.tab_content_A.getMaxTabIndex()
+					//smart client
+					else {
+						if (forms[baseForm].elements.tab_content_A.tabIndex > 0) {
+							forms[baseForm].elements.tab_content_A.removeTabAt(1)
+						}
+						forms[baseForm].elements.tab_content_A.addTab(forms.NAV__navigation_tree)
+						forms[baseForm].elements.tab_content_A.tabIndex = forms[baseForm].elements.tab_content_A.getMaxTabIndex()
+					}
 					
 					//check that last viewed navigation set still ok
 					var foundSet = false
