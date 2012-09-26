@@ -32,3 +32,8 @@
 .yuimenuitemlabel-selected {
 	font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;
 }
+
+.yuimenuitemlabel td{
+	height: auto;
+	line-height: auto;
+}
