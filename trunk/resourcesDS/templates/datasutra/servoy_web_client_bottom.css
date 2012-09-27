@@ -29,11 +29,27 @@
 }
 
 .yuimenuitemlabel, 
-.yuimenuitemlabel-selected {
+.yuimenuitemlabel-selected,
+.yuimenuitemlabel td {
 	font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;
 }
 
-.yuimenuitemlabel td{
+.yuimenuitemlabel table {
+	border-spacing: 0px;
+	margin-left: -19px;
+}
+
+.yuimenuitemlabel td {
 	height: auto;
-	line-height: auto;
+	line-height: 10px;
+	font-size: 11px;
+}
+
+.yuimenuitemlabel .img_checkbox {
+	background-position-x: 4px;
+	background-position-y: -1px;
+}
+
+#basicmenu {
+	padding-left: 3px;
 }
