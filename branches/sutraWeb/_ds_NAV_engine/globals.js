@@ -3058,12 +3058,6 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		globals.DS_web_pulse = false
 		plugins.WebClientUtils.executeClientSideJS('pulseOff();')
 		
-		//have spinny indicator follow mouse when mouse present
-		//in other words, when no mouse, fixed spinny indicator in toolbar
-		if (scopes.DS.deviceFactor != 'Desktop') {
-			plugins.WebClientUtils.executeClientSideJS('mobileIndicator();')
-		}
-		
 		//prompt to add to homescreen
 		plugins.WebClientUtils.executeClientSideJS('if (window.parent.addToHome) window.parent.addToHome.show();')
 		
