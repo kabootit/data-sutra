@@ -330,7 +330,7 @@ function dsFactor() {
 		var myReturn = window.parent.dsFactor();
 	}
 	
-	if (myReturn == 'iPad') {
+	if (myReturn == 'iPad' || myReturn == 'iPhone') {
 		setTimeout(mobileIndicator,1500);
 	}
 	
