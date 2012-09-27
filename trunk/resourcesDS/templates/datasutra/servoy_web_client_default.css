@@ -545,3 +545,40 @@ and (max-device-width : 1024px) {
 	/*would be nice to import...but needs to be first in the stylesheet*/
 /*	@import url('/ds/css/ds.tablet.css')*/
 }
+
+/*	Loading indicator for iOS	*/
+#HUDcenter1 {
+/*	width: 100%;*/
+	width: 1024px;
+}
+
+#HUDcenter2 {
+	width: 130px;
+	margin: 200px auto 0px;
+}
+
+@media only screen and (max-device-width: 1024px) and (orientation:landscape) { 
+    #HUDcenter2 { margin-top: 25%; }
+}
+@media only screen and (max-device-width: 1024px) and (orientation:portrait) {
+	#HUDcenter1 { width: 768px; }
+	#HUDcenter2 { margin-top: 50%; } 
+}
+
+#HUDalpha {
+	width: 90px;
+	height: 110px;
+	padding: 10px 20px;
+	background: #242322;
+	opacity:0.9;
+	font-family: Helvetica, Arial, Sans-Serif;
+	text-align: center;
+	border-radius: 12px;
+}
+
+#HUDalpha h3 {
+	padding-top: 65px;
+	color: #F2F2F2;
+	font-size: 150%;
+}
+

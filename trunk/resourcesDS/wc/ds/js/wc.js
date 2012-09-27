@@ -70,35 +70,15 @@ function loginIndicator(signup) {
 }
 
 //	Update indicator to be new style (in the toolbar)
-function mobileIndicator(delay) {
+function mobileIndicator() {
 	var indicator = $('#indicator');
-	var fastfind = $("#form_DATASUTRA_WEB_0F__header__fastfind");
-
-	//we have enough things loaded to actually run this method
-	if (fastfind.length && fastfind.width()) {
-		//68 is position of form from right edge, 20 is width of indicator = 215
-		var offset = fastfind.width() + 60 + 20 + 'px';
-
-		console.log('SET: ' + offset);
-
-		//in the wrong place, readjust
-		if (indicator.css('margin-right') != offset) {
-			//reset left fixation
-			indicator.removeStyle('margin-left');
-			indicator.removeStyle('left');
-			//put indicator into toolbar area
-			indicator.css('right','0px');
-			indicator.css('margin-right',offset);
-			indicator.css('margin-top','8px');
-		}
-	}
-	//run this function again until enough loaded
-	else {
-		setTimeout(function(){
-			mobileIndicator(delay)
-		},delay || 250)
-		console.log('SET waiting....');
-	}
+	indicator.html('<div id="HUDcenter1"><div id="HUDcenter2"><div id="HUDalpha"><h3>Loading...</h3></div></div></div>');
+	indicator.removeStyle('width');
+	indicator.removeStyle('height');
+	indicator.removeStyle('top');
+	indicator.removeStyle('left');
+	$('#HUDalpha').activity({ valign: 'top', steps: 3, segments: 12, width: 5.5, space: 5, length: 12,color: '#F2F2F2', speed: 0.75});
+	$('#sutraBusy').css('margin-top','5px');
 }
 
 //  Include spinny indicator after jquery is available
@@ -347,6 +327,12 @@ function browserCheck() {
 //	Form factor used
 function dsFactor() {
 	if (window.parent.dsFactor) {
-		return window.parent.dsFactor();
+		var myReturn = window.parent.dsFactor();
 	}
+	
+	if (myReturn == 'iPad') {
+		setTimeout(mobileIndicator,1500);
+	}
+	
+	return myReturn
 }
