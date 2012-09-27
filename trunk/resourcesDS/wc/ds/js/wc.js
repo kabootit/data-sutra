@@ -168,8 +168,9 @@ function mobileIndicator(delay) {
 (function(){
 	$(document).keydown(function(e) {
 		var nodeName = e.target.nodeName.toLowerCase();
-
-		if (e.which === 8) {
+		
+		//8 is backspace, but allow meta-shift-backspace to dump cache when developing in chrome
+		if (e.which === 8 && !e.metaKey && !e.shiftKey) {
 			if ((nodeName === 'input' && e.target.type === 'text') ||
 				nodeName === 'textarea' || 
 				(nodeName === 'input' && e.target.type === 'password')) {
