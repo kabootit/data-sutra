@@ -11,18 +11,18 @@ if (id_navigation_item) {
 	var height = (solutionPrefs.config.webClient) ? '16px' : '20'
 	
 	var html = '<html><head><style type="text/css" media="screen"><!--'
-	html += 'table { table-layout: fixed; width: 100%; border-spacing: 0px; border: 0px; }'
-	html += 'td  { text-indent: 5px; white-space: nowrap; overflow: hidden; border: 0px; padding: 2px; height: ' + height + '; line-height: ' + height + '; }'
-	html += '.rowSelected  { color: white; text-decoration: none; font-weight: bold; background-image: url("media:///row_selected.png"); }'
-	html += 'td.rowSelected a { color: white; text-decoration: none; }'
+	html += 'table.sutra { table-layout: fixed; width: 100%; border-spacing: 0px; border: 0px; }'
+	html += 'table.sutra td  { text-indent: 5px; white-space: nowrap; overflow: hidden; border: 0px; padding: 2px; height: ' + height + '; line-height: ' + height + '; }'
+	html += 'table.sutra .rowSelected  { color: white; text-decoration: none; font-weight: bold; background-image: url("media:///row_selected.png"); }'
+	html += 'table.sutra td.rowSelected a { color: white; text-decoration: none; }'
 	html += '--></style></head>'
 	if (globals.NAV_navigation_item_selected == id_navigation_item) {
-		html += '<table><tr>'
+		html += '<table class = "sutra"><tr>'
 		html += '<td class = "rowSelected">' + itemName + '</td>'
 		html += '</tr></table></html>'
 	}
 	else {
-		html += '<table><tr>'
+		html += '<table class = "sutra"><tr>'
 		html += '<td>' + itemName + '</td>'
 		html += '</tr></table></html>'
 	}
@@ -44,15 +44,15 @@ if (id_navigation_item) {
 	var height = (solutionPrefs.config.webClient) ? '16px' : '20'
 	
 	var html = '<html><head><style type="text/css" media="screen"><!--'
-	html += 'table { table-layout: fixed; width: 100%; border-spacing: 0px; border: 0px; }'
-	html += 'td  { text-indent: 5px; white-space: nowrap; overflow: hidden; border: 0px; padding: 2px; height: ' + height + '; line-height: ' + height + '; }'
-	html += '.rowSelected  { color: white; text-decoration: none; font-weight: bold; background-image: url("media:///row_selected.png"); }'
-	html += '.rowSelectedIndent  { background-image: url("media:///row_selected.png"); width: 10px; }'
-	html += '.rowIndent  { width: 10px; }'
-	html += 'td.rowSelected a { color: white; text-decoration: none; }'
+	html += 'table.sutra  { table-layout: fixed; width: 100%; border-spacing: 0px; border: 0px; }'
+	html += 'table.sutra td  { text-indent: 5px; white-space: nowrap; overflow: hidden; border: 0px; padding: 2px; height: ' + height + '; line-height: ' + height + '; }'
+	html += 'table.sutra .rowSelected  { color: white; text-decoration: none; font-weight: bold; background-image: url("media:///row_selected.png"); }'
+	html += 'table.sutra .rowSelectedIndent  { background-image: url("media:///row_selected.png"); width: 10px; }'
+	html += 'table.sutra .rowIndent  { width: 10px; }'
+	html += 'table.sutra td.rowSelected a { color: white; text-decoration: none; }'
 	html += '--></style></head>'
 	
-	html += '<table><tr>'
+	html += '<table class = "sutra"><tr>'
 	
 	//if row selected
 	if (globals.NAV_navigation_item_selected == id_navigation_item) {
@@ -90,22 +90,22 @@ if (id_navigation_item) {
 	var height = (solutionPrefs.config.webClient) ? '16px' : '20'
 	
 	var html = '<html><head><style type="text/css" media="screen"><!--'
-	html += 'table { table-layout: fixed; width: 100%; border-spacing: 0px; border: 0px; }'
-	html += 'td  { text-indent: 5px; white-space: nowrap; overflow: hidden; border: 0px; padding: 1px; height: ' + height + '; line-height: ' + height + '; }'
-	html += '.rowSelectedFill  { background-image: url("media:///row_selected.png"); width: 10px; }'
-	html += '.expanded  { background-image: url("media:///row_expanded.png"); background-repeat: no-repeat; width: 10px; }'
-	html += '.expandedSelected  { background-image: url("media:///row_expanded_selected.png"); background-repeat: no-repeat; width: 10px; }'
-	html += '.collapsed  { background-image: url("media:///row_collapsed.png"); background-repeat: no-repeat; width: 10px; }'
-	html += '.collapsedSelected  { background-image: url("media:///row_collapsed_selected.png"); background-repeat: no-repeat; width: 10px; }'
-	html += '.rowFill  { width: 10px; }'
-	html += 'td.rowSelected a { color: white; text-decoration: none; }'
-	html += 'td.expanded a { text-decoration: none; }'
-	html += 'td.expandedSelected a { text-decoration: none; }'
-	html += 'td.collapsed a { text-decoration: none; }'
-	html += 'td.collapsedSelected a { text-decoration: none; }'
+	html += 'table.sutra  { table-layout: fixed; width: 100%; border-spacing: 0px; border: 0px; }'
+	html += 'table.sutra td  { text-indent: 5px; white-space: nowrap; overflow: hidden; border: 0px; padding: 0px; height: ' + height + '; line-height: ' + height + '; }'
+	html += 'table.sutra .rowSelectedFill  { background-image: url("media:///row_selected.png"); width: 10px; }'
+	html += 'table.sutra .expanded  { background-image: url("media:///row_expanded.png"); background-repeat: no-repeat; width: 10px; }'
+	html += 'table.sutra .expandedSelected  { background-image: url("media:///row_expanded_selected.png"); background-repeat: no-repeat; width: 10px; }'
+	html += 'table.sutra .collapsed  { background-image: url("media:///row_collapsed.png"); background-repeat: no-repeat; width: 10px; }'
+	html += 'table.sutra .collapsedSelected  { background-image: url("media:///row_collapsed_selected.png"); background-repeat: no-repeat; width: 10px; }'
+	html += 'table.sutra .rowFill  { width: 10px; }'
+	html += 'table.sutra td.rowSelected a { color: white; text-decoration: none; }'
+	html += 'table.sutra td.expanded a { text-decoration: none; }'
+	html += 'table.sutra td.expandedSelected a { text-decoration: none; }'
+	html += 'table.sutra td.collapsed a { text-decoration: none; }'
+	html += 'table.sutra td.collapsedSelected a { text-decoration: none; }'
 	html += '--></style></head>'
 	
-	html += '<table><tr>'
+	html += '<table class = "sutra"><tr>'
 	
 	//if row selected
 	if (globals.NAV_navigation_item_selected == id_navigation_item) {

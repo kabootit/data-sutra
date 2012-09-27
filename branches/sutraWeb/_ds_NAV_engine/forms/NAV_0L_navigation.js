@@ -1,4 +1,11 @@
 /**
+ * @type {Boolean}
+ *
+ * @properties={typeid:35,uuid:"81B52C5F-4536-4BBB-97B6-AC2165900E7D",variableType:-4}
+ */
+var _configSet = false;
+
+/**
  *
  * @properties={typeid:24,uuid:"7c7a54d9-6406-4aaa-a7bf-bc1a2fd25920"}
  */
@@ -7031,6 +7038,7 @@ if (globals.CODE_key_pressed() == 2 || typeof forceShow == 'boolean') {
 	//show all records
 	if (forceShow || !foundIt) {
 		controller.loadAllRecords()
+		_configSet = true
 	}
 	//config record showing, hide
 	else {
@@ -7040,6 +7048,7 @@ if (globals.CODE_key_pressed() == 2 || typeof forceShow == 'boolean') {
 		controller.find()
 		flag_config = '0'
 		controller.search(false,false)
+		_configSet = false
 	}
 	
 	if (utils.hasRecords(foundset)) {
@@ -7551,4 +7560,15 @@ function zzimport()
 			//call to helper Function to create node
 				//recursion built in here
 			
+}
+
+/**
+ * Perform the element double-click action.
+ *
+ * @param {JSEvent} event the event that triggered the action
+ *
+ * @properties={typeid:24,uuid:"AAF5B554-C9E3-4244-875E-80105FB9171A"}
+ */
+function TOGGLE_config_set_web(event) {
+	TOGGLE_config_set(!_configSet)
 }

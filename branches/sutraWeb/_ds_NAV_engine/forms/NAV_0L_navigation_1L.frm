@@ -94,7 +94,8 @@ tabSeq:1,
 toolTipText:"Order",
 transparent:true,
 typeid:4,
-uuid:"f2448c75-64fd-44a0-b061-0319367b06e3"
+uuid:"f2448c75-64fd-44a0-b061-0319367b06e3",
+visible:false
 }
 ],
 name:"NAV_0L_navigation_1L",
