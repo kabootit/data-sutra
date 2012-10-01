@@ -119,8 +119,15 @@ function FORM_on_show(firstShow, event) {
 		
 		//call router to switch entire page
 		if (globals.DATASUTRA_router_enable) {
-			//4th param is special case for embedded login from external site
-			globals.DS_router(null,null,navItemID,globals.DATASUTRA_router_login)
+			//reset flag that this is initial history load
+			if (globals.DATASUTRA_router_initialHix) {
+				globals.DATASUTRA_router_initialHix = false
+			}
+			//when running history on login, do not draw navigation pane
+			else {
+				//4th param is special case for embedded login from external site
+				globals.DS_router(null,null,navItemID,globals.DATASUTRA_router_login)
+			}
 		}
 		//smart or straight-up web client
 		else {
