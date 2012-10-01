@@ -158,9 +158,10 @@ function LOGIN(event,webkit) {
 			history.go(-1)
 			
 			//go to nav item requested
-//			if (globals.DATASUTRA_router.length && globals.DATASUTRA_router[0].pathObject && globals.DATASUTRA_router[0].pathObject.hasOwnProperty('set')) {
-//				globals.DS_router('DSHistory')
-//			}
+			if (globals.DATASUTRA_router.length && globals.DATASUTRA_router[0].pathString != '/ds/login') {
+				globals.DATASUTRA_router_initialHix = true
+				globals.DS_router('DSHistory')
+			}
 		}
 		else {
 			_userName = globals.AC_login_user
