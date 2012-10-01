@@ -1,6 +1,13 @@
 /**
  * @type {Boolean}
  *
+ * @properties={typeid:35,uuid:"7E8C2907-DE68-4240-8FC1-0CDD2D455F3A",variableType:-4}
+ */
+var DATASUTRA_router_initialHix = false;
+
+/**
+ * @type {Boolean}
+ *
  * @properties={typeid:35,uuid:"274F26D5-592C-43A1-BB30-AD7482FA748E",variableType:-4}
  */
 var DATASUTRA_router_firstRun = false;
@@ -5195,8 +5202,8 @@ function DATASUTRA_open(skipFontFix) {
  * 
  */
 function DS_router(p1,params,itemID,launch,logout,pathName) {
-	//get url using callback
-	if (!pathName) {
+	//get url using callback (when navigating history, doesn't really matter
+	if (p1 != 'DSHistory' && !pathName) {
 		plugins.WebClientUtils.executeClientSideJS('var path = window.parent.location.pathname;', DS_router, [null,null,null,null,null,'path'])
 		globals.DATASUTRA_router_arguments = arguments
 		return
@@ -5302,6 +5309,7 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 	
 	// url object logic
 	var url = {}
+	//see DSHistory below...must be the same
 	for ( var item in params ) {
 		// 1st slot is navigation set
 		if ( item == "argument" ) {
@@ -5330,7 +5338,7 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 						'DSError_NoURL',
 						'DSHistory'
 					]
-	if (specialRequests.indexOf(url.set) == -1) {
+	if (specialRequests.indexOf(url.set) == -1 && pathName != '/ds/login' && getURL() != '/ds/') {
 		globals.DATASUTRA_router.push(getNode())
 	}
 	
@@ -5396,13 +5404,18 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 		}
 		// specific navitem requested, go to login page first
 		else if (!(url.set == 'DSLogin' || url.set == 'DSLoginSmall')) {
-			plugins.WebClientUtils.executeClientSideJS(routerCall + '(null,"Data Sutra: Login","' + getURL('login') + '");')
-			
+			if (pathName != '/ds/login') {
+				plugins.WebClientUtils.executeClientSideJS(routerCall + '(null,"Data Sutra: Login","' + getURL('login') + '");')
+			}
 			//we've run once
 			globals.DATASUTRA_router_firstRun = true
 			return
 		}
 	}
+	
+	// get nav object mapping
+	var nav = (application.__parent__.navigationPrefs) ? navigationPrefs.siteMap : new Object()
+	
 	
 	// check for special status codes
 	if (p1 == 'DSLoginSmall') {
@@ -5469,6 +5482,48 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 			return
 		}
 	}
+	// navigate through history
+	else if (p1 == 'DSHistory') {
+		//TODO: ability to specify which history item to go to
+		var slot = (url && url.history) ? url.history : 0
+		
+		//figure out which navigation item is being requested (same as DS_router_callback)
+		var path = globals.DATASUTRA_router[slot].pathString
+		path = path.split('/')
+		//pop off first/, ds, and last/
+		if (!path[0]) {
+			path.splice(0,1)
+		}
+		path.splice(0,1)
+		if (!path[path.length - 1]) {
+			path.pop()
+		}
+		
+		url = {
+			set : path[0],
+			item : path[1]
+		}
+		
+		// particular item specified
+		if (url.set && url.item) {
+			// this item exists
+			if (nav[url.set] && nav[url.set][url.item]) {
+				itemID = nav[url.set][url.item].navItemID
+			}
+		}
+		// only nav set specified, grab first navigation item
+		else if (url.set && nav[url.set]) {
+			// don't really need a loop, but need to grab an element inside the set referenced
+			for (var i in nav[url.set]) {
+				itemID = navigationPrefs.byNavSetID[nav[url.set][i].details.navigationItem.idNavigation].itemsByOrder[0].navigationItem.idNavigationItem
+				break
+			}
+		}
+		
+//		plugins.WebClientUtils.executeClientSideJS('window.parent.routerDelay(null,"' + navigationPrefs.byNavItemID[itemID]._about_ + '","' + getURL(navigationPrefs.byNavItemID[itemID].path) + '",' + delay + ');')
+		plugins.WebClientUtils.executeClientSideJS(routerCall + '(null,"' + navigationPrefs.byNavItemID[itemID]._about_ + '","' + getURL(navigationPrefs.byNavItemID[itemID].path) + '",' + delay + ');')
+		return
+	}
 	else if (p1 == 'DSError_NoURL') {
 		setError('404','No page requested')
 		plugins.WebClientUtils.executeClientSideJS(routerCall + '(null,"Data Sutra: Error page: No URL","' + getURL('error') + '");')
@@ -5497,43 +5552,6 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 	}
 	// potentially valid url passed in; try to navigate here
 	else {
-		// get nav object mapping
-		var nav = (application.__parent__.navigationPrefs) ? navigationPrefs.siteMap : new Object()
-		
-		// navigate through history
-		if (p1 == 'DSHistory') {
-			var slot = (url && url.history) ? url.history : 0
-			//TODO: ability to specify which history item to go to
-			url = globals.DATASUTRA_router[slot].pathObject
-			
-			//going to first item after logged in, do a hard redirect driven by the iframe
-			if (slot == 0) {
-				if (url.set && url.item) {
-					itemID = nav[url.set][url.item].navItemID
-				}
-				else if (url.set) {
-					// don't really need a loop, but need to grab an element inside the set referenced
-					for (var i in nav[url.set]) {
-						itemID = navigationPrefs.byNavSetID[nav[url.set][i].details.navigationItem.idNavigation].itemsByOrder[0].navigationItem.idNavigationItem
-						break
-					}
-				}
-				
-				plugins.WebClientUtils.executeClientSideJS('window.parent.routerDelay(null,"' + navigationPrefs.byNavItemID[itemID]._about_ + '","' + getURL(navigationPrefs.byNavItemID[itemID].path) + '",' + delay + ');')
-				
-//				if (url.set && url.item) {
-//					var pass = url.set + '/p1/' + url.item + '/'
-//				}
-//				else if (url.set) {
-//					var pass = url.set + '/'
-//				}
-//				
-//				plugins.WebClientUtils.executeClientSideJS('window.parent.routerIframe(' + pass + ');')
-
-				return
-			}
-		}
-		
 		// particular item specified
 		if (url.set && url.item) {
 			// this item exists
