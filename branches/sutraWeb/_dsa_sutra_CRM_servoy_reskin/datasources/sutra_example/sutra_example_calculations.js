@@ -17,5 +17,5 @@ function test_original()
 	]
 	
 	//return a random color
-	return colors[Math.floor(Math.random() * 10)]
+	return test_original || colors[Math.floor(Math.random() * 10)]
 }
