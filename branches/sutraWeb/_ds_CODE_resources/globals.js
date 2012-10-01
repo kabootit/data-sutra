@@ -3,7 +3,7 @@
  *
  * @properties={typeid:35,uuid:"972592B3-0B0B-47D7-A674-BD6B309C9D5C",variableType:-4}
  */
-var DS_web_pulse = false;
+var DS_web_login_running = false;
 
 /**
  * @properties={typeid:35,uuid:"B35E0445-3ECA-4323-8C87-BF0E5E9DEAD4",variableType:-4}
@@ -1619,18 +1619,17 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset, idNavigationIt
 			
 			var lastItem = solutionPrefs.config.currentFormID
 			
-			//not using iframe to drive jump betweens now; may in the future (deeplinked related records?)
-			if (false) {
 			//call router to switch entire page when not called from router
-//			if (globals.DATASUTRA_router_enable && !idNavigationItem) {
+			if (globals.DATASUTRA_router_enable && !idNavigationItem) {
 				globals.DS_router(null,null,navItem.idNavigationItem)
 				
 				//fill global to be used on second pass through this method (after url is rewritten)
 				globals.DATASUTRA_router_payload = {
 						itemID : itemID,
 						setFoundset : setFoundset,
-						useFoundset : useFoundset
+						useFoundset : (useFoundset) ? useFoundset : forms[application.getMethodTriggerFormName()].foundset
 					}
+				return
 			}
 			else {
 				//if from a different navigation set
@@ -1648,8 +1647,13 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset, idNavigationIt
 			
 			//bring foundset over
 			if (setFoundset) {
-				var callingFoundset = (useFoundset) ? useFoundset : forms[application.getMethodTriggerFormName()].foundset
-	
+				var callingFoundset = (useFoundset) ? useFoundset : (application.getMethodTriggerFormName() ? forms[application.getMethodTriggerFormName()].foundset : null)
+				
+				//don't have a foundset, stop trying to set it
+				if (!callingFoundset) {
+					return
+				}
+						
 				//we're passed an array, convert to dataset
 				if (callingFoundset instanceof Array) {
 					var ds = databaseManager.convertToDataSet(callingFoundset)
