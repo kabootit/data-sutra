@@ -1578,6 +1578,9 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset, idNavigationIt
 		var useFoundset = arguments[2]
 		var idNavigationItem = arguments[3]
 		
+		//variable letting us know if foundset was intentionally modified
+		var foundsetSet = false
+		
 		//navigate by registry
 		if (!idNavigationItem) {
 			//loop through all available items, finding everything with this registry
@@ -1659,6 +1662,8 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset, idNavigationIt
 					var ds = databaseManager.convertToDataSet(callingFoundset)
 	
 					forms[formNameWorkflow].controller.loadRecords(ds)
+					
+					foundsetSet = true
 				}
 				//working with foundset, verify that based on same table
 				else {
@@ -1673,11 +1678,13 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset, idNavigationIt
 					if (formOne == formTwo) {
 						//load related foundset
 						forms[formNameWorkflow].controller.loadRecords(callingFoundset.unrelate())
+						
+						foundsetSet = true
 					}
 				}
 	
-				//one of the above two is true, //TODO!
-				if (true) {
+				//a foundset was modified, do some more massage
+				if (foundsetSet) {
 					//restrict if required to
 				//	globals.NAV_foundset_restrict(true,null,true)
 	
