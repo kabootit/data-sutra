@@ -138,8 +138,11 @@ function LOGIN(event,webkit) {
 		var status = forms.AC_R__login_1F__password.LOGIN_user(null,SET_dialog)
 		
 		if (typeof status == 'boolean' && status) {
-			globals.DS_web_pulse = true
-			plugins.WebClientUtils.executeClientSideJS('pulseOn();')
+			globals.DS_web_login_running = true
+			
+			if (scopes.DS.deviceFactor != 'iPad') {
+				plugins.WebClientUtils.executeClientSideJS('pulseOn();')
+			}
 			
 			//set global for busy cursor in webclient
 			globals.DATASUTRA_web_cursor = true
@@ -437,7 +440,7 @@ function SET_remember(event) {
 	//forget user
 	else {
 		if (application.getUserProperty('sutra' + application.getServerURL().substr(7) + 'User')) {
-			application.setUserProperty('sutra' + application.getServerURL().substr(7) + 'User','')
+			application.setUserProperty('sutra' + application.getServerURL().substr(7) + 'User',null)
 		}
 	}
 }
