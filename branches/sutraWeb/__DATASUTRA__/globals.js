@@ -27,6 +27,13 @@ var DATASUTRA_router_refresh = false;
 var DATASUTRA_router_payload = new Object();
 
 /**
+ * @type {Array}
+ *
+ * @properties={typeid:35,uuid:"283845A3-0F1A-4A20-8CB1-BA4BE3E742EE",variableType:-4}
+ */
+var DATASUTRA_router_arguments = new Array();
+
+/**
  * @type {String}
  *
  * @properties={typeid:35,uuid:"A64600C5-CEE8-4839-95B6-13CEE6A505C2"}
@@ -5182,11 +5189,30 @@ function DATASUTRA_open(skipFontFix) {
  * @param {Number}	[itemID]	Specified ID to go to
  * @param {Boolean}	[launch]	Launch app requested (break out of iframe)
  * @param {Boolean}	[logout]	Log out requested, redirect url
+ * @param {String}	[pathName]	Current path shown in webclient
  * 
  * @properties={typeid:24,uuid:"AF8DE8BA-7503-462B-B4B0-45B9A2DE7921"}
  * 
  */
-function DS_router(p1,params,itemID,launch,logout) {
+function DS_router(p1,params,itemID,launch,logout,pathName) {
+	//get url using callback
+	if (!pathName) {
+		plugins.WebClientUtils.executeClientSideJS('var path = window.parent.location.pathname;', DS_router, [null,null,null,null,null,'path'])
+		globals.DATASUTRA_router_arguments = arguments
+		return
+	}
+	//url callback was made, use other arguments as well
+	else if (globals.DATASUTRA_router_arguments.length) {
+		p1 = globals.DATASUTRA_router_arguments[0]
+		params = globals.DATASUTRA_router_arguments[1]
+		itemID = globals.DATASUTRA_router_arguments[2]
+		launch = globals.DATASUTRA_router_arguments[3]
+		logout = globals.DATASUTRA_router_arguments[4]
+		
+		//reset to default value
+		globals.DATASUTRA_router_arguments = eval(solutionModel.getGlobalVariable('globals','DATASUTRA_router_arguments').defaultValue)
+	}
+	
 	//number of ms to wait before replacing state
 	var delay = 0
 	
@@ -5253,7 +5279,7 @@ function DS_router(p1,params,itemID,launch,logout) {
 		}
 		
 		if (pathS || !dataNode.pathString) {
-			dataNode.pathString = getURL(pathS)
+			dataNode.pathString = pathName || getURL(pathS)
 		}
 		
 		if (navI || !dataNode.navItemID) {
@@ -5553,7 +5579,7 @@ function DS_router(p1,params,itemID,launch,logout) {
 		globals.TRIGGER_navigation_set(payload.itemID,payload.setFoundset,payload.useFoundset,itemID)
 		
 		//reset payload (values only used immediately after set)
-		globals.DATASUTRA_router_payload = solutionModel.getGlobalVariable('globals','DATASUTRA_router_payload').defaultValue
+		globals.DATASUTRA_router_payload = eval(solutionModel.getGlobalVariable('globals','DATASUTRA_router_payload').defaultValue)
 		
 		// make sure on correct top level form
 		var goHere = historyCheck('DATASUTRA_WEB_0F')
@@ -5659,9 +5685,6 @@ function DS_router_recreateUI() {
 	var elemID = plugins.WebClientUtils.getElementMarkupId(forms.DATASUTRA_WEB_0F__header.elements['btn_space_' + spaceConversion[solutionPrefs.config.activeSpace]])
 	plugins.WebClientUtils.executeClientSideJS('dimSpace("' + elemID +'");')
 	
-	//update fast find box with correct stuff
-	globals.TRIGGER_fastfind_display_set(null,null,null,true)
-	
 	//things that must be resized after small login
 	if (globals.DATASUTRA_router_login) {
 		var callback = plugins.WebClientUtils.generateCallbackScript(globals.DS_router_bean_resize);
@@ -5693,17 +5716,23 @@ function DS_router_logout() {
 }
 
 /**
+ * Drive navigation from callback on form, not iframe url changes. OR
+ * Get current pathname in webclient
+ * 
+ * @param {String} 		path	The current pathname.
+ * @param {Function} 	[callback] Method to pass pathname to.
+ * 
  * @properties={typeid:24,uuid:"75330960-68A3-4298-9BE2-074A78F5B819"}
  */
-function DS_router_callback(path) {
+function DS_router_callback(path,callback) {
 	//get url using callback
 	if (!path) {
-		plugins.WebClientUtils.executeClientSideJS('var path = window.parent.location.pathname;', DS_router_callback, ['path'])
+		plugins.WebClientUtils.executeClientSideJS('var path = window.parent.location.pathname;', callback || DS_router_callback, ['path'])
 	}
 	//have path, figure out where to navigate to
 	else {
 		path = path.split('/')
-		//pop off first/last and ds
+		//pop off first/, ds, and last/
 		if (!path[0]) {
 			path.splice(0,1)
 		}
@@ -5739,7 +5768,8 @@ function DS_router_callback(path) {
 		
 		//navigate to the correct form
 		if (itemID) {
-			globals.TRIGGER_navigation_set(null,null,null,itemID)
+			var payload = globals.DATASUTRA_router_payload
+			globals.TRIGGER_navigation_set(null,payload.setFoundset,payload.useFoundset,itemID)
 		}
 	}
 }
