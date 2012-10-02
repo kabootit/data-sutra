@@ -6668,7 +6668,8 @@ function CODE_form_in_dialog(form, x, y, width, height, title, resizable, showTe
 			//check to see if this FiD already exists and remove it
 			if (application.getWindow(name)) {
 				
-				//run on hide method //must destroy window in onhide
+				//run on hide method
+					//MEMO: must destroy window in onhide
 				if (smForm.onHide.getName() && form[smForm.onHide.getName()]) {
 					form[smForm.onHide.getName()]()
 					
@@ -6685,8 +6686,36 @@ function CODE_form_in_dialog(form, x, y, width, height, title, resizable, showTe
 					application.getWindow(name).destroy()
 				}
 			}
-		
-		
+			
+			//in webclient on an ipad, turn off indicator; fixed position is outside bounds of FiD and makes scroll bars show up
+			if (solutionPrefs.config.webClient && scopes.DS.deviceFactor != 'iPad') {
+				//there is already an onshow
+				if (smForm.onShow && smForm.onShow.getName()) {
+					//check to see that not already extended, extend
+					if (!utils.stringPatternCount(smForm.onShow.code,'CODE_form_in_dialog_setup_ipad()')) {
+						//first trash the form
+						solutionModel.removeForm(smForm.name)
+						
+						//now update the code
+						smForm.onShow.code = smForm.onShow.code.substr(0,smForm.onShow.code.length - 2) + ";globals.CODE_form_in_dialog_setup_ipad()" + smForm.onShow.code.substr(smForm.onShow.code.length - 2)
+						
+						//get the form again
+						form = forms[smForm.name]
+					}
+				}
+				//need new on show method
+				else {
+					//first trash the form
+					solutionModel.removeForm(smForm.name)
+					
+					//now create new on show method
+					smForm.onShow = smForm.newMethod("function FORM_on_show__DSWEBCLIENT(firstShow,event){globals.CODE_form_in_dialog_setup_ipad()}")
+					
+					//get the form again
+					form = forms[smForm.name]
+				}
+			}
+			
 			var FiD = application.createWindow(name,modality)
 			FiD.setInitialBounds(
 							getSize(x,-1),
@@ -6774,4 +6803,15 @@ function CODE_appserver_get(hostName) {
 //	
 //	application.output(appURL)
 //	return appURL
+}
+
+/**
+ * Turn off ajax indicator on iPad FiD so scrollbars do not show up
+ * 
+ * @properties={typeid:24,uuid:"C04AB740-78A8-4C00-B6BB-31B2AB0586C8"}
+ */
+function CODE_form_in_dialog_setup_ipad() {
+	if (solutionPrefs.config.webClient && scopes.DS.deviceFactor != 'iPad') {
+		plugins.WebClientUtils.executeClientSideJS('indicatorOff();')
+	}
 }
