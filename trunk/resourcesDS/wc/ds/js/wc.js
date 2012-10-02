@@ -336,3 +336,19 @@ function dsFactor() {
 	
 	return myReturn
 }
+
+//	Turn of indicator for selected iframe
+function indicatorOff() {
+	setTimeout(function(){
+		var selector = $("#HUDcenter1");
+		
+		//we have a jquery selector
+		if (selector.length) {
+			console.log('FiD indicator hidden');
+			$("#HUDcenter1").hide();
+		}
+		else {
+			console.log('FiD indicator not hidden');
+		}
+	},1500);
+}
