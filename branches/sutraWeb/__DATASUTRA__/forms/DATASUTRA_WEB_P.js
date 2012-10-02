@@ -81,6 +81,9 @@ function FORM_on_show(firstShow, event) {
 	
 	_wrapperDivider = forms.DATASUTRA_WEB_0F.elements.tab_wrapper.dividerLocation
 	_wrapperSize = forms.DATASUTRA_WEB_0F.elements.tab_wrapper.getWidth() + ',' + forms.DATASUTRA_WEB_0F.elements.tab_wrapper.getHeight()
+	
+	//custom form setup for iOS FiD
+	globals.CODE_form_in_dialog_setup_ipad()
 }
 
 /**
