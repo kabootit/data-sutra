@@ -267,7 +267,7 @@ function FORM_on_show(firstShow, event) {
 	INDICATOR()
 	
 	// request focus in username field unless prefilled
-	if (!user) {
+	if (!_userName) {
 		elements.var_userName.requestFocus()
 	}
 }
