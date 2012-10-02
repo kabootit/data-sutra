@@ -76,6 +76,9 @@ if (utils.hasRecords(foundset)) {
 	
 	foundset.setSelectedIndex(1)
 }
+
+//custom form setup for iOS FiD
+globals.CODE_form_in_dialog_setup_ipad()
 }
 
 /**
