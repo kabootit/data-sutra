@@ -17,10 +17,14 @@ function ACTION_done() {
 /**
  *
  * @properties={typeid:24,uuid:"f14b56cb-a381-4d45-b318-7e057112368d"}
+ * @AllowToRunInFind
  */
 function FORM_on_show() {
 	//disable closing the form
 	globals.CODE_hide_form = 0
+	
+	//custom form setup for iOS FiD
+	globals.CODE_form_in_dialog_setup_ipad()
 }
 
 /**
