@@ -200,4 +200,7 @@ globals.NAV_import_navset = null
 globals.NAV_export_access = null
 globals.NAV_import_access = null
 globals.NAV_P_all = null
+
+//custom form setup for iOS FiD
+globals.CODE_form_in_dialog_setup_ipad()
 }

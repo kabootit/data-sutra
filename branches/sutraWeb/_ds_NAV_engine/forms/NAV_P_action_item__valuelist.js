@@ -289,4 +289,7 @@ globals.NAV_filter_valuelist = null
 
 //populate columns list
 FLD_data_change__column_relation()
+
+//custom form setup for iOS FiD
+globals.CODE_form_in_dialog_setup_ipad()
 }

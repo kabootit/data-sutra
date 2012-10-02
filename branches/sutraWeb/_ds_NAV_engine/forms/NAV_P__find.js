@@ -97,4 +97,7 @@ function FORM_on_show()
 globals.CODE_hide_form = 0
 
 globals.NAV_search_valuelist = null
+
+//custom form setup for iOS FiD
+globals.CODE_form_in_dialog_setup_ipad()
 }

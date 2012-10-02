@@ -385,4 +385,7 @@ globals.NAV_replace_field_value = null
 globals.NAV_replace_field_value_date = null
 
 FLD_data_change__replace_method()
+
+//custom form setup for iOS FiD
+globals.CODE_form_in_dialog_setup_ipad()
 }

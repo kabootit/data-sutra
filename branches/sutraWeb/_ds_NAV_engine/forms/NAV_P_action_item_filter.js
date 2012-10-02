@@ -270,4 +270,7 @@ FLD_data_change__column_relation()
 FLD_data_change__filter_type()
 
 //elements.fld_column_relation.requestFocus(false)
+
+//custom form setup for iOS FiD
+globals.CODE_form_in_dialog_setup_ipad()
 }

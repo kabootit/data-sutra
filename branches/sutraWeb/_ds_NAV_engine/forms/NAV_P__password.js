@@ -75,4 +75,7 @@ globals.CODE_hide_form = 0
 
 globals.NAV_password = null
 elements.fld_NAV_password.requestFocus()
+
+//custom form setup for iOS FiD
+globals.CODE_form_in_dialog_setup_ipad()
 }
