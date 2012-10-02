@@ -6688,11 +6688,11 @@ function CODE_form_in_dialog(form, x, y, width, height, title, resizable, showTe
 			}
 			
 			//in webclient on an ipad, turn off indicator; fixed position is outside bounds of FiD and makes scroll bars show up
-			if (solutionPrefs.config.webClient && scopes.DS.deviceFactor != 'iPad') {
+			if (solutionPrefs.config.webClient && scopes.DS.deviceFactor == 'iPad') {
 				//there is already an onshow
 				if (smForm.onShow && smForm.onShow.getName()) {
 					//check to see that not already extended, extend
-					if (!utils.stringPatternCount(smForm.onShow.code,'CODE_form_in_dialog_setup_ipad()')) {
+					if (!(utils.stringPatternCount(smForm.onShow.code,'CODE_form_in_dialog_setup_ipad()')  || utils.stringPatternCount(smForm.onShow.code,'indicatorOff()'))) {
 						//first trash the form
 						solutionModel.removeForm(smForm.name)
 						
@@ -6811,7 +6811,7 @@ function CODE_appserver_get(hostName) {
  * @properties={typeid:24,uuid:"C04AB740-78A8-4C00-B6BB-31B2AB0586C8"}
  */
 function CODE_form_in_dialog_setup_ipad() {
-	if (solutionPrefs.config.webClient && scopes.DS.deviceFactor != 'iPad') {
+	if (solutionPrefs.config.webClient && scopes.DS.deviceFactor == 'iPad') {
 		plugins.WebClientUtils.executeClientSideJS('indicatorOff();')
 	}
 }
