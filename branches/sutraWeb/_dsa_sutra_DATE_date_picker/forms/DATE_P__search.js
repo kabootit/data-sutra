@@ -794,4 +794,7 @@ elements.date_end.format = formatDate
 
 ACTION_range_set()
 
+//custom form setup for iOS FiD
+globals.CODE_form_in_dialog_setup_ipad()
+
 }
