@@ -62,6 +62,9 @@ var useHTML = '<html>'.equalsIgnoreCase(utils.stringLeft(globals.CODE_text, 6))
 
 elements.fld_text__html.visible = useHTML
 elements.fld_text__plain.visible = !useHTML
+
+//custom form setup for iOS FiD
+globals.CODE_form_in_dialog_setup_ipad()
 }
 
 /**
