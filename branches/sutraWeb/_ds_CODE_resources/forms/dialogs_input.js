@@ -69,4 +69,7 @@ function onInputAction(event) {
  */
 function onShow(firstShow, event) {
 	elements.fldValue.requestFocus();
+	
+	//custom form setup for iOS FiD
+	globals.CODE_form_in_dialog_setup_ipad()
 }

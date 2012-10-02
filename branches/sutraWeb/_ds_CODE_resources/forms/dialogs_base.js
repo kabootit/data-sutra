@@ -177,4 +177,7 @@ function onShow(firstShow, event) {
 	if (buttonCount) {
 //		elements["btn_" + (application.getOSName().match("Mac") ? 1 : buttonCount)].requestFocus();
 	}
+	
+	//custom form setup for iOS FiD
+	globals.CODE_form_in_dialog_setup_ipad()
 }
