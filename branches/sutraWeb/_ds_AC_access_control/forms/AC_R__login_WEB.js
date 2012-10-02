@@ -138,6 +138,9 @@ function LOGIN(event,webkit) {
 		var status = forms.AC_R__login_1F__password.LOGIN_user(null,SET_dialog)
 		
 		if (typeof status == 'boolean' && status) {
+			//update the remember/forget status
+			SET_remember()
+			
 			globals.DS_web_login_running = true
 			
 			if (scopes.DS.deviceFactor != 'iPad') {
@@ -428,12 +431,11 @@ function INDICATOR(event) {
 /**
  * Perform the element default action.
  *
- * @param {JSEvent} event the event that triggered the action
+ * @param {JSEvent} [event] the event that triggered the action
  *
  * @properties={typeid:24,uuid:"DD76B361-CB7E-4F15-9FFE-472AEBB9E65C"}
  */
 function SET_remember(event) {
-	//MEHERE
 	//remember user
 	if (_rememberMe) {
 		application.setUserProperty('sutra' + application.getServerURL().substr(7) + 'User',_userName)
