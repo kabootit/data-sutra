@@ -158,6 +158,8 @@ if (!utils.hasRecords(foundset)) {
 	valuelistItems = null
 }
 
+//custom form setup for iOS FiD
+globals.CODE_form_in_dialog_setup_ipad()
 }
 
 /**

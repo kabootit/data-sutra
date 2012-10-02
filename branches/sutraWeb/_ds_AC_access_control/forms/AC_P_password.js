@@ -461,4 +461,7 @@ elements.gfx_capslock.visible = false
 //request focus in password field
 application.updateUI()
 elements.fld_AC_password_edit.requestFocus(false)
+
+//custom form setup for iOS FiD
+globals.CODE_form_in_dialog_setup_ipad()
 }

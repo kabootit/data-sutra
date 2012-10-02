@@ -148,5 +148,8 @@ function FORM_on_show() {
 	
 	//form variable
 	addSome = 0
+	
+	//custom form setup for iOS FiD
+	globals.CODE_form_in_dialog_setup_ipad()
 
 }

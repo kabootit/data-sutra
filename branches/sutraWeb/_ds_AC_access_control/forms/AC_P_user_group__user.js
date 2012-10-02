@@ -125,4 +125,7 @@ globals.AC_P_flag = state
 //disable closing the form
 globals.CODE_hide_form = 0
 
+//custom form setup for iOS FiD
+globals.CODE_form_in_dialog_setup_ipad()
+
 }
