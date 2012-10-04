@@ -352,3 +352,22 @@ function indicatorOff() {
 		}
 	},1500);
 }
+
+//	Adjust position of FormDialogs
+function formDialogMove(formName, x, y) {
+	var selector = $('#form_' + formName)
+	
+	//traverse up the tree two divs
+	if (selector.length) {
+		selector = selector.parent()
+		
+		if (selector.length) {
+			selector = selector.parent()
+			
+			if (selector.length) {
+				var offset = selector.offset()
+				selector.offset({top: offset.top + y, left: offset.left + x})
+			}
+		}
+	}
+}
