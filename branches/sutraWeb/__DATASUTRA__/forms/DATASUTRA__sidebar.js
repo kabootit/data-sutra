@@ -26,4 +26,10 @@ function FORM_on_load()
 
 elements.lbl_color.visible = false
 elements.gfx_gradient.visible = false
+
+//smart client, remove top border
+if (!solutionPrefs.config.webClient) {
+	elements.tab_content.setBorder('MatteBorder,0,0,0,1,#333333')
+}
+
 }

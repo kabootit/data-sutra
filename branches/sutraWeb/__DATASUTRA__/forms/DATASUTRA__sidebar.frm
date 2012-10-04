@@ -57,7 +57,7 @@ uuid:"DA1A86A5-34B2-44A0-9815-AB1473FDA405"
 },
 {
 anchors:15,
-borderType:"MatteBorder,0,0,0,1,#333333",
+borderType:"MatteBorder,1,0,0,1,#333333",
 formIndex:10400,
 location:"0,44",
 name:"tab_content",
