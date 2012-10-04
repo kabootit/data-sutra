@@ -117,6 +117,11 @@ if (sideBar) {
 		forms.DATASUTRA__sidebar__header.elements.lbl_heading.text = (sideBar.tabName) ? sideBar.tabName.toUpperCase() : ''
 		forms.DATASUTRA__sidebar__header.elements.lbl_heading.toolTipText = (sideBar.tabName) ? sideBar.tabName : ''
 	}
+	//otherwise blank out title text
+	else {
+		forms.DATASUTRA__sidebar__header.elements.lbl_heading.text = ''
+		forms.DATASUTRA__sidebar__header.elements.lbl_heading.toolTipText = ''
+	}
 }
 
 //toggle add record button
