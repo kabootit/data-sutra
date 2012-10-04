@@ -65,13 +65,13 @@ showFocus:false,
 size:"45,11",
 styleClass:"solutionlogstatus",
 tabSeq:-1,
-text:"3.0",
+text:"4.0",
 toolTipText:"<html>
   <head>
 
   <\/head>
   <body>
-    Data Sutra v3.0<br>Revision &#8805;81 <em>Unlocked<\/em><br><strike>Expires July 1, 2011<\/strike>
+    Data Sutra v4.0rc3<br>Revision &#8805;700 <em>Unlocked<\/em><br><strike>Expires Jan 1, 2013<\/strike>
   <\/body>
 <\/html>",
 transparent:true,
