@@ -84,6 +84,27 @@ var relnName = 'nav_navigation_item_to_column'
 var colFormName = 'NAV_0F_navigation_item_1F__universal_lists_2F_list_display__right_3L_column'
 var navItem = forms[formName].id_navigation_item
 
+//hard refresh of columns
+if (globals.CODE_key_pressed('shift')) {
+	forms[colFormName].foundset.find()
+	forms[colFormName].foundset.id_navigation_item = navItem
+	var results = forms[colFormName].foundset.search()
+	
+	if (results) {
+		var input = globals.DIALOGS.showQuestionDialog(
+					'Delete all columns?',
+					'Do you need to do a hard refresh?\nYou will need to reconfigure fast finds and power replaces.',
+					'Yes',
+					'No'
+			)
+		
+		if (input == 'Yes') {
+			forms[colFormName].foundset.deleteAllRecords()
+			var hardRefresh = true
+		}
+	}
+}
+
 if (globals.NAV_column_relation != '-') {
 	
 	//find all columns based on selected relation/table and navItem
@@ -149,9 +170,9 @@ if (globals.NAV_column_relation != '-') {
 			var columnNamesStored = new Array()
 			
 			//check to see if there are already some records
-			var results = forms[colFormName].controller.getMaxRecordIndex()
+			var results = forms[colFormName].foundset.getSize()
 			if (results) {
-				for (var i = 0 ; i < forms[colFormName].controller.getMaxRecordIndex() ; i++) {
+				for (var i = 0 ; i < forms[colFormName].foundset.getSize() ; i++) {
 					var columnInfo = new Object()
 					
 					var record = forms[colFormName].foundset.getRecord(i+1)
@@ -274,6 +295,10 @@ if (globals.NAV_column_relation != '-') {
 			if (results) {
 				forms[colFormName].controller.sort('name_column asc')
 				forms[colFormName].controller.setSelectedIndex(1)
+			}
+			
+			if (hardRefresh) {
+				globals.DIALOGS.showInfoDialog('Hard refresh','Columns have been deleted.\nPlease reconfigure fast finds now.')
 			}
 		}
 	}

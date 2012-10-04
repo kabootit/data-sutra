@@ -166,6 +166,27 @@ var relnName = 'nav_navigation_item_to_column'
 var colFormName = 'NAV_0F_navigation_item_1F_column__fastfind_2L__right'
 var navItem = forms.NAV_0F_navigation_item.id_navigation_item
 
+//hard refresh of columns
+if (globals.CODE_key_pressed('shift')) {
+	forms[colFormName].foundset.find()
+	forms[colFormName].foundset.id_navigation_item = navItem
+	var results = forms[colFormName].foundset.search()
+	
+	if (results) {
+		var input = globals.DIALOGS.showQuestionDialog(
+					'Delete all columns?',
+					'Do you need to do a hard refresh?\nYou will need to reconfigure fast finds and power replaces.',
+					'Yes',
+					'No'
+			)
+		
+		if (input == 'Yes') {
+			forms[colFormName].foundset.deleteAllRecords()
+			var hardRefresh = true
+		}
+	}
+}
+
 if (globals.NAV_find_relation != '-') {
 	
 	//find all columns based on selected relation/table and navItem
@@ -357,6 +378,10 @@ if (globals.NAV_find_relation != '-') {
 			if (results) {
 				forms[colFormName].controller.sort('name_column asc')
 				forms[colFormName].controller.setSelectedIndex(1)
+			}
+			
+			if (hardRefresh) {
+				globals.DIALOGS.showInfoDialog('Hard refresh','Columns have been deleted.\nPlease reconfigure fast finds now.')
 			}
 		}
 	}
