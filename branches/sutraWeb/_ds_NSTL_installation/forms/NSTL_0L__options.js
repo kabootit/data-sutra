@@ -198,7 +198,15 @@ else {
  * @properties={typeid:24,uuid:"33aff1a1-8d5f-4a8a-ab35-a41682068d51"}
  */
 function GO_one() {
-	GO_generic('one','NSTL_0F_solution__license')
+	//add/remove tabs in frameworks layout
+	if (application.__parent__.solutionPrefs && solutionPrefs.config && solutionPrefs.config.formNameBase) {
+		GO_generic('one','NSTL_0F_solution__license')
+	}
+	//error mode
+	else {
+	//	forms.DATASUTRA__error.elements.tab_nav.tabIndex = 2
+		forms.DATASUTRA__error.elements.tab_main.tabIndex = 2
+	}
 }
 
 
@@ -212,7 +220,7 @@ function GO_one() {
  * @properties={typeid:24,uuid:"32EA48A3-9463-46E6-AFD8-BFBABF75230C"}
  */
 function GO_generic(buttonName,formName,listName,listTitle) {
-	var listTabForm = (solutionPrefs.config.webClient) ? forms.DATASUTRA_WEB_0F__list__universal : forms.DATASUTRA_0F_solution
+	var listTabForm = (application.__parent__.solutionPrefs && solutionPrefs.config.webClient) ? forms.DATASUTRA_WEB_0F__list__universal : forms.DATASUTRA_0F_solution
 	
 	//highlighter map
 	var highlightNotree = {
@@ -227,7 +235,7 @@ function GO_generic(buttonName,formName,listName,listTitle) {
 	elements.highlighter.setLocation(0,highlightNotree[buttonName])
 	
 	//get font string (font,normal/bold/italic/bolditalic,size)
-	if (application.__parent__.solutionPrefs) {
+	if (application.__parent__.solutionPrefs && solutionPrefs.clientInfo) {
 		//on a mac
 		if (solutionPrefs.clientInfo.typeOS == 'Mac OS X') {
 			var fontSelect = 'Verdana,1,10'
@@ -271,7 +279,7 @@ function GO_generic(buttonName,formName,listName,listTitle) {
 	
 	//running in frameworks
 	if (application.__parent__.solutionPrefs) {
-		var baseForm = solutionPrefs.config.formNameBase
+		var baseForm = solutionPrefs.config.formNameBase || 'DATASUTRA_0F_solution'
 		
 		//load list window
 		if (listName) {
@@ -328,5 +336,13 @@ function GO_three() {
  * @properties={typeid:24,uuid:"bca358b9-27a9-4355-8e42-b9624219fdf9"}
  */
 function GO_two() {
-	GO_generic('two','NSTL_0F_solution__static_object')
+	//add/remove tabs in frameworks layout
+	if (application.__parent__.solutionPrefs && solutionPrefs.config && solutionPrefs.config.formNameBase) {
+		GO_generic('two','NSTL_0F_solution__static_object')
+	}
+	//error mode
+	else {
+	//	forms.DATASUTRA__error.elements.tab_nav.tabIndex = 2
+		forms.DATASUTRA__error.elements.tab_main.tabIndex = 3
+	}
 }
