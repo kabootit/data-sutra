@@ -1560,7 +1560,7 @@ function TRIGGER_navigation_filter_update(forceRefresh,itemID) {
  * 
  * @param	{String}	[itemID] The navigation item to jump to.
  * @param	{Boolean}	[setFoundset] Modify the foundset on the new navigation item.
- * @param	{JSFoundset|Number[]}	[useFoundset] Foundset or array of primary keys to restore on the destination form.
+ * @param	{JSFoundset|Number[]|UUID[]}	[useFoundset] Foundset or array of primary keys to restore on the destination form.
  * @param	{Number}	[idNavigationItem] The pk for the navigation item to jump to. (will override itemID)
  *
  * @returns	{Boolean}	Success of loading the foundset requested.
@@ -1622,30 +1622,33 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset, idNavigationIt
 			
 			var lastItem = solutionPrefs.config.currentFormID
 			
-			//call router to switch entire page when not called from router
-			if (globals.DATASUTRA_router_enable && !idNavigationItem) {
-				globals.DS_router(null,null,navItem.idNavigationItem)
-				
-				//fill global to be used on second pass through this method (after url is rewritten)
-				globals.DATASUTRA_router_payload = {
-						itemID : itemID,
-						setFoundset : setFoundset,
-						useFoundset : (useFoundset) ? useFoundset : forms[application.getMethodTriggerFormName()].foundset
-					}
-				return
-			}
-			else {
-				//if from a different navigation set
-				if (globals.DATASUTRA_navigation_set != navSetID) {
-					navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].lastNavItem = lastItem
-					globals.DATASUTRA_navigation_set = navSetID
+			//need to change navigation items
+			if (lastItem != navItem.idNavigationItem) {
+				//call router to switch entire page when not called from router
+				if (globals.DATASUTRA_router_enable && !idNavigationItem) {
+					globals.DS_router(null,null,navItem.idNavigationItem)
 					
-					//update text display
-					forms.NAV__navigation_tree.LABEL_update()
+					//fill global to be used on second pass through this method (after url is rewritten)
+					globals.DATASUTRA_router_payload = {
+							itemID : itemID,
+							setFoundset : setFoundset,
+							useFoundset : (useFoundset) ? useFoundset : forms[application.getMethodTriggerFormName()].foundset
+						}
+					return
 				}
-				
-				//redraw list; make sure row is expanded if node2; load new item
-				forms.NAV__navigation_tree__rows.LIST_expand_collapse(null,navItem.idNavigationItem,'open',navSetID)
+				else {
+					//if from a different navigation set
+					if (globals.DATASUTRA_navigation_set != navSetID) {
+						navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].lastNavItem = lastItem
+						globals.DATASUTRA_navigation_set = navSetID
+						
+						//update text display
+						forms.NAV__navigation_tree.LABEL_update()
+					}
+					
+					//redraw list; make sure row is expanded if node2; load new item
+					forms.NAV__navigation_tree__rows.LIST_expand_collapse(null,navItem.idNavigationItem,'open',navSetID)
+				}
 			}
 			
 			//bring foundset over
@@ -6813,5 +6816,24 @@ function CODE_appserver_get(hostName) {
 function CODE_form_in_dialog_setup_ipad() {
 	if (solutionPrefs.config.webClient && scopes.DS.deviceFactor == 'iPad') {
 		plugins.WebClientUtils.executeClientSideJS('indicatorOff();')
+	}
+}
+
+/**
+ * Spellcheck the element assigned to the event's labelfor property.
+ * 
+ * @param {JSEevent} event
+ * 
+ * @properties={typeid:24,uuid:"D946F5F2-235C-4171-BE1B-1DA8F13470C6"}
+ */
+function CODE_spellcheck(event) {
+	if (event) {
+		var formName = event.getFormName()
+		var btnName = event.getElementName()
+		var elemName = forms[formName].elements[btnName].getLabelForElementName()
+		
+		if (formName && elemName && forms[formName].elements[elemName]) {
+			plugins.spellcheck.checkTextComponent(forms[formName].elements[elemName])
+		}
 	}
 }
