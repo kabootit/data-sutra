@@ -6814,7 +6814,7 @@ function CODE_appserver_get(hostName) {
  * @properties={typeid:24,uuid:"C04AB740-78A8-4C00-B6BB-31B2AB0586C8"}
  */
 function CODE_form_in_dialog_setup_ipad() {
-	if (solutionPrefs.config.webClient && scopes.DS.deviceFactor == 'iPad') {
+	if (application.__parent__.solutionPrefs && solutionPrefs.config.webClient && scopes.DS.deviceFactor == 'iPad') {
 		plugins.WebClientUtils.executeClientSideJS('indicatorOff();')
 	}
 }
