@@ -157,8 +157,14 @@ globals.TRIGGER_tooltip_set()
 
 
 // troy's stuff. looks like a hack to me!
-ACTION_toggle_detail()
-ACTION_toggle_detail()
+if (solutionPrefs.config.webClient) {
+	elements.btn_detail_left.visible = false
+	elements.btn_detail_right.visible = false
+}
+else {
+	ACTION_toggle_detail()
+	ACTION_toggle_detail()
+}
 }
 
 /**
