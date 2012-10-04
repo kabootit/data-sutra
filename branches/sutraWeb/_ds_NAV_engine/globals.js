@@ -3053,13 +3053,14 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	}
 	
 	// web client hooks on login
-	if (globals.DS_web_pulse) {
+	if (globals.DS_web_login_running) {
+		globals.DS_web_login_running = false
+		
 		//turn off pulsating
-		globals.DS_web_pulse = false
 		plugins.WebClientUtils.executeClientSideJS('pulseOff();')
 		
 		//prompt to add to homescreen
-		plugins.WebClientUtils.executeClientSideJS('if (window.parent.addToHome) window.parent.addToHome.show();')
+		plugins.WebClientUtils.executeClientSideJS('if (window.parent.addToHome) {window.top.History.replaceState(null,"Data Sutra",window.top.location.pathname);window.parent.addToHome.show();}')
 		
 		//increase the size of loading please wait verbage on mobile phones when viewing the desktop version of data sutra
 		if (scopes.DS.deviceFactor == 'iPhone') {
