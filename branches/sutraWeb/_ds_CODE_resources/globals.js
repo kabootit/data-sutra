@@ -6837,3 +6837,65 @@ function CODE_spellcheck(event) {
 		}
 	}
 }
+
+/**
+ * Get the mouse location within a workflow form.
+ * 
+ * @param {JSEvent} event
+ * @return {{x: Number, y: Number}} Coordinates
+ * 
+ * @properties={typeid:24,uuid:"9E4A25E9-1D33-40AD-B7A6-55FE133630F7"}
+ */
+function TRIGGER_mouse_get(event) {
+	var position = {
+			x: 0,
+			y: 0
+		}
+	
+	if (solutionPrefs.config.webClient) {
+		//header offset
+		position.y += 44
+		
+		//are we in workflow space (no offset)
+		if (solutionPrefs.config.activeSpace != 'workflow') {
+			//all horizontals kept in sync; doesn't matter which one i grab
+			position.x += solutionPrefs.screenAttrib.spaces.standard.currentHorizontal
+		}
+		
+		//at this point, position is in the top left corner of the workflow form
+		
+		var context = forms[event.getFormName()].controller.getFormContext()
+		
+		//working on workflow form
+		if (context.getValue(3,2) == 'DATASUTRA_WEB_0F__workflow') {
+			for (var i = 4; i <= context.getMaxRowIndex(); i++) {
+				var formContext = context.getRowAsArray(i)
+				var formName = formContext[1]
+				var elemName = formContext[2]
+				
+				//see about a title header
+				var smForm = solutionModel.getForm(formName)
+				if (smForm.getTitleHeaderPart() && smForm.getTitleHeaderPart().height) {
+					position.y += smForm.getTitleHeaderPart().height
+				}
+				
+				//check what element
+				if (formName && elemName) {
+					position.x += forms[formName].elements[elemName].getLocationX()
+					position.y += forms[formName].elements[elemName].getLocationY()
+				}
+			}
+		}
+		//working on sidebar
+		
+		//something else
+		
+		
+	}
+	//mouse pointer plugin available
+	else if (false) {
+		
+	}
+	
+	return position
+}
