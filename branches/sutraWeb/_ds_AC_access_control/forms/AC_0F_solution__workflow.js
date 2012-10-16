@@ -136,3 +136,59 @@ for ( var i = 1; i <= max ; i++ ) {
 	}
 }
 }
+
+/**
+ * Update registry actions
+ *
+ * @param {JSEvent} event
+ *
+ * @properties={typeid:24,uuid:"59BAA793-4171-4C9F-9737-67B7A226A477"}
+ * @AllowToRunInFind
+ */
+function REGISTRY_update(event) {
+	//fs for actions registry
+	/** @type {JSFoundset<db:/sutra/sutra_access_action>} */
+	var fsRegistry = databaseManager.getFoundSet('db:/sutra/sutra_access_action')
+	var recRegistry
+	
+	//all info for an app
+	var myApp = globals.WW.init
+	
+	/**
+  	 * @type {Object[]}
+	 */
+	var registryItems = myApp.items
+	
+	for (var i = 0; i < registryItems.length; i++) {
+		/**
+		 * @type {{name: String, registry: String, description: String, uuid: UUID}}
+		 */
+		var registryItem = registryItems[i]
+		
+		fsRegistry.find()
+		//TODO: flip around to uuids
+		fsRegistry.action_id = registryItem.registry
+		var results = fsRegistry.search()
+		
+		//we have a registry already, smart update
+		if (results == 1) {
+			recRegistry = fsRegistry.getSelectedRecord()
+		}
+		//create a new one
+		else {
+			recRegistry = fsRegistry.getRecord(fsRegistry.newRecord())
+		}
+		
+		//punch in new data points
+		recRegistry.action_name = registryItem.name
+		recRegistry.action_id = registryItem.registry
+		recRegistry.action_uuid = registryItem.uuid
+		recRegistry.description = registryItem.description
+		
+		databaseManager.saveData(recRegistry)
+	}
+	
+	//clear out filters and load all records
+	forms.AC_0F_solution__workflow_1F_action_2L__filter.FILTER_clear()
+	forms.AC_0F_solution__workflow_1F_action_2L.controller.sort('action_id asc')
+}
