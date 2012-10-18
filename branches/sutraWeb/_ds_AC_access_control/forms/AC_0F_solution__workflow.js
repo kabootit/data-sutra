@@ -151,44 +151,72 @@ function REGISTRY_update(event) {
 	var fsRegistry = databaseManager.getFoundSet('db:/sutra/sutra_access_action')
 	var recRegistry
 	
-	//all info for an app
-	var myApp = globals.WW.init
 	
-	/**
-  	 * @type {Object[]}
-	 */
-	var registryItems = myApp.items
-	
-	for (var i = 0; i < registryItems.length; i++) {
-		/**
-		 * @type {{name: String, registry: String, description: String, uuid: UUID}}
-		 */
-		var registryItem = registryItems[i]
-		
-		fsRegistry.find()
-		//TODO: flip around to uuids
-		fsRegistry.action_id = registryItem.registry
-		var results = fsRegistry.search()
-		
-		//we have a registry already, smart update
-		if (results == 1) {
-			recRegistry = fsRegistry.getSelectedRecord()
+	//loop over all scopes to get all identifiers
+	var allIDs = new Array()
+	for (var i in scopes) {
+		if (i != 'globals') {
+			allIDs.push(i)
 		}
-		//create a new one
-		else {
-			recRegistry = fsRegistry.getRecord(fsRegistry.newRecord())
+	}
+	//check all scopes for init method
+	for (var i = 0; i < allIDs.length; i++) {
+		var id = allIDs[i]
+		var myApp = null
+		
+		//check in named scope
+		if (scopes[id] && scopes[id].init && scopes[id].init.items instanceof Array && scopes[id].init.name) {
+			myApp = scopes[id].init
+		}
+		//check in global scope
+		else if (globals[id] && globals[id].init && globals[id].init.items instanceof Array && globals[id].init.name) {
+			myApp = globals[id].init
 		}
 		
-		//punch in new data points
-		recRegistry.action_name = registryItem.name
-		recRegistry.action_id = registryItem.registry
-		recRegistry.action_uuid = registryItem.uuid
-		recRegistry.description = registryItem.description
-		
-		databaseManager.saveData(recRegistry)
+		//there is an app and it has length
+		if (myApp && myApp.items.length) {
+			//flag that need to reload records
+			var refresh = true
+			
+			/**
+		  	 * @type {Object[]}
+			 */
+			var registryItems = myApp.items
+			
+			for (var i = 0; i < registryItems.length; i++) {
+				/**
+				 * @type {{name: String, registry: String, description: String, uuid: UUID}}
+				 */
+				var registryItem = registryItems[i]
+				
+				fsRegistry.find()
+				//TODO: flip around to uuids
+				fsRegistry.action_id = registryItem.registry
+				var results = fsRegistry.search()
+				
+				//we have a registry already, smart update
+				if (results == 1) {
+					recRegistry = fsRegistry.getSelectedRecord()
+				}
+				//create a new one
+				else {
+					recRegistry = fsRegistry.getRecord(fsRegistry.newRecord())
+				}
+				
+				//punch in new data points
+				recRegistry.action_name = registryItem.name
+				recRegistry.action_id = registryItem.registry
+				recRegistry.action_uuid = registryItem.uuid
+				recRegistry.description = registryItem.description
+				
+				databaseManager.saveData(recRegistry)
+			}
+		}
 	}
 	
 	//clear out filters and load all records
-	forms.AC_0F_solution__workflow_1F_action_2L__filter.FILTER_clear()
-	forms.AC_0F_solution__workflow_1F_action_2L.controller.sort('action_id asc')
+	if (refresh) {
+		forms.AC_0F_solution__workflow_1F_action_2L__filter.FILTER_clear()
+		forms.AC_0F_solution__workflow_1F_action_2L.controller.sort('action_id asc')
+	}
 }
