@@ -5202,6 +5202,9 @@ function DATASUTRA_open(skipFontFix) {
  * 
  */
 function DS_router(p1,params,itemID,launch,logout,pathName) {
+	//prefix in url path?
+	var prefix = '/ds/'
+	
 	//get url using callback (when navigating history, doesn't really matter
 	if (p1 != 'DSHistory' && !pathName) {
 		plugins.WebClientUtils.executeClientSideJS('var path = window.parent.location.pathname;', DS_router, [null,null,null,null,null,'path'])
@@ -5248,7 +5251,7 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 	
 	//helper function to return url of navitem to be navigated to
 	function getURL(alt) {
-		var urlString = '/ds/'
+		var urlString = prefix
 		
 		// page specified
 		if (alt) {
@@ -5338,7 +5341,7 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 						'DSError_NoURL',
 						'DSHistory'
 					]
-	if (specialRequests.indexOf(url.set) == -1 && pathName != '/ds/login' && getURL() != '/ds/') {
+	if (specialRequests.indexOf(url.set) == -1 && pathName != prefix + 'login' && getURL() != prefix) {
 		globals.DATASUTRA_router.push(getNode())
 	}
 	
@@ -5404,7 +5407,7 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 		}
 		// specific navitem requested, go to login page first
 		else if (!(url.set == 'DSLogin' || url.set == 'DSLoginSmall')) {
-			if (pathName != '/ds/login') {
+			if (pathName != prefix + 'login') {
 				plugins.WebClientUtils.executeClientSideJS(routerCall + '(null,"Data Sutra: Login","' + getURL('login') + '");')
 			}
 			//we've run once
@@ -5661,7 +5664,7 @@ function DS_router_visibility(hidden,params) {
 	//need to refresh a form that has been hidden before
 	if (globals.DATASUTRA_router_refresh && !hidden) {
 		//set global that coming from small login screen to big one, need to rejiggle the beans
-		if (path != '/ds/loginInline') {
+		if (path != prefix + 'loginInline') {
 			globals.DATASUTRA_router_login = true
 		}
 		
