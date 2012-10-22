@@ -12,18 +12,48 @@
 -->
 
 <urlrewrite>
+	<!-- 	Servoy non-web clients (smart, headless, admin) accessible ONLY from these addresses -->
+	<rule>
+		<name>Servoy servlets (not web-client)</name>
+		<note>Smart-client, web-client, headless-client, and servoy-admin will only work when accessed from this host. Any other thing that is served up by Tomcat you do not want pushed into sutraCMS should be manually specified here (or duplicate this rule and put there). NOTE: This rule must be the first one.</note>
+		<condition name="host" next="or">
+			servlets
+		</condition>
+		<condition name="host">
+			servlets.example.com
+		</condition>
+		<from>^(.*)</from>
+		<to last="true">$1</to>
+	</rule>
 	
-	<!-- DS WebClient with /ds/ prefix -->
+	
+	<!-- DS WebClient with(out) /ds/ prefix -->
+	<rule>
+		<name enabled="true">DS remove /ds/ prefix</name>
+		<note></note>
+		<condition name="host">
+			ds
+		</condition>
+		<from>^/(?!servoy-webclient)(?!ds)(.*)$</from>
+		<to last="false">/ds/$1</to>
+	</rule>
+	
 	<rule>
 		<name>DS resources</name>
 		<note>Pass all datasutra wc resources through untouched</note>
-		<from>^/ds/(config|css|external|js)/(.*)$</from>
+		<condition name="host">
+			ds
+		</condition>
+		<from>^/(?:ds)?/(config|css|external|img|js|theme)/(.*)$</from>
 		<to last="true">/ds/$1/$2</to>
 	</rule>
 	
 	<rule>
 		<name>DS favicons</name>
 		<note>Regular favicon and iOS icon</note>
+		<condition name="host">
+			ds
+		</condition>
 		<from>^/(favicon.ico|apple-touch-icon.png|startup.png)$</from>
 		<to last="true">/ds/img/$1</to>
 	</rule>
@@ -31,30 +61,102 @@
 	<rule>
 		<name>DS no trailing slash</name>
 		<note></note>
-		<from>^/ds$</from>
+		<condition name="host">
+			ds
+		</condition>
+		<from>^/(?:ds)?$</from>
 		<to last="false">/ds/</to>
 	</rule>
 	
 	<rule>
 		<name>DS iPhone/iTouch</name>
+		<condition name="host">
+			ds
+		</condition>
 		<condition name="user-agent" next="or">^.*iPhone.*$</condition>
 		<condition name="user-agent">^.*iPod.*$</condition>
-		<from>^/ds/(.*)$</from>
+		<from>^/(?:ds)?/(.*)$</from>
 		<to last="true">/ds/index.iphone.html?path=$1</to>
 	</rule>
 	
 	<rule>
 		<name>DS iPad</name>
+		<condition name="host">
+			ds
+		</condition>
 		<condition name="user-agent">^.*iPad.*$</condition>
-		<from>^/ds/(.*)$</from>
+		<from>^/(?:ds)?/(.*)$</from>
 		<to last="true">/ds/index.ipad.html?path=$1</to>
 	</rule>
 	
 	<rule>
 		<name>DS desktop</name>
+		<condition name="host">
+			ds
+		</condition>
 		<note></note>
-		<from>^/ds/(.*)$</from>
+		<from>^/(?:ds)?/(.*)$</from>
 		<to last="true">/ds/index.html?path=$1</to>
+	</rule>
+	
+	
+	<!-- 	Same for all CMS sites -->
+	<rule>
+		<name>Generic CMS entry .jsp</name>
+		<note>All CMS jsp files served up from sutraCMS directory</note>
+		<from>^/(\b(index|index_edit|error)\b.jsp.*)$</from>
+		<to last="true">/sutraCMS/$1</to>
+	</rule>
+
+	<rule>
+		<name>Generic CMS home page</name>
+		<note>When no page specified, serve the default page for the requested domain</note>
+		<from>^/$</from>
+		<to last="true">/sutraCMS/index.jsp</to>
+	</rule>	
+
+	<rule>
+		<name>Generic CMS controllers</name>
+		<note>Push controllers into sutraCMS starting directory
+			Note: should be without leading (.*), but don't know how to specifiy scope in non-processed js files
+		</note>
+		<from>(.*)/controllers/(.*)$</from>
+		<to last="true">/sutraCMS/controllers/$2</to>
+	</rule>
+
+	<rule>
+		<name>Generic CMS resources</name>
+		<note>Push resources into sutraCMS starting directory</note>
+		<from>^/resources/(.*)$</from>
+		<to last="true">/sutraCMS/resources/$1</to>
+	</rule>
+
+	<rule>
+		<name>Generic CMS paths (folder and pretty)</name>
+		<note>Feed requested path (anything without an extension) into sutraCMS/index.jsp unless coming from sutra web client directory</note>
+		<condition name="host" operator="notequal">
+			ds
+		</condition>
+		<from>^(?:(?:/sutraCMS)/index.jsp)?(.*/(?!.*\.)(?!.*/).*?)(?:\?|$)(?:\?*)(.*)</from>
+		<set name="path">$1</set>
+		<to last="true">/sutraCMS/index.jsp?$2</to>
+	</rule>
+
+	<!--	Site resources (1 rule per site)		-->
+	<rule>
+		<name>Example resources</name>
+		<note>If we get this far, it is a file with an extension, serve it from site directory</note>
+		<condition name="host" next="or">
+			example
+		</condition>
+		<condition name="host" next="or">
+			example.ru
+		</condition>
+		<condition name="host">
+			example.be
+		</condition>
+		<from>^/(.*)</from>
+		<to>/sutraCMS/sites/default/$1</to>
 	</rule>
 
 </urlrewrite>
