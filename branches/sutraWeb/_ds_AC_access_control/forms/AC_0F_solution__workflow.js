@@ -160,8 +160,8 @@ function REGISTRY_update(event) {
 		}
 	}
 	//check all scopes for init method
-	for (var i = 0; i < allIDs.length; i++) {
-		var id = allIDs[i]
+	for (var h = 0; h < allIDs.length; h++) {
+		var id = allIDs[h]
 		var myApp = null
 		
 		//check in named scope
