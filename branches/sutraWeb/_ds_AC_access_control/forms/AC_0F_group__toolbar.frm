@@ -67,11 +67,11 @@ typeid:15,
 uuid:"7bf9f332-2b6e-476e-a766-e49f7bec3e29"
 },
 {
-containsFormID:"72e6b61a-97f0-4907-b3ec-6880fc717c51",
-location:"126,23",
-text:"AC_0F_group__toolbar_1L_group_toolbar",
+containsFormID:"9EECB8B0-ACF6-4D88-B68C-0FE6D527C119",
+location:"106,23",
+text:"AC_0F_group__toolbar_1L_group_toolbar2",
 typeid:15,
-uuid:"aa5f4a38-be58-4f2e-a394-fc2700c9ea28"
+uuid:"C98634FE-3D8C-40ED-8FA3-5003AD1BD9B2"
 }
 ],
 location:"6,23",

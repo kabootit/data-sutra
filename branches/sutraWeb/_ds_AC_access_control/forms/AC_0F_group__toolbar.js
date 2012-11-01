@@ -21,10 +21,10 @@ function LOAD_records()
 //load selected records for this type of toolbar
 
 var toolType = elements.tab_detail.tabIndex
-
 var groupID = forms.AC_0F_group.id_group
+var formName = elements.tab_detail.getTabFormNameAt(elements.tab_detail.tabIndex)
 
-var fsGroupTool = forms.AC_0F_group__toolbar_1L_group_toolbar.foundset
+var fsGroupTool = forms[formName].foundset
 
 fsGroupTool.loadAllRecords()
 fsGroupTool.find()
@@ -37,7 +37,7 @@ if (results) {
 	fsGroupTool.sort('order_by asc')
 }
 
-forms.AC_0F_group__toolbar_1L_group_toolbar.TOGGLE_order_by()
+forms[formName].TOGGLE_order_by()
 
 
 }
