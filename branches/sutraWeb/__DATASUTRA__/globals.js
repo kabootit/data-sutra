@@ -2506,7 +2506,7 @@ if (application.__parent__.solutionPrefs) {
 		
 		//if first tab, set title
 		if (sidebars.length > 1 && sidebars[0].tabName) {
-			forms[sideForm + '__header'].elements.lbl_heading.text = sidebars[0].tabName.toUpperCase()
+//			forms[sideForm + '__header'].elements.lbl_heading.text = sidebars[0].tabName.toUpperCase()
 		}
 		
 		/*

@@ -114,7 +114,7 @@ if (sideBar) {
 	
 	//set title if more than one sidebar
 	if (solutionPrefs.panel.sidebar.length > 1) {
-		forms.DATASUTRA__sidebar__header.elements.lbl_heading.text = (sideBar.tabName) ? sideBar.tabName.toUpperCase() : ''
+//		forms.DATASUTRA__sidebar__header.elements.lbl_heading.text = (sideBar.tabName) ? sideBar.tabName.toUpperCase() : ''
 		forms.DATASUTRA__sidebar__header.elements.lbl_heading.toolTipText = (sideBar.tabName) ? sideBar.tabName : ''
 	}
 	//otherwise blank out title text
