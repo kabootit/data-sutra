@@ -404,6 +404,13 @@ var CODE_constant_1 = 1;
 var CODE_ddarray_field = '';
 
 /**
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"5161E97B-32BD-4147-A5B5-934EF03461E3"}
+ */
+var CODE_ddarray_sort = 'asc';
+
+/**
  * @type {Number}
  *
  * @properties={typeid:35,uuid:"1212d8f4-ea41-49b2-9bf7-be528a0b42a3",variableType:4}
@@ -2007,13 +2014,30 @@ function TRIGGER_progressbar_stop(forceUpdate) {
  * Checks if the group of the currently logged in user is permitted to perform action.
  * 
  * @param	{String}	registeredAction Registered action (configured in Access & control).
+ * @param	{Boolean}	[showDialog=false] Show error dialog when action not allowed.
  * 
  * @returns	{Boolean}	Action authorized status.
  * 
  * @properties={typeid:24,uuid:"32c5064f-1136-410e-8f08-900c0872fc96"}
  * @AllowToRunInFind
  */
-function TRIGGER_registered_action_authenticate(registeredAction) {
+function TRIGGER_registered_action_authenticate(registeredAction,showDialog) {
+	//default to not show dialogs
+	if (typeof showDialog != 'boolean') {
+		showDialog = false
+	}
+	
+	/**
+	 * Show dialog popup indicating why failed.
+	 * 
+	 * @param {String} actionName
+	 */
+	function alert(actionName) {
+		if (showDialog) {
+			globals.DIALOGS.showErrorDialog('Error','You do not have permission to:\n' + actionName)
+		}
+	}
+	
 	//check to see that solutionPrefs is defined
 	if (application.__parent__.solutionPrefs) {
 		//check to see that access and control is enabled
@@ -2048,11 +2072,14 @@ function TRIGGER_registered_action_authenticate(registeredAction) {
 				}
 				//action disallowed
 				else {
+					alert(allActions.description || allActions.action_id)
 					return false
 				}
 			}
 			//the specified action does not exist
 			else {
+				//possible should state that this action doesn't exist...
+				alert(registeredAction)
 				return false
 			}
 		}
@@ -4639,12 +4666,24 @@ function CODE_sort_dd_array()
 
 var a = arguments[0]
 var b = arguments[1]
+
 var fieldName = globals.CODE_ddarray_field
+var direction = new Array()
+switch (globals.CODE_ddarray_sort) {
+	case 'asc':
+		direction[0] = -1
+		direction[1] = 1
+		break
+	case 'desc':
+		direction[0] = 1
+		direction[1] = -1
+		break
+}
 
 var x = a[fieldName] //.toLowerCase()
 var y = b[fieldName] //.toLowerCase()
 
-return ((x < y) ? -1 : ((x > y) ? 1 : 0))
+return ((x < y) ? direction[0] : ((x > y) ? direction[1] : 0))
 
 }
 
