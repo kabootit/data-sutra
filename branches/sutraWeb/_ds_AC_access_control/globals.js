@@ -260,7 +260,7 @@ function AC_sample_data(org) {
 	}
 	
 	//products
-	/** @type {JSFoundset<db:/sutra_example/products>} */
+	/** @type {JSFoundSet<db:/sutra_example/products>} */
 	var fsProduct = databaseManager.getFoundSet('sutra_example','products')
 	
 	var newProduct1 = fsProduct.getRecord(fsProduct.newRecord(false,true))
@@ -350,7 +350,7 @@ function AC_sample_data(org) {
 	newProduct6.total_sold = 249.75
 	
 	//companies
-	/** @type {JSFoundset<db:/sutra_example/companies>} */
+	/** @type {JSFoundSet<db:/sutra_example/companies>} */
 	var fsCompany = databaseManager.getFoundSet('sutra_example','companies')
 	
 	
