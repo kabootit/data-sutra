@@ -1567,7 +1567,7 @@ function TRIGGER_navigation_filter_update(forceRefresh,itemID) {
  * 
  * @param	{String}	[itemID] The navigation item to jump to.
  * @param	{Boolean}	[setFoundset] Modify the foundset on the new navigation item.
- * @param	{JSFoundset|Number[]|UUID[]}	[useFoundset] Foundset or array of primary keys to restore on the destination form.
+ * @param	{JSFoundSet|Number[]|UUID[]}	[useFoundset] Foundset or array of primary keys to restore on the destination form.
  * @param	{Number}	[idNavigationItem] The pk for the navigation item to jump to. (will override itemID)
  *
  * @returns	{Boolean}	Success of loading the foundset requested.
