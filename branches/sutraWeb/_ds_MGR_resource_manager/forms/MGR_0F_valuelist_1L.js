@@ -43,7 +43,7 @@ function REC_delete()
 	
 	if (delRec == 'Yes') {
 		//what record selected?
-		var selectedRec = foundset.getRecord(selectedIndex)
+		var selectedRec = foundset.getSelectedRecord()
 		var selectedValue = (selectedRec.saved) ? selectedRec.saved : selectedRec.visible
 		var nameVL = selectedRec.valuelist_name
 		
@@ -61,7 +61,7 @@ function REC_delete()
 			}
 		}
 		
-		controller.deleteRecord()
+		foundset.deleteRecord(selectedRec)
 		i--
 		
 		//continue looping through foundset and delete any child records
