@@ -304,7 +304,7 @@ function DEMO(event) {
  */
 function CREATE(event) {
 	if (_newName && _newUser && _newPass) {
-		/** @type {JSFoundset<db:/sutra/sutra_access_user>} */
+		/** @type {JSFoundSet<db:/sutra/sutra_access_user>} */
 		var fsUser = databaseManager.getFoundSet('sutra','sutra_access_user')
 		
 		//check to make sure this email doesn't already have an account
@@ -353,7 +353,7 @@ function CREATE(event) {
 		
 		//create new SaaS org and populate with data
 		
-		/** @type {JSFoundset<db:/sutra/sutra_access_organization>} */
+		/** @type {JSFoundSet<db:/sutra/sutra_access_organization>} */
 		var fsOrg = databaseManager.getFoundSet('sutra','sutra_access_organization')
 		var newOrg = fsOrg.getRecord(fsOrg.newRecord(false,true))
 		newOrg.name_organization = _newUser

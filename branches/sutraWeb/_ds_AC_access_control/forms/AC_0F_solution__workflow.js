@@ -147,7 +147,7 @@ for ( var i = 1; i <= max ; i++ ) {
  */
 function REGISTRY_update(event) {
 	//fs for actions registry
-	/** @type {JSFoundset<db:/sutra/sutra_access_action>} */
+	/** @type {JSFoundSet<db:/sutra/sutra_access_action>} */
 	var fsRegistry = databaseManager.getFoundSet('db:/sutra/sutra_access_action')
 	var recRegistry
 	
