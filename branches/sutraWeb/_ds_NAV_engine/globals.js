@@ -3172,18 +3172,51 @@ function NAV_universal_list_edit(input,elem) {
 }
 
 /**
+ * Right-click in the UL.
+ * Note: This works quite well in smart client, but is fixed to table header in webclient.
+ * 
+ * @param {JSEvent|Number} input
+ * @param {String} [elem]
+ * @param {Boolean} [list]
+ * @param {JSRecord} [record]
+ * 
  * @properties={typeid:24,uuid:"74617C2C-E06A-4E7E-A3AD-10CB50797CA4"}
  */
 function NAV_universal_list_right_click(input,elem,list,record) {
 	var currentNavItem = solutionPrefs.config.currentFormID
+	var btn = navigationPrefs.byNavItemID[currentNavItem].buttons
 	
 	//build menu
 	var menu = new Array()
+	
+	//add
+	if (btn.add) {
+		menu.push(plugins.popupmenu.createMenuItem('New record', forms.NAV_T_universal_list.REC_new))
+	}
+	
+	//actions
+	if (btn.actions) {
+		//grab actions
+		var menuActions = forms.NAV_T_universal_list.ACTIONS_list(null,true)
+		
+		//add divider if there are already items and we have some more
+		if (menu.length && menuActions.length) {
+			menu.push(plugins.popupmenu.createMenuItem('-'))
+		}
+		
+		//join actions
+		menu = menu.concat(menuActions)
+	}
 	
 	//access and control turned on, this ul takes favorites
 	if (solutionPrefs.access.accessControl && navigationPrefs.byNavItemID[currentNavItem].navigationItem.favoritable) {
 		if (!record && input instanceof JSEvent) {
 			record = forms[input.getFormName()].foundset.getSelectedRecord()
+		}
+		
+		//add divider if there are already items
+		if (menu.length) {
+			menu.push(plugins.popupmenu.createMenuItem('-'))
 		}
 		
 		//get view of this record showing in UL
@@ -3217,7 +3250,7 @@ function NAV_universal_list_right_click(input,elem,list,record) {
 			menu.push(plugins.popupmenu.createMenuItem('Favorite', globals.NAV_universal_list_right_click))
 		}
 		
-		menu[0].setMethodArguments(null,null,null,record)
+		menu[menu.length - 1].setMethodArguments(null,null,null,record)
 	}
 	
 	//what's in the menu?
@@ -3236,25 +3269,30 @@ function NAV_universal_list_right_click(input,elem,list,record) {
 			    plugins.popupmenu.showPopupMenu(elem, menu)
 			}
 		}
-		//make favorite
+		//run actions
 		else {
-			//new favorite, add to stack
-			if (!solutionPrefs.access.favorites.some(favExists)) {
-				solutionPrefs.access.favorites.push(fave)
-				var selectFave = solutionPrefs.access.favorites.length - 1
-			}
-			//remove favorite
-			else {
-				solutionPrefs.access.favorites.splice(solutionPrefs.access.favorites.map(favExists).indexOf(true),1)
-			}
+			//perform a sutra action
 			
-			//assign back into record
-			solutionPrefs.access.user.record.favorites = solutionPrefs.access.favorites
-			databaseManager.saveData(solutionPrefs.access.user.record)
-			
-			//if in favorites mode, redraw
-			if (globals.DATASUTRA_navigation_set == 0) {
-				forms.NAV__navigation_tree__rows.LIST_redraw(null,null,true,false,true,selectFave)
+			//make favorite
+			if (record instanceof JSRecord) {
+				//new favorite, add to stack
+				if (!solutionPrefs.access.favorites.some(favExists)) {
+					solutionPrefs.access.favorites.push(fave)
+					var selectFave = solutionPrefs.access.favorites.length - 1
+				}
+				//remove favorite
+				else {
+					solutionPrefs.access.favorites.splice(solutionPrefs.access.favorites.map(favExists).indexOf(true),1)
+				}
+				
+				//assign back into record
+				solutionPrefs.access.user.record.favorites = solutionPrefs.access.favorites
+				databaseManager.saveData(solutionPrefs.access.user.record)
+				
+				//if in favorites mode, redraw
+				if (globals.DATASUTRA_navigation_set == 0) {
+					forms.NAV__navigation_tree__rows.LIST_redraw(null,null,true,false,true,selectFave)
+				}
 			}
 		}
 	}

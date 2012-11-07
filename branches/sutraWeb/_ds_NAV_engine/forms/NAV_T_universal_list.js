@@ -1,8 +1,10 @@
 /**
- *
+ * @param {JSEvent} [event]
+ * @param {Boolean} [list] Return the popupmenu list only
+ * 
  * @properties={typeid:24,uuid:"0CB9F20C-8E7A-44FA-A691-97398613F61C"}
  */
-function ACTIONS_list()
+function ACTIONS_list(event,list)
 {
 
 /*
@@ -67,6 +69,11 @@ if (valueList.length) {
 				menu[i].setEnabled(false)
 			}
 		}
+	}
+	
+	//we need this list to use elsewhere
+	if (list) {
+		return menu
 	}
 	
 	//hack not required
