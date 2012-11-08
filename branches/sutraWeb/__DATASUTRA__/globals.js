@@ -1251,6 +1251,7 @@ for (var i = totalRecs; i < 100000; i++) {
  * @param {String}			[itemFormName] Form for the item chosen.
  * @param {String}			[itemID] Navigation Item ID for the item chosen.
  * @param {String}			[itemType] Type of item chosen.
+ * @param {Number}			[keyPressed] Modifier key pressed when chosen.
  * 
  * @properties={typeid:24,uuid:"48174bfa-d0a4-4e64-935e-b4b73feffa12"}
  */
@@ -1559,7 +1560,7 @@ function DS_actions(input) {
 				}
 				
 				//pass arguments
-				menu[j].setMethodArguments(htmlTags[2],formList[j],navIDList[j],typeList[j])
+				menu[j].setMethodArguments(htmlTags[2],formList[j],navIDList[j],typeList[j],globals.CODE_key_pressed())
 				
 				//set tooltip, if there is one
 		//		if (descList[j]) {
@@ -1594,6 +1595,7 @@ function DS_actions(input) {
 			var itemFormName = arguments[1]
 			var itemID = arguments[2]
 			var itemType = arguments[3]
+			var keyPressed = arguments[4]
 			
 			//if a sidebar
 			//MEMO: not used; seet DATASUTRA__sidebar__header.TAB_popdown()
@@ -1611,8 +1613,6 @@ function DS_actions(input) {
 					//if not showing, show sidebar
 					globals.DS_sidebar_toggle(true)
 				}
-				
-		
 			}
 			//check for non-standard prefpane logout
 			else if (itemClicked == 'Logout') {
@@ -1696,6 +1696,21 @@ function DS_actions(input) {
 			//check for non-standard prefpane configure screen
 			else if (itemClicked == 'Save window metrics') {
 				forms.AC_P_screen.FORM_on_show(solutionPrefs.access.userID)
+			}
+			//check for non-standard prefpane tooltip popup (when shift key pressed)
+			else if (itemClicked == 'Tooltip registry' && keyPressed == 1) {
+				globals.CODE_form_in_dialog(forms.MGR_P_tooltip,-1,-1,-1,-1,' ',null,null,'tooltipFID',false)
+				
+				//restrict to this form's tooltips
+				if (forms[solutionPrefs.config.currentFormName].controller.getDataSource()) {
+					globals.MGR_tooltip_filter_module = solutionPrefs.repository.allFormsByTable[forms[solutionPrefs.config.currentFormName].controller.getServerName()][forms[solutionPrefs.config.currentFormName].controller.getTableName()][solutionPrefs.config.currentFormName].moduleName
+				}
+				else {
+					globals.MGR_tooltip_filter_module = solutionPrefs.repository.allFormsByTable['No datasource'][solutionPrefs.config.currentFormName].moduleName
+				}
+				forms.MGR_0F_tooltip_1L_2L__filter.ACTION_vl_forms()
+				globals.MGR_tooltip_filter_form = solutionPrefs.config.currentFormName
+				forms.MGR_0F_tooltip_1L_2L__filter.ACTION_filter()
 			}
 			//anything that needs to exit design mode (help or preferences)
 			else {
