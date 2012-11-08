@@ -2453,10 +2453,11 @@ function TRIGGER_tooltip_help_popup(tabPanelName,formName,elemName) {
 				var tabFormName = forms[formName].elements[tabPanelName].getTabFormNameAt(forms[formName].elements[tabPanelName].tabIndex)
 				var firstFound = false
 				
-				//loop through all inline help and get the first one available
+				//loop through all inline help and get the first help one available
 				for (var j in solutionPrefs.i18n[solutionPrefs.config.language][tabFormName]) {
-					if (!firstFound) {
+					if (solutionPrefs.i18n[solutionPrefs.config.language][tabFormName][j].help) {
 						firstFound = solutionPrefs.i18n[solutionPrefs.config.language][tabFormName][j].inlineHelp
+						break
 					}
 				}
 				
@@ -5429,12 +5430,15 @@ function TAB_change_grid_init(event) {
  * Reference to new method
  * @deprecated
  *
- * @param {JSEvent} event
+ * @param {String} formName
+ * @param {String} elemName
+ * @param {String} tabPanel
+ * @param {String} prefix
  *
  * @properties={typeid:24,uuid:"CA58A6E0-7D8F-4AAC-9093-266DA7EAC6F8"}
  */
-function TAB_change_inline(event) {
-	scopes.TAB.INLINE_change()
+function TAB_change_inline(formName,elemName,tabPanel,prefix) {
+	scopes.TAB.INLINE_change(formName,elemName,tabPanel,prefix)
 }
 
 /**

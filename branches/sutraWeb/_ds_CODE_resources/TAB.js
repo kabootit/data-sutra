@@ -313,13 +313,13 @@ if (buttonName) {
 		var showDivider = showAdd && showActions
 		var showHelp = false
 		if (application.__parent__.solutionPrefs && solutionPrefs.i18n && solutionPrefs.config.language && solutionPrefs.i18n[solutionPrefs.config.language][tabFormName]) {
-			showHelp = true
-			
 			//get the bloody tooltip
 			for (var k in solutionPrefs.i18n[solutionPrefs.config.language][tabFormName]) {
 				//only get the first help tip
-				if (!helpTip) {
+				if (solutionPrefs.i18n[solutionPrefs.config.language][tabFormName][k].help) {
 					var helpTip = solutionPrefs.i18n[solutionPrefs.config.language][tabFormName][k].toolTip
+					showHelp = true
+					break
 				}
 			}	
 		}
