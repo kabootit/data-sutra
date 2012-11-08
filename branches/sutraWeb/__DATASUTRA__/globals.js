@@ -4751,7 +4751,8 @@ for (var i = 0; i < languages.length; i++) {
 					//actual tip
 					locale[formFilter][record.element_name] = {
 										toolTip : record.tooltip,
-										inlineHelp : record.inline_help
+										inlineHelp : record.inline_help,
+										help: record.flag_help ? true : false
 									}
 				}
 				//element not named, create in numeric order
@@ -4759,7 +4760,8 @@ for (var i = 0; i < languages.length; i++) {
 					//actual tip
 					locale[formFilter]['noname_help_'+formArray++] = {
 										toolTip : record.tooltip,
-										inlineHelp : record.inline_help
+										inlineHelp : record.inline_help,
+										help: record.flag_help ? true : false
 									}
 				}
 			}
