@@ -2442,8 +2442,8 @@ function TRIGGER_tooltip_help_popup(tabPanelName,formName,elemName) {
 	}
 	
 	var tabPanelName = arguments[0] || 'tab_detail'
-	var formName = application.getMethodTriggerFormName() || arguments[1]
-	var elemName = application.getMethodTriggerElementName() || arguments[2]
+	var formName = arguments[1] || application.getMethodTriggerFormName()
+	var elemName = arguments[2] || application.getMethodTriggerElementName()
 	
 	if (application.__parent__.solutionPrefs) {
 		//there is a default language configured
@@ -5366,507 +5366,87 @@ if (repositoryPrefs.allModules.length) {
 }
 
 /**
+ * Reference to new method
+ * @deprecated
  *
- * @properties={typeid:24,uuid:"c1c626b7-62aa-4d7f-8536-346ae9dd5fd0"}
+ * @param {JSEvent} event
+ *
+ * @properties={typeid:24,uuid:"B16736CE-B7ED-42A5-AAAA-93190A841940"}
  */
-function TAB_btn_actions_list()
-{
-
-/*
- *	TITLE    :	TAB_actions_list
- *			  	
- *	MODULE   :	rsrc_CODE_sutra
- *			  	
- *	ABOUT    :	uses ACTIONS_list() from the currently selected tab
- *			  	
- *	INPUT    :	ALL inputs are optional
- *			  	1)	form name with tab panel
- *			  	2)	tab panel name
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
- *	MODIFIED :	January 5, 2009 -- Troy Elliott, Data Mosaic
- *			  	
- */
-
-//MEMO: need to somehow put this section in a Function of it's own
-//running in Tano...strip out jsevents for now
-if (utils.stringToNumber(application.getVersion()) >= 5) {
-	//cast Arguments to array
-	var Arguments = new Array()
-	for (var i = 0; i < arguments.length; i++) {
-		Arguments.push(arguments[i])
-	}
-	
-	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
-}
-
-var formName = (arguments[0]) ? arguments[0] : application.getMethodTriggerFormName()
-var tabPanelName = (arguments[1]) ? arguments[1] : 'tab_detail'
-
-//if there is a tabpanel on the selected form
-if (forms[formName] && forms[formName].elements[tabPanelName]) {
-	var tabFormName = forms[formName].elements[tabPanelName].getTabFormNameAt(forms[formName].elements[tabPanelName].tabIndex)
-	
-	//if there is a form in this tab position and it has an ACTIONS_list method on it
-	if (forms[tabFormName] && forms[tabFormName].ACTIONS_list) {
-		var elem = forms[formName].elements[application.getMethodTriggerElementName()]
-		
-		//pass the actions_list sub method the element that called it
-		forms[tabFormName].ACTIONS_list(elem)
-	}
-}
+function TAB_btn_actions_list(event) {
+	scopes.TAB.GRID_actions()
 }
 
 /**
+ * Reference to new method
+ * @deprecated
  *
- * @properties={typeid:24,uuid:"d7d0db6e-a736-4395-a0e3-da757d161a37"}
+ * @param {JSEvent} event
+ *
+ * @properties={typeid:24,uuid:"96825750-E40B-4C74-A8F4-5D03F0FEC951"}
  */
-function TAB_btn_rec_new()
-{
-
-/*
- *	TITLE    :	TAB_actions_list
- *			  	
- *	MODULE   :	rsrc_CODE_sutra
- *			  	
- *	ABOUT    :	uses ACTIONS_list() from the currently selected tab
- *			  	
- *	INPUT    :	ALL inputs are optional
- *			  	1)	form name with tab panel
- *			  	2)	tab panel name
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
- *	MODIFIED :	October 6, 2008 -- Troy Elliott, Data Mosaic
- *			  	
- */
-
-//MEMO: need to somehow put this section in a Function of it's own
-//running in Tano...strip out jsevents for now
-if (utils.stringToNumber(application.getVersion()) >= 5) {
-	//cast Arguments to array
-	var Arguments = new Array()
-	for (var i = 0; i < arguments.length; i++) {
-		Arguments.push(arguments[i])
-	}
-	
-	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
-}
-
-var formName = (arguments[0]) ? arguments[0] : application.getMethodTriggerFormName()
-var tabPanelName = (arguments[1]) ? arguments[1] : 'tab_detail'
-
-//if there is a tabpanel on the selected form
-if (forms[formName] && forms[formName].elements[tabPanelName]) {
-	var tabFormName = forms[formName].elements[tabPanelName].getTabFormNameAt(forms[formName].elements[tabPanelName].tabIndex)
-	
-	//if there is a form in this tab position and it has an REC_new method on it
-	if (forms[tabFormName] && forms[tabFormName].REC_new) {
-		var elem = forms[formName].elements[application.getMethodTriggerElementName()]
-
-		//pass the new record method the element that called it
-		forms[tabFormName].REC_new(elem)
-	}
-}
+function TAB_btn_help(event) {
+	scopes.TAB.GRID_help()
 }
 
 /**
+ * Reference to new method
+ * @deprecated
  *
- * @properties={typeid:24,uuid:"1d11e845-6036-42a2-8367-5c8d524edad3"}
+ * @param {JSEvent} event
+ *
+ * @properties={typeid:24,uuid:"FACB9D45-A3DB-4A98-B18F-C3F1236E38E7"}
  */
-function TAB_change_grid()
-{
-
-/*
- *	TITLE    :	TAB_change_grid
- *			  	
- *	MODULE   :	rsrc_CODE_sutra
- *			  	
- *	ABOUT    :	change tabIndex and all associated labels
- *			  		- finds the colors of a selected/unselected tab and then goes to work
- *			  		- if tab controller label has text, but no tooltip, set tooltip with value of text
- *			  	
- *	INPUT    :	ALL inputs are optional
- *			  	1)	form name with tab panel
- *			  	2)	tab to be activated eg. 'tab_d1'
- *			  	3)	name of tab panel
- *			  	4)	prefix on all tab labels
- *			  	5)	btn_add name
- *			  	6)	btn_actions name
- *			  	7)	btn_help name
- *			  	8)	btn_divider name
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	tab panel named 'tab_detail', labels named 'tab_d'+[1,2,...n]
- *			  	
- *	MODIFIED :	August 5, 2009 -- Troy Elliott, Data Mosaic
- *			  	
- */
-
-//MEMO: need to somehow put this section in a Function of it's own
-//running in Tano...strip out jsevents for now
-if (utils.stringToNumber(application.getVersion()) >= 5) {
-	//cast Arguments to array
-	var Arguments = new Array()
-	for (var i = 0; i < arguments.length; i++) {
-		Arguments.push(arguments[i])
-	}
-	
-	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
-}
-
-var formName = (arguments[0]) ? arguments[0] : application.getMethodTriggerFormName()
-var buttonName = (arguments[1]) ? arguments[1] : application.getMethodTriggerElementName()
-var tabPanelName = (arguments[2]) ? arguments[2] : 'tab_detail'
-var prefix = (arguments[3]) ? arguments[3] : 'tab_d'
-var btnAdd = (arguments[4]) ? arguments[4] : 'btn_add'
-var btnActions = (arguments[5]) ? arguments[5] : 'btn_actions'
-var btnHelp = (arguments[6]) ? arguments[6] : 'btn_help'
-var lblDivider = (arguments[7]) ? arguments[7] : 'lbl_' + tabPanelName + '_divider'
-
-//make sure that element clicked is actually a custom tab controller
-if (!utils.stringPatternCount(buttonName,prefix)) {
-	return
-}
-
-//get number of tabs
-var tabTotal = forms[formName].elements[tabPanelName].getMaxTabIndex()
-
-//this tab panel doesn't have any tabs, try to still work
-if (!tabTotal) {
-	return
-}
-
-//get current tab
-var currentTab = forms[formName].elements[tabPanelName].tabIndex
-
-//get foreground/background color
-var foreSelect = forms[formName].elements[prefix + currentTab].fgcolor
-var backSelect = forms[formName].elements[prefix + currentTab].bgcolor
-//if not tab 1, get from itself and previous
-if (currentTab > 1) {
-	var foreUnselect = forms[formName].elements[prefix + (currentTab - 1)].fgcolor
-	var backUnselect = forms[formName].elements[prefix + (currentTab - 1)].bgcolor
-}
-//if not last tab, get from itself and next
-else if (currentTab < tabTotal) {
-	var foreUnselect = forms[formName].elements[prefix + (currentTab + 1)].fgcolor
-	var backUnselect = forms[formName].elements[prefix + (currentTab + 1)].bgcolor
-}
-//only one tab, do not need unselected values
-else if (currentTab == tabTotal && currentTab == 1) {
-	var foreUnselect = forms[formName].elements[prefix + currentTab].fgcolor
-	var backUnselect = forms[formName].elements[prefix + currentTab].bgcolor
-}
-//break out of method, something is not set up correctly
-else {
-	return
-}
-
-//get font string (font,normal/bold/italic/bolditalic,size)
-if (application.__parent__.solutionPrefs) {
-	//on a mac
-	if (solutionPrefs.clientInfo.typeOS == 'Mac OS X') {
-		var fontSelect = 'Verdana,1,10'
-		var fontUnselect = 'Verdana,0,10'
-	}
-	//on windows, linux, etc.
-	else {
-		var fontSelect = 'Tahoma,1,11'
-		var fontUnselect = 'Tahoma,0,11'	
-	}
-}
-//use mac settings when not running in the shell //TODO: change to windows settings when deployed
-else {
-	var fontSelect = 'Verdana,1,10'
-	var fontUnselect = 'Verdana,0,10'
-}
-
-//activate correct tab and flip tab buttons
-for ( var i = 1 ; i <= tabTotal ; i++ ) {	
-	var tabName = prefix + i
-	
-	if (tabName == buttonName) {
-		forms[formName].elements[tabName].fgcolor = foreSelect
-		forms[formName].elements[tabName].bgcolor = backSelect
-		forms[formName].elements[tabName].setFont(fontSelect)
-	}
-	else {
-		forms[formName].elements[tabName].fgcolor = foreUnselect
-		forms[formName].elements[tabName].bgcolor = backUnselect
-		forms[formName].elements[tabName].setFont(fontUnselect)
-	}
-	
-	//set tooltip text if element can take a tooltip, tooltip is not already set, and tab has text
-	if (typeof forms[formName].elements[tabName].toolTipText != undefined && 
-		!forms[formName].elements[tabName].toolTipText && 
-		typeof forms[formName].elements[tabName].text != undefined && 
-		forms[formName].elements[tabName].text) {
-		
-		forms[formName].elements[tabName].toolTipText = forms[formName].elements[tabName].text
-	}
-}
-
-if (buttonName) {
-	//set up quickvars
-	i = utils.stringToNumber(buttonName)
-	tabName = prefix + i
-	
-	//set tab index
-	forms[formName].elements[tabPanelName].tabIndex = i
-	
-	//show/hide + button
-	var tabFormName = forms[formName].elements[tabPanelName].getTabFormNameAt(i)
-	if (forms[tabFormName]) {
-		var showAdd = (forms[tabFormName].REC_new) ? true : false
-		var showActions = (forms[tabFormName].ACTIONS_list) ? true : false
-		var showDivider = showAdd && showActions
-		var showHelp = false
-		if (application.__parent__.solutionPrefs && solutionPrefs.i18n && solutionPrefs.config.language && solutionPrefs.i18n[solutionPrefs.config.language][tabFormName]) {
-			showHelp = true
-			
-			//get the bloody tooltip
-			for (var k in solutionPrefs.i18n[solutionPrefs.config.language][tabFormName]) {
-				//only get the first help tip
-				if (!helpTip) {
-					var helpTip = solutionPrefs.i18n[solutionPrefs.config.language][tabFormName][k].toolTip
-				}
-			}	
-		}
-		
-		if (forms[formName].elements[btnAdd]) {
-			forms[formName].elements[btnAdd].visible = showAdd
-		}
-		if (forms[formName].elements[btnActions]) {
-			forms[formName].elements[btnActions].visible = showActions
-		}
-		if (forms[formName].elements[btnHelp]) {
-			forms[formName].elements[btnHelp].visible = showHelp
-			
-			//showHelp enabled and element can take a tooltip, set tooltip text
-			if (showHelp && typeof forms[formName].elements[btnHelp].toolTipText != undefined) {
-				forms[formName].elements[btnHelp].toolTipText = helpTip
-			}
-		}
-		if (forms[formName].elements[lblDivider]) {
-			forms[formName].elements[lblDivider].visible = showDivider
-		}
-	}
-	
-	/*	//TODO: what to do if there is a title header?
-	//put line on tab panel if tab's form is in solution and type is table
-	var tabFormName = forms[formName].elements[tabPanelName].getTabFormNameAt(i)
-	if (forms[tabFormName] && forms[tabFormName].controller.view == 3) {
-		forms[formName].elements[tabPanelName].setBorder('MatteBorder,1,0,0,0,#808080')
-	}
-	//set default border type
-	else {
-		forms[formName].elements[tabPanelName].setBorder('EmptyBorder,0,0,0,0')
-	}
-	*/
-}
-
+function TAB_btn_rec_new(event) {
+	scopes.TAB.GRID_new()
 }
 
 /**
+ * Reference to new method
+ * @deprecated
  *
- * @properties={typeid:24,uuid:"54fc4dcd-e1b8-441b-8fac-a32764a63b54"}
+ * @param {JSEvent} event
+ *
+ * @properties={typeid:24,uuid:"7B91A5A9-3A3F-44B7-B1E8-2FC00B2A3D97"}
  */
-function TAB_change_grid_init()
-{
-
-/*
- *	TITLE    :	TAB_change_grid_init
- *			  	
- *	MODULE   :	rsrc_CODE_sutra
- *			  	
- *	ABOUT    :	change tabIndex and all associated labels
- *			  		-finds the colors of a selected/unselected tab and then goes to work
- *			  	
- *	INPUT    :	ALL inputs are optional
- *			  	1)	form name with tab panel
- *			  	2)	tab to be activated eg. 'tab_d1'
- *			  	3)	name of tab panel
- *			  	4)	prefix on all tab labels
- *			  	5)	btn_add name
- *			  	6)	btn_actions name
- *			  	7)	btn_help name
- *			  	8)	btn_divider name
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
- *	MODIFIED :	October 6, 2008 -- Troy Elliott, Data Mosaic
- *			  	
- */
-
-//MEMO: need to somehow put this section in a Function of it's own
-//running in Tano...strip out jsevents for now
-if (utils.stringToNumber(application.getVersion()) >= 5) {
-	//cast Arguments to array
-	var Arguments = new Array()
-	for (var i = 0; i < arguments.length; i++) {
-		Arguments.push(arguments[i])
-	}
-	
-	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
-}
-
-var formName = (arguments[0]) ? arguments[0] : application.getMethodTriggerFormName()
-var tabPanelName = (arguments[2]) ? arguments[2] : 'tab_detail'
-var prefix = (arguments[3]) ? arguments[3] : 'tab_d'
-var buttonName = (arguments[1]) ? arguments[1] : prefix + '1'
-var btnAdd = (arguments[4]) ? arguments[4] : 'btn_add'
-var btnActions = (arguments[5]) ? arguments[5] : 'btn_actions'
-var btnHelp = (arguments[6]) ? arguments[6] : 'btn_help'
-var lblDivider = (arguments[7]) ? arguments[7] : 'lbl_' + tabPanelName + '_divider'
-
-if (forms[formName] && forms[formName].elements[tabPanelName]) {
-	globals.TAB_change_grid(formName,buttonName,tabPanelName,prefix,btnAdd,btnActions,btnHelp,lblDivider)
-}
+function TAB_change_grid(event) {
+	scopes.TAB.GRID_change()
 }
 
 /**
+ * Reference to new method
+ * @deprecated
  *
- * @properties={typeid:24,uuid:"15b31c9f-f3b0-4efb-ba8f-4f3163c962b2"}
+ * @param {JSEvent} event
+ *
+ * @properties={typeid:24,uuid:"8756E1DB-B872-45F5-BB9B-3C5F68560C59"}
  */
-function TAB_change_inline()
-{
+function TAB_change_grid_init(event) {
+	scopes.TAB.GRID_init()
+}
 
-/*
- *	TITLE    :	TAB_change_inline
- *			  	
- *	MODULE   :	rsrc_CODE_sutra
- *			  	
- *	ABOUT    :	change tabIndex and all associated labels
- *			  		-finds the colors of a selected/unselected tab and then goes to work
- *			  	activates action buttons for log and detail tab panels 
- *			  	
- *	INPUT    :	ALL inputs are optional
- *			  	1)	form name with tab panel
- *			  	2)	tab to be activated eg. 'tab_d1'
- *			  	3)	name of tab panel
- *			  	4)	prefix on all tab labels
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	tab panel named 'tab_detail', labels named 'tab_d'+[1,2,...n]
- *			  	
- *	MODIFIED :	Dec 6, 2007 -- Troy Elliott, Data Mosaic
- *			  	
+/**
+ * Reference to new method
+ * @deprecated
+ *
+ * @param {JSEvent} event
+ *
+ * @properties={typeid:24,uuid:"CA58A6E0-7D8F-4AAC-9093-266DA7EAC6F8"}
  */
-
-//MEMO: need to somehow put this section in a Function of it's own
-//running in Tano...strip out jsevents for now
-if (utils.stringToNumber(application.getVersion()) >= 5) {
-	//cast Arguments to array
-	var Arguments = new Array()
-	for (var i = 0; i < arguments.length; i++) {
-		Arguments.push(arguments[i])
-	}
-	
-	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
+function TAB_change_inline(event) {
+	scopes.TAB.INLINE_change()
 }
 
-var formName = (arguments[0]) ? arguments[0] : application.getMethodTriggerFormName()
-var buttonName = (arguments[1]) ? arguments[1] : application.getMethodTriggerElementName()
-var tabPanelName = (arguments[2]) ? arguments[2] : 'tab_detail'
-var prefix = (arguments[3]) ? arguments[3] : 'tab_d'
-
-//get number of tabs
-var tabTotal = forms[formName].elements[tabPanelName].getMaxTabIndex()
-
-//get current tab
-var currentTab = forms[formName].elements[tabPanelName].tabIndex
-
-//get foreground/background color
-var foreSelect = forms[formName].elements[prefix + currentTab].fgcolor
-var backSelect = forms[formName].elements[prefix + currentTab].bgcolor
-//if not tab 1, get from itself and previous
-if (currentTab > 1) {
-	var foreUnselect = forms[formName].elements[prefix + (currentTab - 1)].fgcolor
-	var backUnselect = forms[formName].elements[prefix + (currentTab - 1)].bgcolor
-}
-//if not last tab, get from itself and next
-else if (currentTab < tabTotal) {
-	var foreUnselect = forms[formName].elements[prefix + (currentTab + 1)].fgcolor
-	var backUnselect = forms[formName].elements[prefix + (currentTab + 1)].bgcolor
-}
-//only one tab, do not need unselected values
-else if (currentTab == tabTotal && currentTab == 1) {
-	var foreUnselect = forms[formName].elements[prefix + currentTab].fgcolor
-	var backUnselect = forms[formName].elements[prefix + currentTab].bgcolor
-}
-//break out of method, something is not set up correctly
-else {
-	return
-}
-
-//get font string (font,normal/bold/italic/bolditalic,size)
-if (application.__parent__.solutionPrefs) {
-	//on a mac
-	if (solutionPrefs.clientInfo.typeOS == 'Mac OS X') {
-		var fontSelect = 'Verdana,1,10'
-		var fontUnselect = 'Verdana,0,10'
-	}
-	//on windows, linux, etc.
-	else {
-		var fontSelect = 'Tahoma,1,11'
-		var fontUnselect = 'Tahoma,0,11'	
-	}
-}
-//use mac settings when not running in the shell //TODO: change to windows settings when deployed
-else {
-	var fontSelect = 'Verdana,1,10'
-	var fontUnselect = 'Verdana,0,10'
-}
-
-
-
-//activate correct tab and flip tab buttons
-for ( var i = 1 ; i <= tabTotal ; i++ ) {	
-	var tabName = prefix + i
-	if (buttonName == tabName) {
-		forms[formName].elements[tabName].fgcolor = foreSelect
-		forms[formName].elements[tabName].bgcolor = backSelect
-		forms[formName].elements[tabName].setFont(fontSelect)
-		
-		//set tab index
-		forms[formName].elements[tabPanelName].tabIndex = i
-		
-		/*	//TODO: what to do if there is a title header?
-		//put line on tab panel if tab's form is in solution and type is table
-		var tabFormName = forms[formName].elements[tabPanelName].getTabFormNameAt(i)
-		if (forms[tabFormName] && forms[tabFormName].controller.view == 3) {
-			forms[formName].elements[tabPanelName].setBorder('MatteBorder,1,0,0,0,#808080')
-		}
-		//set default border type
-		else {
-			forms[formName].elements[tabPanelName].setBorder('EmptyBorder,0,0,0,0')
-		}
-		*/
-	}
-	else {
-		forms[formName].elements[tabName].fgcolor = foreUnselect
-		forms[formName].elements[tabName].bgcolor = backUnselect
-		forms[formName].elements[tabName].setFont(fontUnselect)
-	}				
-}
-
-
-
+/**
+ * Reference to new method
+ * @deprecated
+ *
+ * @param {JSEvent} event
+ *
+ * @properties={typeid:24,uuid:"70C1A10F-80DB-4F65-9DC7-5CFA837CB9DE"}
+ */
+function TAB_change_set(event) {
+	scopes.TAB.SET_change()
 }
 
 /**
@@ -5934,65 +5514,6 @@ function _1() {
 	var	nWidth = cmdVarBin.windowSize.width
 	
 	globals.CODE_form_in_dialog(forms.CODE_P__konsole, 20, 50, nWidth, nHeight + 20, 'Servoy Konsole',  true,  false, 'KONSOLE', false)
-}
-
-/**
- * @properties={typeid:24,uuid:"05CA6E53-E55F-4F8E-84F3-E436986B9FD5"}
- */
-function TAB_change_set(input, formParent) {
-	if (!formParent) {
-		var formName = application.getMethodTriggerFormName()
-		var elem = forms[formName].elements[application.getMethodTriggerElementName()]
-		
-		//get parent form
-		var formStack = forms[formName].controller.getFormContext()
-		
-		//this form is included on some other form
-		if (formStack.getMaxRowIndex() > 1) {
-			formParent = formStack.getValue(formStack.getMaxRowIndex()-1,2)
-		}
-	}
-		
-	//check for form variable that sets up tab controllers
-	if (forms[formParent]) {
-		//all tabs
-		var valuelist = forms[formParent].tabSets
-		
-		//selected tab
-		var tabSelected = forms[formParent].elements.tab_sets.tabIndex
-			
-		//called to depress menu
-		if (typeof input != 'number') {
-			//set up menu with arguments
-			var menu = new Array()
-			
-			for ( var i = 0 ; i < valuelist.length ; i++ ) {
-				
-				if (i + 1 == tabSelected) {
-					menu[i] = plugins.popupmenu.createCheckboxMenuItem(valuelist[i],TAB_change_set)
-					menu[i].setMethodArguments(i + 1,formParent)
-					menu[i].setSelected(true)
-				}
-				else {
-					menu[i] = plugins.popupmenu.createMenuItem(valuelist[i],TAB_change_set)
-					menu[i].setMethodArguments(i + 1,formParent)
-				}
-				
-				if (utils.stringPatternCount(menu[i].text,'---')) {
-					menu[i].setEnabled(false)
-				}
-			}
-			
-			//popup
-			if (elem != null) {
-				plugins.popupmenu.showPopupMenu(elem, menu)
-			}
-		}
-		//menu shown and item chosen
-		else {
-			forms[formParent].elements.tab_sets.tabIndex = input
-		}
-	}
 }
 
 /**
@@ -6712,7 +6233,7 @@ function CODE_form_in_dialog(form, x, y, width, height, title, resizable, showTe
 				
 				//run on hide method
 					//MEMO: must destroy window in onhide
-				if (smForm.onHide.getName() && form[smForm.onHide.getName()]) {
+				if (smForm.onHide && smForm.onHide.getName() && form[smForm.onHide.getName()]) {
 					form[smForm.onHide.getName()]()
 					
 					//on hide changed the status of autosave, reset
