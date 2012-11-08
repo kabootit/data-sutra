@@ -1,7 +1,6 @@
 dataSource:"db:/sutra/sutra_tooltip",
 items:[
 {
-background:"#ffffff",
 height:105,
 partType:5,
 typeid:19,

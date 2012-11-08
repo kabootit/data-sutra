@@ -448,7 +448,9 @@ application.setValueListItems( "MGR_tooltip_element_names_filter", dataset)
 forms.MGR_0F_tooltip_1L.controller.find()
 forms.MGR_0F_tooltip_1L.module_filter 	= globals.MGR_tooltip_filter_module
 forms.MGR_0F_tooltip_1L.form_name		= globals.MGR_tooltip_filter_form
-//forms.MGR_0F_tooltip_1L.flag_help 		= globals.MGR_tooltip_filter_flag_help
+if (globals.MGR_tooltip_filter_flag_help) {
+	forms.MGR_0F_tooltip_1L.flag_help = 1
+}
 forms.MGR_0F_tooltip_1L.controller.search()
 
 // clear filters
@@ -503,7 +505,9 @@ application.setValueListItems( "MGR_tooltip_form_names_filter", dataset)
 // filter tooltips to selected module
 forms.MGR_0F_tooltip_1L.controller.find()
 forms.MGR_0F_tooltip_1L.module_filter 	= globals.MGR_tooltip_filter_module
-//forms.MGR_0F_tooltip_1L.flag_help 		= globals.MGR_tooltip_filter_flag_help
+if (globals.MGR_tooltip_filter_flag_help) {
+	forms.MGR_0F_tooltip_1L.flag_help = 1
+}
 forms.MGR_0F_tooltip_1L.controller.search()
 
 
@@ -567,7 +571,7 @@ application.setValueListItems( "MGR_tooltip_element_names_filter", [])
  *
  * @properties={typeid:24,uuid:"17B7F3CD-64E5-43B0-9CA7-0F06AC8B62C6"}
  */
-function FORM_on_show()
+function FORM_on_show(firstShow)
 {
 
 /*
@@ -589,22 +593,24 @@ function FORM_on_show()
  *			  	
  */
 
-// make sure sutra_solution record is loaded
-
-FILTER_clear()
-
-
-// assign module name value list
-
-var sql = 	"select module_filter from " +
-			forms.MGR_0F_tooltip_1L.controller.getTableName() +
-			" group by module_filter"
-			
-var dataset = 	databaseManager.getDataSetByQuery(
-				controller.getServerName(),
-				sql,
-				null,
-				1000)
+if (firstShow) {
+	// make sure sutra_solution record is loaded
+	
+	FILTER_clear()
+	
+	
+	// assign module name value list
+	
+	var sql = 	"select module_filter from " +
+				forms.MGR_0F_tooltip_1L.controller.getTableName() +
+				" group by module_filter"
 				
-application.setValueListItems( "MGR_tooltip_module_names_filter", dataset)
+	var dataset = 	databaseManager.getDataSetByQuery(
+					controller.getServerName(),
+					sql,
+					null,
+					1000)
+					
+	application.setValueListItems( "MGR_tooltip_module_names_filter", dataset)
+}
 }
