@@ -2465,14 +2465,30 @@ function TRIGGER_tooltip_help_popup(tabPanelName,formName,elemName) {
 				if (firstFound) {
 					globals.CODE_text = firstFound
 					forms.CODE_P__text.elements.lbl_header.text = 'Inline help'
-					globals.CODE_form_in_dialog(forms.CODE_P__text,-1,-1,-1,-1,' ',true,false,'inlineHelp')
+						
+					//show window when not already showing
+					if (!application.getWindow('inlineHelp')) {
+						globals.CODE_form_in_dialog(forms.CODE_P__text,-1,-1,-1,-1,' ',true,false,'inlineHelp',false)
+					}
+					//make sure correct field displayed
+					else {
+						forms.CODE_P__text.FORM_on_show()
+					}
 				}
 			}
 			//check to see that there is additional help for this element
 			else if (solutionPrefs.i18n[solutionPrefs.config.language][formName] && solutionPrefs.i18n[solutionPrefs.config.language][formName][elemName] && solutionPrefs.i18n[solutionPrefs.config.language][formName][elemName].inlineHelp) {
 				globals.CODE_text = solutionPrefs.i18n[solutionPrefs.config.language][formName][elemName].inlineHelp
 				forms.CODE_P__text.elements.lbl_header.text = 'Inline help'
-				globals.CODE_form_in_dialog(forms.CODE_P__text,-1,-1,-1,-1,' ',true,false,'inlineHelp')
+					
+				//show window when not already showing
+				if (!application.getWindow('inlineHelp')) {
+					globals.CODE_form_in_dialog(forms.CODE_P__text,-1,-1,-1,-1,' ',true,false,'inlineHelp',false)
+				}
+				//make sure correct field displayed
+				else {
+					forms.CODE_P__text.FORM_on_show()
+				}
 			}
 		}
 		//no default language set up; abort
