@@ -58,7 +58,7 @@ location:"5,40",
 name:"fld_text__plain",
 scrollbars:33,
 size:"300,150",
-styleClass:"noborder_popup",
+styleClass:"noborder",
 transparent:true,
 typeid:4,
 uuid:"b3c1ff39-806a-4b84-afe8-9c2db3724e22"
