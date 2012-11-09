@@ -230,46 +230,35 @@ if (!tabTotal) {
 //get current tab
 var currentTab = forms[formName].elements[tabPanelName].tabIndex
 
-//get foreground/background color
+//get foreground/background colors, transparency, and font
 var foreSelect = forms[formName].elements[prefix + currentTab].fgcolor
 var backSelect = forms[formName].elements[prefix + currentTab].bgcolor
+var transparentSelect = forms[formName].elements[prefix + currentTab].transparent
+var fontSelect = forms[formName].elements[prefix + currentTab].font
 //if not tab 1, get from itself and previous
 if (currentTab > 1) {
 	var foreUnselect = forms[formName].elements[prefix + (currentTab - 1)].fgcolor
 	var backUnselect = forms[formName].elements[prefix + (currentTab - 1)].bgcolor
+	var transparentUnselect = forms[formName].elements[prefix + (currentTab - 1)].transparent
+	var fontUnselect = forms[formName].elements[prefix + (currentTab - 1)].font
 }
 //if not last tab, get from itself and next
 else if (currentTab < tabTotal) {
 	var foreUnselect = forms[formName].elements[prefix + (currentTab + 1)].fgcolor
 	var backUnselect = forms[formName].elements[prefix + (currentTab + 1)].bgcolor
+	var transparentUnselect = forms[formName].elements[prefix + (currentTab + 1)].transparent
+	var fontUnselect = forms[formName].elements[prefix + (currentTab + 1)].font
 }
 //only one tab, do not need unselected values
 else if (currentTab == tabTotal && currentTab == 1) {
 	var foreUnselect = forms[formName].elements[prefix + currentTab].fgcolor
 	var backUnselect = forms[formName].elements[prefix + currentTab].bgcolor
+	var transparentUnselect = forms[formName].elements[prefix + currentTab].transparent
+	var fontUnselect = forms[formName].elements[prefix + currentTab].font
 }
 //break out of method, something is not set up correctly
 else {
 	return
-}
-
-//get font string (font,normal/bold/italic/bolditalic,size)
-if (application.__parent__.solutionPrefs) {
-	//on a mac
-	if (solutionPrefs.clientInfo.typeOS == 'Mac OS X') {
-		var fontSelect = 'Verdana,1,10'
-		var fontUnselect = 'Verdana,0,10'
-	}
-	//on windows, linux, etc.
-	else {
-		var fontSelect = 'Tahoma,1,11'
-		var fontUnselect = 'Tahoma,0,11'	
-	}
-}
-//use mac settings when not running in the shell //TODO: change to windows settings when deployed
-else {
-	var fontSelect = 'Verdana,1,10'
-	var fontUnselect = 'Verdana,0,10'
 }
 
 //activate correct tab and flip tab buttons
@@ -279,11 +268,13 @@ for ( var i = 1 ; i <= tabTotal ; i++ ) {
 	if (tabName == buttonName) {
 		forms[formName].elements[tabName].fgcolor = foreSelect
 		forms[formName].elements[tabName].bgcolor = backSelect
+		forms[formName].elements[tabName].transparent = transparentSelect
 		forms[formName].elements[tabName].setFont(fontSelect)
 	}
 	else {
 		forms[formName].elements[tabName].fgcolor = foreUnselect
 		forms[formName].elements[tabName].bgcolor = backUnselect
+		forms[formName].elements[tabName].transparent = transparentUnselect
 		forms[formName].elements[tabName].setFont(fontUnselect)
 	}
 	
@@ -472,49 +463,36 @@ var tabTotal = forms[formName].elements[tabPanelName].getMaxTabIndex()
 //get current tab
 var currentTab = forms[formName].elements[tabPanelName].tabIndex
 
-//get foreground/background color
+//get foreground/background colors, transparency, and font
 var foreSelect = forms[formName].elements[prefix + currentTab].fgcolor
 var backSelect = forms[formName].elements[prefix + currentTab].bgcolor
+var transparentSelect = forms[formName].elements[prefix + currentTab].transparent
+var fontSelect = forms[formName].elements[prefix + currentTab].font
 //if not tab 1, get from itself and previous
 if (currentTab > 1) {
 	var foreUnselect = forms[formName].elements[prefix + (currentTab - 1)].fgcolor
 	var backUnselect = forms[formName].elements[prefix + (currentTab - 1)].bgcolor
+	var transparentUnselect = forms[formName].elements[prefix + (currentTab - 1)].transparent
+	var fontUnselect = forms[formName].elements[prefix + (currentTab - 1)].font
 }
 //if not last tab, get from itself and next
 else if (currentTab < tabTotal) {
 	var foreUnselect = forms[formName].elements[prefix + (currentTab + 1)].fgcolor
 	var backUnselect = forms[formName].elements[prefix + (currentTab + 1)].bgcolor
+	var transparentUnselect = forms[formName].elements[prefix + (currentTab + 1)].transparent
+	var fontUnselect = forms[formName].elements[prefix + (currentTab + 1)].font
 }
 //only one tab, do not need unselected values
 else if (currentTab == tabTotal && currentTab == 1) {
 	var foreUnselect = forms[formName].elements[prefix + currentTab].fgcolor
 	var backUnselect = forms[formName].elements[prefix + currentTab].bgcolor
+	var transparentUnselect = forms[formName].elements[prefix + currentTab].transparent
+	var fontUnselect = forms[formName].elements[prefix + currentTab].font
 }
 //break out of method, something is not set up correctly
 else {
 	return
 }
-
-//get font string (font,normal/bold/italic/bolditalic,size)
-if (application.__parent__.solutionPrefs) {
-	//on a mac
-	if (solutionPrefs.clientInfo.typeOS == 'Mac OS X') {
-		var fontSelect = 'Verdana,1,10'
-		var fontUnselect = 'Verdana,0,10'
-	}
-	//on windows, linux, etc.
-	else {
-		var fontSelect = 'Tahoma,1,11'
-		var fontUnselect = 'Tahoma,0,11'	
-	}
-}
-//use mac settings when not running in the shell //TODO: change to windows settings when deployed
-else {
-	var fontSelect = 'Verdana,1,10'
-	var fontUnselect = 'Verdana,0,10'
-}
-
-
 
 //activate correct tab and flip tab buttons
 for ( var i = 1 ; i <= tabTotal ; i++ ) {	
@@ -522,6 +500,7 @@ for ( var i = 1 ; i <= tabTotal ; i++ ) {
 	if (buttonName == tabName) {
 		forms[formName].elements[tabName].fgcolor = foreSelect
 		forms[formName].elements[tabName].bgcolor = backSelect
+		forms[formName].elements[tabName].transparent = transparentSelect
 		forms[formName].elements[tabName].setFont(fontSelect)
 		
 		//set tab index
@@ -542,6 +521,7 @@ for ( var i = 1 ; i <= tabTotal ; i++ ) {
 	else {
 		forms[formName].elements[tabName].fgcolor = foreUnselect
 		forms[formName].elements[tabName].bgcolor = backUnselect
+		forms[formName].elements[tabName].transparent = transparentUnselect
 		forms[formName].elements[tabName].setFont(fontUnselect)
 	}				
 }
