@@ -5473,12 +5473,13 @@ function TAB_change_set(event) {
  * Navigates to the specified sidebar if it is available for the logged in user.
  * 
  * @param	{String}	sidebarName Sidebar name to jump to (defined in sidebar config "tab name").
+ * @param 	{Boolean} 	[showSidebar] Force sidebar open/closed.
  * 
  * @returns	{Boolean}	Sidebar able to be changed.
  * 
  * @properties={typeid:24,uuid:"8EC7C55E-6B55-43D5-9693-897E32EA0884"}
  */
-function TRIGGER_sidebar_set(newToolbar, showSidebar) {
+function TRIGGER_sidebar_set(sidebarName, showSidebar) {
 	//solutionPrefs defined and frameworks not in a locked status
 	if (application.__parent__.solutionPrefs && !solutionPrefs.config.lockStatus) {
 	
@@ -5492,14 +5493,14 @@ function TRIGGER_sidebar_set(newToolbar, showSidebar) {
 			//check to make sure that newToolbar is a valid input
 			var found = false
 			for (var i = 0; i < allToolbars.length && !found; i++) {
-				if (allToolbars[i].tabName == newToolbar) {
+				if (allToolbars[i].tabName == sidebarName) {
 					found = true
 					break
 				}
 			}
 	
 			//destination toolbar is valid and different than current toolbar, change
-			if (newToolbar != oldToolbar && found) {
+			if (sidebarName != oldToolbar && found) {
 				//should this by i or i+1?
 				forms.DATASUTRA__sidebar__header.TAB_popdown(i + 1)
 				
@@ -6386,6 +6387,19 @@ function CODE_appserver_get(hostName) {
 //	
 //	application.output(appURL)
 //	return appURL
+
+//	another try
+//application.output('hello world 1')
+//
+////store method stack
+//globals.CODE_continuation = new Continuation()
+//
+////halt
+//new Continuation()()
+//
+//application.output('hello world 2')
+//
+//return
 }
 
 /**
@@ -6422,11 +6436,12 @@ function CODE_spellcheck(event) {
  * Get the mouse location within a workflow form.
  * 
  * @param {JSEvent} event
+ * @param {Number[]} posn
  * @return {{x: Number, y: Number}} Coordinates
  * 
  * @properties={typeid:24,uuid:"9E4A25E9-1D33-40AD-B7A6-55FE133630F7"}
  */
-function TRIGGER_mouse_get(event) {
+function TRIGGER_mouse_get(event,posn) {
 	var position = {
 			x: 0,
 			y: 0
@@ -6476,6 +6491,18 @@ function TRIGGER_mouse_get(event) {
 	else if (false) {
 		
 	}
+	
+//	//grab last click location from Wicket
+//	if (solutionPrefs.config.webClient) {
+//		//current mouse location
+//		if (!posn) {
+//			plugins.WebClientUtils.executeClientSideJS('var posn = Wicket.indicatorPosition;', TRIGGER_mouse_get, [null,'posn'])
+//		}
+//		//have cursor, resume paused method
+//		else {
+//			
+//		}
+//	}
 	
 	return position
 }
