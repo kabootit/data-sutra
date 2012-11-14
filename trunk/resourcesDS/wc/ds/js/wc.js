@@ -167,12 +167,15 @@ function mobileIndicator() {
 if (dsFactor() == 'Desktop') {
 	//track location of mouse cursor
 	setTimeout(function(){
-			$('#servoy_page').click(function(e){
+		function trackMouse(e) {
 			var position = [0,0];
 			position[0] = (e.pageX) ? e.pageX : 0;
 			position[1] = (e.pageY) ? e.pageY : 0;
+			
 			Wicket.indicatorPosition = position;
-		})
+		}
+		
+		$('#servoy_page').on('click contextmenu',trackMouse);
 	},1500)
 	
 	function busyCursor(clickPos,turnOn) {
@@ -188,11 +191,23 @@ if (dsFactor() == 'Desktop') {
 			var indicator = $('#indicator')
 			//valid mouse location passed in
 			if ( clickPos ) {
-				indicator.css('top', clickPos[1] + 10).css('left', clickPos[0] + 10);
+				function trackMouse(event,position) {
+					var maxWidth = $(document).width() - 36;
+					var maxHeight = $(document).height() - 36;
+					
+					if (event && !position) {
+						position = [event.clientX,event.clientY];
+					}
+					
+					position[0] = (position[0] <= maxWidth) ? position[0] : maxWidth;
+					position[1] = (position[1] <= maxHeight) ? position[1] : maxHeight;
+					
+					indicator.css('top', position[1]+10).css('left', position[0]+10);
+				}
+				
+				trackMouse(null,clickPos);
 	
-				selector.mousemove(function(event) {
-					indicator.css('top', event.clientY+10).css('left', event.clientX+10);
-				});
+				selector.mousemove(trackMouse);
 			
 				//force indicator on (used for programmed busy)
 				if (turnOn) {
