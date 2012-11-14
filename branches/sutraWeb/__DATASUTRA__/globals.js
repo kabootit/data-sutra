@@ -1623,7 +1623,9 @@ function DS_actions(input) {
 				}
 				//webclient in router, redirect url
 				else if (globals.DATASUTRA_router_enable) {
-					plugins.WebClientUtils.executeClientSideJS('reLogin();')
+					application.showURL('/ds/quit','_top')
+					security.logout()
+//					plugins.WebClientUtils.executeClientSideJS('reLogin();')
 				//	globals.DS_router(null,null,null,null,true)
 				//	security.logout()
 				}
@@ -5222,7 +5224,7 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 	//prefix in url path?
 	var prefix = '/ds/'
 	
-	//get url using callback (when navigating history, doesn't really matter
+	//get url using callback (when navigating history, doesn't really matter)
 	if (p1 != 'DSHistory' && !pathName) {
 		plugins.WebClientUtils.executeClientSideJS('var path = window.parent.location.pathname;', DS_router, [null,null,null,null,null,'path'])
 		globals.DATASUTRA_router_arguments = arguments
