@@ -151,13 +151,12 @@
 			}
 		</script>
 	</head>
-	<body onload="reLogin()">
+	<body>
 		<div class="container">
 			<h1>Timed out <span>:(</span></h1>
 			<p>Sorry, but your session has timed out.</p>
-			<p id="redirectMsg">Redirecting to <a href="javascript:;" onclick="javascript:loginPage();">login</a> page in <span id="seconds">5</span> seconds...</p>
 			<div id="redirectCancel">
-				<button onclick="reLoginAbort()">Cancel</button>
+				<button onclick="loginPage()">Login</button>
 			</div>
 		</div>
 	</body>
