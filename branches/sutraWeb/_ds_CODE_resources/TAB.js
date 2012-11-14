@@ -594,23 +594,42 @@ function SET_change(input, formParent) {
  */
 
 /**
- * @param {JSEvent} event
+ * @param {JSEvent} [event]
+ * @param {String} [formName]
  * 
  * @properties={typeid:24,uuid:"A7B3910A-ACED-4674-B9E4-264DC9D58E53"}
  */
-function GRID_actions__detail(event) {
-	GRID_actions(event.getFormName(),'tab_detail')
+function GRID_actions__detail(event,formName) {
+	//no formname specified, try to get from event
+	if (!formName && event instanceof JSEvent) {
+		formName = event.getFormName()
+	}
+	
+	GRID_actions(formName,'tab_detail')
 }
 
 /**
- * @param {JSEvent} event
+ * @param {JSEvent} [event]
+ * @param {String} [formName]
+ * @param {String} [elemName]
  * 
  * @properties={typeid:24,uuid:"98E39441-7771-41AB-857A-0D1090C5011E"}
  */
-function GRID_change__detail(event) {
+function GRID_change__detail(event,formName,elemName) {
+	if (event instanceof JSEvent) {
+		//no form name specified, try to get from event
+		if (!formName) {
+			formName = event.getFormName()
+		}
+		//no element name specified, try to get from event
+		if (!elemName) {
+			elemName = event.getElementName()
+		}
+	}
+	
 	GRID_change(
-			event.getFormName(),
-			event.getElementName(),
+			formName,
+			elemName,
 			'tab_detail',
 			'tab_d',
 			'btn_add',
@@ -622,13 +641,19 @@ function GRID_change__detail(event) {
 
 
 /**
- * @param {JSEvent} event
+ * @param {JSEvent} [event]
+ * @param {String} [formName]
  * 
  * @properties={typeid:24,uuid:"0FDCF4EC-E690-48B2-9621-F649477F9A95"}
  */
-function GRID_init__detail(event) {
+function GRID_init__detail(event,formName) {
+	//no formname specified, try to get from event
+	if (!formName && event instanceof JSEvent) {
+		formName = event.getFormName()
+	}
+	
 	GRID_init(
-			event.getFormName(),
+			formName,
 			null,
 			'tab_detail',
 			'tab_d',
@@ -640,21 +665,33 @@ function GRID_init__detail(event) {
 }
 
 /**
- * @param {JSEvent} event
+ * @param {JSEvent} [event]
+ * @param {String} [formName]
  * 
  * @properties={typeid:24,uuid:"B8712358-9249-4A08-BD9F-6801DBEC8829"}
  */
-function GRID_help__detail(event) {
-	GRID_help(event.getFormName(),'tab_detail')
+function GRID_help__detail(event,formName) {
+	//no formname specified, try to get from event
+	if (!formName && event instanceof JSEvent) {
+		formName = event.getFormName()
+	}
+	
+	GRID_help(formName,'tab_detail')
 }
 
 /**
- * @param {JSEvent} event
+ * @param {JSEvent} [event]
+ * @param {String} [formName]
  * 
  * @properties={typeid:24,uuid:"A060CB8C-748F-40EC-96E0-E9797753CF69"}
  */
-function GRID_new__detail(event) {
-	GRID_new(event.getFormName(),'tab_detail')
+function GRID_new__detail(event,formName) {
+	//no formname specified, try to get from event
+	if (!formName && event instanceof JSEvent) {
+		formName = event.getFormName()
+	}
+	
+	GRID_new(formName,'tab_detail')
 }
 
 /**
@@ -662,23 +699,42 @@ function GRID_new__detail(event) {
  */
 
 /**
- * @param {JSEvent} event
+ * @param {JSEvent} [event]
+ * @param {String} [formName]
  * 
  * @properties={typeid:24,uuid:"20C677A7-11A3-4331-994F-53743CFC4AF2"}
  */
-function GRID_actions__list(event) {
-	GRID_actions(event.getFormName(),'tab_list')
+function GRID_actions__list(event,formName) {
+	//no formname specified, try to get from event
+	if (!formName && event instanceof JSEvent) {
+		formName = event.getFormName()
+	}
+	
+	GRID_actions(formName,'tab_list')
 }
 
 /**
- * @param {JSEvent} event
+ * @param {JSEvent} [event]
+ * @param {String} [formName]
+ * @param {String} [elemName]
  * 
  * @properties={typeid:24,uuid:"9BFB8469-3A06-4129-9A6E-56E07AFCB59E"}
  */
-function GRID_change__list(event) {
+function GRID_change__list(event,formName,elemName) {
+	if (event instanceof JSEvent) {
+		//no form name specified, try to get from event
+		if (!formName) {
+			formName = event.getFormName()
+		}
+		//no element name specified, try to get from event
+		if (!elemName) {
+			elemName = event.getElementName()
+		}
+	}
+	
 	GRID_change(
-			event.getFormName(),
-			event.getElementName(),
+			formName,
+			elemName,
 			'tab_list',
 			'tab_l',
 			'btn_list_add',
@@ -690,13 +746,19 @@ function GRID_change__list(event) {
 
 
 /**
- * @param {JSEvent} event
+ * @param {JSEvent} [event]
+ * @param {String} [formName]
  * 
  * @properties={typeid:24,uuid:"09F102A2-8E0A-4505-8400-8A04C080B71E"}
  */
-function GRID_init__list(event) {
+function GRID_init__list(event,formName) {
+	//no formname specified, try to get from event
+	if (!formName && event instanceof JSEvent) {
+		formName = event.getFormName()
+	}
+	
 	GRID_init(
-			event.getFormName(),
+			formName,
 			null,
 			'tab_list',
 			'tab_l',
@@ -708,21 +770,33 @@ function GRID_init__list(event) {
 }
 
 /**
- * @param {JSEvent} event
+ * @param {JSEvent} [event]
+ * @param {String} [formName]
  * 
  * @properties={typeid:24,uuid:"48F1AE51-816E-4A78-8648-FB562EA1F81B"}
  */
-function GRID_help__list(event) {
-	GRID_help(event.getFormName(),'tab_list')
+function GRID_help__list(event,formName) {
+	//no formname specified, try to get from event
+	if (!formName && event instanceof JSEvent) {
+		formName = event.getFormName()
+	}
+	
+	GRID_help(formName,'tab_list')
 }
 
 /**
- * @param {JSEvent} event
+ * @param {JSEvent} [event]
+ * @param {String} [formName]
  * 
  * @properties={typeid:24,uuid:"8B1E69BC-30D6-4E89-B4AF-5B97C9939C25"}
  */
-function GRID_new__list(event) {
-	GRID_new(event.getFormName(),'tab_list')
+function GRID_new__list(event,formName) {
+	//no formname specified, try to get from event
+	if (!formName && event instanceof JSEvent) {
+		formName = event.getFormName()
+	}
+	
+	GRID_new(formName,'tab_list')
 }
 
 /**
@@ -730,23 +804,42 @@ function GRID_new__list(event) {
  */
 
 /**
- * @param {JSEvent} event
+ * @param {JSEvent} [event]
+ * @param {String} [formName]
  * 
  * @properties={typeid:24,uuid:"05305861-D32C-4F5D-837E-513B34999633"}
  */
-function GRID_actions__primary(event) {
-	GRID_actions(event.getFormName(),'tab_primary')
+function GRID_actions__primary(event,formName) {
+	//no formname specified, try to get from event
+	if (!formName && event instanceof JSEvent) {
+		formName = event.getFormName()
+	}
+	
+	GRID_actions(formName,'tab_primary')
 }
 
 /**
- * @param {JSEvent} event
+ * @param {JSEvent} [event]
+ * @param {String} [formName]
+ * @param {String} [elemName]
  * 
  * @properties={typeid:24,uuid:"B0BE29D2-B40A-4FA2-84B1-1C643C7E4A6D"}
  */
-function GRID_change__primary(event) {
+function GRID_change__primary(event,formName,elemName) {
+	if (event instanceof JSEvent) {
+		//no form name specified, try to get from event
+		if (!formName) {
+			formName = event.getFormName()
+		}
+		//no element name specified, try to get from event
+		if (!elemName) {
+			elemName = event.getElementName()
+		}
+	}
+	
 	GRID_change(
-			event.getFormName(),
-			event.getElementName(),
+			formName,
+			elemName,
 			'tab_primary',
 			'tab_p',
 			'btn_primary_add',
@@ -758,13 +851,19 @@ function GRID_change__primary(event) {
 
 
 /**
- * @param {JSEvent} event
+ * @param {JSEvent} [event]
+ * @param {String} [formName]
  * 
  * @properties={typeid:24,uuid:"76D64D0F-126F-4C89-88A0-335F3D891B9F"}
  */
-function GRID_init__primary(event) {
+function GRID_init__primary(event,formName) {
+	//no formname specified, try to get from event
+	if (!formName && event instanceof JSEvent) {
+		formName = event.getFormName()
+	}
+	
 	GRID_init(
-			event.getFormName(),
+			formName,
 			null,
 			'tab_primary',
 			'tab_p',
@@ -776,21 +875,33 @@ function GRID_init__primary(event) {
 }
 
 /**
- * @param {JSEvent} event
+ * @param {JSEvent} [event]
+ * @param {String} [formName]
  * 
  * @properties={typeid:24,uuid:"3E612008-D5D0-4E42-833E-B3A24F8243EC"}
  */
-function GRID_help__primary(event) {
-	GRID_help(event.getFormName(),'tab_primary')
+function GRID_help__primary(event,formName) {
+	//no formname specified, try to get from event
+	if (!formName && event instanceof JSEvent) {
+		formName = event.getFormName()
+	}
+	
+	GRID_help(formName,'tab_primary')
 }
 
 /**
- * @param {JSEvent} event
+ * @param {JSEvent} [event]
+ * @param {String} [formName]
  * 
  * @properties={typeid:24,uuid:"E5434E8D-0170-49A0-A51C-0810E7D7D223"}
  */
-function GRID_new__primary(event) {
-	GRID_new(event.getFormName(),'tab_primary')
+function GRID_new__primary(event,formName) {
+	//no formname specified, try to get from event
+	if (!formName && event instanceof JSEvent) {
+		formName = event.getFormName()
+	}
+	
+	GRID_new(formName,'tab_primary')
 }
 
 /**
@@ -798,23 +909,42 @@ function GRID_new__primary(event) {
  */
 
 /**
- * @param {JSEvent} event
+ * @param {JSEvent} [event]
+ * @param {String} [formName]
  * 
  * @properties={typeid:24,uuid:"A04B7FD9-8D75-4F70-91D6-B0D514CBEFE4"}
  */
-function GRID_actions__secondary(event) {
-	GRID_actions(event.getFormName(),'tab_secondary')
+function GRID_actions__secondary(event,formName) {
+	//no formname specified, try to get from event
+	if (!formName && event instanceof JSEvent) {
+		formName = event.getFormName()
+	}
+	
+	GRID_actions(formName,'tab_secondary')
 }
 
 /**
  * @param {JSEvent} event
+ * @param {String} [formName]
+ * @param {String} [elemName]
  * 
  * @properties={typeid:24,uuid:"4715371F-B77E-4E00-B931-0DBE79C3E229"}
  */
-function GRID_change__secondary(event) {
+function GRID_change__secondary(event,formName,elemName) {
+	if (event instanceof JSEvent) {
+		//no form name specified, try to get from event
+		if (!formName) {
+			formName = event.getFormName()
+		}
+		//no element name specified, try to get from event
+		if (!elemName) {
+			elemName = event.getElementName()
+		}
+	}
+	
 	GRID_change(
-			event.getFormName(),
-			event.getElementName(),
+			formName,
+			elemName,
 			'tab_secondary',
 			'tab_s',
 			'btn_secondary_add',
@@ -826,13 +956,19 @@ function GRID_change__secondary(event) {
 
 
 /**
- * @param {JSEvent} event
+ * @param {JSEvent} [event]
+ * @param {String} [formName]
  * 
  * @properties={typeid:24,uuid:"FA4FABF9-A26B-4011-942E-487D0F27C9FF"}
  */
-function GRID_init__secondary(event) {
+function GRID_init__secondary(event,formName) {
+	//no formname specified, try to get from event
+	if (!formName && event instanceof JSEvent) {
+		formName = event.getFormName()
+	}
+	
 	GRID_init(
-			event.getFormName(),
+			formName,
 			null,
 			'tab_secondary',
 			'tab_s',
@@ -844,21 +980,33 @@ function GRID_init__secondary(event) {
 }
 
 /**
- * @param {JSEvent} event
+ * @param {JSEvent} [event]
+ * @param {String} [formName]
  * 
  * @properties={typeid:24,uuid:"DDFC3DAA-2C4A-4FEF-88DB-EAF6A55FC279"}
  */
-function GRID_help__secondary(event) {
-	GRID_help(event.getFormName(),'tab_secondary')
+function GRID_help__secondary(event,formName) {
+	//no formname specified, try to get from event
+	if (!formName && event instanceof JSEvent) {
+		formName = event.getFormName()
+	}
+	
+	GRID_help(formName,'tab_secondary')
 }
 
 /**
- * @param {JSEvent} event
+ * @param {JSEvent} [event]
+ * @param {String} [formName]
  * 
  * @properties={typeid:24,uuid:"EA351284-2881-4865-9A26-90FC7AACF715"}
  */
-function GRID_new__secondary(event) {
-	GRID_new(event.getFormName(),'tab_secondary')
+function GRID_new__secondary(event,formName) {
+	//no formname specified, try to get from event
+	if (!formName && event instanceof JSEvent) {
+		formName = event.getFormName()
+	}
+	
+	GRID_new(formName,'tab_secondary')
 }
 
 /**
@@ -866,23 +1014,42 @@ function GRID_new__secondary(event) {
  */
 
 /**
- * @param {JSEvent} event
+ * @param {JSEvent} [event]
+ * @param {String} [formName]
  * 
  * @properties={typeid:24,uuid:"E56FAE6B-5027-4ECD-9779-C1E2F1E75562"}
  */
-function GRID_actions__summary(event) {
-	GRID_actions(event.getFormName(),'tab_summary')
+function GRID_actions__summary(event,formName) {
+	//no formname specified, try to get from event
+	if (!formName && event instanceof JSEvent) {
+		formName = event.getFormName()
+	}
+	
+	GRID_actions(formName,'tab_summary')
 }
 
 /**
- * @param {JSEvent} event
+ * @param {JSEvent} [event]
+ * @param {String} [formName]
+ * @param {String} [elemName]
  * 
  * @properties={typeid:24,uuid:"C03F856C-B58B-46FE-B51B-9558D76FF926"}
  */
-function GRID_change__summary(event) {
+function GRID_change__summary(event,formName,elemName) {
+	if (event instanceof JSEvent) {
+		//no form name specified, try to get from event
+		if (!formName) {
+			formName = event.getFormName()
+		}
+		//no element name specified, try to get from event
+		if (!elemName) {
+			elemName = event.getElementName()
+		}
+	}
+	
 	GRID_change(
-			event.getFormName(),
-			event.getElementName(),
+			formName,
+			elemName,
 			'tab_summary',
 			'tab_ss',
 			'btn_summary_add',
@@ -894,13 +1061,19 @@ function GRID_change__summary(event) {
 
 
 /**
- * @param {JSEvent} event
+ * @param {JSEvent} [event]
+ * @param {String} [formName]
  * 
  * @properties={typeid:24,uuid:"8B697B0D-6C56-4487-A533-630D0D33F5F2"}
  */
-function GRID_init__summary(event) {
+function GRID_init__summary(event,formName) {
+	//no formname specified, try to get from event
+	if (!formName && event instanceof JSEvent) {
+		formName = event.getFormName()
+	}
+	
 	GRID_init(
-			event.getFormName(),
+			formName,
 			null,
 			'tab_summary',
 			'tab_ss',
@@ -912,19 +1085,31 @@ function GRID_init__summary(event) {
 }
 
 /**
- * @param {JSEvent} event
+ * @param {JSEvent} [event]
+ * @param {String} [formName]
  * 
  * @properties={typeid:24,uuid:"DC75BE47-0F97-4A40-A1CF-74A4A9EBD643"}
  */
-function GRID_help__summary(event) {
-	GRID_help(event.getFormName(),'tab_summary')
+function GRID_help__summary(event,formName) {
+	//no formname specified, try to get from event
+	if (!formName && event instanceof JSEvent) {
+		formName = event.getFormName()
+	}
+	
+	GRID_help(formName,'tab_summary')
 }
 
 /**
- * @param {JSEvent} event
+ * @param {JSEvent} [event]
+ * @param {String} [formName]
  * 
  * @properties={typeid:24,uuid:"F13BBA63-88DF-4736-84A8-F1D73F714095"}
  */
-function GRID_new__summary(event) {
-	GRID_new(event.getFormName(),'tab_summary')
+function GRID_new__summary(event,formName) {
+	//no formname specified, try to get from event
+	if (!formName && event instanceof JSEvent) {
+		formName = event.getFormName()
+	}
+	
+	GRID_new(formName,'tab_summary')
 }
