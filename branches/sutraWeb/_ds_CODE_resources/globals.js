@@ -5390,8 +5390,8 @@ if (repositoryPrefs.allModules.length) {
  *
  * @properties={typeid:24,uuid:"B16736CE-B7ED-42A5-AAAA-93190A841940"}
  */
-function TAB_btn_actions_list(event) {
-	scopes.TAB.GRID_actions()
+function TAB_btn_actions_list(event,arg1) {
+	scopes.TAB.GRID_actions(event,arg1)
 }
 
 /**
@@ -5402,8 +5402,8 @@ function TAB_btn_actions_list(event) {
  *
  * @properties={typeid:24,uuid:"96825750-E40B-4C74-A8F4-5D03F0FEC951"}
  */
-function TAB_btn_help(event) {
-	scopes.TAB.GRID_help()
+function TAB_btn_help(event,arg1) {
+	scopes.TAB.GRID_help(event,arg1)
 }
 
 /**
@@ -5414,8 +5414,8 @@ function TAB_btn_help(event) {
  *
  * @properties={typeid:24,uuid:"FACB9D45-A3DB-4A98-B18F-C3F1236E38E7"}
  */
-function TAB_btn_rec_new(event) {
-	scopes.TAB.GRID_new()
+function TAB_btn_rec_new(event,arg1) {
+	scopes.TAB.GRID_new(event,arg1)
 }
 
 /**
@@ -5426,8 +5426,8 @@ function TAB_btn_rec_new(event) {
  *
  * @properties={typeid:24,uuid:"7B91A5A9-3A3F-44B7-B1E8-2FC00B2A3D97"}
  */
-function TAB_change_grid(event) {
-	scopes.TAB.GRID_change()
+function TAB_change_grid(event,arg2,arg3,arg4,arg5,arg6,arg7,arg8) {
+	scopes.TAB.GRID_change(event,arg2,arg3,arg4,arg5,arg6,arg7,arg8)
 }
 
 /**
@@ -5438,8 +5438,8 @@ function TAB_change_grid(event) {
  *
  * @properties={typeid:24,uuid:"8756E1DB-B872-45F5-BB9B-3C5F68560C59"}
  */
-function TAB_change_grid_init(event) {
-	scopes.TAB.GRID_init()
+function TAB_change_grid_init(event,arg2,arg3,arg4,arg5,arg6,arg7,arg8) {
+	scopes.TAB.GRID_init(event,arg2,arg3,arg4,arg5,arg6,arg7,arg8)
 }
 
 /**
@@ -5465,8 +5465,8 @@ function TAB_change_inline(formName,elemName,tabPanel,prefix) {
  *
  * @properties={typeid:24,uuid:"70C1A10F-80DB-4F65-9DC7-5CFA837CB9DE"}
  */
-function TAB_change_set(event) {
-	scopes.TAB.SET_change()
+function TAB_change_set(event,arg1) {
+	scopes.TAB.SET_change(event,arg1)
 }
 
 /**
