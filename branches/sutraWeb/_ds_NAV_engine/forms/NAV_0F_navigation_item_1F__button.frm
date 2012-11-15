@@ -148,7 +148,7 @@ typeid:7,
 uuid:"76405c70-1705-4dc6-86df-5ba1a4d9679f"
 },
 {
-formIndex:12300,
+formIndex:3,
 groupID:"1",
 horizontalAlignment:4,
 location:"447,20",
@@ -163,7 +163,6 @@ typeid:7,
 uuid:"7ec72142-5d91-4f08-88fe-e715af7c10f7"
 },
 {
-formIndex:11700,
 groupID:"1",
 horizontalAlignment:4,
 location:"117,20",
@@ -178,7 +177,7 @@ typeid:7,
 uuid:"85d8b5a5-7b46-422b-b777-179770604db4"
 },
 {
-formIndex:12200,
+formIndex:2,
 groupID:"1",
 horizontalAlignment:4,
 location:"337,20",
@@ -211,7 +210,7 @@ typeid:7,
 uuid:"aead1728-c703-4190-94e1-dca0058756c6"
 },
 {
-formIndex:12000,
+formIndex:1,
 groupID:"1",
 horizontalAlignment:4,
 location:"227,20",
