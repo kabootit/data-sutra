@@ -4384,8 +4384,8 @@ if (utils.hasRecords(fsToolbar)) {
 			var sizeHeight = utils.stringToNumber(sizeSplit[1]) + 20
 		}
 		
-		//only add tabs that have a form assigned
-		if (record.form_name) {
+		//only add tabs that have a form assigned and that form exists in the solution
+		if (record.form_name && solutionModel.getForm(record.form_name)) {
 			panel.push({
 					tabName : record.tab_name,
 					formName : record.form_name,
