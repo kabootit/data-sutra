@@ -14,7 +14,8 @@ styleClass:"button",
 text:"Thanks for signing up!",
 transparent:true,
 typeid:7,
-uuid:"0AAAE14C-0C0C-4CA6-AD2C-EB38C94D5FF3"
+uuid:"0AAAE14C-0C0C-4CA6-AD2C-EB38C94D5FF3",
+visible:false
 },
 {
 horizontalAlignment:0,
@@ -52,7 +53,8 @@ styleClass:"web",
 tabSeq:6,
 toolTipText:"Password",
 typeid:4,
-uuid:"2F256807-5D1E-46B4-8E43-421ADB8CB867"
+uuid:"2F256807-5D1E-46B4-8E43-421ADB8CB867",
+visible:false
 },
 {
 location:"260,370",
@@ -66,7 +68,8 @@ styleClass:"button_web",
 tabSeq:-2,
 text:"Sign up",
 typeid:7,
-uuid:"4D6D5A22-E578-4F06-94AB-BCD3F478FD43"
+uuid:"4D6D5A22-E578-4F06-94AB-BCD3F478FD43",
+visible:false
 },
 {
 dataProviderID:"_dialog",
@@ -140,7 +143,8 @@ styleClass:"web",
 tabSeq:4,
 toolTipText:"Full name",
 typeid:4,
-uuid:"9566D0C0-01C5-41CC-B6BC-60C94B348895"
+uuid:"9566D0C0-01C5-41CC-B6BC-60C94B348895",
+visible:false
 },
 {
 dataProviderID:"_userName",
@@ -195,7 +199,8 @@ styleClass:"web",
 tabSeq:5,
 toolTipText:"Email",
 typeid:4,
-uuid:"EB079DDB-6C3E-440B-94D7-65579F4717EF"
+uuid:"EB079DDB-6C3E-440B-94D7-65579F4717EF",
+visible:false
 },
 {
 anchors:11,
@@ -212,7 +217,8 @@ styleClass:"button",
 text:"New to %%solution_name%%? Sign up",
 transparent:true,
 typeid:7,
-uuid:"F5D39941-299A-41DB-9806-6684AC561478"
+uuid:"F5D39941-299A-41DB-9806-6684AC561478",
+visible:false
 }
 ],
 name:"AC_R__login_WEB",
