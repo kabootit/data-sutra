@@ -2911,9 +2911,12 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		var findInitial = navSpecs.findDefault
 		if (findInitial && !globals.DATASUTRA_find_field) {
 			globals.DATASUTRA_find_field = findInitial
+			
 			//get pretty name for chosen column
-			var prettyFind = navigationPrefs.byNavItemID[navigationItemID].fastFind.filter(function(item){return item.columnName == findInitial})
-			forms[baseForm + '__header__fastfind'].elements.fld_find.toolTipText = 'Searching in "' + (prettyFind.length ? prettyFind[0].findName : findInitial) + '"'
+			if (navigationPrefs.byNavItemID[navigationItemID] && navigationPrefs.byNavItemID[navigationItemID].fastFind instanceof Array) {
+				var prettyFind = navigationPrefs.byNavItemID[navigationItemID].fastFind.filter(function(item){return item.columnName == findInitial})
+			}
+			forms[baseForm + '__header__fastfind'].elements.fld_find.toolTipText = 'Searching in "' + (prettyFind && prettyFind.length ? prettyFind[0].findName : findInitial) + '"'
 		}
 		
 		//set check on display pop-down
