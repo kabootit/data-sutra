@@ -33,6 +33,7 @@ globals.TRIGGER_fastfind_override(false)
 /**
  *
  * @properties={typeid:24,uuid:"b5a3d81e-729d-4f8b-a016-9c6116fc7562"}
+ * @AllowToRunInFind
  */
 function FORM_on_show()
 {
