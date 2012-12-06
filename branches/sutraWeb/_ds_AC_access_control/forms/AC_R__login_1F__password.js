@@ -223,7 +223,7 @@ if (event) {
 if (globals.AC_login_user && globals.AC_login_password) {
 
 	var baseForm = solutionPrefs.config.formNameBase
-	var navigationList = 'NAV__navigation_tree'
+	var navigationList = (solutionPrefs.config.webClient) ? 'NAV__navigation_tree__WEB' : 'NAV__navigation_tree'
 	var navTabPanel = (solutionPrefs.config.webClient) ? forms.DATASUTRA_WEB_0F__list.elements.tab_list : forms[baseForm].elements.tab_content_A
 	
 	// // //
