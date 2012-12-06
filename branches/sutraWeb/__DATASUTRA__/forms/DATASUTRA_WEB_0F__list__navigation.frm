@@ -6,11 +6,11 @@ background:"#d1d7e2",
 formIndex:11200,
 items:[
 {
-containsFormID:"43C13A7A-650A-4E78-AAEE-5C07ED45F27C",
-location:"9,11",
-text:"NAV__navigation_tree",
+containsFormID:"017BB1D9-4384-40B4-96AF-600558030E43",
+location:"0,0",
+text:"NAV__navigation_tree__WEB",
 typeid:15,
-uuid:"8FDFD978-0446-439B-BC80-D3F9564CF577"
+uuid:"5088AFA7-8730-4DA3-9154-FE779B293E96"
 }
 ],
 location:"0,0",
@@ -18,6 +18,7 @@ name:"tab_content_A",
 printable:false,
 size:"50,50",
 tabOrientation:-1,
+transparent:true,
 typeid:16,
 uuid:"135C5ABE-B03B-41ED-9F0B-951476D94C4D"
 },
@@ -36,5 +37,6 @@ paperPrintScale:100,
 scrollbars:36,
 size:"50,100",
 styleName:"_DATASUTRA_",
+transparent:true,
 typeid:3,
 uuid:"2123CCBC-C752-492E-9008-8809321540E1"

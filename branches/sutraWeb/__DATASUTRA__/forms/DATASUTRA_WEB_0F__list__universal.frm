@@ -2,25 +2,25 @@ customProperties:"",
 items:[
 {
 anchors:15,
-background:"#d1d7e2",
+background:"#323a4b",
 formIndex:11200,
 items:[
 {
-containsFormID:"746CBC99-A948-473D-A020-CC8861EF03F8",
+containsFormID:"BCA5E36B-77EC-4676-B5E1-24075D613AD5",
 location:"20,30",
 text:"UL nobuttons",
 typeid:15,
 uuid:"01B3DD5D-D2A5-4695-BADF-C4EF7E9CA87A"
 },
 {
-containsFormID:"9FBDAEE4-2FCB-4984-B5B3-0DD722A7508E",
+containsFormID:"9968A147-54C3-4F87-A103-454EBD21C326",
 location:"10,20",
 text:"UL",
 typeid:15,
 uuid:"02962B5A-7942-44A7-B802-75B3441FDAC4"
 },
 {
-containsFormID:"71201bd6-f000-4ba1-aa9c-d8a8097b79a1",
+containsFormID:"02396CCF-ADD3-418B-BB54-800A6740264F",
 location:"0,0",
 text:"Blank",
 typeid:15,
@@ -32,6 +32,7 @@ name:"tab_content_B",
 printable:false,
 size:"50,50",
 tabOrientation:-1,
+transparent:true,
 typeid:16,
 uuid:"213D27FB-90E2-4DEA-B3E0-49F00812C7E1"
 },
@@ -50,5 +51,6 @@ paperPrintScale:100,
 scrollbars:36,
 size:"50,100",
 styleName:"_DATASUTRA_",
+transparent:true,
 typeid:3,
 uuid:"C108A5B4-894F-4F46-81B9-AB0AF8512C2F"

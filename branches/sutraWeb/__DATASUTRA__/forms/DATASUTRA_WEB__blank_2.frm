@@ -11,6 +11,7 @@ navigatorID:"-1",
 paperPrintScale:100,
 scrollbars:36,
 size:"0,20",
+styleClass:"list",
 styleName:"ds_WEB_universal_list",
 typeid:3,
 uuid:"02396CCF-ADD3-418B-BB54-800A6740264F"

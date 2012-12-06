@@ -716,7 +716,7 @@ function ACTION_space_flexible(event) {
 			if (solutionPrefs.config.currentFormID && navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID]) {
 				var currentNavItem = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID]
 				if (currentNavItem.navigationItem.useFwList) {
-					var methodRefresh = currentNavItem.listData.withButtons ? forms.NAV_T_universal_list.DISPLAY_cycle : forms.NAV_T_universal_list__no_buttons.DISPLAY_cycle
+					var methodRefresh = currentNavItem.listData.withButtons ? forms.NAV_T_universal_list__WEB.DISPLAY_cycle : forms.NAV_T_universal_list__no_buttons__WEB.DISPLAY_cycle
 					
 					var callback = plugins.WebClientUtils.generateCallbackScript(methodRefresh, ['true'])
 					var jsCallback = 'function repaintUL(){' + callback + '}';

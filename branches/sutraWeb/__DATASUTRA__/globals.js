@@ -1791,7 +1791,7 @@ function DS_actions(input) {
 					//load navigation set list back in
 					if (solutionPrefs.config.webClient) {
 						var tabPanel = forms.DATASUTRA_WEB_0F__list.elements.tab_list
-						var navName = 'NAV__navigation_tree'
+						var navName = 'NAV__navigation_tree__WEB'
 						//remove main window if new one different than currently displayed one
 						if (tabPanel.getLeftForm().controller.getName() != navName) {
 							tabPanel.setLeftForm(forms[navName])
@@ -1951,19 +1951,21 @@ function DS_actions(input) {
 						else if (navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].navigationItem.useFwList) {
 							//with buttons
 							if (navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.withButtons) {
-								forms.NAV_T_universal_list.DISPLAY_cycle(true)
+								var navForm = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__WEB' : 'NAV_T_universal_list'
+								forms[navForm].DISPLAY_cycle(true)
 							
-								forms.NAV_T_universal_list.FORM_on_show(true)
+								forms[navForm].FORM_on_show(true)
 								forms[baseForm].elements.tab_content_B.tabIndex = 2
-								forms.NAV_T_universal_list.elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.tabNumber
+								forms[navForm].elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.tabNumber
 							}
 							//without buttons
 							else {
-								forms.NAV_T_universal_list__no_buttons.DISPLAY_cycle(true)
+								var navForm = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__no_buttons__WEB' : 'NAV_T_universal_list__no_buttons'
+								forms[navForm].DISPLAY_cycle(true)
 								
-								forms.NAV_T_universal_list__no_buttons.FORM_on_show(true)
+								forms[navForm].FORM_on_show(true)
 								forms[baseForm].elements.tab_content_B.tabIndex = 3
-								forms.NAV_T_universal_list__no_buttons.elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.tabNumber
+								forms[navForm].elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.tabNumber
 							}
 						}
 						//show blank tab
