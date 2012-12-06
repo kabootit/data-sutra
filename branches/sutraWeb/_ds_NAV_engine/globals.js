@@ -2592,6 +2592,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 								
 								//create check field
 								if (lineItem.formatMask == 'Check') {
+									/** JSComponent*/
 									var myField = myForm.newCheck(
 													nameNameField,			//dataprovider
 													i,						//x
@@ -2617,6 +2618,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 								myField.horizontalAlignment = horizAlign
 								myField.styleClass = 'universallist'
 								myField.editable = lineItem.editable
+								myField.selectOnEnter = false
 								myField.scrollbars = 0
 								myField.transparent = false
 								myField.text = (lineItem.header) ? lineItem.header : nameNameField
@@ -2656,7 +2658,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 													'badge += \'<html><center><img src="media:///\';',
 													
 													//this row is selected
-													'if (foundset.getSelectedIndex() == foundset.getRecordIndex(record)) {',
+													'if (foundset.getSelectedIndex() == foundset.getRecordIndex(record) && !solutionPrefs.config.webClient) {',
 														'badge += "btn_favorite_selected.png";',
 													'}',
 													//row is not selected
@@ -2694,7 +2696,8 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 //								starField.rolloverImageMedia = solutionModel.getMedia('btn_favorite_rollover.png')
 								starField.toolTipText = 'Toggle favorite'//'%%sutra_favorite_tooltip%%'
 								starField.showClick = false
-								starField.text = '<html><center><img src="media:///btn_favorite_dark.png" width=12 height=17></center>'
+								var height = solutionPrefs.config.webClient ? 16 : 17
+								starField.text = '<html><center><img src="media:///btn_favorite_dark.png" width=12 height=' + height + '></center>'
 									
 								//override sort on form so that will toggle favorite mode on off for this field
 								myForm.onSortCmd = solutionModel.getGlobalMethod('NAV_universal_list_sort')
@@ -2909,14 +2912,11 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		
 		//check for default find field
 		var findInitial = navSpecs.findDefault
-		if (findInitial && !globals.DATASUTRA_find_field) {
+		if (findInitial && !globals.DATASUTRA_find_field && navigationPrefs.byNavItemID[navigationItemID].fastFind) {
 			globals.DATASUTRA_find_field = findInitial
-			
 			//get pretty name for chosen column
-			if (navigationPrefs.byNavItemID[navigationItemID] && navigationPrefs.byNavItemID[navigationItemID].fastFind instanceof Array) {
-				var prettyFind = navigationPrefs.byNavItemID[navigationItemID].fastFind.filter(function(item){return item.columnName == findInitial})
-			}
-			forms[baseForm + '__header__fastfind'].elements.fld_find.toolTipText = 'Searching in "' + (prettyFind && prettyFind.length ? prettyFind[0].findName : findInitial) + '"'
+			var prettyFind = navigationPrefs.byNavItemID[navigationItemID].fastFind.filter(function(item){return item.columnName == findInitial})
+			forms[baseForm + '__header__fastfind'].elements.fld_find.toolTipText = 'Searching in "' + (prettyFind.length ? prettyFind[0].findName : findInitial) + '"'
 		}
 		
 		//set check on display pop-down
@@ -5108,7 +5108,7 @@ function NAV_navigation_set_load()
 	}
 	
 	//call router to switch entire page
-	if (globals.DATASUTRA_router_enable) {
+	if (globals.DATASUTRA_router_enable && !favoriteMode) {
 		globals.DS_router(null,null,itemID)
 	}
 	else {
@@ -5122,6 +5122,11 @@ function NAV_navigation_set_load()
 		}
 		
 		forms[formName].LABEL_update()
+	}
+	
+	//favorite mode, rewrite url
+	if (favoriteMode) {
+		plugins.WebClientUtils.executeClientSideJS('preRender(null,"Favorite records","/ds/favorites",0);')
 	}
 }
 
@@ -5201,7 +5206,7 @@ function NAV_universal_list_select() {
 	navigationPrefs.byNavItemID[currentNavItem].listData.visitedPKs[(pkName != 'repositoryAPINotImplemented') ? forms[formName][pkName] : pkActedOn] = application.getServerTimeStamp()
 	
 	//update record navigator when showing
-	if ((solutionPrefs.panel.toolbar.selectedTab - 4) && solutionPrefs.panel.toolbar[solutionPrefs.panel.toolbar.selectedTab - 4] && solutionPrefs.panel.toolbar[solutionPrefs.panel.toolbar.selectedTab - 4].formName == 'TOOL_record_navigator') {
+	if (solutionPrefs.panel.toolbar[solutionPrefs.panel.toolbar.selectedTab - 4].formName == 'TOOL_record_navigator') {
 		globals.TRIGGER_toolbar_record_navigator_set()
 	}
 	
