@@ -1890,9 +1890,19 @@ function DS_actions(input) {
 					
 					//return sidebar window to most recent position and then clear out the stored value
 					if (solutionPrefs.config.prefs.sidebarTabSelected) {
-						//formerly selected tab no longer available
-						if (solutionPrefs.config.prefs.sidebarTabSelected <= forms[baseForm].elements.tab_content_D.getMaxTabIndex()) {
-							forms[baseForm].elements.tab_content_D.tabIndex = solutionPrefs.config.prefs.sidebarTabSelected
+						//web client
+						if (solutionPrefs.config.webClient) {
+							//formerly selected tab no longer available
+							if (solutionPrefs.config.prefs.sidebarTabSelected <= forms.DATASUTRA__sidebar.elements.tab_content.getMaxTabIndex()) {
+								forms.DATASUTRA__sidebar.elements.tab_content.tabIndex = solutionPrefs.config.prefs.sidebarTabSelected
+							}
+						}
+						//smart client
+						else {
+							//formerly selected tab no longer available
+							if (solutionPrefs.config.prefs.sidebarTabSelected <= forms[baseForm].elements.tab_content_D.getMaxTabIndex()) {
+								forms[baseForm].elements.tab_content_D.tabIndex = solutionPrefs.config.prefs.sidebarTabSelected
+							}
 						}
 						delete solutionPrefs.config.prefs.sidebarTabSelected
 					}
@@ -2041,9 +2051,11 @@ function DS_actions(input) {
 						}
 						
 						//make sure find graphics are the unselected variety
-						forms[baseForm + '__header__fastfind'].elements.btn_find.setImageURL('media:///find_magnify.png')
-						forms[baseForm + '__header__fastfind'].elements.find_mid.setImageURL('media:///find_middle.png')
-						forms[baseForm + '__header__fastfind'].elements.find_end.setImageURL('media:///find_stop.png')
+						if (!solutionPrefs.config.webClient) {
+							forms[baseForm + '__header__fastfind'].elements.btn_find.setImageURL('media:///find_magnify.png')
+							forms[baseForm + '__header__fastfind'].elements.find_mid.setImageURL('media:///find_middle.png')
+							forms[baseForm + '__header__fastfind'].elements.find_end.setImageURL('media:///find_stop.png')
+						}
 						forms[baseForm + '__header'].elements.fld_constant.requestFocus(false)
 						
 						//disable nav_chooser, find, and toolbar cycle button
@@ -4407,7 +4419,7 @@ if (utils.hasRecords(fsToolbar)) {
 			
 			//default background color for toolbar is pale yellow
 			if (panelType == 1) {
-				panel[panel.length - 1].gradientColor = (record.background_color) ? record.background_color : '#f5fbd4'
+				panel[panel.length - 1].gradientColor = (record.background_color) ? record.background_color : '#ffffff'
 			}
 				
 			//sidebars can have background color and gradient
