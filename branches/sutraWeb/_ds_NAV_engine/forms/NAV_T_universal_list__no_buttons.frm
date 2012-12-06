@@ -148,6 +148,7 @@ scrollbars:36,
 size:"125,36",
 styleClass:"list",
 styleName:"_DATASUTRA_",
+transparent:true,
 typeid:3,
 uuid:"746CBC99-A948-473D-A020-CC8861EF03F8",
 view:5

@@ -163,7 +163,8 @@ globals.CODE_form_in_dialog_close('inlineNavItem')
 
 //nav item name changed, redraw navitem list
 if (redraw) {
-	forms.NAV__navigation_tree.LIST_redraw(null,record.id_navigation_item,true)
+	var navForm = (solutionPrefs.config.webClient) ? 'NAV__navigation_tree__WEB' : 'NAV__navigation_tree'
+	forms[navForm].LIST_redraw(null,record.id_navigation_item,true)
 }
 
 

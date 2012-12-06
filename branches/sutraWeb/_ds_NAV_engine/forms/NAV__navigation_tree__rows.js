@@ -1,4 +1,11 @@
 /**
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"18CAFD09-470D-465D-81E3-C1E60732CBDD"}
+ */
+var _parentForm = (solutionPrefs.config.webClient) ? 'NAV__navigation_tree__WEB' : 'NAV__navigation_tree';
+
+/**
  * @properties={typeid:35,uuid:"90C2111C-4A1E-4642-B0CC-3E830147BBD5",variableType:-4}
  */
 var _variableWC = new Object();
@@ -36,7 +43,7 @@ function LIST_expand_collapse(event, idNavItem, forceToggle, idNavSet) {
 		
 		//triggered by clicking on element in list
 		if (event instanceof JSEvent) {
-			var navDetails = forms.NAV__navigation_tree._rows[event.getElementName().split('_').pop()]
+			var navDetails = forms[_parentForm]._rows[event.getElementName().split('_').pop()]
 			idNavItem = navDetails.navItemID
 		}
 		
@@ -151,7 +158,7 @@ function zLIST_redraw(event,itemID,reScroll,skipLoadForms,favoriteMode,selected)
 		//triggered by clicking on element in list
 		if (event instanceof JSEvent) {
 			var selected = utils.stringToNumber(event.getElementName().split('_').pop())
-			var itemDetails = forms.NAV__navigation_tree._rows[selected]
+			var itemDetails = forms[_parentForm]._rows[selected]
 			itemID = itemDetails.navItemID
 			
 			//this is favorites
@@ -188,23 +195,23 @@ function zLIST_redraw(event,itemID,reScroll,skipLoadForms,favoriteMode,selected)
 		
 		//redo form of favorite records
 		if (favoriteMode) {
-			forms.NAV__navigation_tree.LIST_favorites(selected)
+			forms[_parentForm].LIST_favorites(selected)
 			
-			if (selected && forms.NAV__navigation_tree._rows.length < selected + 1) {
-				selected = forms.NAV__navigation_tree._rows.length - 1
+			if (selected && forms[_parentForm]._rows.length < selected + 1) {
+				selected = forms[_parentForm]._rows.length - 1
 			}
 			
-			var itemDetails = forms.NAV__navigation_tree._rows[selected || 0]
+			var itemDetails = forms[_parentForm]._rows[selected || 0]
 			itemID = itemDetails.navItemID
 		}
 		//redo form of navigation items
 		else {
-			forms.NAV__navigation_tree.LIST_generate(itemID)
+			forms[_parentForm].LIST_generate(itemID)
 		}
 		
 		//if rescroll requested, rescroll (not possible for favorites at this point)
 		if (reScroll && !favoriteMode) {
-			forms.NAV__navigation_tree.LIST_rescroll(itemID)
+			forms[_parentForm].LIST_rescroll(itemID)
 		}
 		
 		//web client
@@ -269,7 +276,7 @@ function FAVE_right_click(input,fave,oldSelected) {
 	//called to depress menu
 	if (input instanceof JSEvent) {
 		var selected = utils.stringToNumber(input.getElementName().split('_').pop())
-		var fave = forms.NAV__navigation_tree._rows[selected]
+		var fave = forms[_parentForm]._rows[selected]
 		
 		//build menu
 		var menu = new Array()
@@ -327,7 +334,7 @@ function LIST_redraw__smartclient(event,itemID,reScroll,skipLoadForms,favoriteMo
 		//triggered by clicking on element in list
 		if (event instanceof JSEvent) {
 			var selected = utils.stringToNumber(event.getElementName().split('_').pop())
-			var itemDetails = forms.NAV__navigation_tree._rows[selected]
+			var itemDetails = forms[_parentForm]._rows[selected]
 			itemID = itemDetails.navItemID
 			
 			//this is favorites
@@ -346,23 +353,23 @@ function LIST_redraw__smartclient(event,itemID,reScroll,skipLoadForms,favoriteMo
 		
 		//redo form of favorite records
 		if (favoriteMode) {
-			forms.NAV__navigation_tree.LIST_favorites(selected)
+			forms[_parentForm].LIST_favorites(selected)
 			
-			if (selected && forms.NAV__navigation_tree._rows.length < selected + 1) {
-				selected = forms.NAV__navigation_tree._rows.length - 1
+			if (selected && forms[_parentForm]._rows.length < selected + 1) {
+				selected = forms[_parentForm]._rows.length - 1
 			}
 			
-			var itemDetails = forms.NAV__navigation_tree._rows[selected || 0]
+			var itemDetails = forms[_parentForm]._rows[selected || 0]
 			itemID = itemDetails.navItemID
 		}
 		//redo form of navigation items
 		else {
-			forms.NAV__navigation_tree.LIST_generate(itemID)
+			forms[_parentForm].LIST_generate(itemID)
 		}
 		
 		//if rescroll requested, rescroll (not possible for favorites at this point)
 		if (reScroll && !favoriteMode) {
-			forms.NAV__navigation_tree.LIST_rescroll(itemID)
+			forms[_parentForm].LIST_rescroll(itemID)
 		}
 		
 		//return to original scroll position
@@ -425,7 +432,7 @@ function LIST_redraw__webclient(event,idItem,scrollRe,loadFormsSkip,modeFavorite
 		//triggered by clicking on element in list
 		if (event instanceof JSEvent) {
 			var selectedRow = utils.stringToNumber(event.getElementName().split('_').pop())
-			var itemDetails = forms.NAV__navigation_tree._rows[selectedRow]
+			var itemDetails = forms[_parentForm]._rows[selectedRow]
 			
 			_variableWC.itemID = itemDetails.navItemID
 			
@@ -460,27 +467,27 @@ function LIST_redraw__webclient(event,idItem,scrollRe,loadFormsSkip,modeFavorite
  * @properties={typeid:24,uuid:"EF3C1382-852F-4F6F-8A31-EA3478C8F844"}
  */
 function LIST_redraw__webclient__continue(scrollTop) {
-	var itemDetails = forms.NAV__navigation_tree._rows[_variableWC.selected]
+	var itemDetails = forms[_parentForm]._rows[_variableWC.selected]
 		
 	//redo form of favorite records
 	if (_variableWC.favoriteMode) {
-		forms.NAV__navigation_tree.LIST_favorites(_variableWC.selected)
+		forms[_parentForm].LIST_favorites(_variableWC.selected)
 		
-		if (_variableWC.selected && forms.NAV__navigation_tree._rows.length < _variableWC.selected + 1) {
-			_variableWC.selected = forms.NAV__navigation_tree._rows.length - 1
+		if (_variableWC.selected && forms[_parentForm]._rows.length < _variableWC.selected + 1) {
+			_variableWC.selected = forms[_parentForm]._rows.length - 1
 		}
 		
-		var itemDetails = forms.NAV__navigation_tree._rows[_variableWC.selected || 0]
+		var itemDetails = forms[_parentForm]._rows[_variableWC.selected || 0]
 		_variableWC.itemID = itemDetails.navItemID
 	}
 	//redo form of navigation items
 	else {
-		forms.NAV__navigation_tree.LIST_generate(_variableWC.itemID)
+		forms[_parentForm].LIST_generate(_variableWC.itemID)
 	}
 	
 	//if rescroll requested, rescroll (not possible for favorites at this point)
 	if (_variableWC.reScroll && !_variableWC.favoriteMode) {
-		forms.NAV__navigation_tree.LIST_rescroll(_variableWC.itemID)
+		forms[_parentForm].LIST_rescroll(_variableWC.itemID)
 	}
 	
 	//return to original scroll position

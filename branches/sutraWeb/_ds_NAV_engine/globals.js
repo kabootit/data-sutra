@@ -2217,6 +2217,9 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	var listTab
 	var mainTab
 	
+	var navButtons = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__WEB' : 'NAV_T_universal_list'
+	var navButtonsNo = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__no_buttons__WEB' : 'NAV_T_universal_list__no_buttons'
+	
 	//save information about current space setup only if not coming from a preference
 	if (!solutionPrefs.config.prefs.preferenceMode && solutionPrefs.config.currentFormID && navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID]) {
 		navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].spaceStatus = new Array()
@@ -2387,7 +2390,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		
 		//only add history item if not navigating history and not in any preference
 		var navTabFormName = (solutionPrefs.config.webClient) ? forms.DATASUTRA_WEB_0F__list.elements.tab_list.getLeftForm() : forms[baseForm].elements.tab_content_A.getTabFormNameAt(1)
-		if (historyPosition == undefined && navTabFormName == 'NAV__navigation_tree') {
+		if (historyPosition == undefined && utils.stringPatternCount(navTabFormName,'NAV__navigation_tree')) {
 			//add new history item to solution Prefs
 			var historyItem = solutionPrefs.history[solutionPrefs.history.length] = new Object()
 			historyItem.navigationSetID = navSpecs.idNavigation
@@ -2697,7 +2700,8 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 								starField.toolTipText = 'Toggle favorite'//'%%sutra_favorite_tooltip%%'
 								starField.showClick = false
 								var height = solutionPrefs.config.webClient ? 16 : 17
-								starField.text = '<html><center><img src="media:///btn_favorite_dark.png" width=12 height=' + height + '></center>'
+								var headStar = solutionPrefs.config.webClient ? 'btn_favorite_selected.png' : 'btn_favorite_dark.png'
+								starField.text = '<html><center><img src="media:///' + headStar + '" width=12 height=' + height + '></center>'
 									
 								//override sort on form so that will toggle favorite mode on off for this field
 								myForm.onSortCmd = solutionModel.getGlobalMethod('NAV_universal_list_sort')
@@ -2750,15 +2754,15 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 							
 							//assign the secondary form to the main UL with buttons
 							if (navSpecs.barItemAdd || navSpecs.barItemAction || navSpecs.barItemFilter || navSpecs.barItemReport) {
-								forms.NAV_T_universal_list.elements.tab_ul.addTab(forms[newFormName],'UL Records',null,null,null,null)
+								forms[navButtons].elements.tab_ul.addTab(forms[newFormName],'UL Records',null,null,null,null)
 								navigationPrefs.byNavItemID[navigationItemID].listData.withButtons = true
-								navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber = forms.NAV_T_universal_list.elements.tab_ul.getMaxTabIndex()
+								navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber = forms[navButtons].elements.tab_ul.getMaxTabIndex()
 							}
 							//assign the secondary form to the main UL without buttons
 							else {
-								forms.NAV_T_universal_list__no_buttons.elements.tab_ul.addTab(forms[newFormName],'UL Records',null,null,null,null)
+								forms[navButtonsNo].elements.tab_ul.addTab(forms[newFormName],'UL Records',null,null,null,null)
 								navigationPrefs.byNavItemID[navigationItemID].listData.withButtons = false
-								navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber = forms.NAV_T_universal_list__no_buttons.elements.tab_ul.getMaxTabIndex()
+								navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber = forms[navButtonsNo].elements.tab_ul.getMaxTabIndex()
 							}
 							
 							//save status info
@@ -2768,14 +2772,14 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 							//only switch to this tab if not on any of the developer modes
 							if (!designMode) {
 								if (navigationPrefs.byNavItemID[navigationItemID].listData.withButtons) {
-									forms.NAV_T_universal_list.FORM_on_show(true)
+									forms[navButtons].FORM_on_show(true)
 									listTabForm.elements.tab_content_B.tabIndex = 2
-									forms.NAV_T_universal_list.elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber
+									forms[navButtons].elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber
 								}
 								else {
-									forms.NAV_T_universal_list__no_buttons.FORM_on_show(true)
+									forms[navButtonsNo].FORM_on_show(true)
 									listTabForm.elements.tab_content_B.tabIndex = 3
-									forms.NAV_T_universal_list__no_buttons.elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber
+									forms[navButtonsNo].elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber
 								}
 							}
 							//fire form on show to illiminate flicker when eventually shown
@@ -2824,14 +2828,14 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 //						}
 						
 						if (navigationPrefs.byNavItemID[navigationItemID].listData.withButtons) {
-							forms.NAV_T_universal_list.FORM_on_show(true)
+							forms[navButtons].FORM_on_show(true)
 							listTabForm.elements.tab_content_B.tabIndex = 2
-							forms.NAV_T_universal_list.elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber
+							forms[navButtons].elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber
 						}
 						else {
-							forms.NAV_T_universal_list__no_buttons.FORM_on_show(true)
+							forms[navButtonsNo].FORM_on_show(true)
 							listTabForm.elements.tab_content_B.tabIndex = 3
-							forms.NAV_T_universal_list__no_buttons.elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber
+							forms[navButtonsNo].elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber
 						}
 					}
 					//set to correct tab
@@ -3188,19 +3192,20 @@ function NAV_universal_list_edit(input,elem) {
 function NAV_universal_list_right_click(input,elem,list,record) {
 	var currentNavItem = solutionPrefs.config.currentFormID
 	var btn = navigationPrefs.byNavItemID[currentNavItem].buttons
+	var navForm = solutionPrefs.config.webClient ? 'NAV_T_universal_list' : 'NAV_T_universal_list__WEB'
 	
 	//build menu
 	var menu = new Array()
 	
 	//add
 	if (btn.add) {
-		menu.push(plugins.popupmenu.createMenuItem('New record', forms.NAV_T_universal_list.REC_new))
+		menu.push(plugins.popupmenu.createMenuItem('New record', forms[navForm].REC_new))
 	}
 	
 	//actions
 	if (btn.actions) {
 		//grab actions
-		var menuActions = forms.NAV_T_universal_list.ACTIONS_list(null,true)
+		var menuActions = forms[navForm].ACTIONS_list(null,true)
 		
 		//add divider if there are already items and we have some more
 		if (menu.length && menuActions.length) {
@@ -4280,6 +4285,9 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	
 	var listTabForm = (solutionPrefs.config.webClient) ? forms.DATASUTRA_WEB_0F__list__universal : forms.DATASUTRA_0F_solution
 	
+	var navButtons = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__WEB' : 'NAV_T_universal_list'
+	var navButtonsNo = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__no_buttons__WEB' : 'NAV_T_universal_list__no_buttons'
+	
 	var navTab
 	var listTab
 	var mainTab
@@ -4512,25 +4520,30 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 					
 					//assign the secondary form to the main UL with buttons
 					if (navSpecs.barItemAdd || navSpecs.barItemAction || navSpecs.barItemFilter || navSpecs.barItemReport) {
-						forms.NAV_T_universal_list.elements.tab_ul.addTab(forms[newFormName],'Prefs',null,null,null,null)
+						forms[navButtons].elements.tab_ul.addTab(forms[newFormName],'Prefs',null,null,null,null)
 						navigationPrefs.byNavItemID[prefNavID].listData.withButtons = true
-						navigationPrefs.byNavItemID[prefNavID].listData.tabNumber = forms.NAV_T_universal_list.elements.tab_ul.getMaxTabIndex()
+						navigationPrefs.byNavItemID[prefNavID].listData.tabNumber = forms[navButtons].elements.tab_ul.getMaxTabIndex()
+						
+						//switch to this tab
+						forms[navButtons].FORM_on_show(true)
+						listTabForm.elements.tab_content_B.tabIndex = 2
+						forms[navButtons].elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[prefNavID].listData.tabNumber
 					}
 					//assign the secondary form to the main UL without buttons
 					else {
-						forms.NAV_T_universal_list__no_buttons.elements.tab_ul.addTab(forms[newFormName],'Prefs',null,null,null,null)
+						forms[navButtonsNo].elements.tab_ul.addTab(forms[newFormName],'Prefs',null,null,null,null)
 						navigationPrefs.byNavItemID[prefNavID].listData.withButtons = false
-						navigationPrefs.byNavItemID[prefNavID].listData.tabNumber = forms.NAV_T_universal_list__no_buttons.elements.tab_ul.getMaxTabIndex()
+						navigationPrefs.byNavItemID[prefNavID].listData.tabNumber = forms[navButtonsNo].elements.tab_ul.getMaxTabIndex()
+						
+						//switch to this tab
+						forms[navButtonsNo].FORM_on_show(true)
+						listTabForm.elements.tab_content_B.tabIndex = 2
+						forms[navButtonsNo].elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[prefNavID].listData.tabNumber
 					}
 					
 					//save status info
 					navigationPrefs.byNavItemID[prefNavID].listData.tabFormInstance = newFormName
 					navigationPrefs.byNavItemID[prefNavID].listData.dateAdded = application.getServerTimeStamp()
-					
-					//switch to this tab
-					forms.NAV_T_universal_list.FORM_on_show(true)
-					listTabForm.elements.tab_content_B.tabIndex = 2
-					forms.NAV_T_universal_list.elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[prefNavID].listData.tabNumber
 				}
 			}
 		}
@@ -4564,14 +4577,14 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			//UL, set to 2 and then correct tab
 			if (navSpecs.useFwList) {
 				if (navigationPrefs.byNavItemID[prefNavID].listData.withButtons) {
-					forms.NAV_T_universal_list.FORM_on_show(true)
+					forms[navButtons].FORM_on_show(true)
 					listTabForm.elements.tab_content_B.tabIndex = 2
-					forms.NAV_T_universal_list.elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[prefNavID].listData.tabNumber
+					forms[navButtons].elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[prefNavID].listData.tabNumber
 				}
 				else {
-					forms.NAV_T_universal_list__no_buttons.FORM_on_show(true)
+					forms[navButtonsNo].FORM_on_show(true)
 					listTabForm.elements.tab_content_B.tabIndex = 3
-					forms.NAV_T_universal_list__no_buttons.elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[prefNavID].listData.tabNumber
+					forms[navButtonsNo].elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[prefNavID].listData.tabNumber
 				}
 			}
 			//set to correct tab
@@ -5084,7 +5097,7 @@ function NAV_navigation_set_load()
 	var skipLoadForms = arguments[0]
 	var treeTop = arguments[1]
 	
-	var formName = 'NAV__navigation_tree'
+	var formName = (solutionPrefs.config.webClient) ? 'NAV__navigation_tree__WEB' : 'NAV__navigation_tree'
 	
 	//there is a set
 	if (globals.DATASUTRA_navigation_set >= 0) {
@@ -5241,24 +5254,35 @@ function NAV_universal_list_select() {
  */
 function NAV_universal_list_select__unhilite() {
 	var withButtons = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.withButtons
+	var navButtons = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__WEB' : 'NAV_T_universal_list'
+	var navButtonsNo = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__no_buttons__WEB' : 'NAV_T_universal_list__no_buttons'
 	
 	if (withButtons) {
 		//unhilite the current record (so highlighter spans entire row)
-		forms.NAV_T_universal_list.elements.fld_constant.requestFocus(false)
+		
+		forms[navButtons].elements.fld_constant.requestFocus(false)
 	}
 	else {
 		//unhilite the current record (so highlighter spans entire row)
-		forms.NAV_T_universal_list__no_buttons.elements.fld_constant.requestFocus(false)
+		forms[navButtonsNo].elements.fld_constant.requestFocus(false)
 	}
 }
 
 /**
- *
+ * @param {Boolean} firstShow
+ * @param {JSEvent} event
+ * 
  * @properties={typeid:24,uuid:"92a1010e-b5bc-4c9d-b812-7b17dd01f3ef"}
  */
-function NAV_universal_list_show()
-{
+function NAV_universal_list_show(firstShow,event) {
 	var formName = 'NAV_T_universal_list'
+	
+	//try to get parent form (accounts for buttons/no buttons, web, smart
+	var formStack = forms[event.getFormName()].controller.getFormContext()
+	if (formStack.getMaxRowIndex() > 1) {
+		formName = formStack.getValue(formStack.getMaxRowIndex()-1,2)
+	}
+	
 	var currentNavItem = solutionPrefs.config.currentFormID
 	
 	var rawDisplayPosn = navigationPrefs.byNavItemID[currentNavItem].universalList.displays.displayPosn

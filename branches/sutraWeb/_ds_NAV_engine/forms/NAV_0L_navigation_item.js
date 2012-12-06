@@ -830,7 +830,8 @@ if (delRec == 'Yes') {
 		}
 		
 		//redraw navitem list
-		forms.NAV__navigation_tree.LIST_redraw(null,theItem,true)
+		var navForm = (solutionPrefs.config.webClient) ? 'NAV__navigation_tree__WEB' : 'NAV__navigation_tree'
+		forms[navForm].LIST_redraw(null,theItem,true)
 		
 	}
 	//called in frameworks engine, refresh main workflow area if needed

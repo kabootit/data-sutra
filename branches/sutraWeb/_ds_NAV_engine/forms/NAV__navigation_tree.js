@@ -237,7 +237,7 @@ function LIST_generate(selected) {
 		}
 		
 		//get form and clear
-		var formName = controller.getName() + '__rows'
+		var formName = 'NAV__navigation_tree__rows'
 		var thisForm = solutionModel.getForm(formName)
 		
 		//remove all elements from target form
@@ -284,8 +284,11 @@ function LIST_generate(selected) {
 				lblClick.mediaOptions = SM_MEDIAOPTION.REDUCE | SM_MEDIAOPTION.ENLARGE
 				lblClick.onAction = thisForm.getFormMethod('LIST_redraw')
 				lblClick.rolloverCursor = SM_CURSOR.HAND_CURSOR
-				if (!solutionPrefs.config.webClient) {
-					lblClick.rolloverImageMedia = solutionModel.getMedia("row_selected_light.png")
+				if (solutionPrefs.config.webClient) {
+					lblClick.rolloverImageMedia = solutionModel.getMedia('row_selected_web.png')
+				}
+				else {
+					lblClick.rolloverImageMedia = solutionModel.getMedia('row_selected_light.png')
 				}
 				if (details.description) {
 					lblClick.toolTipText = details.description
@@ -360,7 +363,7 @@ function LIST_generate(selected) {
 				if (details.navItemID == selected) {
 					//HIGHLIGHT
 					if (solutionPrefs.config.webClient) {
-						lblClick.background = '#B3B3B3'
+						lblClick.background = '#262626'
 						lblClick.transparent = false
 					}
 					else {
