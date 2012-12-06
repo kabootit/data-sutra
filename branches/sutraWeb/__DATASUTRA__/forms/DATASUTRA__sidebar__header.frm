@@ -1,7 +1,7 @@
 items:[
 {
 anchors:3,
-formIndex:11200,
+formIndex:4,
 imageMediaID:"1359f3aa-3c46-4028-a025-b115b9be382a",
 location:"87,11",
 mediaOptions:14,
@@ -20,7 +20,7 @@ uuid:"1E229F58-E257-4133-8CFC-FA8AD342B6BD"
 },
 {
 displaysTags:true,
-formIndex:10200,
+formIndex:8,
 imageMediaID:"d4ae3339-8b95-4d89-9db3-0281878d821f",
 location:"0,1",
 mediaOptions:1,
@@ -38,8 +38,6 @@ uuid:"3B7B05C2-A342-4823-8A91-17F70087141E"
 },
 {
 anchors:11,
-formIndex:9998,
-imageMediaID:"9827c3aa-e229-4561-996b-28e768585694",
 location:"0,0",
 mediaOptions:4,
 name:"gfx_header",
@@ -69,7 +67,7 @@ typeid:7,
 uuid:"48B24468-A5E5-4966-8E13-CDA5EBFCE69C"
 },
 {
-formIndex:11301,
+formIndex:6,
 imageMediaID:"5d3c61da-ddfc-4a9a-8f71-2b2d11b7c7db",
 location:"25,11",
 mediaOptions:14,
@@ -106,7 +104,7 @@ uuid:"512C5323-1646-4631-8A51-DAFB6F69E43A"
 },
 {
 anchors:11,
-formIndex:10900,
+formIndex:3,
 location:"4,44",
 mediaOptions:14,
 name:"lbl_header",
@@ -122,7 +120,7 @@ uuid:"79CB71AF-284B-4D8F-BB2B-794376C2259F"
 },
 {
 borderType:"MatteBorder,0,0,0,1,#757575",
-formIndex:11300,
+formIndex:5,
 location:"0,0",
 mediaOptions:14,
 name:"gfx_flexible",
@@ -137,7 +135,7 @@ uuid:"80B0D9F0-7A40-4F50-8785-7B4E7A4F806E"
 {
 anchors:11,
 foreground:"#ffffff",
-formIndex:9999,
+formIndex:1,
 location:"30,10",
 mediaOptions:14,
 name:"lbl_heading",
@@ -152,7 +150,7 @@ uuid:"879D1F6B-8950-4B68-B6C2-AE8F3915B6D5"
 },
 {
 anchors:3,
-formIndex:11000,
+formIndex:2,
 imageMediaID:"ca4e2a5c-226f-45f9-ac0d-e4ccd71c3528",
 location:"42,11",
 mediaOptions:14,
@@ -170,9 +168,22 @@ typeid:7,
 uuid:"88BA25D5-E49F-4597-A10F-740E8A57D9ED"
 },
 {
+anchors:13,
+formIndex:7,
+location:"0,0",
+mediaOptions:4,
+name:"lbl_cliff",
+showClick:false,
+showFocus:false,
+size:"20,44",
+transparent:true,
+typeid:7,
+uuid:"944004CE-08FF-450F-8543-E237C675F07F"
+},
+{
 anchors:11,
 borderType:"MatteBorder,0,0,0,1,#333333",
-formIndex:10800,
+formIndex:2,
 imageMediaID:"50b57e9b-b95e-4188-bcfb-1f0f0936643d",
 location:"0,44",
 mediaOptions:6,
@@ -192,7 +203,7 @@ uuid:"F2EF715E-0C2F-4521-9DAD-F9B8BBDFC1F0"
 },
 {
 anchors:3,
-formIndex:11100,
+formIndex:3,
 imageMediaID:"01c51ba6-497d-415e-8048-50c6623e0ea5",
 location:"9,11",
 mediaOptions:14,
@@ -225,6 +236,7 @@ onPreviousRecordCmdMethodID:"-1",
 onPrintPreviewCmdMethodID:"-1",
 onSearchCmdMethodID:"-1",
 onShowAllRecordsCmdMethodID:"-1",
+onShowMethodID:"6EABE161-A146-4D6C-8802-F0E2AC77C669",
 onShowOmittedRecordsCmdMethodID:"-1",
 onSortCmdMethodID:"-1",
 paperPrintScale:100,

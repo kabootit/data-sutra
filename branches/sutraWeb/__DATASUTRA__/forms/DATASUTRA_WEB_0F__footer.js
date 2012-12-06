@@ -2,19 +2,23 @@
  *
  * @properties={typeid:24,uuid:"08A8144B-290E-44BD-936E-8B20BC3A4382"}
  */
-function FORM_on_load()
-{
-
-/*
-//set up listeners
-elements.bean_move_it.addMouseListener(new Packages.java.awt.event.MouseAdapter({mousePressed:LISTEN_point}))
-elements.bean_move_it.addMouseMotionListener(new Packages.java.awt.event.MouseMotionAdapter({mouseDragged:LISTEN_move}))
-
-
-elements.bean_resize.addMouseListener(new Packages.java.awt.event.MouseAdapter({mousePressed:LISTEN_point}))
-elements.bean_resize.addMouseMotionListener(new Packages.java.awt.event.MouseMotionAdapter({mouseDragged:LISTEN_resize}))
-*/
+function FORM_on_load() {
+	
 }
+/**
+ * Callback method for when form is shown.
+ *
+ * @param {Boolean} firstShow form is shown first time after load
+ * @param {JSEvent} event the event that triggered the action
+ *
+ * @properties={typeid:24,uuid:"CD26C765-47A4-4559-8574-8CA232ACD763"}
+ */
+function FORM_on_show(firstShow, event) {
+	if (firstShow) {
+		plugins.WebClientUtils.setExtraCssClass(elements.gfx_footer, 'gfxFooter')
+	}
+}
+
 
 /**
  *

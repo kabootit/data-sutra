@@ -301,3 +301,18 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 }
 
 }
+
+/**
+ * Callback method for when form is shown.
+ *
+ * @param {Boolean} firstShow form is shown first time after load
+ * @param {JSEvent} event the event that triggered the action
+ *
+ * @properties={typeid:24,uuid:"61BCE02A-83C2-48D8-850C-AECCF9A099C3"}
+ */
+function FORM_on_show(firstShow, event) {
+	if (firstShow) {
+		//css classes
+		plugins.WebClientUtils.setExtraCssClass(elements.gfx_header, 'gfxHeader')
+	}
+}

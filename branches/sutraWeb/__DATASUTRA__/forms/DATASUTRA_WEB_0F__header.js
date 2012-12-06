@@ -44,6 +44,10 @@ function FORM_on_show(firstShow, event) {
 		elements.split_tool_find.resizeWeight = 1
 		elements.split_tool_find.dividerSize = 0
 		elements.split_tool_find.dividerLocation = application.getWindowWidth(null) - splitOffset
+		
+		
+		//css classes
+		plugins.WebClientUtils.setExtraCssClass(elements.gfx_header, 'gfxHeader')
 	}
 }
 

@@ -347,3 +347,26 @@ function TAB_popdown(input) {
 		}
 	}
 }
+
+/**
+ * Callback method for when form is shown.
+ *
+ * @param {Boolean} firstShow form is shown first time after load
+ * @param {JSEvent} event the event that triggered the action
+ *
+ * @properties={typeid:24,uuid:"6EABE161-A146-4D6C-8802-F0E2AC77C669"}
+ */
+function FORM_on_show(firstShow, event) {
+	if (firstShow) {
+		//webclient
+		if (solutionPrefs.config.webClient) {
+			//css classes
+			plugins.WebClientUtils.setExtraCssClass(elements.gfx_header, 'gfxSideHeader')
+			plugins.WebClientUtils.setExtraCssClass(elements.lbl_cliff, 'gfxSideCliff')
+		}
+		//reattach graphic to header
+		else {
+			elements.gfx_header.imageURL = 'media:///bck_header_sidebar.png'
+		}
+	}
+}
