@@ -1,6 +1,6 @@
 /* split pane customizations */
 .yui-resize {
-	background-color: #A1B0CF;
+	background-color: #262626;
 }
 
 .yui-resize .yui-resize-handle-b {
@@ -52,4 +52,8 @@
 
 #basicmenu {
 	padding-left: 3px;
+}
+
+.yuimenu ul {
+	border-top: solid 1px #999999;
 }
