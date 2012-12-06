@@ -1,4 +1,12 @@
 /**
+ * Show fields that allow for auto-account creation
+ * @type {Boolean}
+ * 
+ * @properties={typeid:35,uuid:"4143AA32-A679-4966-A6B4-24BF238B20C5",variableType:-4}
+ */
+var _createAccount = false;
+
+/**
  * @type {Number}
  *
  * @properties={typeid:35,uuid:"B73D027C-6242-4823-96E3-6A44CBD08A64",variableType:4}
@@ -213,20 +221,24 @@ function FORM_on_show(firstShow, event) {
 	if (firstShow) {
 		//css classes for transitions
 		plugins.WebClientUtils.setExtraCssClass(elements.var_dialog, 'dialogDS')
-		plugins.WebClientUtils.setExtraCssClass(elements.lbl_new, 'newDS')
-		plugins.WebClientUtils.setExtraCssClass(elements.var_newName, 'newDS')
-		plugins.WebClientUtils.setExtraCssClass(elements.var_newUser, 'newDS')
-		plugins.WebClientUtils.setExtraCssClass(elements.var_newPass, 'newDS')
-		plugins.WebClientUtils.setExtraCssClass(elements.btn_signup, 'newDS')		
-		plugins.WebClientUtils.setExtraCssClass(elements.lbl_new_success, 'newSuccessDS')
 		
 		//css classes for positioning of indicator spinner
 		plugins.WebClientUtils.setExtraCssClass(elements.btn_login, 'loginDS')
-		plugins.WebClientUtils.setExtraCssClass(elements.btn_signup, 'signupDS')
 		
 		//css class for underline hover behavior
 		plugins.WebClientUtils.setExtraCssClass(elements.var_rememberMe, 'rememberMe')
 		plugins.WebClientUtils.setExtraCssClass(elements.lbl_forgot_password, 'forgotPass')
+		
+		if (_createAccount) {
+			plugins.WebClientUtils.setExtraCssClass(elements.lbl_new, 'newDS')
+			plugins.WebClientUtils.setExtraCssClass(elements.var_newName, 'newDS')
+			plugins.WebClientUtils.setExtraCssClass(elements.var_newUser, 'newDS')
+			plugins.WebClientUtils.setExtraCssClass(elements.var_newPass, 'newDS')
+			plugins.WebClientUtils.setExtraCssClass(elements.btn_signup, 'newDS')		
+			plugins.WebClientUtils.setExtraCssClass(elements.lbl_new_success, 'newSuccessDS')
+			
+			plugins.WebClientUtils.setExtraCssClass(elements.btn_signup, 'signupDS')
+		}
 		
 		//retrieve user name
 		var user = application.getUserProperty('sutra' + application.getServerURL().substr(7) + 'User')
@@ -465,4 +477,22 @@ function asdf(event) {
 		 application.output("k is now a " + typeof(k));
 	 }
 	 application.output(k);
+}
+
+/**
+ * Callback method when form is (re)loaded.
+ *
+ * @param {JSEvent} event the event that triggered the action
+ *
+ * @properties={typeid:24,uuid:"2990C7A7-7408-41C5-9D6A-11FED0B45CF3"}
+ */
+function FORM_on_load(event) {
+	if (_createAccount) {
+		elements.lbl_new.visible = true
+		elements.var_newName.visible = true
+		elements.var_newUser.visible = true
+		elements.var_newPass.visible = true
+		elements.btn_signup.visible = true
+		elements.lbl_new_success.visible = true
+	}
 }

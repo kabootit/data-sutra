@@ -223,6 +223,7 @@ visible:false
 ],
 name:"AC_R__login_WEB",
 navigatorID:"-1",
+onLoadMethodID:"2990C7A7-7408-41C5-9D6A-11FED0B45CF3",
 onShowMethodID:"F9A8228A-2929-476D-846C-BE8A6E74B256",
 scrollbars:32,
 size:"600,500",
