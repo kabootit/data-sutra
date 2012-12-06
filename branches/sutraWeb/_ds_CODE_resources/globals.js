@@ -816,7 +816,8 @@ function TRIGGER_help_navigation_set(itemID, confirmJump, subLanding, showHelp) 
 					navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].lastNavItem = lastItem
 					globals.DATASUTRA_navigation_set = navSetID
 					
-					forms.NAV__navigation_tree.LABEL_update()
+					var navigationList = (solutionPrefs.config.webClient) ? 'NAV__navigation_tree__WEB' : 'NAV__navigation_tree'
+					forms[navigationList].LABEL_update()
 				}
 				
 				//move around to land on correct spot of this form
@@ -1650,7 +1651,8 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset, idNavigationIt
 						globals.DATASUTRA_navigation_set = navSetID
 						
 						//update text display
-						forms.NAV__navigation_tree.LABEL_update()
+						var navigationList = (solutionPrefs.config.webClient) ? 'NAV__navigation_tree__WEB' : 'NAV__navigation_tree'
+						forms[navigationList].LABEL_update()
 					}
 					
 					//redraw list; make sure row is expanded if node2; load new item
@@ -5674,7 +5676,8 @@ function TRIGGER_ul_tab_list(input,itemName,tabSelected) {
 		
 		//tack on the selected UL to the top of the pop-down
 		valueList.unshift(navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].universalList.displays[navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].universalList.displays.displayPosn].listTitle || navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].navigationItem.fwListTitle)
-		formNames.unshift((navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.withButtons) ? 'NAV_T_universal_list' : 'NAV_T_universal_list__no_buttons')
+		var navForm = (solutionPrefs.config.webClient) ? '__WEB' : ''
+		formNames.unshift((navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.withButtons) ? 'NAV_T_universal_list' + navForm : 'NAV_T_universal_list__no_buttons' + navForm)
 		
 		//called to depress menu
 		if (input instanceof JSEvent) {
@@ -5803,7 +5806,8 @@ function TRIGGER_ul_tab_list(input,itemName,tabSelected) {
 function TRIGGER_ul_button_action(event) {
 	//only run if meta-objects defined
 	if (application.__parent__.navigationPrefs && application.__parent__.solutionPrefs) {
-		forms.NAV_T_universal_list.ACTIONS_list(event)
+		var navForm = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__WEB' : 'NAV_T_universal_list'
+		forms[navForm].ACTIONS_list(event)
 	}
 }
 
@@ -5817,7 +5821,8 @@ function TRIGGER_ul_button_action(event) {
 function TRIGGER_ul_button_add(event) {
 	//only run if meta-objects defined
 	if (application.__parent__.navigationPrefs && application.__parent__.solutionPrefs) {
-		forms.NAV_T_universal_list.REC_new(event)
+		var navForm = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__WEB' : 'NAV_T_universal_list'
+		forms[navForm].REC_new(event)
 	}
 }
 
@@ -5831,7 +5836,8 @@ function TRIGGER_ul_button_add(event) {
 function TRIGGER_ul_button_report(event) {
 	//only run if meta-objects defined
 	if (application.__parent__.navigationPrefs && application.__parent__.solutionPrefs) {
-		forms.NAV_T_universal_list.REPORTS_list(event)
+		var navForm = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__WEB' : 'NAV_T_universal_list'
+		forms[navForm].REPORTS_list(event)
 	}
 }
 
@@ -5845,7 +5851,8 @@ function TRIGGER_ul_button_report(event) {
 function TRIGGER_ul_button_filter(event) {
 	//only run if meta-objects defined
 	if (application.__parent__.navigationPrefs && application.__parent__.solutionPrefs) {
-		forms.NAV_T_universal_list.FILTERS_list(event)
+		var navForm = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__WEB' : 'NAV_T_universal_list'
+		forms[navForm].FILTERS_list(event)
 	}
 }
 
