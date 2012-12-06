@@ -17,6 +17,7 @@ function FORM_on_load(event) {
 		for (var i = 0; i < smForms.length; i++) {
 			var smForm = smForms[i]
 			var smLabels = smForm.getLabels()
+			var touched = false
 			
 			for (var j = 0; j < smLabels.length; j++) {
 				var smLabel = smLabels[j]
@@ -25,6 +26,27 @@ function FORM_on_load(event) {
 					smLabel.imageMedia = null
 					smLabel.styleClass = 'gfx_subheader'
 					smLabel.borderType = SM_DEFAULTS.DEFAULT
+					
+					//make sure that there is a name so can attach css class to it
+					if (!smLabel.name) {
+						smLabel.name = application.getUUID().toString().replace('-','')
+					}
+					
+					touched = true
+				}
+			}
+			
+			//this form was modified, attach a new on show method
+			if (touched) {
+				//there is already an onshow
+				if (smForm.onShow && smForm.onShow.getName()) {
+					//now update the code
+					smForm.onShow.code = smForm.onShow.code.substr(0,smForm.onShow.code.length - 2) + ";scopes.DS.subheaderWeb(arguments[0],arguments[1])" + smForm.onShow.code.substr(smForm.onShow.code.length - 2)
+				}
+				//need new on show method
+				else {
+					//now create new on show method
+					smForm.onShow = solutionModel.getGlobalMethod('DS','subheaderWeb')
 				}
 			}
 		}
