@@ -359,7 +359,13 @@ function LIST_generate(selected) {
 				//row selected, highlight
 				if (details.navItemID == selected) {
 					//HIGHLIGHT
-					lblClick.imageMedia = solutionModel.getMedia("row_selected.png")
+					if (solutionPrefs.config.webClient) {
+						lblClick.background = '#B3B3B3'
+						lblClick.transparent = false
+					}
+					else {
+						lblClick.imageMedia = solutionModel.getMedia("row_selected.png")
+					}
 					lblClick.onAction = null
 					lblClick.rolloverCursor = SM_CURSOR.DEFAULT_CURSOR
 					lblClick.rolloverImageMedia = null
