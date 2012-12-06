@@ -44,16 +44,6 @@ label, button, field, check, radio {
 	color: #000;
 }
 
-label.login_action {
-	font-size: 8px;
-	color: #989898; 
-}
-
-check.login_remember {
-	font-size: 8px;
-	color: #989898; 
-}
-
 combobox {
 	font-family: Verdana,'Helvetica Neue', Arial, Helvetica, sans-serif;
 	font-size: 9px;
@@ -84,14 +74,17 @@ field.bold {
 	font-weight: bold;
 }
 
-field.customlist, field.fastfind, field.navigationset, field.noborder, field.noborderhtml, field.noborderbold, field.nobordertextarea {
+field.customlist, field.navigationset, field.noborder, field.noborderhtml, field.noborderbold, field.nobordertextarea {
 	border: 0px solid;
 	margin: 0px 5px 0px 5px; 
 }
 
 field.fastfind {
 	font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;
-	margin: 0px 0px 0px 0px;
+	margin: 0px 20px 0px 27px; 
+	border: 1px solid silver;
+	border-top-width: 2px;
+	border-radius: 10px;
 }
 
 field.customlist, field.noborderhtml {
@@ -167,7 +160,6 @@ listbox {
 }
 
 label {
-	text-align: left; 
 	color: black; 
 }
 
@@ -243,6 +235,16 @@ label.list {
 	font-size: 8.5px;
 }
 
+label.login_action {
+	font-size: 8px;
+	color: #989898; 
+}
+
+check.login_remember {
+	font-size: 8px;
+	color: #989898; 
+}
+
 label.recordnavigator, label.solutionlogstatus, label.solutionsubheader {
 	font-family: TrebuchetMS, 'Trebuchet MS';
 	color: #333333;
@@ -310,13 +312,10 @@ label.color_white {
 
 /* gradients */
 label.gfx_header {
-	background-image: linear-gradient(top, #C9CBCA, #848485);
+	
 }
 
 label.gfx_subheader {
-	border: 0px solid #999999;
-	border-bottom-width: 1px;
-	background-image: linear-gradient(top, #E1E1E1, #ACACAC);
 }
 
 label.gfx_tableheader {
@@ -324,10 +323,6 @@ label.gfx_tableheader {
 }
 
 label.gfx_footer {
-	border: 1px solid #404040;
-	border-left-width: 0px;
-	border-right-width: 0px;
-	background-image: linear-gradient(top, #BBBCBA, #808080);
 }
 
 /* tree styling for navigation item list */
