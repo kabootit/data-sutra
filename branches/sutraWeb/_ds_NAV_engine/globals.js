@@ -266,6 +266,7 @@ if (application.__parent__.solutionPrefs) {
 	var currentNavItem = solutionPrefs.config.currentFormID
 	var formName = solutionPrefs.config.currentFormName
 	var fastFindEnabled = navigationPrefs.byNavItemID[currentNavItem].fastFind
+	var findForm = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__WEB__fastfind' : baseForm + '__header__fastfind'
 	
 	//first time find is cleared, there is no value, so we set at a second to make sure and trigger the rest of the method
 	var timeElapsed = (solutionPrefs.fastFind.findClear) ? new Date() - solutionPrefs.fastFind.findClear : 1000
@@ -302,7 +303,7 @@ if (application.__parent__.solutionPrefs) {
 		}
 		
 		//refresh tooltiptext on find field
-		forms[baseForm + '__header__fastfind'].elements.fld_find.toolTipText = searchingTip
+		forms[findForm].elements.fld_find.toolTipText = searchingTip
 		
 		//only run when if required data is available
 		if (solutionPrefs.repository && solutionPrefs.repository.allFormsByTable && 
@@ -416,10 +417,10 @@ if (application.__parent__.solutionPrefs) {
 }
 
 /**
- *
+ * @param {JSEvent} event
  * @properties={typeid:24,uuid:"7013e286-1a9a-4128-a504-750f84a2a31e"}
  */
-function NAV_find_fields()
+function NAV_find_fields(event)
 {
 
 /*
@@ -602,7 +603,7 @@ if (application.__parent__.solutionPrefs) {
 //				}
 			}
 			
-			var elem = forms[baseForm + '__header__fastfind'].elements.btn_find
+			var elem = forms[event.getFormName()].elements.btn_find
 			if (elem != null) {
 				plugins.popupmenu.showPopupMenu(elem, menu)
 			}
@@ -654,6 +655,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	var baseForm = solutionPrefs.config.formNameBase
 	var formName = solutionPrefs.config.currentFormName
 	var currentNavItem = solutionPrefs.config.currentFormID
+	var findForm = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__WEB__fastfind' : baseForm + '__header__fastfind'
 	var findValue = arguments[0]
 	var colType = findValue.columnType
 	var valuelist = findValue.valuelist
@@ -679,7 +681,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 				)
 		
 		//set tooltiptext to find field
-		forms[baseForm + '__header__fastfind'].elements.fld_find.toolTipText = 'Power searching...'
+		forms[findForm].elements.fld_find.toolTipText = 'Power searching...'
 		if (fastFindStatus) {
 			navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindTip = 'Power searching...'
 		}
@@ -861,7 +863,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 				}
 			}
 
-			forms[baseForm + '__header__fastfind'].elements.fld_find.toolTipText = 'Searching in "'+findValue.findName+'"'
+			forms[findForm].elements.fld_find.toolTipText = 'Searching in "'+findValue.findName+'"'
 			if (fastFindStatus) {
 				navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindTip = 'Searching in "'+findValue.findName+'"'
 			}
@@ -899,7 +901,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 //			globals.NAV_find_set_popdown('DATE_P__search')
 
 			//set tooltiptext to find field
-			forms[baseForm + '__header__fastfind'].elements.fld_find.toolTipText = 'Searching in "'+findValue.findName+'"'
+			forms[findForm].elements.fld_find.toolTipText = 'Searching in "'+findValue.findName+'"'
 			if (fastFindStatus) {
 				navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindTip = 'Searching in "'+findValue.findName+'"'
 			}
@@ -952,16 +954,16 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		//	}
 
 			//set tooltiptext to find field
-			forms[baseForm + '__header__fastfind'].elements.fld_find.toolTipText = 'Searching in "'+findValue.findName+'"'
+			forms[findForm].elements.fld_find.toolTipText = 'Searching in "'+findValue.findName+'"'
 			if (fastFindStatus) {
 				navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindTip = 'Searching in "'+findValue.findName+'"'
 			}
 		}
 		else {
-			forms[baseForm + '__header__fastfind'].elements.fld_find.requestFocus(true)
+			forms[findForm].elements.fld_find.requestFocus(true)
 
 			//set tooltiptext to find field
-			forms[baseForm + '__header__fastfind'].elements.fld_find.toolTipText = 'Searching in "'+findValue.findName+'"'
+			forms[findForm].elements.fld_find.toolTipText = 'Searching in "'+findValue.findName+'"'
 			if (fastFindStatus) {
 				navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindTip = 'Searching in "'+findValue.findName+'"'
 			}
@@ -1112,6 +1114,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	//control variables
 	var baseForm = solutionPrefs.config.formNameBase
 	var formName = solutionPrefs.config.currentFormName
+	var findForm = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__WEB__fastfind' : baseForm + '__header__fastfind'
 	var currentNavItem = solutionPrefs.config.currentFormID
 	var keyPressed = (arguments[1] != undefined) ? arguments[1] : globals.CODE_key_pressed()
 	
@@ -1423,7 +1426,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 					//forms.NAV_T_universal_list.DISPLAY_cycle(true)
 				}
 				
-				forms[baseForm + '__header__fastfind'].elements.fld_find.requestFocus(true)
+				forms[findForm].elements.fld_find.requestFocus(true)
 			}
 			else {
 				//existing sort on that foundset (by clicking on the UL headers)
@@ -2211,14 +2214,18 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	var spaceOV = arguments[4]
 	
 	var baseForm = solutionPrefs.config.formNameBase
+	var findForm = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__WEB__fastfind' : baseForm + '__header__fastfind'
 	
 	var listTabForm = (solutionPrefs.config.webClient) ? forms.DATASUTRA_WEB_0F__list__universal : forms.DATASUTRA_0F_solution
 	
 	var listTab
 	var mainTab
 	
-	var navButtons = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__WEB' : 'NAV_T_universal_list'
-	var navButtonsNo = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__no_buttons__WEB' : 'NAV_T_universal_list__no_buttons'
+	var navButtons = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__WEB__buttons' : 'NAV_T_universal_list'
+	var navButtonsNo = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__WEB__no_buttons' : 'NAV_T_universal_list__no_buttons'
+	var navListButtons = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__WEB__list' : 'NAV_T_universal_list'
+	var navListButtonsNo = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__WEB__list' : 'NAV_T_universal_list__no_buttons'
+	var navWeb = 'NAV_T_universal_list__WEB'
 	
 	//save information about current space setup only if not coming from a preference
 	if (!solutionPrefs.config.prefs.preferenceMode && solutionPrefs.config.currentFormID && navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID]) {
@@ -2759,15 +2766,15 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 							
 							//assign the secondary form to the main UL with buttons
 							if (navSpecs.barItemAdd || navSpecs.barItemAction || navSpecs.barItemFilter || navSpecs.barItemReport) {
-								forms[navButtons].elements.tab_ul.addTab(forms[newFormName],'UL Records',null,null,null,null)
+								forms[navListButtons].elements.tab_ul.addTab(forms[newFormName],'UL Records',null,null,null,null)
 								navigationPrefs.byNavItemID[navigationItemID].listData.withButtons = true
-								navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber = forms[navButtons].elements.tab_ul.getMaxTabIndex()
+								navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber = forms[navListButtons].elements.tab_ul.getMaxTabIndex()
 							}
 							//assign the secondary form to the main UL without buttons
 							else {
-								forms[navButtonsNo].elements.tab_ul.addTab(forms[newFormName],'UL Records',null,null,null,null)
+								forms[navListButtonsNo].elements.tab_ul.addTab(forms[newFormName],'UL Records',null,null,null,null)
 								navigationPrefs.byNavItemID[navigationItemID].listData.withButtons = false
-								navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber = forms[navButtonsNo].elements.tab_ul.getMaxTabIndex()
+								navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber = forms[navListButtonsNo].elements.tab_ul.getMaxTabIndex()
 							}
 							
 							//save status info
@@ -2779,12 +2786,12 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 								if (navigationPrefs.byNavItemID[navigationItemID].listData.withButtons) {
 									forms[navButtons].FORM_on_show(true)
 									listTabForm.elements.tab_content_B.tabIndex = 2
-									forms[navButtons].elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber
+									forms[navListButtons].elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber
 								}
 								else {
 									forms[navButtonsNo].FORM_on_show(true)
 									listTabForm.elements.tab_content_B.tabIndex = 3
-									forms[navButtonsNo].elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber
+									forms[navListButtonsNo].elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber
 								}
 							}
 							//fire form on show to illiminate flicker when eventually shown
@@ -2835,12 +2842,12 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 						if (navigationPrefs.byNavItemID[navigationItemID].listData.withButtons) {
 							forms[navButtons].FORM_on_show(true)
 							listTabForm.elements.tab_content_B.tabIndex = 2
-							forms[navButtons].elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber
+							forms[navListButtons].elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber
 						}
 						else {
 							forms[navButtonsNo].FORM_on_show(true)
 							listTabForm.elements.tab_content_B.tabIndex = 3
-							forms[navButtonsNo].elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber
+							forms[navListButtonsNo].elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber
 						}
 					}
 					//set to correct tab
@@ -2886,11 +2893,32 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		
 		//when fast find not configured, disable data entry
 		var findOn = navigationPrefs.byNavItemID[navigationItemID].fastFind ? true : false
-		if (findOn != forms[baseForm + '__header__fastfind'].elements.fld_find.enabled) {
-			forms[baseForm + '__header__fastfind'].elements.btn_find.enabled = findOn
-			forms[baseForm + '__header__fastfind'].elements.find_mid.enabled = findOn
-			forms[baseForm + '__header__fastfind'].elements.find_end.enabled = findOn
-			forms[baseForm + '__header__fastfind'].elements.fld_find.enabled = findOn
+		
+		//web client
+		if (solutionPrefs.config.webClient) {
+			//using universal list, moneky here...
+			if (navigationPrefs.byNavItemID[navigationItemID].navigationItem.useFwList) {
+				//need find and not showing
+				if (findOn && forms[navWeb].elements.tab_list.getLeftForm().controller.getName() != findForm) {
+					//show find
+					forms[navWeb].elements.tab_list.setLeftForm(forms[findForm])
+					
+					//set divider
+					forms[navWeb].elements.tab_list.dividerLocation = 35
+				}
+				//not need find and showing
+				else if (!findOn && forms[navWeb].elements.tab_list.getLeftForm().controller.getName() == findForm) {
+					forms[navWeb].elements.tab_list.setLeftForm(forms.DATASUTRA_WEB__blank_5)
+					forms[navWeb].elements.tab_list.dividerLocation = 0
+				}
+			}
+		}
+		//smart client
+		else if (findOn != forms[findForm].elements.fld_find.enabled) {
+			forms[findForm].elements.btn_find.enabled = findOn
+			forms[findForm].elements.find_mid.enabled = findOn
+			forms[findForm].elements.find_end.enabled = findOn
+			forms[findForm].elements.fld_find.enabled = findOn
 		}
 		
 		//if field to search by, the search string, tooltip text, or selected display are present on a form,
@@ -2902,7 +2930,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			if (serverName && tableName && solutionPrefs.repository.allFormsByTable[serverName] && solutionPrefs.repository.allFormsByTable[serverName][tableName] && solutionPrefs.repository.allFormsByTable[serverName][tableName][mainTab] && !solutionPrefs.repository.allFormsByTable[serverName][tableName][mainTab].useSeparateFoundset && solutionPrefs.fastFind.currentSearch[serverName] && solutionPrefs.fastFind.currentSearch[serverName][tableName]) {
 				globals.DATASUTRA_find = solutionPrefs.fastFind.currentSearch[serverName][tableName].lastFindValue
 				globals.DATASUTRA_find_field = solutionPrefs.fastFind.currentSearch[serverName][tableName].lastFindField
-				forms[baseForm + '__header__fastfind'].elements.fld_find.toolTipText = solutionPrefs.fastFind.currentSearch[serverName][tableName].lastFindTip
+				forms[findForm].elements.fld_find.toolTipText = solutionPrefs.fastFind.currentSearch[serverName][tableName].lastFindTip
 				
 				navigationPrefs.byNavItemID[navigationItemID].listData.sortField = solutionPrefs.fastFind.currentSearch[serverName][tableName].sortField
 				navigationPrefs.byNavItemID[navigationItemID].listData.sortDirection = solutionPrefs.fastFind.currentSearch[serverName][tableName].sortDirection
@@ -2910,13 +2938,13 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			else {
 				globals.DATASUTRA_find = (navigationPrefs.byNavItemID[navigationItemID].fastFind && navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFindValue) ? navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFind : null
 				globals.DATASUTRA_find_field = (navigationPrefs.byNavItemID[navigationItemID].fastFind && navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFindField) ? navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFindField : null
-				forms[baseForm + '__header__fastfind'].elements.fld_find.toolTipText = (navigationPrefs.byNavItemID[navigationItemID].fastFind && navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFindTip) ? navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFindTip : 'Not searching any field'
+				forms[findForm].elements.fld_find.toolTipText = (navigationPrefs.byNavItemID[navigationItemID].fastFind && navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFindTip) ? navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFindTip : 'Not searching any field'
 			}
 		}
 		else {
 			globals.DATASUTRA_find = (navigationPrefs.byNavItemID[navigationItemID].fastFind && navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFindValue) ? navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFind : null
 			globals.DATASUTRA_find_field = (navigationPrefs.byNavItemID[navigationItemID].fastFind && navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFindField) ? navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFindField : null
-			forms[baseForm + '__header__fastfind'].elements.fld_find.toolTipText = (navigationPrefs.byNavItemID[navigationItemID].fastFind && navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFindTip) ? navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFindTip : 'Not searching any field'
+			forms[findForm].elements.fld_find.toolTipText = (navigationPrefs.byNavItemID[navigationItemID].fastFind && navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFindTip) ? navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFindTip : 'Not searching any field'
 		}
 		
 		//check for default find field
@@ -2925,7 +2953,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			globals.DATASUTRA_find_field = findInitial
 			//get pretty name for chosen column
 			var prettyFind = navigationPrefs.byNavItemID[navigationItemID].fastFind.filter(function(item){return item.columnName == findInitial})
-			forms[baseForm + '__header__fastfind'].elements.fld_find.toolTipText = 'Searching in "' + (prettyFind.length ? prettyFind[0].findName : findInitial) + '"'
+			forms[findForm].elements.fld_find.toolTipText = 'Searching in "' + (prettyFind.length ? prettyFind[0].findName : findInitial) + '"'
 		}
 		
 		//set check on display pop-down
@@ -2940,10 +2968,10 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		
 		//if above globals.DATASUTRA_find, set appropriate end graphics
 	/*	if (globals.DATASUTRA_find) {
-			forms[baseForm + '__header__fastfind'].elements.find_end.setImageURL('media:///find_stop.png')
+			forms[findForm].elements.find_end.setImageURL('media:///find_stop.png')
 		}
 		else {
-			forms[baseForm + '__header__fastfind'].elements.find_end.setImageURL('media:///find_end.png')
+			forms[findForm].elements.find_end.setImageURL('media:///find_end.png')
 		}	*/
 		
 		//SPACES setup
@@ -3197,7 +3225,7 @@ function NAV_universal_list_edit(input,elem) {
 function NAV_universal_list_right_click(input,elem,list,record) {
 	var currentNavItem = solutionPrefs.config.currentFormID
 	var btn = navigationPrefs.byNavItemID[currentNavItem].buttons
-	var navForm = solutionPrefs.config.webClient ? 'NAV_T_universal_list' : 'NAV_T_universal_list__WEB'
+	var navForm = solutionPrefs.config.webClient ? 'NAV_T_universal_list' : 'NAV_T_universal_list__WEB__buttons'
 	
 	//build menu
 	var menu = new Array()
@@ -4290,8 +4318,11 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	
 	var listTabForm = (solutionPrefs.config.webClient) ? forms.DATASUTRA_WEB_0F__list__universal : forms.DATASUTRA_0F_solution
 	
-	var navButtons = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__WEB' : 'NAV_T_universal_list'
-	var navButtonsNo = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__no_buttons__WEB' : 'NAV_T_universal_list__no_buttons'
+	var navButtons = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__WEB__buttons' : 'NAV_T_universal_list'
+	var navButtonsNo = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__WEB__no_buttons' : 'NAV_T_universal_list__no_buttons'
+	var navListButtons = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__WEB__list' : 'NAV_T_universal_list'
+	var navListButtonsNo = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__WEB__list' : 'NAV_T_universal_list__no_buttons'
+	var navWeb = 'NAV_T_universal_list__WEB'
 	
 	var navTab
 	var listTab
@@ -4525,25 +4556,25 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 					
 					//assign the secondary form to the main UL with buttons
 					if (navSpecs.barItemAdd || navSpecs.barItemAction || navSpecs.barItemFilter || navSpecs.barItemReport) {
-						forms[navButtons].elements.tab_ul.addTab(forms[newFormName],'Prefs',null,null,null,null)
+						forms[navListButtons].elements.tab_ul.addTab(forms[newFormName],'Prefs',null,null,null,null)
 						navigationPrefs.byNavItemID[prefNavID].listData.withButtons = true
-						navigationPrefs.byNavItemID[prefNavID].listData.tabNumber = forms[navButtons].elements.tab_ul.getMaxTabIndex()
+						navigationPrefs.byNavItemID[prefNavID].listData.tabNumber = forms[navListButtons].elements.tab_ul.getMaxTabIndex()
 						
 						//switch to this tab
 						forms[navButtons].FORM_on_show(true)
 						listTabForm.elements.tab_content_B.tabIndex = 2
-						forms[navButtons].elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[prefNavID].listData.tabNumber
+						forms[navListButtons].elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[prefNavID].listData.tabNumber
 					}
 					//assign the secondary form to the main UL without buttons
 					else {
-						forms[navButtonsNo].elements.tab_ul.addTab(forms[newFormName],'Prefs',null,null,null,null)
+						forms[navListButtonsNo].elements.tab_ul.addTab(forms[newFormName],'Prefs',null,null,null,null)
 						navigationPrefs.byNavItemID[prefNavID].listData.withButtons = false
-						navigationPrefs.byNavItemID[prefNavID].listData.tabNumber = forms[navButtonsNo].elements.tab_ul.getMaxTabIndex()
+						navigationPrefs.byNavItemID[prefNavID].listData.tabNumber = forms[navListButtonsNo].elements.tab_ul.getMaxTabIndex()
 						
 						//switch to this tab
 						forms[navButtonsNo].FORM_on_show(true)
 						listTabForm.elements.tab_content_B.tabIndex = 2
-						forms[navButtonsNo].elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[prefNavID].listData.tabNumber
+						forms[navListButtonsNo].elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[prefNavID].listData.tabNumber
 					}
 					
 					//save status info
@@ -4584,12 +4615,12 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 				if (navigationPrefs.byNavItemID[prefNavID].listData.withButtons) {
 					forms[navButtons].FORM_on_show(true)
 					listTabForm.elements.tab_content_B.tabIndex = 2
-					forms[navButtons].elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[prefNavID].listData.tabNumber
+					forms[navListButtons].elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[prefNavID].listData.tabNumber
 				}
 				else {
 					forms[navButtonsNo].FORM_on_show(true)
 					listTabForm.elements.tab_content_B.tabIndex = 3
-					forms[navButtonsNo].elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[prefNavID].listData.tabNumber
+					forms[navListButtonsNo].elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[prefNavID].listData.tabNumber
 				}
 			}
 			//set to correct tab
@@ -5259,8 +5290,9 @@ function NAV_universal_list_select() {
  */
 function NAV_universal_list_select__unhilite() {
 	var withButtons = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.withButtons
-	var navButtons = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__WEB' : 'NAV_T_universal_list'
-	var navButtonsNo = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__no_buttons__WEB' : 'NAV_T_universal_list__no_buttons'
+	var navButtons = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__WEB__buttons' : 'NAV_T_universal_list'
+	var navButtonsNo = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__WEB__no_buttons' : 'NAV_T_universal_list__no_buttons'
+	var navWeb = 'NAV_T_universal_list__WEB'
 	
 	if (withButtons) {
 		//unhilite the current record (so highlighter spans entire row)
@@ -5296,7 +5328,7 @@ function NAV_universal_list_show(firstShow,event) {
 	if (navigationPrefs.byNavItemID[currentNavItem].buttons) {
 		//web client
 		if (solutionPrefs.config.webClient) {
-			formName = 'NAV_T_universal_list__WEB'
+			formName = 'NAV_T_universal_list__WEB__buttons'
 		}
 		//smart client
 		else {
@@ -5307,7 +5339,7 @@ function NAV_universal_list_show(firstShow,event) {
 	else {
 		//web client
 		if (solutionPrefs.config.webClient) {
-			formName = 'NAV_T_universal_list__no_buttons__WEB'
+			formName = 'NAV_T_universal_list__WEB__no_buttons'
 		}
 		//smart client
 		else {

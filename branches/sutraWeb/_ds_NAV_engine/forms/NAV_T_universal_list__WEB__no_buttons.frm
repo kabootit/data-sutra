@@ -2,6 +2,15 @@ extendsID:"746CBC99-A948-473D-A020-CC8861EF03F8",
 items:[
 {
 extendsID:"7E4727B9-F103-404B-8630-3529F9437715",
+items:[
+{
+containsFormID:"5C283A8B-DBCC-4C06-8E27-D527DC00C18F",
+location:"0,24",
+text:"NAV_T_universal_list__WEB",
+typeid:15,
+uuid:"1BB396DA-3F22-4BA8-B1D1-34235B12834C"
+}
+],
 location:"0,22",
 size:"125,14",
 typeid:16,
@@ -52,6 +61,6 @@ typeid:7,
 uuid:"F713E4B6-A5C6-4991-9D58-1952BBBE67CD"
 }
 ],
-name:"NAV_T_universal_list__no_buttons__WEB",
+name:"NAV_T_universal_list__WEB__no_buttons",
 typeid:3,
 uuid:"BCA5E36B-77EC-4676-B5E1-24075D613AD5"
