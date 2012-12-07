@@ -453,7 +453,6 @@ onShowOmittedRecordsCmdMethodID:"-1",
 onSortCmdMethodID:"-1",
 paperPrintScale:100,
 size:"250,182",
-styleClass:"workarea2",
 styleName:"_DATASUTRA_",
 typeid:3,
 uuid:"bc6a81f9-5f93-4073-b413-065165445f40"
