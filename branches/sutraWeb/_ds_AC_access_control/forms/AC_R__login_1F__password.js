@@ -1563,10 +1563,12 @@ if (globals.AC_login_user && globals.AC_login_password) {
 		}
 	}
 	forms[baseForm + '__header'].elements.btn_space_dividers.visible = true
-	forms[baseForm + '__header__fastfind'].elements.btn_find.visible = true
-	forms[baseForm + '__header__fastfind'].elements.find_mid.visible = true
-	forms[baseForm + '__header__fastfind'].elements.find_end.visible = true
-	forms[baseForm + '__header__fastfind'].elements.fld_find.visible = true
+	if (!solutionPrefs.config.webClient) {
+		forms[baseForm + '__header__fastfind'].elements.btn_find.visible = true
+		forms[baseForm + '__header__fastfind'].elements.find_mid.visible = true
+		forms[baseForm + '__header__fastfind'].elements.find_end.visible = true
+		forms[baseForm + '__header__fastfind'].elements.fld_find.visible = true
+	}
 	forms[baseForm + '__header'].elements.btn_pref.visible = true
 	forms[baseForm + '__header'].elements.btn_fw_action.visible = true
 	forms[baseForm + '__footer'].elements.lbl_status.visible = true
