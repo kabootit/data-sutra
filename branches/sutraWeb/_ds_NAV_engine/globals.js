@@ -2660,11 +2660,15 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 												'if (solutionPrefs.access.favorites.some(favExists)) {',
 													'badge += \'<html><center><img src="media:///\';',
 													
-													//this row is selected
-													'if (foundset.getSelectedIndex() == foundset.getRecordIndex(record) && !solutionPrefs.config.webClient) {',
+													//web client
+													'if (solutionPrefs.config.webClient) {',
+														'badge += "btn_favorite_rollover.png";',
+													'}',
+													//smart client row is selected
+													'else if (foundset.getSelectedIndex() == foundset.getRecordIndex(record)) {',
 														'badge += "btn_favorite_selected.png";',
 													'}',
-													//row is not selected
+													//smart client row is not selected
 													'else {',
 														'badge += "btn_favorite_unselected.png";',
 													'}',
@@ -2680,7 +2684,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 													'',						//text on label
 													i++,					//x
 													0,						//y
-													23,						//width
+													(solutionPrefs.config.webClient ? 25 : 23),						//width
 													20						//height
 												)
 					
@@ -2699,9 +2703,10 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 //								starField.rolloverImageMedia = solutionModel.getMedia('btn_favorite_rollover.png')
 								starField.toolTipText = 'Toggle favorite'//'%%sutra_favorite_tooltip%%'
 								starField.showClick = false
-								var height = solutionPrefs.config.webClient ? 16 : 17
-								var headStar = solutionPrefs.config.webClient ? 'btn_favorite_selected.png' : 'btn_favorite_dark.png'
-								starField.text = '<html><center><img src="media:///' + headStar + '" width=12 height=' + height + '></center>'
+								var height = solutionPrefs.config.webClient ? 18 : 17
+								var width = solutionPrefs.config.webClient ? 15 : 12
+								var headStar = solutionPrefs.config.webClient ? 'btn_favorite_rollover.png' : 'btn_favorite_dark.png'
+								starField.text = '<html><center><img src="media:///' + headStar + '" width=' + width + ' height=' + height + '></center>'
 									
 								//override sort on form so that will toggle favorite mode on off for this field
 								myForm.onSortCmd = solutionModel.getGlobalMethod('NAV_universal_list_sort')
@@ -5275,15 +5280,40 @@ function NAV_universal_list_select__unhilite() {
  * @properties={typeid:24,uuid:"92a1010e-b5bc-4c9d-b812-7b17dd01f3ef"}
  */
 function NAV_universal_list_show(firstShow,event) {
-	var formName = 'NAV_T_universal_list'
+	var formName
 	
-	//try to get parent form (accounts for buttons/no buttons, web, smart
-	var formStack = forms[event.getFormName()].controller.getFormContext()
-	if (formStack.getMaxRowIndex() > 1) {
-		formName = formStack.getValue(formStack.getMaxRowIndex()-1,2)
-	}
+//	//try to get parent form (accounts for buttons/no buttons, web, smart
+//	if (event instanceof JSEvent && event.getFormName() && forms[event.getFormName()].controller && forms[event.getFormName()].controller.getFormContext) {
+//		var formStack = forms[event.getFormName()].controller.getFormContext()
+//		if (formStack.getMaxRowIndex() > 1) {
+//			formName = formStack.getValue(formStack.getMaxRowIndex()-1,2)
+//		}
+//	}
 	
 	var currentNavItem = solutionPrefs.config.currentFormID
+	
+	//with buttons
+	if (navigationPrefs.byNavItemID[currentNavItem].buttons) {
+		//web client
+		if (solutionPrefs.config.webClient) {
+			formName = 'NAV_T_universal_list__WEB'
+		}
+		//smart client
+		else {
+			formName = 'NAV_T_universal_list'
+		}
+	}
+	//without buttons
+	else {
+		//web client
+		if (solutionPrefs.config.webClient) {
+			formName = 'NAV_T_universal_list__no_buttons__WEB'
+		}
+		//smart client
+		else {
+			formName = 'NAV_T_universal_list__no_buttons'
+		}
+	}
 	
 	var rawDisplayPosn = navigationPrefs.byNavItemID[currentNavItem].universalList.displays.displayPosn
 	
