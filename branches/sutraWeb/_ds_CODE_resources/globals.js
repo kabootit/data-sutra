@@ -5806,7 +5806,7 @@ function TRIGGER_ul_tab_list(input,itemName,tabSelected) {
 function TRIGGER_ul_button_action(event) {
 	//only run if meta-objects defined
 	if (application.__parent__.navigationPrefs && application.__parent__.solutionPrefs) {
-		var navForm = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__WEB' : 'NAV_T_universal_list'
+		var navForm = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__WEB__buttons' : 'NAV_T_universal_list'
 		forms[navForm].ACTIONS_list(event)
 	}
 }
@@ -5821,7 +5821,7 @@ function TRIGGER_ul_button_action(event) {
 function TRIGGER_ul_button_add(event) {
 	//only run if meta-objects defined
 	if (application.__parent__.navigationPrefs && application.__parent__.solutionPrefs) {
-		var navForm = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__WEB' : 'NAV_T_universal_list'
+		var navForm = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__WEB__buttons' : 'NAV_T_universal_list'
 		forms[navForm].REC_new(event)
 	}
 }
@@ -5836,7 +5836,7 @@ function TRIGGER_ul_button_add(event) {
 function TRIGGER_ul_button_report(event) {
 	//only run if meta-objects defined
 	if (application.__parent__.navigationPrefs && application.__parent__.solutionPrefs) {
-		var navForm = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__WEB' : 'NAV_T_universal_list'
+		var navForm = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__WEB__buttons' : 'NAV_T_universal_list'
 		forms[navForm].REPORTS_list(event)
 	}
 }
@@ -5851,7 +5851,7 @@ function TRIGGER_ul_button_report(event) {
 function TRIGGER_ul_button_filter(event) {
 	//only run if meta-objects defined
 	if (application.__parent__.navigationPrefs && application.__parent__.solutionPrefs) {
-		var navForm = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__WEB' : 'NAV_T_universal_list'
+		var navForm = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__WEB__buttons' : 'NAV_T_universal_list'
 		forms[navForm].FILTERS_list(event)
 	}
 }
