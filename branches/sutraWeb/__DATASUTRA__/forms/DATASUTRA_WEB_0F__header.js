@@ -32,10 +32,10 @@ function SIDEBAR_expand() {
  */
 function FORM_on_show(firstShow, event) {
 	if (firstShow) {
-		var splitOffset = 580
+		var splitOffset = 495
 		//determine split between fast find and toolbar
 		if (scopes.DS.deviceFactor == 'iPad') {
-			splitOffset = 500
+			splitOffset = 420
 		}
 		
 		//set up split bean
@@ -716,7 +716,7 @@ function ACTION_space_flexible(event) {
 			if (solutionPrefs.config.currentFormID && navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID]) {
 				var currentNavItem = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID]
 				if (currentNavItem.navigationItem.useFwList) {
-					var methodRefresh = currentNavItem.listData.withButtons ? forms.NAV_T_universal_list__WEB.DISPLAY_cycle : forms.NAV_T_universal_list__no_buttons__WEB.DISPLAY_cycle
+					var methodRefresh = currentNavItem.listData.withButtons ? forms.NAV_T_universal_list__WEB.DISPLAY_cycle : forms.NAV_T_universal_list__WEB__no_buttons.DISPLAY_cycle
 					
 					var callback = plugins.WebClientUtils.generateCallbackScript(methodRefresh, ['true'])
 					var jsCallback = 'function repaintUL(){' + callback + '}';
@@ -779,14 +779,4 @@ function ACTION_space_flexible(event) {
  */
 function ACTIONS_list(input) {
 	globals.DS_actions(input)
-}
-/**
- * Perform the element default action.
- *
- * @param {JSEvent} event the event that triggered the action
- *
- * @properties={typeid:24,uuid:"42D5D916-7E64-45FE-882A-23A6CD198989"}
- */
-function dimensions(event) {
-	globals.CODE_form_in_dialog(forms.DATASUTRA_WEB_P,-1,-1,-1,-1,'Dims',false)
 }

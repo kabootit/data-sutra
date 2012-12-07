@@ -1951,21 +1951,23 @@ function DS_actions(input) {
 						else if (navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].navigationItem.useFwList) {
 							//with buttons
 							if (navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.withButtons) {
-								var navForm = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__WEB' : 'NAV_T_universal_list'
+								var navForm = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__WEB__buttons' : 'NAV_T_universal_list'
+								var navList = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__WEB__list' : 'NAV_T_universal_list'
 								forms[navForm].DISPLAY_cycle(true)
 							
 								forms[navForm].FORM_on_show(true)
 								forms[baseForm].elements.tab_content_B.tabIndex = 2
-								forms[navForm].elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.tabNumber
+								forms[navList].elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.tabNumber
 							}
 							//without buttons
 							else {
-								var navForm = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__no_buttons__WEB' : 'NAV_T_universal_list__no_buttons'
+								var navForm = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__WEB__no_buttons' : 'NAV_T_universal_list__no_buttons'
+								var navList = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__WEB__list' : 'NAV_T_universal_list__no_buttons'
 								forms[navForm].DISPLAY_cycle(true)
 								
 								forms[navForm].FORM_on_show(true)
 								forms[baseForm].elements.tab_content_B.tabIndex = 3
-								forms[navForm].elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.tabNumber
+								forms[navList].elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.tabNumber
 							}
 						}
 						//show blank tab

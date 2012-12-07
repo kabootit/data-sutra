@@ -242,10 +242,10 @@ function FORM_setup(baseForm,prefForm) {
 	forms[baseForm + '__header'].elements.btn_space_dividers.visible = false
 	forms[baseForm + '__header__toolbar'].elements.btn_toolbar_toggle.visible = false
 	forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.visible = false
-	forms[baseForm + '__header__fastfind'].elements.btn_find.visible = false
-	forms[baseForm + '__header__fastfind'].elements.find_mid.visible = false
-	forms[baseForm + '__header__fastfind'].elements.find_end.visible = false
-	forms[baseForm + '__header__fastfind'].elements.fld_find.visible = false
+//	forms[baseForm + '__header__fastfind'].elements.btn_find.visible = false
+//	forms[baseForm + '__header__fastfind'].elements.find_mid.visible = false
+//	forms[baseForm + '__header__fastfind'].elements.find_end.visible = false
+//	forms[baseForm + '__header__fastfind'].elements.fld_find.visible = false
 	forms[baseForm + '__header'].elements.btn_pref.visible = false
 	forms[baseForm + '__header'].elements.btn_fw_action.visible = false
 	forms[baseForm + '__header'].elements.btn_sidebar_expand.visible = false

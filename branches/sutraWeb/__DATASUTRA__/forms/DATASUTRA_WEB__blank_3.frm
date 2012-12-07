@@ -12,5 +12,6 @@ paperPrintScale:100,
 scrollbars:36,
 size:"0,20",
 styleName:"_DATASUTRA_",
+transparent:true,
 typeid:3,
 uuid:"347C96E2-6470-410A-9ED2-EF9E67AFE512"
