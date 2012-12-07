@@ -8,10 +8,10 @@ button {
 	font-weight: bold;
 	font-size: 20px;
 	text-align: center; 
-	color: #323A4B;
+	color: #262626;
 	
 	border-radius: 3px;
-	border: 1px solid #5D5D5D;
+	border: 1px solid #666666;
 	background-image: linear-gradient(top, #F6F6F7, #A8A8A8);
 }
 
@@ -24,15 +24,15 @@ form {
 }
 
 form.list {
-	background-color: #D1D7E2;
+	background-color: #262626;
 }
 
 form.workarea1 {
-	background-color: #A1B0CF;
+	background-color: #666666;
 }
 
 form.workarea2 {
-	background-color: #D1D7E2;
+	background-color: #999999;
 }
 
 label, button, field, check, radio {
@@ -81,10 +81,12 @@ field.customlist, field.navigationset, field.noborder, field.noborderhtml, field
 
 field.fastfind {
 	font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;
-	margin: 0px 20px 0px 27px; 
-	border: 1px solid silver;
-	border-top-width: 2px;
-	border-radius: 10px;
+	margin: 0px 20px 0px 27px;
+	border: 0px solid black; /*
+	border: 1px solid #333333;
+	border-bottom-width: 2px;
+	*/border-radius: 10px;
+	background-color: #dcdcdc;
 }
 
 field.customlist, field.noborderhtml {
@@ -117,7 +119,7 @@ field.textarea, field.textareahtml {
 }
 
 field.universallist, field.universallist_selected {
-	background-color: #D1D7E2;
+	background-color: #999999;
 	border: 0px solid;
 	/*right margin nothing so that doesn't prematurely truncate end of field*/
 	margin: 0px 0px 0px 4px;
@@ -129,7 +131,7 @@ field.web {
 	margin: 0px 6px 0px 6px;
 	
 	border-radius: 3px;
-	border: 1px solid #5D5D5D;
+	border: 1px solid #666666;
 }
 
 check {
@@ -171,17 +173,17 @@ label.button {
 	font-weight: bold;
 	/*font-size: 10pt;*/
 	text-align: center; 
-	color: #323A4B;
+	color: #262626;
 }
 
 label.button_web {
 	font-weight: bold;
 	/*font-size: 10pt;*/
 	text-align: center; 
-	color: #323A4B;
+	color: #262626;
 	
 	border-radius: 3px;
-	border: 1px solid #5D5D5D;
+	border: 1px solid #666666;
 	background-image: linear-gradient(top, #F6F6F7, #A8A8A8);
 }
 
@@ -223,12 +225,12 @@ label.heading1 {
 
 label.heading2 {
 	font-weight: bold;
-	color: #323A4B; 
+	color: #262626; 
 }
 
 label.heading3 {
 	font-size: 8px;
-	color: #323A4B; 
+	color: #262626; 
 }
 
 label.list {
@@ -237,12 +239,12 @@ label.list {
 
 label.login_action {
 	font-size: 8px;
-	color: #989898; 
+	color: #999999; 
 }
 
 check.login_remember {
 	font-size: 8px;
-	color: #989898; 
+	color: #999999; 
 }
 
 label.recordnavigator, label.solutionlogstatus, label.solutionsubheader {
@@ -283,19 +285,19 @@ label.white, label.whitebold {
 
 /* colors */
 label.color_primary {
-	background-color: #A1B0CF;
+	background-color: #666666;
 }
 
 label.color_secondary {
-	background-color: #D1D7E2;
+	background-color: #999999;
 }
 
 label.color_tertiary {
-	background-color: #E6E8EB;
+	background-color: #E6E6E6;
 }
 
 label.color_dark {
-	background-color: #323A4B;
+	background-color: #262626;
 }
 
 label.color_gray {
@@ -303,7 +305,7 @@ label.color_gray {
 }
 
 label.color_light {
-	background-color: #FDF7F6;
+	background-color: #F1F1F1;
 }
 
 label.color_white {
@@ -330,42 +332,28 @@ label.tree, label.tree_header, label.tree_arrow_close, label.tree_arrow_open,
 label.tree_select, label.tree_select_arrow_close, label.tree_select_arrow_open {
 	margin: 0px 0px 0px 0px;
 	font-size: 9px;
+	color: #999999;
 }
 
-label.tree {
+label.tree, label.tree_select {
 	margin: 0px 0px 0px 2px;
 }
 
-label.tree_arrow_close {
-	background-image: url('media:///row_collapsed.png');
+label.tree_arrow_close, label.tree_select_arrow_close {
+	background-image: url('media:///row_collapsed_web.png');
 	text-align: right;
 }
 
-label.tree_arrow_open {
-	background-image: url('media:///row_expanded.png');
+label.tree_arrow_open, label.tree_select_arrow_open {
+	background-image: url('media:///row_expanded_web.png');
 	text-align: right;
 }
 
 label.tree_header {
-	color: #4C4C4C;
-	font-weight: bold;
-	margin: 0px 0px 0px 4px;
-}
-
-label.tree_select {
-	color: #FFFFFF;
-	font-weight: bold;
-	margin: 0px 0px 0px 2px;
-}
-
-label.tree_select_arrow_close {
-	background-image: url('media:///row_collapsed_selected.png');
-	text-align: right;
-}
-
-label.tree_select_arrow_open {
-	background-image: url('media:///row_expanded_selected.png');
-	text-align: right;
+	color: #999999;
+	font-weight: normal;
+	margin: 0px 0px 0px 0px;
+	text-align: left;
 }
 
 /* row background */
@@ -418,15 +406,15 @@ tabpanel {
 }
 
 tabpanel.grid_primary {
-	border: 1px solid #A1B0CF;
+	border: 1px solid #999999;
 	border-bottom-width: 3px;
-	border-top-color: #647B95;
+	border-top-color: #666666;
 }
 
 tabpanel.grid_secondary {
-	border: 1px solid #D1D7E2;
+	border: 1px solid #E6E6E6;
 	border-bottom-width: 3px;
-	border-top-color: #647B95;
+	border-top-color: #666666;
 }
 
 /* settings for label on custom tab controllers */
@@ -442,12 +430,12 @@ label.grid_pri_tab_select {
 }
 
 label.grid_pri_tab_unselect {
-	color: #323A4B;
+	color: #666666;
 }
 
 label.grid_sec_tab_select {
 	font-weight: bold;
-	color: #323A4B;
+	color: #666666;
 }
 
 label.grid_sec_tab_unselect {
@@ -455,13 +443,13 @@ label.grid_sec_tab_unselect {
 }
 
 label.grid_tab_divider {
-	border-color: #323A4B;
+	border-color: #262626;
 	border-style: solid;
 	border-width: 0px 1px 0px 0px;
 }
 
 label.defaulttabselect, label.defaulttabunselect, label.defaulttabunselectalt {
-	background-color: #D1D7E2;
+	background-color: #999999;
 	color: #333333; 
 	font-weight: bold;
 	text-align: center; 
@@ -471,7 +459,7 @@ label.defaulttabselect, label.defaulttabunselect, label.defaulttabunselectalt {
 }
 
 label.defaulttabunselect {
-	background-color: #A1B0CF;
+	background-color: #666666;
 	font-weight: normal;
 }
 
@@ -481,7 +469,7 @@ label.defaulttabunselectalt {
 
 label.drawntabselect, label.drawntabunselect {
 	font-weight: bold;
-	color: #323A4B;
+	color: #262626;
 	text-align: center; 
 }
 
@@ -514,17 +502,17 @@ label.fancytabunselect {
 label.grid_primary_header, label.grid_secondary_header, label.grid_sub_secondary {
 	border-style: solid;
 	border-width: 1px;
-	border-color: #647B95 #A1B0CF #999999 #A1B0CF;
-	background-color: #D1D7E2;
+	border-color: #666666 #666666 #999999 #666666;
+	background-color: #999999;
 }
 
 label.grid_secondary_header {
-	border-color: #647B95 #D1D7E2 #999999 #D1D7E2;
+	border-color: #666666 #999999 #999999 #999999;
 	background-color: #FFFFFF;
 }
 
 label.grid_sub_secondary {
-	border-color: #647B95 #A1B0CF #D1D7E2 #A1B0CF;
+	border-color: #666666 #666666 #999999 #666666;
 }
 
 /* standard table and bold table grid form pattern*/
@@ -543,7 +531,7 @@ radio.bold_table_bottom, listbox.bold_table_bottom, button.bold_table_bottom,
 field.bold_table_textarea_bottom, field.bold_table_htmlarea_bottom {
 	border-style: solid;
 	border-width: 0px 0px 1px 1px;
-	border-color: #647B95;
+	border-color: #666666;
 	margin: 1px 2px 0px 4px;
 	background-color: #F1F1F1;
 	
@@ -595,7 +583,7 @@ label.standard_table_bottom, label.standard_table_indent_bottom,
 label.bold_table_category, label.bold_table, label.bold_table_indent, 
 label.bold_table_bottom, label.bold_table_indent_bottom {
 	color: #787878;
-	border-color: #647B95;
+	border-color: #666666;
 	border-style: solid;
 	border-width: 0px 0px 1px 0px;
 	margin: 0px 2px 0px 4px;
@@ -626,7 +614,7 @@ label.standard_table_check, label.standard_table_check_bottom,
 label.bold_table_check, label.bold_table_check_bottom  {
 	border-style: solid;
 	border-width: 0px 0px 1px 1px;
-	border-color: #647B95;
+	border-color: #666666;
 	background-color: #F1F1F1;
 }
 

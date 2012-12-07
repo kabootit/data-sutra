@@ -11,7 +11,7 @@ form {
 }
 
 form.list {
-	background-color: #D1D7E2;
+	background-color: #191919;
 }
 
 label, button, field, combobox, check, radio {
@@ -39,10 +39,11 @@ field.customlist {
 }
 
 field.universallist, field.universallist_selected {
-	background-color: #D1D7E2;
+	background-color: #191919;
 	border: 0px solid;
 	/*right margin nothing so that doesn't prematurely truncate end of field*/
 	margin: 0px 0px 0px 4px;
+	color: #999999;
 }
 
 field.universallist_selected {
@@ -80,6 +81,11 @@ label.list {
 	font-size: 8.5px;
 }
 
+label.tree_header {
+	color: #999999;
+	margin: 0px 0px 0px 0px;
+}
+
 label.white, label.whitebold {
 	color: white;
 }
@@ -87,7 +93,7 @@ label.white, label.whitebold {
 
 /* row background */
 odd, even, selected {
-	background-color: #D1D7E2;
+	background-color: #191919;
 }
 
 odd {
@@ -99,21 +105,13 @@ even {
 }
 
 selected {
-	background-color: #CCCCCC;
+	background-color: #262626;
 }
 
 grid_header {
-	background-image: linear-gradient(top, #F6F6F7, #BBBBBB);
-	
+	background-color: #1E1E1E;
 	border: 0px solid;
-	border-right: 1px solid gray;
-	
-	/*font-size: 11pt;
-	font-weight: bold;
-	font-style: normal;
-	text-align: left;*/
-	vertical-align: center;
-	color: #333333;
+	color: #999999;
 }
 
 /* grid view */
