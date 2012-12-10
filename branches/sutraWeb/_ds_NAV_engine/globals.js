@@ -590,7 +590,7 @@ if (application.__parent__.solutionPrefs) {
 				}
 				
 				//pass arguments
-				menu[i].setMethodArguments(findItems[i])
+				menu[i].setMethodArguments(findItems[i],event)
 				
 				//disable dividers
 				if (findItems[i].findName == '-') {
@@ -639,24 +639,12 @@ function NAV_find_fields_control()
 
 if (application.__parent__.solutionPrefs) {
 
-//MEMO: need to somehow put this section in a Function of it's own
-//running in Tano...strip out jsevents for now
-if (utils.stringToNumber(application.getVersion()) >= 5) {
-	//cast Arguments to array
-	var Arguments = new Array()
-	for (var i = 0; i < arguments.length; i++) {
-		Arguments.push(arguments[i])
-	}
-
-	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
-}
-
 	var baseForm = solutionPrefs.config.formNameBase
 	var formName = solutionPrefs.config.currentFormName
 	var currentNavItem = solutionPrefs.config.currentFormID
 	var findForm = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__WEB__fastfind' : baseForm + '__header__fastfind'
 	var findValue = arguments[0]
+	var event = arguments[1]
 	var colType = findValue.columnType
 	var valuelist = findValue.valuelist
 	var fastFindStatus = navigationPrefs.byNavItemID[currentNavItem].fastFind
@@ -967,6 +955,11 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			if (fastFindStatus) {
 				navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindTip = 'Searching in "'+findValue.findName+'"'
 			}
+		}
+		
+		//re-show form-popup
+		if (event && event.getFormName && event.getFormName() == 'NAV_P__fastfind') {
+			forms.DATASUTRA_WEB_0F__header.ACTION_find()
 		}
 	}
 }
@@ -2435,6 +2428,9 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		if (solutionPrefs.config.webClient) {
 			//load main window if new one different than currently displayed one
 			forms.DATASUTRA_WEB_0F__workflow.setForm(mainTab)
+			
+			//update elements/variables on header toolbar
+			forms.DATASUTRA_WEB_0F__header__actions.BUTTONS_toggle()
 		}
 		//smart client
 		else {
@@ -2669,7 +2665,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 													
 													//web client
 													'if (solutionPrefs.config.webClient) {',
-														'badge += "btn_favorite_rollover.png";',
+														'badge += "btn_favorite_web.png";',
 													'}',
 													//smart client row is selected
 													'else if (foundset.getSelectedIndex() == foundset.getRecordIndex(record)) {',
@@ -2712,7 +2708,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 								starField.showClick = false
 								var height = solutionPrefs.config.webClient ? 18 : 17
 								var width = solutionPrefs.config.webClient ? 15 : 12
-								var headStar = solutionPrefs.config.webClient ? 'btn_favorite_rollover.png' : 'btn_favorite_dark.png'
+								var headStar = solutionPrefs.config.webClient ? 'btn_favorite_web.png' : 'btn_favorite_dark.png'
 								starField.text = '<html><center><img src="media:///' + headStar + '" width=' + width + ' height=' + height + '></center>'
 									
 								//override sort on form so that will toggle favorite mode on off for this field

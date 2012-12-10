@@ -8,7 +8,6 @@
  */
 function FORM_on_show(firstShow, event) {
 	if (firstShow) {
-		plugins.WebClientUtils.setExtraCssClass(elements.fld_find, 'noWebkitOutline')
-		plugins.WebClientUtils.setExtraCssClass(elements.fld_find, 'fastFind')
+		plugins.WebClientUtils.setExtraCssClass(elements.fld_find, 'noWebkitOutline fastFind')
 	}
 }

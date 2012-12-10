@@ -6,6 +6,13 @@
 var _faveMode = 0;
 
 /**
+ * Array that will hold information about currently showing rows.
+ * 
+ * @properties={typeid:35,uuid:"8BEF2D83-B94F-4611-BEC9-D0E272F3F73D",variableType:-4}
+ */
+var _rows = null;
+
+/**
  * @properties={typeid:24,uuid:"835C298B-5875-4CDB-9C5F-B719F27951F6"}
  */
 function ACTIONS_list(input) {
@@ -184,13 +191,6 @@ function LABEL_update(optionsVisible) {
 	//update label
 	elements.lbl_header.text = (displayValue) ? displayValue.toUpperCase() : 'NAVIGATION'
 }
-
-/**
- * Array that will hold information about currently showing rows.
- * 
- * @properties={typeid:35,uuid:"8BEF2D83-B94F-4611-BEC9-D0E272F3F73D",variableType:-4}
- */
-var _rows = null;
 
 /**
  * Trash existing rows and add new ones.

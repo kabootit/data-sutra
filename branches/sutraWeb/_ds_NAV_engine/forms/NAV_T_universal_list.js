@@ -34,11 +34,14 @@ function ACTIONS_list(event,list)
 var valueList = new Array()
 var methodTypes = new Array()
 var methods = new Array()
-for (var i = 0; i < navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].buttons.actions.length ; i++) {
-	var actionItem = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].buttons.actions[i]
-	valueList.push(actionItem.menuName)
-	methodTypes.push(actionItem.methodType)
-	methods.push(actionItem.method)
+
+if (navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].buttons && navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].buttons.actions) {
+	for (var i = 0; i < navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].buttons.actions.length ; i++) {
+		var actionItem = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].buttons.actions[i]
+		valueList.push(actionItem.menuName)
+		methodTypes.push(actionItem.methodType)
+		methods.push(actionItem.method)
+	}
 }
 
 //only show pop-up if there are enabled values

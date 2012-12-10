@@ -23,6 +23,7 @@ visible:false
 {
 extendsID:"6CEE525B-7ED4-45D6-A2B2-B4FE1EEB8819",
 formIndex:2,
+imageMediaID:"0B24B28F-6406-4762-9287-1034BE121E44",
 location:"68,1",
 size:"32,20",
 typeid:7,
