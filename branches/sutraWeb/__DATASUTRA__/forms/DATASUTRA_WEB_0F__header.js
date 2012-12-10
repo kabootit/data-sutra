@@ -780,3 +780,14 @@ function ACTION_space_flexible(event) {
 function ACTIONS_list(input) {
 	globals.DS_actions(input)
 }
+
+/**
+ * Perform the element default action.
+ *
+ * @param {JSEvent} event the event that triggered the action
+ *
+ * @properties={typeid:24,uuid:"F5485AD9-2E9A-45F8-9CBB-2682B96ED6B9"}
+ */
+function ACTION_find(event) {
+	plugins.window.showFormPopup(elements.btn_find_popdown,forms.NAV_P__fastfind,forms.DATASUTRA_WEB_0F__header,'_search')
+}

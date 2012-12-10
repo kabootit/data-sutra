@@ -2064,11 +2064,13 @@ function DS_actions(input) {
 						
 						//disable nav_chooser, find, and toolbar cycle button
 						forms[baseForm + '__header'].elements.btn_navset.enabled = false
-						forms[baseForm + '__header__fastfind'].elements.btn_find.enabled = false
-						forms[baseForm + '__header__fastfind'].elements.find_mid.enabled = false
-						forms[baseForm + '__header__fastfind'].elements.find_end.enabled = false
-						forms[baseForm + '__header__fastfind'].elements.fld_find.enabled = false
 						forms[baseForm + '__header__toolbar'].elements.btn_toolbar_toggle.visible = false
+						if (!solutionPrefs.config.webClient) {
+							forms[baseForm + '__header__fastfind'].elements.btn_find.enabled = false
+							forms[baseForm + '__header__fastfind'].elements.find_mid.enabled = false
+							forms[baseForm + '__header__fastfind'].elements.find_end.enabled = false
+							forms[baseForm + '__header__fastfind'].elements.fld_find.enabled = false
+						}
 						
 						//hide frameworks action graphic, showing red outline underneath
 						forms[baseForm + '__header'].elements.btn_fw_action.visible = false
