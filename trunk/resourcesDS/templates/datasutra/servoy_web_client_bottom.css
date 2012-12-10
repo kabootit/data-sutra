@@ -12,6 +12,13 @@
 }
 
 /* popup menu overrides */
+.yuimenuitemlabel-disabled,
+.yuimenubaritemlabel-disabled,
+.yuimenuitemlabel-disabled a,
+.yuimenubaritemlabel-disabled a, {
+	color: #666666;
+}
+
 .yuimenuitem-selected,
 .yuimenubaritem-selected,
 .yuimenuitem-selected a,
