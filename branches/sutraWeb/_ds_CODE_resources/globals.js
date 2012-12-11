@@ -889,6 +889,7 @@ function TRIGGER_interface_lock(freeze,freezeAll,nonTransparent,spinner,nonTrans
 		//web client	only implements freeze for now
 		if (solutionPrefs.config.webClient) {
 			forms.DATASUTRA_WEB_0F__main.elements.gfx_curtain.visible = freeze
+			forms.DATASUTRA__sidebar.elements.gfx_curtain.visible = freeze
 			
 			//adjust z-index to be on top
 			if (freeze) {
