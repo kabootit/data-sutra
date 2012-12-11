@@ -260,6 +260,8 @@ if (application.__parent__.solutionPrefs) {
 	var serverName = forms[solutionPrefs.config.currentFormName].controller.getServerName()
 	var tableName = forms[solutionPrefs.config.currentFormName].controller.getTableName()
 	
+	var tabPanel = solutionPrefs.config.webClient ? forms.NAV_T_universal_list__WEB__list.elements.tab_ul : elements.tab_ul
+	
 	//set check box in display drop down
 	globals.DATASUTRA_display = theDisplayID
 	navigationPrefs.byNavItemID[currentNavItem].universalList.displays.displayID = theDisplayID
@@ -280,14 +282,6 @@ if (application.__parent__.solutionPrefs) {
 		elements.record_heading.text = (navigationPrefs.byNavItemID[currentNavItem].navigationItem.itemName) ? navigationPrefs.byNavItemID[currentNavItem].navigationItem.itemName.toUpperCase() : 'RECORDS'
 	}
 	
-	//pump new data in
-//	if (syncRecords) {
-//		UL_sync_records()
-//	}
-//	else {
-//		UL_fill_data()
-//	}
-	
 	//get the form, destroy it, put new one in its place
 	var uniList = 'NAV_T_universal_list_1L'
 				
@@ -298,19 +292,9 @@ if (application.__parent__.solutionPrefs) {
 	//if form already defined, remove
 	if (forms[newFormName]) {
 		//remove from tabpanel
-		elements.tab_ul.removeTabAt(newFormTab)
+		tabPanel.removeTabAt(newFormTab)
 	}
-//	//if form already defined, remove
-//	if (forms[newFormName]) {
-//		//remove from tabpanel
-//		elements.tab_ul.removeTabAt(newFormTab)
-//		//first remove it from the current history, to destroy any active form instance
-//		var success = history.removeForm(newFormName)
-//		//removes the named form from this session
-//		if (success) {
-//			solutionModel.removeForm(newFormName)
-//		}
-//	}
+	
 	//create new forms
 	var template = globals.NAV_universal_list_form_to_template(uniList)
 	var myForm = globals.NAV_universal_list_template_to_form(template,newFormName)
@@ -520,10 +504,10 @@ if (application.__parent__.solutionPrefs) {
 	detailView.visible = false
 	
 	//assign the secondary form to the main UL at the tab right behind where it used to be (when deleted, the others slid over to fill its spot)
-	elements.tab_ul.addTab(forms[newFormName],'UL Record: ' + theDisplayPosn,null,null,null,null,null,null,newFormTab - 1)
+	tabPanel.addTab(forms[newFormName],'UL Record: ' + theDisplayPosn,null,null,null,null,null,null,newFormTab - 1)
 	navigationPrefs.byNavItemID[currentNavItem].listData.dateAdded = application.getServerTimeStamp()
 	
-	elements.tab_ul.tabIndex = newFormTab
+	tabPanel.tabIndex = newFormTab
 	
 	//LOG ul display change
 	var serverName = forms[formName].controller.getServerName()
