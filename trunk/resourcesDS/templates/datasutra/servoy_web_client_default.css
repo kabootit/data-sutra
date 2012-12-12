@@ -438,7 +438,6 @@ div.wicket-modal div.w_content {
 }
 
 .yuimenu {
-	
 	background: #dcdedc;
 	background: -moz-linear-gradient(top, #dcdedc 0%, #ced0ce 2%, #cdcdcd 5%, #cccdcb 14%, #c7c7c7 28%, #b0aeb0 77%, #a6a6a6 100%);
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#dcdedc), color-stop(2%,#ced0ce), color-stop(5%,#cdcdcd), color-stop(14%,#cccdcb), color-stop(28%,#c7c7c7), color-stop(77%,#b0aeb0), color-stop(100%,#a6a6a6));
@@ -449,14 +448,13 @@ div.wicket-modal div.w_content {
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dcdedc', endColorstr='#a6a6a6',GradientType=0 );
 
     border: solid 1px #6d6d6d !important;
-    padding:5px;
+    padding:45px;
 	-moz-box-shadow: 10px 10px 10px rgba(10, 10, 10, 0.5);
 	-webkit-box-shadow: 10px 10px 10px rgba(10, 10, 10, 0.5);
 	box-shadow: 10px 10px 10px rgba(10, 10, 10, 0.5);
 	
 	-moz-border-radius: 0.5em 0.5em 0.5em 0.5em;
 	border-radius: 0.5em 0.5em 0.5em 0.5em;
-    
 }
 
 .yuimenuitem,
@@ -475,7 +473,6 @@ div.wicket-modal div.w_content {
 
 .yuimenuitem a.selected,
 .yuimenubaritem a.selected {
-
     background-color:#d1d1d1 !important;
 	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ebebeb', endColorstr='#a1a1a1') !important; /* for IE */
 	background: -webkit-gradient(linear, left top, left bottom, from(#ebebeb), to(#a1a1a1)) !important; /* for webkit browsers */
@@ -483,14 +480,7 @@ div.wicket-modal div.w_content {
     text-decoration:none !important;
     color:#000000 !important;
 	border: solid 1px #6d6d6d !important;
-
 }
-
-/*.yuimenuitemlabel {
-	font-size: 85%;
-	color: black;
-	text-decoration: none;
-}*/
 
 /* lozenges example	*/
 .orange {
