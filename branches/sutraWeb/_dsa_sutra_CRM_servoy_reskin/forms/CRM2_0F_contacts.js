@@ -156,3 +156,24 @@ if (utils.hasRecords(foundset)) {
 	}
 }
 }
+
+/**
+ * @properties={typeid:24,uuid:"8D02DA83-E811-4B69-BA4A-6C0A5C75A851"}
+ */
+function EDIT_start() {
+	plugins.WebClientUtils.executeClientSideJS('alert("Start");')
+}
+
+/**
+ * @properties={typeid:24,uuid:"47CFB21C-3A72-4A2A-88B4-AC276543850F"}
+ */
+function EDIT_cancel() {
+	plugins.WebClientUtils.executeClientSideJS('alert("Cancelled");')
+}
+
+/**
+ * @properties={typeid:24,uuid:"BE914001-2FE7-48AA-81C9-358B87B59394"}
+ */
+function EDIT_save() {
+	plugins.WebClientUtils.executeClientSideJS('alert("Saved");')
+}
