@@ -1,4 +1,11 @@
 /**
+ * Dummy place holder variable
+ * 
+ * @properties={typeid:35,uuid:"3798E296-DB4E-4BF4-82B5-215E75F2615F",variableType:-4}
+ */
+var _search = null;
+
+/**
  * @type {Boolean}
  * 
  * @properties={typeid:35,uuid:"7B507E00-904D-4CED-BE2B-DE940F4392F6",variableType:-4}
@@ -17,11 +24,27 @@ var _methodForm = null;
  */
 function BUTTONS_toggle() {
 	_methodForm = solutionPrefs.config.currentFormName
+	var currentNavItem = solutionPrefs.config.currentFormID
 	
-	elements.btn_create.enabled = (forms[_methodForm] && forms[_methodForm].REC_new) ? true : false
-	elements.btn_actions.enabled = (forms[_methodForm] && forms[_methodForm].ACTIONS_list || (navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].buttons && navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].buttons.actions && navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].buttons.actions.length)) ? true : false
-	elements.btn_delete.enabled = (forms[_methodForm] && forms[_methodForm].REC_delete) ? true : false
+	//actions
+	elements.btn_create.enabled = (navigationPrefs.byNavItemID[currentNavItem].buttons.add) ? true : false
+	elements.btn_actions.enabled = (navigationPrefs.byNavItemID[currentNavItem].buttons.actions) ? true : false
+	elements.btn_filters.enabled = (navigationPrefs.byNavItemID[currentNavItem].buttons.filters) ? true : false
+	elements.btn_reports.enabled = (navigationPrefs.byNavItemID[currentNavItem].buttons.reports) ? true : false
 	
+	//fastfind
+	elements.btn_find.enabled = navigationPrefs.byNavItemID[currentNavItem].fastFind ? true : false
+	
+	//transactions
+	elements.btn_edit.enabled = navigationPrefs.byNavItemID[currentNavItem].transactions ? true : false
+	elements.btn_save.enabled = navigationPrefs.byNavItemID[currentNavItem].transactions ? true : false
+	elements.btn_cancel.enabled = navigationPrefs.byNavItemID[currentNavItem].transactions ? true : false
+	elements.edit_save_start.enabled = 
+	elements.edit_save_middle.enabled = 
+	elements.edit_save_end.enabled = 
+		navigationPrefs.byNavItemID[currentNavItem].transactions ? true : false
+	
+	//leave edit mode if currently in it
 	if (_editMode) {
 		EDIT_cancel()
 	}
@@ -51,44 +74,12 @@ function REC_delete_right(event) {
 
 /**
  * @param {JSEvent} event
- * 
- * @properties={typeid:24,uuid:"03B65491-02BF-41D0-95E7-2A20C56D1E3D"}
- */
-function REC_new(event) {
-	if (forms[_methodForm] && forms[_methodForm].REC_new) {
-		forms[_methodForm].REC_new(event)
-	}
-}
-
-/**
- * @param {JSEvent} event
  *
  * @properties={typeid:24,uuid:"0314CA8F-B7AA-4621-93C4-62B19981ADA9"}
  */
 function REC_new_right(event) {
 	if (forms[_methodForm] && forms[_methodForm].REC_new_right) {
 		forms[_methodForm].REC_new_right(event)
-	}
-}
-
-/**
- * @param {JSEvent} event
- * 
- * @properties={typeid:24,uuid:"7F4C3D7F-7063-40ED-AFE0-F985484B8DC7"}
- */
-function ACTIONS_list(event) {
-	if (forms[_methodForm] && forms[_methodForm].ACTIONS_list) {
-		forms[_methodForm].ACTIONS_list(event)
-	}
-	//call default actions configured for this navigation item
-	else {
-		//grab actions
-		var menu = forms.NAV_T_universal_list__WEB__buttons.ACTIONS_list(null,true)
-		
-		var elem = elements[event.getElementName()]
-		if (elem != null) {
-		    plugins.popupmenu.showPopupMenu(elem, menu)
-		}
 	}
 }
 
@@ -102,12 +93,38 @@ function ACTIONS_list_right(event) {
 		forms[_methodForm].ACTIONS_list_right(event)
 	}
 }
+
+/**
+ * @param {JSEvent} event
+ * 
+ * @properties={typeid:24,uuid:"1E99F05E-9BAF-4CC2-8FB3-3481E4902A04"}
+ */
+function FILTERS_list_right(event) {
+	if (forms[_methodForm] && forms[_methodForm].FILTERS_list_right) {
+		forms[_methodForm].FILTERS_list_right(event)
+	}
+}
+
+/**
+ * @param {JSEvent} event
+ * 
+ * @properties={typeid:24,uuid:"4766B7CE-695E-4BE2-B667-BAC8D375BFE0"}
+ */
+function REPORTS_list_right(event) {
+	if (forms[_methodForm] && forms[_methodForm].REPORTS_list_right) {
+		forms[_methodForm].REPORTS_list_right(event)
+	}
+}
+
 /**
  * @param {JSEvent} event
  *
  * @properties={typeid:24,uuid:"51B35F72-AE6C-49E5-988B-546F5E4EB7A2"}
  */
 function EDIT_begin(event) {
+	scopes.DS_buttons.TRANSACTION_start(event)
+	
+	//update screen appropriately
 	_editMode = true
 	EDIT_elements()
 }
@@ -118,6 +135,9 @@ function EDIT_begin(event) {
  * @properties={typeid:24,uuid:"414F564F-CFF5-4BA9-8FD8-D744497F8778"}
  */
 function EDIT_save(event) {
+	scopes.DS_buttons.TRANSACTION_save(event)
+	
+	//update screen appropriately
 	_editMode = false
 	EDIT_elements()
 }
@@ -128,6 +148,9 @@ function EDIT_save(event) {
  * @properties={typeid:24,uuid:"67C6D5AB-7DC9-4C84-9997-FF35400E8508"}
  */
 function EDIT_cancel(event) {
+	scopes.DS_buttons.TRANSACTION_cancel(event)
+	
+	//update screen appropriately
 	_editMode = false
 	EDIT_elements()
 }
@@ -145,19 +168,42 @@ function EDIT_elements() {
 	//other actions
 	elements.btn_create.enabled = !_editMode
 	elements.btn_actions.enabled = !_editMode
-	elements.btn_delete.enabled = !_editMode
+	elements.btn_filters.enabled = !_editMode
+	elements.btn_reports.enabled = !_editMode
+	elements.btn_find.enabled = !_editMode
 	
 	//edit mode
 	if (_editMode) {
 		//big button
 		elements.edit_save_middle.setSize(67,elements.edit_save_middle.getHeight())
-		elements.edit_save_end.setLocation(171,elements.edit_save_end.getLocationY())
+		elements.edit_save_end.setLocation(246,elements.edit_save_end.getLocationY())
 	}
 	else {
 		//little button
 		elements.edit_save_middle.setSize(67-25,elements.edit_save_middle.getHeight())
-		elements.edit_save_end.setLocation(171-25,elements.edit_save_end.getLocationY())
+		elements.edit_save_end.setLocation(246-25,elements.edit_save_end.getLocationY())
 	}
 	
 	globals.TRIGGER_interface_lock(_editMode)
+}
+/**
+ * Perform the element default action.
+ *
+ * @param {JSEvent} event the event that triggered the action
+ *
+ * @properties={typeid:24,uuid:"EB7C403A-0777-4FEC-A0EF-54D1E74C53E6"}
+ */
+function ACTION_find(event) {
+	plugins.window.showFormPopup(elements.btn_find_popdown,forms.NAV_P__fastfind,forms.DATASUTRA_WEB_0F__header,'_search')
+}
+
+/**
+ * Perform the element right-click action.
+ *
+ * @param {JSEvent} event the event that triggered the action
+ *
+ * @properties={typeid:24,uuid:"D2908724-FCBB-4E21-8C8A-86F8A9BDED08"}
+ */
+function ACTION_find_right(event) {
+	
 }
