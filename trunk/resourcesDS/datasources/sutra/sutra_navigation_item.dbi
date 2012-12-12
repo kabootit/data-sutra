@@ -374,6 +374,12 @@ name:"tablet_module"
 },
 {
 allowNull:true,
+creationOrderIndex:56,
+dataType:4,
+name:"transactions"
+},
+{
+allowNull:true,
 creationOrderIndex:39,
 dataType:4,
 name:"ul_busy_indicator"
