@@ -543,13 +543,25 @@ else {
  *
  * @properties={typeid:24,uuid:"b008f8b1-6b46-45a6-b1c0-d12bcb8ee128"}
  */
-function TAB_enable()
-{
-/*
-databaseManager.saveData()
-
-TAB_control('tab_b'+elements.tab_buttons.tabIndex)
-*/
+function TAB_enable() {
+	//if transactions enabled and no records created yet, create
+	if (transactions && !utils.hasRecords(nav_navigation_item_to_action_item__transaction)) {
+		var fsTxion = nav_navigation_item_to_action_item__transaction
+		
+		var record = fsTxion.getRecord(fsTxion.newRecord(false,true))
+		record.menu_name = 'Edit start'
+		record.order_by = 1
+		
+		record = fsTxion.getRecord(fsTxion.newRecord(false,true))
+		record.menu_name = 'Edit save'
+		record.order_by = 2
+		
+		record = fsTxion.getRecord(fsTxion.newRecord(false,true))
+		record.menu_name = 'Edit cancel'
+		record.order_by = 3
+		
+		fsTxion.setSelectedIndex(1)
+	}
 }
 
 /**
@@ -614,4 +626,42 @@ if (bar_item_tab && valueList.length) {
 	    plugins.popupmenu.showPopupMenu(elem, menu)
 	}
 }
+}
+
+/**
+ * Perform the element default action.
+ *
+ * @param {JSEvent} event the event that triggered the action
+ *
+ * @properties={typeid:24,uuid:"952E8B91-EC19-44CC-9B4C-A474D5048A30"}
+ */
+function TXN_preview(event) {
+	//grab the actions to this
+	var dataset = databaseManager.getDataSetByQuery(
+	                controller.getServerName(),
+	                'select menu_name, order_by from sutra_action_item ' +
+						'where category = ? and id_navigation_item = ? order by order_by asc',
+	                ["Transactions",globals.NAV_navigation_item_selected],
+	                -1)
+	var valueList = dataset.getColumnAsArray(1)
+
+	//only show pop-up if there are enabled values
+	if (transactions && valueList.length) {
+		//build menu
+		var menu = new Array
+		for ( var i = 0 ; i < valueList.length ; i++ ) {
+		    menu[i] = plugins.popupmenu.createMenuItem(valueList[i] + "")
+		
+			//disable dividers
+			if (valueList[i] == '-') {
+				menu[i].setEnabled(false)
+			}
+		}
+		
+		//popdown popup menu
+		var elem = elements[application.getMethodTriggerElementName()]
+		if (elem != null) {
+		    plugins.popupmenu.showPopupMenu(elem, menu)
+		}
+	}
 }
