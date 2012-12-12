@@ -5,7 +5,7 @@ extendsID:"7E4727B9-F103-404B-8630-3529F9437715",
 items:[
 {
 containsFormID:"5C283A8B-DBCC-4C06-8E27-D527DC00C18F",
-location:"0,24",
+location:"153,15",
 text:"NAV_T_universal_list__WEB",
 typeid:15,
 uuid:"1BB396DA-3F22-4BA8-B1D1-34235B12834C"
