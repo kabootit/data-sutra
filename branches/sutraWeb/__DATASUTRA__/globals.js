@@ -1777,10 +1777,12 @@ function DS_actions(input) {
 					
 					//enable nav_chooser, find, and toolbar toggle buttons
 					forms[baseForm + '__header'].elements.btn_navset.enabled = true
-					forms[baseForm + '__header__fastfind'].elements.btn_find.enabled = true
-					forms[baseForm + '__header__fastfind'].elements.find_mid.enabled = true
-					forms[baseForm + '__header__fastfind'].elements.find_end.enabled = true
-					forms[baseForm + '__header__fastfind'].elements.fld_find.enabled = true
+					if (!solutionPrefs.config.webClient) {
+						forms[baseForm + '__header__fastfind'].elements.btn_find.enabled = true
+						forms[baseForm + '__header__fastfind'].elements.find_mid.enabled = true
+						forms[baseForm + '__header__fastfind'].elements.find_end.enabled = true
+						forms[baseForm + '__header__fastfind'].elements.fld_find.enabled = true
+					}
 					forms[baseForm + '__header__toolbar'].elements.btn_toolbar_toggle.visible = true
 					
 					//set current form back to workflow
