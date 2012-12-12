@@ -2535,7 +2535,6 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 							
 							//create new forms
 							var template = globals.NAV_universal_list_form_to_template(uniList)
-//							var myForm = solutionModel.newForm(name, superForm)
 							var myForm = globals.NAV_universal_list_template_to_form(template,newFormName)
 							
 							//set datasource
@@ -2549,10 +2548,10 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 							}
 							
 							//set events
-							myForm.onShow = solutionModel.getGlobalMethod('NAV_universal_list_show')
-							myForm.onRecordSelection = solutionModel.getGlobalMethod('NAV_universal_list_select')
+							myForm.onShow = solutionModel.getGlobalMethod('globals','NAV_universal_list_show')
+							myForm.onRecordSelection = solutionModel.getGlobalMethod('globals','NAV_universal_list_select')
 							if (!solutionPrefs.config.webClient) {
-								myForm.onRender = solutionModel.getGlobalMethod('NAV_universal_list_render')
+								myForm.onRender = solutionModel.getGlobalMethod('globals','NAV_universal_list_render')
 								myForm.rowBGColorCalculation = 'globals.NAV_universal_list_row_background'
 							}
 							
@@ -2619,7 +2618,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 								}
 								
 								myField.name = application.getUUID().toString()
-								myField.onFocusGained = solutionModel.getGlobalMethod('NAV_universal_list_select__unhilite')
+								myField.onFocusGained = solutionModel.getGlobalMethod('globals','NAV_universal_list_select__unhilite')
 								myField.anchors = SM_ANCHOR.ALL
 								myField.horizontalAlignment = horizAlign
 								myField.styleClass = 'universallist'
@@ -2640,19 +2639,21 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 								}
 								
 								if (lineItem.editable) {
-									myField.onRightClick = solutionModel.getGlobalMethod('NAV_universal_list_edit')
+									myField.onRightClick = solutionModel.getGlobalMethod('globals','NAV_universal_list_edit')
 								}
 								else {
-									myField.onRightClick = solutionModel.getGlobalMethod('NAV_universal_list_right_click')
+									myField.onRightClick = solutionModel.getGlobalMethod('globals','NAV_universal_list_right_click')
 								}
 							}
+							
+							var dsNode = solutionModel.getDataSourceNode('db:/' + serverName + '/' + tableName)
 							
 							//add favorite column to universal list
 							if (solutionPrefs.access.accessControl && navSpecs.favoritable) {
 								//add calculation to show favorite star if hasn't been added already
-								var starCalc = solutionModel.getCalculation('sutra_favorite_badge', 'db:/' + serverName + '/' + tableName)
+								var starCalc = dsNode.getCalculation('sutra_favorite_badge')
 								if (!starCalc) {
-									starCalc = solutionModel.newCalculation(
+									starCalc = dsNode.newCalculation(
 											['function sutra_favorite_badge() {',
 												'var badge = "";',
 												'var record = foundset.getRecord(currentRecordIndex);',
@@ -2678,8 +2679,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 													'badge += \'" width=15 height=20></center>\';',
 												'}',
 												'return badge;',
-											'}'].join(''), 
-											'db:/' + serverName + '/' + tableName
+											'}'].join('')
 										)
 								}
 								
@@ -2693,8 +2693,8 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 					
 								starField.name = 'sutra_favorite_badge'
 								starField.dataProviderID = 'sutra_favorite_badge'
-								starField.onAction = solutionModel.getGlobalMethod('NAV_universal_list_favorite')
-								starField.onRightClick = solutionModel.getGlobalMethod('NAV_universal_list_right_click')
+								starField.onAction = solutionModel.getGlobalMethod('globals','NAV_universal_list_favorite')
+								starField.onRightClick = solutionModel.getGlobalMethod('globals','NAV_universal_list_right_click')
 								starField.anchors = SM_ANCHOR.DEFAULT
 								starField.horizontalAlignment = SM_ALIGNMENT.LEFT
 								starField.styleClass = 'universallist'
@@ -2712,7 +2712,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 								starField.text = '<html><center><img src="media:///' + headStar + '" width=' + width + ' height=' + height + '></center>'
 									
 								//override sort on form so that will toggle favorite mode on off for this field
-								myForm.onSortCmd = solutionModel.getGlobalMethod('NAV_universal_list_sort')
+								myForm.onSortCmd = solutionModel.getGlobalMethod('globals','NAV_universal_list_sort')
 							}
 							
 							//add detail button for workflow when in maximized list view
@@ -2724,9 +2724,9 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 												20						//height
 											)
 							
-							var detailCalc = solutionModel.getCalculation('sutra_detail_view', 'db:/' + serverName + '/' + tableName)
+							var detailCalc = dsNode.getCalculation('sutra_detail_view')
 							if (!detailCalc) {
-								detailCalc = solutionModel.newCalculation(
+								detailCalc = dsNode.newCalculation(
 										['function sutra_detail_view() {',
 											'var badge = \'<html><center><img src="media:///\';',
 //											'var record = foundset.getRecord(currentRecordIndex);',
@@ -2740,14 +2740,13 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 //											'}',
 											'badge += \'" width=20 height=20></center>\';',
 											'return badge;',
-										'}'].join(''), 
-										'db:/' + serverName + '/' + tableName
+										'}'].join('')
 									)
 							}
 							
 							detailView.name = 'sutra_detail_view'
 							detailView.dataProviderID = 'sutra_detail_view'
-							detailView.onAction = solutionModel.getGlobalMethod('NAV_universal_list_detail_view')
+							detailView.onAction = solutionModel.getGlobalMethod('globals','NAV_universal_list_detail_view')
 							detailView.anchors = SM_ANCHOR.DEFAULT
 							detailView.horizontalAlignment = SM_ALIGNMENT.LEFT
 							detailView.styleClass = 'universallist'
@@ -2757,7 +2756,6 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 							detailView.rolloverCursor = SM_CURSOR.HAND_CURSOR
 							detailView.toolTipText = 'View details'
 							detailView.showClick = false
-//							detailView.text = '<html><center><img src="media:///arrow_round.png" width=14 height=14 vspace=3></center>'
 							detailView.visible = solutionPrefs.config.activeSpace == 'workflow flip'
 							
 							//assign the secondary form to the main UL with buttons
@@ -4070,7 +4068,10 @@ if (record[relationName].url_path && record.url_path) {
 				}
 			}
 		}
-		
+	}
+	
+//TODO: (not)	BUTTONS blueprint information
+	if (true) {
 		navItemObj.buttons = new Object()
 		
 		//load buttons
@@ -4245,6 +4246,19 @@ if (record[relationName].url_path && record.url_path) {
 						}
 						
 						break
+					case 'Transactions':
+						//check that button turned on
+						if (record.transactions) {
+							//create array if none exists
+							if (!navItemObj.transactions) {
+								navItemObj.transactions = new Array()
+							}
+							
+							//assign subItem to last position
+							navItemObj.transactions.push(subItem)
+						}
+						
+						break
 				}
 			}
 		
@@ -4258,13 +4272,17 @@ if (record[relationName].url_path && record.url_path) {
 					navItemObj.buttons[reSort[i]].sort(globals.CODE_sort_dd_array)
 				}
 			}
+			
+			//sort transactions if we have them too
+			if (navItemObj.transactions) {
+				navItemObj.transactions.sort(globals.CODE_sort_dd_array)
+			}
 		}
 	}
 
 
 
 return navItemObj
-
 
 }
 
