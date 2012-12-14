@@ -249,7 +249,7 @@ function FORM_on_show(firstShow, event) {
 		}
 		
 		//store down if an ipad/iphone/desktop experience
-		plugins.WebClientUtils.executeClientSideJS('var dsFormFactor = dsFactor();',scopes.DS.setFactor,['dsFormFactor'])
+		plugins.WebClientUtils.executeClientSideJS('var dsFormFactor = dsFactor();',scopes.DS.webFactorSet,['dsFormFactor'])
 		
 		_shown = true
 	}
