@@ -1,5 +1,5 @@
 /*!
- * Add to Homescreen v2.0.1 ~ Copyright (c) 2012 Matteo Spinelli, http://cubiq.org
+ * Add to Homescreen v2.0.4 ~ Copyright (c) 2012 Matteo Spinelli, http://cubiq.org
  * Released under MIT license, http://cubiq.org/license
  */
 var addToHome = (function (w) {
@@ -39,6 +39,7 @@ var addToHome = (function (w) {
 		},
 
 		intl = {
+			ar:    '<span dir="rtl">قم بتثبيت هذا التطبيق على <span dir="ltr">%device:</span>انقر<span dir="ltr">%icon</span> ،<strong>ثم اضفه الى الشاشة الرئيسية.</strong></span>',
 			ca_es: 'Per instal·lar aquesta aplicació al vostre %device premeu %icon i llavors <strong>Afegir a pantalla d\'inici</strong>.',
 			cs_cz: 'Pro instalaci aplikace na Váš %device, stiskněte %icon a v nabídce <strong>Přidat na plochu</strong>.',
 			da_dk: 'Tilføj denne side til din %device: tryk på %icon og derefter <strong>Føj til hjemmeskærm</strong>.',
@@ -49,14 +50,15 @@ var addToHome = (function (w) {
 			fi_fi: 'Asenna tämä web-sovellus laitteeseesi %device: paina %icon ja sen jälkeen valitse <strong>Lisää Koti-valikkoon</strong>.',
 			fr_fr: 'Ajoutez cette application sur votre %device en cliquant sur %icon, puis <strong>Ajouter à l\'écran d\'accueil</strong>.',
 			he_il: '<span dir="rtl">התקן אפליקציה זו על ה-%device שלך: הקש %icon ואז <strong>הוסף למסך הבית</strong>.</span>',
+			hr_hr: 'Instaliraj ovu aplikaciju na svoj %device: klikni na %icon i odaberi <strong>Dodaj u početni zaslon</strong>.',
 			hu_hu: 'Telepítse ezt a web-alkalmazást az Ön %device-jára: nyomjon a %icon-ra majd a <strong>Főképernyőhöz adás</strong> gombra.',
 			it_it: 'Installa questa applicazione sul tuo %device: premi su %icon e poi <strong>Aggiungi a Home</strong>.',
 			ja_jp: 'このウェブアプリをあなたの%deviceにインストールするには%iconをタップして<strong>ホーム画面に追加</strong>を選んでください。',
 			ko_kr: '%device에 웹앱을 설치하려면 %icon을 터치 후 "홈화면에 추가"를 선택하세요',
 			nb_no: 'Installer denne appen på din %device: trykk på %icon og deretter <strong>Legg til på Hjem-skjerm</strong>',
-			nl_nl: 'Installeer deze webapp op uw %device: tik %icon en dan <strong>Zet in beginscherm</strong>.',
+			nl_nl: 'Installeer deze webapp op uw %device: tik %icon en dan <strong>Voeg toe aan beginscherm</strong>.',
 			pl_pl: 'Aby zainstalować tę aplikacje na %device: naciśnij %icon a następnie <strong>Dodaj jako ikonę</strong>.',
-			pt_br: 'Instale este web app em seu %device: aperte %icon e selecione <strong>Adicionar à Tela Inicio</strong>.',
+			pt_br: 'Instale este aplicativo em seu %device: aperte %icon e selecione <strong>Adicionar à Tela Inicio</strong>.',
 			pt_pt: 'Para instalar esta aplicação no seu %device, prima o %icon e depois o <strong>Adicionar ao ecrã principal</strong>.',
 			ru_ru: 'Установите это веб-приложение на ваш %device: нажмите %icon, затем <strong>Добавить в «Домой»</strong>.',
 			sv_se: 'Lägg till denna webbapplikation på din %device: tryck på %icon och därefter <strong>Lägg till på hemskärmen</strong>.',
@@ -67,14 +69,14 @@ var addToHome = (function (w) {
 		};
 
 	function init () {
-		// Preliminary check, prevents all further checks to be performed on iDevices only
+		// Preliminary check, all further checks are performed on iDevices only
 		if ( !isIDevice ) return;
 
 		var now = Date.now(),
 			i;
 
 		// Merge local with global options
-		if (w.addToHomeConfig) {
+		if ( w.addToHomeConfig ) {
 			for ( i in w.addToHomeConfig ) {
 				options[i] = w.addToHomeConfig[i];
 			}
@@ -161,6 +163,8 @@ var addToHome = (function (w) {
 		closeButton = balloon.querySelector('.addToHomeClose');
 		if ( closeButton ) closeButton.addEventListener('click', clicked, false);
 
+		if ( !isIPad && OSVersion >= 6 ) window.addEventListener('orientationchange', orientationCheck, false);
+
 		setTimeout(show, options.startDelay);
 	}
 
@@ -203,7 +207,7 @@ var addToHome = (function (w) {
 				balloon.style.top = startY - balloon.offsetHeight - options.bottomOffset + 'px';
 			} else {
 				balloon.style.left = '50%';
-				balloon.style.marginLeft = -Math.round(balloon.offsetWidth / 2) + 'px';
+				balloon.style.marginLeft = -Math.round(balloon.offsetWidth / 2) - ( w.orientation%180 && OSVersion >= 6 ? 40 : 0 ) + 'px';
 				balloon.style.bottom = options.bottomOffset + 'px';
 			}
 
@@ -250,6 +254,7 @@ var addToHome = (function (w) {
 			closeButton = balloon.querySelector('.addToHomeClose');
 
 		if ( closeButton ) closeButton.removeEventListener('click', close, false);
+		if ( !isIPad && OSVersion >= 6 ) window.removeEventListener('orientationchange', orientationCheck, false);
 
 		if ( OSVersion < 5 ) {
 			posY = isIPad ? w.scrollY - startY : w.scrollY + w.innerHeight - startY;
@@ -331,6 +336,10 @@ var addToHome = (function (w) {
 		w.sessionStorage.removeItem('addToHomeSession');
 	}
 
+	function orientationCheck () {
+		balloon.style.marginLeft = -Math.round(balloon.offsetWidth / 2) - ( w.orientation%180 && OSVersion >= 6 ? 40 : 0 ) + 'px';
+	}
+
 	// Bootstrap!
 	init();
 
@@ -339,4 +348,4 @@ var addToHome = (function (w) {
 		close: close,
 		reset: reset
 	};
-})(this);
+})(window);
