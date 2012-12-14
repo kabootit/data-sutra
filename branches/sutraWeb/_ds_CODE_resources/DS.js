@@ -1,4 +1,12 @@
 /**
+ * Enable small scrollbars
+ * 
+ * @type {Boolean}
+ * @properties={typeid:35,uuid:"BC212301-4A96-48A9-90AB-CC0C2CF1C0A0",variableType:-4}
+ */
+var smallScroll = false;
+
+/**
  * DS transaction hooks
  * 
  * @properties={typeid:35,uuid:"2E1E3EEB-3A16-4AF0-B50B-C9D93779D6CB",variableType:-4}
@@ -61,7 +69,7 @@ var deviceFactor = 'Desktop';
  * 
  * @properties={typeid:24,uuid:"A7441E3D-7529-4930-8597-968C00F5948C"}
  */
-function setFactor(device) {
+function webFactorSet(device) {
 	if (device && device != 'null') {
 		deviceFactor = device
 	}
@@ -74,7 +82,7 @@ function setFactor(device) {
  *
  * @properties={typeid:24,uuid:"5F9F8E54-8AED-4C2B-8DDC-542AC91B0D40"}
  */
-function subheaderWeb(firstShow, event) {
+function webSubheader(firstShow, event) {
 	if (firstShow && event instanceof JSEvent) {
 		var formName = event.getFormName()
 		var allElems = forms[formName].elements.allnames
@@ -88,5 +96,16 @@ function subheaderWeb(firstShow, event) {
 				plugins.WebClientUtils.setExtraCssClass(forms[formName].elements[elem], 'gfxSubHeader')
 			}
 		}
+	}
+}
+
+/**
+ * Convert passed in form/id to use small scrollbars
+ * 
+ * @properties={typeid:24,uuid:"DF6762C3-C8E0-4A4A-92B1-8CF985EC5BFF"}
+ */
+function webSmallScroller(formName) {
+	if (solutionPrefs.config.webClient && smallScroll) {
+		plugins.WebClientUtils.executeClientSideJS('setTimeout(function(){scrollbarSmall("' + formName + '");},1500);')
 	}
 }
