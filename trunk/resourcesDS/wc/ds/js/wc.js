@@ -17,6 +17,12 @@
  *	run in an iframe.
  */
 
+//DS namespace
+if (typeof(DS) == "undefined") {
+	DS = new Object()
+}
+	
+
 //	Center the login form
 function centerForm(formName) {
 	var selector = $("#form_" + formName);
@@ -163,9 +169,26 @@ function mobileIndicator() {
 	})
 })();
 
+//	Allow for disabling of selection
+(function($){
+    $.fn.disableSelection = function() {
+        return this
+                 .attr('unselectable', 'on')
+                 .css({
+						'user-select': 'none',
+						'-moz-user-select': 'none',
+						'-khtml-user-select': 'none',
+						'-o-user-select': 'none',
+						'-webkit-user-select': 'none'
+					})
+                 .on('selectstart', false);
+    };
+})(jQuery);
+
 //	Hook servoy's indicator to the mouse location when running in Desktop moode (doesn't make sense on touch screens)
 if (dsFactor() == 'Desktop') {
 	//track location of mouse cursor
+		//MEMO: used for indicator, but also for right-click in table views
 	setTimeout(function(){
 		function trackMouse(e) {
 			var position = [0,0];
@@ -341,7 +364,7 @@ function browserCheck() {
 
 //	Form factor used
 function dsFactor() {
-	if (window.parent.dsFactor) {
+	if (window.parent != window && window.parent.dsFactor) {
 		var myReturn = window.parent.dsFactor();
 	}
 	
@@ -352,7 +375,7 @@ function dsFactor() {
 	return myReturn
 }
 
-//	Turn of indicator for selected iframe
+//	Turn off indicator for selected iframe
 function indicatorOff() {
 	setTimeout(function(){
 		var selector = $("#HUDcenter1");
@@ -384,5 +407,181 @@ function formDialogMove(formName, x, y) {
 				selector.offset({top: offset.top + y, left: offset.left + x})
 			}
 		}
+	}
+}
+
+//	Event to toggle class based on element
+function toggleClass(id, className, forceOn) {
+	var selector = $('#' + id);
+
+	//valid selector
+	if (selector.length) {
+		//check for existence of class and toggle
+		if (forceOn || !selector.is('.' + className)) {
+			selector.addClass(className);
+		}
+		//remove class
+		else {
+			selector.removeClass(className);
+		}
+	}
+}
+
+//	Inject iOS scrollbars
+(function(){
+	setTimeout(function(){
+		$('head').append("<script src='/ds/js/lib/ftscroller.js'></script>");
+	},1000)
+	
+	//"override" functions
+	if (typeof(DS.Servoy) == "undefined") {
+		DS.Servoy = new Object();
+	}
+	if (typeof(DS.Servoy.TableView) == "undefined") {
+		DS.Servoy.TableView = new Object();
+	}
+	DS.Servoy.TableView.needToUpdateRowsBuffer = function(rowContainerBodyId,formName) {
+		if (Servoy.TableView.isAppendingRows || (!Servoy.TableView.hasTopBuffer[rowContainerBodyId] && !Servoy.TableView.hasBottomBuffer[rowContainerBodyId])) {
+			return 0;
+		}
+		var scrollTop = DS.scroller[formName].scrollTop
+		var scrollDiff = scrollTop - Servoy.TableView.currentScrollTop[rowContainerBodyId];
+		if (scrollDiff == 0 || (Servoy.TableView.keepLoadedRows && (scrollDiff < 0))) return 0;
+		Servoy.TableView.currentScrollTop[rowContainerBodyId] = scrollTop;
+		var rowContainerBodyEl = document.getElementById(rowContainerBodyId);
+		var clientHeight = rowContainerBodyEl.clientHeight;
+		var scrollHeight = DS.scroller[formName].scrollHeight;
+		var bufferedRows = scrollHeight - scrollTop - clientHeight;
+		if (scrollDiff > 0) {
+			Servoy.TableView.isAppendingRows = Servoy.TableView.hasBottomBuffer[rowContainerBodyId] && (bufferedRows < clientHeight);
+		} else {
+			var row = $('#' + rowContainerBodyId).children('tr:first');
+			var topPhHeight = 0;
+			if (row.attr('id') == 'topPh') {
+				topPhHeight = row.height();
+			}
+			Servoy.TableView.isAppendingRows = Servoy.TableView.hasTopBuffer[rowContainerBodyId] && (scrollTop - topPhHeight < clientHeight);
+		}
+		var secondRow = $('#' + rowContainerBodyId).children('tr').eq(1);
+		var rowHeight = secondRow.height();
+		var nrRows = scrollDiff / rowHeight;
+		var nrRowAbs = Math.ceil(Math.abs(nrRows));
+		nrRows = nrRows < 0 ? -nrRowAbs : nrRowAbs;
+		return Servoy.TableView.isAppendingRows ? nrRows : 0;
+	}
+	
+})();
+function scrollbarSmall(formName) {
+	//on initial load, FTScroller not loaded in yet, wait another second
+	if (typeof(FTScroller) == 'undefined') {
+		setTimeout(function(){scrollbarSmall(formName)},1000);
+		return;
+	}
+	
+	//check to make sure that there are records (<td>s) already pushed into the UL area
+	
+	//hardcode to ease debugging
+	if (!formName) {
+		formName = 'UL__set55_item1356_CRM_0F_example';
+	}
+	var selector = $('#form_' + formName + ' table tbody');
+
+	//selector now holds the column headers and the UL records
+	// selector[0] selector[1] selector[n] == 1st, 2nd, nth column header
+
+	if (selector.length) {
+		//place to keep tabs on scrollers for future modification
+		if (typeof(DS.scroller) == "undefined") {
+			DS.scroller = new Object();
+		}
+		
+		//records
+		var list = selector[selector.length - 1];
+		var oldScroll = list.scrollTop;
+	
+		//load up scroller here
+		var scroller = 
+		DS.scroller[formName] = 
+			new FTScroller(list, {
+				//don't bounce on desktop
+				// bouncing: false,
+				// contentHeight: 123,
+				// maxFlingDuration: 0,
+				scrollingX: false
+				// snapping: true,
+				// snapSizeY: 20,
+				// updateOnWindowResize: true
+			});
+		scroller.scrollTop = oldScroll;
+		
+		//remove right-specific padding for normal scrollbar
+		$('#' + list.id).removeStyle('padding-right');
+		
+		//let row highlight span entire row (by expanding final 'hidden' element) run once; for all future clicks
+		$('#form_' + formName + ' table tbody .ftscroller_container td[style*="display: none;"]').css({display: 'block', width: '17px'});
+		//TODO: this is firing too often but doesn't matter because selector doesn't return anything
+		$('#form_' + formName + ' table tbody .ftscroller_container').on('click','td',function(e) {$('#form_' + formName + ' table tbody .ftscroller_container td[style*="display: none;"]').css({display: 'block', width: '17px'})});
+		
+		//disable selectability
+		// $('#form_' + formName + ' table tbody .ftscroller_container input').disableSelection();
+		
+		//reattach servoy stuff
+		var scrollEvent = list.onscroll.toString().split("'");
+		
+		function onScrollEnd() {
+			var tHead = scrollEvent[1]
+			var tBody = scrollEvent[3]
+			var tForm = formName
+			var wicketCall = scrollEvent[13]
+			
+			var currentScrollTop = DS.scroller[tForm].scrollTop;
+			var scrollDiff = DS.Servoy.TableView.needToUpdateRowsBuffer(tBody,tForm);
+			
+			//destroy custom scrollbar and put contents back where servoy can find them
+			if (Servoy.TableView.isAppendingRows) {
+				setTimeout(function() {
+					//put contents of small scrollbar div back into parent container and update scroll position so it looks the same
+					var contents = DS.scroller[tForm].contentContainerNode.innerHTML;
+					DS.scroller[tForm].destroy();
+					$('#' + tBody + ' .ftscroller_container').remove();
+					$('#' + tBody).html(contents);
+					$('#' + tBody).scrollTop(currentScrollTop);
+					
+					//remove scrollbar while we wait for tiny scrollbars to be added
+					$('#' + list.id).css('overflow-y','hidden');
+					
+					//recreate scrollbar and set scroll position
+					setTimeout(function(){scrollbarSmall(formName); DS.scroller[tForm].scrollTop = currentScrollTop;},1000);
+					
+					if (function() {
+						onABC();
+						return Wicket.$('tBody') != null;
+					}.bind(this)()) {
+						Wicket.showIncrementally('indicator');
+					}
+					var wcall = wicketAjaxGet(wicketCall + '&scrollDiff=' + scrollDiff + '&currentScrollTop=' + currentScrollTop, function() {
+						hideBlocker();;
+						Wicket.hideIncrementally('indicator');
+					}.bind(this), function() {
+						onAjaxError();;
+						Wicket.hideIncrementally('indicator');
+					}.bind(this), function() {
+						if (!
+						function() {
+							onABC();
+							return Wicket.$(tBody) != null;
+						}.bind(this)()) {
+							//maybe put recreate mini in here...
+
+							Wicket.hideIncrementally('indicator');
+						}
+						onABC();
+						return Wicket.$(tBody) != null;
+					});
+				},0)
+			}
+		}
+		
+		scroller.addEventListener('scrollend',onScrollEnd)
 	}
 }
