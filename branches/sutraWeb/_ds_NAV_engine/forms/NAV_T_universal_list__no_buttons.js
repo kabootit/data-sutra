@@ -464,6 +464,9 @@ function DISPLAY_list_control(rawDisplay,theDisplayID,listTitle,formName,recSele
 		
 		tabPanel.tabIndex = newFormTab
 		
+		//attach fancy scrollbars
+		scopes.DS.webSmallScroller(newFormName)
+		
 		//LOG ul display change
 		var serverName = forms[formName].controller.getServerName()
 		var tableName = forms[formName].controller.getTableName()

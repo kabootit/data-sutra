@@ -2771,6 +2771,9 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 								navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber = forms[navListButtonsNo].elements.tab_ul.getMaxTabIndex()
 							}
 							
+							//attach fancy scrollbars
+							scopes.DS.webSmallScroller(newFormName)
+							
 							//save status info
 							navigationPrefs.byNavItemID[navigationItemID].listData.tabFormInstance = newFormName
 							navigationPrefs.byNavItemID[navigationItemID].listData.dateAdded = application.getServerTimeStamp()

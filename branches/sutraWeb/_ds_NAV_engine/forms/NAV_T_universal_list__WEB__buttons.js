@@ -6,7 +6,6 @@ function BUTTONS_toggle(currentNavItem) {
 	//normal hiding/showing of elements
 	_super.BUTTONS_toggle(currentNavItem)
 	
-	
 	//make sure tabs/display indicator far right if need to be
 	
 	//tabs and not display
@@ -17,4 +16,7 @@ function BUTTONS_toggle(currentNavItem) {
 	else {
 		elements.btn_tabs_right.visible = false
 	}
+	
+	//attach fancy scrollbars
+	scopes.DS.webSmallScroller(navigationPrefs.byNavItemID[currentNavItem].listData.tabFormInstance)
 }
