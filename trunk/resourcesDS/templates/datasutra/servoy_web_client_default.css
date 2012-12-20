@@ -227,6 +227,11 @@ th.nosort
 	vertical-align: center;
 }
 
+th a:focus
+{
+	outline-width: 0;
+}
+
 th.sortable
 {
 	color: #333333;
@@ -259,18 +264,28 @@ th.sortable a:visited
 /*	font-weight: bold;*/
 }
 
-#form_DATASUTRA_WEB_0F__list__universal th.sortable,
-#form_DATASUTRA_WEB_0F__list__universal th.sortable a {
+#form_DATASUTRA_WEB_0F__list__universal tr.headerbuttons {
+	background: transparent;
+	background-color: transparent;
+}
+
+#form_DATASUTRA_WEB_0F__list__universal tr.headerbuttons td {
+	height: 18px;
+	line-height: 18px;
+}
+
+#form_DATASUTRA_WEB_0F__list__universal tr.headerbuttons th.sortable,
+#form_DATASUTRA_WEB_0F__list__universal tr.headerbuttons th.sortable a {
 	font-size: 11px;
 	font-weight: normal;
 	text-shadow: none;
 	text-align: left;
 	padding-left: 4px;
+	text-decoration: underline;
 }
 
-#form_DATASUTRA_WEB_0F__list__universal td {
-	height: 20px;
-	line-height: 20px;
+#form_DATASUTRA_WEB_0F__list__universal tr.headerbuttons th.sortable {
+/*	border-bottom: 1px solid #505050;*/
 }
 
 tr.headerbuttons
@@ -653,4 +668,12 @@ and (max-device-width : 1024px) {
 	-webkit-border-radius: 1px;
 	border-radius: 1px;*/
 	box-shadow: -1px -1px 0px #858585;
+}
+
+.gfxLeftHand {
+	background-image: url(/servoy-webclient/templates/datasutra/images/linen.jpg);
+}
+
+.gfxLeftHilite {
+	background-image: url(/servoy-webclient/templates/datasutra/images/linen_highlight.jpg);
 }

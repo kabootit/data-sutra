@@ -107,7 +107,7 @@ function mobileIndicator() {
 		indicator.css('width','20px');
 		indicator.css('height','20px');
 		indicator.css('z-index','1000');
-		indicator.activity({segments: 12, align: 'left', valign: 'top', steps: 3, width:2, space: 1, length: 3, color: '#030303', speed: 1.5});
+		indicator.activity({segments: 12, align: 'left', valign: 'top', steps: 3, width:2, space: 1, length: 3, color: '#666666', speed: 1.5});
 		// indicator.activity({segments: 12, width: 5.5, space: 6, length: 13, color: '#252525', speed: 1.5, outside:true});
 		// sutraBusy is id for this indicator: $('#sutraBusy');
 	},1500)
@@ -584,4 +584,25 @@ function scrollbarSmall(formName) {
 		
 		scroller.addEventListener('scrollend',onScrollEnd)
 	}
+}
+
+//pretty up the ul
+function prettifyUL(delay) {
+	//TODO: check if successfully run or not; respawn
+	if (typeof delay != 'number') {
+		delay = 500
+	}
+	
+	setTimeout(function(){
+		//header
+		$("#form_NAV_T_universal_list__WEB__list table tbody td th table").css("background-color","transparent");
+		
+		//non-selected rows
+		$('#form_NAV_T_universal_list__WEB__list td[style*="background-color: rgb(48, 48, 48);"] div[name*=sutra_favorite_badge], #form_NAV_T_universal_list__WEB__list table tbody td[style*="background-color: rgb(48, 48, 48);"], #form_NAV_T_universal_list__WEB__list table tbody td[style*="background-color: rgb(48, 48, 48);"] input').css('background-color','transparent').removeClass('gfxLeftHilite');
+		
+		//selected row
+		$('#form_NAV_T_universal_list__WEB__list td[style*="background-color: rgb(38, 38, 38);"] div[name*=sutra_favorite_badge], #form_NAV_T_universal_list__WEB__list table tbody td[style*="background-color: rgb(38, 38, 38);"], #form_NAV_T_universal_list__WEB__list table tbody td[style*="background-color: rgb(38, 38, 38);"] input').css('background-color','transparent').addClass('gfxLeftHilite');
+	},delay)
+	
+	
 }
