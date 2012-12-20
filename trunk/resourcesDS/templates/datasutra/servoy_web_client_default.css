@@ -264,6 +264,11 @@ th.sortable a:visited
 /*	font-weight: bold;*/
 }
 
+#form_DATASUTRA_WEB_0F__list__universal tr td {
+	height: 20px;
+	line-height: 20px;
+}
+
 #form_DATASUTRA_WEB_0F__list__universal tr.headerbuttons {
 	background: transparent;
 	background-color: transparent;
