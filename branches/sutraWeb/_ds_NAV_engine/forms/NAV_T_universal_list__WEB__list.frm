@@ -1,4 +1,3 @@
-encapsulation:60,
 items:[
 {
 height:50,

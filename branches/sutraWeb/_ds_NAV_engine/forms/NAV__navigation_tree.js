@@ -149,6 +149,11 @@ function FORM_on_show(firstShow, event) {
 								true
 							)
 		}
+		
+		//show highlighter
+		if (solutionPrefs.config.webClient = forms.NAV__navigation_tree__rows._elementSelected) {
+			plugins.WebClientUtils.setExtraCssClass(forms.NAV__navigation_tree__rows.elements[forms.NAV__navigation_tree__rows._elementSelected], 'gfxLeftHilite')
+		}
 	}
 }
 
@@ -284,10 +289,7 @@ function LIST_generate(selected) {
 				lblClick.mediaOptions = SM_MEDIAOPTION.REDUCE | SM_MEDIAOPTION.ENLARGE
 				lblClick.onAction = thisForm.getFormMethod('LIST_redraw')
 				lblClick.rolloverCursor = SM_CURSOR.HAND_CURSOR
-				if (solutionPrefs.config.webClient) {
-					lblClick.rolloverImageMedia = solutionModel.getMedia('row_selected_web.png')
-				}
-				else {
+				if (!solutionPrefs.config.webClient) {
 					lblClick.rolloverImageMedia = solutionModel.getMedia('row_selected_light.png')
 				}
 				if (details.description) {
@@ -334,7 +336,7 @@ function LIST_generate(selected) {
 				lblData.formIndex = 10
 				lblData.name = 'lbl_row_' + i
 				//put action on the text in webclient, but not smart client
-				if (solutionPrefs.config.webClient) {
+				if (solutionPrefs.config.webClient) {// && !details.navItemID == selected) {
 					lblData.onAction = thisForm.getFormMethod('LIST_redraw')
 				}
 				lblData.showClick = false
@@ -363,8 +365,10 @@ function LIST_generate(selected) {
 				if (details.navItemID == selected) {
 					//HIGHLIGHT
 					if (solutionPrefs.config.webClient) {
-						lblClick.background = '#262626'
-						lblClick.transparent = false
+//						lblClick.imageMedia = solutionModel.getMedia("row_selected.png")
+						var elem = lblClick.name
+//						lblClick.background = '#262626'
+//						lblClick.transparent = false
 					}
 					else {
 						lblClick.imageMedia = solutionModel.getMedia("row_selected.png")
@@ -398,6 +402,11 @@ function LIST_generate(selected) {
 		
 		//recreate ui
 		forms[formName].controller.recreateUI()
+		
+		//an element is selected, add the style class
+		if (elem && solutionPrefs.config.webClient) {
+			forms.NAV__navigation_tree__rows._elementSelected = elem
+		}
 		
 		//how many levels does this tree have
 		return treeDepth

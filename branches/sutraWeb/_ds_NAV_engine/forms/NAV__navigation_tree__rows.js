@@ -1,6 +1,13 @@
 /**
  * @type {String}
  *
+ * @properties={typeid:35,uuid:"656E16CA-9238-45B4-A53A-D8B28DE43893"}
+ */
+var _elementSelected = null;
+
+/**
+ * @type {String}
+ *
  * @properties={typeid:35,uuid:"18CAFD09-470D-465D-81E3-C1E60732CBDD"}
  */
 var _parentForm = (solutionPrefs.config.webClient) ? 'NAV__navigation_tree__WEB' : 'NAV__navigation_tree';
@@ -450,11 +457,11 @@ function LIST_redraw__webclient(event,idItem,scrollRe,loadFormsSkip,modeFavorite
 			var getScroll = 'var scrollRows = $("#form_NAV__navigation_tree__rows").find(".formpart")[0].scrollTop;'
 			
 			//grab the current scroll position
-			plugins.WebClientUtils.executeClientSideJS(getScroll, LIST_redraw__webclient__continue, ['scrollRows'])
+			plugins.WebClientUtils.executeClientSideJS(getScroll, forms[controller.getName()].LIST_redraw__webclient__continue, ['scrollRows'])
 		}
 		//continue redrawing the screen
 		else {
-			LIST_redraw__webclient__continue(0)
+			forms[controller.getName()].LIST_redraw__webclient__continue(0)
 		}
 	}
 }
@@ -530,5 +537,10 @@ function LIST_redraw__webclient__continue(scrollTop) {
 			}
 		var elemID = plugins.WebClientUtils.getElementMarkupId(forms.DATASUTRA_WEB_0F__header.elements['btn_space_' + spaceConversion[solutionPrefs.config.activeSpace]])
 		plugins.WebClientUtils.executeClientSideJS('dimSpace("' + elemID +'");')
+	}
+	
+	//try setting my class now
+	if (_elementSelected) {
+		plugins.WebClientUtils.setExtraCssClass(elements[_elementSelected], 'gfxLeftHilite')
 	}
 }

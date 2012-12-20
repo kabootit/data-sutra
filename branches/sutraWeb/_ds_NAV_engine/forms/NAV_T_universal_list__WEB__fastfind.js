@@ -9,5 +9,7 @@
 function FORM_on_show(firstShow, event) {
 	if (firstShow) {
 		plugins.WebClientUtils.setExtraCssClass(elements.fld_find, 'noWebkitOutline fastFind')
+		
+		plugins.WebClientUtils.setExtraCssClass(elements.color, 'gfxLeftHand')
 	}
 }

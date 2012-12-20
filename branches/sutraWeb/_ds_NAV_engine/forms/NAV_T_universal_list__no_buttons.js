@@ -318,14 +318,14 @@ function DISPLAY_list_control(rawDisplay,theDisplayID,listTitle,formName,recSele
 			}
 			
 			myField.name = application.getUUID().toString()
-			myField.onFocusGained = solutionModel.getGlobalMethod('globals','NAV_universal_list_select__unhilite')
+//			myField.onFocusGained = solutionModel.getGlobalMethod('globals','NAV_universal_list_select__unhilite')
 			myField.anchors = SM_ANCHOR.ALL
 			myField.horizontalAlignment = horizAlign
 			myField.styleClass = 'universallist'
 			myField.editable = lineItem.editable
 			myField.selectOnEnter = false
 			myField.scrollbars = 0
-			myField.transparent = false
+			myField.transparent = true
 			myField.text = (lineItem.header) ? lineItem.header : nameNameField
 			if (fieldFormat) {
 				myField.format = fieldFormat
@@ -366,7 +366,7 @@ function DISPLAY_list_control(rawDisplay,theDisplayID,listTitle,formName,recSele
 								
 								//web client
 								'if (solutionPrefs.config.webClient) {',
-									'badge += "btn_favorite_web.png";',
+									'badge += "btn_favorite_web_selected.png";',
 								'}',
 								//smart client row is selected
 								'else if (foundset.getSelectedIndex() == foundset.getRecordIndex(record)) {',
@@ -399,7 +399,7 @@ function DISPLAY_list_control(rawDisplay,theDisplayID,listTitle,formName,recSele
 			starField.horizontalAlignment = SM_ALIGNMENT.LEFT
 			starField.styleClass = 'universallist'
 			starField.borderType = 'EmptyBorder,0,0,0,0'
-			starField.transparent = false
+			starField.transparent = true
 			starField.displaysTags = true
 			starField.rolloverCursor = SM_CURSOR.HAND_CURSOR
 			//commented out because gets stuck on when updating a record
@@ -408,7 +408,7 @@ function DISPLAY_list_control(rawDisplay,theDisplayID,listTitle,formName,recSele
 			starField.showClick = solutionPrefs.config.activeSpace == 'workflow flip'
 			var height = solutionPrefs.config.webClient ? 18 : 17
 			var width = solutionPrefs.config.webClient ? 15 : 12
-			var headStar = solutionPrefs.config.webClient ? 'btn_favorite_web.png' : 'btn_favorite_dark.png'
+			var headStar = solutionPrefs.config.webClient ? 'btn_favorite_web_selected.png' : 'btn_favorite_dark.png'
 			starField.text = '<html><center><img src="media:///' + headStar + '" width=' + width + ' height=' + height + '></center>'
 				
 			//override sort on form so that will toggle favorite mode on off for this field
@@ -466,6 +466,7 @@ function DISPLAY_list_control(rawDisplay,theDisplayID,listTitle,formName,recSele
 		
 		//attach fancy scrollbars
 		scopes.DS.webSmallScroller(newFormName)
+		scopes.DS.webULPrettify()
 		
 		//LOG ul display change
 		var serverName = forms[formName].controller.getServerName()

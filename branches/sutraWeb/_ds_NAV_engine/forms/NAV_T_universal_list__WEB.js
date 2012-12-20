@@ -1,4 +1,11 @@
 /**
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"E7A7A140-5B94-4CC3-9D76-8AA7C82F6D12"}
+ */
+var _focusTrap = null;
+
+/**
  * Callback method when form is (re)loaded.
  *
  * @param {JSEvent} event the event that triggered the action
@@ -21,9 +28,11 @@ function FORM_on_show(firstShow, event) {
 	if (firstShow) {
 		//configure list tab
 		elements.tab_list.dividerSize = 0
-		elements.tab_list.dividerLocation = 30
+		elements.tab_list.dividerLocation = 32
 		elements.tab_list.continuousLayout = true
 //		elements.tab_list.bgcolor = '#d1d7e2'
 		elements.tab_list.resizeWeight = 0
+		
+		plugins.WebClientUtils.setExtraCssClass(elements.var_trap, 'noWebkitOutline')
 	}
 }

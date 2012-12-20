@@ -29,6 +29,17 @@ typeid:16,
 uuid:"0FCA4189-691E-4FA3-9F61-C875284EE72B"
 },
 {
+dataProviderID:"_focusTrap",
+location:"20,0",
+name:"var_trap",
+printable:false,
+size:"1,1",
+styleClass:"noborder",
+transparent:true,
+typeid:4,
+uuid:"D7D65C16-DA61-4CCE-A35A-83BE7050512F"
+},
+{
 height:100,
 partType:5,
 typeid:19,

@@ -958,8 +958,8 @@ if (application.__parent__.solutionPrefs) {
 		}
 		
 		//re-show form-popup
-		if (event && event.getFormName && event.getFormName() == 'NAV_P__fastfind') {
-			forms.DATASUTRA_WEB_0F__header.ACTION_find()
+		if (event && event.getFormName && (event.getFormName() == 'NAV_P__fastfind' || event.getFormName() == 'DATASUTRA_WEB_0F__header__actions')) {
+			plugins.window.showFormPopup(forms.DATASUTRA_WEB_0F__header__actions.elements.btn_find_popdown,forms.NAV_P__fastfind,forms.DATASUTRA_WEB_0F__header,'_search')
 		}
 	}
 }
@@ -2618,7 +2618,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 								}
 								
 								myField.name = application.getUUID().toString()
-								myField.onFocusGained = solutionModel.getGlobalMethod('globals','NAV_universal_list_select__unhilite')
+//								myField.onFocusGained = solutionModel.getGlobalMethod('globals','NAV_universal_list_select__unhilite')
 								myField.anchors = SM_ANCHOR.ALL
 								myField.horizontalAlignment = horizAlign
 								myField.styleClass = 'universallist'
@@ -2666,7 +2666,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 													
 													//web client
 													'if (solutionPrefs.config.webClient) {',
-														'badge += "btn_favorite_web.png";',
+														'badge += "btn_favorite_web_selected.png";',
 													'}',
 													//smart client row is selected
 													'else if (foundset.getSelectedIndex() == foundset.getRecordIndex(record)) {',
@@ -2699,7 +2699,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 								starField.horizontalAlignment = SM_ALIGNMENT.LEFT
 								starField.styleClass = 'universallist'
 								starField.borderType = 'EmptyBorder,0,0,0,0'
-								starField.transparent = false
+								starField.transparent = true
 								starField.displaysTags = true
 								starField.rolloverCursor = SM_CURSOR.HAND_CURSOR
 								//commented out because gets stuck on when updating a record
@@ -2708,7 +2708,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 								starField.showClick = false
 								var height = solutionPrefs.config.webClient ? 18 : 17
 								var width = solutionPrefs.config.webClient ? 15 : 12
-								var headStar = solutionPrefs.config.webClient ? 'btn_favorite_web.png' : 'btn_favorite_dark.png'
+								var headStar = solutionPrefs.config.webClient ? 'btn_favorite_web_selected.png' : 'btn_favorite_dark.png'
 								starField.text = '<html><center><img src="media:///' + headStar + '" width=' + width + ' height=' + height + '></center>'
 									
 								//override sort on form so that will toggle favorite mode on off for this field
@@ -2751,7 +2751,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 							detailView.horizontalAlignment = SM_ALIGNMENT.LEFT
 							detailView.styleClass = 'universallist'
 							detailView.borderType = 'EmptyBorder,0,0,0,0'
-							detailView.transparent = false
+							detailView.transparent = true
 							detailView.displaysTags = true
 							detailView.rolloverCursor = SM_CURSOR.HAND_CURSOR
 							detailView.toolTipText = 'View details'
@@ -2815,6 +2815,8 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 						listTabForm.elements.tab_content_B.tabIndex = listTabForm.elements.tab_content_B.getMaxTabIndex()
 					}
 				}
+				
+				scopes.DS.webULPrettify()
 			}
 			//blank form or error, set to blank tab
 			else if (!designList && listTab == 'DATASUTRA_0F_solution__blank_2') {
@@ -2851,6 +2853,8 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 					else {
 						listTabForm.elements.tab_content_B.tabIndex = navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber
 					}
+					
+					scopes.DS.webULPrettify()
 				}
 			}
 		}
@@ -2901,7 +2905,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 					forms[navWeb].elements.tab_list.setLeftForm(forms[findForm])
 					
 					//set divider
-					forms[navWeb].elements.tab_list.dividerLocation = 35
+					forms[navWeb].elements.tab_list.dividerLocation = 32
 				}
 				//not need find and showing
 				else if (!findOn && forms[navWeb].elements.tab_list.getLeftForm().controller.getName() == findForm) {
@@ -5180,11 +5184,11 @@ function NAV_navigation_set_load()
 	else {
 		//first time set is viewed, collapse all pref enabled, and not favorites
 		if (initialLoad && solutionPrefs.config.navigationCollapse && itemID != 0) {
-			forms[formName + '__rows'].LIST_expand_collapse(null,itemID,true)
+			forms.NAV__navigation_tree__rows.LIST_expand_collapse(null,itemID,true)
 		}
 		//regenerate list
 		else {
-			forms[formName + '__rows'].LIST_redraw(null,itemID,true,skipLoadForms,favoriteMode)
+			forms.NAV__navigation_tree__rows.LIST_redraw(null,itemID,true,skipLoadForms,favoriteMode)
 		}
 		
 		forms[formName].LABEL_update()
@@ -5299,6 +5303,11 @@ function NAV_universal_list_select() {
 							'Please restart.'
 						)
 	}
+	
+	
+	//request focus elsewhere
+	forms.NAV_T_universal_list__WEB.elements.var_trap.requestFocus()
+	scopes.DS.webULPrettify(0)
 }
 
 /**
@@ -5319,6 +5328,10 @@ function NAV_universal_list_select__unhilite() {
 	else {
 		//unhilite the current record (so highlighter spans entire row)
 		forms[navButtonsNo].elements.fld_constant.requestFocus(false)
+	}
+	
+	if (solutionPrefs.config.webClient && scopes.DS.smallScroll) {
+		plugins.WebClientUtils.executeClientSideJS("requestFocus($('.field.fastFind')[0].id);")
 	}
 }
 
