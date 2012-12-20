@@ -2,7 +2,7 @@
  *	TITLE    :	ds_WEB_universal_list
  *			  	
  *	ABOUT    :	Data Sutra stylesheet for Web: Universal List
- * @deprecated...onRender event takes care of everything
+ * @deprecated...onRender event takes care of everything (in smart client only)
  */
 
 form {
@@ -39,7 +39,7 @@ field.customlist {
 }
 
 field.universallist, field.universallist_selected {
-	background-color: #191919;
+/*	background-color: #191919;*/
 	border: 0px solid;
 	/*right margin nothing so that doesn't prematurely truncate end of field*/
 	margin: 0px 0px 0px 4px;
@@ -93,7 +93,7 @@ label.white, label.whitebold {
 
 /* row background */
 odd, even, selected {
-	background-color: #191919;
+	background-color: #303030;
 }
 
 odd {

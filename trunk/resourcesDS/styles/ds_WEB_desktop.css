@@ -80,7 +80,6 @@ field.customlist, field.navigationset, field.noborder, field.noborderhtml, field
 }
 
 field.fastfind {
-	font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;
 	margin: 0px 20px 0px 27px;
 	border: 0px solid black; /*
 	border: 1px solid #333333;
@@ -169,11 +168,15 @@ label.bold, label.whitebold {
 	font-weight: bold;
 }
 
-label.button {
+label.button, label.button_light {
 	font-weight: bold;
 	/*font-size: 10pt;*/
 	text-align: center; 
 	color: #262626;
+}
+
+label.button_light {
+	font-weight: normal;
 }
 
 label.button_web {
@@ -340,20 +343,13 @@ label.tree, label.tree_select {
 }
 
 label.tree_arrow_close, label.tree_select_arrow_close {
-	background-image: url('media:///row_collapsed_web.png');
+	background-image: url('media:///row_collapsed.png');
 	text-align: right;
 }
 
 label.tree_arrow_open, label.tree_select_arrow_open {
-	background-image: url('media:///row_expanded_web.png');
+	background-image: url('media:///row_expanded.png');
 	text-align: right;
-}
-
-label.tree_header {
-	color: #999999;
-	font-weight: normal;
-	margin: 0px 0px 0px 0px;
-	text-align: left;
 }
 
 /* row background */
