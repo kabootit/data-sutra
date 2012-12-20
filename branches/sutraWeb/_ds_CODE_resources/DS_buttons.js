@@ -905,10 +905,11 @@ function REPORTS_list_control() {
 }
 
 /**
- *
+ * @param {JSEvent} [event]
+ * 
  * @properties={typeid:24,uuid:"B5878712-AAE0-4E32-93C0-D62AA6F1DE87"}
  */
-function TABS_list() {
+function TABS_list(event) {
 	
 	/*
 	 *	TITLE    :	TABS_list
@@ -936,10 +937,12 @@ function TABS_list() {
 		formNames.push(actionItem.formToLoad)
 	}
 	
+	var formName = event.getFormName()
+	
 	//only show pop-up if there are enabled values
 	if (valueList.length) {
 		//tack on universal list to the top of the array
-		valueList.unshift(globals.CODE_text_initial_caps(elements.record_heading.text))
+		valueList.unshift(globals.CODE_text_initial_caps(forms[formName].elements.record_heading.text))
 		formNames.unshift(null)
 		
 		//build menu, load tabs, and set menu method arguments
@@ -970,19 +973,19 @@ function TABS_list() {
 		
 		//push menu down to the header line
 		var btnInvisible = event.getElementName() + "_down"
-		var currentLocationX = elements[btnInvisible].getLocationX()
-		var currentLocationY = elements[btnInvisible].getLocationY()
+		var currentLocationX = forms[formName].elements[btnInvisible].getLocationX()
+		var currentLocationY = forms[formName].elements[btnInvisible].getLocationY()
 		
-		elements[btnInvisible].setLocation(currentLocationX, currentLocationY + 3)
+		forms[formName].elements[btnInvisible].setLocation(currentLocationX, currentLocationY + 3)
 		
 		//popup menu
-		var elem = elements[btnInvisible]
+		var elem = forms[formName].elements[btnInvisible]
 		if (elem != null) {
 		    plugins.popupmenu.showPopupMenu(elem, menu)
 		}
 		
 		//set invisible btn back to original location
-		elements[btnInvisible].setLocation(currentLocationX, currentLocationY)
+		forms[formName].elements[btnInvisible].setLocation(currentLocationX, currentLocationY)
 	}
 }
 
