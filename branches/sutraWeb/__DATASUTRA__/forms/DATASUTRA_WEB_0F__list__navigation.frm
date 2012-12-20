@@ -2,7 +2,6 @@ customProperties:"",
 items:[
 {
 anchors:15,
-background:"#d1d7e2",
 formIndex:11200,
 items:[
 {
@@ -27,6 +26,17 @@ height:50,
 partType:5,
 typeid:19,
 uuid:"8CA226D9-4B6A-478D-B853-EE37962F603F"
+},
+{
+anchors:15,
+background:"#191919",
+location:"0,0",
+name:"color",
+showClick:false,
+showFocus:false,
+size:"50,50",
+typeid:7,
+uuid:"8D43222E-35DF-404A-9A87-21AB83486127"
 }
 ],
 name:"DATASUTRA_WEB_0F__list__navigation",

@@ -10,7 +10,7 @@ uuid:"0E8DEB16-6066-45F6-ABD6-B1560C935987"
 anchors:15,
 background:"#191919",
 location:"0,0",
-name:"color_dark",
+name:"color",
 showClick:false,
 showFocus:false,
 size:"100,100",

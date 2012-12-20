@@ -13,5 +13,6 @@ scrollbars:36,
 size:"0,20",
 styleClass:"list",
 styleName:"ds_WEB_universal_list",
+transparent:true,
 typeid:3,
 uuid:"02396CCF-ADD3-418B-BB54-800A6740264F"

@@ -23,7 +23,9 @@ function FORM_on_show(firstShow, event) {
 		elements.tab_list.dividerSize = 0
 		elements.tab_list.dividerLocation = 175
 		elements.tab_list.continuousLayout = true
-		elements.tab_list.bgcolor = '#d1d7e2'
 		elements.tab_list.resizeWeight = 0
+		
+		//set style class for background image
+		plugins.WebClientUtils.setExtraCssClass(elements.color,'gfxLeftHand')
 	}
 }

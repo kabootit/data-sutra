@@ -2,7 +2,6 @@ customProperties:"",
 items:[
 {
 anchors:15,
-background:"#323a4b",
 formIndex:11200,
 items:[
 {

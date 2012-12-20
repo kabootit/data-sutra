@@ -18,5 +18,8 @@ function FORM_on_load(event) {
  * @properties={typeid:24,uuid:"EB430CF8-C96D-43B6-BD66-93CA65B5F2BA"}
  */
 function FORM_on_show(firstShow, event) {
-	
+	if (firstShow) {
+		//set style class for background image
+		plugins.WebClientUtils.setExtraCssClass(elements.color,'gfxLeftHand')
+	}
 }

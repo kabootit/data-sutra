@@ -474,8 +474,8 @@ function ACTION_space_flexible(event) {
 		var skipUI = arguments[1]
 		var sidebarStatus = solutionPrefs.screenAttrib.sidebar.status
 		
-		var borderTop = 'MatteBorder,1,0,0,0,#333333'
 		var borderEmpty = 'EmptyBorder,0,0,0,0'
+		var leftPaneColor = '#666666'
 		
 		//determine which ones to show and which to hide
 		switch (solutionPrefs.config.activeSpace) {
@@ -483,8 +483,8 @@ function ACTION_space_flexible(event) {
 					var mainLevel = true
 					var listLevel = true
 					
-					var contentArea_A_Show = 'MatteBorder,0,1,1,0,#333333'
-					var contentArea_B_Show = 'MatteBorder,1,1,0,0,#333333'
+					var contentArea_A_Show = 'MatteBorder,0,1,1,0,' + leftPaneColor
+					var contentArea_B_Show = 'MatteBorder,1,1,0,0,' + leftPaneColor
 					var contentArea_C_Show = 'MatteBorder,0,0,0,1,#333333'
 					
 					//override defaults when sidebar visible
@@ -493,7 +493,7 @@ function ACTION_space_flexible(event) {
 					}
 					
 					var contentArea_A_Hide = borderEmpty
-					var contentArea_B_Hide = 'MatteBorder,1,0,0,0,#333333'
+					var contentArea_B_Hide = 'MatteBorder,1,0,0,0,' + leftPaneColor
 					var contentArea_C_Hide = 'MatteBorder,0,0,0,1,#333333'
 					
 					var dimensionOneStart = (solutionPrefs.screenAttrib) ? solutionPrefs.screenAttrib.spaces.standard.currentHorizontal : 0
@@ -507,7 +507,7 @@ function ACTION_space_flexible(event) {
 					var mainLevel = true
 					var listLevel = false
 					
-					var contentArea_A_Show = 'MatteBorder,0,1,0,0,#333333'
+					var contentArea_A_Show = 'MatteBorder,0,1,0,0,' + leftPaneColor
 					var contentArea_B_Show = borderEmpty
 					var contentArea_C_Show = 'MatteBorder,0,0,0,1,#333333'
 					
@@ -518,7 +518,7 @@ function ACTION_space_flexible(event) {
 					
 					var contentArea_A_Hide = borderEmpty
 					var contentArea_B_Hide = borderEmpty
-					var contentArea_C_Hide = 'MatteBorder,0,0,0,1,#333333'
+					var contentArea_C_Hide = 'MatteBorder,0,0,0,1,' + leftPaneColor
 					
 					var dimensionOneStart = (solutionPrefs.screenAttrib) ? solutionPrefs.screenAttrib.spaces.list.currentHorizontal : 0
 					var dimensionOneEnd = forms[baseForm + '__main'].elements.tab_main.dividerLocation
@@ -530,7 +530,7 @@ function ACTION_space_flexible(event) {
 					var listLevel = false
 					
 					var contentArea_A_Show = borderEmpty
-					var contentArea_B_Show = 'MatteBorder,0,1,0,0,#333333'
+					var contentArea_B_Show = 'MatteBorder,0,1,0,0,' + leftPaneColor
 					var contentArea_C_Show = 'MatteBorder,0,0,0,1,#333333'
 					
 					//override defaults when sidebar visible
@@ -551,8 +551,8 @@ function ACTION_space_flexible(event) {
 					var mainLevel = true
 					var listLevel = true
 					
-					var contentArea_A_Show = 'MatteBorder,0,1,0,0,#333333'
-					var contentArea_B_Show = 'MatteBorder,0,1,0,1,#333333'
+					var contentArea_A_Show = 'MatteBorder,0,1,0,0,' + leftPaneColor
+					var contentArea_B_Show = 'MatteBorder,0,1,0,1,' + leftPaneColor
 					var contentArea_C_Show = 'MatteBorder,0,0,0,1,#333333'
 					
 					//override defaults when sidebar visible
@@ -561,7 +561,7 @@ function ACTION_space_flexible(event) {
 					}
 					
 					var contentArea_A_Hide = borderEmpty
-					var contentArea_B_Hide = 'MatteBorder,0,0,0,1,#333333'
+					var contentArea_B_Hide = 'MatteBorder,0,0,0,1,' + leftPaneColor
 					var contentArea_C_Hide = 'MatteBorder,0,0,0,1,#333333'
 					
 					var dimensionOneStart = (solutionPrefs.screenAttrib) ? solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalOne : 0
