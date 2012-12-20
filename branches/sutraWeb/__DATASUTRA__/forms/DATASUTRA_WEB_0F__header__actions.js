@@ -194,7 +194,7 @@ function EDIT_elements() {
  * @properties={typeid:24,uuid:"EB7C403A-0777-4FEC-A0EF-54D1E74C53E6"}
  */
 function ACTION_find(event) {
-	plugins.window.showFormPopup(elements.btn_find_popdown,forms.NAV_P__fastfind,forms.DATASUTRA_WEB_0F__header,'_search')
+	plugins.window.showFormPopup(forms.DATASUTRA_WEB_0F__header__actions.elements.btn_find_popdown,forms.NAV_P__fastfind,forms.DATASUTRA_WEB_0F__header,'_search')
 }
 
 /**
@@ -205,5 +205,27 @@ function ACTION_find(event) {
  * @properties={typeid:24,uuid:"D2908724-FCBB-4E21-8C8A-86F8A9BDED08"}
  */
 function ACTION_find_right(event) {
-	
+	globals.NAV_find_fields(event)
+}
+
+/**
+ * Auto-hide/show fast find data entry
+ *
+ * @param {Boolean} firstShow form is shown first time after load
+ * @param {JSEvent} event the event that triggered the action
+ *
+ * @properties={typeid:24,uuid:"5D86C07E-1F37-4E4E-A7D8-48A56C71F347"}
+ */
+function FORM_on_show(firstShow, event) {
+	if (firstShow && false) {
+		var elem = plugins.WebClientUtils.getElementMarkupId(elements.btn_find)
+		
+		var script = plugins.WebClientUtils.generateCallbackScript(ACTION_find)
+		
+		//rollover of fast find auto-pops up form
+		plugins.WebClientUtils.executeClientSideJS("$('#" + elem + "').on('mouseover','span',function(){" + script + "});");
+		
+		//rollout of fast find hides form
+		plugins.WebClientUtils.executeClientSideJS("$('#" + elem + "').on('mouseout','span',function(){alert('goodbye');});");
+	}
 }
