@@ -31,9 +31,9 @@ function FORM_on_hide(event) {
  * @properties={typeid:24,uuid:"BC0555DA-21D9-4440-AD68-F6A6B936C090"}
  */
 function FIND_clear(event) {
-	globals.NAV_find_clear()
+	plugins.window.closeFormPopup(false)
 	
-//	plugins.window.closeFormPopup(false)
+	globals.NAV_find_clear()
 }
 /**
  * Perform the element default action.
@@ -48,3 +48,20 @@ function FIND_normal(event) {
 	plugins.window.closeFormPopup(false)
 }
 
+
+/**
+ *
+ * @param {Boolean} firstShow
+ * @param {JSEvent} event
+ *
+ * @properties={typeid:24,uuid:"1F1B85C0-C6E6-4508-9ACB-F0E3356AA70A"}
+ */
+function FORM_on_show(firstShow, event) {
+	_super.FORM_on_show(firstShow, event)
+	
+	//put a bottom line on the fast find
+	plugins.WebClientUtils.executeClientSideJS('setTimeout(function(){$("#' + plugins.WebClientUtils.getElementMarkupId(elements.fld_find) + '").css("border-bottom","1px solid #E6E6E6")},0);')
+	
+	//enter the field
+	elements.fld_find.requestFocus()
+}
