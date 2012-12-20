@@ -161,7 +161,7 @@ function MD5 (message, options) {
 	MD5._digestsize = 16;
 	
 	/** @private */
-	function _md5 (message) {
+	function _md5 () {
 
 		// Convert to byte array
 		if (message.constructor == String) message = util.UTF8.stringToBytes(message);
@@ -297,7 +297,7 @@ function MD5 (message, options) {
 	};
 	
 	
-	var digestbytes = util.wordsToBytes(_md5(message));
+	var digestbytes = util.wordsToBytes(_md5());
 	return options && options.asBytes ? digestbytes :
 	       options && options.asString ? util.Binary.bytesToString(digestbytes) :
 	       util.bytesToHex(digestbytes);
@@ -321,7 +321,7 @@ var SHA1 = function (message, options) {
 	SHA1._digestsize = 20;
 	
 	/** @private */
-	function _sha1 (message) {
+	function _sha1 () {
 
 		// Convert to byte array
 		if (message.constructor == String) message = util.UTF8.stringToBytes(message);
@@ -382,7 +382,7 @@ var SHA1 = function (message, options) {
 
 	}
 	
-	var digestbytes = util.wordsToBytes(_sha1(message));
+	var digestbytes = util.wordsToBytes(_sha1());
 	return options && options.asBytes ? digestbytes :
 	       options && options.asString ? util.Binary.bytesToString(digestbytes) :
 	       util.bytesToHex(digestbytes);
@@ -399,7 +399,7 @@ function SHA256 (message, options) {
 	SHA256._digestsize = 32;
 	
 	/** @private */
- 	function _sha256 (message) {
+ 	function _sha256 () {
 		 
 		// Constants
 		 var K = [ 0x428A2F98, 0x71374491, 0xB5C0FBCF, 0xE9B5DBA5,
@@ -504,7 +504,7 @@ function SHA256 (message, options) {
 
 	}
 	
-	var digestbytes = util.wordsToBytes(_sha256(message));
+	var digestbytes = util.wordsToBytes(_sha256());
 	return options && options.asBytes ? digestbytes :
 	       options && options.asString ? util.Binary.bytesToString(digestbytes) :
 	       util.bytesToHex(digestbytes);
@@ -574,17 +574,17 @@ function PBKDF2 (password, salt, keylen, options) {
 	    iterations = options && options.iterations || 1;
 
 	// Pseudo-random function
-	function PRF(password, salt) {
-		return HMAC(hasher, salt, password, { asBytes: true });
+	function PRF(modSalt) {
+		return HMAC(hasher, modSalt, password, { asBytes: true });
 	}
 
 	// Generate key
 	var derivedKeyBytes = [],
 	    blockindex = 1;
 	while (derivedKeyBytes.length < keylen) {
-		var block = PRF(password, salt.concat(util.wordsToBytes([blockindex])));
+		var block = PRF(salt.concat(util.wordsToBytes([blockindex])));
 		for (var u = block, i = 1; i < iterations; i++) {
-			u = PRF(password, u);
+			u = PRF(u);
 			for (var j = 0; j < block.length; j++) block[j] ^= u[j];
 		}
 		derivedKeyBytes = derivedKeyBytes.concat(block);
