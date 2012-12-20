@@ -41,12 +41,12 @@ function FORM_on_load(event) {
 				//there is already an onshow
 				if (smForm.onShow && smForm.onShow.getName()) {
 					//now update the code
-					smForm.onShow.code = smForm.onShow.code.substr(0,smForm.onShow.code.length - 2) + ";scopes.DS.subheaderWeb(arguments[0],arguments[1])" + smForm.onShow.code.substr(smForm.onShow.code.length - 2)
+					smForm.onShow.code = smForm.onShow.code.substr(0,smForm.onShow.code.length - 2) + ";scopes.DS.webSubheader(arguments[0],arguments[1])" + smForm.onShow.code.substr(smForm.onShow.code.length - 2)
 				}
 				//need new on show method
 				else {
 					//now create new on show method
-					smForm.onShow = solutionModel.getGlobalMethod('DS','subheaderWeb')
+					smForm.onShow = solutionModel.getGlobalMethod('DS','webSubheader')
 				}
 			}
 		}
