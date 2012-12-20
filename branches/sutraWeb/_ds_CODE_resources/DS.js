@@ -92,7 +92,7 @@ function webSubheader(firstShow, event) {
 			var elem = allElems[i]
 			var smElem = smForm.getComponent(elem)
 			
-			if (smElem.styleClass == 'gfx_subheader') {
+			if (smElem && smElem.styleClass == 'gfx_subheader') {
 				plugins.WebClientUtils.setExtraCssClass(forms[formName].elements[elem], 'gfxSubHeader')
 			}
 		}
@@ -107,5 +107,16 @@ function webSubheader(firstShow, event) {
 function webSmallScroller(formName) {
 	if (solutionPrefs.config.webClient && smallScroll) {
 		plugins.WebClientUtils.executeClientSideJS('setTimeout(function(){scrollbarSmall("' + formName + '");},1500);')
+	}
+}
+
+/**
+ * @param {Number} [delay]
+ *
+ * @properties={typeid:24,uuid:"E2571884-7D85-4BDC-9A61-AC1351B784C9"}
+ */
+function webULPrettify(delay) {
+	if (solutionPrefs.config.webClient) {
+		plugins.WebClientUtils.executeClientSideJS('prettifyUL(' + (typeof delay == 'number' ? delay : '') + ');')
 	}
 }
