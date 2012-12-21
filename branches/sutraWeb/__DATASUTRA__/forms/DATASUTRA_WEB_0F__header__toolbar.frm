@@ -45,6 +45,7 @@ typeid:7,
 uuid:"89EF2628-1586-4EAD-AE9E-217A96A582CB"
 },
 {
+background:"#ffffff",
 extendsID:"794A0735-B869-4192-9712-7F6000600B85",
 formIndex:1,
 typeid:7,
