@@ -2771,9 +2771,6 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 								navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber = forms[navListButtonsNo].elements.tab_ul.getMaxTabIndex()
 							}
 							
-							//attach fancy scrollbars
-							scopes.DS.webSmallScroller(newFormName)
-							
 							//save status info
 							navigationPrefs.byNavItemID[navigationItemID].listData.tabFormInstance = newFormName
 							navigationPrefs.byNavItemID[navigationItemID].listData.dateAdded = application.getServerTimeStamp()
@@ -2781,12 +2778,12 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 							//only switch to this tab if not on any of the developer modes
 							if (!designMode) {
 								if (navigationPrefs.byNavItemID[navigationItemID].listData.withButtons) {
-									forms[navButtons].FORM_on_show(true)
+									forms[navButtons].FORM_on_show()
 									listTabForm.elements.tab_content_B.tabIndex = 2
 									forms[navListButtons].elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber
 								}
 								else {
-									forms[navButtonsNo].FORM_on_show(true)
+									forms[navButtonsNo].FORM_on_show()
 									listTabForm.elements.tab_content_B.tabIndex = 3
 									forms[navListButtonsNo].elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber
 								}
@@ -2839,12 +2836,12 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 //						}
 						
 						if (navigationPrefs.byNavItemID[navigationItemID].listData.withButtons) {
-							forms[navButtons].FORM_on_show(true)
+							forms[navButtons].FORM_on_show()
 							listTabForm.elements.tab_content_B.tabIndex = 2
 							forms[navListButtons].elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber
 						}
 						else {
-							forms[navButtonsNo].FORM_on_show(true)
+							forms[navButtonsNo].FORM_on_show()
 							listTabForm.elements.tab_content_B.tabIndex = 3
 							forms[navListButtonsNo].elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber
 						}
@@ -5307,7 +5304,7 @@ function NAV_universal_list_select() {
 	
 	//request focus elsewhere
 	forms.NAV_T_universal_list__WEB.elements.var_trap.requestFocus()
-	scopes.DS.webULPrettify(0)
+	scopes.DS.webULPrettify(true)
 }
 
 /**

@@ -464,8 +464,7 @@ function DISPLAY_list_control(rawDisplay,theDisplayID,listTitle,formName,recSele
 		
 		tabPanel.tabIndex = newFormTab
 		
-		//attach fancy scrollbars
-		scopes.DS.webSmallScroller(newFormName)
+		//make UL prettified again
 		scopes.DS.webULPrettify()
 		
 		//LOG ul display change
@@ -511,14 +510,6 @@ function FORM_on_show(firstShow, event) {
 			else {
 				elements.record_heading.text = 'RECORDS'
 			}
-			
-			//set hide/show on all buttons
-			BUTTONS_toggle(currentNavItem)
-		}
-		//frameworks engine data has changed since form first displayed
-		else if (solutionPrefs.config.prefs.navEngineTouch && solutionPrefs.config.prefs.navEngineTouch > navigationPrefs.byNavItemID[currentNavItem].listData.dateAdded) {
-			//set hide/show on all buttons
-			BUTTONS_toggle(currentNavItem)
 		}
 		
 		//set record navigator to reflect current index and found set
