@@ -293,6 +293,11 @@ th.sortable a:visited
 /*	border-bottom: 1px solid #505050;*/
 }
 
+/* needed for firefox */
+#form_NAV_T_universal_list__WEB__list table tbody td input {
+	cursor: default;
+}
+
 tr.headerbuttons
 {
 	/* For Internet Explorer */
