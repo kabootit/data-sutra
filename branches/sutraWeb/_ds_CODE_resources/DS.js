@@ -4,7 +4,7 @@
  * @type {Boolean}
  * @properties={typeid:35,uuid:"BC212301-4A96-48A9-90AB-CC0C2CF1C0A0",variableType:-4}
  */
-var smallScroll = false;
+var smallScroll = true;
 
 /**
  * DS transaction hooks
@@ -105,18 +105,30 @@ function webSubheader(firstShow, event) {
  * @properties={typeid:24,uuid:"DF6762C3-C8E0-4A4A-92B1-8CF985EC5BFF"}
  */
 function webSmallScroller(formName) {
-	if (solutionPrefs.config.webClient && smallScroll) {
-		plugins.WebClientUtils.executeClientSideJS('setTimeout(function(){scrollbarSmall("' + formName + '");},1500);')
+	//this is how it's called
+//	scopes.DS.webSmallScroller(navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.tabFormInstance)
+	
+	//currently can only attach to ULs...need to also do for other list-based forms
+	if (solutionPrefs.config.webClient && smallScroll && solutionPrefs.config.currentFormID && navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData) {
+		plugins.WebClientUtils.executeClientSideJS('scrollbarSmall("' + formName + '");')
 	}
 }
 
 /**
- * @param {Number} [delay]
+ * @param {Boolean} [noDelay]
  *
  * @properties={typeid:24,uuid:"E2571884-7D85-4BDC-9A61-AC1351B784C9"}
  */
-function webULPrettify(delay) {
+function webULPrettify(noDelay) {
 	if (solutionPrefs.config.webClient) {
-		plugins.WebClientUtils.executeClientSideJS('prettifyUL(' + (typeof delay == 'number' ? delay : '') + ');')
+		//check to see how many records are loaded
+		var chunks = Math.ceil(forms[solutionPrefs.config.currentFormName].foundset.getSize() / 50)
+		
+		if (noDelay) {
+			plugins.WebClientUtils.executeClientSideJS('prettifyUL();')
+		}
+		else {
+			plugins.WebClientUtils.executeClientSideJS('prettifyUL(100,' + chunks + ');')
+		}
 	}
 }
