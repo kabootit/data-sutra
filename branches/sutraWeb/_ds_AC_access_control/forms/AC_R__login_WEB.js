@@ -106,10 +106,21 @@ function LOGIN(event,webkit) {
 		webkit = eval(webkit)
 	}
 	else {
-		plugins.WebClientUtils.executeClientSideJS('var isWebkit = $.browser.webkit;',LOGIN,[null,'isWebkit'])
+		plugins.WebClientUtils.executeClientSideJS('var isWebkit = browserCheck();',LOGIN,[null,'isWebkit'])
 		return
 	}
 	
+//	//disable pretty urls
+//	if (!webkit) {
+////		SET_dialog(
+////			"Unsupported browser", 
+////			"You are using an unsupported browser and cannot log in.<br><br>Please try again with Chrome or Safari."
+////		)
+////
+////		globals.DATASUTRA_router_enable = false
+//	}
+	
+	//only allow webkit
 	if (!webkit) {
 		SET_dialog(
 			"Unsupported browser", 
