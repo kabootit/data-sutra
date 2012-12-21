@@ -359,7 +359,7 @@ function navigateConfig(source) {
 
 //	Sniff browser used and disallow login from 'bad' browsers
 function browserCheck() {
-	return $.browser.webkit
+	return $.browser.webkit || $.browser.mozilla
 }
 
 //	Form factor used
@@ -440,6 +440,8 @@ function toggleClass(id, className, forceOn) {
 	if (typeof(DS.Servoy.TableView) == "undefined") {
 		DS.Servoy.TableView = new Object();
 	}
+	
+	//this is for Servoy 6.1.3
 	DS.Servoy.TableView.needToUpdateRowsBuffer = function(rowContainerBodyId,formName) {
 		if (Servoy.TableView.isAppendingRows || (!Servoy.TableView.hasTopBuffer[rowContainerBodyId] && !Servoy.TableView.hasBottomBuffer[rowContainerBodyId])) {
 			return 0;
@@ -471,16 +473,20 @@ function toggleClass(id, className, forceOn) {
 	}
 	
 })();
-function scrollbarSmall(formName) {
-	//on initial load, FTScroller not loaded in yet, wait another second
-	if (typeof(FTScroller) == 'undefined') {
-		setTimeout(function(){scrollbarSmall(formName)},1000);
+function scrollbarSmall(formName,runIt) {
+	//wait until both scroller library (1st time only) and UL have been loaded; respawn every tenth of a second
+	if (typeof(FTScroller) == 'undefined' || !($ && $('#form_' + formName + ' table tbody'))) {
+		setTimeout(function(){scrollbarSmall(formName)},500);
+		return;
+	}
+	//things are available now, hold off another second
+	else if (!runIt) {
+		//TODO: check to make sure that rows are actually availalble
+		setTimeout(function(){scrollbarSmall(formName,true)},1000);
 		return;
 	}
 	
-	//check to make sure that there are records (<td>s) already pushed into the UL area
-	
-	//hardcode to ease debugging
+	//hardcode to ease with debugging
 	if (!formName) {
 		formName = 'UL__set55_item1356_CRM_0F_example';
 	}
@@ -528,6 +534,7 @@ function scrollbarSmall(formName) {
 		//reattach servoy stuff
 		var scrollEvent = list.onscroll.toString().split("'");
 		
+		//this is for Servoy 6.1.3
 		function onScrollEnd() {
 			var tHead = scrollEvent[1]
 			var tBody = scrollEvent[3]
@@ -551,7 +558,13 @@ function scrollbarSmall(formName) {
 					$('#' + list.id).css('overflow-y','hidden');
 					
 					//recreate scrollbar and set scroll position
-					setTimeout(function(){scrollbarSmall(formName); DS.scroller[tForm].scrollTop = currentScrollTop;},1000);
+					setTimeout(function(){
+						scrollbarSmall(formName); 
+						DS.scroller[tForm].scrollTop = currentScrollTop;
+					},1000);
+					
+					//rehook up correct styling to this part of the UL
+					setTimeout(prettifyUL,2000);
 					
 					if (function() {
 						onABC();
@@ -587,22 +600,51 @@ function scrollbarSmall(formName) {
 }
 
 //pretty up the ul
-function prettifyUL(delay) {
-	//TODO: check if successfully run or not; respawn
-	if (typeof delay != 'number') {
-		delay = 500
+function prettifyUL(maxTimeOut,fsSize) {
+	//check if successfully run or not; respawn
+	var timeOut = 1
+	if (!maxTimeOut) {
+		maxTimeOut = 100
 	}
 	
-	setTimeout(function(){
-		//header
-		$("#form_NAV_T_universal_list__WEB__list table tbody td th table").css("background-color","transparent");
+	function iFeelPretty() {
+		timeOut++;
+		// console.log('PRETTY UL: ' + timeOut);
 		
-		//non-selected rows
-		$('#form_NAV_T_universal_list__WEB__list td[style*="background-color: rgb(48, 48, 48);"] div[name*=sutra_favorite_badge], #form_NAV_T_universal_list__WEB__list table tbody td[style*="background-color: rgb(48, 48, 48);"], #form_NAV_T_universal_list__WEB__list table tbody td[style*="background-color: rgb(48, 48, 48);"] input').css('background-color','transparent').removeClass('gfxLeftHilite');
-		
-		//selected row
-		$('#form_NAV_T_universal_list__WEB__list td[style*="background-color: rgb(38, 38, 38);"] div[name*=sutra_favorite_badge], #form_NAV_T_universal_list__WEB__list table tbody td[style*="background-color: rgb(38, 38, 38);"], #form_NAV_T_universal_list__WEB__list table tbody td[style*="background-color: rgb(38, 38, 38);"] input').css('background-color','transparent').addClass('gfxLeftHilite');
-	},delay)
+		// the UL table header has loaded, the rest should be ready as well
+		if ($ && $("#form_NAV_T_universal_list__WEB__list table tbody td th table").length) {
+			function iAmPretty() {
+				//reference colors
+				var unselectRGB = ' rgb(48, 48, 48)';
+				var unselectHEX = '#303030';
+				var selectRGB = ' rgb(38, 38, 38)';
+				var selectHEX = '#262626';
+			
+				//header
+				$("#form_NAV_T_universal_list__WEB__list table tbody td th table").css("background-color","transparent");
+
+				//selected row
+				$('#form_NAV_T_universal_list__WEB__list td[style*="background-color:' + selectRGB + ';"] div[name*=sutra_favorite_badge], #form_NAV_T_universal_list__WEB__list table tbody td[style*="background-color:' + selectRGB + ';"], #form_NAV_T_universal_list__WEB__list table tbody td[style*="background-color:' + selectRGB + ';"] input'
+				).css('background-color','transparent').addClass('gfxLeftHilite');
+				$('#form_NAV_T_universal_list__WEB__list td[style*="background-color:' + selectHEX + ';"] div[name*=sutra_favorite_badge], #form_NAV_T_universal_list__WEB__list table tbody td[style*="background-color:' + selectHEX + ';"], #form_NAV_T_universal_list__WEB__list table tbody td[style*="background-color:' + selectHEX + ';"] input'
+				).css('background-color','transparent').addClass('gfxLeftHilite');
+
+				//non-selected rows
+				$('#form_NAV_T_universal_list__WEB__list td[style*="background-color:' + unselectRGB + ';"] div[name*=sutra_favorite_badge], #form_NAV_T_universal_list__WEB__list table tbody td[style*="background-color:' + unselectRGB + ';"], 			#form_NAV_T_universal_list__WEB__list table tbody td[style*="background-color:' + unselectRGB + ';"] input'
+				).css('background-color','transparent').removeClass('gfxLeftHilite');
+				$('#form_NAV_T_universal_list__WEB__list td[style*="background-color:' + unselectHEX + ';"] div[name*=sutra_favorite_badge], #form_NAV_T_universal_list__WEB__list table tbody td[style*="background-color:' + unselectHEX + ';"], 			#form_NAV_T_universal_list__WEB__list table tbody td[style*="background-color:' + unselectHEX + ';"] input'
+				).css('background-color','transparent').removeClass('gfxLeftHilite');
+			}
+			
+			//wait ~1sec per 50 rows
+			setTimeout(iAmPretty,(fsSize - 1)*750);
+		}
+		// keep running until table loaded; will timeout after 10 seconds
+		else if (timeOut < maxTimeOut) {
+			setTimeout(iFeelPretty,100);
+		}
+	}
 	
-	
+	// start first time
+	setTimeout(iFeelPretty,50);
 }

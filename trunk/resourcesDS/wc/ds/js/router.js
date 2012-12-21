@@ -16,6 +16,33 @@
  *	to maintain the history stack, configure the iframe, etc.
  */
 
+// start listening for internal error page; help kill session if detected
+(function() {
+	var timeOut = 1
+
+	function checkError() {
+		timeOut++;
+		console.log('CHECK ERROR: ' + timeOut);
+
+		// only the Please wait has loaded
+		if (false) {/*window.frames['wc_application'] && window.frames['wc_application'].window && window.frames['wc_application'].window.document && 
+			window.frames['wc_application'].window.document.getElementsByTagName('body').length && 
+			(window.frames['wc_application'].window.document.getElementsByTagName('body')[0].getAttribute('onload') == "javascript:submitform();" || 
+			window.frames['wc_application'].window.document.getElementsByTagName('body')[0].getAttribute('onload') == "window.setTimeout(submitform,50);")) {*/
+
+			window.frames['wc_application'].window.document.getElementById('loading').innerHTML = '';
+		}
+		// keep running for 5 seconds or until changed once
+			//will not get changed if really slow network or if webclient already started
+		else {
+			setTimeout(checkError,2500);
+		}
+	}
+
+	// start first time
+	// setTimeout(checkError,1000);
+})();
+
 // set up switcheroo for initial 'Loading...' thing
 (function() {
 	var timeOut = 1
@@ -76,6 +103,12 @@ function router(input) {
 		// console.log('routerTWO: ' + input);
 		window.frames['wc_application'].window.navigate()
 	}
+	//navigate firefox
+	else if (window.frames['wc_application'] && window.frames['wc_application'].contentWindow && window.frames['wc_application'].contentWindow.navigate) {
+		// console.log('routerTWO: ' + input);
+		window.frames['wc_application'].contentWindow.navigate()
+	}
+	
 }
 
 // center login form
@@ -190,6 +223,13 @@ function routerIframe(data) {
 	
 	// swc iframe setup
 	var iframeHeaderCell = document.getElementById('sutra');
+	
+	//something not right, try calling again in a second
+	if (!iframeHeaderCell) {
+		setTimeout(function(){routerIframe(data);},0);
+		return;
+	}
+	
 	iframeHeaderCell.innerHTML = "";
 	// var dynamicURL = dsDomain + "/servoy-webclient/ss/s/__DATASUTRA__/m/DS_router/a/" + append;
 	var dynamicURL = "/servoy-webclient/ss/s/__DATASUTRA__/m/DS_router/a/" + append;
@@ -205,6 +245,17 @@ function routerIframe(data) {
 	
 	// iframe load
 	iframeHeaderCell.appendChild(iframeHeader);	
+	
+	setTimeout(function() {
+		//redo UL
+		if (window.frames['wc_application'] && window.frames['wc_application'].window && window.frames['wc_application'].window.prettifyUL) {
+			window.frames['wc_application'].window.prettifyUL(20);
+		}
+		//redo UL firefox
+		else if (window.frames['wc_application'] && window.frames['wc_application'].contentWindow && window.frames['wc_application'].contentWindow.prettifyUL) {
+			window.frames['wc_application'].contentWindow.prettifyUL(20);
+		}
+	},1000);
 	
 	//	try to manage the session
 	// var oldSession = localStorage.dsCookie;
