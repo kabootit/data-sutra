@@ -762,6 +762,11 @@ function ACTION_space_flexible(event) {
 		if (solutionPrefs.design.statusDesign && solutionPrefs.design.statusLockWorkflow) {
 			globals.DEV_lock_workflow(true,solutionPrefs.design.statusLockList)
 		}
+		
+		//attach fancy scrollbars
+		if (application.__parent__.navigationPrefs && navigationPrefs.byNavItemID && solutionPrefs.config.currentFormID) {
+			scopes.DS.webSmallScroller(navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.tabFormInstance)
+		}
 	}
 }
 
