@@ -180,7 +180,7 @@ function LOGIN(event,webkit) {
 			history.go(-1)
 			
 			//go to nav item requested
-			var prefix = '/ds/'
+			var prefix = '/'
 			if (globals.DATASUTRA_router.length && globals.DATASUTRA_router[0].pathString != prefix + 'login') {
 				globals.DATASUTRA_router_initialHix = true
 				globals.DS_router('DSHistory')
