@@ -147,7 +147,6 @@ function triggerAjaxUpdate() {
 	}
 }
 
-
 // delay running of router until webclient form loaded in
 function routerDelay(p1,p2,p3,p4) {
 	setTimeout(function(){
@@ -179,7 +178,7 @@ function routerIframe(data) {
 		
 		// strip trailing slash
 		url 			= ( url.charAt(url.length - 1) === "/" ) ? url.substr(0, url.length - 1) : url;
-		var urlElements = url.split('/').slice(2);
+		var urlElements = url.split('/').slice(1);
 		for (var x = 0; x < urlElements.length; x++) {
 			append += urlElements[x] + "/";
 			if ( x != urlElements.length - 1 ) {
