@@ -1623,7 +1623,7 @@ function DS_actions(input) {
 				}
 				//webclient in router, redirect url
 				else if (globals.DATASUTRA_router_enable) {
-					application.showURL('/ds/quit','_top')
+					application.showURL('/quit','_top')
 					security.logout()
 //					plugins.WebClientUtils.executeClientSideJS('reLogin();')
 				//	globals.DS_router(null,null,null,null,true)
@@ -5242,7 +5242,7 @@ function DATASUTRA_open(skipFontFix) {
  */
 function DS_router(p1,params,itemID,launch,logout,pathName) {
 	//prefix in url path?
-	var prefix = '/ds/'
+	var prefix = '/'
 	
 	//get url using callback (when navigating history, doesn't really matter)
 	if (p1 != 'DSHistory' && !pathName) {
@@ -5678,7 +5678,7 @@ function DS_router_visibility(hidden,params) {
 	// if not logged in, throw back to login page
 		// on page hide/show will let this situation arise where ping back to server and that client is dead
 //	if ((!application.__parent__.solutionPrefs || !application.__parent__.navigationPrefs)) {
-//		plugins.WebClientUtils.executeClientSideJS('window.parent.routerReplace(null,"Data Sutra: Login","/ds/loginInline");')
+//		plugins.WebClientUtils.executeClientSideJS('window.parent.routerReplace(null,"Data Sutra: Login","/loginInline");')
 //		return
 //	}
 	
@@ -5792,11 +5792,10 @@ function DS_router_callback(path,callback) {
 	//have path, figure out where to navigate to
 	else {
 		path = path.split('/')
-		//pop off first/, ds, and last/
+		//pop off first and last /
 		if (!path[0]) {
 			path.splice(0,1)
 		}
-		path.splice(0,1)
 		if (!path[path.length - 1]) {
 			path.pop()
 		}
