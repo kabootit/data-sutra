@@ -11,20 +11,66 @@
 
 .label
 {
-	padding: 0px 0px 0px 0px
+	padding: 0px 0px 0px 0px;
+	overflow: hidden;
 }
 
+/** Tooltips */
 #mktipmsg
 {
-	padding: 2px;
-	background-color: #FFFFE1;
-	border: 1px solid #000000;
-	white-space: nowrap;
+	padding: 3px 10px 3px 10px;
+	background-color: #404040 !important;
 	font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;
 	font-size: 11px;
-	color: #000000;
+	color: #ffffff;
 	display: none;
-	position: absolute;left:0px;top:0px
+	position: absolute;left:0px;top:0px;
+	opacity:0.9;
+	filter:alpha(opacity=90); /* For IE8 and earlier */
+	margin-right: 10px;
+	-moz-border-radius: 4px; /* Firefox */
+	-webkit-border-radius: 4px; /* Safari, Chrome */
+	border-radius: 4px; /* CSS3 */
+}
+
+.accordionlinkmargin
+{
+	margin: 5px;
+}
+
+.button
+{
+	padding: 0px 0px 0px 0px;
+	overflow: hidden;
+}
+
+.listbox, .spinner
+{
+	padding: 1px 1px 1px 1px;
+	margin: 0;
+	border-style: inset;
+	border-width: 2px 2px 2px 2px;
+	border-spacing: 0px 0px;
+	border-color: #D4D0C8;
+	background-color: #FFFFFF;
+}
+
+.radioCheckField
+{
+	padding: 1px 1px 1px 1px;
+	margin: 0;
+	border-style: inset;
+	border-width: 2px 2px 2px 2px;
+	border-spacing: 0px 0px;
+	border-color: transparent;
+	background-color: #FFFFFF;
+}
+
+.tabcontainer
+{
+	border-width: 0px 1px 1px 1px;
+	border-color: #99AACC;
+	border-style: solid;
 }
 
 .tableviewcell
@@ -69,6 +115,16 @@ div.check div label
 	vertical-align: text-bottom;
 }
 
+div.check div.blk:focus,
+div.check div.inl:focus,
+div.radio div.blk:focus,
+div.radio div.inl:focus,
+div.radioCheckField div.blk:focus,
+div.radioCheckField div.inl:focus
+{
+	outline: 1px dotted black;
+}
+
 div.check div.inl
 {
 	display: inline;
@@ -81,30 +137,9 @@ div.check label
 	vertical-align: super
 }
 
-div.field div input
+div.opaquecontainer
 {
-	vertical-align: middle;
-	margin: 2px;
-	padding: 0px;
-	width: 16px;
-	height: 16px
-}
-
-div.field div label
-{
-	vertical-align: middle
-}
-
-div.field div.inl
-{
-	display: inline;
-	white-space: nowrap;
-	float: left
-}
-
-div.field label
-{
-	vertical-align: super
+	background-color: #ffffff;
 }
 
 div.radio div input
@@ -113,12 +148,12 @@ div.radio div input
 	margin: 2px;
 	padding: 0px;
 	width: 16px;
-	height: 16px
+	height: 16px;
 }
 
 div.radio div label
 {
-	vertical-align: middle
+	vertical-align: middle;
 }
 
 div.radio div.inl
@@ -129,6 +164,32 @@ div.radio div.inl
 }
 
 div.radio label
+{
+	vertical-align: super
+}
+
+div.radioCheckField div input
+{
+	vertical-align: middle;
+	margin: 2px;
+	padding: 0px;
+	width: 16px;
+	height: 16px
+}
+
+div.radioCheckField div label
+{
+	vertical-align: middle
+}
+
+div.radioCheckField div.inl
+{
+	display: inline;
+	white-space: nowrap;
+	float: left
+}
+
+div.radioCheckField label
 {
 	vertical-align: super
 }
@@ -152,27 +213,33 @@ div.tabs div
 
 div.tabs div a
 {
-	color: #222222;
+	color: #333333;
 	text-decoration: none;
 	text-shadow: #fff 0 1px 0;
-	padding: 3px 10px 3px 10px;
+	padding: 2px 6px 2px 6px;
 	margin-top: 0.2em;
 	margin-left: 0.2em;
-	/* For Internet Explorer */
-		filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f5f5f5', endColorstr='#dedede');
-	/* For WebKit (Safari, Google Chrome etc) */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #f5f5f5), color-stop(1, #dedede));
-	/* For Mozilla/Gecko (Firefox etc) */
-	background: -moz-linear-gradient(top center, #f5f5f5 0%, #dedede 100%);
-	background-color: #ffffff;
-	background-position: center center;
 	border: 1px solid #888888;
 	border-bottom: 1px solid #dfdfdf;
 	float: left;
 	position: relative;
 	top: 1px;
-	-moz-border-radius: 0.5em 0.5em 0em 0em;
-	border-radius: 0.5em 0.5em 0em 0em;
+	-moz-border-radius: 3px 3px 0px 0px; /* Firefox */
+	-webkit-border-radius: 3px 3px 0px 0px; /* Safari, Chrome */
+	border-radius: 3px 3px 0px 0px; /* CSS3 */
+	background: #dedede; /* Old browsers */
+	background: -moz-linear-gradient(top, #dedede 0%, #ffffff 0%, #dedede 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#dedede), color-stop(0%,#ffffff), color-stop(100%,#dedede)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #dedede 0%,#ffffff 0%,#dedede 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #dedede 0%,#ffffff 0%,#dedede 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #dedede 0%,#ffffff 0%,#dedede 100%); /* IE10+ */
+	background: linear-gradient(to bottom, #dedede 0%,#ffffff 0%,#dedede 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dedede', endColorstr='#dedede',GradientType=0 ); /* IE6-9 */
+}
+
+div.tabs div a span
+{
+	padding-left: 10px;
 }
 
 div.tabs div a:hover
@@ -313,36 +380,49 @@ tr.headerbuttons
 /*	border-top: 1px solid #000000*/
 }
 
+/** Change the pagination */
 a.navigatornumber, em span.navigatornumber, .navigatornext, .navigatorprev, .navigatorfirst, .navigatorlast
 {
-	/* For Internet Explorer */
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#cccccc', endColorstr='#666666');
-	/* For WebKit (Safari, Google Chrome etc) */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #ccc), color-stop(1, #666));
-	/* For Mozilla/Gecko (Firefox etc) */
-	background: -moz-linear-gradient(top center, #ccc 0%, #666 100%);
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	border-radius: 4px;
+	-moz-border-radius: 3px; /* Firefox */
+	-webkit-border-radius: 3px; /* Safari, Chrome */
+	border-radius: 3px; /* CSS3 */
 	border: 1px solid;
-	border-color: #666 #999 #fff;
-	color: #fff;
-	display: inline-block;
-	font-size: 12px;
-	font-weight: bold;
-	line-height: 16px;
-	margin: 8px 0 0;
+	border-color: #666; /* #999 #fff; */
+	color: #000000;
+
+	position: relative !important;
+	top: 5px !important;
+	
+	font-size: 11px;
+	font-weight: normal;
+	line-height: 13px; 
 	overflow: hidden;
-	padding: 0 5px;
+	padding: 0px 5px;
+	padding-top: 2px;
+	padding-bottom: 2px;
 	text-decoration: none;
-	text-shadow: rgba(0, 0, 0, 0.5) 0 -1px 0;
-	height: 18px;
+	text-shadow: #fff 0 1px 0;
+	height: 15px !important;
+	background: #dedede !important; /* Old browsers */
+	background: -moz-linear-gradient(top, #dedede 0%, #ffffff 0%, #dedede 100%)!important; /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#dedede), color-stop(0%,#ffffff), color-stop(100%,#dedede))!important; /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #dedede 0%,#ffffff 0%,#dedede 100%)!important; /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #dedede 0%,#ffffff 0%,#dedede 100%)!important; /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #dedede 0%,#ffffff 0%,#dedede 100%)!important; /* IE10+ */
+	background: linear-gradient(to bottom, #dedede 0%,#ffffff 0%,#dedede 100%)!important; /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dedede', endColorstr='#dedede',GradientType=0 )!important; /* IE6-9 */
 }
+
+a.navigatornumber {
+}
+
 em span.navigatornumber
 {
-	color: #ccc;
+	background: #ffffff !important; /* Old browsers */
+	color: #000000;
 	font-style: normal;
 }
+
 
 #infoPanel {
 	visibility: hidden;	
@@ -462,6 +542,7 @@ div.wicket-modal div.w_content {
 	background-color: transparent !important;
 }
 
+/** Change the (contextual) menu-plugin style */
 .yuimenu {
 	background: #dcdedc;
 	background: -moz-linear-gradient(top, #dcdedc 0%, #ced0ce 2%, #cdcdcd 5%, #cccdcb 14%, #c7c7c7 28%, #b0aeb0 77%, #a6a6a6 100%);
@@ -473,17 +554,19 @@ div.wicket-modal div.w_content {
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dcdedc', endColorstr='#a6a6a6',GradientType=0 );
 
     border: solid 1px #6d6d6d !important;
-    padding:45px;
+    padding: 5px;
 	-moz-box-shadow: 10px 10px 10px rgba(10, 10, 10, 0.5);
 	-webkit-box-shadow: 10px 10px 10px rgba(10, 10, 10, 0.5);
 	box-shadow: 10px 10px 10px rgba(10, 10, 10, 0.5);
 	
-	-moz-border-radius: 0.5em 0.5em 0.5em 0.5em;
-	border-radius: 0.5em 0.5em 0.5em 0.5em;
+	-moz-border-radius: 3px; /* Firefox */
+	-webkit-border-radius: 3px; /* Safari, Chrome */
+	border-radius: 3px; /* CSS3 */
 }
 
 .yuimenuitem,
-.yuimenubaritem  {
+.yuimenubaritem,
+.yuimenuitemlabel  {
 /*    text-shadow: #fff 0 1px 0;*/
 }
 
