@@ -5193,7 +5193,7 @@ function NAV_navigation_set_load()
 	
 	//favorite mode, rewrite url
 	if (favoriteMode) {
-		plugins.WebClientUtils.executeClientSideJS('preRender(null,"Favorite records","/ds/favorites",0);')
+		plugins.WebClientUtils.executeClientSideJS('preRender(null,"Favorite records","/favorites",0);')
 	}
 }
 
