@@ -633,11 +633,11 @@ function LIST_favorites(selected) {
 		}
 		
 		//get form and clear
-		var formName = controller.getName() + '__rows'
+		var formName = 'NAV__navigation_tree__rows'
 		var thisForm = solutionModel.getForm(formName)
 		
 		//grab width
-		var newWidth = 200//forms[formName].controller.getFormWidth()
+		var newWidth = forms.NAV__navigation_tree.controller.getFormWidth()
 		
 		//remove all elements from target form
 		var allComponents = thisForm.getComponents()
@@ -691,7 +691,7 @@ function LIST_favorites(selected) {
 				}
 				
 				//how wide are we showing
-				var shownWidth = forms.DATASUTRA_0F_solution.elements.tab_content_A.getWidth() - 8
+				var shownWidth = (solutionPrefs.config.webClient ? forms.DATASUTRA_WEB_0F__list__navigation.controller.getFormWidth() : forms.DATASUTRA_0F_solution.elements.tab_content_A.getWidth()) - 8
 				
 				//conversion factor
 				var convFactor = shownWidth / totalWidth
