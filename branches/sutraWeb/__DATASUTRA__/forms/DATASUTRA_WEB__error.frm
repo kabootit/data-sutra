@@ -7,6 +7,7 @@ uuid:"BD949740-7252-48D0-B096-25679D53B7B0"
 },
 {
 anchors:3,
+formIndex:2,
 location:"111,15",
 name:"btn_logout",
 onActionMethodID:"8C80426C-5464-4C98-952C-6875B8EFADF2",
@@ -36,10 +37,12 @@ anchors:15,
 dataProviderID:"_errorMessage",
 displayType:1,
 editable:false,
+formIndex:1,
 location:"10,35",
 scrollbars:32,
 size:"180,160",
 styleClass:"noborder",
+transparent:true,
 typeid:4,
 uuid:"DB1BDBF7-15A5-4FBD-98D6-972F214097E0"
 }
