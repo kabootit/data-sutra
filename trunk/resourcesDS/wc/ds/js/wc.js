@@ -84,7 +84,7 @@ function mobileIndicator() {
 	indicator.removeStyle('top');
 	indicator.removeStyle('left');
 	$('#HUDalpha').activity({ valign: 'top', steps: 3, segments: 12, width: 5.5, space: 5, length: 12,color: '#F2F2F2', speed: 0.75});
-	$('#sutraBusy').css('margin-top','5px');
+	$('#indicator .sutraBusy').css('margin-top','5px');
 }
 
 //  Include spinny indicator after jquery is available
@@ -109,7 +109,7 @@ function mobileIndicator() {
 		indicator.css('z-index','1000');
 		indicator.activity({segments: 12, align: 'left', valign: 'top', steps: 3, width:2, space: 1, length: 3, color: '#666666', speed: 1.5});
 		// indicator.activity({segments: 12, width: 5.5, space: 6, length: 13, color: '#252525', speed: 1.5, outside:true});
-		// sutraBusy is id for this indicator: $('#sutraBusy');
+		// sutraBusy is class for this indicator: $('#indicator .sutraBusy');
 	},1500)
 })();
 
@@ -485,6 +485,9 @@ function toggleClass(id, className, forceOn) {
 	
 })();
 function scrollbarSmall(formName,runIt) {
+	//no custom scrollbar
+	return;
+	
 	//wait until both scroller library (1st time only) and UL have been loaded; respawn every tenth of a second
 	if (typeof(FTScroller) == 'undefined' || !($ && $('#form_' + formName + ' table tbody'))) {
 		setTimeout(function(){scrollbarSmall(formName)},500);
@@ -502,7 +505,7 @@ function scrollbarSmall(formName,runIt) {
 		}
 		
 		//TODO: check to make sure that rows are actually availalble
-		setTimeout(function(){scrollbarSmall(formName,true)},1000);
+		setTimeout(function(){scrollbarSmall(formName,true)},500);
 		return;
 	}
 	
@@ -617,7 +620,7 @@ function scrollbarSmall(formName,runIt) {
 }
 
 //pretty up the ul
-function prettifyUL(maxTimeOut,fsSize) {
+function prettifyUL(maxTimeOut,fsSize,noShow) {
 	//check if successfully run or not; respawn
 	var timeOut = 1
 	if (!maxTimeOut) {
@@ -626,7 +629,7 @@ function prettifyUL(maxTimeOut,fsSize) {
 	
 	function iFeelPretty() {
 		timeOut++;
-		// console.log('PRETTY UL: ' + timeOut);
+		console.log('PRETTY UL: ' + timeOut);
 		
 		// the UL table header has loaded, the rest should be ready as well
 		if ($ && $("#form_NAV_T_universal_list__WEB__list table tbody td th table").length) {
@@ -654,11 +657,14 @@ function prettifyUL(maxTimeOut,fsSize) {
 				
 				
 				//make sure UL is showing
-				setTimeout(showUL,(fsSize - 1)*750);
+				if (!noShow) {
+					setTimeout(showUL,(fsSize - 1)*750);
+				}
 			}
 			
 			//wait ~1sec per 50 rows
-			setTimeout(iAmPretty,(fsSize - 1)*750);
+			setTimeout(iAmPretty,0);
+			// setTimeout(iAmPretty,(fsSize - 1)*750);
 		}
 		// keep running until table loaded; will timeout after 10 seconds
 		else if (timeOut < maxTimeOut) {
@@ -672,17 +678,20 @@ function prettifyUL(maxTimeOut,fsSize) {
 
 //listen for changes in size to UL area
 function lefthandListen() {
-	if ($.debounce) {
+	function attache(event) {
+		console.log("resized");
+		hideUL();
+		setTimeout(scrollbarSmall,750);
+		showUL();
+	}
+	
+	if ($.debounce && $('#form_DATASUTRA_WEB_0F__list').length && $._data($('#form_DATASUTRA_WEB_0F__list')[0],'events') && !$._data($('#form_DATASUTRA_WEB_0F__list')[0],'events').resize) {
 		//make sure that event not currently bound
 		$('#form_DATASUTRA_WEB_0F__list').off('resize');
 	
 		//(re-)attach
 		console.log("listener attached");
-		$('#form_DATASUTRA_WEB_0F__list').on('resize', null, $.debounce(300,function(event) {
-			console.log("resized");
-		
-			setTimeout(scrollbarSmall,750);
-		}));
+		$('#form_DATASUTRA_WEB_0F__list').on('resize', null, $.debounce(300,attache));
 	}
 }
 
@@ -690,21 +699,38 @@ function lefthandListen() {
 function hideUL() {
 	var selector = $('#form_NAV_T_universal_list__WEB');
 	if (selector.length) {
-		var list = selector[selector.length - 1];
-		var table = $('#' + list.id);
-		table.css('z-index', '-10');
+		selector.css('z-index', '-10');
+	}
+	
+	//add in the spinner for the UL area
+	var spinner = $('#form_DATASUTRA_WEB_0F__list__universal .sutraBusy')
+	if (!spinner.length) {
+		var indicator = $('#form_DATASUTRA_WEB_0F__list__universal');
+		indicator.activity({ valign: 'top', steps: 3, segments: 12, width: 3.5, space: 4, length: 8,color: '#F2F2F2', speed: 0.75});
+		
+		$('#form_DATASUTRA_WEB_0F__list__universal .sutraBusy').css('margin-top','50px');
+	}
+	else {
+		//show spinny
+		$('#form_DATASUTRA_WEB_0F__list__universal .sutraBusy').toggle(true);
 	}
 }
 
 //UL show
 function showUL() {
-	//rehook up correct styling to this part of the UL
-	setTimeout(prettifyUL,2000);
-	
-	var selector = $('#form_NAV_T_universal_list__WEB');
-	if (selector.length) {
-		var list = selector[selector.length - 1];
-		var table = $('#' + list.id);
-		table.css('z-index', 'auto');
-	}
+	//rehook up correct styling to this part of the UL, but don't call showUL again
+	setTimeout(function(){
+		prettifyUL(null,null,true)
+		
+		var selector = $('#form_NAV_T_universal_list__WEB');
+		if (selector.length) {
+			selector.css('z-index', 'auto');
+			
+			//hide spinny
+			$('#form_DATASUTRA_WEB_0F__list__universal .sutraBusy').toggle(false);
+		}
+		
+		//attach listener
+		lefthandListen();
+	},1000);
 }

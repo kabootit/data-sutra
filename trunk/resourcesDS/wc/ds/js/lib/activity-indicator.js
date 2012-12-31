@@ -70,7 +70,7 @@
 	 * is inserted, that can be styled with CSS to display an animated gif as fallback.
 	 */
 	var render = function() {
-		return $('<div id="sutraBusy">').addClass('busy');
+		return $('<div class="sutraBusy">').addClass('busy');
 	};
 	
 	/**
@@ -123,7 +123,7 @@
 					opacity: $.fn.activity.getOpacity(d, i)
 				}));
 			}
-			return $('<div id="sutraBusy">').append(el).width(2*r).height(2*r);
+			return $('<div class="sutraBusy">').append(el).width(2*r).height(2*r);
 		};
 				
 		// Check if Webkit CSS animations are available, as they work much better on the iPad
