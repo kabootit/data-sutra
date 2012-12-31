@@ -472,7 +472,10 @@ function ACTION_space_flexible(event) {
 		//reassign arguments without jsevents
 		arguments = Arguments.filter(globals.CODE_jsevent_remove)
 	}
-
+		
+		//listen to changes in size of the left hand pane
+		scopes.DS.webULResizeMonitor()
+		
 		var baseForm = solutionPrefs.config.formNameBase
 		var forceHide = arguments[0]
 		var skipUI = arguments[1]
@@ -769,7 +772,8 @@ function ACTION_space_flexible(event) {
 		
 		//attach fancy scrollbars
 		if (application.__parent__.navigationPrefs && navigationPrefs.byNavItemID && solutionPrefs.config.currentFormID) {
-			scopes.DS.webSmallScroller(navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.tabFormInstance)
+			scopes.DS.webULPrettify()
+//			scopes.DS.webSmallScroller(navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.tabFormInstance)
 		}
 	}
 }
