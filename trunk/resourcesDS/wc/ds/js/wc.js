@@ -137,6 +137,17 @@ function mobileIndicator() {
 	},1000)
 })(jQuery);
 
+//	Extend jquery to listen to resize on elements (https://github.com/cowboy/jquery-resize)
+(function($) {
+	setTimeout(function(){
+		//load in resource
+		$('head').append('<script type="text/javascript" src="/ds/js/lib/jquery.ba-resize.min.js"></script>');
+		
+		//load in resource
+		$('head').append('<script type="text/javascript" src="/ds/js/lib/jquery.ba-throttle-debounce.min.js"></script>');
+	},1000)
+})(jQuery);
+
 //  Pump in extra stylesheets at the end of head so that overwrite existing 
 (function(){
 	var delayTime = 3500
@@ -359,7 +370,7 @@ function navigateConfig(source) {
 
 //	Sniff browser used and disallow login from 'bad' browsers
 function browserCheck() {
-	return $.browser.webkit || $.browser.mozilla
+	return $.browser.webkit; // || $.browser.mozilla
 }
 
 //	Form factor used
@@ -481,14 +492,23 @@ function scrollbarSmall(formName,runIt) {
 	}
 	//things are available now, hold off another second
 	else if (!runIt) {
+		//hide scrollbar from the get-go
+		var selector = $('#form_' + formName + ' table tbody');
+		
+		if (selector.length) {
+			//records
+			var list = selector[selector.length - 1];
+			$('#' + list.id).css('overflow-y','hidden');
+		}
+		
 		//TODO: check to make sure that rows are actually availalble
 		setTimeout(function(){scrollbarSmall(formName,true)},1000);
 		return;
 	}
 	
-	//hardcode to ease with debugging
+	//when no formName specified, try to use from previous UL
 	if (!formName) {
-		formName = 'UL__set55_item1356_CRM_0F_example';
+		formName = (DS.scroller && DS.scroller._lastForm) ? DS.scroller._lastForm : 'UL__set55_item1356_CRM_0F_example';
 	}
 	var selector = $('#form_' + formName + ' table tbody');
 
@@ -500,6 +520,9 @@ function scrollbarSmall(formName,runIt) {
 		if (typeof(DS.scroller) == "undefined") {
 			DS.scroller = new Object();
 		}
+		
+		//track the last form run on
+		DS.scroller._lastForm = formName
 		
 		//records
 		var list = selector[selector.length - 1];
@@ -527,9 +550,6 @@ function scrollbarSmall(formName,runIt) {
 		$('#form_' + formName + ' table tbody .ftscroller_container td[style*="display: none;"]').css({display: 'block', width: '17px'});
 		//TODO: this is firing too often but doesn't matter because selector doesn't return anything
 		$('#form_' + formName + ' table tbody .ftscroller_container').on('click','td',function(e) {$('#form_' + formName + ' table tbody .ftscroller_container td[style*="display: none;"]').css({display: 'block', width: '17px'})});
-		
-		//disable selectability
-		// $('#form_' + formName + ' table tbody .ftscroller_container input').disableSelection();
 		
 		//reattach servoy stuff
 		var scrollEvent = list.onscroll.toString().split("'");
@@ -562,9 +582,6 @@ function scrollbarSmall(formName,runIt) {
 						scrollbarSmall(formName); 
 						DS.scroller[tForm].scrollTop = currentScrollTop;
 					},1000);
-					
-					//rehook up correct styling to this part of the UL
-					setTimeout(prettifyUL,2000);
 					
 					if (function() {
 						onABC();
@@ -634,6 +651,10 @@ function prettifyUL(maxTimeOut,fsSize) {
 				).css('background-color','transparent').removeClass('gfxLeftHilite');
 				$('#form_NAV_T_universal_list__WEB__list td[style*="background-color:' + unselectHEX + ';"] div[name*=sutra_favorite_badge], #form_NAV_T_universal_list__WEB__list table tbody td[style*="background-color:' + unselectHEX + ';"], 			#form_NAV_T_universal_list__WEB__list table tbody td[style*="background-color:' + unselectHEX + ';"] input'
 				).css('background-color','transparent').removeClass('gfxLeftHilite');
+				
+				
+				//make sure UL is showing
+				setTimeout(showUL,(fsSize - 1)*750);
 			}
 			
 			//wait ~1sec per 50 rows
@@ -647,4 +668,43 @@ function prettifyUL(maxTimeOut,fsSize) {
 	
 	// start first time
 	setTimeout(iFeelPretty,50);
+}
+
+//listen for changes in size to UL area
+function lefthandListen() {
+	if ($.debounce) {
+		//make sure that event not currently bound
+		$('#form_DATASUTRA_WEB_0F__list').off('resize');
+	
+		//(re-)attach
+		console.log("listener attached");
+		$('#form_DATASUTRA_WEB_0F__list').on('resize', null, $.debounce(300,function(event) {
+			console.log("resized");
+		
+			setTimeout(scrollbarSmall,750);
+		}));
+	}
+}
+
+//UL hide
+function hideUL() {
+	var selector = $('#form_NAV_T_universal_list__WEB');
+	if (selector.length) {
+		var list = selector[selector.length - 1];
+		var table = $('#' + list.id);
+		table.css('z-index', '-10');
+	}
+}
+
+//UL show
+function showUL() {
+	//rehook up correct styling to this part of the UL
+	setTimeout(prettifyUL,2000);
+	
+	var selector = $('#form_NAV_T_universal_list__WEB');
+	if (selector.length) {
+		var list = selector[selector.length - 1];
+		var table = $('#' + list.id);
+		table.css('z-index', 'auto');
+	}
 }
