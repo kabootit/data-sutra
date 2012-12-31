@@ -101,34 +101,46 @@ function webSubheader(firstShow, event) {
 
 /**
  * Convert passed in form/id to use small scrollbars
+ * @param {String} [formName]
  * 
  * @properties={typeid:24,uuid:"DF6762C3-C8E0-4A4A-92B1-8CF985EC5BFF"}
  */
 function webSmallScroller(formName) {
-	//this is how it's called
-//	scopes.DS.webSmallScroller(navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.tabFormInstance)
-	
 	//currently can only attach to ULs...need to also do for other list-based forms
 	if (solutionPrefs.config.webClient && smallScroll && solutionPrefs.config.currentFormID && navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData) {
+		if (!formName) {
+			formName = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.tabFormInstance
+		}
+		
 		plugins.WebClientUtils.executeClientSideJS('scrollbarSmall("' + formName + '");')
 	}
 }
 
 /**
- * @param {Boolean} [noDelay]
+ * @param {Boolean} [ulClick]
  *
  * @properties={typeid:24,uuid:"E2571884-7D85-4BDC-9A61-AC1351B784C9"}
  */
-function webULPrettify(noDelay) {
+function webULPrettify(ulClick) {
 	if (solutionPrefs.config.webClient) {
 		//check to see how many records are loaded
 		var chunks = Math.ceil(forms[solutionPrefs.config.currentFormName].foundset.getSize() / 50)
 		
-		if (noDelay) {
+		//no delay when clicking in UL
+		if (ulClick) {
 			plugins.WebClientUtils.executeClientSideJS('prettifyUL();')
 		}
+		//delay and scrollbars
 		else {
 			plugins.WebClientUtils.executeClientSideJS('prettifyUL(100,' + chunks + ');')
+			webSmallScroller()
 		}
 	}
+}
+
+/**
+ * @properties={typeid:24,uuid:"82CC64E3-C1BC-4A88-8D8A-3CD6A35BDE98"}
+ */
+function webULResizeMonitor() {
+	plugins.WebClientUtils.executeClientSideJS('lefthandListen();')
 }
