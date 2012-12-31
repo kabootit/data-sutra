@@ -18,5 +18,5 @@ function BUTTONS_toggle(currentNavItem) {
 	}
 	
 	//attach fancy scrollbars
-	scopes.DS.webSmallScroller(navigationPrefs.byNavItemID[currentNavItem].listData.tabFormInstance)
+	scopes.DS.webULPrettify()
 }
