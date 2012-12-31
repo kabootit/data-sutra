@@ -5569,9 +5569,11 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 			}
 		}
 		
-//		plugins.WebClientUtils.executeClientSideJS('window.parent.routerDelay(null,"' + navigationPrefs.byNavItemID[itemID]._about_ + '","' + getURL(navigationPrefs.byNavItemID[itemID].path) + '",' + delay + ');')
-		plugins.WebClientUtils.executeClientSideJS(routerCall + '(null,"' + navigationPrefs.byNavItemID[itemID]._about_ + '","' + getURL(navigationPrefs.byNavItemID[itemID].path) + '",' + delay + ');')
-		return
+		if (navigationPrefs.byNavItemID[itemID]) {
+	//		plugins.WebClientUtils.executeClientSideJS('window.parent.routerDelay(null,"' + navigationPrefs.byNavItemID[itemID]._about_ + '","' + getURL(navigationPrefs.byNavItemID[itemID].path) + '",' + delay + ');')
+			plugins.WebClientUtils.executeClientSideJS(routerCall + '(null,"' + navigationPrefs.byNavItemID[itemID]._about_ + '","' + getURL(navigationPrefs.byNavItemID[itemID].path) + '",' + delay + ');')
+			return
+		}
 	}
 	else if (p1 == 'DSError_NoURL') {
 		setError('404','No page requested')
