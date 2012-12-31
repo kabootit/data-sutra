@@ -212,7 +212,8 @@ function routerIframe(data) {
 	//tack on referrer (as long as it isn't servoy-webclient...get around logout issue)
 	if (document.referrer && (document.referrer.indexOf('servoy-webclient') == -1)) {
 		//replace all slashes out with tab characters because servoy is de-encoding at some point
-		var refer = document.referrer.replace(/\//g,'%09')
+		// var refer = document.referrer.replace(/\//g,'%09')
+		var refer = window.btoa(unescape(encodeURIComponent( document.referrer )));
 		
 		append += 'refer/' + refer + '/';
 	}
