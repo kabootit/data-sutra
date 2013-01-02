@@ -1792,12 +1792,19 @@ function DS_actions(input) {
 					
 					//load navigation set list back in
 					if (solutionPrefs.config.webClient) {
-						var tabPanel = forms.DATASUTRA_WEB_0F__list.elements.tab_list
-						var navName = 'NAV__navigation_tree__WEB'
-						//remove main window if new one different than currently displayed one
-						if (tabPanel.getLeftForm().controller.getName() != navName) {
-							tabPanel.setLeftForm(forms[navName])
+//						var tabPanel = forms.DATASUTRA_WEB_0F__list.elements.tab_list
+//						var navName = 'DATASUTRA_WEB_0F__list__navigation'
+//						//remove main window if new one different than currently displayed one
+//						if (tabPanel.getLeftForm().controller.getName() != navName) {
+//							tabPanel.setLeftForm(forms[navName])
+//						}
+
+						var tabPanel = forms.DATASUTRA_WEB_0F__list__navigation.elements.tab_content_A
+						if (tabPanel.tabIndex > 0) {
+							tabPanel.removeTabAt(1)
 						}
+						tabPanel.addTab(forms.NAV__navigation_tree__WEB)
+						tabPanel.tabIndex = tabPanel.getMaxTabIndex()
 					}
 					//smart client
 					else {
@@ -1945,9 +1952,11 @@ function DS_actions(input) {
 					
 					//in servoy 4 or greater
 					if (utils.stringToNumber(solutionPrefs.clientInfo.verServoy) >= 4) {
+						var ulForm = (solutionPrefs.config.webClient) ? 'DATASUTRA_WEB_0F__list__universal' : baseForm
+						
 						//a custom tab was actually being shown
 						if (false) {
-							forms[baseForm].elements.tab_content_B.tabIndex = navigationPrefs.byNavSetName.configPanes.itemsByName['Custom tab ' + solutionPrefs.config.currentFormID + ': ' + solutionPrefs.config.currentFormName].listData.tabNumber
+							forms[ulForm].elements.tab_content_B.tabIndex = navigationPrefs.byNavSetName.configPanes.itemsByName['Custom tab ' + solutionPrefs.config.currentFormID + ': ' + solutionPrefs.config.currentFormName].listData.tabNumber
 						}
 						//retrigger the shown UL to reload
 						else if (navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].navigationItem.useFwList) {
@@ -1958,7 +1967,7 @@ function DS_actions(input) {
 								forms[navForm].DISPLAY_cycle(true)
 							
 								forms[navForm].FORM_on_show(true)
-								forms[baseForm].elements.tab_content_B.tabIndex = 2
+								forms[ulForm].elements.tab_content_B.tabIndex = 2
 								forms[navList].elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.tabNumber
 							}
 							//without buttons
@@ -1968,13 +1977,13 @@ function DS_actions(input) {
 								forms[navForm].DISPLAY_cycle(true)
 								
 								forms[navForm].FORM_on_show(true)
-								forms[baseForm].elements.tab_content_B.tabIndex = 3
+								forms[ulForm].elements.tab_content_B.tabIndex = 3
 								forms[navList].elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.tabNumber
 							}
 						}
 						//show blank tab
 						else {
-							forms[baseForm].elements.tab_content_B.tabIndex = 1
+							forms[ulForm].elements.tab_content_B.tabIndex = 1
 						}
 					}
 					
