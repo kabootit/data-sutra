@@ -1,10 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE urlrewrite 
 		PUBLIC "-//tuckey.org//DTD UrlRewrite 2.6//EN"
-		"http://www.tuckey.org/res/dtds/urlrewrite2.6.dtd">
+		"http://www.tuckey.org/res/dtds/urlrewrite2.6.dtd"
+		[
+			<!ENTITY dsDev "localhost">
+			<!ENTITY dsDirect "example.servoy">
+			<!ENTITY dsServlets "example.admin">
+			<!ENTITY dsSutra "example.app">
+			
+			<!ENTITY dsCMS1 "YOUR_WEBSITE_NAME">
+			<!ENTITY dsCMS2 "YOUR_WEBSITE_NAME">
+			<!ENTITY dsCMS3 "YOUR_WEBSITE_NAME">
+			<!ENTITY dsCMS4 "YOUR_WEBSITE_NAME">
+			<!ENTITY dsCMS5 "YOUR_WEBSITE_NAME">
+		]>
 
 <!--
-	Configuration file for Data Sutra by Data Mosaic
+	Configuration file for Data Sutra and Sutra CMS by Data Mosaic
 	http://www.data-mosaic.com/data-sutra/
 
 	Rewriting provided by UrlRewriteFilter
@@ -12,37 +24,109 @@
 -->
 
 <urlrewrite>
-	<!-- 	Servoy non-web clients (smart, headless, admin) accessible ONLY from these addresses -->
+	
+<!-- 	Servoy non-web clients (smart, headless, admin) accessible ONLY from these addresses -->
 	<rule>
 		<name>Servoy servlets (not web-client)</name>
 		<note>Smart-client, web-client, headless-client, and servoy-admin will only work when accessed from this host. Any other thing that is served up by Tomcat you do not want pushed into sutraCMS should be manually specified here (or duplicate this rule and put there). NOTE: This rule must be the first one.</note>
 		<condition name="host" next="or">
-			servlets
+			&dsDirect;
 		</condition>
+		<condition name="host" next="or">
+			&dsServlets;
+		</condition>
+		<!-- This condition is included for advanced Apache proxy setup -->
 		<condition name="host">
-			servlets.example.com
+			servlets
 		</condition>
 		<from>^(.*)</from>
 		<to last="true">$1</to>
 	</rule>
 	
+<!--	Language based redirects (1 rule per domain, 1 rule per folder) -->
+
+	<!--	Example site		-->
+	<rule enabled="false">
+		<name>Example lang.d::english</name>
+		<note>English version of Example as a domain</note>
+		<condition name="host">
+			&dsCMS1;
+		</condition>
+		<from>^(.*)</from>
+		<set name="language">en</set>
+		<to last="false">$1</to>
+	</rule>
+
+	<rule enabled="true">
+		<name>Example lang.f::english</name>
+		<note>English version of Example as a folder</note>
+		<condition name="host">
+			&dsCMS1;
+		</condition>
+		<from>^/english/?(.*)</from>
+		<set name="language">en</set>
+		<to last="false">/$1</to>
+	</rule>
+
+
+<!-- Override things in Servoy that aren't modifiable otherwise -->
+	<rule>
+		<name>Servoy table sort icons</name>
+		<note>Better webclient sort icons</note>
+		<from>^/servoy-webclient/resources/application/images/arrow_(down|up|off).png$</from>
+		<to last="true">/servoy-webclient/templates/datasutra/override/table/images/arrow_$1.png</to>
+	</rule>
 	
-	<!-- DS WebClient with(out) /ds/ prefix -->
+	<rule>
+		<name>Servoy calendar css</name>
+		<note>Better calendar picker graphics</note>
+		<from>^/servoy-webclient/resources/datepicker/dhtmlgoodies_calendar.css$</from>
+		<to last="true">/servoy-webclient/templates/datasutra/override/calendar/calendar.css</to>
+	</rule>
+	
+	<rule enabled="false">
+		<name>Servoy calendar graphics</name>
+		<note>Better calendar picker graphics</note>
+		<from>^/servoy-webclient/resources/datepicker/images/(icon1|left|left_over|right|right_over|close|close_over|down_time).gif$</from>
+		<to last="true">/servoy-webclient/templates/datasutra/override/calendar/images/$1.gif</to>
+	</rule>
+
+	
+<!-- DS WebClient with(out) /ds/ prefix -->
 	<rule>
 		<name enabled="true">DS remove /ds/ prefix</name>
 		<note></note>
+		<condition name="host" next="or">
+			&dsSutra;
+		</condition>
 		<condition name="host">
-			ds
+			&dsDev;
 		</condition>
 		<from>^/(?!servoy-webclient)(?!ds)(.*)$</from>
 		<to last="false">/ds/$1</to>
 	</rule>
 	
 	<rule>
+		<name>DS logout</name>
+		<condition name="host" next="or">
+			&dsSutra;
+		</condition>
+		<condition name="host">
+			&dsDev;
+		</condition>
+		<note></note>
+		<from>^/(?:ds)?/quit$</from>
+		<to last="true">/ds/logout.html</to>
+	</rule>
+	
+	<rule>
 		<name>DS resources</name>
 		<note>Pass all datasutra wc resources through untouched</note>
+		<condition name="host" next="or">
+			&dsSutra;
+		</condition>
 		<condition name="host">
-			ds
+			&dsDev;
 		</condition>
 		<from>^/(?:ds)?/(config|css|external|img|js|theme)/(.*)$</from>
 		<to last="true">/ds/$1/$2</to>
@@ -51,8 +135,11 @@
 	<rule>
 		<name>DS favicons</name>
 		<note>Regular favicon and iOS icon</note>
+		<condition name="host" next="or">
+			&dsSutra;
+		</condition>
 		<condition name="host">
-			ds
+			&dsDev;
 		</condition>
 		<from>^/(favicon.ico|apple-touch-icon.png|startup.png)$</from>
 		<to last="true">/ds/img/$1</to>
@@ -61,8 +148,11 @@
 	<rule>
 		<name>DS no trailing slash</name>
 		<note></note>
+		<condition name="host" next="or">
+			&dsSutra;
+		</condition>
 		<condition name="host">
-			ds
+			&dsDev;
 		</condition>
 		<from>^/(?:ds)?$</from>
 		<to last="false">/ds/</to>
@@ -70,8 +160,11 @@
 	
 	<rule>
 		<name>DS iPhone/iTouch</name>
+		<condition name="host" next="or">
+			&dsSutra;
+		</condition>
 		<condition name="host">
-			ds
+			&dsDev;
 		</condition>
 		<condition name="user-agent" next="or">^.*iPhone.*$</condition>
 		<condition name="user-agent">^.*iPod.*$</condition>
@@ -81,18 +174,29 @@
 	
 	<rule>
 		<name>DS iPad</name>
-		<condition name="host">
-			ds
+		<condition name="host" next="or">
+			&dsSutra;
 		</condition>
-		<condition name="user-agent">^.*iPad.*$</condition>
+		<condition name="host">
+			&dsDev;
+		</condition>
+		<condition name="user-agent" next="or">^.*iPad.*$</condition>
+		<condition name="user-agent" next="or">^.*Nexus 7.*$</condition>
+		<condition name="user-agent" next="or">^.*Nexus 10.*$</condition>
+		<condition name="user-agent" next="or">^.*Kindle.*$</condition>
+		<condition name="user-agent" next="or">^.*Silk-Accelerated.*$</condition>
+		<condition name="user-agent" next="or">^.*PlayBook.*$</condition>
 		<from>^/(?:ds)?/(.*)$</from>
 		<to last="true">/ds/index.ipad.html?path=$1</to>
 	</rule>
 	
 	<rule>
 		<name>DS desktop</name>
+		<condition name="host" next="or">
+			&dsSutra;
+		</condition>
 		<condition name="host">
-			ds
+			&dsDev;
 		</condition>
 		<note></note>
 		<from>^/(?:ds)?/(.*)$</from>
@@ -100,10 +204,25 @@
 	</rule>
 	
 	
-	<!-- 	Same for all CMS sites -->
+<!-- 	Same for all CMS sites -->
 	<rule>
 		<name>Generic CMS entry .jsp</name>
 		<note>All CMS jsp files served up from sutraCMS directory</note>
+		<condition name="host" next="or">
+			&dsCMS1;
+		</condition>
+		<condition name="host" next="or">
+			&dsCMS2;
+		</condition>
+		<condition name="host" next="or">
+			&dsCMS3;
+		</condition>
+		<condition name="host" next="or">
+			&dsCMS4;
+		</condition>
+		<condition name="host">
+			&dsCMS5;
+		</condition>
 		<from>^/(\b(index|index_edit|error)\b.jsp.*)$</from>
 		<to last="true">/sutraCMS/$1</to>
 	</rule>
@@ -111,6 +230,21 @@
 	<rule>
 		<name>Generic CMS home page</name>
 		<note>When no page specified, serve the default page for the requested domain</note>
+		<condition name="host" next="or">
+			&dsCMS1;
+		</condition>
+		<condition name="host" next="or">
+			&dsCMS2;
+		</condition>
+		<condition name="host" next="or">
+			&dsCMS3;
+		</condition>
+		<condition name="host" next="or">
+			&dsCMS4;
+		</condition>
+		<condition name="host">
+			&dsCMS5;
+		</condition>
 		<from>^/$</from>
 		<to last="true">/sutraCMS/index.jsp</to>
 	</rule>	
@@ -120,6 +254,21 @@
 		<note>Push controllers into sutraCMS starting directory
 			Note: should be without leading (.*), but don't know how to specifiy scope in non-processed js files
 		</note>
+		<condition name="host" next="or">
+			&dsCMS1;
+		</condition>
+		<condition name="host" next="or">
+			&dsCMS2;
+		</condition>
+		<condition name="host" next="or">
+			&dsCMS3;
+		</condition>
+		<condition name="host" next="or">
+			&dsCMS4;
+		</condition>
+		<condition name="host">
+			&dsCMS5;
+		</condition>
 		<from>(.*)/controllers/(.*)$</from>
 		<to last="true">/sutraCMS/controllers/$2</to>
 	</rule>
@@ -127,6 +276,21 @@
 	<rule>
 		<name>Generic CMS resources</name>
 		<note>Push resources into sutraCMS starting directory</note>
+		<condition name="host" next="or">
+			&dsCMS1;
+		</condition>
+		<condition name="host" next="or">
+			&dsCMS2;
+		</condition>
+		<condition name="host" next="or">
+			&dsCMS3;
+		</condition>
+		<condition name="host" next="or">
+			&dsCMS4;
+		</condition>
+		<condition name="host">
+			&dsCMS5;
+		</condition>
 		<from>^/resources/(.*)$</from>
 		<to last="true">/sutraCMS/resources/$1</to>
 	</rule>
@@ -134,30 +298,35 @@
 	<rule>
 		<name>Generic CMS paths (folder and pretty)</name>
 		<note>Feed requested path (anything without an extension) into sutraCMS/index.jsp unless coming from sutra web client directory</note>
-		<condition name="host" operator="notequal">
-			ds
+		<condition name="host" next="or">
+			&dsCMS1;
+		</condition>
+		<condition name="host" next="or">
+			&dsCMS2;
+		</condition>
+		<condition name="host" next="or">
+			&dsCMS3;
+		</condition>
+		<condition name="host" next="or">
+			&dsCMS4;
+		</condition>
+		<condition name="host">
+			&dsCMS5;
 		</condition>
 		<from>^(?:(?:/sutraCMS)/index.jsp)?(.*/(?!.*\.)(?!.*/).*?)(?:\?|$)(?:\?*)(.*)</from>
 		<set name="path">$1</set>
 		<to last="true">/sutraCMS/index.jsp?$2</to>
 	</rule>
 
-	<!--	Site resources (1 rule per site)		-->
+<!--	Site resources (1 rule per site)		-->
 	<rule>
 		<name>Example resources</name>
 		<note>If we get this far, it is a file with an extension, serve it from site directory</note>
-		<condition name="host" next="or">
-			example
-		</condition>
-		<condition name="host" next="or">
-			example.ru
-		</condition>
 		<condition name="host">
-			example.be
+			&dsCMS1;
 		</condition>
 		<from>^/(.*)</from>
 		<to>/sutraCMS/sites/default/$1</to>
 	</rule>
 
 </urlrewrite>
-
