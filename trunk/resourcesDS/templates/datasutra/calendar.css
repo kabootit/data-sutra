@@ -1,0 +1,248 @@
+#calendarDiv {
+	position: absolute;
+	width: 220px;
+	border: 1px solid gray;
+	padding: 10px;
+	font-family: arial,helvetica,clean,sans-serif;
+	font-size: 10px;
+	padding-bottom: 20px;
+	visibility: hidden;
+	background: #F2F2F2;
+	
+	background: -moz-linear-gradient(top,  #ffffff 0%, #f9f9f9 41%, #e8eaea 63%, #d8d8da 79%, #d8d8da 97%, #8c8c8c 100%) 0 0 no-repeat, #F2F2F2;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(41%,#f9f9f9), color-stop(63%,#e8eaea), color-stop(79%,#d8d8da), color-stop(97%,#d8d8da), color-stop(100%,#8c8c8c)) 0 0 no-repeat, #F2F2F2;
+	background: -webkit-linear-gradient(top,  #ffffff 0%,#f9f9f9 41%,#e8eaea 63%,#d8d8da 79%,#d8d8da 97%,#8c8c8c 100%) 0 0 no-repeat, #F2F2F2;
+	background: -o-linear-gradient(top,  #ffffff 0%,#f9f9f9 41%,#e8eaea 63%,#d8d8da 79%,#d8d8da 97%,#8c8c8c 100%) 0 0 no-repeat, #F2F2F2;
+	background: -ms-linear-gradient(top,  #ffffff 0%,#f9f9f9 41%,#e8eaea 63%,#d8d8da 79%,#d8d8da 97%,#8c8c8c 100%) 0 0 no-repeat, #F2F2F2;
+	background: linear-gradient(to bottom,  #ffffff 0%,#f9f9f9 41%,#e8eaea 63%,#d8d8da 79%,#d8d8da 97%,#8c8c8c 100%) 0 0 no-repeat, #F2F2F2;
+	filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#8c8c8c',GradientType=0 );
+	
+	-moz-background-size: 100% 24px;
+	-webkit-background-size: 100% 24px;
+	-o-background-size: 100% 24px;
+	-ms-background-size: 100% 24px;
+	background-size: 100% 24px;
+}
+
+#calendarDiv span, #calendarDiv img{
+	float: left;
+	padding-top: 1px;
+}
+
+#calendarDiv .selectBox,
+#calendarDiv .selectBoxOver {
+	padding: 1px;
+	cursor: pointer;
+	padding-left: 2px;
+	font-size: 14px;
+}
+
+#calendarDiv .selectBoxTime,
+#calendarDiv .selectBoxTimeOver {	
+	padding: 1px;
+	cursor: pointer;
+	padding-left: 2px;
+}
+
+#calendarDiv .calendar_week_column{
+	display: none;
+}
+
+#calendarDiv .selectBox{
+	border: 1px solid #CCC;
+	font-weight: bold;		
+	position: relative;
+	padding-left: 6px;
+	padding-right: 6px;
+	border-radius: 2px;
+	background-color: #FBFBFB;
+}
+
+#calendarDiv .selectBox img,
+#calendarDiv .selectBoxOver img {
+	display: none;
+}
+
+#calendarDiv .selectBoxOver{
+	background-color: #426FD9;
+	border: 1px solid #FFF;
+	font-weight: bold;
+	color: #FFF;
+	position: relative;
+	padding-left: 6px;
+	padding-right: 6px;
+	border-radius: 2px;
+}
+
+#calendarDiv .selectBoxTime{
+	border: 1px solid #CCC;	
+	color: #262626;
+	position: relative;
+	border-radius: 2px;
+	background-color: #FBFBFB;
+	height: 1.3em;
+}
+
+#calendarDiv .selectBoxTimeOver{
+	border: 1px solid #CCC;	
+	color: #262626;
+	position: relative;
+}
+
+#calendarDiv .topBar{
+	height: 1.6em;
+	padding: 2px;
+	margin-top: 18px;
+	margin-bottom: 8px;
+	text-align: center;
+}
+
+#calendarDiv .activeDay{	/* Active day in the calendar */
+	color: #FFFFFF;
+	background-color: #426FD9;
+}
+
+#calendarDiv .todaysDate{
+	text-align: left;
+	position: absolute;
+	bottom: 4px;
+	right: 10px;
+	left: 10px;
+}
+
+#calendarDiv .todaysDate div{
+	float: left;
+	cursor: default;
+}
+	
+#calendarDiv .timeBar{
+	position: absolute;
+	right: 0px;
+	bottom: -2px;
+}
+
+#calendarDiv .timeBar div{
+	float: left;
+	margin-left: 1px;
+	cursor: pointer;
+}
+
+#calendarDiv .monthYearPicker{
+	background-color: #FBFBFB;
+	border: 1px solid #CCC;
+	border-radius: 6px;
+	font-size: 12px;
+	padding: 3px;
+	position: absolute;
+	left: 0px;
+	top: 15px;
+	z-index: 1000;
+	display: none;
+
+}
+
+#calendarDiv #monthSelect{
+	margin-right: 4px;
+}
+
+#calendarDiv .monthYearPicker div{
+	float: none;
+	clear: both;	
+	padding: 1px;
+	margin: 1px;	
+	cursor: pointer;
+}
+
+#calendarDiv .monthYearActive{
+	background-color: #426FD9;
+	color: #FFFFFF;
+}
+
+#calendarDiv table{
+	table-layout: fixed;
+	border-collapse: collapse;
+	background-color: #CCC;
+}
+
+#calendarDiv td[colspan]{
+	background-color: #CCC;
+	cursor: default;
+}
+
+#calendarDiv td{
+	border: 1px solid #CCC;
+	text-align: center;
+	cursor: pointer;
+	padding: 1px;
+	height: 1.6em;
+	line-height: 1.6em;
+	white-space: nowrap;
+	margin: 0px;
+	font-size: 12px;
+	color: #06C;
+	background-color: white;
+}
+
+#calendarDiv tr.calendar_week_row {
+	padding: 0;
+	border: 0;
+}
+
+#calendarDiv tr.calendar_week_row td {
+	border: 0;
+	height: 2em;
+	color: black;
+	background-color: #F2F2F2;
+	cursor: default;
+}
+
+#calendarDiv .topBar img{
+	cursor: pointer;
+}
+
+#calendarDiv .topBar div{
+	display: inline-block;
+	margin-right: 1px;
+}
+
+#calendarDiv .topBar div:first-child img {
+	position: absolute;
+	left: 10px;
+	top: 32px;
+}
+
+#calendarDiv .topBar div:nth-of-type(2) img {
+	position: absolute;
+	right: 10px;
+	top: 32px;
+}
+
+#calendarDiv .topBar img:nth-of-type(1) {
+	position: absolute;
+	right: 10px;
+	top: 3px;
+}
+
+#calendar_hour_txt, #calendar_minute_txt {
+	padding-left: 3px;
+}
+
+#calendarDiv #yearDropDown {
+	margin-top: -2px;
+	margin-left: 25px;
+}
+
+#calendarDiv #monthDropDown {
+	margin-top: -2px;
+	margin-left: 30px;
+}
+
+#calendarDiv #hourDropDown {
+	margin-top: -2px;
+	margin-left: 20px;
+}
+
+#calendarDiv #minuteDropDown {
+	margin-top: -2px;
+	margin-left: 20px;
+}
