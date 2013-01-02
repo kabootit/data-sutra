@@ -2392,7 +2392,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		}
 		
 		//only add history item if not navigating history and not in any preference
-		var navTabFormName = (solutionPrefs.config.webClient) ? forms.DATASUTRA_WEB_0F__list.elements.tab_list.getLeftForm() : forms[baseForm].elements.tab_content_A.getTabFormNameAt(1)
+		var navTabFormName = (solutionPrefs.config.webClient) ? forms.DATASUTRA_WEB_0F__list__navigation.elements.tab_content_A.getTabNameAt(1) : forms[baseForm].elements.tab_content_A.getTabFormNameAt(1)
 		if (historyPosition == undefined && utils.stringPatternCount(navTabFormName,'NAV__navigation_tree')) {
 			//add new history item to solution Prefs
 			var historyItem = solutionPrefs.history[solutionPrefs.history.length] = new Object()
@@ -4426,10 +4426,13 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	
 	//web client
 	if (solutionPrefs.config.webClient) {
-		//load navigation window if new one different than currently displayed one
-		if (forms.DATASUTRA_WEB_0F__list.elements.tab_list.getLeftForm().controller.getName() != navTab) {
-			forms.DATASUTRA_WEB_0F__list.elements.tab_list.setLeftForm(forms[navTab])
+		//remove navigation window
+		if (forms.DATASUTRA_WEB_0F__list__navigation.elements.tab_content_A.tabIndex > 0) {
+			forms.DATASUTRA_WEB_0F__list__navigation.elements.tab_content_A.removeTabAt(1)
 		}
+		//load navigation window
+		forms.DATASUTRA_WEB_0F__list__navigation.elements.tab_content_A.addTab(forms[navTab])
+		forms.DATASUTRA_WEB_0F__list__navigation.elements.tab_content_A.tabIndex = forms.DATASUTRA_WEB_0F__list__navigation.elements.tab_content_A.getMaxTabIndex()
 	}
 	//smart client
 	else {
