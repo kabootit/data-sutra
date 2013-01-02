@@ -651,7 +651,7 @@ if (application.__parent__.solutionPrefs) {
 	var listName = navigationPrefs.byNavItemID[currentNavItem].navigationItem.listToLoad
 	
 	//base form where searching originates has been overridden
-	if (navigationPrefs.byNavItemID[currentNavItem].fastFind.searchForm) {
+	if (navigationPrefs.byNavItemID[currentNavItem].fastFind && navigationPrefs.byNavItemID[currentNavItem].fastFind.searchForm) {
 		formName = navigationPrefs.byNavItemID[currentNavItem].fastFind.searchForm
 	}	
 	
@@ -2198,6 +2198,9 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	if (solutionPrefs.config.webClient && forms.DATASUTRA_WEB_0F.elements.gfx_curtain_login.visible) {
 		//hide the shield
 		forms.DATASUTRA_WEB_0F.elements.gfx_curtain_login.visible = false
+		
+		//hook up left hand listener method
+		scopes.DS.webULResizeMonitor()
 	}
 
 	var navigationItemID = arguments[0] || null
@@ -2818,6 +2821,9 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			//blank form or error, set to blank tab
 			else if (!designList && listTab == 'DATASUTRA_0F_solution__blank_2') {
 				listTabForm.elements.tab_content_B.tabIndex = 1
+				
+				//turn off spinny indicator
+				scopes.DS.webNavSwitchProgress(false)
 			}
 			//form already exists, set tab index
 			else if (!designList) {
@@ -2845,13 +2851,16 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 							listTabForm.elements.tab_content_B.tabIndex = 3
 							forms[navListButtonsNo].elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber
 						}
+						
+						scopes.DS.webULPrettify()						
 					}
 					//set to correct tab
 					else {
 						listTabForm.elements.tab_content_B.tabIndex = navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber
+						
+						//turn off spinny indicator
+						scopes.DS.webNavSwitchProgress(false)
 					}
-					
-					scopes.DS.webULPrettify()
 				}
 			}
 		}
@@ -3431,6 +3440,10 @@ function NAV_universal_list_favorite(input,elem,list,record) {
 		if (globals.DATASUTRA_navigation_set == 0) {
 			forms.NAV__navigation_tree__rows.LIST_redraw(null,null,true,false,true,selectFave)
 		}
+		
+		//recolor me lines
+		scopes.DS.webULPrettify()
+//		scopes.DS.webSmallScroller()
 	}
 }
 
@@ -7002,4 +7015,7 @@ function NAV_universal_list_sort(columnName, sortDir, event) {
 			globals.CODE_cursor_busy(false)
 		}
 	}
+	
+	//recolor me lines
+	scopes.DS.webULPrettify()
 }
