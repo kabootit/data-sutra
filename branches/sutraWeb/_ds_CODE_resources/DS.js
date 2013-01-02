@@ -144,3 +144,18 @@ function webULPrettify(ulClick) {
 function webULResizeMonitor() {
 	plugins.WebClientUtils.executeClientSideJS('lefthandListen();')
 }
+
+/**
+ * @param [toggle=true]
+ *
+ * @properties={typeid:24,uuid:"A8A520A8-7B81-4974-805B-E7E3A49CFE3E"}
+ */
+function webNavSwitchProgress(toggle) {
+	if (solutionPrefs.config.webClient) {
+		if (typeof toggle != 'boolean') {
+			toggle = true
+		}
+		
+		plugins.WebClientUtils.executeClientSideJS("$('#form_DATASUTRA_WEB_0F__workflow .sutraBusy').toggle(" + toggle + ");")
+	}
+}
