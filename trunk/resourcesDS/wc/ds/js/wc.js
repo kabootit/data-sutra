@@ -703,16 +703,16 @@ function hideUL() {
 	}
 	
 	//add in the spinner for the UL area
-	var spinner = $('#form_DATASUTRA_WEB_0F__list__universal .sutraBusy')
+	var spinner = $('#form_DATASUTRA_WEB_0F__workflow .sutraBusy')
 	if (!spinner.length) {
-		var indicator = $('#form_DATASUTRA_WEB_0F__list__universal');
-		indicator.activity({ valign: 'top', steps: 3, segments: 12, width: 3.5, space: 4, length: 8,color: '#F2F2F2', speed: 0.75});
+		var indicator = $('#form_DATASUTRA_WEB_0F__workflow');
+		indicator.activity({ valign: 'top', steps: 3, segments: 12, width: 3.5, space: 4, length: 8,color: '#AAA', speed: 0.75});
 		
-		$('#form_DATASUTRA_WEB_0F__list__universal .sutraBusy').css('margin-top','50px');
+		$('#form_DATASUTRA_WEB_0F__workflow .sutraBusy').css('margin-top',Math.floor($('#form_DATASUTRA_WEB_0F__workflow').height()/2) - 10 + 'px').css('z-index',1);
 	}
 	else {
 		//show spinny
-		$('#form_DATASUTRA_WEB_0F__list__universal .sutraBusy').toggle(true);
+		$('#form_DATASUTRA_WEB_0F__workflow .sutraBusy').toggle(true);
 	}
 }
 
@@ -727,7 +727,7 @@ function showUL() {
 			selector.css('z-index', 'auto');
 			
 			//hide spinny
-			$('#form_DATASUTRA_WEB_0F__list__universal .sutraBusy').toggle(false);
+			$('#form_DATASUTRA_WEB_0F__workflow .sutraBusy').toggle(false);
 		}
 		
 		//attach listener
