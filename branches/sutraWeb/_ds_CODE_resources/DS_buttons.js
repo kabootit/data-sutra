@@ -931,61 +931,65 @@ function TABS_list(event) {
 	//grab the actions to this
 	var valueList = new Array()
 	var formNames = new Array()
-	for (var i = 0; i < navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].buttons.tabs.length ; i++) {
-		var actionItem = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].buttons.tabs[i]
-		valueList.push(actionItem.menuName)
-		formNames.push(actionItem.formToLoad)
-	}
 	
-	var formName = event.getFormName()
+	if (navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].buttons.tabs) {
 	
-	//only show pop-up if there are enabled values
-	if (valueList.length) {
-		//tack on universal list to the top of the array
-		valueList.unshift(globals.CODE_text_initial_caps(forms[formName].elements.record_heading.text))
-		formNames.unshift(null)
-		
-		//build menu, load tabs, and set menu method arguments
-		var menu = new Array()
-		for ( var i = 0 ; i < valueList.length ; i++ ) {
-		    //set check on universal list
-			if (i == 0) {
-				menu[i] = plugins.popupmenu.createCheckboxMenuItem(valueList[i] + "", TABS_list_control)
-				menu[i].setSelected(true)
-			}
-			else {
-				menu[i] = plugins.popupmenu.createMenuItem(valueList[i] + "", TABS_list_control)
-			}
-			
-			//pass method name as parameter if that form is currently included
-			if (forms[formNames[i]]) {
-				menu[i].setMethodArguments(formNames[i],valueList[i],i-1)
-			}
-			else {
-				menu[i].setEnabled(false)
-			}
-			
-			//disable dividers
-			if (valueList[i] == '-') {
-				menu[i].setEnabled(false)
-			}
+		for (var i = 0; i < navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].buttons.tabs.length ; i++) {
+			var actionItem = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].buttons.tabs[i]
+			valueList.push(actionItem.menuName)
+			formNames.push(actionItem.formToLoad)
 		}
 		
-		//push menu down to the header line
-		var btnInvisible = event.getElementName() + "_down"
-		var currentLocationX = forms[formName].elements[btnInvisible].getLocationX()
-		var currentLocationY = forms[formName].elements[btnInvisible].getLocationY()
+		var formName = event.getFormName()
 		
-		forms[formName].elements[btnInvisible].setLocation(currentLocationX, currentLocationY + 3)
-		
-		//popup menu
-		var elem = forms[formName].elements[btnInvisible]
-		if (elem != null) {
-		    plugins.popupmenu.showPopupMenu(elem, menu)
+		//only show pop-up if there are enabled values
+		if (valueList.length) {
+			//tack on universal list to the top of the array
+			valueList.unshift(globals.CODE_text_initial_caps(forms[formName].elements.record_heading.text))
+			formNames.unshift(null)
+			
+			//build menu, load tabs, and set menu method arguments
+			var menu = new Array()
+			for ( var i = 0 ; i < valueList.length ; i++ ) {
+			    //set check on universal list
+				if (i == 0) {
+					menu[i] = plugins.popupmenu.createCheckboxMenuItem(valueList[i] + "", TABS_list_control)
+					menu[i].setSelected(true)
+				}
+				else {
+					menu[i] = plugins.popupmenu.createMenuItem(valueList[i] + "", TABS_list_control)
+				}
+				
+				//pass method name as parameter if that form is currently included
+				if (forms[formNames[i]]) {
+					menu[i].setMethodArguments(formNames[i],valueList[i],i-1)
+				}
+				else {
+					menu[i].setEnabled(false)
+				}
+				
+				//disable dividers
+				if (valueList[i] == '-') {
+					menu[i].setEnabled(false)
+				}
+			}
+			
+			//push menu down to the header line
+			var btnInvisible = event.getElementName() + "_down"
+			var currentLocationX = forms[formName].elements[btnInvisible].getLocationX()
+			var currentLocationY = forms[formName].elements[btnInvisible].getLocationY()
+			
+			forms[formName].elements[btnInvisible].setLocation(currentLocationX, currentLocationY + 3)
+			
+			//popup menu
+			var elem = forms[formName].elements[btnInvisible]
+			if (elem != null) {
+			    plugins.popupmenu.showPopupMenu(elem, menu)
+			}
+			
+			//set invisible btn back to original location
+			forms[formName].elements[btnInvisible].setLocation(currentLocationX, currentLocationY)
 		}
-		
-		//set invisible btn back to original location
-		forms[formName].elements[btnInvisible].setLocation(currentLocationX, currentLocationY)
 	}
 }
 
