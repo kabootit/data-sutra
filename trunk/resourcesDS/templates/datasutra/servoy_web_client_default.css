@@ -640,6 +640,33 @@ input.noWebkitOutline:focus {
     outline-width: 0;
 }
 
+/*	Big loading indicator	*/
+#HUDcenter1 {
+	width: 100%;
+}
+
+#HUDcenter2 {
+	width: 130px;
+	margin: 15% auto 0px;
+}
+
+#HUDalpha {
+	width: 90px;
+	height: 110px;
+	padding: 10px 20px;
+	background: #242322;
+	opacity:0.9;
+	font-family: Helvetica, Arial, Sans-Serif;
+	text-align: center;
+	border-radius: 12px;
+}
+
+#HUDalpha h3 {
+	padding-top: 65px;
+	color: #F2F2F2;
+	font-size: 20px;
+}
+
 /* input fields on servoy forms for ipad */
 @media only screen
 and (min-device-width : 768px)
@@ -658,44 +685,20 @@ and (max-device-width : 1024px) {
 		vertical-align: -10%;
 	}
 	
+	/*	Loading indicator for iOS	*/
+	#HUDcenter2 {
+		margin: 200px auto 0px;
+	}
+	
 	/*would be nice to import...but needs to be first in the stylesheet*/
 /*	@import url('/ds/css/ds.tablet.css')*/
 }
-
-/*	Loading indicator for iOS	*/
-#HUDcenter1 {
-/*	width: 100%;*/
-	width: 1024px;
-}
-
-#HUDcenter2 {
-	width: 130px;
-	margin: 200px auto 0px;
-}
-
 @media only screen and (max-device-width: 1024px) and (orientation:landscape) { 
-    #HUDcenter2 { margin-top: 25%; }
+    #HUDcenter1 { width: 1024px; }
+	#HUDcenter2 { margin-top: 25%; }
 }
 @media only screen and (max-device-width: 1024px) and (orientation:portrait) {
-	#HUDcenter1 { width: 768px; }
 	#HUDcenter2 { margin-top: 50%; } 
-}
-
-#HUDalpha {
-	width: 90px;
-	height: 110px;
-	padding: 10px 20px;
-	background: #242322;
-	opacity:0.9;
-	font-family: Helvetica, Arial, Sans-Serif;
-	text-align: center;
-	border-radius: 12px;
-}
-
-#HUDalpha h3 {
-	padding-top: 65px;
-	color: #F2F2F2;
-	font-size: 20px;
 }
 
 /*	graphics styles on main page	*/
