@@ -367,18 +367,18 @@ function ACTION_space_change(event) {
 					var currentNavItem = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID]
 					
 					//when in workflow flip, show click through	//MEMO: this isn't currently firing because we need to force a UL refresh
-//					if (spaceName == 'workflow flip') {
-//						if (currentNavItem.navigationItem.useFwList) {
-//							if (forms[currentNavItem.listData.tabFormInstance].elements.sutra_detail_view) {
-//								forms[currentNavItem.listData.tabFormInstance].elements.sutra_detail_view.visible = true
-//							}
-//						}
-//					}
-//					else {
-//						if (forms[currentNavItem.listData.tabFormInstance].elements.sutra_detail_view) {
-//							forms[currentNavItem.listData.tabFormInstance].elements.sutra_detail_view.visible = false
-//						}
-//					}
+					if (spaceName == 'workflow flip') {
+						if (currentNavItem.navigationItem.useFwList) {
+							if (forms[currentNavItem.listData.tabFormInstance].elements.sutra_detail_view) {
+								forms[currentNavItem.listData.tabFormInstance].elements.sutra_detail_view.visible = true
+							}
+						}
+					}
+					else {
+						if (forms[currentNavItem.listData.tabFormInstance].elements.sutra_detail_view) {
+							forms[currentNavItem.listData.tabFormInstance].elements.sutra_detail_view.visible = false
+						}
+					}
 				}
 				
 				//LOG windowing
@@ -395,7 +395,27 @@ function ACTION_space_change(event) {
 				
 				//DS_space_flexible method sets the correct border and turns off dividers if showing
 				ACTION_space_flexible(true,skipUI)
-					
+				
+				//fast find showing and leaving navigation-only view, reset divider location
+				var navWeb = 'NAV_T_universal_list__WEB'
+				if (oldSpace == 'list flip' && forms[navWeb].elements.tab_list.getLeftForm().controller.getName() == 'NAV_T_universal_list__WEB__fastfind') {
+					forms[navWeb].elements.tab_list.dividerLocation = 32
+				}
+				
+				//leaving workflow-only view, re-fire UL
+				if (application.__parent__.navigationPrefs && solutionPrefs.config.currentFormID) { 
+					var currentNavItem = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID]
+					if (oldSpace == 'workflow' && currentNavItem.navigationItem.useFwList) {
+						var methodRefresh = currentNavItem.listData.withButtons ? forms.NAV_T_universal_list__WEB__buttons.DISPLAY_cycle : forms.NAV_T_universal_list__WEB__no_buttons.DISPLAY_cycle
+						methodRefresh(true)
+
+//						var methodRefresh = currentNavItem.listData.withButtons ? forms.NAV_T_universal_list__WEB__buttons.DISPLAY_cycle : forms.NAV_T_universal_list__WEB__no_buttons.DISPLAY_cycle
+//						var callback = plugins.WebClientUtils.generateCallbackScript(methodRefresh, ['true'])
+//						var jsCallback = 'function repaintUL(){' + callback + '}';
+//						plugins.WebClientUtils.executeClientSideJS('refreshUL(' + jsCallback + ');')
+					}
+				}
+				
 				//run post-space change method
 				if (!skipCustomMethod && navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID] && navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].navigationItem.spaceMethod) {
 					var spaceManMethod = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].navigationItem.spaceMethod.split('.')
@@ -419,6 +439,11 @@ function ACTION_space_change(event) {
 				
 //				globals.CODE_cursor_busy(false)
 			}		
+		}
+		
+		//attach fancy scrollbars
+		if (application.__parent__.navigationPrefs && navigationPrefs.byNavItemID && solutionPrefs.config.currentFormID) {
+			scopes.DS.webULPrettify(false,true)
 		}
 	}
 
@@ -474,7 +499,14 @@ function ACTION_space_flexible(event) {
 	}
 		
 		//listen to changes in size of the left hand pane
-		scopes.DS.webULResizeMonitor()
+		if (solutionPrefs.config.activeSpace != 'workflow') {
+			scopes.DS.webULResizeMonitor()
+		}
+		
+		//hide UL area
+//		if (solutionPrefs.config.activeSpace != 'workflow') {
+//			plugins.WebClientUtils.executeClientSideJS('hideUL();');
+//		}
 		
 		var baseForm = solutionPrefs.config.formNameBase
 		var forceHide = arguments[0]
@@ -716,16 +748,16 @@ function ACTION_space_flexible(event) {
 			
 			//TODO: only do if changed spaces have different dimensions; can remove this tweak once interior anchoring working better in webclient
 			//re-fire UL if configured and changing spaces
-			if (solutionPrefs.config.currentFormID && navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID]) {
-				var currentNavItem = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID]
-				if (currentNavItem.navigationItem.useFwList) {
-					var methodRefresh = currentNavItem.listData.withButtons ? forms.NAV_T_universal_list__WEB.DISPLAY_cycle : forms.NAV_T_universal_list__WEB__no_buttons.DISPLAY_cycle
-					
-					var callback = plugins.WebClientUtils.generateCallbackScript(methodRefresh, ['true'])
-					var jsCallback = 'function repaintUL(){' + callback + '}';
-					plugins.WebClientUtils.executeClientSideJS('refreshUL(' + jsCallback + ');')
-				}
-			}
+//			if (solutionPrefs.config.currentFormID && navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID]) {
+//				var currentNavItem = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID]
+//				if (currentNavItem.navigationItem.useFwList) {
+//					var methodRefresh = currentNavItem.listData.withButtons ? forms.NAV_T_universal_list__WEB.DISPLAY_cycle : forms.NAV_T_universal_list__WEB__no_buttons.DISPLAY_cycle
+//					
+//					var callback = plugins.WebClientUtils.generateCallbackScript(methodRefresh, ['true'])
+//					var jsCallback = 'function repaintUL(){' + callback + '}';
+//					plugins.WebClientUtils.executeClientSideJS('refreshUL(' + jsCallback + ');')
+//				}
+//			}
 		}
 		//show dividers
 		else {
@@ -772,8 +804,7 @@ function ACTION_space_flexible(event) {
 		
 		//attach fancy scrollbars
 		if (application.__parent__.navigationPrefs && navigationPrefs.byNavItemID && solutionPrefs.config.currentFormID) {
-			scopes.DS.webULPrettify()
-//			scopes.DS.webSmallScroller(navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.tabFormInstance)
+//			scopes.DS.webULPrettify(false,true)
 		}
 	}
 }
