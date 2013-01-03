@@ -118,10 +118,11 @@ function webSmallScroller(formName) {
 
 /**
  * @param {Boolean} [ulClick]
+ * @param {Boolean} [extraPause]
  *
  * @properties={typeid:24,uuid:"E2571884-7D85-4BDC-9A61-AC1351B784C9"}
  */
-function webULPrettify(ulClick) {
+function webULPrettify(ulClick,extraPause) {
 	if (solutionPrefs.config.webClient) {
 		//check to see how many records are loaded
 		var chunks = Math.ceil(forms[solutionPrefs.config.currentFormName].foundset.getSize() / 50)
@@ -132,7 +133,12 @@ function webULPrettify(ulClick) {
 		}
 		//delay and scrollbars
 		else {
-			plugins.WebClientUtils.executeClientSideJS('prettifyUL(100,' + chunks + ');')
+			if (extraPause) {
+				plugins.WebClientUtils.executeClientSideJS('setTimeout(function(){prettifyUL(100,' + chunks + ')},500);')
+			}
+			else {
+				plugins.WebClientUtils.executeClientSideJS('prettifyUL(100,' + chunks + ');')
+			}
 			webSmallScroller()
 		}
 	}
