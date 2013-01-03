@@ -19,7 +19,8 @@
 
 //DS namespace
 if (typeof(DS) == "undefined") {
-	DS = new Object()
+	DS = new Object();
+	DS.timer = new Object();
 }
 	
 
@@ -708,6 +709,15 @@ function lefthandListen() {
 	function attache(event) {
 		// console.log("resized");
 		hideUL();
+		
+		//don't show UL when isn't showing
+		var selector = $('#form_NAV_T_universal_list__WEB__list')
+		if (selector.length) {
+			if (selector.height() == 0 || selector.width() == 0) {
+				return;
+			}
+		}
+		
 		setTimeout(scrollbarSmall,750);
 		showUL();
 	}
@@ -723,50 +733,61 @@ function lefthandListen() {
 		//(re-)attach
 		// console.log("listener attached");
 		$('#form_DATASUTRA_WEB_0F__list').on('resize', null, $.debounce(300,attache));
-		
-		//try to bind scroll end event to recolor UL
-		// $('#form_NAV_T_universal_list__WEB__list .servoywebform').bind('scrollstop',
-		// 	function() {
-		// 		prettifyUL(null,null,true);
-		// 	}
-		// );
-		// setTimeout(function(){$('#form_NAV_T_universal_list__WEB__list .servoywebform').on('scroll', null, $.debounce(300,function(){prettifyUL(null,null,true);}))},2000)
 	}
 }
 
 //UL hide
 function hideUL() {
-	var selector = $('#form_NAV_T_universal_list__WEB');
-	if (selector.length) {
-		selector.css('z-index', '-10');
-	}
-	
+	// First up: set up big indicator
 	//don't do in tablet mode (already has this indicator)
 	if (window.parent != window && window.parent.dsFactor) {
 		var formFactor = window.parent.dsFactor();
 	}
 	if (formFactor != 'iPad') {
-		//add in the spinner for the UL area
-		var spinner = $('#form_DATASUTRA_WEB_0F .sutraBusy')
-		if (!spinner.length) {
-			var indicator = $('#form_DATASUTRA_WEB_0F');
 		
-			if (indicator.length) {
-				setTimeout(function(){
-					//attach indicator
-					// indicator.activity({ valign: 'top', steps: 3, segments: 12, width: 3.5, space: 4, length: 8,color: '#AAA', speed: 0.75});
-					//set up custom location, z-index
-					// $('#form_DATASUTRA_WEB_0F .sutraBusy').css('margin-top',Math.floor($('#form_DATASUTRA_WEB_0F__main').height()/2) - 10 + 'px').css('z-index',1);
-				
-					indicator.append('<div id="HUDcenter1"><div id="HUDcenter2"><div id="HUDalpha"><h3>Loading...</h3></div></div></div>');
-					$('#HUDalpha').activity({ valign: 'top', steps: 3, segments: 12, width: 5.5, space: 5, length: 12,color: '#F2F2F2', speed: 0.75});
-					$('#form_DATASUTRA_WEB_0F .sutraBusy').css('margin-top','5px').css('z-index',1);
-				},0)
+		var selector = $('#form_NAV_T_universal_list__WEB__list');
+		
+		//list isn't currently showing, don't need to hide/show
+			//MEMO: this should be called from within lefthandListen.attache, but really only concerned about spinner showing
+		if (selector.length) {
+			if (selector.height() == 0 || selector.width() == 0) {
+				var skipMe = true
 			}
 		}
-		else {
-			//show spinny
-			$('#HUDcenter1').toggle(true);
+		
+		//add in the spinner for the UL area
+		if (!skipMe) {
+			var spinner = $('#form_DATASUTRA_WEB_0F .sutraBusy');
+			if (!spinner.length) {
+				var indicator = $('#form_DATASUTRA_WEB_0F');
+		
+				if (indicator.length) {
+					setTimeout(function(){
+						//attach indicator (small one without big inset)
+						// indicator.activity({ valign: 'top', steps: 3, segments: 12, width: 3.5, space: 4, length: 8,color: '#AAA', speed: 0.75});
+						//set up custom location, z-index
+						// $('#form_DATASUTRA_WEB_0F .sutraBusy').css('margin-top',Math.floor($('#form_DATASUTRA_WEB_0F__main').height()/2) - 10 + 'px').css('z-index',1);
+					
+						//tablet indicator
+						indicator.append('<div id="HUDcenter1"><div id="HUDcenter2"><div id="HUDalpha"><h3>Loading...</h3></div></div></div>');
+						$('#HUDalpha').activity({ valign: 'top', steps: 3, segments: 12, width: 5.5, space: 5, length: 12,color: '#F2F2F2', speed: 0.75});
+						$('#form_DATASUTRA_WEB_0F .sutraBusy').css('margin-top','5px').css('z-index',1);
+					},0)
+				}
+			}
+			else {
+				//show spinny
+				$('#HUDcenter1').toggle(true);
+			}
+		}
+	}
+	
+	//Now try and hide the UL
+	var selector = $('#form_NAV_T_universal_list__WEB');
+	if (selector.length) {
+		//not hidden yet; need to (re)-hide
+		if (selector.css('z-index') != '-10') {
+			selector.css('z-index', '-10');
 		}
 	}
 }
@@ -775,19 +796,56 @@ function hideUL() {
 function showUL() {
 	//rehook up correct styling to this part of the UL, but don't call showUL again
 	setTimeout(function(){
-		prettifyUL(null,null,true)
+		// prettifyUL(null,null,true);
 		
 		var selector = $('#form_NAV_T_universal_list__WEB');
 		if (selector.length) {
-			setTimeout(function() {
-				selector.css('z-index', 'auto');
+			//make sure we have a place to store events
+			if (typeof(DS.timer.showUL) == "undefined") {
+				DS.timer.showUL = new Array();
+			}
+			
+			var tOut = setTimeout(fadeIn,450);
+			
+			function fadeIn() {
+				//check to make sure other things aren't in the queue
+				if (DS.timer.showUL.length) {
+					if (DS.timer.showUL.length > 1) {
+						DS.timer.showUL.splice(0,1);
+						// console.log("skipped " + DS.timer.showUL.length);
+					}
+					//last in the queue, clear for next time and run
+					else {
+						DS.timer.showUL.splice(0,1);
 
+						//give an extra quarter second
+						setTimeout(fadeIn,0);
+					}
+					return
+				}
+				
+				// console.log("run " + DS.timer.showUL.length);
+				
+				//UL is hidden behind, fade back in
+				if (selector.css('z-index') != 'auto') {
+					selector.toggle(false);
+					selector.css('z-index', 'auto');
+					
+					//call again to make sure super pretty!
+					prettifyUL(null,null,true);
+					
+					selector.fadeIn();
+				}
+				
 				//hide spinny (won't do in table mode because empty selector)
 				$('#HUDcenter1').toggle(false);
-			},0);
+			}
+			
+			//tracking more info than needed at this point
+			DS.timer.showUL.push({timeout: tOut, timestamp: new Date()})
 		}
 		
 		//attach listener
 		lefthandListen();
-	},1000);
+	},500);
 }
