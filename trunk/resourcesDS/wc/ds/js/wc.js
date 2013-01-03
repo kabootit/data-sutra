@@ -148,6 +148,14 @@ function mobileIndicator() {
 	},1000)
 })(jQuery);
 
+//	Extend jQuery to give us scrollstart / scrollstop events (https://github.com/ssorallen/jquery-scrollstop)
+(function($) {
+	setTimeout(function(){
+		//load in resource
+		$('head').append('<script type="text/javascript" src="/ds/js/lib/jquery.scrollstop.js"></script>');
+	},1000)
+})(jQuery);
+
 //  Pump in extra stylesheets at the end of head so that overwrite existing 
 (function(){
 	var delayTime = 3500
@@ -287,7 +295,9 @@ function refreshUL(source) {
 		script.type = 'text/javascript';
 		script.text = source;
 		$("#servoy_page").append(script);
+		hideUL();
 		repaintUL();
+		setTimeout(showUL,0);
 	},250)
 }
 
@@ -437,6 +447,23 @@ function toggleClass(id, className, forceOn) {
 		}
 	}
 }
+
+//	Run custom code whenever new records loaded in
+(function() {
+	//	Extending Wicket...object to hold original calls
+	var ServoyDSExtend = new Object();
+
+	//	Extend wicket calls to hide/show indicator so that follows mouse location
+	ServoyDSExtend.needToUpdateRowsBuffer = Servoy.TableView.needToUpdateRowsBuffer;
+	Servoy.TableView.needToUpdateRowsBuffer = function() {
+		//override
+		setTimeout(prettifyUL,500);//(null,null,true);
+		
+		//original call
+		return ServoyDSExtend.needToUpdateRowsBuffer.apply(this,arguments);
+	}
+})();
+
 
 //	Inject iOS scrollbars
 (function(){
@@ -629,7 +656,7 @@ function prettifyUL(maxTimeOut,fsSize,noShow) {
 	
 	function iFeelPretty() {
 		timeOut++;
-		console.log('PRETTY UL: ' + timeOut);
+		// console.log('PRETTY UL: ' + timeOut);
 		
 		// the UL table header has loaded, the rest should be ready as well
 		if ($ && $("#form_NAV_T_universal_list__WEB__list table tbody td th table").length) {
@@ -644,15 +671,15 @@ function prettifyUL(maxTimeOut,fsSize,noShow) {
 				$("#form_NAV_T_universal_list__WEB__list table tbody td th table").css("background-color","transparent");
 
 				//selected row
-				$('#form_NAV_T_universal_list__WEB__list td[style*="background-color:' + selectRGB + ';"] div[name*=sutra_favorite_badge], #form_NAV_T_universal_list__WEB__list table tbody td[style*="background-color:' + selectRGB + ';"], #form_NAV_T_universal_list__WEB__list table tbody td[style*="background-color:' + selectRGB + ';"] input'
+				$('#form_NAV_T_universal_list__WEB__list td[style*="background-color:' + selectRGB + ';"] div[name*=sutra_favorite_badge], #form_NAV_T_universal_list__WEB__list table tbody td[style*="background-color:' + selectRGB + ';"], #form_NAV_T_universal_list__WEB__list table tbody td[style*="background-color:' + selectRGB + ';"] input, #form_NAV_T_universal_list__WEB__list table tbody td[style*="background-color:' + selectRGB + ';"] div div'
 				).css('background-color','transparent').addClass('gfxLeftHilite');
-				$('#form_NAV_T_universal_list__WEB__list td[style*="background-color:' + selectHEX + ';"] div[name*=sutra_favorite_badge], #form_NAV_T_universal_list__WEB__list table tbody td[style*="background-color:' + selectHEX + ';"], #form_NAV_T_universal_list__WEB__list table tbody td[style*="background-color:' + selectHEX + ';"] input'
+				$('#form_NAV_T_universal_list__WEB__list td[style*="background-color:' + selectHEX + ';"] div[name*=sutra_favorite_badge], #form_NAV_T_universal_list__WEB__list table tbody td[style*="background-color:' + selectHEX + ';"], #form_NAV_T_universal_list__WEB__list table tbody td[style*="background-color:' + selectHEX + ';"] input, #form_NAV_T_universal_list__WEB__list table tbody td[style*="background-color:' + selectHEX + ';"] div div'
 				).css('background-color','transparent').addClass('gfxLeftHilite');
 
 				//non-selected rows
-				$('#form_NAV_T_universal_list__WEB__list td[style*="background-color:' + unselectRGB + ';"] div[name*=sutra_favorite_badge], #form_NAV_T_universal_list__WEB__list table tbody td[style*="background-color:' + unselectRGB + ';"], 			#form_NAV_T_universal_list__WEB__list table tbody td[style*="background-color:' + unselectRGB + ';"] input'
+				$('#form_NAV_T_universal_list__WEB__list td[style*="background-color:' + unselectRGB + ';"] div[name*=sutra_favorite_badge], #form_NAV_T_universal_list__WEB__list table tbody td[style*="background-color:' + unselectRGB + ';"], #form_NAV_T_universal_list__WEB__list table tbody td[style*="background-color:' + unselectRGB + ';"] input, #form_NAV_T_universal_list__WEB__list table tbody td[style*="background-color:' + unselectRGB + ';"] div div'
 				).css('background-color','transparent').removeClass('gfxLeftHilite');
-				$('#form_NAV_T_universal_list__WEB__list td[style*="background-color:' + unselectHEX + ';"] div[name*=sutra_favorite_badge], #form_NAV_T_universal_list__WEB__list table tbody td[style*="background-color:' + unselectHEX + ';"], 			#form_NAV_T_universal_list__WEB__list table tbody td[style*="background-color:' + unselectHEX + ';"] input'
+				$('#form_NAV_T_universal_list__WEB__list td[style*="background-color:' + unselectHEX + ';"] div[name*=sutra_favorite_badge], #form_NAV_T_universal_list__WEB__list table tbody td[style*="background-color:' + unselectHEX + ';"], #form_NAV_T_universal_list__WEB__list table tbody td[style*="background-color:' + unselectHEX + ';"] input, #form_NAV_T_universal_list__WEB__list table tbody td[style*="background-color:' + unselectHEX + ';"] div div'
 				).css('background-color','transparent').removeClass('gfxLeftHilite');
 				
 				
@@ -679,19 +706,31 @@ function prettifyUL(maxTimeOut,fsSize,noShow) {
 //listen for changes in size to UL area
 function lefthandListen() {
 	function attache(event) {
-		console.log("resized");
+		// console.log("resized");
 		hideUL();
 		setTimeout(scrollbarSmall,750);
 		showUL();
 	}
 	
-	if ($.debounce && $('#form_DATASUTRA_WEB_0F__list').length && $._data($('#form_DATASUTRA_WEB_0F__list')[0],'events') && !$._data($('#form_DATASUTRA_WEB_0F__list')[0],'events').resize) {
+	//debounce is loaded
+	if ($.debounce && $('#form_DATASUTRA_WEB_0F__list').length && !$._data($('#form_DATASUTRA_WEB_0F__list')[0],'events')) {
+		
 		//make sure that event not currently bound
-		$('#form_DATASUTRA_WEB_0F__list').off('resize');
-	
+		if ($._data($('#form_DATASUTRA_WEB_0F__list')[0],'events') && !$._data($('#form_DATASUTRA_WEB_0F__list')[0],'events').resize) {
+			$('#form_DATASUTRA_WEB_0F__list').off('resize');
+		}
+		
 		//(re-)attach
-		console.log("listener attached");
+		// console.log("listener attached");
 		$('#form_DATASUTRA_WEB_0F__list').on('resize', null, $.debounce(300,attache));
+		
+		//try to bind scroll end event to recolor UL
+		// $('#form_NAV_T_universal_list__WEB__list .servoywebform').bind('scrollstop',
+		// 	function() {
+		// 		prettifyUL(null,null,true);
+		// 	}
+		// );
+		// setTimeout(function(){$('#form_NAV_T_universal_list__WEB__list .servoywebform').on('scroll', null, $.debounce(300,function(){prettifyUL(null,null,true);}))},2000)
 	}
 }
 
@@ -702,17 +741,33 @@ function hideUL() {
 		selector.css('z-index', '-10');
 	}
 	
-	//add in the spinner for the UL area
-	var spinner = $('#form_DATASUTRA_WEB_0F__workflow .sutraBusy')
-	if (!spinner.length) {
-		var indicator = $('#form_DATASUTRA_WEB_0F__workflow');
-		indicator.activity({ valign: 'top', steps: 3, segments: 12, width: 3.5, space: 4, length: 8,color: '#AAA', speed: 0.75});
-		
-		$('#form_DATASUTRA_WEB_0F__workflow .sutraBusy').css('margin-top',Math.floor($('#form_DATASUTRA_WEB_0F__workflow').height()/2) - 10 + 'px').css('z-index',1);
+	//don't do in tablet mode (already has this indicator)
+	if (window.parent != window && window.parent.dsFactor) {
+		var formFactor = window.parent.dsFactor();
 	}
-	else {
-		//show spinny
-		$('#form_DATASUTRA_WEB_0F__workflow .sutraBusy').toggle(true);
+	if (formFactor != 'iPad') {
+		//add in the spinner for the UL area
+		var spinner = $('#form_DATASUTRA_WEB_0F .sutraBusy')
+		if (!spinner.length) {
+			var indicator = $('#form_DATASUTRA_WEB_0F');
+		
+			if (indicator.length) {
+				setTimeout(function(){
+					//attach indicator
+					// indicator.activity({ valign: 'top', steps: 3, segments: 12, width: 3.5, space: 4, length: 8,color: '#AAA', speed: 0.75});
+					//set up custom location, z-index
+					// $('#form_DATASUTRA_WEB_0F .sutraBusy').css('margin-top',Math.floor($('#form_DATASUTRA_WEB_0F__main').height()/2) - 10 + 'px').css('z-index',1);
+				
+					indicator.append('<div id="HUDcenter1"><div id="HUDcenter2"><div id="HUDalpha"><h3>Loading...</h3></div></div></div>');
+					$('#HUDalpha').activity({ valign: 'top', steps: 3, segments: 12, width: 5.5, space: 5, length: 12,color: '#F2F2F2', speed: 0.75});
+					$('#form_DATASUTRA_WEB_0F .sutraBusy').css('margin-top','5px').css('z-index',1);
+				},0)
+			}
+		}
+		else {
+			//show spinny
+			$('#HUDcenter1').toggle(true);
+		}
 	}
 }
 
@@ -724,10 +779,12 @@ function showUL() {
 		
 		var selector = $('#form_NAV_T_universal_list__WEB');
 		if (selector.length) {
-			selector.css('z-index', 'auto');
-			
-			//hide spinny
-			$('#form_DATASUTRA_WEB_0F__workflow .sutraBusy').toggle(false);
+			setTimeout(function() {
+				selector.css('z-index', 'auto');
+
+				//hide spinny (won't do in table mode because empty selector)
+				$('#HUDcenter1').toggle(false);
+			},0);
 		}
 		
 		//attach listener
