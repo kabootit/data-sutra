@@ -82,7 +82,8 @@
 
 body
 {
-	margin: 0px 0px 0px 0px
+	margin: 0px 0px 0px 0px;
+	cursor: default !important;
 }
 
 body, input, button, select, td, th, textarea
