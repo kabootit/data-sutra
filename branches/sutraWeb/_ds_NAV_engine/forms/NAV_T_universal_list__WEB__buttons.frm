@@ -109,6 +109,7 @@ typeid:7,
 uuid:"C5F430E7-488C-40CA-AAFA-10ABE20503CC"
 },
 {
+anchors:3,
 extendsID:"5BB7520F-C42C-4638-8379-7BC7BD7ACC10",
 location:"93,1",
 size:"32,20",
