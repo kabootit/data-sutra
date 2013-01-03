@@ -2651,6 +2651,10 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 							
 							var dsNode = solutionModel.getDataSourceNode('db:/' + serverName + '/' + tableName)
 							
+							//width/height for favorite and arrow
+							var height = solutionPrefs.config.webClient ? 18 : 17
+							var width = solutionPrefs.config.webClient ? 15 : 12
+							
 							//add favorite column to universal list
 							if (solutionPrefs.access.accessControl && navSpecs.favoritable) {
 								//add calculation to show favorite star if hasn't been added already
@@ -2709,8 +2713,6 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 //								starField.rolloverImageMedia = solutionModel.getMedia('btn_favorite_rollover.png')
 								starField.toolTipText = 'Toggle favorite'//'%%sutra_favorite_tooltip%%'
 								starField.showClick = false
-								var height = solutionPrefs.config.webClient ? 18 : 17
-								var width = solutionPrefs.config.webClient ? 15 : 12
 								var headStar = solutionPrefs.config.webClient ? 'btn_favorite_web_selected.png' : 'btn_favorite_dark.png'
 								starField.text = '<html><center><img src="media:///' + headStar + '" width=' + width + ' height=' + height + '></center>'
 									
@@ -2723,7 +2725,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 												'',						//text on label
 												i++,					//x
 												0,						//y
-												24,						//width
+												(solutionPrefs.config.webClient ? 25 : 24),					//width
 												20						//height
 											)
 							
@@ -2732,15 +2734,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 								detailCalc = dsNode.newCalculation(
 										['function sutra_detail_view() {',
 											'var badge = \'<html><center><img src="media:///\';',
-//											'var record = foundset.getRecord(currentRecordIndex);',
-//											//this row is selected
-//											'if (foundset.getSelectedIndex() == foundset.getRecordIndex(record)) {',
-//												'badge += "arrow_round_light.png";',
-//											'}',
-//											//row is not selected
-//											'else {',
-												'badge += "arrow_right.png";',
-//											'}',
+											'badge += "arrow_white_right_over.png";',
 											'badge += \'" width=20 height=20></center>\';',
 											'return badge;',
 										'}'].join('')
@@ -2759,6 +2753,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 							detailView.rolloverCursor = SM_CURSOR.HAND_CURSOR
 							detailView.toolTipText = 'View details'
 							detailView.showClick = false
+							detailView.text = '<html><center><img src="media:///arrow_white_right_over.png" width=' + height + ' height=' + height + '></center>'
 							detailView.visible = solutionPrefs.config.activeSpace == 'workflow flip'
 							
 							//assign the secondary form to the main UL with buttons

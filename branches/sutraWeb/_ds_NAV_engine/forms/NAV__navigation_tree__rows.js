@@ -436,6 +436,11 @@ function LIST_redraw__webclient(event,idItem,scrollRe,loadFormsSkip,modeFavorite
 				selected: selector
 			}
 		
+		//hide UL area
+		if (true) {
+			plugins.WebClientUtils.executeClientSideJS('hideUL();');
+		}
+		
 		//triggered by clicking on element in list
 		if (event instanceof JSEvent) {
 			var selectedRow = utils.stringToNumber(event.getElementName().split('_').pop())

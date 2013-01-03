@@ -637,7 +637,8 @@ function LIST_favorites(selected) {
 		var thisForm = solutionModel.getForm(formName)
 		
 		//grab width
-		var newWidth = forms.NAV__navigation_tree.controller.getFormWidth()
+		var parentForm = (solutionPrefs.config.webClient) ? 'NAV__navigation_tree__WEB' : 'NAV__navigation_tree'
+		var newWidth = forms[parentForm].controller.getFormWidth()
 		
 		//remove all elements from target form
 		var allComponents = thisForm.getComponents()
