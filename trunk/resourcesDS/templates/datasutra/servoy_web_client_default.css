@@ -551,8 +551,6 @@ div.wicket-modal div.w_content {
 
 /* changing font for type-ahead (look up field) */
 div.wicket-aa-container { 
-	font-family: Verdana,'Helvetica Neue', Arial, Helvetica, sans-serif !important;
-	
 	background: #F1F1F1; /* for non-css3 browsers */
 	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#f5f5f5', endColorstr='#dedede') !important; /* for IE */
 	background: -webkit-gradient(linear, left top, left bottom, from(#f5f5f5), to(#dedede)) !important; /* for webkit browsers */
@@ -578,6 +576,7 @@ div.wicket-aa ul {
 	background-color: transparent !important;
 	margin: 0 !important;
 	
+	font-family: Verdana,'Helvetica Neue', Arial, Helvetica, sans-serif !important;
 	font-size: 11px !important;
 	line-height: 150%;
 }
