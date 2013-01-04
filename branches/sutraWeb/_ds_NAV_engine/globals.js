@@ -2455,6 +2455,9 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			var prefName = 'Custom tab ' + navigationItemID + ': ' + navigationPrefs.byNavItemID[navigationItemID].buttons.tabs[navigationPrefs.byNavItemID[navigationItemID].buttons.tabs.tabPosn].formToLoad
 			
 			listTabForm.elements.tab_content_B.tabIndex = navigationPrefs.byNavSetName.configPanes.itemsByName[prefName].listData.tabNumber
+			
+			//turn off spinny indicator
+			scopes.DS.webNavSwitchProgress(false)
 		}
 		else {
 			//form not yet added, add to lists tab panel
@@ -2809,6 +2812,9 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 						//select tab
 						listTabForm.elements.tab_content_B.tabIndex = listTabForm.elements.tab_content_B.getMaxTabIndex()
 					}
+					
+					//turn off spinny indicator
+					scopes.DS.webNavSwitchProgress(false)
 				}
 				
 				scopes.DS.webULPrettify()
