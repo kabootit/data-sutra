@@ -543,6 +543,47 @@ div.wicket-modal div.w_content {
 	background-color: transparent !important;
 }
 
+/* changing font for type-ahead (look up field) */
+div.wicket-aa-container { 
+	font-family: Verdana,'Helvetica Neue', Arial, Helvetica, sans-serif !important;
+	
+	background: #F1F1F1; /* for non-css3 browsers */
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#f5f5f5', endColorstr='#dedede') !important; /* for IE */
+	background: -webkit-gradient(linear, left top, left bottom, from(#f5f5f5), to(#dedede)) !important; /* for webkit browsers */
+	background: -moz-linear-gradient(top,  #f5f5f5,  #dedede) !important; /* for firefox 3.6+ */
+
+    border: solid 1px #CCC !important;
+    
+	-moz-box-shadow: 2px 2px 5px rgba(10, 10, 10, 0.5);
+	-webkit-box-shadow: 2px 2px 5px rgba(10, 10, 10, 0.5);
+	box-shadow: 2px 2px 5px rgba(10, 10, 10, 0.5);
+	
+	-moz-border-radius: 0.5em 0.5em 0.5em 0.5em;
+	border-radius: 0.5em 0.5em 0.5em 0.5em;
+	
+	padding: 4px 4px 4px 0px !important;
+	margin: -2px -2px 0px -4px !important;
+}
+div.wicket-aa {
+	padding: 0 !important;
+}
+div.wicket-aa ul { 
+	list-style: none;
+	background-color: transparent !important;
+	margin: 0 !important;
+	
+	font-size: 11px !important;
+	line-height: 150%;
+}
+div.wicket-aa ul li { 
+	margin-left: 5px !important;
+}
+div.wicket-aa ul li.selected { 
+	margin-left: 2px !important;
+	background-color: #426FD9 !important;
+	color: #FFF;
+}
+
 /** Change the (contextual) menu-plugin style */
 .yuimenu {
 	background: #dcdedc;
