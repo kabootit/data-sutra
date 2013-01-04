@@ -79,16 +79,16 @@
 	
 	<rule>
 		<name>Servoy calendar css</name>
-		<note>Better calendar picker graphics</note>
+		<note>Better calendar picker css</note>
 		<from>^/servoy-webclient/resources/datepicker/dhtmlgoodies_calendar.css$</from>
 		<to last="true">/servoy-webclient/templates/datasutra/override/calendar/calendar.css</to>
 	</rule>
 	
-	<rule enabled="false">
+	<rule>
 		<name>Servoy calendar graphics</name>
 		<note>Better calendar picker graphics</note>
-		<from>^/servoy-webclient/resources/datepicker/images/(icon1|left|left_over|right|right_over|close|close_over|down_time).gif$</from>
-		<to last="true">/servoy-webclient/templates/datasutra/override/calendar/images/$1.gif</to>
+		<from>^/servoy-webclient/resources/datepicker/images/(.*)$</from>
+		<to last="true">/servoy-webclient/templates/datasutra/override/calendar/images/$1</to>
 	</rule>
 
 	
