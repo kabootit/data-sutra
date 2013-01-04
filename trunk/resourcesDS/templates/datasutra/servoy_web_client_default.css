@@ -9,6 +9,12 @@
 	background-color: #FFFFFF;
 }
 
+/* date field */
+div.field td input {
+	font-family: Verdana,'Helvetica Neue', Arial, Helvetica, sans-serif !important;
+	font-size: 11px !important;
+}
+
 .label
 {
 	padding: 0px 0px 0px 0px;
