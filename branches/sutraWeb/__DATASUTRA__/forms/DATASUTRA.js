@@ -12,7 +12,7 @@ function FORM_on_load(event) {
 	}
 	//web client, go there
 	else if (application.getApplicationType() == APPLICATION_TYPES.WEB_CLIENT) {
-		//solutionModel to replace out subheader images
+		//solutionModel to replace out images and attach style classes
 		var smForms = solutionModel.getForms()
 		for (var i = 0; i < smForms.length; i++) {
 			var smForm = smForms[i]
@@ -22,11 +22,22 @@ function FORM_on_load(event) {
 			for (var j = 0; j < smLabels.length; j++) {
 				var smLabel = smLabels[j]
 				
+				//subheader
 				if (smLabel.imageMedia && smLabel.imageMedia.getName() == 'bck_subheader.png') {
 					smLabel.imageMedia = null
 					smLabel.styleClass = 'gfx_subheader'
 					smLabel.borderType = SM_DEFAULTS.DEFAULT
 					
+					//make sure that there is a name so can attach css class to it
+					if (!smLabel.name) {
+						smLabel.name = application.getUUID().toString().replace('-','')
+					}
+					
+					touched = true
+				}
+				
+				//lightly colored poke boxes
+				if (smLabel.styleClass == 'color_light') {
 					//make sure that there is a name so can attach css class to it
 					if (!smLabel.name) {
 						smLabel.name = application.getUUID().toString().replace('-','')
@@ -41,12 +52,12 @@ function FORM_on_load(event) {
 				//there is already an onshow
 				if (smForm.onShow && smForm.onShow.getName()) {
 					//now update the code
-					smForm.onShow.code = smForm.onShow.code.substr(0,smForm.onShow.code.length - 2) + ";scopes.DS.webSubheader(arguments[0],arguments[1])" + smForm.onShow.code.substr(smForm.onShow.code.length - 2)
+					smForm.onShow.code = smForm.onShow.code.substr(0,smForm.onShow.code.length - 2) + ";scopes.DS.webStyleCSS(arguments[0],arguments[1])" + smForm.onShow.code.substr(smForm.onShow.code.length - 2)
 				}
 				//need new on show method
 				else {
 					//now create new on show method
-					smForm.onShow = solutionModel.getGlobalMethod('DS','webSubheader')
+					smForm.onShow = solutionModel.getGlobalMethod('DS','webStyleCSS')
 				}
 			}
 		}
