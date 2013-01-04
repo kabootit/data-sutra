@@ -168,6 +168,8 @@ function webNavSwitchProgress(toggle) {
 			toggle = true
 		}
 		
-		plugins.WebClientUtils.executeClientSideJS("$('#form_DATASUTRA_WEB_0F__workflow .sutraBusy').toggle(" + toggle + ");")
+		var fade = toggle ? 'fadeIn' : 'fadeOut'
+		
+		plugins.WebClientUtils.executeClientSideJS("$('#HUDcenter1')." + fade + "();")
 	}
 }
