@@ -777,7 +777,7 @@ function hideUL() {
 			}
 			else {
 				//show spinny
-				$('#HUDcenter1').toggle(true);
+				$('#HUDcenter1').fadeIn();
 			}
 		}
 	}
@@ -838,7 +838,7 @@ function showUL() {
 				}
 				
 				//hide spinny (won't do in table mode because empty selector)
-				$('#HUDcenter1').toggle(false);
+				$('#HUDcenter1').fadeOut();
 			}
 			
 			//tracking more info than needed at this point
