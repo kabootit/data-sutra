@@ -173,6 +173,7 @@ scrollbars:33,
 size:"210,115",
 styleClass:"standard_table_textarea",
 tabSeq:7,
+transparent:true,
 typeid:4,
 uuid:"4ab0e4d8-bc0c-45e6-b009-75baf98283ee"
 },

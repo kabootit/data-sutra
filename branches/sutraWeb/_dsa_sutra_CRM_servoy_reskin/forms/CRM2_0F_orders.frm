@@ -418,6 +418,7 @@ uuid:"6ea80b90-750b-4132-bf84-5f79ab448c27"
 {
 dataProviderID:"order_date",
 displayType:5,
+editable:false,
 formIndex:15100,
 format:"MM-dd-yyyy",
 location:"111,67",
@@ -468,11 +469,11 @@ uuid:"7b86524a-b067-486b-a4d8-132393ff6e15"
 {
 anchors:6,
 formIndex:13500,
-location:"534,436",
+location:"542,436",
 mediaOptions:14,
 showClick:false,
 showFocus:false,
-size:"206,18",
+size:"198,18",
 styleClass:"standard_table_category",
 tabSeq:-1,
 text:"Order totals",
