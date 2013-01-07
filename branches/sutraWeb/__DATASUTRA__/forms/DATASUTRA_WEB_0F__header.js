@@ -366,17 +366,20 @@ function ACTION_space_change(event) {
 				if (solutionPrefs.config.currentFormID && navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID]) {
 					var currentNavItem = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID]
 					
-					//when in workflow flip, show click through	//MEMO: this isn't currently firing because we need to force a UL refresh
-					if (spaceName == 'workflow flip') {
-						if (currentNavItem.navigationItem.useFwList) {
-							if (forms[currentNavItem.listData.tabFormInstance].elements.sutra_detail_view) {
-								forms[currentNavItem.listData.tabFormInstance].elements.sutra_detail_view.visible = true
+					//we have a form to work on
+					if (currentNavItem.listData.tabFormInstance) {
+						//when in workflow flip, show click through	//MEMO: this isn't currently firing because we need to force a UL refresh
+						if (spaceName == 'workflow flip') {
+							if (currentNavItem.navigationItem.useFwList) {
+								if (forms[currentNavItem.listData.tabFormInstance].elements.sutra_detail_view) {
+									forms[currentNavItem.listData.tabFormInstance].elements.sutra_detail_view.visible = true
+								}
 							}
 						}
-					}
-					else {
-						if (forms[currentNavItem.listData.tabFormInstance].elements.sutra_detail_view) {
-							forms[currentNavItem.listData.tabFormInstance].elements.sutra_detail_view.visible = false
+						else {
+							if (forms[currentNavItem.listData.tabFormInstance].elements.sutra_detail_view) {
+								forms[currentNavItem.listData.tabFormInstance].elements.sutra_detail_view.visible = false
+							}
 						}
 					}
 				}
@@ -408,11 +411,6 @@ function ACTION_space_change(event) {
 					if (oldSpace == 'workflow' && currentNavItem.navigationItem.useFwList) {
 						var methodRefresh = currentNavItem.listData.withButtons ? forms.NAV_T_universal_list__WEB__buttons.DISPLAY_cycle : forms.NAV_T_universal_list__WEB__no_buttons.DISPLAY_cycle
 						methodRefresh(true)
-
-//						var methodRefresh = currentNavItem.listData.withButtons ? forms.NAV_T_universal_list__WEB__buttons.DISPLAY_cycle : forms.NAV_T_universal_list__WEB__no_buttons.DISPLAY_cycle
-//						var callback = plugins.WebClientUtils.generateCallbackScript(methodRefresh, ['true'])
-//						var jsCallback = 'function repaintUL(){' + callback + '}';
-//						plugins.WebClientUtils.executeClientSideJS('refreshUL(' + jsCallback + ');')
 					}
 				}
 				
@@ -441,8 +439,15 @@ function ACTION_space_change(event) {
 			}		
 		}
 		
-		//attach fancy scrollbars
-		if (application.__parent__.navigationPrefs && navigationPrefs.byNavItemID && solutionPrefs.config.currentFormID) {
+		//when no ul, manually turn off center spinner
+		if (application.__parent__.navigationPrefs && solutionPrefs.config.currentFormID && 
+			navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID] && 
+			!navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].navigationItem.useFwList) {
+			
+			scopes.DS.webNavSwitchProgress(false)
+		}
+		//prettify UL
+		else if (application.__parent__.navigationPrefs && navigationPrefs.byNavItemID && solutionPrefs.config.currentFormID) {
 			scopes.DS.webULPrettify(false,true)
 		}
 	}
