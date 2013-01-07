@@ -38,54 +38,8 @@ function centerForm(formName) {
 		}
 	}
 	else {
-		console.log('CENTER: Nothing found here: ' + formName);
+		// console.log('CENTER: Nothing found here: ' + formName);
 	}
-}
-
-//	Update indicator to be new style (next to login button)
-function loginIndicator(signup) {
-	var indicator = $('#indicator');
-	
-	// sign up button
-	if (signup) {
-		var button = $('.signupDS');
-		var offsetTop = 2;
-		var offsetLeft = -30;
-	}
-	// log in button
-	else {
-		var button = $('.loginDS');
-		var offsetTop = 2;
-		var offsetLeft = -38;
-	}
-	
-	//we have enough things loaded to actually run this method
-	if (button.length && button.offset()) {
-		//put indicator next to toolbar button
-		indicator.offset({
-				top: button.offset().top + offsetTop, 
-				left: button.offset().left + offsetLeft
-			})
-	}
-	//run this function again until enough loaded
-	else {
-		setTimeout(function(){
-			loginIndicator(signup)
-		},500)
-		// console.log('LOGIN indicator waiting....');
-	}
-}
-
-//	Update indicator to be new style (in the toolbar)
-function mobileIndicator() {
-	var indicator = $('#indicator');
-	indicator.html('<div id="HUDcenter1"><div id="HUDcenter2"><div id="HUDalpha"><h3>Loading...</h3></div></div></div>');
-	indicator.removeStyle('width');
-	indicator.removeStyle('height');
-	indicator.removeStyle('top');
-	indicator.removeStyle('left');
-	$('#HUDalpha').activity({ valign: 'top', steps: 3, segments: 12, width: 5.5, space: 5, length: 12,color: '#F2F2F2', speed: 0.75});
-	$('#indicator .sutraBusy').css('margin-top','5px');
 }
 
 //  Include spinny indicator after jquery is available
@@ -102,17 +56,233 @@ function mobileIndicator() {
 	
 	//part 2: set up indicator
 	setTimeout(function(){
-		var indicator = $('#indicator');
-		indicator.html('');
-		indicator.css('position','absolute');
-		indicator.css('width','20px');
-		indicator.css('height','20px');
-		indicator.css('z-index','1000');
-		indicator.activity({segments: 12, align: 'left', valign: 'top', steps: 3, width:2, space: 1, length: 3, color: '#666666', speed: 1.5});
-		// indicator.activity({segments: 12, width: 5.5, space: 6, length: 13, color: '#252525', speed: 1.5, outside:true});
-		// sutraBusy is class for this indicator: $('#indicator .sutraBusy');
+		//running  on ipad, large centered spinny blocker
+		if (dsFactor() == 'iPad') {
+			var indicator = $('#indicator');
+			indicator.css({
+					'position':'absolute',
+					'left':'0px',
+					'right':'0px',
+					'z-index':1000
+				});
+			indicator.html('<div class="HUDcenter1"><div class="HUDcenter2"><div class="HUDalpha"><h3>Loading...</h3></div></div></div>');
+			// indicator.removeStyle('top');
+			// indicator.removeStyle('left');
+			$('#indicator .HUDalpha').activity({ valign: 'top', steps: 3, segments: 12, width: 5.5, space: 5, length: 12,color: '#F2F2F2', speed: 0.75});
+			$('#indicator .sutraBusy').css({'margin-top':'5px','margin-left':'16px'});
+		}
+		//small spinny blocker
+		else {
+			var indicator = $('#indicator');
+			indicator.html('');
+			indicator.css({
+					'position':'absolute',
+					'width':'20px',
+					'height':'20px',
+					'z-index':1000
+				});
+			indicator.activity({segments: 12, align: 'left', valign: 'top', steps: 3, width:2, space: 1, length: 3, color: '#666666', speed: 1.5});
+		}
+		
+		//MEMO: sutraBusy is class for this indicator: $('#indicator .sutraBusy');
 	},1500)
 })();
+
+//	Update indicator to be new style (next to login button)
+function loginIndicator(signup) {
+	//non-tablet only
+	if (dsFactor() != 'iPad') {
+		var indicator = $('#indicator');
+	
+		// sign up button
+		if (signup) {
+			var button = $('.signupDS');
+			var offsetTop = 2;
+			var offsetLeft = -30;
+		}
+		// log in button
+		else {
+			var button = $('.loginDS');
+			var offsetTop = 2;
+			var offsetLeft = -38;
+		}
+	
+		//we have enough things loaded to actually run this method
+		if (button.length && button.offset()) {
+			//put indicator next to toolbar button
+			indicator.offset({
+					top: button.offset().top + offsetTop, 
+					left: button.offset().left + offsetLeft
+				})
+		}
+		//run this function again until enough loaded
+		else {
+			setTimeout(function(){
+				loginIndicator(signup)
+			},500)
+			// console.log('LOGIN indicator waiting....');
+		}
+	}
+}
+
+//	Large centered "Loading..." indicator
+function bigIndicator(toggle) {
+	// var indicator = $('#form_DATASUTRA_WEB_0F');
+	var elem = '#servoy_dataform .webform:first';
+	var indicator = $(elem);
+		
+	//not enough loaded in yet, try to load up again in half a second
+	if (!indicator.length) {
+		setTimeout(bigIndicator,500);
+		return
+	}
+		
+	//add in the spinner for the UL area
+	var spinner = $(elem + ' .sutraBusy');
+	if (!spinner.length) {
+		//activity available, add spinner
+		if (typeof $.fn.activity == 'function') {
+			//tablet indicator
+			indicator.append('<div class="HUDcenter1"><div class="HUDcenter2"><div class="HUDalpha"><h3>Loading...</h3></div></div></div>');
+			$(elem + ' .HUDalpha').activity({ valign: 'top', steps: 3, segments: 12, width: 5.5, space: 5, length: 12,color: '#F2F2F2', speed: 0.75});
+			$(elem + ' .sutraBusy').css('margin-top','5px').css('z-index',1);
+			$(elem + ' .HUDcenter1').toggle(false);
+		}
+		//run whole thing again
+		else {
+			setTimeout(bigIndicator,25);
+			return
+		}
+	}
+			
+	//toggle state not specified, toggle
+	if (typeof toggle != 'boolean') {
+		// toggle = !$(elem + ' .HUDcenter1').is(":visible");
+		toggle = true;
+	}
+			
+	//show
+	if (toggle) {
+		//list isn't currently showing, don't need to hide/show
+			//MEMO: this should be called from within lefthandListen.attache, but really only concerned about spinner showing
+		var selector = $('#form_NAV_T_universal_list__WEB__list');
+		if (selector.length) {
+			if (selector.height() == 0 || selector.width() == 0) {
+				var skipMe = true
+			}
+		}
+				
+		if (!skipMe) {
+			console.log("centered: ON");
+			$(elem + ' .HUDcenter1').fadeIn();
+		}
+	}
+	//hide
+	else {
+		console.log("centered: OFF");
+		$(elem + ' .HUDcenter1').fadeOut();
+	}
+}
+
+//	Hook servoy's indicator to the mouse location when running in Desktop moode (doesn't make sense on touch screens)
+switch (dsFactor()) {
+	case 'Desktop':
+		//track location of mouse cursor
+			//MEMO: used for indicator, but also for right-click in table views
+		setTimeout(function(){
+			function trackMouse(e) {
+				var position = [0,0];
+				position[0] = (e.pageX) ? e.pageX : 0;
+				position[1] = (e.pageY) ? e.pageY : 0;
+			
+				Wicket.indicatorPosition = position;
+			}
+		
+			$('#servoy_page').on('click contextmenu',trackMouse);
+		},1500)
+	
+		function busyCursor(clickPos,turnOn) {
+			var selector = $("#servoy_page");
+	
+			//don't run on login form, we want the cursor in a specific location
+			if ($('.loginDS').length) {
+				return
+			}
+	
+			//we have a jquery selector
+			if (selector.length) {
+				var indicator = $('#indicator')
+				//valid mouse location passed in
+				if ( clickPos ) {
+					function trackMouse(event,position) {
+						var maxWidth = $(document).width() - 36;
+						var maxHeight = $(document).height() - 36;
+					
+						if (event && !position) {
+							position = [event.clientX,event.clientY];
+						}
+					
+						position[0] = (position[0] <= maxWidth) ? position[0] : maxWidth;
+						position[1] = (position[1] <= maxHeight) ? position[1] : maxHeight;
+					
+						indicator.css('top', position[1]+10).css('left', position[0]+10);
+					}
+				
+					trackMouse(null,clickPos);
+	
+					selector.mousemove(trackMouse);
+			
+					//force indicator on (used for programmed busy)
+					if (turnOn) {
+						indicator.show();
+					}
+				}
+				//no mouse location, remove listener
+				else {
+					selector.unbind('mousemove');
+			
+					//make sure that really turned off (sometimes gets stuck)
+					indicator.hide();
+				}
+			}
+		}
+
+		//	Extending Wicket...object to hold original calls
+		var WicketDSExtend = new Object();
+
+		//	Extend wicket calls to hide/show indicator so that follows mouse location
+		WicketDSExtend.showIncrementally = Wicket.showIncrementally;
+		Wicket.showIncrementally = function() {
+			//original call
+			WicketDSExtend.showIncrementally.apply(this,arguments);
+	
+			//override
+			busyCursor(Wicket.indicatorPosition);
+		}
+		WicketDSExtend.hideIncrementally = Wicket.hideIncrementally;
+		Wicket.hideIncrementally = function() {
+			//original call
+			WicketDSExtend.hideIncrementally.apply(this,arguments);
+	
+			//override
+			busyCursor();
+		}
+		break
+	case 'iPad':
+		//	Extending Wicket...object to hold original calls
+		var WicketDSExtend = new Object();
+
+		//	Extend wicket calls to hide/show indicator so that follows mouse location
+		WicketDSExtend.showIncrementally = Wicket.showIncrementally;
+		Wicket.showIncrementally = function() {
+			//only show indicator when center blocker not already showing
+			if (!$('#servoy_dataform .webform:first .HUDcenter1').is(':visible')) {
+				//original call
+				WicketDSExtend.showIncrementally.apply(this,arguments);
+			}
+		}
+		break
+}
 
 //	Extend jquery to be able to remove styles (http://stackoverflow.com/questions/2465158)
 (function($) {
@@ -204,90 +374,6 @@ function mobileIndicator() {
                  .on('selectstart', false);
     };
 })(jQuery);
-
-//	Hook servoy's indicator to the mouse location when running in Desktop moode (doesn't make sense on touch screens)
-if (dsFactor() == 'Desktop') {
-	//track location of mouse cursor
-		//MEMO: used for indicator, but also for right-click in table views
-	setTimeout(function(){
-		function trackMouse(e) {
-			var position = [0,0];
-			position[0] = (e.pageX) ? e.pageX : 0;
-			position[1] = (e.pageY) ? e.pageY : 0;
-			
-			Wicket.indicatorPosition = position;
-		}
-		
-		$('#servoy_page').on('click contextmenu',trackMouse);
-	},1500)
-	
-	function busyCursor(clickPos,turnOn) {
-		var selector = $("#servoy_page");
-	
-		//don't run on login form, we want the cursor in a specific location
-		if ($('.loginDS').length) {
-			return
-		}
-	
-		//we have a jquery selector
-		if (selector.length) {
-			var indicator = $('#indicator')
-			//valid mouse location passed in
-			if ( clickPos ) {
-				function trackMouse(event,position) {
-					var maxWidth = $(document).width() - 36;
-					var maxHeight = $(document).height() - 36;
-					
-					if (event && !position) {
-						position = [event.clientX,event.clientY];
-					}
-					
-					position[0] = (position[0] <= maxWidth) ? position[0] : maxWidth;
-					position[1] = (position[1] <= maxHeight) ? position[1] : maxHeight;
-					
-					indicator.css('top', position[1]+10).css('left', position[0]+10);
-				}
-				
-				trackMouse(null,clickPos);
-	
-				selector.mousemove(trackMouse);
-			
-				//force indicator on (used for programmed busy)
-				if (turnOn) {
-					indicator.show();
-				}
-			}
-			//no mouse location, remove listener
-			else {
-				selector.unbind('mousemove');
-			
-				//make sure that really turned off (sometimes gets stuck)
-				indicator.hide();
-			}
-		}
-	}
-
-	//	Extending Wicket...object to hold original calls
-	var WicketDSExtend = new Object();
-
-	//	Extend wicket calls to hide/show indicator so that follows mouse location
-	WicketDSExtend.showIncrementally = Wicket.showIncrementally;
-	Wicket.showIncrementally = function() {
-		//original call
-		WicketDSExtend.showIncrementally.apply(this,arguments);
-	
-		//override
-		busyCursor(Wicket.indicatorPosition);
-	}
-	WicketDSExtend.hideIncrementally = Wicket.hideIncrementally;
-	Wicket.hideIncrementally = function() {
-		//original call
-		WicketDSExtend.hideIncrementally.apply(this,arguments);
-	
-		//override
-		busyCursor();
-	}
-}
 
 //	Refresh UL list
 function refreshUL(source) {
@@ -390,22 +476,18 @@ function dsFactor() {
 		var myReturn = window.parent.dsFactor();
 	}
 	
-	if (myReturn == 'iPad') {
-		setTimeout(mobileIndicator,1500);
-	}
-	
 	return myReturn
 }
 
 //	Turn off indicator for selected iframe
 function indicatorOff() {
 	setTimeout(function(){
-		var selector = $("#HUDcenter1");
+		var selector = $("#indicator .HUDcenter1");
 		
 		//we have a jquery selector
 		if (selector.length) {
 			console.log('FiD indicator hidden');
-			$("#HUDcenter1").hide();
+			selector.fadeOut();
 		}
 		else {
 			console.log('FiD indicator not hidden');
@@ -467,51 +549,51 @@ function toggleClass(id, className, forceOn) {
 
 
 //	Inject iOS scrollbars
-(function(){
-	setTimeout(function(){
-		$('head').append("<script src='/ds/js/lib/ftscroller.js'></script>");
-	},1000)
-	
-	//"override" functions
-	if (typeof(DS.Servoy) == "undefined") {
-		DS.Servoy = new Object();
-	}
-	if (typeof(DS.Servoy.TableView) == "undefined") {
-		DS.Servoy.TableView = new Object();
-	}
-	
-	//this is for Servoy 6.1.3
-	DS.Servoy.TableView.needToUpdateRowsBuffer = function(rowContainerBodyId,formName) {
-		if (Servoy.TableView.isAppendingRows || (!Servoy.TableView.hasTopBuffer[rowContainerBodyId] && !Servoy.TableView.hasBottomBuffer[rowContainerBodyId])) {
-			return 0;
-		}
-		var scrollTop = DS.scroller[formName].scrollTop
-		var scrollDiff = scrollTop - Servoy.TableView.currentScrollTop[rowContainerBodyId];
-		if (scrollDiff == 0 || (Servoy.TableView.keepLoadedRows && (scrollDiff < 0))) return 0;
-		Servoy.TableView.currentScrollTop[rowContainerBodyId] = scrollTop;
-		var rowContainerBodyEl = document.getElementById(rowContainerBodyId);
-		var clientHeight = rowContainerBodyEl.clientHeight;
-		var scrollHeight = DS.scroller[formName].scrollHeight;
-		var bufferedRows = scrollHeight - scrollTop - clientHeight;
-		if (scrollDiff > 0) {
-			Servoy.TableView.isAppendingRows = Servoy.TableView.hasBottomBuffer[rowContainerBodyId] && (bufferedRows < clientHeight);
-		} else {
-			var row = $('#' + rowContainerBodyId).children('tr:first');
-			var topPhHeight = 0;
-			if (row.attr('id') == 'topPh') {
-				topPhHeight = row.height();
-			}
-			Servoy.TableView.isAppendingRows = Servoy.TableView.hasTopBuffer[rowContainerBodyId] && (scrollTop - topPhHeight < clientHeight);
-		}
-		var secondRow = $('#' + rowContainerBodyId).children('tr').eq(1);
-		var rowHeight = secondRow.height();
-		var nrRows = scrollDiff / rowHeight;
-		var nrRowAbs = Math.ceil(Math.abs(nrRows));
-		nrRows = nrRows < 0 ? -nrRowAbs : nrRowAbs;
-		return Servoy.TableView.isAppendingRows ? nrRows : 0;
-	}
-	
-})();
+// (function(){
+// 	setTimeout(function(){
+// 		$('head').append("<script src='/ds/js/lib/ftscroller.js'></script>");
+// 	},1000)
+// 	
+// 	//"override" functions
+// 	if (typeof(DS.Servoy) == "undefined") {
+// 		DS.Servoy = new Object();
+// 	}
+// 	if (typeof(DS.Servoy.TableView) == "undefined") {
+// 		DS.Servoy.TableView = new Object();
+// 	}
+// 	
+// 	//this is for Servoy 6.1.3
+// 	DS.Servoy.TableView.needToUpdateRowsBuffer = function(rowContainerBodyId,formName) {
+// 		if (Servoy.TableView.isAppendingRows || (!Servoy.TableView.hasTopBuffer[rowContainerBodyId] && !Servoy.TableView.hasBottomBuffer[rowContainerBodyId])) {
+// 			return 0;
+// 		}
+// 		var scrollTop = DS.scroller[formName].scrollTop
+// 		var scrollDiff = scrollTop - Servoy.TableView.currentScrollTop[rowContainerBodyId];
+// 		if (scrollDiff == 0 || (Servoy.TableView.keepLoadedRows && (scrollDiff < 0))) return 0;
+// 		Servoy.TableView.currentScrollTop[rowContainerBodyId] = scrollTop;
+// 		var rowContainerBodyEl = document.getElementById(rowContainerBodyId);
+// 		var clientHeight = rowContainerBodyEl.clientHeight;
+// 		var scrollHeight = DS.scroller[formName].scrollHeight;
+// 		var bufferedRows = scrollHeight - scrollTop - clientHeight;
+// 		if (scrollDiff > 0) {
+// 			Servoy.TableView.isAppendingRows = Servoy.TableView.hasBottomBuffer[rowContainerBodyId] && (bufferedRows < clientHeight);
+// 		} else {
+// 			var row = $('#' + rowContainerBodyId).children('tr:first');
+// 			var topPhHeight = 0;
+// 			if (row.attr('id') == 'topPh') {
+// 				topPhHeight = row.height();
+// 			}
+// 			Servoy.TableView.isAppendingRows = Servoy.TableView.hasTopBuffer[rowContainerBodyId] && (scrollTop - topPhHeight < clientHeight);
+// 		}
+// 		var secondRow = $('#' + rowContainerBodyId).children('tr').eq(1);
+// 		var rowHeight = secondRow.height();
+// 		var nrRows = scrollDiff / rowHeight;
+// 		var nrRowAbs = Math.ceil(Math.abs(nrRows));
+// 		nrRows = nrRows < 0 ? -nrRowAbs : nrRowAbs;
+// 		return Servoy.TableView.isAppendingRows ? nrRows : 0;
+// 	}
+// 	
+// })();
 function scrollbarSmall(formName,runIt) {
 	//no custom scrollbar
 	return;
@@ -657,7 +739,7 @@ function prettifyUL(maxTimeOut,fsSize,noShow) {
 	
 	function iFeelPretty() {
 		timeOut++;
-		// console.log('PRETTY UL: ' + timeOut);
+		console.log('PRETTY UL: ' + timeOut);
 		
 		// the UL table header has loaded, the rest should be ready as well
 		if ($ && $("#form_NAV_T_universal_list__WEB__list table tbody td th table").length) {
@@ -707,18 +789,15 @@ function prettifyUL(maxTimeOut,fsSize,noShow) {
 //listen for changes in size to UL area
 function lefthandListen() {
 	function attache(event) {
-		// console.log("resized");
-		hideUL();
-		
 		//don't show UL when isn't showing
 		var selector = $('#form_NAV_T_universal_list__WEB__list')
-		if (selector.length) {
-			if (selector.height() == 0 || selector.width() == 0) {
-				return;
-			}
+		if (selector.length && (selector.height() == 0 || selector.width() == 0) || !selector.length) {
+			return;
 		}
 		
-		setTimeout(scrollbarSmall,750);
+		console.log("resized");
+		hideUL();
+		// setTimeout(scrollbarSmall,750);
 		showUL();
 	}
 	
@@ -731,7 +810,7 @@ function lefthandListen() {
 		}
 		
 		//(re-)attach
-		// console.log("listener attached");
+		console.log("listener attached");
 		$('#form_DATASUTRA_WEB_0F__list').on('resize', null, $.debounce(300,attache));
 	}
 }
@@ -739,48 +818,7 @@ function lefthandListen() {
 //UL hide
 function hideUL() {
 	// First up: set up big indicator
-	//don't do in tablet mode (already has this indicator)
-	if (window.parent != window && window.parent.dsFactor) {
-		var formFactor = window.parent.dsFactor();
-	}
-	if (formFactor != 'iPad') {
-		
-		var selector = $('#form_NAV_T_universal_list__WEB__list');
-		
-		//list isn't currently showing, don't need to hide/show
-			//MEMO: this should be called from within lefthandListen.attache, but really only concerned about spinner showing
-		if (selector.length) {
-			if (selector.height() == 0 || selector.width() == 0) {
-				var skipMe = true
-			}
-		}
-		
-		//add in the spinner for the UL area
-		if (!skipMe) {
-			var spinner = $('#form_DATASUTRA_WEB_0F .sutraBusy');
-			if (!spinner.length) {
-				var indicator = $('#form_DATASUTRA_WEB_0F');
-		
-				if (indicator.length) {
-					setTimeout(function(){
-						//attach indicator (small one without big inset)
-						// indicator.activity({ valign: 'top', steps: 3, segments: 12, width: 3.5, space: 4, length: 8,color: '#AAA', speed: 0.75});
-						//set up custom location, z-index
-						// $('#form_DATASUTRA_WEB_0F .sutraBusy').css('margin-top',Math.floor($('#form_DATASUTRA_WEB_0F__main').height()/2) - 10 + 'px').css('z-index',1);
-					
-						//tablet indicator
-						indicator.append('<div id="HUDcenter1"><div id="HUDcenter2"><div id="HUDalpha"><h3>Loading...</h3></div></div></div>');
-						$('#HUDalpha').activity({ valign: 'top', steps: 3, segments: 12, width: 5.5, space: 5, length: 12,color: '#F2F2F2', speed: 0.75});
-						$('#form_DATASUTRA_WEB_0F .sutraBusy').css('margin-top','5px').css('z-index',1);
-					},0)
-				}
-			}
-			else {
-				//show spinny
-				$('#HUDcenter1').fadeIn();
-			}
-		}
-	}
+	bigIndicator();
 	
 	//Now try and hide the UL
 	var selector = $('#form_NAV_T_universal_list__WEB');
@@ -796,8 +834,6 @@ function hideUL() {
 function showUL() {
 	//rehook up correct styling to this part of the UL, but don't call showUL again
 	setTimeout(function(){
-		// prettifyUL(null,null,true);
-		
 		var selector = $('#form_NAV_T_universal_list__WEB');
 		if (selector.length) {
 			//make sure we have a place to store events
@@ -838,7 +874,8 @@ function showUL() {
 				}
 				
 				//hide spinny (won't do in table mode because empty selector)
-				$('#HUDcenter1').fadeOut();
+				// $('#HUDcenter1').fadeOut();
+				bigIndicator(false);
 			}
 			
 			//tracking more info than needed at this point

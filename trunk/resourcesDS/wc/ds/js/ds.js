@@ -29,6 +29,8 @@ function preRender(data,description,path,delay) {
 		if (window.top.routerDelay) {
 			window.parent.routerDelay(data,description,path,250);
 		}
+		//manually turn on loading indicator
+		hideUL();
 	}
 }
 
@@ -107,13 +109,7 @@ function reLogin(smallForm) {
 }
 
 function pulseOn() {
-	var block = $('#blocker',window.parent.document)
-	
-	if (!block.is(':visible')) {
-		block.show()
-	}
-	
-	block.delay(250).fadeOut(4000).delay(50).fadeIn(2500,pulseOn);
+	bigIndicator(true);
 }
 
 function pulseOff() {

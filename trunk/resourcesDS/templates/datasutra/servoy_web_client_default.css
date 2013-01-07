@@ -688,16 +688,16 @@ input.noWebkitOutline:focus {
 }
 
 /*	Big loading indicator	*/
-#HUDcenter1 {
+.HUDcenter1 {
 	width: 100%;
 }
 
-#HUDcenter2 {
+.HUDcenter2 {
 	width: 130px;
 	margin: 20% auto 0px;
 }
 
-#HUDalpha {
+.HUDalpha {
 	width: 90px;
 	height: 110px;
 	padding: 10px 20px;
@@ -708,7 +708,7 @@ input.noWebkitOutline:focus {
 	border-radius: 12px;
 }
 
-#HUDalpha h3 {
+.HUDalpha h3 {
 	padding-top: 65px;
 	color: #F2F2F2;
 	font-size: 20px;
@@ -733,7 +733,7 @@ and (max-device-width : 1024px) {
 	}
 	
 	/*	Loading indicator for iOS	*/
-	#HUDcenter2 {
+	.HUDcenter2 {
 		margin: 200px auto 0px;
 	}
 	
@@ -741,11 +741,11 @@ and (max-device-width : 1024px) {
 /*	@import url('/ds/css/ds.tablet.css')*/
 }
 @media only screen and (max-device-width: 1024px) and (orientation:landscape) { 
-    #HUDcenter1 { width: 1024px; }
-	#HUDcenter2 { margin-top: 25%; }
+    .HUDcenter1 { width: 1024px; }
+	.HUDcenter2 { margin-top: 25%; }
 }
 @media only screen and (max-device-width: 1024px) and (orientation:portrait) {
-	#HUDcenter2 { margin-top: 50%; } 
+	.HUDcenter2 { margin-top: 50%; } 
 }
 
 /*	graphics styles on main page	*/
