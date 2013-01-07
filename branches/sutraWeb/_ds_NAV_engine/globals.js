@@ -3105,7 +3105,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		globals.DS_web_login_running = false
 		
 		//turn off pulsating
-		plugins.WebClientUtils.executeClientSideJS('pulseOff();')
+//		plugins.WebClientUtils.executeClientSideJS('pulseOff();')
 		
 		//prompt to add to homescreen
 		plugins.WebClientUtils.executeClientSideJS('if (window.parent.addToHome) {window.top.History.replaceState(null,"Data Sutra",window.top.location.pathname);window.parent.addToHome.show();}')
