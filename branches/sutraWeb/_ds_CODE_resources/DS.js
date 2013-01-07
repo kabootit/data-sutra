@@ -168,8 +168,8 @@ function webNavSwitchProgress(toggle) {
 			toggle = true
 		}
 		
-		var fade = toggle ? 'fadeIn' : 'fadeOut'
-		
-		plugins.WebClientUtils.executeClientSideJS("$('#HUDcenter1')." + fade + "();")
+//		var fade = toggle ? 'fadeIn' : 'fadeOut'
+//		plugins.WebClientUtils.executeClientSideJS("$('#HUDcenter1')." + fade + "();")
+		plugins.WebClientUtils.executeClientSideJS("bigIndicator(" + (toggle ? 'true' : 'false') + ");")
 	}
 }
