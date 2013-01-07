@@ -74,7 +74,7 @@ function REC_duplicate()
  *			  	
  */
 
-controller.duplicateRecord(false)
+controller.duplicateRecord()
 globals.TRIGGER_ul_refresh_all()
 }
 
