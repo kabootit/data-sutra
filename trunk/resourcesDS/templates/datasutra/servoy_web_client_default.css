@@ -468,15 +468,15 @@ div.webform,
 
 /*Override Dialog styling*/
 div.wicket-modal div.w_blue {
-	border-radius: 0px 0px 0px 0px;
+	border-radius: 6px;
 	border: 0px solid white;
 	margin: -1px;
-	background-color: #cccccc;
+	background-color: #666666;
 	/*background-color: rgba(10, 10, 10, 0.8);*/
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#cc0a0a0a,endColorstr=#cc0a0a0a);
-	-moz-box-shadow: 10px 10px 10px rgba(10, 10, 10, 0.5);
-	-webkit-box-shadow: 10px 10px 10px rgba(10, 10, 10, 0.5);
-	box-shadow: 10px 10px 10px rgba(10, 10, 10, 0.5);
+	-moz-box-shadow: 0px 1px 8px rgba(10, 10, 10, 0.5);
+	-webkit-box-shadow: 0px 1px 8px rgba(10, 10, 10, 0.5);
+	box-shadow: 0px 1px 8px rgba(10, 10, 10, 0.5);
 }
 
 /*Styling the draggable area of a dialog*/
@@ -487,6 +487,9 @@ div.wicket-modal div.w_caption {
 	/*text-shadow: 0 0 15px white, 0 0 15px white; */
 	font-size: 12px;
 	color: white;
+	
+	border-top-left-radius: 6px;
+	border-top-right-radius: 6px;
 }
 
 /*Styling the dialog close button*/
@@ -533,6 +536,10 @@ div.w_bottom_1, div.w_bottomRight, div.bottomLeft  {
 }
 div.w_top, div.w_topRight, div.w_topLeft  {
 	height: 1px !important;
+}
+div.w_content iframe {
+	border-bottom-left-radius: 6px;
+	border-bottom-right-radius: 6px;
 }
 
 /*disabling default dialog styling*/

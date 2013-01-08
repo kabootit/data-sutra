@@ -201,6 +201,11 @@ label.developerbutton {
 	border-bottom-width: 0px;
 }
 
+label.dialogs_icon_generic { background-image: url('media:///dialogs_icon_generic.png'); }
+label.dialogs_icon_info { background-image: url('media:///dialogs_icon_info.png'); }
+label.dialogs_icon_warning { background-image: url('media:///dialogs_icon_warning.png'); }
+label.dialogs_icon_error { background-image: url('media:///dialogs_icon_error.png'); }
+
 label.fidaction {
 	font-weight: bold;
 	font-size: 10px; 
