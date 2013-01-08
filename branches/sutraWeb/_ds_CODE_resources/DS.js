@@ -4,7 +4,7 @@
  * @type {Boolean}
  * @properties={typeid:35,uuid:"BC212301-4A96-48A9-90AB-CC0C2CF1C0A0",variableType:-4}
  */
-var smallScroll = true;
+var smallScroll = false;
 
 /**
  * DS transaction hooks
@@ -72,6 +72,16 @@ var deviceFactor = 'Desktop';
 function webFactorSet(device) {
 	if (device && device != 'null') {
 		deviceFactor = device
+	}
+	
+	//when not running on ipad, request focus into user/pass field
+	if (deviceFactor != 'iPad') {
+		if (forms.AC_R__login_WEB._focusPass) {
+			forms.AC_R__login_WEB.elements.var_userPass.requestFocus()
+		}
+		else if (forms.AC_R__login_WEB._focusUser) {
+			forms.AC_R__login_WEB.elements.var_userName.requestFocus()
+		}
 	}
 }
 
@@ -171,5 +181,28 @@ function webNavSwitchProgress(toggle) {
 //		var fade = toggle ? 'fadeIn' : 'fadeOut'
 //		plugins.WebClientUtils.executeClientSideJS("$('#HUDcenter1')." + fade + "();")
 		plugins.WebClientUtils.executeClientSideJS("bigIndicator(" + (toggle ? 'true' : 'false') + ");")
+	}
+}
+
+/**
+ * @properties={typeid:24,uuid:"49E0E69D-3364-44CD-823C-FCCA36A9385F"}
+ */
+function webCallbacks() {
+	//on orientation change events
+	if (scopes.DS.deviceFactor == 'iPad') {
+		var callback = plugins.WebClientUtils.generateCallbackScript(globals.DS_space_change,['"btn_space_7"'],true)
+		var jsCallback = 'function orientPortrait(){' + callback + '}';
+		plugins.WebClientUtils.executeClientSideJS('callbackConfig(' + jsCallback + ');')
+		
+		var callback = plugins.WebClientUtils.generateCallbackScript(globals.DS_space_change,['"btn_space_1"'],true)
+		var jsCallback = 'function orientLandscape(){' + callback + '}';
+		plugins.WebClientUtils.executeClientSideJS('callbackConfig(' + jsCallback + ');')
+	}
+	
+	//running in the router
+	if (globals.DATASUTRA_router_enable) {
+		var callback = plugins.WebClientUtils.generateCallbackScript(globals.DS_router_callback,null,false)
+		var jsCallback = 'function navigate(){' + callback + '}';
+		plugins.WebClientUtils.executeClientSideJS('callbackConfig(' + jsCallback + ');')
 	}
 }
