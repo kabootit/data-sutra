@@ -46,4 +46,5 @@ h1 {
 	border-color: black !important;
 	border-top-left-radius: 15px 10px;
 	border-top-right-radius: 15px 10px;
+	opacity: 0.65;
 }
