@@ -5409,11 +5409,9 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 	//this must be called from the router and therefore we must be running in the iframe router wrapper
 	globals.DATASUTRA_router_enable = true
 	
-	//set up callback on form for navigating when in router wrapper -- see DATASUTRA_WEB_0F.FORM_on_show
+	//set up callback on form for navigating when in router wrapper
 		//MEMO: only needed when url manually typed in
-	var callback = plugins.WebClientUtils.generateCallbackScript(globals.DS_router_callback,null,false)
-	var jsCallback = 'function navigate(){' + callback + '}';
-	plugins.WebClientUtils.executeClientSideJS('navigateConfig(' + jsCallback + ');')
+	scopes.DS.webCallbacks()
 	
 	// external login form requested and already logged in, show something to this effect
 	if (url.set == 'DSLoginSmall' && application.__parent__.solutionPrefs && solutionPrefs.access && solutionPrefs.access.userID) {
@@ -5456,14 +5454,14 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 			}
 			//no url specified and still not logged in, redirect again
 			else if (url.set == 'DSError_NoURL') {
-				plugins.WebClientUtils.executeClientSideJS(routerCall + '(null,"Data Sutra: Login","' + getURL('login') + '");')
+				plugins.WebClientUtils.executeClientSideJS(routerCall + '(null,"Data Sutra","' + getURL('login') + '");')
 				return
 			}
 		}
 		// specific navitem requested, go to login page first
 		else if (!(url.set == 'DSLogin' || url.set == 'DSLoginSmall')) {
 			if (pathName != prefix + 'login') {
-				plugins.WebClientUtils.executeClientSideJS(routerCall + '(null,"Data Sutra: Login","' + getURL('login') + '");')
+				plugins.WebClientUtils.executeClientSideJS(routerCall + '(null,"Data Sutra","' + getURL('login') + '");')
 			}
 			//we've run once
 			globals.DATASUTRA_router_firstRun = true
