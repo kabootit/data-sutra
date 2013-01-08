@@ -94,6 +94,19 @@
 	
 <!-- DS WebClient with(out) /ds/ prefix -->
 	<rule>
+		<name>DS favicons</name>
+		<note>Regular favicon and iOS icon</note>
+		<condition name="host" next="or">
+			&dsSutra;
+		</condition>
+		<condition name="host">
+			&dsDev;
+		</condition>
+		<from>^/(favicon.ico|startup.png|apple-touch-icon)(.*)</from>
+		<to last="true">/ds/img/$1$2</to>
+	</rule>
+
+	<rule>
 		<name enabled="true">DS remove /ds/ prefix</name>
 		<note></note>
 		<condition name="host" next="or">
@@ -130,19 +143,6 @@
 		</condition>
 		<from>^/(?:ds)?/(config|css|external|img|js|theme)/(.*)$</from>
 		<to last="true">/ds/$1/$2</to>
-	</rule>
-	
-	<rule>
-		<name>DS favicons</name>
-		<note>Regular favicon and iOS icon</note>
-		<condition name="host" next="or">
-			&dsSutra;
-		</condition>
-		<condition name="host">
-			&dsDev;
-		</condition>
-		<from>^/(favicon.ico|apple-touch-icon.png|startup.png)$</from>
-		<to last="true">/ds/img/$1</to>
 	</rule>
 
 	<rule>
