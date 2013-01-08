@@ -1,4 +1,20 @@
 /**
+ * Focus password field
+ * @type {Boolean}
+ * 
+ * @properties={typeid:35,uuid:"C88C4438-5171-4166-BB9D-332FC0F75E3E",variableType:-4}
+ */
+var _focusUser = false;
+
+/**
+ * Focus password field
+ * @type {Boolean}
+ * 
+ * @properties={typeid:35,uuid:"450EB289-AC27-4436-8D0B-B46E03A922BC",variableType:-4}
+ */
+var _focusPass = false;
+
+/**
  * Show fields that allow for auto-account creation
  * @type {Boolean}
  * 
@@ -162,9 +178,7 @@ function LOGIN(event,webkit) {
 			
 			globals.DS_web_login_running = true
 			
-			if (scopes.DS.deviceFactor != 'iPad') {
-				plugins.WebClientUtils.executeClientSideJS('pulseOn();')
-			}
+			plugins.WebClientUtils.executeClientSideJS('pulseOn();')
 			
 			//set global for busy cursor in webclient
 			globals.DATASUTRA_web_cursor = true
@@ -256,7 +270,7 @@ function FORM_on_show(firstShow, event) {
 		if (user) {
 			_rememberMe = 1
 			_userName = user
-			elements.var_userPass.requestFocus()
+			_focusPass = true
 		}
 		
 		//store down if an ipad/iphone/desktop experience
@@ -295,7 +309,7 @@ function FORM_on_show(firstShow, event) {
 	
 	// request focus in username field unless prefilled
 	if (!_userName) {
-		elements.var_userName.requestFocus()
+		_focusUser = true
 	}
 }
 
