@@ -50,7 +50,8 @@ selectOnEnter:true,
 size:"180,23",
 tabSeq:2,
 typeid:4,
-uuid:"66b9d58a-0cd8-4a5d-8e15-b2d7adb3f377"
+uuid:"66b9d58a-0cd8-4a5d-8e15-b2d7adb3f377",
+visible:false
 },
 {
 anchors:11,
@@ -63,7 +64,8 @@ selectOnEnter:true,
 size:"180,23",
 tabSeq:1,
 typeid:4,
-uuid:"abaedbf5-7b87-4581-a1b9-61b5eaf8584c"
+uuid:"abaedbf5-7b87-4581-a1b9-61b5eaf8584c",
+visible:false
 },
 {
 anchors:3,
@@ -121,6 +123,7 @@ onDeleteRecordCmdMethodID:"-1",
 onDuplicateRecordCmdMethodID:"-1",
 onFindCmdMethodID:"-1",
 onInvertRecordsCmdMethodID:"-1",
+onLoadMethodID:"7e75009b-aac6-4a35-ac24-8ee99cd4fa04",
 onNewRecordCmdMethodID:"-1",
 onNextRecordCmdMethodID:"-1",
 onOmitRecordCmdMethodID:"-1",

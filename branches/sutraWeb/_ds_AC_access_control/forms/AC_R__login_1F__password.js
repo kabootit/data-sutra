@@ -96,16 +96,20 @@ function FORM_on_load()
  *			  	
  */
 
-//running in servoy < 4
-if (utils.stringToNumber(application.getVersion()) < 4 || utils.stringToNumber(application.getVersion()) >= 5) {
-	
-	var elem = globals.CODE_java_component(elements.fld_AC_login_password)
-	
-	elem.addKeyListener(new Packages.java.awt.event.KeyListener({keyPressed:CAPS_pressed}))
-	elem.addKeyListener(new Packages.java.awt.event.KeyListener({keyReleased:CAPS_pressed}))
-	
-}
+////running in servoy < 4
+//if (utils.stringToNumber(application.getVersion()) < 4 || utils.stringToNumber(application.getVersion()) >= 5) {
+//	
+//	var elem = globals.CODE_java_component(elements.fld_AC_login_password)
+//	
+//	elem.addKeyListener(new Packages.java.awt.event.KeyListener({keyPressed:CAPS_pressed}))
+//	elem.addKeyListener(new Packages.java.awt.event.KeyListener({keyReleased:CAPS_pressed}))
+//	
+//}
 
+if (!solutionPrefs.config.webClient) {
+	elements.fld_AC_login_user.visible = true
+	elements.fld_AC_login_password.visible = true
+}
 
 }
 
