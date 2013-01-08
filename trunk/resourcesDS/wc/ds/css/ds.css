@@ -44,7 +44,7 @@ h1 {
 .gsfn-widget-tab {
 	background: black !important;
 	border-color: black !important;
-	border-top-left-radius: 15px 10px;
-	border-top-right-radius: 15px 10px;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
 	opacity: 0.65;
 }
