@@ -27,7 +27,11 @@ function dsLoginDomain() {
 
 // what kind of device are we being accessed from
 function dsFactor() {
-	if (navigator.userAgent.match(/iPad/i)) {
+	if (navigator.userAgent.match(/iPad/i) || 
+		navigator.userAgent.match(/Nexus\s7/i) || navigator.userAgent.match(/Nexus\s10/i) ||
+		navigator.userAgent.match(/Kindle/i) || navigator.userAgent.match(/Silk-Accelerated/i) || 
+		navigator.userAgent.match(/PlayBook/i)) {
+			
 		return 'iPad';
 	}
 	else if (navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPod/i)) {
