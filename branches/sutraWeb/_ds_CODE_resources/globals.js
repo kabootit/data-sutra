@@ -16,7 +16,18 @@ var CODE_continuation = null;
 var CODE_continuation_value = null;
 
 /**
- * @properties={typeid:35,uuid:"284F41A2-1873-48DF-ACD0-AF015D374D59",variableType:-4}
+ * @constructor
+ *
+ * @description Dialog module - https://www.servoyforge.net/projects/mod-dialog
+ * @version 1.5.6
+ *
+ * Written by Robert J.C. Ivens and Paul Bakker
+ * OS dependent button-reverse patch by Harjo Kompagnie
+ * Many JSDoc (Servoy 6.0/6.1) fixes by Sanneke Aleman
+ * RuntimeForm support in FIMD by Sanneke Aleman
+ * 2012.Oct.14 Patch for form in dialog not creating proper form by Tom Parry
+ *
+ * @properties={typeid:35,uuid:"4C2A14AC-4C58-4A99-AACB-7D32D32CB0A4",variableType:-4}
  */
 var DIALOGS = new function() {
 	/**
@@ -71,6 +82,7 @@ var DIALOGS = new function() {
 	 */
 	function newFormBluePrint(_sFormName, _sBaseFormName, _nWidth, _nHeight) {
 		//Cleanup of previously used blueprints
+		/** @type {String} */
 		var formName;
 		for (var i = 0; i < bluePrintStack.length; i++) {
 			formName = bluePrintStack[i];
@@ -87,7 +99,9 @@ var DIALOGS = new function() {
 
 		//Create requested blueprint
 		if (!forms[_sFormName]) {
-			var _oForm = solutionModel.newForm(_sFormName, forms[_sBaseFormName].controller.getDataSource(), _sStyleSheet, false, _nWidth, _nHeight);
+			var base_form = solutionModel.getForm(_sBaseFormName);//tp assumes not null!
+			var ds = base_form.dataSource;//tp
+			var _oForm = solutionModel.newForm(_sFormName, ds, _sStyleSheet, false, _nWidth, _nHeight);
 			_oForm.extendsForm = _sBaseFormName;
 
 			//Store pointer to otherwise private method on the form, to be used when hiding the form
@@ -100,7 +114,7 @@ var DIALOGS = new function() {
 	/**
 	 * @private
 	 *
-	 * @param {String} _sFormName
+	 * @param {String|RuntimeForm} _sFormName
 	 * @param {String} _sDlgType
 	 * @param {Array} _aArguments
 	 * @param {String} [_sIconStyle]
@@ -108,36 +122,44 @@ var DIALOGS = new function() {
 	 * @return {String}
 	 */
 	function showDialog(_sFormName, _sDlgType, _aArguments, _sIconStyle) {
+
+		/** @type {Object} */
 		var _aArgs = Array.prototype.slice.call(_aArguments),
 			_nWidthPadding = 22,
-			i, dialogWindow;
+			dialogWindow;
 		var _sUniqueName = _aArgs[8] || utils.stringReplace(application.getUUID().toString(), "-", "");
 
+		if (_aArgs[0] instanceof RuntimeForm) _aArgs[0] = _aArgs[0].controller.getName()
+
 		if (_sDlgType == 'FIMD') {
-			dialogWindow = application.createWindow("W_" + _sUniqueName, JSWindow.MODAL_DIALOG);
-			dialogWindow.setLocation(_aArgs[1] | JSWindow.DEFAULT, _aArgs[2] || JSWindow.DEFAULT);
+			var win_name = "W_" + _sUniqueName;//tp
+			dialogWindow = application.createWindow(win_name, JSWindow.MODAL_DIALOG);//tp
+			dialogWindow.setLocation(_aArgs[1] || JSWindow.DEFAULT, _aArgs[2] || JSWindow.DEFAULT);//tp changed single | to double ||
 			if (_aArgs[5]) {
 				dialogWindow.title = _aArgs[5];
+			} else {
+				dialogWindow.title = solutionModel.getForm(_aArgs[0]).titleText
 			}
 			dialogWindow.resizable = (_aArgs[6] == null ? true : _aArgs[6]);
 			dialogWindow.showTextToolbar(_aArgs[7] == null ? false : _aArgs[7]);
-			forms[_aArgs[0]]['windowName'] = "W_" + _sUniqueName;
+			forms[_aArgs[0]]['windowName'] = win_name;
 
 			if (application.getApplicationType() == APPLICATION_TYPES.WEB_CLIENT) {
 				var _nWidth = (_aArgs[3] == null || _aArgs[3] == JSWindow.DEFAULT) ? solutionModel.getForm(_aArgs[0]).width : _aArgs[3];
 				var _nHeight = (_aArgs[4] == null || _aArgs[4] == JSWindow.DEFAULT) ? solutionModel.getForm(_aArgs[0]).getBodyPart().height : _aArgs[4];
 
-				newFormBluePrint(_sUniqueName, 'dialogs_fimd', _nWidth, _nHeight);
+				var _extended = 'X_' +  _sUniqueName;//tp
+				newFormBluePrint(_extended, 'dialogs_fimd', _nWidth, _nHeight);//tp
 				/** @type {RuntimeForm<dialogs_fimd>}*/
-				var form = forms[_sUniqueName];
+				var form = forms[_extended];//tp
 				form.continuation = new Continuation(); // saves the current methodStack into variable x, so it can be continued later on
-				form.windowName = "W_" + _sUniqueName;
+				form.windowName = win_name;//tp
 				form.setupForm(_aArgs[0], _nWidth, _nHeight);
 
 				// Need to add 22 pixels to the width with the original (built-in) servoy stylesheet or else you get scrollbars. You may want to adjust this value when you use a custom (override) stylesheet
 				dialogWindow.setSize(_nWidth + _nWidthPadding, _nHeight);
 				dialogWindow.show(form);
-				terminateCurrentMethodExecution()
+				terminateCurrentMethodExecution();
 			} else {
 				dialogWindow.setSize(_aArgs[3] || JSWindow.DEFAULT, _aArgs[4] || JSWindow.DEFAULT);
 				dialogWindow.show(forms[_aArgs[0]]);
@@ -161,7 +183,8 @@ var DIALOGS = new function() {
 
 				switch (_sDlgType) {
 				case 'input':
-					dialog.setupForm([_aArgs[1], i18n.getI18NMessage('servoy.button.ok'), i18n.getI18NMessage('servoy.button.cancel')], _sIconStyle, _aArgs[2], _nDialogWidth, _nDialogHeight + 30);
+					var _top = _aArgs[2];
+					dialog.setupForm([_aArgs[1], i18n.getI18NMessage('servoy.button.ok'), i18n.getI18NMessage('servoy.button.cancel')], _sIconStyle, _top, _nDialogWidth, _nDialogHeight + 30);
 					break;
 				case 'select':
 					dialog.setupForm([_aArgs[1], _aArgs[2], i18n.getI18NMessage('servoy.button.ok'), i18n.getI18NMessage('servoy.button.cancel')], _sIconStyle, _nDialogWidth, _nDialogHeight + 30);
@@ -216,9 +239,13 @@ var DIALOGS = new function() {
 		 */
 		function parseArgumentList(_oValue, _nIndex, _aArray) {
 			if (_oValue instanceof String) {
-				_aArray[_nIndex] = "'" + _oValue.replace(/\'/g, "\\'").replace(/\r/g, "\\r").replace(/\n/g, "\\n") + "'";
+				/** @type {String} */
+				var _sVal = _oValue;
+				_aArray[_nIndex] = "'" + _sVal.replace(/\'/g, "\\'").replace(/\r/g, "\\r").replace(/\n/g, "\\n") + "'";
 			} else if (_oValue instanceof Array) {
-				_aArray[_nIndex] = "['" + _oValue.join("','") + "']";
+				/** @type {Array} */
+				var _aVal = _oValue;
+				_aArray[_nIndex] = "['" + _aVal.join("','") + "']";
 			}
 		}
 
@@ -268,7 +295,7 @@ var DIALOGS = new function() {
 	 * @return {String}
 	 */
 	this.getVersion = function() {
-		return '1.1.5';
+		return '1.5.6';
 	}
 
 	/**
@@ -345,8 +372,7 @@ var DIALOGS = new function() {
 
 	/**
 	 * Show a Form In Modal Dialog
-	 *
-	 * @param {String||RuntimeForm} formName
+	 * @param {String|RuntimeForm} formName
 	 * @param {Number} [left]
 	 * @param {Number} [top]
 	 * @param {Number} [width]
@@ -2244,10 +2270,11 @@ function TRIGGER_timer(startStop) {
  * 
  * @param	{Boolean}	[status] Enable/disable the record navigator.<br>
  * 						Note: if false passed, true must be specified before navigator will work on other future forms.
+ * @param	{Number}	[maxWidth] Width of progress indicator (needed for webclient)
  * 
  * @properties={typeid:24,uuid:"545d621f-ead0-4ac5-99aa-7e3a05c85e41"}
  */
-function TRIGGER_toolbar_record_navigator_set(status) {
+function TRIGGER_toolbar_record_navigator_set(status,maxWidth) {
 
 	//solutionPrefs defined and frameworks not in a locked status
 	if (application.__parent__.solutionPrefs && !solutionPrefs.config.lockStatus) {
@@ -2276,6 +2303,12 @@ function TRIGGER_toolbar_record_navigator_set(status) {
 				arguments[0]
 		}
 		else {
+			//webclient, get the actual length of this bar
+			if (solutionPrefs.config.webClient && (!maxWidth || typeof parseInt(maxWidth) != 'number')) {
+				plugins.WebClientUtils.executeClientSideJS('var selector = $(".gfxRecNavigator"); var recNavWidth = (selector.length) ? selector.width() : 0;', TRIGGER_toolbar_record_navigator_set, [null,'recNavWidth'])
+				return
+			}
+			
 			var rnStatus = solutionPrefs.config.recordNavigatorStatus
 		}
 		
@@ -2331,7 +2364,9 @@ function TRIGGER_toolbar_record_navigator_set(status) {
 			****************************/
 			
 			//figure out record object display length
-			var maxWidth		= forms[formNameRN].elements.obj_records_max.getWidth()
+			if (!maxWidth) {
+				maxWidth = forms[formNameRN].elements.obj_records_max.getWidth()
+			}
 			
 			var recordDivisor	= (thisIndex / loaded) ? thisIndex / loaded : 0
 			var recordWidth		= maxWidth * recordDivisor

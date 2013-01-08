@@ -40,8 +40,8 @@ function setupForm(_aArguments, _sIconStyle, _nDialogWidth, _nDialogHeight) {
 	_oLabel.verticalAlignment = SM_ALIGNMENT.TOP;
 	_oLabel.text = '<html>' + utils.stringReplace(utils.stringReplace(utils.stringReplace(_aArguments[0], "\r\n", "<br />"), "\n", "<br />"), "\r", "<br />") + '</html>';
 	controller.recreateUI();
-	elements.fldValue.setLocation(85, _nDialogHeight - 71);
-	elements.fldValue.setSize(_nDialogWidth - 120, 22);
+	elements.fldValue.setLocation(90, _nDialogHeight - 95);
+	elements.fldValue.setSize(_nDialogWidth - 145, 22);
 	application.setValueListItems("dialogs_valuelist", _aArguments[1]);
 	retVal = _aArguments[1][0];
 	callbackMethod = handleButtonAction;
