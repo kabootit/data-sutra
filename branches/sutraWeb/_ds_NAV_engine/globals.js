@@ -5294,8 +5294,17 @@ function NAV_universal_list_select() {
 		globals.TRIGGER_toolbar_record_navigator_set()
 	}
 	
+	//run in webclient
+	if (solutionPrefs.config.webClient) {
+		//request focus elsewhere on desktop
+		if (scopes.DS.deviceFactor == 'Desktop') {
+			forms.NAV_T_universal_list__WEB.elements.var_trap.requestFocus()
+		}
+		
+		scopes.DS.webULPrettify(true)
+	}
 	//no run in webclient
-	if (!solutionPrefs.config.webClient) {
+	else {
 		//record was not in memory, turn off busy bar and busy cursor
 		if (recNotLoaded) {
 			globals.TRIGGER_progressbar_stop()
@@ -5317,11 +5326,6 @@ function NAV_universal_list_select() {
 							'Please restart.'
 						)
 	}
-	
-	
-	//request focus elsewhere
-	forms.NAV_T_universal_list__WEB.elements.var_trap.requestFocus()
-	scopes.DS.webULPrettify(true)
 }
 
 /**
