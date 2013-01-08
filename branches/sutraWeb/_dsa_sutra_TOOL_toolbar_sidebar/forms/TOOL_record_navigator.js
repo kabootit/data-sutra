@@ -23,6 +23,8 @@ function FORM_on_show(firstShow,event) {
 			var jsCallback = 'function recNavFirstShow(){' + callback + '}';
 			plugins.WebClientUtils.executeClientSideJS('recordNavigatorFirstShow(' + jsCallback + ');')
 			_shown = true
+			
+			plugins.WebClientUtils.setExtraCssClass(elements.obj_records_max,'gfxRecNavigator')
 		}
 		
 		//when 'previewing' this toolbar, disabled (on the form)
@@ -63,4 +65,20 @@ function GO_previous(event) {
 	}
 	
 	globals.NAV_record_previous()
+}
+
+/**
+ * Callback method when form is (re)loaded.
+ *
+ * @param {JSEvent} event the event that triggered the action
+ *
+ * @properties={typeid:24,uuid:"7E9D620D-DFB8-4D93-B3F8-C68B2D19D41B"}
+ */
+function FORM_on_load(event) {
+	if (solutionPrefs.config.webClient) {
+		elements.obj_records_max.fgcolor = '#CCCCCC'
+		elements.obj_records_max.bgcolor = '#CCCCCC'
+		elements.obj_records.bgcolor = '#CCCCCC'
+		elements.obj_records.fgcolor = '#CCCCCC'
+	}
 }
