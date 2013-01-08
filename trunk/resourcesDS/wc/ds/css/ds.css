@@ -40,3 +40,10 @@ h1 {
 	letter-spacing: 8px;
 	text-shadow: black 0.1em 0.1em 0.2em;
 }
+
+.gsfn-right {
+	background: black !important;
+	border-color: black !important;
+	border-top-left-radius: 15px 10px;
+	border-top-right-radius: 15px 10px;
+}
