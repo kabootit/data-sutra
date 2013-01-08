@@ -481,7 +481,7 @@ div.wicket-modal div.w_blue {
 
 /*Styling the draggable area of a dialog*/
 div.wicket-modal div.w_caption {
-	border: 0px solid #666;
+	border: 0px solid #CCC;
 	border-bottom-width: 1px;
 	cursor: move;
 	/*text-shadow: 0 0 15px white, 0 0 15px white; */
