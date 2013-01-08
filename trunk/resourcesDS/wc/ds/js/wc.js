@@ -184,8 +184,9 @@ function bigIndicator(toggle) {
 	}
 }
 
-//	Hook servoy's indicator to the mouse location when running in Desktop moode (doesn't make sense on touch screens)
+//	Custom stuff depending on platform
 switch (dsFactor()) {
+	// Hook servoy's indicator to the mouse location when running in Desktop moode
 	case 'Desktop':
 		//track location of mouse cursor
 			//MEMO: used for indicator, but also for right-click in table views
@@ -268,6 +269,8 @@ switch (dsFactor()) {
 			busyCursor();
 		}
 		break
+		
+	// Only show indicator when custom center blocker not showing; orientation change
 	case 'iPad':
 		//	Extending Wicket...object to hold original calls
 		var WicketDSExtend = new Object();
@@ -281,6 +284,28 @@ switch (dsFactor()) {
 				WicketDSExtend.showIncrementally.apply(this,arguments);
 			}
 		}
+		
+		$(window).bind('orientationchange resize', function(event) {
+			if (event.orientation) {
+				if (event.orientation == 'portrait') {
+					orientPortrait();
+				} 
+				else if (event.orientation == 'landscape') {
+					//small delay for resize javascript to catch up
+					setTimeout(orientLandscape,250);
+				}
+			}
+			else {
+				if (window.innerHeight > window.innerWidth) {
+					orientPortrait();
+				} 
+				else {
+					//small delay for resize javascript to catch up
+					setTimeout(orientLandscape,250);
+				}
+			}
+		});
+		
 		break
 }
 
@@ -455,14 +480,12 @@ function setPlaceHolders(elements,texts,delay) {
 	},delay || 0)
 }
 
-//	Callback to setup navigation
-function navigateConfig(source) {
+//	Callback to setup callback method
+function callbackConfig(source) {
 	var script = document.createElement('script');
 	script.type = 'text/javascript';
 	script.text = source;
 	$("#servoy_page").append(script);
-	
-	//method is called navigate()
 }
 
 //	Sniff browser used and disallow login from 'bad' browsers
@@ -885,4 +908,12 @@ function showUL() {
 		//attach listener
 		lefthandListen();
 	},500);
+}
+
+//Orientation change dummy functions (overridden with callbacks to servoy)
+function orientPortrait() {
+	// alert("portrait");
+}
+function orientLandscape() {
+	// alert("landscape");
 }
