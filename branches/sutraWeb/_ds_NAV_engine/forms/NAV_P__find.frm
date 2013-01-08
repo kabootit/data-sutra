@@ -31,7 +31,7 @@ valuelistID:"8f0bb026-7baf-4688-a27c-0f9edaa949e5"
 anchors:14,
 formIndex:10200,
 imageMediaID:"5100a0f7-e408-4698-b0a3-65059779b12b",
-location:"0,83",
+location:"0,173",
 mediaOptions:6,
 size:"200,17",
 tabSeq:-1,
@@ -56,7 +56,7 @@ uuid:"5c2d4cfb-bb43-449c-9789-53ae946db197"
 {
 anchors:12,
 formIndex:10500,
-location:"10,84",
+location:"10,174",
 mediaOptions:14,
 mnemonic:"c",
 onActionMethodID:"fa5ba3c5-5ce1-4d83-8998-ccc38897f95e",
@@ -72,7 +72,7 @@ typeid:7,
 uuid:"8f8a004c-2c94-4065-8de5-6a2de9ad22eb"
 },
 {
-height:100,
+height:190,
 partType:5,
 typeid:19,
 uuid:"d0ba119c-f34a-42f2-9cfb-2d2abfd084cc"
@@ -108,7 +108,7 @@ valuelistID:"8f0bb026-7baf-4688-a27c-0f9edaa949e5"
 {
 anchors:6,
 formIndex:10300,
-location:"118,84",
+location:"118,174",
 mediaOptions:14,
 mnemonic:"o",
 onActionMethodID:"a92ffc1b-b4f6-4a17-820c-6955a9d07490",
@@ -144,7 +144,6 @@ onShowOmittedRecordsCmdMethodID:"-1",
 onSortCmdMethodID:"-1",
 paperPrintScale:100,
 size:"200,100",
-styleClass:"workarea2",
 styleName:"_DATASUTRA_",
 typeid:3,
 uuid:"65b4c05a-7ceb-4266-b5d3-788078033d1e",
