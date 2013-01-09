@@ -33,7 +33,7 @@ globals.TRIGGER_navigation_set(13,true) //contacts is 13
  *
  * @properties={typeid:24,uuid:"c9f20044-2d52-4feb-ada2-521fea2baced"}
  */
-function REC_new()
+function zREC_new()
 {
 
 /*

@@ -31,6 +31,7 @@ uuid:"4d3cdca0-ad46-4a73-ba80-9e4d98b7d2e1"
 {
 anchors:11,
 dataProviderID:"company_id",
+displayType:2,
 editable:false,
 formIndex:11100,
 location:"200,10",
