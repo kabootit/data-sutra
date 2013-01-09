@@ -5252,9 +5252,17 @@ function DATASUTRA_open(skipFontFix) {
 function DS_router(p1,params,itemID,launch,logout,pathName) {
 	//prefix in url path?
 	var prefix = '/'
+	var url = new Object()
 	
-	//get url using callback (when navigating history, doesn't really matter)
-	if (p1 != 'DSHistory' && !pathName) {
+	//prefill url from history
+	if (p1 == 'DSHistory') {
+		var hixItem = globals.DATASUTRA_router[globals.DATASUTRA_router.length - 1]
+		var url = hixItem.pathObject
+		itemID = hixItem.navItemID
+		pathName = hixItem.pathString
+	}
+	//get url using callback
+	else if (!pathName) {
 		plugins.WebClientUtils.executeClientSideJS('var path = window.parent.location.pathname;', DS_router, [null,null,null,null,null,'path'])
 		globals.DATASUTRA_router_arguments = arguments
 		return
@@ -5359,7 +5367,7 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 	}
 	
 	// url object logic
-	var url = {}
+	
 	//see DSHistory below...must be the same
 	for ( var item in params ) {
 		// 1st slot is navigation set
@@ -5387,7 +5395,7 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 		}
 	}
 	
-	// log this router request unless special requests
+	// log this router request unless special requests (history included)
 	var specialRequests = [
 						'DSLogin',
 						'DSLoginSmall',
@@ -5396,7 +5404,7 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 						'DSError_NoURL',
 						'DSHistory'
 					]
-	if (specialRequests.indexOf(url.set) == -1 && pathName != prefix + 'login' && getURL() != prefix) {
+	if (specialRequests.indexOf(url.set) == -1 && pathName != prefix + 'login' && getURL() != prefix && p1 != 'DSHistory') {
 		globals.DATASUTRA_router.push(getNode())
 	}
 	
@@ -5540,24 +5548,26 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 	}
 	// navigate through history
 	else if (p1 == 'DSHistory') {
-		//TODO: ability to specify which history item to go to
-		var slot = (url && url.history) ? url.history : 0
-		
-		//figure out which navigation item is being requested (same as DS_router_callback)
-		var path = globals.DATASUTRA_router[slot].pathString
-		path = path.split('/')
-		//pop off first/, ds, and last/
-		if (!path[0]) {
-			path.splice(0,1)
-		}
-		path.splice(0,1)
-		if (!path[path.length - 1]) {
-			path.pop()
-		}
-		
-		url = {
-			set : path[0],
-			item : path[1]
+		//nothing specified, try to figure it out
+		if (!url.set) {
+			//TODO: ability to specify which history item to go to
+			var slot = (url && url.history) ? url.history : 0
+			
+			//figure out which navigation item is being requested (same as DS_router_callback)
+			var path = globals.DATASUTRA_router[slot].pathString
+			path = path.split('/')
+			//pop off first/, ds, and last/
+			if (!path[0]) {
+				path.splice(0,1)
+			}
+			if (!path[path.length - 1]) {
+				path.pop()
+			}
+			
+			url = {
+				set : path[0],
+				item : path[1]
+			}
 		}
 		
 		// particular item specified
