@@ -1139,7 +1139,10 @@ function TRANSACTION_save(event) {
 			var methods = actionItem.method
 		}
 		
-		//custom edit method
+		//have any changes been made?
+		var redrawUL = databaseManager.hasNewRecords(forms[formName].foundset) || databaseManager.hasRecordChanges(forms[formName].foundset)
+		
+		//custom save method
 		if (methods) {
 			//only eval method if method type set properly
 			if (methodTypes != null || methodTypes != '' && methods) {
@@ -1151,12 +1154,16 @@ function TRANSACTION_save(event) {
 				globals.DIALOGS.showInfoDialog('Config incomplete', 'Return to navigation setup to complete this action', 'OK')
 			}
 		}
-		//execute default edit method
+		//execute default save method
 		else {
 			scopes.DS.transaction.save()
 		}
+		
+		if (redrawUL) {
+			scopes.DS.webULPrettify(true)
+		}
 	
-		//LOG ul add
+		//LOG
 		var serverName = forms[formName].controller.getServerName()
 		var tableName = forms[formName].controller.getTableName()
 		//only run when using query based way to hit repository
@@ -1197,7 +1204,10 @@ function TRANSACTION_cancel(event) {
 			var methods = actionItem.method
 		}
 		
-		//custom edit method
+		//have any changes been made?
+		var redrawUL = databaseManager.hasNewRecords(forms[formName].foundset) || databaseManager.hasRecordChanges(forms[formName].foundset)
+		
+		//custom cancel method
 		if (methods) {
 			//only eval method if method type set properly
 			if (methodTypes != null || methodTypes != '' && methods) {
@@ -1209,12 +1219,16 @@ function TRANSACTION_cancel(event) {
 				globals.DIALOGS.showInfoDialog('Config incomplete', 'Return to navigation setup to complete this action', 'OK')
 			}
 		}
-		//execute default edit method
+		//execute default cancel method
 		else {
 			scopes.DS.transaction.cancel()
 		}
+		
+		if (redrawUL) {
+			scopes.DS.webULPrettify(true)
+		}
 	
-		//LOG ul add
+		//LOG
 		var serverName = forms[formName].controller.getServerName()
 		var tableName = forms[formName].controller.getTableName()
 		//only run when using query based way to hit repository
