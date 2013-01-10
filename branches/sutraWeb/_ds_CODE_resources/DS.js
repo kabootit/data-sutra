@@ -21,7 +21,9 @@ var transaction = new function() {
 	this.start = function(record) {
 		databaseManager.saveData()
 		
-		return databaseManager.setAutoSave(false)
+		solutionPrefs.config.transaction = databaseManager.setAutoSave(false)
+		
+		return solutionPrefs.config.transaction
 	}
 	
 	/**
@@ -29,7 +31,7 @@ var transaction = new function() {
 	 * 
 	 * @param {JSRecord} [record] Record to be edited
 	 * @param {Boolean} [onlyRecord] Only save data in record
-	 * @return {Boolean} Transaction begun
+	 * @return {Boolean} Transaction successfully completed
 	 */
 	this.save = function(record,onlyRecord) {
 		if (onlyRecord) {
@@ -40,19 +42,77 @@ var transaction = new function() {
 			databaseManager.saveData()
 		}
 		
-		return databaseManager.setAutoSave(true)
+		solutionPrefs.config.transaction = databaseManager.setAutoSave(true)
+		
+		return solutionPrefs.config.transaction
 	}
 	
 	/**
 	 * End default transaction
 	 * 
 	 * @param {JSRecord} [record] Record to be edited
-	 * @return {Boolean} Transaction begun
+	 * @return {Boolean} Transaction cancelled
 	 */
 	this.cancel = function(record) {
 		databaseManager.revertEditedRecords()
 		
-		return databaseManager.setAutoSave(true)
+		solutionPrefs.config.transaction = databaseManager.setAutoSave(true)
+		
+		return solutionPrefs.config.transaction
+	}
+	
+	/**
+	 * Toggle elements for given form
+	 * 
+	 * @param {JSForm} form Form to modify
+	 * @param {Boolean} [toggle=true] Show/hide status
+	 */
+	this.toggle = function(form,toggle) {
+		if (form) {
+			//default to showing
+			if (typeof toggle != 'boolean') {
+				toggle = true
+			}
+			/** @type {Array} */
+			var allElems = form.elements.allnames
+			
+			//elements that need to be treated differently
+			var pairedElems = allElems.filter(function(item){
+				return item.indexOf('__no_edit') > 0
+			})
+			//remove special element pairs
+			var normalElems = allElems.filter(function(item) {
+				return !pairedElems.some(function(item2){
+					return utils.stringPatternCount(item2,item) > 0
+				})
+			})
+			
+			//special elements get visibility toggle
+			for (var i = 0; i < pairedElems.length; i++) {
+				var pairNoedit = pairedElems[0]
+				var pairEdit = pairNoedit.substr(0,pairNoedit.length - '__no_edit'.length)
+				
+				if (form.elements[pairEdit]) {
+					form.elements[pairEdit].visible = toggle
+				}
+				form.elements[pairNoedit].visible = !toggle
+			}
+			
+			//normal elements get editability and transparency toggled
+			for (var i = 0; i < normalElems.length; i++) {
+				var elem = normalElems[i]
+				
+				//can set editable on this property
+				if (form.elements[elem] && typeof form.elements[elem].editable != 'undefined') {
+					form.elements[elem].editable = toggle
+					
+					//can set transparent on this property
+					if (typeof form.elements[elem].transparent != undefined) {
+						form.elements[elem].transparent = toggle
+					}
+				}
+			}
+		}
 	}
 }
 
