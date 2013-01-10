@@ -299,7 +299,9 @@ if (buttonName) {
 	//show/hide + button
 	var tabFormName = forms[formName].elements[tabPanelName].getTabFormNameAt(i)
 	if (forms[tabFormName]) {
-		var showAdd = (forms[tabFormName].REC_new) ? true : false
+		var txnEnable = (solutionPrefs.config.webClient && application.__parent__.navigationPrefs && solutionPrefs.config.currentFormID) ? (navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].transactions ? true : false) : false
+		
+		var showAdd = (forms[tabFormName].REC_new && !txnEnable || (txnEnable && solutionPrefs.config.transaction)) ? true : false
 		var showActions = (forms[tabFormName].ACTIONS_list) ? true : false
 		var showDivider = showAdd && showActions
 		var showHelp = false
