@@ -422,7 +422,7 @@ tabpanel.grid_secondary {
 label.grid_pri_tab_select, label.grid_pri_tab_unselect, label.grid_sec_tab_select, label.grid_sec_tab_unselect {
 	font-size: 8px;
 	text-align: center;
-	vertical-align: top;
+	vertical-align: center;
 }
 
 label.grid_pri_tab_select {
@@ -444,7 +444,7 @@ label.grid_sec_tab_unselect {
 }
 
 label.grid_tab_divider {
-	border-color: #262626;
+	border-color: #999999;
 	border-style: solid;
 	border-width: 0px 1px 0px 0px;
 }
