@@ -2597,8 +2597,9 @@ if (application.__parent__.solutionPrefs) {
  */
 function DS_sidebar_toggle(sideToggle, sideWidth, sideExpand)
 {
-	
-	var sideExpand = !globals.CODE_key_pressed('shift')
+	if (typeof sideExpand != 'boolean') {
+		sideExpand = !globals.CODE_key_pressed('shift')
+	}
 	
 	if (application.__parent__.solutionPrefs) {	
 		//timed out, throw up error
@@ -2618,10 +2619,6 @@ function DS_sidebar_toggle(sideToggle, sideWidth, sideExpand)
 		var sideToggle = (typeof arguments[0] == 'boolean') ? arguments[0] : !solutionPrefs.screenAttrib.sidebar.status
 		var sideWidth = arguments[1] || solutionPrefs.screenAttrib.sidebar.currentSize
 		var maxWidth = application.getWindowWidth(null)
-		
-		if (arguments[2]) {
-			sideExpand = false
-		}
 		
 //		var headerHeight = forms[baseForm].elements.bean_header.getHeight()
 //		var mainHeight = forms[baseForm].elements.bean_main.getHeight()
@@ -2746,6 +2743,129 @@ function DS_sidebar_toggle(sideToggle, sideWidth, sideExpand)
 			if (solutionPrefs.config.helpMode) {
 				//set flag that not in helpmode
 				solutionPrefs.config.helpMode = false
+			}
+		}
+	}
+}
+
+/**
+ * Temporarily disable the toolbar
+ * @param {Boolean} state
+ *
+ * @properties={typeid:24,uuid:"A3FA9568-2521-4601-A0F5-12B53CE6CB47"}
+ */
+function DS_toolbar_enable(state) {
+	//webclient only passes in strings
+	if (typeof state == 'string') {
+		state = eval(state)
+	}
+	
+	//turning off
+	if (!state) {
+		//disabled flag
+		solutionPrefs.screenAttrib.toolbar.enable = false
+		
+		//web client
+		if (solutionPrefs.config.webClient) {
+			forms.DATASUTRA_WEB_0F__header.elements.split_tool_find.setLeftForm(forms.DATASUTRA_WEB__blank_3)
+			forms.DATASUTRA_WEB_0F__header.elements.split_tool_find.dividerLocation = application.getWindowWidth(null) - 630
+		}
+		//smart client
+		else {
+			forms.DATASUTRA_0F_solution__header.elements.tab_toolbar.removeAllTabs()
+			forms.DATASUTRA_0F_solution__header.elements.tab_toolbar.addTab(forms.DATASUTRA_0F_solution__blank_4)
+			forms.DATASUTRA_0F_solution__header.elements.tab_toolbar.tabIndex = 1
+		}
+	}
+	//turning on
+	else {
+		//enabled flag
+		solutionPrefs.screenAttrib.toolbar.enable = true
+		
+		//web client
+		if (solutionPrefs.config.webClient) {
+			forms.DATASUTRA_WEB_0F__header.elements.split_tool_find.setLeftForm(forms.DATASUTRA_WEB_0F__header__toolbar)
+			forms.DATASUTRA_WEB_0F__header.elements.split_tool_find.dividerLocation = application.getWindowWidth(null) - 630
+		}
+		//smart client
+		else {
+			forms.DATASUTRA_0F_solution__header.elements.tab_toolbar.removeAllTabs()
+			forms.DATASUTRA_0F_solution__header.elements.tab_toolbar.addTab(forms.DATASUTRA_0F_solution__header__toolbar)
+			forms.DATASUTRA_0F_solution__header.elements.tab_toolbar.tabIndex = 1
+		}
+	}
+}
+
+/** 
+ * Temporarily disable the sidebar
+ * 
+ * @param {Boolean} state (when true, enables; when false, disables
+ * 
+ * @properties={typeid:24,uuid:"1D18E67F-4EEA-4BF2-8187-90DC3EC65B8A"}
+ */
+function DS_sidebar_enable(state) {
+	//webclient only passes in strings
+	if (typeof state == 'string') {
+		state = eval(state)
+	}
+	
+	//there are sidebars
+	if (solutionPrefs.panel.sidebar.length) {
+		
+		//default type of expansion
+		var expandType = !solutionPrefs.config.webClient
+		
+		//turning off
+		if (!state) {
+			//a sidebar is showing
+			if (solutionPrefs.screenAttrib.sidebar.status) {
+				forms.DATASUTRA__sidebar__header.ACTION_collapse()
+//				globals.DS_sidebar_toggle(false,null,expandType)
+				
+				solutionPrefs.screenAttrib.sidebar.wasOpen = true
+			}
+			
+			//disabled flag
+			solutionPrefs.screenAttrib.sidebar.enable = false
+			
+			//disable sidebar icon
+			//web client
+			if (solutionPrefs.config.webClient) {
+				forms.DATASUTRA_WEB_0F__header.elements.btn_sidebar_expand.enabled = false
+			}
+			//smart client
+			else {
+				forms.DATASUTRA_0F_solution__header.elements.btn_sidebar_expand.enabled = false
+			}
+		}
+		//turning on
+		else {
+			//enabled flag
+			solutionPrefs.screenAttrib.sidebar.enable = true
+			
+			//enable sidebar icon
+			//web client
+			if (solutionPrefs.config.webClient) {
+				forms.DATASUTRA_WEB_0F__header.elements.btn_sidebar_expand.enabled = true
+			}
+			//smart client
+			else {
+				forms.DATASUTRA_0F_solution__header.elements.btn_sidebar_expand.enabled = true
+			}
+			
+			//sidebar was open previously
+			if (solutionPrefs.screenAttrib.sidebar.wasOpen && solutionPrefs.panel.sidebar.selectedTab) {
+				delete solutionPrefs.screenAttrib.sidebar.wasOpen
+				
+//				globals.DS_sidebar_toggle(true,null,expandType)
+				//web client
+				if (solutionPrefs.config.webClient) {
+					forms.DATASUTRA_WEB_0F__header.SIDEBAR_expand()
+				}
+				//smart client
+				else {
+					forms.DATASUTRA_0F_solution__header.SIDEBAR_expand()
+				}
 			}
 		}
 	}
@@ -5099,6 +5219,17 @@ else {
 	screenAttrib.locationY = (forms[formName].location_y) ? forms[formName].location_y : 50
 }
 
+//existing toolbar, use it
+if (application.__parent__.solutionPrefs && solutionPrefs.screenAttrib && solutionPrefs.screenAttrib.toolbar) {
+	screenAttrib.toolbar = solutionPrefs.screenAttrib.toolbar
+}
+//default toolbar
+else {
+	screenAttrib.toolbar = {
+							enable	: true
+						}
+}
+
 //existing sidebar, use it
 if (application.__parent__.solutionPrefs && solutionPrefs.screenAttrib && solutionPrefs.screenAttrib.sidebar) {
 	screenAttrib.sidebar = solutionPrefs.screenAttrib.sidebar
@@ -5106,6 +5237,7 @@ if (application.__parent__.solutionPrefs && solutionPrefs.screenAttrib && soluti
 //default sidebar
 else {
 	screenAttrib.sidebar = {
+							enable : true,
 							status	: (forms[formName].sidebar_status) ? true : false,
 							defaultSize	: (forms[formName].sidebar_size) ? forms[formName].sidebar_size : 200,
 							currentSize	: (forms[formName].sidebar_size) ? forms[formName].sidebar_size : 200
