@@ -230,31 +230,43 @@ if (!tabTotal) {
 //get current tab
 var currentTab = forms[formName].elements[tabPanelName].tabIndex
 
+function webFontAdjust(fontString) {
+	if (solutionPrefs.config.webClient) {
+		fontString = fontString.split(',')
+//		fontString[2] = parseInt(fontString[2]) - 1
+		fontString[2] = 10
+		return fontString.join(',')
+	}
+	else {
+		return fontString
+	}
+}
+
 //get foreground/background colors, transparency, and font
 var foreSelect = forms[formName].elements[prefix + currentTab].fgcolor
 var backSelect = forms[formName].elements[prefix + currentTab].bgcolor
 var transparentSelect = forms[formName].elements[prefix + currentTab].transparent
-var fontSelect = forms[formName].elements[prefix + currentTab].font
+var fontSelect = webFontAdjust(forms[formName].elements[prefix + currentTab].font)
 //if not tab 1, get from itself and previous
 if (currentTab > 1) {
 	var foreUnselect = forms[formName].elements[prefix + (currentTab - 1)].fgcolor
 	var backUnselect = forms[formName].elements[prefix + (currentTab - 1)].bgcolor
 	var transparentUnselect = forms[formName].elements[prefix + (currentTab - 1)].transparent
-	var fontUnselect = forms[formName].elements[prefix + (currentTab - 1)].font
+	var fontUnselect = webFontAdjust(forms[formName].elements[prefix + (currentTab - 1)].font)
 }
 //if not last tab, get from itself and next
 else if (currentTab < tabTotal) {
 	var foreUnselect = forms[formName].elements[prefix + (currentTab + 1)].fgcolor
 	var backUnselect = forms[formName].elements[prefix + (currentTab + 1)].bgcolor
 	var transparentUnselect = forms[formName].elements[prefix + (currentTab + 1)].transparent
-	var fontUnselect = forms[formName].elements[prefix + (currentTab + 1)].font
+	var fontUnselect = webFontAdjust(forms[formName].elements[prefix + (currentTab + 1)].font)
 }
 //only one tab, do not need unselected values
 else if (currentTab == tabTotal && currentTab == 1) {
 	var foreUnselect = forms[formName].elements[prefix + currentTab].fgcolor
 	var backUnselect = forms[formName].elements[prefix + currentTab].bgcolor
 	var transparentUnselect = forms[formName].elements[prefix + currentTab].transparent
-	var fontUnselect = forms[formName].elements[prefix + currentTab].font
+	var fontUnselect = webFontAdjust(forms[formName].elements[prefix + currentTab].font)
 }
 //break out of method, something is not set up correctly
 else {
