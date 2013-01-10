@@ -26,7 +26,7 @@ div.field td input {
 {
 	padding: 3px 10px 3px 10px;
 	background-color: #404040 !important;
-	font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;
+	font-family: Verdana, 'Helvetica Neue', Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color: #ffffff;
 	display: none;
@@ -293,7 +293,10 @@ textarea
 	resize: none
 }
 
-/* tr th stuff was here */
+textarea[readonly]:focus {
+    outline-width: 0;
+}
+
 th.nosort
 {
 	padding: 1px 2px 1px 2px;
@@ -833,4 +836,71 @@ and (max-device-width : 1024px) {
 
 .gfxLeftHilite {
 	background-image: url(/servoy-webclient/templates/datasutra/images/linen_highlight.jpg);
+}
+
+/* split pane customizations */
+.yui-resize {
+	background-color: #262626 !important;
+}
+
+.yui-resize .yui-resize-handle-b {
+	cursor: row-resize !important;
+}
+
+.yui-resize .yui-resize-handle-r {
+	cursor: col-resize !important;
+}
+
+/* popup menu overrides */
+.yuimenuitem-selected,
+.yuimenubaritem-selected,
+.yuimenuitem-selected a,
+.yuimenubaritem-selected a  {
+	background-color: transparent !important;
+}
+
+.yuimenuitem-selected:focus,
+.yuimenubaritem-selected:focus,
+.yuimenuitem-selected a:focus,
+.yuimenubaritem-selected a:focus,
+.yuimenuitemlabel:focus, 
+.yuimenuitemlabel-selected:focus {
+    outline-width: 0 !important;
+}
+
+.yuimenuitemlabel, 
+.yuimenuitemlabel-selected,
+.yuimenuitemlabel td {
+	font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif !important;
+}
+
+.yuimenuitemlabel table {
+	border-spacing: 0px !important;
+	margin-left: -19px !important;
+}
+
+.yuimenuitemlabel td {
+	height: auto !important;
+	line-height: 10px !important;
+	font-size: 11px !important;
+}
+
+.yuimenuitemlabel .img_checkbox {
+	background-position-x: 4px !important;
+	background-position-y: -1px !important;
+}
+
+#basicmenu {
+	padding-left: 3px !important;
+}
+
+.yuimenu ul {
+	border-top: solid 1px #999999 !important;
+}
+
+.yuimenuitemlabel-disabled,
+.yuimenubaritemlabel-disabled,
+.yuimenuitemlabel-disabled a,
+.yuimenubaritemlabel-disabled a {
+	color: #666666 !important;
 }
