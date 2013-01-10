@@ -250,12 +250,16 @@ function webNavSwitchProgress(toggle) {
 function webCallbacks() {
 	//on orientation change events
 	if (scopes.DS.deviceFactor == 'iPad') {
-		var callback = plugins.WebClientUtils.generateCallbackScript(globals.DS_space_change,['"btn_space_7"'],true)
-		var jsCallback = 'function orientPortrait(){' + callback + '}';
+		var spaceChange = plugins.WebClientUtils.generateCallbackScript(globals.DS_space_change,['"btn_space_7"'],true)
+		var sidebarToggle = plugins.WebClientUtils.generateCallbackScript(globals.DS_sidebar_enable,[false],true).replace('wcall','wcall2')
+		var toolbarToggle = plugins.WebClientUtils.generateCallbackScript(globals.DS_toolbar_enable,[false],true).replace('wcall','wcall3')
+		var jsCallback = 'function orientPortrait(){' + spaceChange + '\n\n' + sidebarToggle + '\n\n' + toolbarToggle + '}';
 		plugins.WebClientUtils.executeClientSideJS('callbackConfig(' + jsCallback + ');')
 		
-		var callback = plugins.WebClientUtils.generateCallbackScript(globals.DS_space_change,['"btn_space_1"'],true)
-		var jsCallback = 'function orientLandscape(){' + callback + '}';
+		var spaceChange = plugins.WebClientUtils.generateCallbackScript(globals.DS_space_change,['"btn_space_1"'],true)
+		var sidebarToggle = plugins.WebClientUtils.generateCallbackScript(globals.DS_sidebar_enable,[true],true).replace('wcall','wcall2')
+		var toolbarToggle = plugins.WebClientUtils.generateCallbackScript(globals.DS_toolbar_enable,[true],true).replace('wcall','wcall3')
+		var jsCallback = 'function orientLandscape(){' + spaceChange + '\n\n' + sidebarToggle + '\n\n' + toolbarToggle + '}';
 		plugins.WebClientUtils.executeClientSideJS('callbackConfig(' + jsCallback + ');')
 	}
 	
