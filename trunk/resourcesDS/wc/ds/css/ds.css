@@ -34,6 +34,11 @@ body {
 	overflow: hidden; /* hidden so that chatter iframe removal doesn't cause scrollbar to show up */
 }
 
+#sutra iframe {
+	border: 0;
+	overflow: hidden;
+}
+
 h1 {
 	color: white;
 	font-variant: small-caps;
