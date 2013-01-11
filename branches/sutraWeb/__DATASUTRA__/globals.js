@@ -5983,8 +5983,8 @@ function DS_router_callback(path,callback) {
 			}
 		}
 		
-		//navigate to the correct form
-		if (itemID) {
+		//navigate to the correct form if not already there
+		if (itemID && itemID != solutionPrefs.config.currentFormID) {
 			var payload = globals.DATASUTRA_router_payload
 			globals.TRIGGER_navigation_set(null,payload.setFoundset,payload.useFoundset,itemID)
 		}
