@@ -918,14 +918,8 @@ function TRIGGER_interface_lock(freeze,freezeAll,nonTransparent,spinner,nonTrans
 			forms.DATASUTRA_WEB_0F__main.elements.gfx_curtain.visible = freeze
 			forms.DATASUTRA__sidebar.elements.gfx_curtain.visible = freeze
 			
-			//adjust z-index to be on top
-			if (freeze) {
-				plugins.WebClientUtils.executeClientSideJS('setTimeout(function(){$("#form_DATASUTRA_WEB_0F__workflow,#form_DATASUTRA_WEB_0F__header__actions").css("z-index",1)},0);')
-			}
-			//put z-index back
-			else {
-				plugins.WebClientUtils.executeClientSideJS('setTimeout(function(){$("#form_DATASUTRA_WEB_0F__workflow,#form_DATASUTRA_WEB_0F__header__actions").css("z-index","auto")},0);')
-			}
+			//adjust z-index
+			plugins.WebClientUtils.executeClientSideJS('triggerInterfaceLock(' + freeze + ');')
 		}
 		//smart client
 		else {
