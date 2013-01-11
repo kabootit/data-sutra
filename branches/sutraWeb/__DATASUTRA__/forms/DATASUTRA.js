@@ -12,11 +12,13 @@ function FORM_on_load(event) {
 	}
 	//web client, go there
 	else if (application.getApplicationType() == APPLICATION_TYPES.WEB_CLIENT) {
+		
 		//solutionModel to replace out images and attach style classes
 		var smForms = solutionModel.getForms()
 		for (var i = 0; i < smForms.length; i++) {
 			var smForm = smForms[i]
 			var smLabels = smForm.getLabels()
+			var smFields = smForm.getFields()
 			var touched = false
 			
 			for (var j = 0; j < smLabels.length; j++) {
@@ -44,6 +46,49 @@ function FORM_on_load(event) {
 					}
 					
 					touched = true
+				}
+			}
+			
+			for (var j = 0; j < smFields.length; j++) {
+				var smField = smFields[j]
+				
+				//only comboboxes
+				if (smField.displayType == JSField.COMBOBOX) {
+					//comboboxes in grid
+					if (smField.styleClass == 'standard_table' || smField.styleClass == 'bold_table') {
+						//create label for bordering
+						smLabel = smForm.newLabel('',smField.x,smField.y,smField.width,smField.height)
+						smLabel.anchors = smField.anchors
+//						smLabel.formIndex = 0
+						smLabel.showClick = false
+						smLabel.showFocus = false
+						smLabel.styleClass = 'standard_table_check'
+						smLabel.transparent = true
+						
+						//adjust size
+						smField.width = smField.width - 6
+						smField.height = smField.height - 3
+						smField.x = smField.x + 3
+						smField.y = smField.y + 1
+					}
+					
+					//comboboxes at bottom of grid
+					if (smField.styleClass == 'standard_table_bottom' || smField.styleClass == 'bold_table_bottom') {
+						//create label for bordering
+						smLabel = smForm.newLabel('',smField.x,smField.y,smField.width,smField.height)
+						smLabel.anchors = smField.anchors
+//						smLabel.formIndex = 0
+						smLabel.showClick = false
+						smLabel.showFocus = false
+						smLabel.styleClass = 'standard_table_check_bottom'
+						smLabel.transparent = true
+						
+						//adjust size
+						smField.width = smField.width - 6
+						smField.height = smField.height - 3
+						smField.x = smField.x + 3
+						smField.y = smField.y + 1
+					}
 				}
 			}
 			
