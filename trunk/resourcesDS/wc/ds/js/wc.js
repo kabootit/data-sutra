@@ -930,3 +930,11 @@ function styleCSS4Parent() {
 		}
 	}
 }
+
+//interface lock
+function triggerInterfaceLock(toggle) {
+	//put z-index on top or bottom
+	setTimeout(function(){
+		$("#form_DATASUTRA_WEB_0F__workflow,#form_DATASUTRA_WEB_0F__header__actions").css("z-index",toggle ? 1 : auto)
+	},0);
+}
