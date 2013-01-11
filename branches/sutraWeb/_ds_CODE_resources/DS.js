@@ -238,11 +238,12 @@ function webULResizeMonitor() {
 }
 
 /**
- * @param [toggle=true]
+ * @param {Boolean} [toggle=true]
+ * @param {Number} delay
  *
  * @properties={typeid:24,uuid:"A8A520A8-7B81-4974-805B-E7E3A49CFE3E"}
  */
-function webNavSwitchProgress(toggle) {
+function webNavSwitchProgress(toggle,delay) {
 	if (solutionPrefs.config.webClient) {
 		if (typeof toggle != 'boolean') {
 			toggle = true
@@ -250,7 +251,7 @@ function webNavSwitchProgress(toggle) {
 		
 //		var fade = toggle ? 'fadeIn' : 'fadeOut'
 //		plugins.WebClientUtils.executeClientSideJS("$('#HUDcenter1')." + fade + "();")
-		plugins.WebClientUtils.executeClientSideJS("bigIndicator(" + (toggle ? 'true' : 'false') + ");")
+		plugins.WebClientUtils.executeClientSideJS("bigIndicator(" + (toggle ? 'true' : 'false') + "," + delay + ");")
 	}
 }
 
