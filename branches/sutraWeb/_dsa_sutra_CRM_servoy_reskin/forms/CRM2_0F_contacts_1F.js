@@ -24,6 +24,7 @@ function GOTO_company()
  *			  	
  */
 
-globals.TRIGGER_navigation_set(12,true,crm_contacts_to_companies) 
-
+if (utils.hasRecords(crm_contacts_to_companies)) {
+	globals.TRIGGER_navigation_set(12,true,crm_contacts_to_companies) 
+}
 }
