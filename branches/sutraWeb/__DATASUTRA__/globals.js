@@ -155,8 +155,9 @@ function DATASUTRA_close()
 		//MEMO: called explicitly from 
 
 	//don't run in headless or web client (they use whatever solution is activated as context)
-	if (application.getApplicationType() == APPLICATION_TYPES.SMART_CLIENT || application.getApplicationType() == APPLICATION_TYPES.RUNTIME_CLIENT) {
-	
+	if (application.getApplicationType() == APPLICATION_TYPES.SMART_CLIENT || application.getApplicationType() == APPLICATION_TYPES.RUNTIME_CLIENT ||
+		(application.getApplicationType() == APPLICATION_TYPES.WEB_CLIENT && solutionPrefs.config.webClient)) {
+		
 		// still at login screen, just close
 		if (application.__parent__.solutionPrefs && solutionPrefs.clientInfo && !solutionPrefs.clientInfo.logID) {
 			//mark this client as non-validated
@@ -167,13 +168,18 @@ function DATASUTRA_close()
 		}
 		//go through proper logout
 		else {
-			var logOut = globals.DIALOGS.showQuestionDialog(
+			if (solutionPrefs.config.webClient) {
+				logOut = 'Yes'
+			}
+			else {
+				var logOut = globals.DIALOGS.showQuestionDialog(
 							'Logout',
 							'Do you really want to log out?',
 							'Yes',
 							'No'
 						)
-		
+			}
+			
 			if (logOut == 'Yes') {
 			
 				if (!globals.DATASUTRA_close.inProcess) {
@@ -191,7 +197,7 @@ function DATASUTRA_close()
 						var logoutOK
 					
 						//only run in client
-						if (solutionPrefs.clientInfo.typeServoy == 'client') {
+						if (!utils.stringPatternCount(solutionPrefs.clientInfo.typeServoy,'developer') && !utils.stringPatternCount(solutionPrefs.clientInfo.typeServoy,'web client')) {
 							//repository information
 							var fileName = application.getUserProperty('sutraRepository-' + application.getSolutionName() + '-' + application.getServerURL().substr(7))
 							if (fileName && !solutionPrefs.repository.api) {
@@ -275,7 +281,29 @@ function DATASUTRA_close()
 						accessLog.date_logout = application.getServerTimeStamp()
 						databaseManager.saveData()
 					}
-				
+					
+					//if any reports run, delete them
+					if (solutionPrefs.config.webClient) {
+						var allProps = plugins.sutra.getJavaProperties()
+						for (var i = 0; i < allProps.length; i++) {
+							var prop = allProps[i]
+							if (prop[0] == 'catalina.base') {
+								var serverInstall = prop[1]
+								break
+							}
+						}
+						
+						var reportPath = '/webapps/ROOT/ds/reports'
+						var userDir = '/' + security.getClientID().replace(/-/g,'') + '/'
+						
+						var reportDir = plugins.file.convertToJSFile(serverInstall + reportPath + userDir)
+						if (reportDir.exists()) {
+							var reports = plugins.file.getFolderContents(reportDir)
+							reports.forEach(function(item) {item.deleteFile()})
+							reportDir.deleteFile()
+						}
+					}
+					
 					//do access control logging, pref update
 					if (solutionPrefs.access.accessControl) {
 						//save down developer mode state
