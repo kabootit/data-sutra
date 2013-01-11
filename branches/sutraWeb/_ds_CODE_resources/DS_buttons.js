@@ -1097,7 +1097,10 @@ function TRANSACTION_start(event) {
 		else {
 			scopes.DS.transaction.start()
 		}
-	
+		
+		//css4 parent selectors (for comboboxes)
+		scopes.DS.webStyleCSS4()
+		
 		//LOG
 		var serverName = forms[formName].controller.getServerName()
 		var tableName = forms[formName].controller.getTableName()
@@ -1159,10 +1162,13 @@ function TRANSACTION_save(event) {
 			scopes.DS.transaction.save()
 		}
 		
+		//css4 parent selectors (for comboboxes)
+		scopes.DS.webStyleCSS4()		
+		
 		if (redrawUL) {
 			scopes.DS.webULPrettify(true)
 		}
-	
+		
 		//LOG
 		var serverName = forms[formName].controller.getServerName()
 		var tableName = forms[formName].controller.getTableName()
@@ -1223,6 +1229,9 @@ function TRANSACTION_cancel(event) {
 		else {
 			scopes.DS.transaction.cancel()
 		}
+		
+		//css4 parent selectors (for comboboxes)
+		scopes.DS.webStyleCSS4()
 		
 		if (redrawUL) {
 			scopes.DS.webULPrettify(true)

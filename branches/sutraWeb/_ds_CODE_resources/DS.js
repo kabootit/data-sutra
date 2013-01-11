@@ -146,7 +146,8 @@ function webFactorSet(device) {
 }
 
 /**
- * On show method for form that will hook up css class to subheader graphic
+ * On show method for form that will hook up additional css classes
+ * 
  * @param {Boolean} firstShow
  * @param {JSEvent} event
  *
@@ -172,6 +173,15 @@ function webStyleCSS(firstShow, event) {
 				plugins.WebClientUtils.setExtraCssClass(forms[formName].elements[elem], 'gfxColorLight')
 			}
 		}
+	}
+}
+
+/**
+ * @properties={typeid:24,uuid:"D82963A5-C7B5-4255-A254-D10E39FC59BE"}
+ */
+function webStyleCSS4() {
+	if (solutionPrefs.config.webClient) {
+		plugins.WebClientUtils.executeClientSideJS("styleCSS4Parent();");
 	}
 }
 

@@ -346,6 +346,9 @@ if (buttonName) {
 		if (forms[formName].elements[lblDivider]) {
 			forms[formName].elements[lblDivider].visible = showDivider
 		}
+		
+		//css4 parent selectors (for comboboxes)
+		scopes.DS.webStyleCSS4()
 	}
 	
 	/*	//TODO: what to do if there is a title header?
