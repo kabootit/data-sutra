@@ -115,7 +115,7 @@ function LIST_expand_collapse(event, idNavItem, forceToggle, idNavSet) {
 				}
 				
 				//redraw list
-				LIST_redraw(null,idNavItem,true)
+				LIST_redraw(event,idNavItem,true)
 				
 				//re set up the screen
 				globals.DS_router_recreateUI()
@@ -436,36 +436,63 @@ function LIST_redraw__webclient(event,idItem,scrollRe,loadFormsSkip,modeFavorite
 				selected: selector
 			}
 		
-		//hide UL area
-		if (true) {
-			plugins.WebClientUtils.executeClientSideJS('hideUL();');
-		}
-		
 		//triggered by clicking on element in list
 		if (event instanceof JSEvent) {
-			var selectedRow = utils.stringToNumber(event.getElementName().split('_').pop())
-			var itemDetails = forms[_parentForm]._rows[selectedRow]
-			
-			_variableWC.itemID = itemDetails.navItemID
-			
-			//call router to push history state
-			if (globals.DATASUTRA_router_enable) {
-				globals.DS_router(null,null,_variableWC.itemID)
-				return
+			//triggered by arrow
+			if (utils.stringPatternCount(event.getElementName(),'triangle')) {
+				//already there; don't load in form again
+				if (_variableWC.itemID == solutionPrefs.config.currentFormID) {
+					_variableWC.skipLoadForms = true
+				}
+				
+				//redraw the list
+				forms[controller.getName()].LIST_redraw__webclient__continue(0)
+				
+				//call router to push history state
+				if (globals.DATASUTRA_router_enable) {
+					globals.DS_router(null,null,_variableWC.itemID)
+				}
+				
+				//make sure to turn off UL spinny when no UL
+				if (true) {
+					scopes.DS.webNavSwitchProgress(false,1000)
+				}
 			}
-			
-			//this is favorites
-			if (itemDetails.datasource) {
-				_variableWC.favoriteMode = true
+			else {
+				var selectedRow = utils.stringToNumber(event.getElementName().split('_').pop())
+				var itemDetails = forms[_parentForm]._rows[selectedRow]
+				
+				_variableWC.itemID = itemDetails.navItemID
+				
+				//already there; halt
+				if (_variableWC.itemID == solutionPrefs.config.currentFormID) {
+					return
+				}		
+				
+				//call router to push history state
+				if (globals.DATASUTRA_router_enable) {
+					globals.DS_router(null,null,_variableWC.itemID)
+					return
+				}
+				
+				//this is favorites
+				if (itemDetails.datasource) {
+					_variableWC.favoriteMode = true
+				}
+				
+				var getScroll = 'var scrollRows = $("#form_NAV__navigation_tree__rows").find(".formpart")[0].scrollTop;'
+				
+				//grab the current scroll position
+				plugins.WebClientUtils.executeClientSideJS(getScroll, forms[controller.getName()].LIST_redraw__webclient__continue, ['scrollRows'])
 			}
-			
-			var getScroll = 'var scrollRows = $("#form_NAV__navigation_tree__rows").find(".formpart")[0].scrollTop;'
-			
-			//grab the current scroll position
-			plugins.WebClientUtils.executeClientSideJS(getScroll, forms[controller.getName()].LIST_redraw__webclient__continue, ['scrollRows'])
 		}
 		//continue redrawing the screen
 		else {
+			//already there; halt
+			if (_variableWC.itemID == solutionPrefs.config.currentFormID) {
+				return
+			}
+			
 			forms[controller.getName()].LIST_redraw__webclient__continue(0)
 		}
 	}

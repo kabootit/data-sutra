@@ -2904,7 +2904,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		
 		//web client
 		if (solutionPrefs.config.webClient) {
-			//using universal list, moneky here...
+			//using universal list, monkey here...
 			if (navigationPrefs.byNavItemID[navigationItemID].navigationItem.useFwList) {
 				//need find and not showing
 				if (findOn && forms[navWeb].elements.tab_list.getLeftForm().controller.getName() != findForm) {
