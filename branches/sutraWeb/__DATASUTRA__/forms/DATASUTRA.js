@@ -67,8 +67,8 @@ function FORM_on_load(event) {
 						
 						//adjust size
 						smField.width = smField.width - 6
-						smField.height = smField.height - 3
-						smField.x = smField.x + 3
+						smField.height = smField.height - 4
+						smField.x = smField.x + 4
 						smField.y = smField.y + 1
 					}
 					
@@ -85,8 +85,8 @@ function FORM_on_load(event) {
 						
 						//adjust size
 						smField.width = smField.width - 6
-						smField.height = smField.height - 3
-						smField.x = smField.x + 3
+						smField.height = smField.height - 4
+						smField.x = smField.x + 4
 						smField.y = smField.y + 1
 					}
 				}
