@@ -877,15 +877,33 @@ function REPORTS_list_control() {
 			forms[formName].controller.loadRecords(fsToPrint)
 		}
 		
-		//webclient, create pdf, show it inline
-		if (false && solutionPrefs.config.webClient) {
-			var printFile = plugins.file.createTempFile('sutraPreview-' + formName + '-', '.pdf')
+		//webclient from router, create pdf, show it inline
+		if (solutionPrefs.config.webClient && scopes.globals.DATASUTRA_router_enable) {
+			var allProps = plugins.sutra.getJavaProperties()
+			for (var i = 0; i < allProps.length; i++) {
+				var prop = allProps[i]
+				if (prop[0] == 'catalina.base') {
+					var serverInstall = prop[1]
+					break
+				}
+			}
+			
+			var reportPath = '/webapps/ROOT/ds/reports'
+			var userDir = '/' + security.getClientID().replace(/-/g,'') + '/'
+			var fileName = 'sutraPreview-' + formName + '.pdf'	
+			
+			//make sure user directory created
+			var userTest = plugins.file.convertToJSFile(serverInstall + reportPath + userDir)
+			if (!userTest.exists()) {
+				userTest.mkdirs()
+			}
+			
+			//print file
+			var printFile = plugins.file.createFile(serverInstall + reportPath + userDir + fileName)
 			forms[formName].controller.print(false, false, plugins.pdf_output.getPDFPrinter(printFile.getAbsolutePath()))
 			
-			//TODO: move this file into webserver root so can be served
-			
-			//TODO: tack on this embed into a div/overlay (with close button)
-	//		<embed width="100%" height="100%" name="plugin" src="file:///var/folders/eR/eRvq7WnVH2OWuRZ2VGV9A++++TI/-Tmp-/sutraPreview-MGR_RPT__tooltip-1346108977305885092.pdf" type="application/pdf">
+			//load pdf in browser and show it
+			plugins.WebClientUtils.executeClientSideJS('window.parent.printLoad("/reports' + userDir + fileName + '");')
 		}
 		//smart client, use standard print preview
 		else {
