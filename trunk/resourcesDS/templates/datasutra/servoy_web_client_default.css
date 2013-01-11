@@ -21,6 +21,11 @@ div.field td input {
 	overflow: hidden;
 }
 
+/* make indicator text invisible until overwritten */
+#indicator {
+	color: #FFF;
+}
+
 /** Tooltips */
 #mktipmsg
 {
@@ -607,7 +612,7 @@ div! > select {
 	-webkit-border-radius: 3px 3px 3px 3px;
 	border-radius: 3px 3px 3px 3px;
 			
-	box-shadow: 1px 1px 5px #999;
+	box-shadow: 1px 1px 5px #666;
 			
 	background: url(/servoy-webclient/templates/datasutra/images/select-tick.png) no-repeat right center,
 				-moz-linear-gradient(center bottom, #ccc 0%, #eee 60%) no-repeat right top,
