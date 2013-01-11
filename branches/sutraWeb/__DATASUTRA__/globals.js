@@ -5811,6 +5811,11 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 		}
 		
 		globals.DS_router_recreateUI()
+		
+		//hoist divs up if still in a transaction
+		if (solutionPrefs.config.lockStatus) {
+			plugins.WebClientUtils.executeClientSideJS('triggerInterfaceLock(true);')
+		}
 	}
 	// something happened, error out
 	else {
