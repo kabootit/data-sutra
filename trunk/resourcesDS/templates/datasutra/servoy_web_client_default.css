@@ -599,6 +599,60 @@ div.wicket-aa ul li.selected {
 	color: #FFF;
 }
 
+/* combobox */
+div! > select {
+	overflow:hidden;
+			
+	-moz-border-radius: 3px 3px 3px 3px;
+	-webkit-border-radius: 3px 3px 3px 3px;
+	border-radius: 3px 3px 3px 3px;
+			
+	box-shadow: 1px 1px 5px #999;
+			
+	background: url(/servoy-webclient/templates/datasutra/images/select-tick.png) no-repeat right center,
+				-moz-linear-gradient(center bottom, #ccc 0%, #eee 60%) no-repeat right top,
+				-moz-linear-gradient(top, #ccc 0%, #ccc 100%) no-repeat right top;
+	background: url(/servoy-webclient/templates/datasutra/images/select-tick.png) no-repeat right center,
+				-webkit-gradient(linear, left bottom, left top, color-stop(0, #ccc), color-stop(0.6, #eee)) no-repeat right top,
+				-webkit-gradient(linear, left top, right top, color-stop(0,#ccc), color-stop(1,#ccc)) no-repeat right top;
+	background: url(/servoy-webclient/templates/datasutra/images/select-tick.png) no-repeat right center,
+				-webkit-linear-gradient(center bottom, #ccc 0%, #eee 60%) no-repeat right top,
+				-webkit-linear-gradient(top, #cccccc 0%,#cccccc 100%) no-repeat right top;
+	background: url(/servoy-webclient/templates/datasutra/images/select-tick.png) no-repeat right center,
+				-o-linear-gradient(bottom, #ccc 0%, #eee 60%) no-repeat right top,
+				-o-linear-gradient(top, #ccc 0%,#ccc 100%) no-repeat right top;
+	background: url(/servoy-webclient/templates/datasutra/images/select-tick.png) no-repeat right center,
+				-ms-linear-gradient(top, #ccc 0%, #eee 60%) no-repeat right top,
+				-ms-linear-gradient(top, #ccc 0%, #ccc 100%) no-repeat right top;
+	background: url(/servoy-webclient/templates/datasutra/images/select-tick.png) no-repeat right center,
+				linear-gradient(top, #ccc 0%, #eee 60%) no-repeat right top,
+				linear-gradient(to bottom, #ccc 0%, #ccc 100%) no-repeat right top;
+			
+	-moz-background-size: auto, 17px 100%, 18px 100%;
+	-webkit-background-size: auto, 17px 100%, 18px 100%;
+	-o-background-size: auto, 17px 100%, 18px 100%;
+	-ms-background-size: auto, 17px 100%, 18px 100%;
+	background-size: auto, 17px 100%, 18px 100%;
+}
+select { 
+	border:0 !important;
+	background:transparent !important;
+	padding:0px 5px !important;
+/*	width:125% !important;*/
+/*	*width:100% !important;*/
+	-webkit-appearance: none !important;
+}
+select:focus {
+	outline-width: 0 !important;
+}
+
+@-moz-document url-prefix() {
+	select { 
+		width:125% !important;
+		*width:100% !important;
+	}
+}
+
 /** Change the (contextual) menu-plugin style */
 .yuimenu {
 	background: #dcdedc;

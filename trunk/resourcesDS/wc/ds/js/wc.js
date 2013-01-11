@@ -309,46 +309,49 @@ switch (dsFactor()) {
 		break
 }
 
-//	Extend jquery to be able to remove styles (http://stackoverflow.com/questions/2465158)
-(function($) {
-	$.fn.removeStyle = function(style)
-	{
-		var search = new RegExp(style + '[^;]+;?', 'g');
-
-		return this.each(function()
-		{
-			$(this).attr('style', function(i, style)
-			{
-				return style.replace(search, '');
-			});
-		});
-	};
-})(jQuery);
-
-//	Extend jquery to handle cookies (https://github.com/carhartl/jquery-cookie)
+//	Extensions to jQuery
 (function($) {
 	setTimeout(function(){
-		//load in resource
+		//	Extend jquery to handle cookies (https://github.com/carhartl/jquery-cookie)
 		$('head').append('<script type="text/javascript" src="/ds/js/lib/jquery.cookie.js"></script>');
-	},1000)
-})(jQuery);
-
-//	Extend jquery to listen to resize on elements (https://github.com/cowboy/jquery-resize)
-(function($) {
-	setTimeout(function(){
-		//load in resource
-		$('head').append('<script type="text/javascript" src="/ds/js/lib/jquery.ba-resize.min.js"></script>');
 		
-		//load in resource
+		//	Extend jquery to listen to resize on elements (https://github.com/cowboy/jquery-resize)
+		$('head').append('<script type="text/javascript" src="/ds/js/lib/jquery.ba-resize.min.js"></script>');
 		$('head').append('<script type="text/javascript" src="/ds/js/lib/jquery.ba-throttle-debounce.min.js"></script>');
-	},1000)
-})(jQuery);
-
-//	Extend jQuery to give us scrollstart / scrollstop events (https://github.com/ssorallen/jquery-scrollstop)
-(function($) {
-	setTimeout(function(){
-		//load in resource
+		
+		//	Extend jQuery to give us scrollstart / scrollstop events (https://github.com/ssorallen/jquery-scrollstop)
 		$('head').append('<script type="text/javascript" src="/ds/js/lib/jquery.scrollstop.js"></script>');
+		
+		//	Extend jQuery to give us css4 parent selectors (https://github.com/Idered/cssParentSelector)
+		$('head').append('<script type="text/javascript" src="/ds/js/lib/jQuery.cssParentSelector.min.js"></script>');
+		
+		//	Allow for disabling of selection
+	    $.fn.disableSelection = function() {
+	        return this
+	                 .attr('unselectable', 'on')
+	                 .css({
+							'user-select': 'none',
+							'-moz-user-select': 'none',
+							'-khtml-user-select': 'none',
+							'-o-user-select': 'none',
+							'-webkit-user-select': 'none'
+						})
+	                 .on('selectstart', false);
+		}
+		
+		//	Extend jquery to be able to remove styles (http://stackoverflow.com/questions/2465158)
+	 	$.fn.removeStyle = function(style)
+	 	{
+	 		var search = new RegExp(style + '[^;]+;?', 'g');
+
+	 		return this.each(function()
+	 		{
+	 			$(this).attr('style', function(i, style)
+	 			{
+	 				return style.replace(search, '');
+	 			});
+	 		});
+	 	};
 	},1000)
 })(jQuery);
 
@@ -380,22 +383,6 @@ switch (dsFactor()) {
 		}
 	})
 })();
-
-//	Allow for disabling of selection
-(function($){
-    $.fn.disableSelection = function() {
-        return this
-                 .attr('unselectable', 'on')
-                 .css({
-						'user-select': 'none',
-						'-moz-user-select': 'none',
-						'-khtml-user-select': 'none',
-						'-o-user-select': 'none',
-						'-webkit-user-select': 'none'
-					})
-                 .on('selectstart', false);
-    };
-})(jQuery);
 
 //	Refresh UL list
 function refreshUL(source) {
@@ -847,6 +834,10 @@ function hideUL() {
 		if (selector.css('z-index') != '-10') {
 			selector.css('z-index', '-10');
 		}
+		//css4 parent selectors (for comboboxes)
+		else {
+			styleCSS4Parent();
+		}
 	}
 }
 
@@ -894,6 +885,9 @@ function showUL() {
 				//hide spinny (won't do in table mode because empty selector)
 				// $('#HUDcenter1').fadeOut();
 				bigIndicator(false);
+				
+				//css4 parent selectors (for comboboxes)
+				styleCSS4Parent();
 			}
 			
 			var tOut = setTimeout(fadeIn,450);
@@ -913,4 +907,26 @@ function orientPortrait() {
 }
 function orientLandscape() {
 	// alert("landscape");
+}
+
+//style comboboxes
+function styleCSS4Parent() {
+	//available and ready
+	if ($ && $.fn && $.fn.cssParentSelector) {
+		var comboParents = $('select').parent()
+		
+		//no things have had their parents' styled OR
+		if (!$('[class^="CPS"]').length ||
+		//not all selects have been styled
+			(comboParents.length != comboParents.filter(function(){return (this.className || '').search(/CPS/) != -1}).length)
+			) {
+				//remove existing styling
+				comboParents.each(function(){$(this).removeClass(this.className)});
+				
+				//(re-)apply
+				$.fn.cssParentSelector();
+				
+				console.log('Styled');
+		}
+	}
 }
