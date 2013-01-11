@@ -126,14 +126,14 @@ function loginIndicator(signup) {
 }
 
 //	Large centered "Loading..." indicator
-function bigIndicator(toggle) {
+function bigIndicator(toggle,delay) {
 	// var indicator = $('#form_DATASUTRA_WEB_0F');
 	var elem = '#servoy_dataform .webform:first';
 	var indicator = $(elem);
 		
 	//not enough loaded in yet, try to load up again in half a second
-	if (!indicator.length) {
-		setTimeout(bigIndicator,500);
+	if (!indicator.length || delay) {
+		setTimeout(function(){bigIndicator(toggle);},delay || 500);
 		return
 	}
 		
