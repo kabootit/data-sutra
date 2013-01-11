@@ -11,3 +11,21 @@ input.field {
 div.check div label {
 	vertical-align: -10%;
 }
+
+#report {
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
+}
+
+@media only screen and (orientation:landscape) { 
+    #report { 
+		width: 900px;
+		margin-left: -450px;
+	}
+}
+@media only screen and (orientation:portrait) {
+    #report { 
+		width: 700px;
+		margin-left: -350px;
+	}
+}

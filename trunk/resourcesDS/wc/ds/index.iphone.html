@@ -18,13 +18,18 @@
 	<script type="text/javascript" src="/ds/js/lib/ios-orientationchange-fix.js"></script>
 	<script type="text/javascript" src="/ds/js/lib/native.history.js"></script>
 	<script type="text/javascript" src="/ds/js/router.js"></script>
+	<script type="text/javascript" src="/ds/js/print.js"></script>
 	
 	<script type="text/javascript" src="/ds/config/add2homeconfig.js"></script>
 	<link type="text/css" rel="stylesheet" href="/ds/js/lib/css/add2home.css" />
 	<script type="text/javascript" src="/ds/js/lib/add2home.js"></script>	
 </head>
 <body>
-	<div id="blocker"><h1>logging in . . . please wait</h1></div>
 	<div id="sutra"></div>
+	<div id="blocker"></div>
+	<div id="report">
+		<a class="close" href="javascript:;" onclick="javascript:printClose();" title="Close">Close</a>
+		<div id="content" class="content"></div>
+	</div>
 </body>
 </html>
