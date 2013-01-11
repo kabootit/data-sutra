@@ -957,6 +957,10 @@ and (max-device-width : 1024px) {
 	border-top: solid 1px #999999 !important;
 }
 
+.yuimenu ul.first-of-type {
+	border-width: 0 !important;
+}
+
 .yuimenuitemlabel-disabled,
 .yuimenubaritemlabel-disabled,
 .yuimenuitemlabel-disabled a,
