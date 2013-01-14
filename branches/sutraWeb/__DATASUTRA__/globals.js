@@ -2651,6 +2651,13 @@ function DS_sidebar_toggle(sideToggle, sideWidth, sideExpand)
 //		var headerHeight = forms[baseForm].elements.bean_header.getHeight()
 //		var mainHeight = forms[baseForm].elements.bean_main.getHeight()
 		
+		//helper to make sure tables loaded in in sidebar
+		function rejiggle() {
+			var callback = plugins.WebClientUtils.generateCallbackScript(globals.DS_router_bean_resize);
+			var jsCallback = 'function resetBeans(){' + callback + '}';
+			plugins.WebClientUtils.executeClientSideJS('resetBeanSizes(' + jsCallback + ');')
+		}
+		
 		//developer windows
 		if (false) {
 			
@@ -2694,6 +2701,9 @@ function DS_sidebar_toggle(sideToggle, sideWidth, sideExpand)
 				//sidebar fits inside window
 				var mainWidth = maxWidth - sideWidth - offset
 				forms[baseForm].elements.tab_wrapper.dividerLocation = mainWidth
+				
+				//re-jiggle to make sure things loaded in
+				rejiggle()
 			}
 			//smart client
 			else {
@@ -2744,6 +2754,9 @@ function DS_sidebar_toggle(sideToggle, sideWidth, sideExpand)
 				if (solutionPrefs.config.activeSpace == 'workflow flip') {
 					forms[baseForm + '__main'].elements.tab_main.dividerLocation = application.getWindow().getWidth()
 				}
+				
+				//re-jiggle to make sure things loaded in
+				rejiggle()
 			}
 			//smart client
 			else {
@@ -5952,8 +5965,12 @@ function DS_router_recreateUI() {
  */
 function DS_router_bean_resize() {
 	//resize window appropriately
-	//this does not account for sidebar being opened
-	forms.DATASUTRA_WEB_0F.elements.tab_wrapper.dividerLocation = forms.DATASUTRA_WEB_0F.elements.tab_wrapper.getWidth()
+	if (solutionPrefs.screenAttrib.sidebar.status) {
+		forms.DATASUTRA_WEB_0F.elements.tab_wrapper.dividerLocation = forms.DATASUTRA_WEB_0F.elements.tab_wrapper.getWidth() - solutionPrefs.screenAttrib.sidebar.currentSize
+	}
+	else {
+		forms.DATASUTRA_WEB_0F.elements.tab_wrapper.dividerLocation = forms.DATASUTRA_WEB_0F.elements.tab_wrapper.getWidth()
+	}
 	
 	//reset split between toolbar and fastfind
 	forms.DATASUTRA_WEB_0F__header.FORM_on_show(true)

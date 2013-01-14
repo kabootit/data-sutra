@@ -44,7 +44,7 @@ function FORM_on_show(firstShow, event) {
 		elements.split_tool_find.transparent = true
 		elements.split_tool_find.resizeWeight = 1
 		elements.split_tool_find.dividerSize = 0
-		elements.split_tool_find.dividerLocation = application.getWindowWidth(null) - splitOffset
+		elements.split_tool_find.dividerLocation = application.getWindowWidth(null) - splitOffset - (solutionPrefs.screenAttrib.sidebar.status ? solutionPrefs.screenAttrib.sidebar.currentSize : 0)
 		
 		//css classes
 		plugins.WebClientUtils.setExtraCssClass(elements.gfx_header, 'gfxHeader')
