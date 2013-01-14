@@ -65,9 +65,11 @@ else if (elements.tab_shipping.tabIndex == 2) {
  *
  * @properties={typeid:24,uuid:"f9487842-eab2-459f-9fd9-542bf72d2e23"}
  */
-function FORM_on_show()
+function FORM_on_show(firstShow, event)
 {
-
+	if (scopes.NT) {
+		scopes.NT.sidebarSet(event)
+	}
 }
 
 /**
@@ -253,7 +255,7 @@ else if (contCnt == 0) {
  *
  * @properties={typeid:24,uuid:"67d92206-c10a-4caf-b450-6f126e939734"}
  */
-function REC_on_select()
+function REC_on_select(event)
 {
 
 /*
@@ -289,6 +291,10 @@ if (utils.hasRecords(eval(relnName))) {
 }
 else {
 	globals.CRM_address_display = null
+}
+
+if (scopes.NT) {
+	scopes.NT.sidebarSet(event)
 }
 }
 

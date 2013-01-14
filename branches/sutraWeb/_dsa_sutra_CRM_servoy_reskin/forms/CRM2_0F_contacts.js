@@ -2,9 +2,11 @@
  *
  * @properties={typeid:24,uuid:"4b9d5a7f-3696-462e-b0d6-1e0ba6248a05"}
  */
-function FORM_on_show()
+function FORM_on_show(firstShow, event)
 {
-
+	if (scopes.NT) {
+		scopes.NT.sidebarSet(event)
+	}
 }
 
 /**
@@ -176,4 +178,17 @@ function EDIT_cancel() {
  */
 function EDIT_save() {
 	plugins.WebClientUtils.executeClientSideJS('alert("Saved");')
+}
+
+/**
+ * Handle record selected.
+ *
+ * @param {JSEvent} event the event that triggered the action
+ *
+ * @properties={typeid:24,uuid:"A4B842E9-8B1F-45B2-8CBB-6F9056D897FA"}
+ */
+function REC_on_select(event) {
+	if (scopes.NT) {
+		scopes.NT.sidebarSet(event)
+	}
 }

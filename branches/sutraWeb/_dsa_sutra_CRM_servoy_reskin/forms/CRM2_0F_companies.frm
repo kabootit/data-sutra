@@ -518,6 +518,7 @@ uuid:"ebb8b5bd-575a-4453-9249-6ed6e1ce8ea0"
 name:"CRM2_0F_companies",
 navigatorID:"-1",
 onLoadMethodID:"7B57CE2A-D456-4334-8970-30E7FE303A0D",
+onRecordSelectionMethodID:"D956855F-D1CC-4B08-9836-104BF744B1BF",
 onShowMethodID:"88C0E6B5-3D78-4A55-9A7D-44FC7B428A59",
 paperPrintScale:100,
 size:"750,400",

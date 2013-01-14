@@ -82,6 +82,10 @@ function FORM_on_show(firstShow, event) {
 	if (firstShow && !solutionPrefs.config.webClient) {
 		EDIT_toggle(true)
 	}
+	
+	if (scopes.NT) {
+		scopes.NT.sidebarSet(event)
+	}
 }
 
 /**
@@ -93,4 +97,24 @@ function FORM_on_show(firstShow, event) {
  */
 function FORM_on_load(event) {
 	scopes.TAB.GRID_init__detail()
+}
+
+/**
+ * Handle record selected.
+ *
+ * @param {JSEvent} event the event that triggered the action
+ *
+ * @properties={typeid:24,uuid:"D956855F-D1CC-4B08-9836-104BF744B1BF"}
+ */
+function REC_on_select(event) {
+	if (scopes.NT) {
+		scopes.NT.sidebarSet(event)
+	}
+}
+
+/**
+ * @properties={typeid:24,uuid:"913C4656-B407-4DAE-A3E0-3C8FCCF75DA1"}
+ */
+function REPORT_sample() {
+	scopes.DS.print.preview('customer_activity_weekly.pdf',solutionModel.getMedia('report_example.pdf').bytes)
 }

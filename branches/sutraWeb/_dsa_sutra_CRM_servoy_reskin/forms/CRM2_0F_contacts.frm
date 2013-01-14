@@ -419,6 +419,7 @@ uuid:"fc6b2947-b650-467a-97fc-0dcaa85c63fb"
 ],
 name:"CRM2_0F_contacts",
 navigatorID:"-1",
+onRecordSelectionMethodID:"A4B842E9-8B1F-45B2-8CBB-6F9056D897FA",
 onShowMethodID:"4b9d5a7f-3696-462e-b0d6-1e0ba6248a05",
 paperPrintScale:100,
 size:"750,400",
