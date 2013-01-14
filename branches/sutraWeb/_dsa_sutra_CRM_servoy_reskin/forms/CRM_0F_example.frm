@@ -108,6 +108,8 @@ uuid:"D3A42DFB-4E3C-4A80-BBC2-4D2E41FE7548"
 ],
 name:"CRM_0F_example",
 navigatorID:"-1",
+onRecordSelectionMethodID:"C16F26D2-2D21-4534-8337-A22AED6827C0",
+onShowMethodID:"FE467E4A-4FB9-4B7C-AE65-4E35CABA4571",
 paperPrintScale:100,
 size:"400,400",
 styleName:"_DATASUTRA_",
