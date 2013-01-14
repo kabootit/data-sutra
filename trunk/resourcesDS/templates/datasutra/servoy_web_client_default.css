@@ -638,6 +638,8 @@ div! > select {
 	-o-background-size: auto, 17px 100%, 18px 100%;
 	-ms-background-size: auto, 17px 100%, 18px 100%;
 	background-size: auto, 17px 100%, 18px 100%;
+	
+	background-color: #FFF;
 }
 select { 
 	border:0 !important;
