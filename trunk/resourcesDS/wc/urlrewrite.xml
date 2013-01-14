@@ -141,7 +141,7 @@
 		<condition name="host">
 			&dsDev;
 		</condition>
-		<from>^/(?:ds)?/(config|css|external|img|js|theme)/(.*)$</from>
+		<from>^/(?:ds)?/(config|css|external|img|js|reports|theme)/(.*)$</from>
 		<to last="true">/ds/$1/$2</to>
 	</rule>
 
