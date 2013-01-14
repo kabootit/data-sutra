@@ -117,6 +117,122 @@ var transaction = new function() {
 }
 
 /**
+ * DS printing utilities
+ *
+ * @properties={typeid:35,uuid:"90D7E35E-0BAB-4199-80D7-AB0A0D406057",variableType:-4}
+ */
+var print = new function() {
+	/**
+	 * Show print preview
+	 * 
+	 * @param {JSRecord} reportName File name for report
+	 * @param {Blob} reportBytes PDF byte array
+	 * 
+	 */
+	this.preview = function(reportName,reportBytes) {
+		//enough information to proceed
+		if (reportName && reportBytes) {
+			//webclient
+			if (solutionPrefs.config.webClient) {
+				//router
+				if (scopes.globals.DATASUTRA_router_enable) {
+					var reportPath = print.utils.getReportDir()
+					var userDir = print.utils.getUserDir()
+					
+					//print file
+					var printFile = plugins.file.createFile(reportPath + userDir + reportName)
+					var success = printFile.setBytes(reportBytes,true)
+					
+					//load pdf in browser and show it
+					if (success) {
+						plugins.WebClientUtils.executeClientSideJS('window.parent.printLoad("/reports' + userDir + reportName + '");')
+					}
+					else {
+						globals.DIALOGS.showErrorDialog('Error','Report was not run successfully.')
+					}
+				}
+			}
+			//smart client, use standard print preview
+			else {
+				plugins.dialogs.showInfoDialog(
+							'Smart client',
+							'API call not implemented\nUse the web!'
+					)
+			}
+		}
+	}
+	
+	/**
+	 * Do Servoy form report
+	 * 
+	 * @param {String} formName Servoy form
+	 * @return {byte[]} PDF
+	 */
+	this.formBased = function(formName) {
+		//enough information to proceed
+		if (formName && forms[formName]) {
+			//webclient
+			if (solutionPrefs.config.webClient) {
+				//router
+				if (scopes.globals.DATASUTRA_router_enable) {
+					//get pdf
+					var printerMeta = plugins.pdf_output.startMetaPrintJob()
+					forms[formName].controller.print(false, false, plugins.pdf_output.getPDFPrinter())
+					return plugins.pdf_output.endMetaPrintJob()
+				}
+			}
+			//smart client, use standard print preview
+			else {
+				plugins.dialogs.showInfoDialog(
+							'Smart client',
+							'API call not implemented\nUse the web!'
+					)
+			}
+		}
+	}
+	
+	/**
+	 * Printing utilities
+	 */
+	this.utils = new function() {
+		/**
+		 * Default location to store reports
+		 * 
+		 * @return {String} 
+		 */
+		this.getReportDir = function() {
+			var allProps = plugins.sutra.getJavaProperties()
+			for (var i = 0; i < allProps.length; i++) {
+				var prop = allProps[i]
+				if (prop[0] == 'catalina.base') {
+					var serverInstall = prop[1]
+					break
+				}
+			}
+			
+			return serverInstall + '/webapps/ROOT/ds/reports'
+		}
+		
+		/**
+		 * Default location to store reports
+		 * 
+		 * @return {String} 
+		 */
+		this.getUserDir = function() {
+			var userDir = '/' + security.getClientID().replace(/-/g,'') + '/'
+			
+			//make sure user directory created
+			var userTest = plugins.file.convertToJSFile(print.utils.getReportDir() + userDir)
+			if (!userTest.exists()) {
+				userTest.mkdirs()
+			}
+			
+			return userDir
+		}
+	}
+}
+
+/**
  * Valid values are Desktop, iPad, iPhone
  * @type {String}
  *
