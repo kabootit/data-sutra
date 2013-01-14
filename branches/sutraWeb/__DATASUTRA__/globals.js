@@ -6020,6 +6020,9 @@ function DS_router_callback(path,callback) {
 		if (itemID && itemID != solutionPrefs.config.currentFormID) {
 			var payload = globals.DATASUTRA_router_payload
 			globals.TRIGGER_navigation_set(null,payload.setFoundset,payload.useFoundset,itemID)
+			
+			//reset payload (values only used immediately after set)
+			globals.DATASUTRA_router_payload = eval(solutionModel.getGlobalVariable('globals','DATASUTRA_router_payload').defaultValue)
 		}
 	}
 }
