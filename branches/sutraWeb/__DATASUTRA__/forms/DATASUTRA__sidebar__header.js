@@ -343,7 +343,7 @@ function TAB_popdown(input) {
 			}
 			
 			//show sidebar
-			globals.DS_sidebar_toggle(true,null,true)
+			globals.DS_sidebar_toggle(true,null,false)
 		}
 	}
 }
