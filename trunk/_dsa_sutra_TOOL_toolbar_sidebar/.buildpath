@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<buildpath>
+	<buildpathentry excluding=".stp/|medias/" kind="src" path=""/>
+	<buildpathentry exported="true" kind="prj" path="/_ds_CODE_resources"/>
+	<buildpathentry exported="true" kind="prj" path="/_ds_NAV_engine"/>
+</buildpath>
