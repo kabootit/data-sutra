@@ -1,5 +1,5 @@
 /**
- * 	Copyright (C) 2006 - 2012 Data Mosaic
+ * 	Copyright (C) 2006 - 2013 Data Mosaic
  *	http://www.data-mosaic.com
  *	All rights reserved 
  *
@@ -118,27 +118,6 @@ function centerForm(formName) {
 		window.frames['wc_application'].window.centerForm(formName)
 	}
 }
-
-// unblock the screen
-// function viewForm(toggle) {
-// 	if (document.getElementById('sutra') && document.getElementById('blocker')) {
-// 		//unlock the screen
-// 		if (toggle) {
-// 			//show the iframe
-// 			document.getElementById('sutra').style.display = 'block';
-// 	
-// 			//unlock screen
-// 			document.getElementById('blocker').style.display = 'none';
-// 		}
-// 		else {
-// 			//lock screen
-// 			document.getElementById('blocker').style.display = 'block';
-// 		
-// 			//hide the iframe
-// 			document.getElementById('sutra').style.display = 'none';
-// 		}
-// 	}
-// }
 
 // call method in iframe if doesn't exist
 function triggerAjaxUpdate() {

@@ -1,5 +1,5 @@
 /**
- * 	Copyright (C) 2006 - 2012 Data Mosaic
+ * 	Copyright (C) 2006 - 2013 Data Mosaic
  *	http://www.data-mosaic.com
  *	All rights reserved 
  *
@@ -28,13 +28,18 @@ function dsLoginDomain() {
 // what kind of device are we being accessed from
 function dsFactor() {
 	if (navigator.userAgent.match(/iPad/i) || 
+		navigator.userAgent.match(/Android.+Tablet/i) || 
 		navigator.userAgent.match(/Nexus\s7/i) || navigator.userAgent.match(/Nexus\s10/i) ||
 		navigator.userAgent.match(/Kindle/i) || navigator.userAgent.match(/Silk-Accelerated/i) || 
-		navigator.userAgent.match(/PlayBook/i)) {
-			
+		navigator.userAgent.match(/PlayBook/i) 
+		) {
+		
 		return 'iPad';
 	}
-	else if (navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPod/i)) {
+	else if (navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPod/i) || 
+		navigator.userAgent.match(/Android.+Mobile/i)
+		) {
+		
 		return 'iPhone';
 	}
 	else {
