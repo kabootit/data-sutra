@@ -2678,7 +2678,6 @@ function DS_sidebar_toggle(sideToggle, sideWidth, sideExpand)
 			var offset = 0
 		}
 		
-		
 		//toggle on
 		if (sideToggle && sideWidth) {
 			
@@ -2689,7 +2688,17 @@ function DS_sidebar_toggle(sideToggle, sideWidth, sideExpand)
 			if (sideExpand) {
 				var mainWidth = maxWidth - offset
 				maxWidth += sideWidth
-				application.setWindowSize(maxWidth,application.getWindowHeight(null),null)
+				
+				//trying to set screen size larger than this window, maximize
+				if (maxWidth >= application.getScreenWidth()) {
+					plugins.window.maximize(null)
+					
+					mainWidth -= (maxWidth - application.getScreenWidth())
+				}
+				//pop sidebar out
+				else {
+					application.setWindowSize(maxWidth,application.getWindowHeight(null),null)
+				}
 				
 				forms[baseForm].elements.bean_wrapper_1.dividerLocation = mainWidth
 				
