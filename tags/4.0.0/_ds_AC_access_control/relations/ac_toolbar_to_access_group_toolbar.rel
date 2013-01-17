@@ -1,0 +1,9 @@
+deleteRelatedRecords:true,
+foreignDataSource:"db:/sutra/sutra_access_group_toolbar",
+items:[
+{foreignColumnName:"id_toolbar",primaryDataProviderID:"id_toolbar",typeid:23,uuid:"2433697D-8C1F-482B-A4E4-BF880D3D2282"}
+],
+name:"ac_toolbar_to_access_group_toolbar",
+primaryDataSource:"db:/sutra/sutra_toolbar",
+typeid:22,
+uuid:"876FE458-60D8-4616-9651-A7B15EC2BE98"

@@ -1,0 +1,12 @@
+addEmptyValue:1,
+dataProviderID1:"country",
+dataProviderID2:"country_name",
+dataSource:"db:/sutra_example/country_types",
+name:"CRM_address_countries",
+returnDataProviders:1,
+separator:" ",
+showDataProviders:2,
+sortOptions:"country_name asc",
+typeid:34,
+uuid:"964bcb24-d151-4816-9f68-b04a0ab7bea4",
+valueListType:1

@@ -1,0 +1,10 @@
+allowCreationRelatedRecords:true,
+deleteRelatedRecords:true,
+foreignDataSource:"db:/sutra/sutra_column",
+items:[
+{foreignColumnName:"id_navigation_item",primaryDataProviderID:"id_navigation_item",typeid:23,uuid:"32f49ba9-152e-4279-9b0c-0ef6712c2dee"}
+],
+name:"nav_navigation_item_to_column",
+primaryDataSource:"db:/sutra/sutra_navigation_item",
+typeid:22,
+uuid:"c071fad0-4f65-4ab9-a694-d878e2a36c04"

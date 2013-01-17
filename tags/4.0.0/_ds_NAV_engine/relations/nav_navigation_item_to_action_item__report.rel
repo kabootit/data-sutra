@@ -1,0 +1,10 @@
+allowCreationRelatedRecords:true,
+foreignDataSource:"db:/sutra/sutra_action_item",
+items:[
+{foreignColumnName:"id_navigation_item",primaryDataProviderID:"id_navigation_item",typeid:23,uuid:"27d5aac4-00d6-45cf-bab0-d2de0c8fc642"},
+{foreignColumnName:"category",primaryDataProviderID:"globals.NAV_action_item_category_report",typeid:23,uuid:"7a7edfc5-97e1-4575-a176-4ae89f90f1c0"}
+],
+name:"nav_navigation_item_to_action_item__report",
+primaryDataSource:"db:/sutra/sutra_navigation_item",
+typeid:22,
+uuid:"3348611f-a48f-4e99-8f04-a9edef8cf1d9"

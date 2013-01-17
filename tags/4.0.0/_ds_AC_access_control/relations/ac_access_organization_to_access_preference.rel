@@ -1,0 +1,11 @@
+allowCreationRelatedRecords:true,
+deleteRelatedRecords:true,
+foreignDataSource:"db:/sutra/sutra_access_preference",
+items:[
+{foreignColumnName:"id_organization",primaryDataProviderID:"id_organization",typeid:23,uuid:"7A592692-7680-41D6-81B2-C1D227AA5D1D"},
+{foreignColumnName:"preference_type",primaryDataProviderID:"globals.AC_preference_type",typeid:23,uuid:"DB856A5D-D787-466E-A145-6D80D8889684"}
+],
+name:"ac_access_organization_to_access_preference",
+primaryDataSource:"db:/sutra/sutra_access_organization",
+typeid:22,
+uuid:"1A8A214D-7F0C-4D23-99A3-D4D20370F9A5"

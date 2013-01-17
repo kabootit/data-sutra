@@ -1,0 +1,11 @@
+allowCreationRelatedRecords:true,
+deleteRelatedRecords:true,
+foreignDataSource:"db:/sutra/sutra_navigation_item",
+items:[
+{foreignColumnName:"id_navigation",primaryDataProviderID:"id_navigation",typeid:23,uuid:"af5bc326-c43c-4564-973b-8411277a2efa"},
+{foreignColumnName:"row_status_show",primaryDataProviderID:"globals.NAV_constant_one",typeid:23,uuid:"e4ab5545-8b89-46a7-b245-ace0167c2b47"}
+],
+name:"nav_navigation_to_navigation_item",
+primaryDataSource:"db:/sutra/sutra_navigation",
+typeid:22,
+uuid:"d5ee2dd1-b68b-4ea9-bf35-5cfac169b315"

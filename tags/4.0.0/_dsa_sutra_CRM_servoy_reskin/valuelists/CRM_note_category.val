@@ -1,0 +1,13 @@
+addEmptyValue:1,
+dataProviderID1:"saved",
+dataProviderID2:"visible",
+dataSource:"db:/sutra/sutra_valuelist",
+name:"CRM_note_category",
+returnDataProviders:1,
+separator:" ",
+showDataProviders:2,
+sortOptions:"order_by asc",
+typeid:34,
+useTableFilter:true,
+uuid:"00788AC5-4531-4FFF-BA41-79A51B183C6B",
+valueListType:1

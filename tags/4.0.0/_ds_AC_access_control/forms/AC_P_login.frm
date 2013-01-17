@@ -1,0 +1,157 @@
+borderType:"EmptyBorder,0,0,0,0",
+dataSource:"db:/sutra/sutra_access_log",
+items:[
+{
+anchors:11,
+beanClassName:"javax.swing.JProgressBar",
+beanXML:"<?xml version=\"1.0\" encoding=\"UTF-8\"?> 
+<java version=\"1.5.0_19\" class=\"java.beans.XMLDecoder\"> 
+ <object class=\"javax.swing.JProgressBar\"> 
+  <void property=\"bounds\"> 
+   <object class=\"java.awt.Rectangle\"> 
+    <int>20<\/int> 
+    <int>55<\/int> 
+    <int>275<\/int> 
+    <int>25<\/int> 
+   <\/object> 
+  <\/void> 
+  <void property=\"name\"> 
+   <string>bn_progress<\/string> 
+  <\/void> 
+  <void property=\"stringPainted\"> 
+   <boolean>true<\/boolean> 
+  <\/void> 
+ <\/object> 
+<\/java> 
+",
+formIndex:10200,
+location:"20,55",
+name:"bn_progress",
+size:"275,25",
+typeid:12,
+usesUI:true,
+uuid:"46204e64-835a-4279-a2f5-b8db98706f8b"
+},
+{
+anchors:12,
+formIndex:10800,
+location:"10,134",
+mediaOptions:14,
+mnemonic:"c",
+rolloverCursor:12,
+showClick:false,
+showFocus:false,
+size:"70,15",
+styleClass:"fidaction",
+tabSeq:-1,
+text:"Cancel",
+transparent:true,
+typeid:7,
+uuid:"4a6bcbdf-49ba-4f45-b730-069891e60a28"
+},
+{
+anchors:11,
+background:"#323a4b",
+formIndex:10300,
+location:"0,0",
+mediaOptions:6,
+showClick:false,
+showFocus:false,
+size:"310,28",
+tabSeq:-1,
+typeid:7,
+uuid:"86a1d519-279d-4a00-a21b-bbd78f124577"
+},
+{
+anchors:14,
+formIndex:10500,
+imageMediaID:"5100a0f7-e408-4698-b0a3-65059779b12b",
+location:"0,93",
+mediaOptions:6,
+showClick:false,
+showFocus:false,
+size:"310,17",
+tabSeq:-1,
+transparent:true,
+typeid:7,
+uuid:"8fe16515-f521-4769-b9d3-89ae285793c8"
+},
+{
+anchors:11,
+formIndex:10400,
+imageMediaID:"75106851-5fe4-493b-86db-616ebd8df83b",
+location:"0,28",
+mediaOptions:6,
+showClick:false,
+showFocus:false,
+size:"310,6",
+tabSeq:-1,
+transparent:true,
+typeid:7,
+uuid:"b48bc289-2a03-4f37-bef5-f67832933421"
+},
+{
+anchors:11,
+formIndex:10700,
+location:"10,5",
+mediaOptions:14,
+name:"header_text",
+showClick:false,
+showFocus:false,
+size:"288,25",
+styleClass:"heading1",
+tabSeq:-1,
+text:"Logging in...",
+transparent:true,
+typeid:7,
+uuid:"ba9745ae-d0e7-42bb-a793-b7c0006c56f3"
+},
+{
+height:110,
+partType:5,
+typeid:19,
+uuid:"c325fea1-64c4-4f9c-a431-6c5baca01cc2"
+},
+{
+anchors:6,
+formIndex:10600,
+location:"228,134",
+mediaOptions:14,
+mnemonic:"o",
+rolloverCursor:12,
+showClick:false,
+showFocus:false,
+size:"70,15",
+styleClass:"fidaction",
+tabSeq:-1,
+text:"OK",
+transparent:true,
+typeid:7,
+uuid:"cc364dc4-c9c9-4138-9a87-90a61700582e"
+}
+],
+name:"AC_P_login",
+navigatorID:"-1",
+onDeleteAllRecordsCmdMethodID:"-1",
+onDeleteRecordCmdMethodID:"-1",
+onDuplicateRecordCmdMethodID:"-1",
+onFindCmdMethodID:"-1",
+onHideMethodID:"1f99a295-e894-4cef-bf1b-4b2e24208a03",
+onInvertRecordsCmdMethodID:"-1",
+onNewRecordCmdMethodID:"-1",
+onNextRecordCmdMethodID:"-1",
+onOmitRecordCmdMethodID:"-1",
+onPreviousRecordCmdMethodID:"-1",
+onPrintPreviewCmdMethodID:"-1",
+onSearchCmdMethodID:"-1",
+onShowAllRecordsCmdMethodID:"-1",
+onShowMethodID:"8e1203e0-8b1f-4256-814a-df90001ac374",
+onShowOmittedRecordsCmdMethodID:"-1",
+onSortCmdMethodID:"-1",
+paperPrintScale:100,
+scrollbars:36,
+size:"310,110",
+styleClass:"workarea2",
+styleName:"_DATASUTRA_",
+typeid:3,
+uuid:"c98fb74d-58d8-4a2b-984c-401c415c84c1"

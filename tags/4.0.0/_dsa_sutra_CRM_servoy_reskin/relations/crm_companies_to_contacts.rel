@@ -1,0 +1,11 @@
+allowCreationRelatedRecords:true,
+deleteRelatedRecords:true,
+foreignDataSource:"db:/sutra_example/contacts",
+items:[
+{foreignColumnName:"company_id",primaryDataProviderID:"company_id",typeid:23,uuid:"f7cde083-e10d-4f52-a3fe-f0c6b906dd70"}
+],
+joinType:1,
+name:"crm_companies_to_contacts",
+primaryDataSource:"db:/sutra_example/companies",
+typeid:22,
+uuid:"0a9c46f1-f249-4a68-8517-15400b6bef6e"

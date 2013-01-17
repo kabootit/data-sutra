@@ -1,0 +1,12 @@
+addEmptyValue:1,
+customValues:"=
+>
+<
+>=
+<=
+!=
+like",
+name:"NAV_filter_operator",
+separator:" ",
+typeid:34,
+uuid:"ea216497-4de3-4aa4-b441-54d3772cdbaa"

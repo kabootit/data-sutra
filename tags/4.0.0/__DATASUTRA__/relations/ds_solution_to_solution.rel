@@ -1,0 +1,8 @@
+foreignDataSource:"db:/sutra/sutra_solution",
+items:[
+{foreignColumnName:"id_solution",primaryDataProviderID:"id_solution",typeid:23,uuid:"41f544e3-3836-4fa7-8768-346eeff0b15d"}
+],
+name:"ds_solution_to_solution",
+primaryDataSource:"db:/sutra/sutra_solution",
+typeid:22,
+uuid:"dc627d85-1e41-4045-8247-d6714ec1e41e"

@@ -1,0 +1,12 @@
+dataProviderID1:"saved",
+dataProviderID2:"visible",
+dataSource:"db:/sutra/sutra_valuelist",
+name:"CRM_company_types",
+returnDataProviders:1,
+separator:" ",
+showDataProviders:2,
+sortOptions:"order_by asc",
+typeid:34,
+useTableFilter:true,
+uuid:"e79ba578-be1b-4c0b-b9db-2e26f8db5131",
+valueListType:1

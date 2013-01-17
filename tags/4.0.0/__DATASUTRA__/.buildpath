@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<buildpath>
+	<buildpathentry excluding=".stp/|medias/" kind="src" path=""/>
+	<buildpathentry exported="true" kind="prj" path="/__datasutra__connector"/>
+	<buildpathentry exported="true" kind="prj" path="/__datasutra_authenticator"/>
+	<buildpathentry exported="true" kind="prj" path="/__datasutra_login"/>
+	<buildpathentry exported="true" kind="prj" path="/_ds_AC_access_control"/>
+	<buildpathentry exported="true" kind="prj" path="/_ds_CODE_resources"/>
+	<buildpathentry exported="true" kind="prj" path="/_ds_DEV_tools"/>
+	<buildpathentry exported="true" kind="prj" path="/_ds_MGR_resource_manager"/>
+	<buildpathentry exported="true" kind="prj" path="/_ds_NAV_engine"/>
+	<buildpathentry exported="true" kind="prj" path="/_ds_NSTL_installation"/>
+	<buildpathentry exported="true" kind="prj" path="/_dsa_sutra_TOOL_toolbar_sidebar"/>
+</buildpath>

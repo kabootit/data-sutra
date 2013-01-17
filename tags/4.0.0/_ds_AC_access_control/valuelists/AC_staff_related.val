@@ -1,0 +1,13 @@
+addEmptyValue:1,
+dataProviderID1:"id_staff",
+dataProviderID2:"name_last",
+dataProviderID3:"name_first",
+name:"AC_staff_related",
+relationName:"ac_access_user_to_access_staff__staff_by_org",
+returnDataProviders:1,
+separator:", ",
+showDataProviders:6,
+sortOptions:"name_last asc, name_first asc",
+typeid:34,
+uuid:"2c151785-a192-4ab6-9652-d0eec45f2e11",
+valueListType:1

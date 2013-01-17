@@ -1,0 +1,9 @@
+addEmptyValue:1,
+dataProviderID1:"id_action",
+dataProviderID2:"nav_name",
+name:"NAV_navigation_set",
+returnDataProviders:1,
+separator:" ",
+showDataProviders:1,
+typeid:34,
+uuid:"183c39d1-d0dc-4f87-aa05-6452e7e0f9f5"

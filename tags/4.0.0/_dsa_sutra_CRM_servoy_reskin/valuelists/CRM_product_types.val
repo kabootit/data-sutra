@@ -1,0 +1,13 @@
+addEmptyValue:1,
+dataProviderID1:"saved",
+dataProviderID2:"visible",
+dataSource:"db:/sutra/sutra_valuelist",
+name:"CRM_product_types",
+returnDataProviders:1,
+separator:" ",
+showDataProviders:2,
+sortOptions:"order_by asc",
+typeid:34,
+useTableFilter:true,
+uuid:"5bc2137e-99f7-4da3-8498-f82f69f2637c",
+valueListType:1
