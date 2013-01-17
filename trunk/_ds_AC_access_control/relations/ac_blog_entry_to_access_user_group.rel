@@ -1,9 +1,0 @@
-foreignDataSource:"db:/sutra/sutra_access_user_group",
-items:[
-{foreignColumnName:"id_group",primaryDataProviderID:"id_group",typeid:23,uuid:"1617a92a-0594-4bc1-b476-0903fac420c5"},
-{foreignColumnName:"flag_chosen",primaryDataProviderID:"globals.CODE_constant_1",typeid:23,uuid:"625b31a4-ded5-404b-a29b-2f6fece68b6d"}
-],
-name:"ac_blog_entry_to_access_user_group",
-primaryDataSource:"db:/sutra/sutra_blog_entry",
-typeid:22,
-uuid:"13248087-0760-41a7-b71c-f5a738873fdc"

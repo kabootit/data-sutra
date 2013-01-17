@@ -1,9 +1,0 @@
-allowParentDeleteWhenHavingRelatedRecords:false,
-foreignDataSource:"db:/sutra/sutra_access_log",
-items:[
-{foreignColumnName:"id_staff",primaryDataProviderID:"globals.AC_staff_selected",typeid:23,uuid:"3C186E60-DE8C-44A0-B05C-F7ADEB8E1089"}
-],
-name:"ac_access_log__staff",
-primaryDataSource:"db:/sutra/sutra_access_log",
-typeid:22,
-uuid:"02B6B7B4-6382-470B-80E3-761BC8E474D9"

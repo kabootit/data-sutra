@@ -1,9 +1,0 @@
-allowCreationRelatedRecords:true,
-foreignDataSource:"db:/sutra_example/contacts",
-items:[
-{foreignColumnName:"contact_id",primaryDataProviderID:"globals.CRM_contact_id",typeid:23,uuid:"01c692b5-05a5-40f7-8b4f-f81f6443f21f"}
-],
-name:"crm_gcurcontactid_to_contacts",
-primaryDataSource:"db:/sutra_example/contacts",
-typeid:22,
-uuid:"c6410200-41ba-4578-b6ca-34f35fe2ab5e"

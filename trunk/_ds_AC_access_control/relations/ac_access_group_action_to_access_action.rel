@@ -1,8 +1,0 @@
-foreignDataSource:"db:/sutra/sutra_access_action",
-items:[
-{foreignColumnName:"id_action",primaryDataProviderID:"id_action",typeid:23,uuid:"065a8892-b33e-492c-9f23-867d776e3629"}
-],
-name:"ac_access_group_action_to_access_action",
-primaryDataSource:"db:/sutra/sutra_access_group_action",
-typeid:22,
-uuid:"5e5fd564-dd8a-40a0-985f-d403f992c6fd"

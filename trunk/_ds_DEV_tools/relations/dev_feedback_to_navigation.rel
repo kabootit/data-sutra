@@ -1,8 +1,0 @@
-foreignDataSource:"db:/sutra/sutra_navigation",
-items:[
-{foreignColumnName:"id_navigation",primaryDataProviderID:"id_navigation",typeid:23,uuid:"89cca062-f046-43c5-9916-4eedcc06a114"}
-],
-name:"dev_feedback_to_navigation",
-primaryDataSource:"db:/sutra/sutra_feedback",
-typeid:22,
-uuid:"0f548e05-6565-4319-ac62-5591e1c2a080"

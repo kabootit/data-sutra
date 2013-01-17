@@ -1,9 +1,0 @@
-name:"DS_login",
-navigatorID:"-1",
-paperPrintScale:100,
-scrollbars:36,
-size:"0,170",
-styleName:"_DATASUTRA_",
-transparent:true,
-typeid:3,
-uuid:"59BBD479-46F2-44A6-B98F-FC9B58C1D0A8"

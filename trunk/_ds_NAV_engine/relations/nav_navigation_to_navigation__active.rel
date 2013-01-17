@@ -1,9 +1,0 @@
-allowParentDeleteWhenHavingRelatedRecords:false,
-foreignDataSource:"db:/sutra/sutra_navigation",
-items:[
-{foreignColumnName:"nav_status",primaryDataProviderID:"globals.NAV_constant_one",typeid:23,uuid:"9586d215-c05f-4894-8cf2-dd1b8d9ef814"}
-],
-name:"nav_navigation_to_navigation__active",
-primaryDataSource:"db:/sutra/sutra_navigation",
-typeid:22,
-uuid:"68f41672-d41f-4cdc-83f8-157872d505a3"

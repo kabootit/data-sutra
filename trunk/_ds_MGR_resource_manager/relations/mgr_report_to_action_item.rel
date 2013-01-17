@@ -1,8 +1,0 @@
-foreignDataSource:"db:/sutra/sutra_action_item",
-items:[
-{foreignColumnName:"id_report",primaryDataProviderID:"id_report",typeid:23,uuid:"7B0F3ABC-AE9B-4C32-8744-15E31BDF7537"}
-],
-name:"mgr_report_to_action_item",
-primaryDataSource:"db:/sutra/sutra_report",
-typeid:22,
-uuid:"3A75F9C6-5EB6-4B85-825F-E9E3DF1BBEA8"

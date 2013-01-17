@@ -1,8 +1,0 @@
-foreignDataSource:"db:/sutra/sutra_documentation",
-items:[
-{foreignColumnName:"id_documentation",primaryDataProviderID:"parent_id_documentation",typeid:23,uuid:"3EACDD9A-5C8C-4229-9B84-2FFC294297B8"}
-],
-name:"mgr_documentation_to_documentation__parent",
-primaryDataSource:"db:/sutra/sutra_documentation",
-typeid:22,
-uuid:"8911194D-E055-4985-86B9-5BC49343D191"

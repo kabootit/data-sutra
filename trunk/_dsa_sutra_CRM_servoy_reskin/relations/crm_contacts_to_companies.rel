@@ -1,9 +1,0 @@
-foreignDataSource:"db:/sutra_example/companies",
-items:[
-{foreignColumnName:"company_id",primaryDataProviderID:"company_id",typeid:23,uuid:"bae36623-5db1-47f6-8fdf-fa1825c882b2"}
-],
-joinType:1,
-name:"crm_contacts_to_companies",
-primaryDataSource:"db:/sutra_example/contacts",
-typeid:22,
-uuid:"49878e85-d6c8-4d54-84a4-12b834efc321"

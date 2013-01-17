@@ -1,8 +1,0 @@
-foreignDataSource:"db:/sutra/sutra_valuelist",
-items:[
-{foreignColumnName:"id_valuelist",primaryDataProviderID:"id_valuelist",typeid:23,uuid:"66ED1611-4F7E-4BF0-8113-E95D2C43626A"}
-],
-name:"ac_access_valuelist_to_valuelist",
-primaryDataSource:"db:/sutra/sutra_access_valuelist",
-typeid:22,
-uuid:"2872432D-C76E-4BE8-AC99-64D391644DB0"

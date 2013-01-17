@@ -1,9 +1,0 @@
-deleteRelatedRecords:true,
-foreignDataSource:"db:/sutra/sutra_control_navigation",
-items:[
-{foreignColumnName:"id_navigation",primaryDataProviderID:"id_navigation",typeid:23,uuid:"b8e6e272-0251-4ea7-a56b-d4bacabdfe6a"}
-],
-name:"ac_navigation_to_control_navigation",
-primaryDataSource:"db:/sutra/sutra_navigation",
-typeid:22,
-uuid:"0bdc3534-61e6-4886-86bd-5404d8a1ad22"

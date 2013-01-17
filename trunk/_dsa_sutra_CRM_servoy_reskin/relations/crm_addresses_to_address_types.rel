@@ -1,8 +1,0 @@
-foreignDataSource:"db:/sutra_example/address_types",
-items:[
-{foreignColumnName:"address_type_id",primaryDataProviderID:"address_type_id",typeid:23,uuid:"14a29136-8dee-40ea-9d7f-68c6dacc24b7"}
-],
-name:"crm_addresses_to_address_types",
-primaryDataSource:"db:/sutra_example/addresses",
-typeid:22,
-uuid:"b2c8b510-7503-4bf9-ac1b-fb18a121d75e"

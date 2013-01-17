@@ -1,9 +1,0 @@
-foreignDataSource:"db:/sutra/sutra_access_user_group",
-items:[
-{foreignColumnName:"id_user",primaryDataProviderID:"id_user",typeid:23,uuid:"0e458184-16ba-4dbd-81b4-e5b9f75b53bf"},
-{foreignColumnName:"flag_chosen",primaryDataProviderID:"globals.CODE_constant_1",typeid:23,uuid:"6a920b62-3360-43b7-9bbd-4b0b9a0d5ca3"}
-],
-name:"ac_access_user_to_access_user_group__selected",
-primaryDataSource:"db:/sutra/sutra_access_user",
-typeid:22,
-uuid:"cc9c8a5b-afa9-407a-ba8e-fe81e5ee1796"
