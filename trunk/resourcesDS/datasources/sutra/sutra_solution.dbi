@@ -320,6 +320,12 @@ name:"repository_node"
 },
 {
 allowNull:true,
+creationOrderIndex:72,
+dataType:4,
+name:"rewrite_webclient"
+},
+{
+allowNull:true,
 creationOrderIndex:4,
 dataType:4,
 name:"screen_height"
@@ -358,6 +364,7 @@ name:"solution_icon_blob"
 },
 {
 allowNull:true,
+compatibleColumnTypes:"[[3,19,2]]",
 creationOrderIndex:59,
 dataType:3,
 length:19,
