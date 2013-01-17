@@ -1,0 +1,10 @@
+allowCreationRelatedRecords:true,
+deleteRelatedRecords:true,
+foreignDataSource:"db:/sutra/sutra_list_display_item",
+items:[
+{foreignColumnName:"id_list_display",primaryDataProviderID:"id_list_display",typeid:23,uuid:"148e1800-bc7c-47fa-a7eb-b37b882a08c7"}
+],
+name:"nav_list_display_to_list_display_item",
+primaryDataSource:"db:/sutra/sutra_list_display",
+typeid:22,
+uuid:"6cea2040-5ec0-4bec-9600-517861ddbbdc"

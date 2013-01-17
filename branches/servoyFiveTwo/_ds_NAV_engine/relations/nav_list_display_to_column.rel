@@ -1,0 +1,9 @@
+foreignDataSource:"db:/sutra/sutra_column",
+items:[
+{foreignColumnName:"status_relation",operator:5,primaryDataProviderID:"globals.CODE_constant_1",typeid:23,uuid:"d8e05eae-dd4d-4bb3-b1fd-3e6698aaf925"},
+{foreignColumnName:"id_navigation_item",primaryDataProviderID:"id_navigation_item",typeid:23,uuid:"ecdd0689-8b50-4a89-a081-8ecc510bb8b5"}
+],
+name:"nav_list_display_to_column",
+primaryDataSource:"db:/sutra/sutra_list_display",
+typeid:22,
+uuid:"9128f9b0-0365-4178-a1e8-ff520fa9fb42"

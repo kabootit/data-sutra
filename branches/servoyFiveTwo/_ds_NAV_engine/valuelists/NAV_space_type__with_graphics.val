@@ -1,0 +1,19 @@
+addEmptyValue:1,
+customValues:"<html><body><img src=\"media:///space_standard.png\" align=\"middle\">&nbsp;Standard<\/body><\/html>|1
+<html><body><img src=\"media:///space_standard_flip.png\" align=\"middle\">&nbsp;Standard flip<\/body><\/html>|8
+<html><body><img src=\"media:///space_list.png\" align=\"middle\">&nbsp;List<\/body><\/html>|2
+<html><body><img src=\"media:///space_list_flip.png\" align=\"middle\">&nbsp;List flip<\/body><\/html>|9
+<html><body><img src=\"media:///space_vertical.png\" align=\"middle\">&nbsp;Vertical<\/body><\/html>|3
+<html><body><img src=\"media:///space_vertical_flip.png\" align=\"middle\">&nbsp;Vertical flip<\/body><\/html>|10
+<html><body><img src=\"media:///space_centered.png\" align=\"middle\">&nbsp;Centered<\/body><\/html>|4
+<html><body><img src=\"media:///space_centered_flip.png\" align=\"middle\">&nbsp;Centered flip<\/body><\/html>|11
+<html><body><img src=\"media:///space_classic.png\" align=\"middle\">&nbsp;Classic<\/body><\/html>|5
+<html><body><img src=\"media:///space_classic_flip.png\" align=\"middle\">&nbsp;Classic flip<\/body><\/html>|12
+<html><body><img src=\"media:///space_wide.png\" align=\"middle\">&nbsp;Wide<\/body><\/html>|6
+<html><body><img src=\"media:///space_wide_flip.png\" align=\"middle\">&nbsp;Wide flip<\/body><\/html>|13
+<html><body><img src=\"media:///space_workflow.png\" align=\"middle\">&nbsp;Workflow<\/body><\/html>|7
+<html><body><img src=\"media:///space_workflow_flip.png\" align=\"middle\">&nbsp;Workflow flip<\/body><\/html>|14",
+name:"NAV_space_type__with_graphics",
+separator:" ",
+typeid:34,
+uuid:"3be81c83-56aa-4916-a59f-348eaf4d6d24"

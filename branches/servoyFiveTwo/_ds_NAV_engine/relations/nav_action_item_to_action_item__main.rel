@@ -1,0 +1,12 @@
+allowCreationRelatedRecords:true,
+foreignDataSource:"db:/sutra/sutra_action_item",
+initialSort:"id_navigation_item asc, category asc, order_by asc",
+items:[
+{foreignColumnName:"category",primaryDataProviderID:"globals.NAV_action_item_category_filter",typeid:23,uuid:"55ca291c-ce6d-4d94-aa14-03f7619d8ad7"},
+{foreignColumnName:"id_action_item_parent",operator:1,primaryDataProviderID:"globals.CODE_constant_1",typeid:23,uuid:"63bfe97d-898b-4a63-91c4-231c1b1e1e02"},
+{foreignColumnName:"id_navigation_item",primaryDataProviderID:"id_navigation_item",typeid:23,uuid:"927a2951-ffb1-44d6-9588-684850c82f6b"}
+],
+name:"nav_action_item_to_action_item__main",
+primaryDataSource:"db:/sutra/sutra_action_item",
+typeid:22,
+uuid:"717d582d-ef66-40c2-96af-169dac40c9b2"

@@ -1,0 +1,11 @@
+dataProviderID1:"id_navigation",
+dataProviderID2:"nav_name",
+dataSource:"db:/sutra/sutra_navigation",
+name:"NAV_export_navsets",
+returnDataProviders:1,
+separator:" ",
+showDataProviders:2,
+sortOptions:"nav_name asc",
+typeid:34,
+uuid:"f440919b-6c0f-4b1c-8741-0c796f58fb1d",
+valueListType:1
