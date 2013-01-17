@@ -1,0 +1,7 @@
+addEmptyValue:1,
+customValues:"Celsius|C
+Fahrenheit|F",
+name:"TOOL_weather_units",
+separator:" ",
+typeid:34,
+uuid:"732efaaa-b06d-4884-b821-7f4b5e96a885"
