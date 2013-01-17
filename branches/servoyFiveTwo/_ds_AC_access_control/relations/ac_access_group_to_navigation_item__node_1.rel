@@ -1,0 +1,9 @@
+foreignDataSource:"db:/sutra/sutra_navigation_item",
+items:[
+{foreignColumnName:"id_navigation",primaryDataProviderID:"login_nav_set",typeid:23,uuid:"3432ffbb-5537-4ef8-ad5e-c16f3547bf33"},
+{foreignColumnName:"node_2",operator:1,primaryDataProviderID:"globals.CODE_constant_1",typeid:23,uuid:"d9a7b147-66ba-4ff8-8ac2-f035686f9bc9"}
+],
+name:"ac_access_group_to_navigation_item__node_1",
+primaryDataSource:"db:/sutra/sutra_access_group",
+typeid:22,
+uuid:"4aa31707-4b26-4c0a-8428-c16e345433c2"

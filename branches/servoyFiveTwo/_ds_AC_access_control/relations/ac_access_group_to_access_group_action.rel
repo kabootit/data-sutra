@@ -1,0 +1,10 @@
+allowCreationRelatedRecords:true,
+deleteRelatedRecords:true,
+foreignDataSource:"db:/sutra/sutra_access_group_action",
+items:[
+{foreignColumnName:"id_group",primaryDataProviderID:"id_group",typeid:23,uuid:"c7323053-0382-46fd-bc1d-04ee1dffa7e8"}
+],
+name:"ac_access_group_to_access_group_action",
+primaryDataSource:"db:/sutra/sutra_access_group",
+typeid:22,
+uuid:"f7c4b074-d067-41fa-b33a-40581260168c"

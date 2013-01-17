@@ -1,0 +1,8 @@
+foreignDataSource:"db:/sutra/sutra_blog",
+items:[
+{foreignColumnName:"id_blog",primaryDataProviderID:"id_blog",typeid:23,uuid:"3319e0cb-547c-4c41-acb8-157367cbf1df"}
+],
+name:"ac_blog_to_blog",
+primaryDataSource:"db:/sutra/sutra_blog",
+typeid:22,
+uuid:"175a6b82-e3ae-4369-a559-6e5c0aac65f3"
