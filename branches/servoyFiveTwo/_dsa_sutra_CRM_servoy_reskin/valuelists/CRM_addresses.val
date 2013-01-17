@@ -1,0 +1,12 @@
+dataProviderID1:"address_id",
+dataProviderID2:"city",
+dataProviderID3:"line_1",
+dataSource:"db:/sutra_example/addresses",
+name:"CRM_addresses",
+returnDataProviders:1,
+separator:" ",
+showDataProviders:6,
+sortOptions:"city asc, line_1 asc",
+typeid:34,
+uuid:"dd503948-f18e-4aec-a24b-3fcdc62eae19",
+valueListType:1

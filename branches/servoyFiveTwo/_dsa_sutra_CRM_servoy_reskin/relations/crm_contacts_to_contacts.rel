@@ -1,0 +1,8 @@
+foreignDataSource:"db:/sutra_example/contacts",
+items:[
+{foreignColumnName:"contact_id",primaryDataProviderID:"contact_id",typeid:23,uuid:"3f5c0d15-367a-4ce3-be0b-51f9b4fb918d"}
+],
+name:"crm_contacts_to_contacts",
+primaryDataSource:"db:/sutra_example/contacts",
+typeid:22,
+uuid:"df4b019c-3f22-40a8-8f09-9fbfaf554f20"

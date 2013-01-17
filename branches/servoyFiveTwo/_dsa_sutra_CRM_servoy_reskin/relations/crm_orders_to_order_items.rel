@@ -1,0 +1,11 @@
+allowCreationRelatedRecords:true,
+deleteRelatedRecords:true,
+foreignDataSource:"db:/sutra_example/order_items",
+items:[
+{foreignColumnName:"order_id",primaryDataProviderID:"order_id",typeid:23,uuid:"f12366bb-9ac1-464b-baeb-b1e92214fc5a"}
+],
+joinType:1,
+name:"crm_orders_to_order_items",
+primaryDataSource:"db:/sutra_example/orders",
+typeid:22,
+uuid:"284da1e0-fadd-4351-879d-1d99c9f026db"
