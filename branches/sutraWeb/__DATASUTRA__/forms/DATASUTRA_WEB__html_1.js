@@ -37,7 +37,7 @@ function FORM_on_show(firstShow, event) {
 			\
 			<p>- blades with Intel Xeon 5650 processors running at 2.67GHz<br>\
 			- 2.5" SAS harddrives in a raid 10 config<br>\
-			- 96 RAM per blade<br>\
+			- 96 GB RAM per blade<br>\
 			- gigabyte ethernet ports and an integrated LSI 1064e SAS controller<br>\
 			- located in St Paul, Minnesota at a highly secure and redundant hosting facility<br>\
 			</p>'

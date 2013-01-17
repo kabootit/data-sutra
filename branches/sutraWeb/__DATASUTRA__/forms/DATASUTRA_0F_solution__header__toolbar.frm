@@ -71,7 +71,7 @@ toolTipText:"<html>
 
   <\/head>
   <body>
-    Data Sutra v4.0rc3<br>Revision &#8805;700 <em>Unlocked<\/em><br><strike>Expires Jan 1, 2013<\/strike>
+    Data Sutra v4.0<br>Revision 992 <em>Unlocked<\/em><br>No expiry
   <\/body>
 <\/html>",
 transparent:true,

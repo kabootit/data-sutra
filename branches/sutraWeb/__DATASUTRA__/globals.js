@@ -2497,7 +2497,7 @@ if (plugins.sutra && plugins.sutra.executeFunction) {
 		//check if plugin has Fxion
 		if (plugins.sutra.getVersion) {
 			//check for version of plugin
-			if (plugins.sutra.getVersion() == '3.0.0 (unlocked)' && success) {
+			if (plugins.sutra.getVersion() == '4.0.0' && success) {
 				return true
 			}
 			//fail
