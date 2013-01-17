@@ -1,0 +1,13 @@
+columns:[
+{
+allowNull:false,
+autoEnterSubType:0,
+autoEnterType:2,
+creationOrderIndex:0,
+dataType:4,
+flags:1,
+name:"id_universal_list"
+}
+],
+name:"sutra_universal_list",
+tableType:0

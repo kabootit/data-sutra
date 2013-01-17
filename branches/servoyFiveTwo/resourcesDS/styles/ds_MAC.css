@@ -1,0 +1,1143 @@
+
+/*
+ *	TITLE    :	fw_MAC
+ *			  	
+ *	ABOUT    :	_FRAMEWORKS_ stylesheet for Macintosh
+ *			  	
+ *	MODIFIED :	Nov 2007 -- Troy Elliott, Data Mosaic
+ */
+
+/* default settings for button 
+button
+{
+	font-weight: bold;
+	font-family: Verdana;
+	font-size: 10pt;
+} */
+
+/* default settings for form */
+form
+{
+	background-color: #FFFFFF; 
+	border-style: solid;
+	border-width: 0px 0px 0px 0px; 
+}
+
+form.list
+{
+	background-color: #D1D7E2;
+	border-style: solid;
+	border-width: 0px 0px 0px 0px; 
+}
+
+form.workarea1
+{
+	background-color: #A1B0CF;
+	border-style: solid;
+	border-width: 0px 0px 0px 0px; 
+}
+
+form.workarea2
+{
+	background-color: #D1D7E2;
+	border-style: solid;
+	border-width: 0px 0px 0px 0px; 
+}
+
+/* default settings for field */
+field
+{
+	border-top-style: inset;
+	border-left-style: inset;
+	border-bottom-style: solid;
+	border-right-style: solid;
+	font-family: Verdana;
+	font-size: 11pt;
+	text-align: left;
+	margin: 1px 2px 0px 2px; 
+	font-weight: normal;
+	font-color: black;
+	background-color: white;
+}
+
+field.noedit
+{
+	border-style: solid;
+	border-width: 0px 0px 0px 0px;
+	margin: 1px 2px 0px 10px; 
+	background-color: #F1F1F1;
+}
+
+field.html
+{
+	border-style: inset;
+	font-family: Verdana;
+	font-size: 10pt;
+	text-align: left;
+	margin: 1px 2px 0px 2px; 
+	font-weight: normal;
+	font-color: black;
+	background-color: white;
+}
+
+field.bold
+{
+	font-weight: bold;
+}
+
+check
+{
+	text-align: left;
+}
+
+check.valuelist
+{
+	text-align: left;
+	border-style: inset;
+}
+	
+check.noborder
+{
+	text-align: left;
+	border-style: solid;
+	border-width: 0px 0px 0px 0px; 
+	margin: 2px 0px 0px 4px;
+}
+
+field.combobox 
+{ 
+	border-style: solid;
+	border-width: 0px 0px 0px 0px; 
+	margin: 0px 4px 0px 4px; 
+	background-color: white; 
+	text-align: left; 
+	font-family: Verdana;
+	font-size: 11pt;
+}
+
+field.date /* for some reason, calendars don't inherit border properties */
+{
+	border-style: inset;
+	margin-top: 2px;
+}
+
+field.noborder
+{
+	border-style: solid;
+	border-width: 0px 0px 0px 0px; 
+	margin: 0px 5px 0px 5px; 
+}
+
+/*	font size must be the same as customlist to avoid breaking html renderer	*/
+field.noborderhtml
+{
+	font-size: 10pt; 
+	border-style: solid;
+	border-width: 0px 0px 0px 0px; 
+}
+
+/*	leave fontsize the same as html for consistent popup appearance	*/
+field.noborder_popup
+{
+	font-size: 10pt; 
+	border-style: solid;
+	border-width: 0px 0px 0px 0px; 
+	margin: 0px 5px 0px 5px; 
+}
+
+field.noborderbold
+{
+	font-weight: bold;
+	border-style: solid;
+	border-width: 0px 0px 0px 0px; 
+}
+
+field.radio
+{
+	text-align: left;
+	border-style: inset;
+}
+
+field.textarea
+{
+	text-align: left;
+	border-style: inset;
+	margin: 1px 5px 0px 5px; 
+}
+
+field.textareanoborder
+{
+	text-align: left;
+	border-style: solid;
+	border-width: 0px 0px 0px 0px; 
+	margin: 1px 5px 0px 5px; 
+}
+
+/*	font size must be the same as universallist to avoid breaking html renderer	*/
+field.textareahtml
+{
+	font-size: 10pt; 
+	text-align: left;
+	border-style: inset;
+}
+
+field.alignright
+{
+	text-align: right;
+}
+
+field.aligncenter
+{
+	text-align: center;
+}
+
+field.alignjustify
+{
+	text-align: justify;
+}
+
+field.customlist
+{
+	font-size: 10pt; 
+	border-style: solid; 
+	border-width: 0px 0px 0px 0px; 
+	margin: 0px 0px 0px 0px; 
+}
+
+field.tableview
+{
+	
+}
+
+/* special case settings for field */
+field.navigationset
+{
+	border-width: 0px 0px 0px 0px; 
+	border-style: solid;
+	font-family: Tahoma;
+	font-size: 11pt;
+	background-color: white; 
+}
+
+label.tree {
+	border-style: solid;
+	border-width: 0px;
+	color: '#000000';
+	font-size: 10pt;
+	margin: 0px 0px 0px 2px;
+}
+
+label.tree_arrow_close {
+	background-image: 'media:///row_collapsed.png';
+	margin: 0px 0px 0px 0px;
+	text-align: right;
+}
+
+label.tree_arrow_open {
+	background-image: 'media:///row_expanded.png';
+	margin: 0px 0px 0px 0px;
+	text-align: right;
+}
+
+label.tree_header {
+	border-style: solid;
+	border-width: 0px;
+	color: '#4C4C4C';
+	font-size: 10pt;
+	font-weight: bold;
+	margin: 0px 0px 0px 4px;
+}
+
+label.tree_select {
+	border-style: solid;
+	border-width: 0px;
+	color: '#FFFFFF';
+	font-size: 10pt;
+	font-weight: bold;
+	margin: 0px 0px 0px 2px;
+}
+
+label.tree_select_arrow_close {
+	background-image: 'media:///row_collapsed_selected.png';
+	margin: 0px 0px 0px 0px;
+	text-align: right;
+}
+
+label.tree_select_arrow_open {
+	background-image: 'media:///row_expanded_selected.png';
+	margin: 0px 0px 0px 0px;
+	text-align: right;
+}
+
+field.fastfind
+{
+	border-style: solid;
+	border-width: 0px 0px 0px 0px; 
+	font-family: Tahoma;
+	margin: 0px 0px 0px 0px; 
+}
+
+field.universallist
+{
+	font-size: 10pt;
+}
+
+/* default settings for label */
+label
+{
+	border-style: none; 
+	font-weight: normal;
+	font-family: Verdana;
+	font-size: 11pt;
+	text-align: left; 
+	color: black; 
+}
+
+label.header
+{
+	font-weight: bold;
+	font-family: TrebuchetMS;
+	font-size: 11pt;
+	color: #333333;
+	text-align: center;
+	vertical-align: bottom;
+}
+
+label.list
+{
+	font-size: 10pt;
+}
+
+/* settings for label in workflow */
+label.white
+{
+	font-weight: normal;
+	color: white;
+	font-size: 11pt;
+}
+
+label.whitebold
+{
+	font-size: 10pt;
+	font-weight: bold;
+	color: white;
+}
+
+label.bold
+{
+	font-size: 10pt;
+	font-weight: bold;
+}
+
+label.heading1
+{
+	font-weight: bold;
+	font-family: TrebuchetMS;
+	font-size: 17pt;
+	text-align: center; 
+	color: white; 
+}
+
+label.heading2
+{
+	font-weight: bold;
+	font-family: Verdana;
+	font-size: 11pt;
+	text-align: left; 
+	color: #323A4B; 
+}
+
+label.heading3
+{
+	font-weight: normal;
+	font-family: Verdana;
+	font-size: 10pt;
+	text-align: left; 
+	color: #323A4B; 
+}
+
+label.subtotal
+{
+	font-size: 11pt;
+	text-align: right; 
+}
+
+label.button
+{
+	font-weight: bold;
+	font-family: Verdana;
+	font-size: 10pt;
+	text-align: center; 
+	color: #323A4B; 
+}
+
+label.tabpanel
+{
+	font-weight: bold;
+	font-size: 10pt;
+	text-align: left; 
+	color: #BD4803; 
+	border-style: solid;
+	border-width: 0px;
+	margin: 0px 2px 0px 4px;
+}
+
+label.fidaction
+{
+	border-style: none; 
+	font-weight: bold;
+	font-size: 12pt; 
+	font-family: TrebuchetMS; 
+	color: white; 
+	text-align: center; 
+}
+
+/* settings for label on the different tab sets */
+/* default, drawn, and standard also need to have appropriate tab change method updated */
+label.defaulttabselect
+{
+	border-color: #979897;
+	border-style: solid; 
+	border-top-width: 0px;
+	border-left-width: 1px;
+	border-bottom-width: 0px;
+	border-right-width: 1px;
+	font-weight: bold;
+	font-size: 10pt; 
+	font-family: Verdana; 
+	color: #333333; 
+	text-align: center; 
+	background-color: #D1D7E2;
+}
+
+label.defaulttabunselect
+{
+	border-color: #979897;
+	border-style: solid; 
+	border-top-width: 0px;
+	border-left-width: 1px;
+	border-bottom-width: 0px;
+	border-right-width: 1px;
+	font-weight: normal;
+	font-size: 10pt; 
+	font-family: Verdana; 
+	color: #333333;
+	text-align: center; 
+	background-color: #A1B0CF;
+}
+
+label.defaulttabunselectalt
+{
+	border-color: #979897;
+	border-style: solid; 
+	border-top-width: 0px;
+	border-left-width: 1px;
+	border-bottom-width: 0px;
+	border-right-width: 1px;
+	font-weight: bold;
+	font-size: 10pt; 
+	font-family: Verdana; 
+	color: #333333;
+	text-align: center; 
+	background-color: #FFFFFF;
+}
+
+label.drawntabselect
+{
+	border-style: none; 
+	font-weight: bold;
+	font-size: 10pt; 
+	font-family: Verdana; 
+	color: #323A4B;
+	text-align: center; 
+}
+
+label.drawntabunselect
+{
+	border-style: none; 
+	font-weight: bold;
+	font-size: 10pt; 
+	font-family: Verdana; 
+	color: white; 
+	text-align: center; 
+}
+
+label.standardtabselect
+{
+	border-style: none; 
+	font-weight: bold;
+	font-size: 11pt; 
+	font-family: Verdana; 
+	color: #333333; 
+	text-align: center; 
+}
+
+label.standardtabunselect
+{
+	border-style: none; 
+	font-weight: normal;
+	font-size: 11pt; 
+	font-family: Verdana; 
+	color: #333333; 
+	text-align: center; 
+}
+
+label.fancytabselect
+{
+	border-style: none; 
+	font-weight: bold;
+	font-size: 13pt; 
+	font-family: TrebuchetMS; 
+	color: #333333; 
+	text-align: center; 
+}
+
+label.fancytabunselect
+{
+	border-style: none; 
+	font-weight: bold;
+	font-size: 13pt; 
+	font-family: TrebuchetMS; 
+	color: white; 
+	text-align: center; 
+}
+
+/* special case settings for label */
+label.solutionheader
+{
+	font-weight: bold;
+	font-family: TrebuchetMS;
+	font-size: 20pt;
+	color: #404040;
+	text-align: center;
+}
+
+label.solutionsubheader
+{
+	font-weight: normal;
+	font-family: TrebuchetMS;
+	font-size: 11pt;
+	color: #333333;
+	text-align: center;
+}
+
+label.recordnavigator
+{
+	font-weight: normal;
+	font-family: TrebuchetMS;
+	font-size: 11pt;
+	color: #333333;
+	text-align: center;
+}
+
+label.solutionlogstatus
+{
+	font-weight: bold;
+	font-family: TrebuchetMS;
+	font-size: 10pt;
+	color: #333333;
+	text-align: right;
+}
+
+label.developerbutton
+{
+	border-color: #999999;
+	border-style: solid; 
+	border-top-width: 0px;
+	border-left-width: 1px;
+	border-bottom-width: 0px;
+	border-right-width: 1px;
+	font-weight: bold;
+	font-family: TrebuchetMS;
+	font-size: 10pt;
+	color: #333333;
+	text-align: center;
+}
+
+/* large colored boxes (in lieu of rectangles) */
+	label.color_primary /* not transparent */
+	{
+		border-style: solid;
+		border-width: 0px 0px 0px 0px;
+		background-color: #A1B0CF;
+	}
+	
+	label.color_secondary /* not transparent */
+	{
+		border-style: solid;
+		border-width: 0px 0px 0px 0px;
+		background-color: #D1D7E2;
+	}
+	
+	label.color_tertiary /* not transparent */
+	{
+		border-style: solid;
+		border-width: 0px 0px 0px 0px;
+		background-color: #E6E8EB;
+	}
+	
+	label.color_dark /* not transparent */
+	{
+		border-style: solid;
+		border-width: 0px 0px 0px 0px;
+		background-color: #323A4B;
+	}
+	
+	label.color_gray /* not transparent */
+	{
+		border-style: solid;
+		border-width: 0px 0px 0px 0px;
+		background-color: #D9D9D9;
+	}
+	
+	label.color_light /* not transparent */
+	{
+		border-style: solid;
+		border-width: 0px 0px 0px 0px;
+		background-color: #FDF7F6;
+	}
+	
+	label.color_white /* not transparent */
+	{
+		border-style: solid;
+		border-width: 0px 0px 0px 0px;
+		background-color: #FFFFFF;
+	}
+	
+	label.grid_primary_header /* not transparent */
+	{
+		border-style: solid;
+		border-width: 1px;
+		border-color: #647B95 #A1B0CF #999999 #A1B0CF;
+		background-color: #D1D7E2;
+	}
+	
+	label.grid_secondary_header /* not transparent */
+	{
+		border-style: solid;
+		border-width: 1px;
+		border-color: #647B95 #D1D7E2 #999999 #D1D7E2;
+		background-color: #FFFFFF;
+	}
+	
+	label.grid_sub_secondary /* not transparent */
+	{
+		border-style: solid;
+		border-width: 1px;
+		border-color: #647B95 #A1B0CF #D1D7E2 #A1B0CF;
+		background-color: #D1D7E2;
+	}
+
+/* default settings for tabpanel */
+	tabpanel
+	{
+		border-style: none; 
+	}
+	
+	tabpanel.grid_primary /* not transparent */
+	{
+		border-style: solid;
+		border-width: 1px 1px 3px 1px;
+		border-color: #647B95 #A1B0CF #A1B0CF #A1B0CF;
+	}
+	    
+	tabpanel.grid_secondary /* not transparent */
+	{
+		border-style: solid;
+		border-width: 1px 1px 3px 1px;
+		border-color: #647B95 #D1D7E2 #D1D7E2 #D1D7E2;
+	}
+
+/*    grid tabs    */
+    label.grid_pri_tab_select
+    {
+        font-size: 10pt;
+        font-weight: bold;
+        color: #BD4803;
+        border-style: solid;
+        border-width: 0px 0px 0px 0px;
+        margin: 0px 2px 0px 4px;
+        text-align: center;
+    }
+    
+    label.grid_pri_tab_unselect
+    {
+        font-size: 10pt;
+        font-weight: normal;
+        color: #323A4B;
+        border-style: solid;
+        border-width: 0px 0px 0px 0px;
+        margin: 0px 2px 0px 4px;
+        text-align: center;
+    }
+
+    label.grid_sec_tab_select
+    {
+        font-size: 10pt;
+        font-weight: bold;
+        color: #323A4B;
+        border-style: solid;
+        border-width: 0px 0px 0px 0px;
+        margin: 0px 2px 0px 4px;
+        text-align: center;
+    }
+    
+    label.grid_sec_tab_unselect
+    {
+        font-size: 10pt;
+        font-weight: normal;
+        color: #BD4803;
+        border-style: solid;
+        border-width: 0px 0px 0px 0px;
+        margin: 0px 2px 0px 4px;
+        text-align: center;
+    }
+    
+    label.grid_tab_divider
+    {
+        border-color: #323A4B;
+        border-style: solid;
+        border-width: 0px 1px 0px 0px;
+    }
+
+/* standard table */
+	field.standard_table /* transparent */
+	{
+		border-style: solid;
+		border-width: 0px 0px 1px 1px;
+		border-color: #647B95;
+		margin: 1px 2px 0px 4px;
+	}
+
+	field.standard_table_textarea /* (not) transparent */
+	{
+		border-style: solid;
+		border-width: 0px 0px 1px 1px;
+		border-color: #647B95;
+		margin: 3px 2px 0px 4px;
+		background-color: #FFFFFF;
+	}
+	
+	field.standard_table_htmlarea /* (not) transparent */
+	{
+		font-size: 10pt; 
+		border-style: solid;
+		border-width: 0px 0px 1px 1px;
+		border-color: #647B95;
+		margin: 4px 2px 0px 4px;
+		background-color: #FFFFFF;
+	}
+	
+	field.standard_table_noedit /* not transparent */
+	{
+		border-style: solid;
+		border-width: 0px 0px 1px 1px;
+		border-color: #647B95;
+		margin: 0px 2px 0px 4px;
+		background-color: #F1F1F1;
+	}
+	
+	field.standard_table_textarea_noedit /* not transparent */
+	{
+		border-style: solid;
+		border-width: 0px 0px 1px 1px;
+		border-color: #647B95;
+		margin: 4px 2px 0px 4px;
+		background-color: #F1F1F1;
+	}
+	
+	field.standard_table_htmlarea_noedit /* not transparent */
+	{
+		font-size: 10pt; 
+		border-style: solid;
+		border-width: 0px 0px 1px 1px;
+		border-color: #647B95;
+		margin: 4px 2px 0px 4px;
+		background-color: #F1F1F1;
+	}
+	
+	field.standard_table_bottom /* transparent */
+	{
+		border-style: solid;
+		border-width: 0px 0px 0px 1px;
+		border-color: #647B95;
+		margin: 0px 2px 0px 4px;
+	}
+	
+	field.standard_table_textarea_bottom /* (not) transparent */
+	{
+		border-style: solid;
+		border-width: 0px 0px 0px 1px;
+		border-color: #647B95;
+		margin: 3px 2px 0px 4px;
+		background-color: #FFFFFF;
+	}
+	
+	field.standard_table_htmlarea_bottom /* (not) transparent */
+	{
+		font-size: 10pt; 
+		border-style: solid;
+		border-width: 0px 0px 0px 1px;
+		border-color: #647B95;
+		margin: 3px 2px 0px 4px;
+		background-color: #FFFFFF;
+	}
+
+	field.standard_table_bottom_noedit /* not transparent */
+	{
+		border-style: solid;
+		border-width: 0px 0px 0px 1px;
+		border-color: #647B95;
+		margin: 0px 2px 0px 4px;
+		background-color: #F1F1F1;
+	}
+
+	field.standard_table_textarea_bottom_noedit /* not transparent */
+	{
+		border-style: solid;
+		border-width: 0px 0px 0px 1px;
+		border-color: #647B95;
+		margin: 4px 2px 0px 4px;
+		background-color: #F1F1F1;
+	}
+	
+	field.standard_table_htmlarea_bottom_noedit /* not transparent */
+	{
+		font-size: 10pt; 
+		border-style: solid;
+		border-width: 0px 0px 0px 1px;
+		border-color: #647B95;
+		margin: 4px 2px 0px 4px;
+		background-color: #F1F1F1;
+	}
+
+	label.standard_table /* transparent */
+	{
+		font-size: 11pt;
+		font-weight: normal;
+		color: #787878;
+		border-style: solid;
+		border-width: 0px 0px 1px 0px;
+		border-color: #647B95;
+		margin: 0px 2px 0px 4px;
+	}
+	
+	
+	label.standard_table_category /* transparent */
+	{
+		font-size: 10pt;
+		font-weight: bold;
+		color: #BD4803;
+		border-style: solid;
+		border-width: 0px 0px 1px 0px;
+		border-color: #647B95;
+		margin: 0px 2px 0px 6px;
+	}
+	
+	
+	label.standard_table_bottom /* transparent */
+	{
+		font-size: 11pt;
+		font-weight: normal;
+		color: #787878;
+		border-style: solid;
+		border-width: 0px 0px 0px 0px;
+		border-color: #647B95;
+		margin: 0px 2px 0px 4px;
+	}
+
+	label.standard_table_indent /* transparent */
+	{
+		font-size: 11pt;
+		font-weight: normal;
+		color: #787878;
+		border-style: solid;
+		border-width: 0px 0px 1px 0px;
+		border-color: #647B95;
+		margin: 0px 2px 0px 10px;
+	}
+	
+	label.standard_table_indent_bottom /* transparent */
+	{
+		font-size: 11pt;
+		font-weight: normal;
+		color: #787878;
+		border-style: solid;
+		border-width: 0px 0px 0px 0px;
+		border-color: #647B95;
+		margin: 0px 2px 0px 10px;
+	}
+	
+	check.standard_table		/* must have value list assigned */
+	{
+		text-align: left;
+		border-color: #647B95;
+		border-style: solid; 
+		border-width: 0px 0px 1px 1px;
+	}
+	
+	check.standard_table_bottom		/* must have value list assigned */
+	{
+		text-align: left;
+		border-color: #647B95;
+		border-style: solid; 
+		border-width: 0px 0px 0px 1px;
+	}
+	
+	label.standard_table_check /* transparent */
+	{
+		border-style: solid;
+		border-width: 0px 0px 1px 1px;
+		border-color: #647B95;
+	}
+
+	label.standard_table_check_noedit /* not transparent */
+	{
+		border-style: solid;
+		border-width: 0px 0px 1px 1px;
+		border-color: #647B95;
+		background-color: #F1F1F1;
+	}
+
+	label.standard_table_check_bottom /* transparent */
+	{
+		border-style: solid;
+		border-width: 0px 0px 0px 1px;
+		border-color: #647B95;
+	}
+
+	label.standard_table_check_bottom_noedit /* not transparent */
+	{
+		border-style: solid;
+		border-width: 0px 0px 0px 1px;
+		border-color: #647B95;
+		background-color: #F1F1F1;
+	}
+	
+
+/* bold table */
+	field.bold_table /* transparent */
+	{
+		font-weight: bold;
+		border-style: solid;
+		border-width: 0px 0px 1px 1px;
+		border-color: #647B95;
+		margin: 1px 2px 0px 4px;
+	}
+
+	field.bold_table_textarea /* (not) transparent */
+	{
+		font-weight: bold;
+		border-style: solid;
+		border-width: 0px 0px 1px 1px;
+		border-color: #647B95;
+		margin: 3px 2px 0px 4px;
+		background-color: #FFFFFF;
+	}
+
+	field.bold_table_htmlarea /* (not) transparent */
+	{
+		font-size: 10pt; 
+		font-weight: bold;
+		border-style: solid;
+		border-width: 0px 0px 1px 1px;
+		border-color: #647B95;
+		margin: 4px 2px 0px 4px;
+		background-color: #FFFFFF;
+	}
+	
+	field.bold_table_noedit /* not transparent */
+	{
+		font-weight: bold;
+		border-style: solid;
+		border-width: 0px 0px 1px 1px;
+		border-color: #647B95;
+		margin: 0px 2px 0px 4px;
+		background-color: #F1F1F1;
+	}
+	
+	field.bold_table_textarea_noedit /* not transparent */
+	{
+		font-weight: bold;
+		border-style: solid;
+		border-width: 0px 0px 1px 1px;
+		border-color: #647B95;
+		margin: 4px 2px 0px 4px;
+		background-color: #F1F1F1;
+	}
+		
+	field.bold_table_htmlarea_noedit /* not transparent */
+	{
+		font-size: 10pt; 
+		font-weight: bold;
+		border-style: solid;
+		border-width: 0px 0px 1px 1px;
+		border-color: #647B95;
+		margin: 4px 2px 0px 4px;
+		background-color: #F1F1F1;
+	}
+
+	field.bold_table_bottom /* transparent */
+	{
+		font-weight: bold;
+		border-style: solid;
+		border-width: 0px 0px 0px 1px;
+		border-color: #647B95;
+		margin: 0px 2px 0px 4px;
+	}
+	
+	field.bold_table_textarea_bottom /* (not) transparent */
+	{
+		font-weight: bold;
+		border-style: solid;
+		border-width: 0px 0px 0px 1px;
+		border-color: #647B95;
+		margin: 3px 2px 0px 4px;
+		background-color: #FFFFFF;
+	}
+	
+	field.bold_table_htmlarea_bottom /* (not) transparent */
+	{
+		font-size: 10pt; 
+		font-weight: bold;
+		border-style: solid;
+		border-width: 0px 0px 0px 1px;
+		border-color: #647B95;
+		margin: 3px 2px 0px 4px;
+		background-color: #FFFFFF;
+	}
+
+	field.bold_table_bottom_noedit /* not transparent */
+	{
+		font-weight: bold;
+		border-style: solid;
+		border-width: 0px 0px 0px 1px;
+		border-color: #647B95;
+		margin: 0px 2px 0px 4px;
+		background-color: #F1F1F1;
+	}
+
+	field.bold_table_textarea_bottom_noedit /* not transparent */
+	{
+		font-weight: bold;
+		border-style: solid;
+		border-width: 0px 0px 0px 1px;
+		border-color: #647B95;
+		margin: 4px 2px 0px 4px;
+		background-color: #F1F1F1;
+	}
+	
+	field.bold_table_htmlarea_bottom_noedit /* not transparent */
+	{
+		font-size: 10pt; 
+		font-weight: bold;
+		border-style: solid;
+		border-width: 0px 0px 0px 1px;
+		border-color: #647B95;
+		margin: 4px 2px 0px 4px;
+		background-color: #F1F1F1;
+	}
+
+	label.bold_table /* transparent */
+	{
+		font-size: 11pt;
+		font-weight: bold;
+		color: #787878;
+		border-style: solid;
+		border-width: 0px 0px 1px 0px;
+		border-color: #647B95;
+		margin: 0px 2px 0px 4px;
+	}
+	
+	
+	label.bold_table_category /* transparent */
+	{
+		font-size: 10pt;
+		font-weight: bold;
+		color: #BD4803;
+		border-style: solid;
+		border-width: 0px 0px 1px 0px;
+		border-color: #647B95;
+		margin: 0px 2px 0px 6px;
+	}
+	
+	
+	label.bold_table_bottom /* transparent */
+	{
+		font-size: 11pt;
+		font-weight: bold;
+		color: #787878;
+		border-style: solid;
+		border-width: 0px 0px 0px 0px;
+		border-color: #647B95;
+		margin: 0px 2px 0px 4px;
+	}
+
+	label.bold_table_indent /* transparent */
+	{
+		font-size: 11pt;
+		font-weight: bold;
+		color: #787878;
+		border-style: solid;
+		border-width: 0px 0px 1px 0px;
+		border-color: #647B95;
+		margin: 0px 2px 0px 10px;
+	}
+	
+	label.bold_table_indent_bottom /* transparent */
+	{
+		font-size: 11pt;
+		font-weight: bold;
+		color: #787878;
+		border-style: solid;
+		border-width: 0px 0px 0px 0px;
+		border-color: #647B95;
+		margin: 0px 2px 0px 10px;
+	}
+	
+	check.bold_table		/* must have value list assigned */
+	{
+		text-align: left;
+		border-color: #647B95;
+		border-style: solid; 
+		border-width: 0px 0px 1px 1px;
+	}
+	
+	check.bold_table_bottom		/* must have value list assigned */
+	{
+		text-align: left;
+		border-color: #647B95;
+		border-style: solid; 
+		border-width: 0px 0px 0px 1px;
+	}
+	
+	label.bold_table_check /* transparent */
+	{
+		border-style: solid;
+		border-width: 0px 0px 1px 1px;
+		border-color: #647B95;
+	}
+
+	label.bold_table_check_noedit /* not transparent */
+	{
+		border-style: solid;
+		border-width: 0px 0px 1px 1px;
+		border-color: #647B95;
+		background-color: #F1F1F1;
+	}
+
+	label.bold_table_check_bottom /* transparent */
+	{
+		border-style: solid;
+		border-width: 0px 0px 0px 1px;
+		border-color: #647B95;
+	}
+
+	label.bold_table_check_bottom_noedit /* not transparent */
+	{
+		border-style: solid;
+		border-width: 0px 0px 0px 1px;
+		border-color: #647B95;
+		background-color: #F1F1F1;
+	}
+	

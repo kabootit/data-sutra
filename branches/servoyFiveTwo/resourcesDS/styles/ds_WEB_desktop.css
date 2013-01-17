@@ -1,0 +1,552 @@
+/**
+ *	TITLE    :	ds_WEB_desktop
+ *			  	
+ *	ABOUT    :	Data Sutra stylesheet for Web
+ */
+
+button {
+}
+
+portal {
+}
+
+form {
+	background-color: #FFFFFF;
+	border: 0px solid;
+}
+
+form.list {
+	background-color: #D1D7E2;
+}
+
+form.workarea1 {
+	background-color: #A1B0CF;
+}
+
+form.workarea2 {
+	background-color: #D1D7E2;
+}
+
+label, button, field, combobox, check, radio {
+	font-family: Verdana,'Helvetica Neue', Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	border: 0px solid;
+	text-align: left;
+	font-color: black;
+	color: #000;
+}
+
+field, field.date {
+	background-color: #FFF;
+	border: 2px ridge #FFF;
+	margin: 1px 2px 0px 2px;
+}
+
+field.alignright, label.subtotal {
+	text-align: right;
+}
+
+field.aligncenter {
+	text-align: center;
+}
+
+field.alignjustify {
+	text-align: justify;
+}
+
+field.bold {
+	font-weight: bold;
+}
+
+field.customlist, field.fastfind, field.navigationset, field.noborder, field.noborderhtml, field.noborderbold, field.nobordertextarea {
+	border: 0px solid;
+	margin: 0px 5px 0px 5px; 
+}
+
+field.fastfind {
+	font-family: Tahoma;
+	margin: 0px 0px 0px 0px;
+}
+
+field.customlist, field.noborderhtml {
+	margin: 0px 0px 0px 0px; 
+}
+
+field.navigationset {
+	font-family: Tahoma;
+	background-color: white;
+}
+
+field.noborderbold {
+	font-weight: bold;
+}
+
+field.noedit {
+	margin: 1px 2px 0px 10px; 
+	background-color: #F1F1F1;
+}
+
+field.html, field.textarea, field.nobordertextarea {
+	margin: 1px 5px 0px 5px;
+}
+
+field.tableview {
+	
+}
+
+field.textarea, field.textareahtml {
+	margin: 1px 5px 0px 5px;
+}
+
+field.universallist {
+/*	font-size: 10pt;*/
+}
+
+check {
+	text-align: center;
+}
+
+check.valuelist {
+	text-align: left;
+	border: 2px ridge #FFF;
+}
+
+check.noborder {
+	text-align: left;
+	margin: 2px 0px 0px 4px;
+	border: 0px solid;
+}
+
+combobox {
+	background-color: #FFF;
+	margin: 0px 4px 0px 4px;
+}
+
+radio {
+	border: 2px ridge #FFF;
+}
+
+listbox {
+}
+
+label {
+	text-align: left; 
+	color: black; 
+}
+
+label.bold, label.whitebold {
+	font-weight: bold;
+}
+
+label.button {
+	font-weight: bold;
+	/*font-size: 10pt;*/
+	text-align: center; 
+	color: #323A4B;
+}
+
+label.developerbutton {
+	color: #333333;
+	font-family: TrebuchetMS;
+	font-size: 8px;
+	font-weight: bold;
+	text-align: center;
+	border: 1px solid #999999;
+	border-top-width: 0px;
+	border-bottom-width: 0px;
+}
+
+label.fidaction {
+	font-weight: bold;
+	font-size: 10px; 
+	font-family: TrebuchetMS; 
+	color: white; 
+	text-align: center; 
+}
+
+label.header {
+	font-weight: bold;
+	font-family: TrebuchetMS;
+	color: #333333;
+	text-align: center;
+	vertical-align: bottom;
+}
+
+label.heading1 {
+	font-weight: bold;
+	font-family: TrebuchetMS;
+	font-size: 12px;
+	text-align: center;
+	color: white;
+}
+
+label.heading2 {
+	font-weight: bold;
+	color: #323A4B; 
+}
+
+label.heading3 {
+	font-size: 8px;
+	color: #323A4B; 
+}
+
+label.list {
+	font-size: 8.5px;
+}
+
+label.recordnavigator, label.solutionlogstatus, label.solutionsubheader {
+	font-family: TrebuchetMS;
+	color: #333333;
+	text-align: center;
+}
+
+label.solutionheader {
+	font-weight: bold;
+	font-family: TrebuchetMS;
+	font-size: 14px;
+	color: #404040;
+	text-align: center;
+}
+
+label.solutionlogstatus {
+	font-weight: bold;
+	font-size: 8px;
+	text-align: right;
+}
+
+label.tabpanel {
+	font-weight: bold;
+	font-size: 8px;
+	color: #BD4803;
+	margin: 0px 2px 0px 6px;
+}
+
+label.valuelist-hack {
+	background-color: #FFF;
+	border: 2px ridge #FFF;
+}
+
+label.white, label.whitebold {
+	color: white;
+}
+
+/* colors */
+label.color_primary {
+	background-color: #A1B0CF;
+}
+
+label.color_secondary {
+	background-color: #D1D7E2;
+}
+
+label.color_tertiary {
+	background-color: #E6E8EB;
+}
+
+label.color_dark {
+	background-color: #323A4B;
+}
+
+label.color_gray {
+	background-color: #D9D9D9;
+}
+
+label.color_light {
+	background-color: #FDF7F6;
+}
+
+label.color_white {
+	background-color: #FFFFFF;
+}
+
+/* tree styling for navigation item list */
+label.tree, label.tree_header, label.tree_arrow_close, label.tree_arrow_open,  
+label.tree_select, label.tree_select_arrow_close, label.tree_select_arrow_open {
+	margin: 0px 0px 0px 0px;
+	font-size: 9px;
+}
+
+label.tree {
+	margin: 0px 0px 0px 2px;
+}
+
+label.tree_arrow_close {
+	background-image: 'media:///row_collapsed.png';
+	text-align: right;
+}
+
+label.tree_arrow_open {
+	background-image: 'media:///row_expanded.png';
+	text-align: right;
+}
+
+label.tree_header {
+	color: #4C4C4C;
+	font-weight: bold;
+	margin: 0px 0px 0px 4px;
+}
+
+label.tree_select {
+	color: #FFFFFF;
+	font-weight: bold;
+	margin: 0px 0px 0px 2px;
+}
+
+label.tree_select_arrow_close {
+	background-image: 'media:///row_collapsed_selected.png';
+	text-align: right;
+}
+
+label.tree_select_arrow_open {
+	background-image: 'media:///row_expanded_selected.png';
+	text-align: right;
+}
+
+/* row background */
+odd, even, selected {
+	background-color: #F7F7FA;
+}
+
+odd {
+	background-color: #FFFFFF;
+}
+
+even {
+	background-color: #F7F8EF;
+}
+
+selected {
+	background-color: #BED7F7;
+}
+
+/* grid view */
+field.tableview, check.tableview, radio.tableview, listbox.tableview, 
+combobox.tableview, label.tableview, button.tableview {
+	border-style: dotted;
+	border-width: 1px;
+	/*border-bottom: 1px dotted #CBCBCB*/;
+}
+
+label.tableview {
+	margin: 1px 0px 0px 0px; 
+}
+
+/* tab panel */
+tabpanel {
+	border: 0px solid;
+}
+
+tabpanel.grid_primary {
+	border: 1px solid #A1B0CF;
+	border-bottom-width: 3px;
+	border-top-color: #647B95;
+}
+
+tabpanel.grid_secondary {
+	border: 1px solid #D1D7E2;
+	border-bottom-width: 3px;
+	border-top-color: #647B95;
+}
+
+/* settings for label on custom tab controllers */
+label.grid_pri_tab_select, label.grid_pri_tab_unselect, label.grid_sec_tab_select, label.grid_sec_tab_unselect {
+	font-size: 8px;
+	text-align: center;
+	vertical-align: top;
+}
+
+label.grid_pri_tab_select {
+	font-weight: bold;
+	color: #BD4803;
+}
+
+label.grid_pri_tab_unselect {
+	color: #323A4B;
+}
+
+label.grid_sec_tab_select {
+	font-weight: bold;
+	color: #323A4B;
+}
+
+label.grid_sec_tab_unselect {
+	color: #BD4803;
+}
+
+label.grid_tab_divider {
+	border-color: #323A4B;
+	border-style: solid;
+	border-width: 0px 1px 0px 0px;
+}
+
+label.defaulttabselect, label.defaulttabunselect, label.defaulttabunselectalt {
+	background-color: #D1D7E2;
+	color: #333333; 
+	font-weight: bold;
+	text-align: center; 
+	border: 1px solid #979897;
+	border-top-width: 0px;
+	border-bottom-width: 0px;
+}
+
+label.defaulttabunselect {
+	background-color: #A1B0CF;
+	font-weight: normal;
+}
+
+label.defaulttabunselectalt {
+	background-color: #FFFFFF;
+}
+
+label.drawntabselect, label.drawntabunselect {
+	font-weight: bold;
+	color: #323A4B;
+	text-align: center; 
+}
+
+label.drawntabunselect {
+	color: white;
+}
+
+label.standardtabselect, label.standardtabunselect {
+	font-weight: bold;
+	color: #333333; 
+	text-align: center; 
+}
+
+label.standardtabunselect {
+	font-weight: normal;
+}
+
+label.fancytabselect, label.fancytabunselect {
+	font-weight: bold;
+	font-size: 9px; 
+	font-family: TrebuchetMS; 
+	color: #333333; 
+	text-align: center; 
+}
+
+label.fancytabunselect {
+	color: white;
+}
+
+label.grid_primary_header, label.grid_secondary_header, label.grid_sub_secondary {
+	border-style: solid;
+	border-width: 1px;
+	border-color: #647B95 #A1B0CF #999999 #A1B0CF;
+	background-color: #D1D7E2;
+}
+
+label.grid_secondary_header {
+	border-color: #647B95 #D1D7E2 #999999 #D1D7E2;
+	background-color: #FFFFFF;
+}
+
+label.grid_sub_secondary {
+	border-color: #647B95 #A1B0CF #D1D7E2 #A1B0CF;
+}
+
+/* standard table and bold table grid form pattern*/
+field.standard_table, check.standard_table, combobox.standard_table, 
+radio.standard_table, listbox.standard_table, button.standard_table, 
+field.standard_table_textarea, field.standard_table_htmlarea, 
+field.standard_table_bottom, check.standard_table_bottom, combobox.standard_table_bottom, 
+radio.standard_table_bottom, listbox.standard_table_bottom, button.standard_table_bottom, 
+field.standard_table_textarea_bottom, field.standard_table_htmlarea_bottom,
+
+field.bold_table, check.bold_table, combobox.bold_table, 
+radio.bold_table, listbox.bold_table, button.bold_table, 
+field.bold_table_textarea, field.bold_table_htmlarea, 
+field.bold_table_bottom, check.bold_table_bottom, combobox.bold_table_bottom, 
+radio.bold_table_bottom, listbox.bold_table_bottom, button.bold_table_bottom, 
+field.bold_table_textarea_bottom, field.bold_table_htmlarea_bottom {
+	border-style: solid;
+	border-width: 0px 0px 1px 1px;
+	border-color: #647B95;
+	margin: 1px 2px 0px 4px;
+	background-color: #F1F1F1;
+}
+
+field.bold_table, check.bold_table, combobox.bold_table, 
+radio.bold_table, listbox.bold_table, button.bold_table, 
+field.bold_table_textarea, field.bold_table_htmlarea, 
+field.bold_table_bottom, check.bold_table_bottom, combobox.bold_table_bottom, 
+radio.bold_table_bottom, listbox.bold_table_bottom, button.bold_table_bottom, 
+field.bold_table_textarea_bottom, field.bold_table_htmlarea_bottom {
+	font-weight: bold;
+}
+
+
+field.standard_table, check.standard_table, combobox.standard_table, 
+radio.standard_table, listbox.standard_table, button.standard_table,
+
+field.bold_table, check.bold_table, combobox.bold_table, 
+radio.bold_table, listbox.bold_table, button.bold_table {
+}
+
+field.standard_table_textarea, field.standard_table_textarea_bottom, 
+
+field.bold_table_textarea, field.bold_table_textarea_bottom {
+	margin: 3px 2px 0px 4px;
+}
+
+field.standard_table_htmlarea, field.standard_table_htmlarea_bottom, 
+
+field.bold_table_htmlarea, field.bold_table_htmlarea_bottom {
+	margin: 4px 2px 0px 4px;
+}
+
+field.standard_table_bottom, check.standard_table_bottom, combobox.standard_table_bottom, 
+radio.standard_table_bottom, listbox.standard_table_bottom, button.standard_table_bottom, 
+field.standard_table_textarea_bottom, field.standard_table_htmlarea_bottom,
+
+field.bold_table_bottom, check.bold_table_bottom, combobox.bold_table_bottom, 
+radio.bold_table_bottom, listbox.bold_table_bottom, button.bold_table_bottom, 
+field.bold_table_textarea_bottom, field.bold_table_htmlarea_bottom {
+	border-width: 0px 0px 0px 1px;
+}
+
+label.standard_table_category, label.standard_table, label.standard_table_indent, 
+label.standard_table_bottom, label.standard_table_indent_bottom, 
+
+label.bold_table_category, label.bold_table, label.bold_table_indent, 
+label.bold_table_bottom, label.bold_table_indent_bottom {
+	color: #787878;
+	border-color: #647B95;
+	border-style: solid;
+	border-width: 0px 0px 1px 0px;
+	margin: 0px 2px 0px 4px;
+}
+
+label.bold_table_category, label.bold_table, label.bold_table_indent, 
+label.bold_table_bottom, label.bold_table_indent_bottom {
+	font-weight: bold;
+}
+
+label.standard_table_category, label.bold_table_category {
+	font-weight: bold;
+	color: #BD4803;
+}
+
+label.standard_table_indent, label.standard_table_indent_bottom,
+ 
+label.bold_table_indent, label.bold_table_indent_bottom  {
+	margin: 0px 2px 0px 10px;
+}
+
+label.standard_table_bottom, label.standard_table_indent_bottom, 
+label.bold_table_bottom, label.bold_table_indent_bottom  {
+	border-width: 0px 0px 0px 0px;
+}
+
+label.standard_table_check, label.standard_table_check_bottom, 
+label.bold_table_check, label.bold_table_check_bottom  {
+	border-style: solid;
+	border-width: 0px 0px 1px 1px;
+	border-color: #647B95;
+	background-color: #F1F1F1;
+}
+
+label.standard_table_check_bottom, label.bold_table_check_bottom {
+	border-width: 0px 0px 0px 1px;
+}
