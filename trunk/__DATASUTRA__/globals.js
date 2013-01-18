@@ -5677,7 +5677,9 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 //			}
 			itemID = solutionPrefs.config.currentFormID
 			
-			plugins.WebClientUtils.executeClientSideJS('window.parent.routerDelay(null,"' + navigationPrefs.byNavItemID[itemID]._about_ + '","' + getURL(navigationPrefs.byNavItemID[itemID].path) + '",' + delay + ');')
+			if (solutionPrefs.config.currentFormID) {
+				plugins.WebClientUtils.executeClientSideJS('window.parent.routerDelay(null,"' + navigationPrefs.byNavItemID[itemID]._about_ + '","' + getURL(navigationPrefs.byNavItemID[itemID].path) + '",' + delay + ');')
+			}
 		}
 		else {
 			//actual login form shown as result of client starting up first time, this is just to recenter if called subsequent times
