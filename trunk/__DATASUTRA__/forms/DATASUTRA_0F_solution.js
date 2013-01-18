@@ -264,7 +264,7 @@ function FORM_setup(baseForm,prefForm) {
 		//login form
 		forms.AC_R__login.elements.tab_login.tabIndex = 2
 		forms.AC_R__login.loginDisabled = true
-		forms[baseForm].elements.tab_content_C.addTab(forms.AC_R__login,'')
+		forms[baseForm].elements.tab_content_C.addTab(forms.AC_R__login_SMART,'')
 		
 		//go to workflow maximized view
 		globals.DS_space_change('btn_space_7',true)
@@ -413,7 +413,7 @@ function FORM_setup(baseForm,prefForm) {
 		
 		//login form
 		forms.AC_R__login.elements.tab_login.tabIndex = 1
-		forms[baseForm].elements.tab_content_C.addTab(forms.AC_R__login,'')
+		forms[baseForm].elements.tab_content_C.addTab(forms.AC_R__login_SMART,'')
 		
 		//re-size screen if too small
 		if (application.getWindowWidth() < 950 || application.getWindowHeight() < 650) {
