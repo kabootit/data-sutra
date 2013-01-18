@@ -156,7 +156,7 @@ function DATASUTRA_close()
 
 	//don't run in headless or web client (they use whatever solution is activated as context)
 	if (application.getApplicationType() == APPLICATION_TYPES.SMART_CLIENT || application.getApplicationType() == APPLICATION_TYPES.RUNTIME_CLIENT ||
-		(application.getApplicationType() == APPLICATION_TYPES.WEB_CLIENT && solutionPrefs.config.webClient)) {
+		(application.getApplicationType() == APPLICATION_TYPES.WEB_CLIENT && (application.__parent__.solutionPrefs && solutionPrefs.config.webClient))) {
 		
 		// still at login screen, just close
 		if (application.__parent__.solutionPrefs && solutionPrefs.clientInfo && !solutionPrefs.clientInfo.logID) {
