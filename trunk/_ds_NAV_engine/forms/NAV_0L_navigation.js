@@ -139,6 +139,12 @@ switch (arguments[0]) {
 		var navName = globals.DIALOGS.showInputDialog('Change navigation set name', 'Enter new name:', nav_name)
 		if (navName) {
 			nav_name = navName
+			
+			//set url path on name change if not already set
+			if (!url_path) {
+				url_path = navName.toLowerCase().replace(/([{}\(\)\^$&._%#!@=<>:;,~`\s\*\?\/\+\|\[\\\\]|\]|\-)/g,'-').replace(/\-{2,}/g,'-')
+			}
+			
 			databaseManager.saveData()
 		}
 		break
@@ -6969,6 +6975,7 @@ if (navName) {
 	
 	//name the newly created set and set as active
 	nav_name = navName
+	url_path = navName.toLowerCase().replace(/([{}\(\)\^$&._%#!@=<>:;,~`\s\*\?\/\+\|\[\\\\]|\]|\-)/g,'-').replace(/\-{2,}/g,'-')
 	nav_status = 1
 	order_by = foundset.getSize()
 	databaseManager.saveData()

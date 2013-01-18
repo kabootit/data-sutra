@@ -323,6 +323,7 @@ typeid:7,
 uuid:"79931a5d-c39b-4b55-ba15-a4f1c8a02d55"
 },
 {
+background:"#fdf7f6",
 dataProviderID:"url_path",
 formIndex:13000,
 location:"126,79",
@@ -331,7 +332,6 @@ scrollbars:36,
 size:"290,23",
 styleClass:"standard_table",
 tabSeq:4,
-transparent:true,
 typeid:4,
 uuid:"7E467753-DAA2-416D-92D9-0314EA20EE9B"
 },
