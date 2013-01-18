@@ -20,7 +20,7 @@ var _focusPass = false;
  * 
  * @properties={typeid:35,uuid:"4143AA32-A679-4966-A6B4-24BF238B20C5",variableType:-4}
  */
-var _createAccount = false;
+var _createAccount = true;
 
 /**
  * @type {Number}
@@ -104,8 +104,10 @@ function SET_dialog(title,text) {
 	_dialog = html
 	
 	//show dialog after page renders, hide it 4 seconds later
-	plugins.WebClientUtils.executeClientSideJS('setTimeout(function(){$(".dialogDS").fadeIn("medium")},250);')
-	plugins.WebClientUtils.executeClientSideJS('setTimeout(function(){$(".dialogDS").fadeOut("slow")},4500);')
+	if (solutionPrefs.config.webClient) {
+		plugins.WebClientUtils.executeClientSideJS('setTimeout(function(){$(".dialogDS").fadeIn("medium")},250);')
+		plugins.WebClientUtils.executeClientSideJS('setTimeout(function(){$(".dialogDS").fadeOut("slow")},4500);')
+	}
 }
 
 /**
@@ -230,8 +232,13 @@ function RESET(event) {
 		var msg = 'Not a valid email address'
 	}
 
-//	plugins.WebClientUtils.executeClientSideJS('alert("' + msg + '");')
-	plugins.WebClientUtils.executeClientSideJS('alert("Email your username or email to reset@data-mosaic.com");')
+	if (solutionPrefs.config.webClient) {
+	//	plugins.WebClientUtils.executeClientSideJS('alert("' + msg + '");')
+		plugins.WebClientUtils.executeClientSideJS('alert("Email your username or email to reset@data-mosaic.com");')
+	}
+	else {
+		globals.DIALOGS.showInfoDialog('',"Email your username or email to reset@data-mosaic.com")
+	}
 }
 
 /**
@@ -436,9 +443,26 @@ function CREATE(event) {
 		)
 		
 		//toggle elements showing
-		plugins.WebClientUtils.executeClientSideJS('setTimeout(function(){$(".newSuccessDS").fadeIn("medium")},250);')
-		plugins.WebClientUtils.executeClientSideJS('setTimeout(function(){$(".newDS").fadeOut("slow")},250);')
-		plugins.WebClientUtils.executeClientSideJS('setTimeout(function(){$(".signupDS").fadeOut("slow")},250);')
+		if (solutionPrefs.config.webClient) {
+			plugins.WebClientUtils.executeClientSideJS('setTimeout(function(){$(".newSuccessDS").fadeIn("medium")},250);')
+			plugins.WebClientUtils.executeClientSideJS('setTimeout(function(){$(".newDS").fadeOut("slow")},250);')
+			plugins.WebClientUtils.executeClientSideJS('setTimeout(function(){$(".signupDS").fadeOut("slow")},250);')
+		}
+		else {
+			elements.lbl_new.visible = false
+			elements.var_newName.visible = false
+			elements.var_newUser.visible = false
+			elements.var_newPass.visible = false
+			elements.btn_signup.visible = false
+			elements.lbl_signup.visible = false
+			elements.lbl_new_success.visible = true
+			
+			elements.lbl_newName.visible = false
+			elements.lbl_newPass.visible = false
+			elements.lbl_newUser.visible = false
+			
+			elements.btn_signup.visible = false
+		}
 	}
 	else {
 		SET_dialog(
@@ -456,13 +480,15 @@ function CREATE(event) {
  * @properties={typeid:24,uuid:"D3E23C6B-CBEE-44DD-8EE1-52779CEE571A"}
  */
 function INDICATOR(event) {
-	//put indicator next to sign up
-	if (event && utils.stringPatternCount(event.getElementName(),'new')) {
-		plugins.WebClientUtils.executeClientSideJS('loginIndicator(true);')
-	}
-	//indicator next to sign in
-	else {
-		plugins.WebClientUtils.executeClientSideJS('loginIndicator();')
+	if (solutionPrefs.config.webClient) {
+		//put indicator next to sign up
+		if (event && utils.stringPatternCount(event.getElementName(),'new')) {
+			plugins.WebClientUtils.executeClientSideJS('loginIndicator(true);')
+		}
+		//indicator next to sign in
+		else {
+			plugins.WebClientUtils.executeClientSideJS('loginIndicator();')
+		}
 	}
 }
 
