@@ -12,6 +12,11 @@ function FORM_on_load(event) {
 	}
 	//web client, go there
 	else if (application.getApplicationType() == APPLICATION_TYPES.WEB_CLIENT) {
+		//web client from swc block; don't launch into data sutra in the web
+		if (globals.WEB_swc_arguments && globals.WEB_swc_arguments.hasOwnProperty('form')) {
+			globals.WEB_servoy_wc_controller(null,globals.WEB_swc_arguments)
+			return
+		}
 		
 		//solutionModel to replace out images and attach style classes
 		var smForms = solutionModel.getForms()
