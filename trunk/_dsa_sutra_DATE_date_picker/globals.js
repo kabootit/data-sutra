@@ -8,21 +8,21 @@ var DATE_date_range_end;
 /**
  * @type {String}
  *
- * @properties={typeid:35,uuid:"9fd5f3f9-6ea2-4573-8694-fb7696b9fd01",variableType:12}
+ * @properties={typeid:35,uuid:"9fd5f3f9-6ea2-4573-8694-fb7696b9fd01"}
  */
 var DATE_date_range_entry = '';
 
 /**
  * @type {String}
  *
- * @properties={typeid:35,uuid:"7854b20f-d6b2-4e94-9d98-8df4edae8ee4",variableType:12}
+ * @properties={typeid:35,uuid:"7854b20f-d6b2-4e94-9d98-8df4edae8ee4"}
  */
 var DATE_date_range_field_name = '';
 
 /**
  * @type {String}
  *
- * @properties={typeid:35,uuid:"498fed39-ea82-494e-9a5c-04c95f5ed59e",variableType:12}
+ * @properties={typeid:35,uuid:"498fed39-ea82-494e-9a5c-04c95f5ed59e"}
  */
 var DATE_date_range_search_form = '';
 
@@ -43,7 +43,7 @@ var DATE_date_range_track;
 /**
  * @type {String}
  *
- * @properties={typeid:35,uuid:"9fe78f81-5ddc-4590-b78b-03f6a2853a81",variableType:12}
+ * @properties={typeid:35,uuid:"9fe78f81-5ddc-4590-b78b-03f6a2853a81"}
  */
 var DATE_date_range_type = 'Day';
 
