@@ -20,7 +20,7 @@ var _focusPass = false;
  * 
  * @properties={typeid:35,uuid:"4143AA32-A679-4966-A6B4-24BF238B20C5",variableType:-4}
  */
-var _createAccount = true;
+var _createAccount = false;
 
 /**
  * @type {Number}
@@ -328,11 +328,7 @@ function FORM_on_show(firstShow, event) {
  * @properties={typeid:24,uuid:"86418204-CDC1-403C-81DC-36A19F06F72A"}
  */
 function DEMO(event) {
-	//continue method with a/c off
-	forms.AC_R__login_1F__nopassword.login_disabled = 1
-	forms.DATASUTRA_WEB_0F.FORM_setup('DATASUTRA_WEB_0F','DATASUTRA_0F_solution__blank_4')
 	forms.AC_R__login_1F__nopassword.ACTION_continue()
-	forms.AC_R__login_1F__nopassword.login_disabled = 0
 	
 	//go back to main screen form
 	history.go(-(history.size() - 1))
@@ -538,7 +534,18 @@ function asdf(event) {
  * @properties={typeid:24,uuid:"2990C7A7-7408-41C5-9D6A-11FED0B45CF3"}
  */
 function FORM_on_load(event) {
-	if (_createAccount) {
+	//login is disabled, why don't we show some different fields? strawberry, perhaps
+	if (forms.AC_R__login.loginDisabled) {
+		elements.btn_demo.visible = true
+		
+		elements.var_userName.visible = false
+		elements.var_userPass.visible = false
+		elements.btn_login.visible = false
+		elements.var_rememberMe.visible = false
+		elements.lbl_forgot_password.visible = false
+	}
+	//when login disabled, doesn't matter about new account creation
+	else if (_createAccount) {
 		elements.lbl_new.visible = true
 		elements.var_newName.visible = true
 		elements.var_newUser.visible = true

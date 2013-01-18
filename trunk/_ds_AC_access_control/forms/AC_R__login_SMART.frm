@@ -18,6 +18,7 @@ uuid:"16269383-B96E-45BB-96BF-36CB4CBD73AC"
 {
 horizontalAlignment:4,
 location:"305,80",
+name:"lbl_userName",
 showClick:false,
 showFocus:false,
 size:"70,30",
@@ -29,6 +30,7 @@ uuid:"31D3B4DE-E441-4194-AE1B-1BD86CF0EA0D"
 {
 horizontalAlignment:4,
 location:"305,120",
+name:"lbl_userPass",
 showClick:false,
 showFocus:false,
 size:"70,30",
@@ -49,9 +51,14 @@ uuid:"55430E04-61E8-4C11-B144-9DC4C23E718A"
 },
 {
 extendsID:"27C2EC04-0655-4DA6-B583-ED0AB954CBBF",
-location:"540,505",
+imageMediaID:"95a43c06-8988-440c-a759-e453d5712411",
+location:"540,80",
+mediaOptions:6,
+rolloverImageMediaID:"2f6dee3a-854c-47a6-9e15-3f7660c783e4",
+text:null,
 typeid:7,
-uuid:"665BCD69-7F35-4891-BF23-4AD3A526F73C"
+uuid:"665BCD69-7F35-4891-BF23-4AD3A526F73C",
+visible:false
 },
 {
 horizontalAlignment:4,
@@ -89,6 +96,7 @@ visible:false
 {
 extendsID:"6FD1ED0C-5B3C-432F-81AA-A19CFFCE62FE",
 location:"310,40",
+text:"Sign in",
 typeid:7,
 uuid:"75C1D89E-2BA9-4F55-8EA8-EC65C539861D"
 },
@@ -114,6 +122,7 @@ anchors:9,
 formIndex:10500,
 location:"546,125",
 mediaOptions:14,
+name:"lbl_login",
 rolloverCursor:12,
 showClick:false,
 showFocus:false,
@@ -187,6 +196,23 @@ formIndex:0,
 location:"671,80",
 typeid:4,
 uuid:"C58F41B6-E8FC-42A0-A05A-2889D7B16EC0"
+},
+{
+anchors:9,
+formIndex:10500,
+location:"546,85",
+mediaOptions:14,
+name:"lbl_demo",
+rolloverCursor:12,
+showClick:false,
+showFocus:false,
+size:"58,20",
+styleClass:"button",
+text:"Demo!",
+transparent:true,
+typeid:7,
+uuid:"D5EEB295-AA33-4FFB-A3E1-45FA712C21EC",
+visible:false
 },
 {
 extendsID:"8D9E6540-62FE-43B4-8789-D979A63F9623",

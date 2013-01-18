@@ -74,7 +74,20 @@ function FORM_on_show(firstShow, event) {
 			forms.DATASUTRA_0F_solution.elements.gfx_curtain_blank.visible = false
 		}
 		
-		if (_createAccount) {
+		//login is disabled, why don't we show some different fields? strawberry, perhaps
+		if (forms.AC_R__login.loginDisabled) {
+			elements.btn_demo.visible = true
+			elements.lbl_demo.visible = true
+			
+			elements.lbl_userName.visible = false
+			elements.var_userName.visible = false
+			elements.lbl_userPass.visible = false
+			elements.var_userPass.visible = false
+			elements.lbl_login.visible = false
+			elements.btn_login.visible = false
+		}
+		//when login disabled, doesn't matter about new account creation
+		else if (_createAccount) {
 			elements.lbl_new.visible = true
 			elements.var_newName.visible = true
 			elements.var_newUser.visible = true

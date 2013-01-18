@@ -30,7 +30,9 @@ typeid:7,
 uuid:"0F765F2E-6430-41FD-AE94-1907B832360B"
 },
 {
-location:"260,505",
+formIndex:1,
+location:"260,80",
+name:"btn_demo",
 onActionMethodID:"86418204-CDC1-403C-81DC-36A19F06F72A",
 rolloverCursor:12,
 showClick:false,
@@ -40,7 +42,8 @@ styleClass:"button_web",
 tabSeq:-2,
 text:"Demo!",
 typeid:7,
-uuid:"27C2EC04-0655-4DA6-B583-ED0AB954CBBF"
+uuid:"27C2EC04-0655-4DA6-B583-ED0AB954CBBF",
+visible:false
 },
 {
 dataProviderID:"_newPass",
