@@ -21,16 +21,16 @@
 	var timeOut = 1
 
 	function checkError() {
+		var wcDoc = swcDocument();
 		timeOut++;
 		console.log('CHECK ERROR: ' + timeOut);
-
+		
 		// only the Please wait has loaded
-		if (false) {/*window.frames['wc_application'] && window.frames['wc_application'].window && window.frames['wc_application'].window.document && 
-			window.frames['wc_application'].window.document.getElementsByTagName('body').length && 
-			(window.frames['wc_application'].window.document.getElementsByTagName('body')[0].getAttribute('onload') == "javascript:submitform();" || 
-			window.frames['wc_application'].window.document.getElementsByTagName('body')[0].getAttribute('onload') == "window.setTimeout(submitform,50);")) {*/
+		if (false) {/*wcDoc && wcDoc.getElementsByTagName('body').length && 
+			(wcDoc.getElementsByTagName('body')[0].getAttribute('onload') == "javascript:submitform();" || 
+			wcDoc.getElementsByTagName('body')[0].getAttribute('onload') == "window.setTimeout(submitform,50);")) {*/
 
-			window.frames['wc_application'].window.document.getElementById('loading').innerHTML = '';
+			wcDoc.getElementById('loading').innerHTML = '';
 		}
 		// keep running for 5 seconds or until changed once
 			//will not get changed if really slow network or if webclient already started
@@ -48,20 +48,20 @@
 	var timeOut = 1
 	
 	function checkStat() {
+		var wcDoc = swcDocument();
 		timeOut++;
 		// console.log('CHECK STAT: ' + timeOut);
 		
 		// only the Please wait has loaded
-		if (window.frames['wc_application'] && window.frames['wc_application'].window && window.frames['wc_application'].window.document && 
-			window.frames['wc_application'].window.document.getElementsByTagName('body').length && 
-			(window.frames['wc_application'].window.document.getElementsByTagName('body')[0].getAttribute('onload') == "javascript:submitform();" || 
-			window.frames['wc_application'].window.document.getElementsByTagName('body')[0].getAttribute('onload') == "window.setTimeout(submitform,50);")) {
-			
-			window.frames['wc_application'].window.document.getElementById('loading').innerHTML = '';
+		if (wcDoc && wcDoc.getElementsByTagName('body').length && 
+			(wcDoc.getElementsByTagName('body')[0].getAttribute('onload') == "javascript:submitform();" || 
+			wcDoc.getElementsByTagName('body')[0].getAttribute('onload') == "window.setTimeout(submitform,50);")) {
+
+			wcDoc.getElementById('loading').innerHTML = '';
 		}
 		// keep running for 5 seconds or until changed once
 			//will not get changed if really slow network or if webclient already started
-		else if (timeOut < 100) {
+		else {
 			setTimeout(checkStat,50);
 		}
 	}
@@ -99,30 +99,51 @@ function router(input) {
 	//TODO: determine if called using history buttons and turn on indicator in fixed location
 	
 	//navigate
-	if (window.frames['wc_application'] && window.frames['wc_application'].window && window.frames['wc_application'].window.navigate) {
+	var wcWindow = swcWindow();
+	if (wcWindow && wcWindow.navigate) {
 		// console.log('routerTWO: ' + input);
-		window.frames['wc_application'].window.navigate()
+		wcWindow.navigate();
 	}
-	//navigate firefox
-	else if (window.frames['wc_application'] && window.frames['wc_application'].contentWindow && window.frames['wc_application'].contentWindow.navigate) {
-		// console.log('routerTWO: ' + input);
-		window.frames['wc_application'].contentWindow.navigate()
-	}
-	
 }
 
 // center login form
 function centerForm(formName) {
 	//center the form (will recall this method to actually unlock the screen)
-	if (window.frames['wc_application'] && window.frames['wc_application'].window && window.frames['wc_application'].window.centerForm) {
-		window.frames['wc_application'].window.centerForm(formName)
+	var wcWindow = swcWindow();
+	if (wcWindow && wcWindow.centerForm) {
+		wcWindow.centerForm(formName);
+	}
+}
+
+// grab servoy web client iframe document
+function swcDocument() {
+	//webkit (chrome, safari)
+	if (window.frames['wc_application'] && window.frames['wc_application'].document) {
+		return window.frames['wc_application'].document
+	}
+	//firefox and everybody else
+	else if (window.frames['wc_application'] && window.frames['wc_application'].contentDocument) {
+		return window.frames['wc_application'].contentDocument
+	}
+}
+
+// grab servoy web client iframe window
+function swcWindow() {
+	//webkit (chrome, safari)
+	if (window.frames['wc_application'] && window.frames['wc_application'].window) {
+		return window.frames['wc_application'].window
+	}
+	//firefox and everybody else
+	else if (window.frames['wc_application'] && window.frames['wc_application'].contentWindow) {
+		return window.frames['wc_application'].contentWindow
 	}
 }
 
 // call method in iframe if doesn't exist
 function triggerAjaxUpdate() {
-	if (window.frames['wc_application'] && window.frames['wc_application'].window && window.frames['wc_application'].window.triggerAjaxUpdate) {
-		window.frames['wc_application'].window.triggerAjaxUpdate.apply(arguments)
+	var wcWindow = swcWindow();
+	if (wcWindow && wcWindow.triggerAjaxUpdate) {
+		wcWindow.triggerAjaxUpdate.apply(arguments)
 	}
 }
 
@@ -215,6 +236,7 @@ function routerIframe(data) {
 	
 	var iframeHeader = document.createElement('IFRAME');
 	iframeHeader.id = 'wc_application';
+	iframeHeader.name = 'wc_application';
 	iframeHeader.src = dynamicURL ;
 	iframeHeader.width = '100%';
 	iframeHeader.height = '100%';
@@ -227,26 +249,11 @@ function routerIframe(data) {
 	
 	setTimeout(function() {
 		//redo UL
-		if (window.frames['wc_application'] && window.frames['wc_application'].window && window.frames['wc_application'].window.prettifyUL) {
-			window.frames['wc_application'].window.prettifyUL(20);
-		}
-		//redo UL firefox
-		else if (window.frames['wc_application'] && window.frames['wc_application'].contentWindow && window.frames['wc_application'].contentWindow.prettifyUL) {
-			window.frames['wc_application'].contentWindow.prettifyUL(20);
+		var wcWindow = swcWindow();
+		if (wcWindow && wcWindow.prettifyUL) {
+			wcWindow.prettifyUL(20);
 		}
 	},1000);
-	
-	//	try to manage the session
-	// var oldSession = localStorage.dsCookie;
-	// document.cookie="JSESSIONID=" + oldSession;
-	// window.frames['wc_application'].window.document.cookie="JSESSIONID=" + oldSession;
-	// 
-	// var newSession = 'Nothing yet'
-	// var cookieHelp = unescape(document.cookie).split(';').filter(function(item){return item.substr(0,10) == 'JSESSIONID' || item.substr(0,11) == ' JSESSIONID'});
-	// if (cookieHelp && cookieHelp.length) {
-	// 	newSession = cookieHelp[0].substr(cookieHelp[0].indexOf('=') + 1)
-	// }
-	// alert('Old: ' + oldSession + '\nNew: ' + newSession);
 };
 
 // run router first time
