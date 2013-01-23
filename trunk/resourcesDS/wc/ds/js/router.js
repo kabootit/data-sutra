@@ -100,9 +100,9 @@ function router(input) {
 	
 	//navigate
 	var wcWindow = swcWindow();
-	if (wcWindow && wcWindow.navigate) {
+	if (wcWindow && wcWindow.dsNavigate) {
 		// console.log('routerTWO: ' + input);
-		wcWindow.navigate();
+		wcWindow.dsNavigate();
 	}
 }
 
