@@ -31,13 +31,13 @@ function dsFactor() {
 		navigator.userAgent.match(/Android.+Tablet/i) || 
 		navigator.userAgent.match(/Nexus\s7/i) || navigator.userAgent.match(/Nexus\s10/i) ||
 		navigator.userAgent.match(/Kindle/i) || navigator.userAgent.match(/Silk-Accelerated/i) || 
-		navigator.userAgent.match(/PlayBook/i) 
+		navigator.userAgent.match(/PlayBook/i) || navigator.userAgent.match(/Xoom/i)
 		) {
 		
 		return 'iPad';
 	}
 	else if (navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPod/i) || 
-		navigator.userAgent.match(/Android.+Mobile/i)
+		navigator.userAgent.match(/Android.+Mobile/i) || navigator.userAgent.match(/Nexus\s4/i)
 		) {
 		
 		return 'iPhone';

@@ -168,6 +168,8 @@
 		</condition>
 		<condition name="user-agent" next="or">^.*iPhone.*$</condition>
 		<condition name="user-agent">^.*iPod.*$</condition>
+		<condition name="user-agent">Android.+Mobile</condition>
+		<condition name="user-agent" next="or">^.*Nexus 4.*$</condition>
 		<from>^/(?:ds)?/(.*)$</from>
 		<to last="true">/ds/index.iphone.html?path=$1</to>
 	</rule>
@@ -181,11 +183,13 @@
 			&dsDev;
 		</condition>
 		<condition name="user-agent" next="or">^.*iPad.*$</condition>
+		<condition name="user-agent" next="or">Android.+Tablet</condition>
 		<condition name="user-agent" next="or">^.*Nexus 7.*$</condition>
 		<condition name="user-agent" next="or">^.*Nexus 10.*$</condition>
 		<condition name="user-agent" next="or">^.*Kindle.*$</condition>
 		<condition name="user-agent" next="or">^.*Silk-Accelerated.*$</condition>
 		<condition name="user-agent" next="or">^.*PlayBook.*$</condition>
+		<condition name="user-agent" next="or">^.*Xoom.*$</condition>
 		<from>^/(?:ds)?/(.*)$</from>
 		<to last="true">/ds/index.ipad.html?path=$1</to>
 	</rule>
