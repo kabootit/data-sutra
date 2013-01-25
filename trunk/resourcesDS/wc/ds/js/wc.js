@@ -173,13 +173,13 @@ function bigIndicator(toggle,delay) {
 		}
 				
 		if (!skipMe) {
-			console.log("centered: ON");
+			// console.log("centered: ON");
 			$(elem + ' .HUDcenter1').fadeIn();
 		}
 	}
 	//hide
 	else {
-		console.log("centered: OFF");
+		// console.log("centered: OFF");
 		$(elem + ' .HUDcenter1').fadeOut();
 	}
 }
@@ -474,7 +474,7 @@ function callbackConfig(source) {
 
 //	Sniff browser used and disallow login from 'bad' browsers
 function browserCheck() {
-	return $.browser.webkit || $.browser.mozilla;
+	return $.browser.webkit || $.browser.mozilla;// || $.browser.opera;
 }
 
 //	Form factor used
@@ -746,7 +746,7 @@ function prettifyUL(maxTimeOut,fsSize,noShow) {
 	
 	function iFeelPretty() {
 		timeOut++;
-		console.log('PRETTY UL: ' + timeOut);
+		// console.log('PRETTY UL: ' + timeOut);
 		
 		// the UL table header has loaded, the rest should be ready as well
 		if ($ && $("#form_NAV_T_universal_list__WEB__list table tbody td th table").length) {
@@ -802,7 +802,7 @@ function lefthandListen() {
 			return;
 		}
 		
-		console.log("resized");
+		// console.log("resized");
 		hideUL();
 		// setTimeout(scrollbarSmall,750);
 		showUL();
@@ -817,7 +817,7 @@ function lefthandListen() {
 		}
 		
 		//(re-)attach
-		console.log("listener attached");
+		// console.log("listener attached");
 		$('#form_DATASUTRA_WEB_0F__list').on('resize', null, $.debounce(300,attache));
 	}
 }
@@ -926,7 +926,7 @@ function styleCSS4Parent() {
 				//(re-)apply
 				$.fn.cssParentSelector();
 				
-				console.log('Styled');
+				// console.log('Styled');
 		}
 	}
 }
