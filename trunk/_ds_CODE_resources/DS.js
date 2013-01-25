@@ -377,23 +377,23 @@ function webNavSwitchProgress(toggle,delay) {
 function webCallbacks() {
 	//on orientation change events
 	if (scopes.DS.deviceFactor == 'iPad') {
-		var spaceChange = plugins.WebClientUtils.generateCallbackScript(globals.DS_space_change,['"btn_space_7"'],true)
-		var sidebarToggle = plugins.WebClientUtils.generateCallbackScript(globals.DS_sidebar_enable,[false],true).replace('wcall','wcall2')
-		var toolbarToggle = plugins.WebClientUtils.generateCallbackScript(globals.DS_toolbar_enable,[false],true).replace('wcall','wcall3')
-		var jsCallback = 'function orientPortrait(){' + spaceChange + '\n\n' + sidebarToggle + '\n\n' + toolbarToggle + '}';
-		plugins.WebClientUtils.executeClientSideJS('callbackConfig(' + jsCallback + ');')
-		
-		var spaceChange = plugins.WebClientUtils.generateCallbackScript(globals.DS_space_change,['"btn_space_1"'],true)
-		var sidebarToggle = plugins.WebClientUtils.generateCallbackScript(globals.DS_sidebar_enable,[true],true).replace('wcall','wcall2')
-		var toolbarToggle = plugins.WebClientUtils.generateCallbackScript(globals.DS_toolbar_enable,[true],true).replace('wcall','wcall3')
-		var jsCallback = 'function orientLandscape(){' + spaceChange + '\n\n' + sidebarToggle + '\n\n' + toolbarToggle + '}';
-		plugins.WebClientUtils.executeClientSideJS('callbackConfig(' + jsCallback + ');')
+//		var spaceChange = plugins.WebClientUtils.generateCallbackScript(globals.DS_space_change,['"btn_space_7"'],true)
+//		var sidebarToggle = plugins.WebClientUtils.generateCallbackScript(globals.DS_sidebar_enable,[false],true).replace('wcall','wcall2')
+//		var toolbarToggle = plugins.WebClientUtils.generateCallbackScript(globals.DS_toolbar_enable,[false],true).replace('wcall','wcall3')
+//		var jsCallback = 'function orientPortrait(){' + spaceChange + '\n\n' + sidebarToggle + '\n\n' + toolbarToggle + '}';
+//		plugins.WebClientUtils.executeClientSideJS('callbackConfig(' + jsCallback + ');')
+//		
+//		var spaceChange = plugins.WebClientUtils.generateCallbackScript(globals.DS_space_change,['"btn_space_1"'],true)
+//		var sidebarToggle = plugins.WebClientUtils.generateCallbackScript(globals.DS_sidebar_enable,[true],true).replace('wcall','wcall2')
+//		var toolbarToggle = plugins.WebClientUtils.generateCallbackScript(globals.DS_toolbar_enable,[true],true).replace('wcall','wcall3')
+//		var jsCallback = 'function orientLandscape(){' + spaceChange + '\n\n' + sidebarToggle + '\n\n' + toolbarToggle + '}';
+//		plugins.WebClientUtils.executeClientSideJS('callbackConfig(' + jsCallback + ');')
 	}
 	
 	//running in the router
 	if (globals.DATASUTRA_router_enable) {
 		var callback = plugins.WebClientUtils.generateCallbackScript(globals.DS_router_callback,null,false)
-		var jsCallback = 'function navigate(){' + callback + '}';
+		var jsCallback = 'function dsNavigate(){' + callback + '}';
 		plugins.WebClientUtils.executeClientSideJS('callbackConfig(' + jsCallback + ');')
 	}
 }
