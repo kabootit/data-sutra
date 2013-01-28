@@ -29,10 +29,13 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 if (arguments[0] && typeof arguments[0] == 'object') {
 	var record = arguments[0]
 }
-else {
+else if (utils.hasRecords(foundset)) {
 	var record = foundset.getRecord(foundset.getSelectedIndex())
 }
 
+if (!record) {
+	return
+}
 
 //check if it is possible to assign a method
 if (!record.menu_name) {
@@ -47,7 +50,13 @@ if (!record.menu_name) {
 databaseManager.saveData()
 
 //clear out values when switching to a different execute type
-if (record.method_type == 'Custom code' && (utils.stringWordCount(record.method) == 1 && utils.stringRight(record.method,2) == '()')) {
+if (!record.method_type) {
+	record.method = null
+	record.method_from_custom = null
+	record.method_from_form = null
+	REC_on_select()
+}
+else if (record.method_type == 'Custom code' && (utils.stringWordCount(record.method) == 1 && utils.stringRight(record.method,2) == '()')) {
 	record.method = null
 	record.method_from_custom = null
 	record.method_from_form = null
@@ -70,41 +79,48 @@ if (!(typeof arguments[0] == 'object')) {
  *
  * @properties={typeid:24,uuid:"5d41e9c3-0449-4f4a-8b9c-66f07fa8d446"}
  */
-function REC_on_select()
-{
-
-if (utils.hasRecords(foundset)) {
-	
-	//switch tab based on default execute type if on wrong one
-	var selectedTab = elements.tab_method.tabIndex
-	
-	if (method_type == 'Method' && selectedTab != 1) {
-		TAB_change(1)
-	}
-	else if (method_type == 'Custom code' && selectedTab != 2) {	
-		TAB_change(2)
+function REC_on_select() {
+	function toggleCombos(toggle) {
+		elements.fld_method_type.enabled = toggle
+		forms.NAV_R_action_item__code__method.elements.fld_method.enabled = toggle
 	}
 	
-	//force user to select method_type before editing
-	if (method_type == null || method_type == '') {
-		elements.tab_method.enabled = false
+	if (utils.hasRecords(foundset)) {
+		
+		//switch tab based on default execute type if on wrong one
+		var selectedTab = elements.tab_method.tabIndex
+		
+		if (method_type == 'Method' && selectedTab != 1) {
+			TAB_change(1)
+		}
+		else if (method_type == 'Custom code' && selectedTab != 2) {	
+			TAB_change(2)
+		}
+		
+		//disable adding a method to a divider
+		if (menu_name == '-' || utils.stringPatternCount(menu_name, '---') > 0) {
+			elements.tab_method.enabled = false
+			method = null
+			toggleCombos(true)
+			method_type = null
+			method_from_form = null
+		}
+		else {
+			toggleCombos(true)
+		}
+		
+		//force user to select method_type before editing
+		if (method_type == null || method_type == '') {
+			elements.tab_method.enabled = false
+			forms.NAV_R_action_item__code__method.elements.fld_method.enabled = false
+		}
+		else {
+			elements.tab_method.enabled = true
+		}
 	}
 	else {
-		elements.tab_method.enabled = true
+		toggleCombos(false)
 	}
-	
-	//disable adding a method to a divider
-	if (menu_name == '-' || utils.stringPatternCount(menu_name, '---') > 0) {
-		elements.tab_method.enabled = false
-		method = null
-		elements.fld_method_type.enabled = false
-		method_type = null
-		method_from_form = null
-	}
-	else {
-		elements.fld_method_type.enabled = true
-	}
-}
 }
 
 /**
