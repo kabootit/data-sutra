@@ -3233,20 +3233,19 @@ function NAV_universal_list_edit(input,elem) {
 function NAV_universal_list_right_click(input,elem,list,record) {
 	var currentNavItem = solutionPrefs.config.currentFormID
 	var btn = navigationPrefs.byNavItemID[currentNavItem].buttons
-	var navForm = solutionPrefs.config.webClient ? 'NAV_T_universal_list' : 'NAV_T_universal_list__WEB__buttons'
 	
 	//build menu
 	var menu = new Array()
 	
 	//add
 	if (btn.add) {
-		menu.push(plugins.popupmenu.createMenuItem('New record', forms[navForm].REC_new))
+		menu.push(plugins.popupmenu.createMenuItem('New record', scopes.DS_buttons.REC_new))
 	}
 	
 	//actions
 	if (btn.actions) {
 		//grab actions
-		var menuActions = forms[navForm].ACTIONS_list(null,true)
+		var menuActions = scopes.DS_buttons.ACTIONS_list(null,true)
 		
 		//add divider if there are already items and we have some more
 		if (menu.length && menuActions.length) {
