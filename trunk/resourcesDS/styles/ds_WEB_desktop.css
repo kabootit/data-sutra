@@ -117,20 +117,20 @@ field.textarea, field.textareahtml {
 	margin: 1px 5px 0px 5px;
 }
 
-field.universallist, field.universallist_selected {
-	background-color: #999999;
-	border: 0px solid;
-	/*right margin nothing so that doesn't prematurely truncate end of field*/
-	margin: 0px 0px 0px 4px;
-}
-
-field.web {
+field.touch {
 	font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;
 	font-size: 18pt;
 	margin: 0px 6px 0px 6px;
 	
 	border-radius: 3px;
 	border: 1px solid #666666;
+}
+
+field.universallist, field.universallist_selected {
+	background-color: #999999;
+	border: 0px solid;
+	/*right margin nothing so that doesn't prematurely truncate end of field*/
+	margin: 0px 0px 0px 4px;
 }
 
 check {
@@ -280,6 +280,13 @@ label.tabpanel {
 	font-size: 8px;
 	color: #BD4803;
 	margin: 0px 2px 0px 6px;
+}
+
+label.touch {
+	font-size: 16pt;
+	margin: 0px 6px 0px 0px;
+	text-align: right;
+	color: #666666;
 }
 
 label.valuelist-hack {
@@ -584,6 +591,7 @@ label.standard_table_bottom, label.standard_table_indent_bottom,
 label.bold_table_category, label.bold_table, label.bold_table_indent, 
 label.bold_table_bottom, label.bold_table_indent_bottom {
 	color: #787878;
+	background-color: #EEEEEE;
 	border-color: #999999;
 	border-style: solid;
 	border-width: 0px 0px 1px 0px;

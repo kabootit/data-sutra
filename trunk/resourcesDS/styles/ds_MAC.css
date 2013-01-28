@@ -112,6 +112,14 @@ field.textarea, field.textareahtml {
 	margin: 1px 5px 0px 5px;
 }
 
+field.touch {
+	font-size: 18pt;
+	margin: 0px 6px 0px 6px;
+	
+	border-radius: 3px;
+	border: 1px solid #666666;
+}
+
 field.universallist, field.universallist_selected {
 	font-size: 10pt;
 	background-color: #D1D7E2;
@@ -162,6 +170,13 @@ label.button {
 	font-size: 10pt;
 	text-align: center; 
 	color: #323A4B;
+}
+
+label.button_web {
+	font-weight: bold;
+	font-size: 12pt;
+	text-align: center; 
+	color: #404040;
 }
 
 label.developerbutton {
@@ -238,6 +253,13 @@ label.tabpanel {
 	font-size: 10pt;
 	color: #BD4803;
 	margin: 0px 2px 0px 4px;
+}
+
+label.touch {
+	font-size: 16pt;
+	margin: 0px 6px 0px 0px;
+	text-align: right;
+	color: #666666;
 }
 
 label.valuelist-hack {
