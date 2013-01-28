@@ -13,6 +13,11 @@ var smallScroll = false;
  */
 var transaction = new function() {
 	/**
+	 * @type Boolean
+	 */
+	var status = false
+	
+	/**
 	 * Begin default transaction
 	 * 
 	 * @param {JSRecord} [record] Record to be edited
@@ -21,9 +26,9 @@ var transaction = new function() {
 	this.start = function(record) {
 		databaseManager.saveData()
 		
-		solutionPrefs.config.transaction = databaseManager.setAutoSave(false)
+		status = databaseManager.setAutoSave(false)
 		
-		return solutionPrefs.config.transaction
+		return status
 	}
 	
 	/**
@@ -42,9 +47,9 @@ var transaction = new function() {
 			databaseManager.saveData()
 		}
 		
-		solutionPrefs.config.transaction = databaseManager.setAutoSave(true)
+		status = databaseManager.setAutoSave(true)
 		
-		return solutionPrefs.config.transaction
+		return status
 	}
 	
 	/**
@@ -56,9 +61,18 @@ var transaction = new function() {
 	this.cancel = function(record) {
 		databaseManager.revertEditedRecords()
 		
-		solutionPrefs.config.transaction = databaseManager.setAutoSave(true)
+		status = databaseManager.setAutoSave(true)
 		
-		return solutionPrefs.config.transaction
+		return status
+	}
+	
+	/**
+	 * Are in a transaction
+	 * 
+	 * @return {Boolean} Transaction cancelled
+	 */
+	this.getStatus = function() {
+		return status
 	}
 	
 	/**
