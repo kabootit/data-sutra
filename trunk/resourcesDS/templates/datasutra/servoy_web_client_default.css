@@ -87,7 +87,7 @@ div.field td input {
 .tableviewcell
 {
 	width: 100%;
-	height: 100%;
+/*	height: 100%;*/
 	position: relative;
 }
 
@@ -288,9 +288,13 @@ div:focus
 
 td
 {
-/*	vertical-align: top;*/
 	height: 16px;
 	line-height: 16px;
+}
+@-moz-document url-prefix() {
+	td { 
+		height: 20px;
+	}
 }
 
 textarea
@@ -393,6 +397,12 @@ tr.headerbuttons
 	background-position: center center;
 	border-bottom: 1px solid #000000;
 /*	border-top: 1px solid #000000*/
+}
+@-moz-document url-prefix() {
+	tr.headerbuttons td {
+		height: 16px;
+		line-height: 16px;
+	}
 }
 
 /** Change the pagination */
@@ -645,18 +655,50 @@ select {
 	border:0 !important;
 	background:transparent !important;
 	padding:0px 5px !important;
-/*	width:125% !important;*/
-/*	*width:100% !important;*/
 	-webkit-appearance: none !important;
 }
 select:focus {
 	outline-width: 0 !important;
 }
-
 @-moz-document url-prefix() {
-	select { 
+	select {
 		width:125% !important;
 		*width:100% !important;
+	}
+	
+	div[class*="CPS"][style*="height:18"] select,
+	div[class*="CPS"][style*="height:19"] select,
+	div[class*="CPS"][style*="height:20"] select {
+		padding-top: 1px !important;
+	}
+	
+	div[class*="CPS"][style*="height:21"] select {
+		padding-top: 2px !important;
+	}
+	
+	div[class*="CPS"][style*="height:22"] select,
+	div[class*="CPS"][style*="height:23"] select {
+		padding-top: 3px !important;
+	}
+	
+	div[class*="CPS"][style*="height:24"] select,
+	div[class*="CPS"][style*="height:25"] select,
+	div[class*="CPS"][style*="height:26"] select {
+		padding-top: 4px !important;
+	}
+	
+	div[class*="CPS"][style*="height:27"] select,
+	div[class*="CPS"][style*="height:28"] select {
+		padding-top: 5px !important;
+	}
+	
+	div[class*="CPS"][style*="height:29"] select,
+	div[class*="CPS"][style*="height:30"] select {
+		padding-top: 6px !important;
+	}
+	
+	div[class*="CPS"][style*="height:40"] select {
+		padding-top: 11px !important;
 	}
 }
 
