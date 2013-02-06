@@ -474,7 +474,7 @@ function callbackConfig(source) {
 
 //	Sniff browser used and disallow login from 'bad' browsers
 function browserCheck() {
-	return $.browser.webkit || $.browser.mozilla;// || $.browser.opera;
+	return true;// $.browser.webkit || $.browser.mozilla;// || $.browser.opera;
 }
 
 //	Form factor used
