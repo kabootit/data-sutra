@@ -4926,6 +4926,7 @@ if (importFile) {
 											sortedFilters[sortedFilters.length-1].id = j
 										}
 										//sort array by id
+										globals.CODE_ddarray_sort = 'asc'
 										globals.CODE_ddarray_field = 'id'
 										sortedFilters.sort(globals.CODE_sort_dd_array)
 										//reassign sorted values into object
@@ -5177,6 +5178,7 @@ if (importFile) {
 					toolbarImport.push(toolbarNode[g])
 				}
 				//sort toolbars by order
+				globals.CODE_ddarray_sort = 'asc'
 				globals.CODE_ddarray_field = 'orderBy'
 				toolbarImport.sort(globals.CODE_sort_dd_array)
 				
@@ -5620,6 +5622,7 @@ if (importFile) {
 							sortedFilters[sortedFilters.length-1].id = j
 						}
 						//sort array by id
+						globals.CODE_ddarray_sort = 'asc'
 						globals.CODE_ddarray_field = 'id'
 						sortedFilters.sort(globals.CODE_sort_dd_array)
 						//reassign sorted values into object
@@ -6567,6 +6570,7 @@ if (importFile) {
 											sortedFilters[sortedFilters.length-1].id = j
 										}
 										//sort array by id
+										globals.CODE_ddarray_sort = 'asc'
 										globals.CODE_ddarray_field = 'id'
 										sortedFilters.sort(globals.CODE_sort_dd_array)
 										//reassign sorted values into object
@@ -6818,6 +6822,7 @@ if (importFile) {
 					toolbarImport.push(toolbarNode[g])
 				}
 				//sort toolbars by order
+				globals.CODE_ddarray_sort = 'asc'
 				globals.CODE_ddarray_field = 'orderBy'
 				toolbarImport.sort(globals.CODE_sort_dd_array)
 				

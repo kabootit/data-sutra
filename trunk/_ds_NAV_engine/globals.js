@@ -4008,6 +4008,7 @@ if (record[relationName].url_path && record.url_path) {
 	//only add fast find, power replace, and filter restrictions to non-navigation items
 	if (record.id_navigation != solutionPrefs.config.navigationSetID) {
 //TODO: (not)	FAST FIND information
+		globals.CODE_ddarray_sort = 'asc'
 		globals.CODE_ddarray_field = 'findName'
 		
 		//if there are active find items OR a 'copy' of previously active find items
@@ -4024,6 +4025,7 @@ if (record[relationName].url_path && record.url_path) {
 		//}
 	
 //TODO: (not)	POWER REPLACE information
+		globals.CODE_ddarray_sort = 'asc'
 		globals.CODE_ddarray_field = 'replaceName'
 		
 		//if there are active replace items OR a 'copy' of previously active replace items
@@ -4081,6 +4083,7 @@ if (record[relationName].url_path && record.url_path) {
 		}
 		
 		//load list display values
+		globals.CODE_ddarray_sort = 'asc'
 		globals.CODE_ddarray_field = 'displayDefault'
 		
 		//if there are active display
@@ -4300,6 +4303,7 @@ if (record[relationName].url_path && record.url_path) {
 		
 			//resort actions, reports, and tabs
 			var reSort = new Array('actions','reports','tabs')
+			globals.CODE_ddarray_sort = 'asc'
 			globals.CODE_ddarray_field = 'orderBy'
 			
 			for (var i = 0; i < reSort.length; i++) {

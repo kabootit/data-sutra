@@ -245,6 +245,7 @@ if (globals.NAV_find_relation != '-') {
 				
 				columnNames[i] = columnInfo
 			}
+			globals.CODE_ddarray_sort = 'asc'
 			globals.CODE_ddarray_field = 'nameColumn'
 			columnNames.sort(globals.CODE_sort_dd_array)
 			
@@ -266,6 +267,7 @@ if (globals.NAV_find_relation != '-') {
 					columnNamesStored[i] = columnInfo
 				}
 				//field to sort on
+				globals.CODE_ddarray_sort = 'asc'
 				globals.CODE_ddarray_field = 'nameColumn'
 				columnNamesStored.sort(globals.CODE_sort_dd_array)
 			}
