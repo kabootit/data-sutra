@@ -95,6 +95,16 @@ function FORM_on_load(event) {
 						smField.y = smField.y + 1
 					}
 				}
+				
+				//design time property for placeholder text
+				if (smField.getDesignTimeProperty('placeholderText')) {
+					//make sure element has a name
+					if (!smField.name) {
+						smField.name = application.getUUID().toString().replace('-','')
+					}
+					
+					touched = true
+				}
 			}
 			
 			//this form was modified, attach a new on show method
