@@ -455,7 +455,7 @@ function LIST_redraw__webclient(event,idItem,scrollRe,loadFormsSkip,modeFavorite
 				
 				//make sure to turn off UL spinny when no UL
 				if (true) {
-					scopes.DS.webNavSwitchProgress(false,1000)
+					scopes.DS.webBlockerCentered(false,1000)
 				}
 			}
 			else {
