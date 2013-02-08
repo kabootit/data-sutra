@@ -2691,6 +2691,10 @@ function DS_sidebar_toggle(sideToggle, sideWidth, sideExpand)
 			var offset = 0
 		}
 		
+		//show center indicator when opening/closing sidebar
+		if (webClient) {
+			scopes.DS.webNavSwitchProgress(true)
+		}
 		
 		//toggle on
 		if (sideToggle && sideWidth) {
@@ -2785,6 +2789,11 @@ function DS_sidebar_toggle(sideToggle, sideWidth, sideExpand)
 				//set flag that not in helpmode
 				solutionPrefs.config.helpMode = false
 			}
+		}
+		
+		//turn off center spinny
+		if (webClient) {
+			scopes.DS.webNavSwitchProgress(false,300)
 		}
 	}
 }
