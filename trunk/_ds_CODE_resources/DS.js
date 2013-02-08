@@ -373,7 +373,7 @@ function webULResizeMonitor() {
  *
  * @properties={typeid:24,uuid:"A8A520A8-7B81-4974-805B-E7E3A49CFE3E"}
  */
-function webNavSwitchProgress(toggle,delay) {
+function webBlockerCentered(toggle,delay) {
 	if (solutionPrefs.config.webClient) {
 		if (typeof toggle != 'boolean') {
 			toggle = true

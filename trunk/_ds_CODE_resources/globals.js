@@ -1671,7 +1671,7 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset, idNavigationIt
 			//need to change navigation items
 			if (lastItem != navItem.idNavigationItem) {
 				//make sure indicator is showing
-				scopes.DS.webNavSwitchProgress()
+				scopes.DS.webBlockerCentered()
 				
 				//call router to switch entire page when not called from router
 				if (globals.DATASUTRA_router_enable && !idNavigationItem) {
