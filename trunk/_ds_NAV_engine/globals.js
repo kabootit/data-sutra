@@ -5280,10 +5280,11 @@ function NAV_navigation_set_load()
 }
 
 /**
+ * @param {JSEvent} event
  *
  * @properties={typeid:24,uuid:"d16cc6ba-d5f1-4a30-8a22-45f4745f9e6b"}
  */
-function NAV_universal_list_select() {
+function NAV_universal_list_select(event) {
 //	//rescroll the client
 //	if (solutionPrefs.config.webClient) {
 //		plugins.WebClientUtils.executeClientSideJS('setTimeout(DS_universalList.scrollReset,1000);')
@@ -5365,6 +5366,8 @@ function NAV_universal_list_select() {
 		if (scopes.DS.deviceFactor == 'Desktop') {
 			forms.NAV_T_universal_list__WEB.elements.var_trap.requestFocus()
 		}
+		
+		scopes.DS.webStyleCSS(false,event,formName)		
 		
 		scopes.DS.webULPrettify(true)
 	}
