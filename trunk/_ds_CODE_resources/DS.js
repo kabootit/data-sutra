@@ -280,28 +280,48 @@ function webFactorSet(device) {
  * 
  * @param {Boolean} firstShow
  * @param {JSEvent} event
+ * @param {String} [formName]
  *
  * @properties={typeid:24,uuid:"5F9F8E54-8AED-4C2B-8DDC-542AC91B0D40"}
  */
-function webStyleCSS(firstShow, event) {
-	if (firstShow && event instanceof JSEvent) {
-		var formName = event.getFormName()
+function webStyleCSS(firstShow, event, formName) {
+	if (event instanceof JSEvent) {
+		if (!formName) {
+			formName = event.getFormName()
+		}
 		var allElems = forms[formName].elements.allnames
 		var smForm = solutionModel.getForm(formName)
+		
+		var placeHolderElem = new Array()
+		var placeHolderText = new Array()
 		
 		for (var i = 0; i < allElems.length; i++) {
 			var elem = allElems[i]
 			var smElem = smForm.getComponent(elem)
 			
-			//subheader images
-			if (smElem && smElem.styleClass == 'gfx_subheader') {
-				plugins.WebClientUtils.setExtraCssClass(forms[formName].elements[elem], 'gfxSubHeader')
+			//only need to do the first time
+			if (firstShow) {
+				//subheader images
+				if (smElem && smElem.styleClass == 'gfx_subheader') {
+					plugins.WebClientUtils.setExtraCssClass(forms[formName].elements[elem], 'gfxSubHeader')
+				}
+				
+				//light boxes to delineate input field areas
+				if (smElem && smElem.styleClass == 'color_light') {
+					plugins.WebClientUtils.setExtraCssClass(forms[formName].elements[elem], 'gfxColorLight')
+				}
 			}
 			
-			//light boxes to delineate input field areas
-			if (smElem && smElem.styleClass == 'color_light') {
-				plugins.WebClientUtils.setExtraCssClass(forms[formName].elements[elem], 'gfxColorLight')
+			//check for place holder text
+			if (smElem && smElem.getDesignTimeProperty('placeholderText')) {
+				placeHolderElem.push(plugins.WebClientUtils.getElementMarkupId(forms[formName].elements[elem]))
+				placeHolderText.push(forms[formName].elements[elem].getDesignTimeProperty('placeholderText'))
 			}
+		}
+		
+		//set place holder text
+		if (placeHolderElem.length) {
+			plugins.WebClientUtils.executeClientSideJS('setPlaceHolders(' + JSON.stringify(placeHolderElem) + ',' + JSON.stringify(placeHolderText) + ');')
 		}
 	}
 }
