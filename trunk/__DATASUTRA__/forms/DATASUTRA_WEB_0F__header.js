@@ -444,7 +444,7 @@ function ACTION_space_change(event) {
 			navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID] && 
 			!navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].navigationItem.useFwList) {
 			
-			scopes.DS.webNavSwitchProgress(false)
+			scopes.DS.webBlockerCentered(false)
 		}
 		//prettify UL
 		else if (application.__parent__.navigationPrefs && navigationPrefs.byNavItemID && solutionPrefs.config.currentFormID) {
