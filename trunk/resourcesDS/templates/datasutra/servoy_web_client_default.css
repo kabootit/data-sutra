@@ -701,6 +701,58 @@ select:focus {
 		padding-top: 11px !important;
 	}
 }
+/* in data sutra tables, make the comboboxes not go outside the row's bounds*/
+div.tableviewcell[class*="CPS"] {
+	-moz-border-radius: 0px 0px 0px 0px !important;
+	-webkit-border-radius: 0px 0px 0px 0px !important;
+	border-radius: 0px 0px 0px 0px !important;
+	
+	box-shadow: 1px 1px 0px #EFEFEF !important;
+	
+	background-color: transparent !important;
+}
+tr[height*="18"] div.tableviewcell[class*="CPS"] {
+	height: 17px !important;
+}
+tr[height*="19"] div.tableviewcell[class*="CPS"] {
+	height: 18px !important;
+}
+tr[height*="20"] div.tableviewcell[class*="CPS"] {
+	height: 19px !important;
+}
+tr[height*="21"] div.tableviewcell[class*="CPS"] {
+	height: 20px !important;
+}
+tr[height*="22"] div.tableviewcell[class*="CPS"] {
+	height: 21px !important;
+}
+tr[height*="23"] div.tableviewcell[class*="CPS"] {
+	height: 22px !important;
+}
+tr[height*="24"] div.tableviewcell[class*="CPS"] {
+	height: 23px !important;
+}
+tr[height*="25"] div.tableviewcell[class*="CPS"] {
+	height: 24px !important;
+}
+tr[height*="26"] div.tableviewcell[class*="CPS"] {
+	height: 25px !important;
+}
+tr[height*="27"] div.tableviewcell[class*="CPS"] {
+	height: 26px !important;
+}
+tr[height*="28"] div.tableviewcell[class*="CPS"] {
+	height: 27px !important;
+}
+tr[height*="29"] div.tableviewcell[class*="CPS"] {
+	height: 27px !important;
+}
+tr[height*="30"] div.tableviewcell[class*="CPS"] {
+	height: 29px !important;
+}
+tr[height*="40"] div.tableviewcell[class*="CPS"] {
+	height: 39px !important;
+}
 
 /** Change the (contextual) menu-plugin style */
 .yuimenu {
