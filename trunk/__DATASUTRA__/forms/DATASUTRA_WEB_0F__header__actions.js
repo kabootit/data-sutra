@@ -159,6 +159,16 @@ function EDIT_cancel(event) {
  * @properties={typeid:24,uuid:"2670F1F7-F56F-4007-89D8-1EE733081CFC"}
  */
 function EDIT_elements() {
+	//add button allowed to work if something configured
+	if (navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].buttons.add) {
+		var addOK = true
+	}
+	
+	//action button allowed to work if something configured
+	if (navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].buttons.add) {
+		var actionOK = true
+	}
+	
 	//edit related stuff
 	elements.btn_edit.visible = !_editMode
 	elements.edit_save_divider.visible = _editMode
@@ -166,8 +176,8 @@ function EDIT_elements() {
 	elements.btn_cancel.visible = _editMode
 	
 	//other actions
-	elements.btn_create.enabled = !_editMode
-	elements.btn_actions.enabled = !_editMode
+	elements.btn_create.enabled = !_editMode || addOK
+	elements.btn_actions.enabled = !_editMode || actionOK
 	elements.btn_filters.enabled = !_editMode
 	elements.btn_reports.enabled = !_editMode
 	elements.btn_find.enabled = !_editMode
