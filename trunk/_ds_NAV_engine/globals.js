@@ -2457,7 +2457,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			listTabForm.elements.tab_content_B.tabIndex = navigationPrefs.byNavSetName.configPanes.itemsByName[prefName].listData.tabNumber
 			
 			//turn off spinny indicator
-			scopes.DS.webNavSwitchProgress(false)
+			scopes.DS.webBlockerCentered(false)
 		}
 		else {
 			//form not yet added, add to lists tab panel
@@ -2539,260 +2539,279 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 							(!navigationPrefs.byNavItemID[navigationItemID].listData.withButtons && (navSpecs.barItemAdd || navSpecs.barItemAction || navSpecs.barItemFilter || navSpecs.barItemReport))
 							) {
 							
-							//create new forms
-							var template = globals.NAV_universal_list_form_to_template(uniList)
-							var myForm = globals.NAV_universal_list_template_to_form(template,newFormName)
-							
-							//set datasource
-							myForm.serverName = serverName
-							myForm.tableName = tableName
-							
-							//set to use same foundset
-							var origForm = solutionModel.getForm(mainTab)
-							if (origForm.namedFoundSet) {
-								myForm.namedFoundSet = origForm.namedFoundSet
-							}
-							
-							//set events
-							myForm.onShow = solutionModel.getGlobalMethod('globals','NAV_universal_list_show')
-							myForm.onRecordSelection = solutionModel.getGlobalMethod('globals','NAV_universal_list_select')
-							if (!solutionPrefs.config.webClient) {
-								myForm.onRender = solutionModel.getGlobalMethod('globals','NAV_universal_list_render')
-								myForm.rowBGColorCalculation = 'globals.NAV_universal_list_row_background'
-							}
-							
-							//get the UL data and set it up
+							//get the UL data
 							var allULDisplays = navigationPrefs.byNavItemID[navigationItemID].universalList.displays
 							var initialUL = allULDisplays[allULDisplays.displayPosn].rawDisplay
 							
-							for (var i = 0; i < initialUL.length; i++) {
-								var lineItem = initialUL[i]
-								
-								//determine alignment
-								var horizAlign = 2
-								switch (lineItem.align) {
-									case 'left':
-										horizAlign = 2
-										break
-									case 'right':
-										horizAlign = 4
-										break
-									case 'center':
-										horizAlign = 0
-										break
-								}
-								
-								var fieldFormat = null
-								var fieldVL = null
-								
-								//determine format
-								if (lineItem.formatMask == 'Number' || lineItem.formatMask == 'Date') { // || lineItem.formatMask == 'Text') {
-									var fieldFormat = lineItem.format
-								}
-								else if (lineItem.formatMask == 'Valuelist') {
-									var fieldVL = lineItem.format
-								}	
-								
-								//TODO: check for better name
-								var nameNameField = (lineItem.rowDisplay[0].isField) ? lineItem.rowDisplay[0].value : lineItem.fieldName
-								
-								//TODO: error checking for contents of rawDisplay
-								if (!nameNameField) {
-									continue
-								}
-								
-								//create check field
-								if (lineItem.formatMask == 'Check') {
-									/** JSComponent*/
-									var myField = myForm.newCheck(
-													nameNameField,			//dataprovider
-													i,						//x
-													0,						//y
-													lineItem.width,			//width
-													20						//height
-												)
-								}
-								//create normal field
-								else {
-									var myField = myForm.newTextField(
-													nameNameField,			//dataprovider
-													i,						//x
-													0,						//y
-													lineItem.width,			//width
-													20						//height
-												)
-								}
-								
-								myField.name = application.getUUID().toString()
-//								myField.onFocusGained = solutionModel.getGlobalMethod('globals','NAV_universal_list_select__unhilite')
-								myField.anchors = SM_ANCHOR.ALL
-								myField.horizontalAlignment = horizAlign
-								myField.styleClass = 'universallist'
-								myField.editable = lineItem.editable
-								myField.selectOnEnter = false
-								myField.scrollbars = 0
-								myField.transparent = false
-								myField.text = (lineItem.header) ? lineItem.header : nameNameField
-								if (fieldFormat) {
-									myField.format = fieldFormat
-								}
-								if (fieldVL) {
-									myField.valuelist = solutionModel.getValueList(fieldVL)
-								}
-								//on right column, give a small margin
-								if (i == initialUL.length - 1) {
-									myField.margin = '0,4,0,4'
-								}
-								
-								if (lineItem.editable) {
-									myField.onRightClick = solutionModel.getGlobalMethod('globals','NAV_universal_list_edit')
-								}
-								else {
-									myField.onRightClick = solutionModel.getGlobalMethod('globals','NAV_universal_list_right_click')
-								}
+							//when ul not defined, throw in the pk so that field is at least clickable; if there is a pk
+							var datasource = forms[mainTab].foundset.getDataSource()
+							if (!initialUL && datasource) {
+								initialUL = [{
+										fieldName : solutionPrefs.repository.allFormsByTable[databaseManager.getDataSourceServerName(datasource)][databaseManager.getDataSourceTableName(datasource)].primaryKey,
+										header: 'Primary key',
+										width : 20,
+										editable : false,
+										rowDisplay : new Array({isField: false})
+									}]
 							}
 							
-							var dsNode = solutionModel.getDataSourceNode('db:/' + serverName + '/' + tableName)
-							
-							//width/height for favorite and arrow
-							var height = solutionPrefs.config.webClient ? 18 : 17
-							var width = solutionPrefs.config.webClient ? 15 : 12
-							
-							//add favorite column to universal list
-							if (solutionPrefs.access.accessControl && navSpecs.favoritable) {
-								//add calculation to show favorite star if hasn't been added already
-								var starCalc = dsNode.getCalculation('sutra_favorite_badge')
-								if (!starCalc) {
-									starCalc = dsNode.newCalculation(
-											['function sutra_favorite_badge() {',
-												'var badge = "";',
-												'var record = foundset.getRecord(currentRecordIndex);',
-												'function favExists (item) {',
-													'return item && item.datasource == record.getDataSource() && item.pk == record.getPKs()[0];',
-												'}',
-												//this is a favorite, we need some kind of image
-												'if (solutionPrefs.access.favorites.some(favExists)) {',
-													'badge += \'<html><center><img src="media:///\';',
-													
-													//web client
-													'if (solutionPrefs.config.webClient) {',
-														'badge += "btn_favorite_web_selected.png";',
+							if (initialUL) {
+								//create new forms
+								var template = globals.NAV_universal_list_form_to_template(uniList)
+								var myForm = globals.NAV_universal_list_template_to_form(template,newFormName)
+								
+								//set datasource
+								myForm.serverName = serverName
+								myForm.tableName = tableName
+								
+								//set to use same foundset
+								var origForm = solutionModel.getForm(mainTab)
+								if (origForm.namedFoundSet) {
+									myForm.namedFoundSet = origForm.namedFoundSet
+								}
+								
+								//set events
+								myForm.onShow = solutionModel.getGlobalMethod('globals','NAV_universal_list_show')
+								myForm.onRecordSelection = solutionModel.getGlobalMethod('globals','NAV_universal_list_select')
+								if (!solutionPrefs.config.webClient) {
+									myForm.onRender = solutionModel.getGlobalMethod('globals','NAV_universal_list_render')
+									myForm.rowBGColorCalculation = 'globals.NAV_universal_list_row_background'
+								}
+								
+								//set up UL data
+								for (var i = 0; i < initialUL.length; i++) {
+									var lineItem = initialUL[i]
+									
+									//determine alignment
+									var horizAlign = 2
+									switch (lineItem.align) {
+										case 'left':
+											horizAlign = 2
+											break
+										case 'right':
+											horizAlign = 4
+											break
+										case 'center':
+											horizAlign = 0
+											break
+									}
+									
+									var fieldFormat = null
+									var fieldVL = null
+									
+									//determine format
+									if (lineItem.formatMask == 'Number' || lineItem.formatMask == 'Date') { // || lineItem.formatMask == 'Text') {
+										var fieldFormat = lineItem.format
+									}
+									else if (lineItem.formatMask == 'Valuelist') {
+										var fieldVL = lineItem.format
+									}	
+									
+									//TODO: check for better name
+									var nameNameField = (lineItem.rowDisplay[0].isField) ? lineItem.rowDisplay[0].value : lineItem.fieldName
+									
+									//TODO: error checking for contents of rawDisplay
+									if (!nameNameField) {
+										continue
+									}
+									
+									//create check field
+									if (lineItem.formatMask == 'Check') {
+										/** JSComponent*/
+										var myField = myForm.newCheck(
+														nameNameField,			//dataprovider
+														i,						//x
+														0,						//y
+														lineItem.width,			//width
+														20						//height
+													)
+									}
+									//create normal field
+									else {
+										var myField = myForm.newTextField(
+														nameNameField,			//dataprovider
+														i,						//x
+														0,						//y
+														lineItem.width,			//width
+														20						//height
+													)
+									}
+									
+									myField.name = application.getUUID().toString()
+	//								myField.onFocusGained = solutionModel.getGlobalMethod('globals','NAV_universal_list_select__unhilite')
+									myField.anchors = SM_ANCHOR.ALL
+									myField.horizontalAlignment = horizAlign
+									myField.styleClass = 'universallist'
+									myField.editable = lineItem.editable
+									myField.selectOnEnter = false
+									myField.scrollbars = 0
+									myField.transparent = false
+									myField.text = (lineItem.header) ? lineItem.header : nameNameField
+									if (fieldFormat) {
+										myField.format = fieldFormat
+									}
+									if (fieldVL) {
+										myField.valuelist = solutionModel.getValueList(fieldVL)
+									}
+									//on right column, give a small margin
+									if (i == initialUL.length - 1) {
+										myField.margin = '0,4,0,4'
+									}
+									
+									if (lineItem.editable) {
+										myField.onRightClick = solutionModel.getGlobalMethod('globals','NAV_universal_list_edit')
+									}
+									else {
+										myField.onRightClick = solutionModel.getGlobalMethod('globals','NAV_universal_list_right_click')
+									}
+								}
+								
+								var dsNode = solutionModel.getDataSourceNode('db:/' + serverName + '/' + tableName)
+								
+								//width/height for favorite and arrow
+								var height = solutionPrefs.config.webClient ? 18 : 17
+								var width = solutionPrefs.config.webClient ? 15 : 12
+								
+								//add favorite column to universal list
+								if (solutionPrefs.access.accessControl && navSpecs.favoritable) {
+									//add calculation to show favorite star if hasn't been added already
+									var starCalc = dsNode.getCalculation('sutra_favorite_badge')
+									if (!starCalc) {
+										starCalc = dsNode.newCalculation(
+												['function sutra_favorite_badge() {',
+													'var badge = "";',
+													'var record = foundset.getRecord(currentRecordIndex);',
+													'function favExists (item) {',
+														'return item && item.datasource == record.getDataSource() && item.pk == record.getPKs()[0];',
 													'}',
-													//smart client row is selected
-													'else if (foundset.getSelectedIndex() == foundset.getRecordIndex(record)) {',
-														'badge += "btn_favorite_selected.png";',
+													//this is a favorite, we need some kind of image
+													'if (solutionPrefs.access.favorites.some(favExists)) {',
+														'badge += \'<html><center><img src="media:///\';',
+														
+														//web client
+														'if (solutionPrefs.config.webClient) {',
+															'badge += "btn_favorite_web_selected.png";',
+														'}',
+														//smart client row is selected
+														'else if (foundset.getSelectedIndex() == foundset.getRecordIndex(record)) {',
+															'badge += "btn_favorite_selected.png";',
+														'}',
+														//smart client row is not selected
+														'else {',
+															'badge += "btn_favorite_unselected.png";',
+														'}',
+														'badge += \'" width=15 height=20></center>\';',
 													'}',
-													//smart client row is not selected
-													'else {',
-														'badge += "btn_favorite_unselected.png";',
-													'}',
-													'badge += \'" width=15 height=20></center>\';',
-												'}',
+													'return badge;',
+												'}'].join('')
+											)
+									}
+									
+									var starField = myForm.newLabel(
+														'',						//text on label
+														i++,					//x
+														0,						//y
+														(solutionPrefs.config.webClient ? 25 : 23),						//width
+														20						//height
+													)
+						
+									starField.name = 'sutra_favorite_badge'
+									starField.dataProviderID = 'sutra_favorite_badge'
+									starField.onAction = solutionModel.getGlobalMethod('globals','NAV_universal_list_favorite')
+									starField.onRightClick = solutionModel.getGlobalMethod('globals','NAV_universal_list_right_click')
+									starField.anchors = SM_ANCHOR.DEFAULT
+									starField.horizontalAlignment = SM_ALIGNMENT.LEFT
+									starField.styleClass = 'universallist'
+									starField.borderType = 'EmptyBorder,0,0,0,0'
+									starField.transparent = true
+									starField.displaysTags = true
+									starField.rolloverCursor = SM_CURSOR.HAND_CURSOR
+									//commented out because gets stuck on when updating a record
+	//								starField.rolloverImageMedia = solutionModel.getMedia('btn_favorite_rollover.png')
+									starField.toolTipText = 'Toggle favorite'//'%%sutra_favorite_tooltip%%'
+									starField.showClick = false
+									var headStar = solutionPrefs.config.webClient ? 'btn_favorite_web_selected.png' : 'btn_favorite_dark.png'
+									starField.text = '<html><center><img src="media:///' + headStar + '" width=' + width + ' height=' + height + '></center>'
+										
+									//override sort on form so that will toggle favorite mode on off for this field
+									myForm.onSortCmd = solutionModel.getGlobalMethod('globals','NAV_universal_list_sort')
+								}
+								
+								//add detail button for workflow when in maximized list view
+								var detailView = myForm.newLabel(
+													'',						//text on label
+													i++,					//x
+													0,						//y
+													(solutionPrefs.config.webClient ? 25 : 24),					//width
+													20						//height
+												)
+								
+								var detailCalc = dsNode.getCalculation('sutra_detail_view')
+								if (!detailCalc) {
+									detailCalc = dsNode.newCalculation(
+											['function sutra_detail_view() {',
+												'var badge = \'<html><center><img src="media:///\';',
+												'badge += "arrow_white_right_over.png";',
+												'badge += \'" width=20 height=20></center>\';',
 												'return badge;',
 											'}'].join('')
 										)
 								}
 								
-								var starField = myForm.newLabel(
-													'',						//text on label
-													i++,					//x
-													0,						//y
-													(solutionPrefs.config.webClient ? 25 : 23),						//width
-													20						//height
-												)
-					
-								starField.name = 'sutra_favorite_badge'
-								starField.dataProviderID = 'sutra_favorite_badge'
-								starField.onAction = solutionModel.getGlobalMethod('globals','NAV_universal_list_favorite')
-								starField.onRightClick = solutionModel.getGlobalMethod('globals','NAV_universal_list_right_click')
-								starField.anchors = SM_ANCHOR.DEFAULT
-								starField.horizontalAlignment = SM_ALIGNMENT.LEFT
-								starField.styleClass = 'universallist'
-								starField.borderType = 'EmptyBorder,0,0,0,0'
-								starField.transparent = true
-								starField.displaysTags = true
-								starField.rolloverCursor = SM_CURSOR.HAND_CURSOR
-								//commented out because gets stuck on when updating a record
-//								starField.rolloverImageMedia = solutionModel.getMedia('btn_favorite_rollover.png')
-								starField.toolTipText = 'Toggle favorite'//'%%sutra_favorite_tooltip%%'
-								starField.showClick = false
-								var headStar = solutionPrefs.config.webClient ? 'btn_favorite_web_selected.png' : 'btn_favorite_dark.png'
-								starField.text = '<html><center><img src="media:///' + headStar + '" width=' + width + ' height=' + height + '></center>'
-									
-								//override sort on form so that will toggle favorite mode on off for this field
-								myForm.onSortCmd = solutionModel.getGlobalMethod('globals','NAV_universal_list_sort')
-							}
-							
-							//add detail button for workflow when in maximized list view
-							var detailView = myForm.newLabel(
-												'',						//text on label
-												i++,					//x
-												0,						//y
-												(solutionPrefs.config.webClient ? 25 : 24),					//width
-												20						//height
-											)
-							
-							var detailCalc = dsNode.getCalculation('sutra_detail_view')
-							if (!detailCalc) {
-								detailCalc = dsNode.newCalculation(
-										['function sutra_detail_view() {',
-											'var badge = \'<html><center><img src="media:///\';',
-											'badge += "arrow_white_right_over.png";',
-											'badge += \'" width=20 height=20></center>\';',
-											'return badge;',
-										'}'].join('')
-									)
-							}
-							
-							detailView.name = 'sutra_detail_view'
-							detailView.dataProviderID = 'sutra_detail_view'
-							detailView.onAction = solutionModel.getGlobalMethod('globals','NAV_universal_list_detail_view')
-							detailView.anchors = SM_ANCHOR.DEFAULT
-							detailView.horizontalAlignment = SM_ALIGNMENT.LEFT
-							detailView.styleClass = 'universallist'
-							detailView.borderType = 'EmptyBorder,0,0,0,0'
-							detailView.transparent = true
-							detailView.displaysTags = true
-							detailView.rolloverCursor = SM_CURSOR.HAND_CURSOR
-							detailView.toolTipText = 'View details'
-							detailView.showClick = false
-							detailView.text = '<html><center><img src="media:///arrow_white_right_over.png" width=' + height + ' height=' + height + '></center>'
-							detailView.visible = solutionPrefs.config.activeSpace == 'workflow flip'
-							
-							//assign the secondary form to the main UL with buttons
-							if (navSpecs.barItemAdd || navSpecs.barItemAction || navSpecs.barItemFilter || navSpecs.barItemReport) {
-								forms[navListButtons].elements.tab_ul.addTab(forms[newFormName],'UL Records',null,null,null,null)
-								navigationPrefs.byNavItemID[navigationItemID].listData.withButtons = true
-								navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber = forms[navListButtons].elements.tab_ul.getMaxTabIndex()
-							}
-							//assign the secondary form to the main UL without buttons
-							else {
-								forms[navListButtonsNo].elements.tab_ul.addTab(forms[newFormName],'UL Records',null,null,null,null)
-								navigationPrefs.byNavItemID[navigationItemID].listData.withButtons = false
-								navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber = forms[navListButtonsNo].elements.tab_ul.getMaxTabIndex()
-							}
-							
-							//save status info
-							navigationPrefs.byNavItemID[navigationItemID].listData.tabFormInstance = newFormName
-							navigationPrefs.byNavItemID[navigationItemID].listData.dateAdded = application.getServerTimeStamp()
-							
-							//only switch to this tab if not on any of the developer modes
-							if (!designMode) {
-								if (navigationPrefs.byNavItemID[navigationItemID].listData.withButtons) {
-									forms[navButtons].FORM_on_show()
-									listTabForm.elements.tab_content_B.tabIndex = 2
-									forms[navListButtons].elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber
+								detailView.name = 'sutra_detail_view'
+								detailView.dataProviderID = 'sutra_detail_view'
+								detailView.onAction = solutionModel.getGlobalMethod('globals','NAV_universal_list_detail_view')
+								detailView.anchors = SM_ANCHOR.DEFAULT
+								detailView.horizontalAlignment = SM_ALIGNMENT.LEFT
+								detailView.styleClass = 'universallist'
+								detailView.borderType = 'EmptyBorder,0,0,0,0'
+								detailView.transparent = true
+								detailView.displaysTags = true
+								detailView.rolloverCursor = SM_CURSOR.HAND_CURSOR
+								detailView.toolTipText = 'View details'
+								detailView.showClick = false
+								detailView.text = '<html><center><img src="media:///arrow_white_right_over.png" width=' + height + ' height=' + height + '></center>'
+								detailView.visible = solutionPrefs.config.activeSpace == 'workflow flip'
+								
+								//assign the secondary form to the main UL with buttons
+								if (navSpecs.barItemAdd || navSpecs.barItemAction || navSpecs.barItemFilter || navSpecs.barItemReport) {
+									forms[navListButtons].elements.tab_ul.addTab(forms[newFormName],'UL Records',null,null,null,null)
+									navigationPrefs.byNavItemID[navigationItemID].listData.withButtons = true
+									navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber = forms[navListButtons].elements.tab_ul.getMaxTabIndex()
 								}
+								//assign the secondary form to the main UL without buttons
 								else {
-									forms[navButtonsNo].FORM_on_show()
-									listTabForm.elements.tab_content_B.tabIndex = 3
-									forms[navListButtonsNo].elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber
+									forms[navListButtonsNo].elements.tab_ul.addTab(forms[newFormName],'UL Records',null,null,null,null)
+									navigationPrefs.byNavItemID[navigationItemID].listData.withButtons = false
+									navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber = forms[navListButtonsNo].elements.tab_ul.getMaxTabIndex()
+								}
+								
+								//save status info
+								navigationPrefs.byNavItemID[navigationItemID].listData.tabFormInstance = newFormName
+								navigationPrefs.byNavItemID[navigationItemID].listData.dateAdded = application.getServerTimeStamp()
+								
+								//only switch to this tab if not on any of the developer modes
+								if (!designMode) {
+									if (navigationPrefs.byNavItemID[navigationItemID].listData.withButtons) {
+										forms[navButtons].FORM_on_show()
+										listTabForm.elements.tab_content_B.tabIndex = 2
+										forms[navListButtons].elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber
+									}
+									else {
+										forms[navButtonsNo].FORM_on_show()
+										listTabForm.elements.tab_content_B.tabIndex = 3
+										forms[navListButtonsNo].elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber
+									}
+								}
+								//fire form on show to illiminate flicker when eventually shown
+								else {
+								//	forms[newFormName].FORM_on_show()
 								}
 							}
-							//fire form on show to illiminate flicker when eventually shown
-							else {
-							//	forms[newFormName].FORM_on_show()
-							}
+						}
+						//UL not configured yet...blank tab
+						else {
+							listTabForm.elements.tab_content_B.tabIndex = 1
 						}
 					}
 				}
@@ -2814,7 +2833,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 					}
 					
 					//turn off spinny indicator
-					scopes.DS.webNavSwitchProgress(false)
+					scopes.DS.webBlockerCentered(false)
 				}
 				
 				scopes.DS.webULPrettify()
@@ -2824,7 +2843,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 				listTabForm.elements.tab_content_B.tabIndex = 1
 				
 				//turn off spinny indicator
-				scopes.DS.webNavSwitchProgress(false)
+				scopes.DS.webBlockerCentered(false)
 			}
 			//form already exists, set tab index
 			else if (!designList) {
@@ -2860,7 +2879,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 						listTabForm.elements.tab_content_B.tabIndex = navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber
 						
 						//turn off spinny indicator
-						scopes.DS.webNavSwitchProgress(false)
+						scopes.DS.webBlockerCentered(false)
 					}
 				}
 			}
@@ -4507,113 +4526,156 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 				
 				//if form not already defined, define
 				if (!forms[newFormName]) {
-					//create new forms
-					var template = globals.NAV_universal_list_form_to_template(uniList)
-					var myForm = globals.NAV_universal_list_template_to_form(template,newFormName)
-					
-					//set datasource
-					myForm.serverName = serverName
-					myForm.tableName = tableName
-					
-					//set events
-					myForm.onShow = solutionModel.getGlobalMethod('NAV_universal_list_show')
-					myForm.onRecordSelection = solutionModel.getGlobalMethod('NAV_universal_list_select')
-					if (!solutionPrefs.config.webClient) {
-						myForm.onRender = solutionModel.getGlobalMethod('NAV_universal_list_render')
-						myForm.rowBGColorCalculation = 'globals.NAV_universal_list_row_background'
-					}
-					
-					//get the UL data and set it up
+					//get the UL data
 					var allULDisplays = navigationPrefs.byNavItemID[prefNavID].universalList.displays
 					var initialUL = allULDisplays[allULDisplays.displayPosn].rawDisplay
 					
-					for (var i = 0; i < initialUL.length; i++) {
-						var lineItem = initialUL[i]
-						
-						//determine alignment
-						var horizAlign = 2
-						switch (lineItem.align) {
-							case 'left':
-								horizAlign = 2
-								break
-							case 'right':
-								horizAlign = 4
-								break
-							case 'center':
-								horizAlign = 0
-								break
-						}
-						
-						var fieldFormat = null
-						var fieldVL = null
-						
-						//determine format
-						if (lineItem.formatMask == 'Number' || lineItem.formatMask == 'Date') { // || lineItem.formatMask == 'Text') {
-							var fieldFormat = lineItem.format
-						}
-						else if (lineItem.formatMask == 'Valuelist') {
-							var fieldVL = lineItem.format
-						}	
-						
-						//TODO: check for better name
-						var nameNameField = (lineItem.rowDisplay[0].isField) ? lineItem.rowDisplay[0].value : lineItem.fieldName
-						
-						//TODO: error checking for contents of rawDisplay
-						if (!nameNameField) {
-							continue
-						}
-						
-						//create field
-						var myField = myForm.newTextField(
-										nameNameField,			//dataprovider
-										i,						//x
-										0,						//y
-										lineItem.width,			//width
-										20						//height
-									)
-						
-//						myField.setOnFocusGainedMethod(globals.NAV_universal_list_select__unhilite)		
-						myField.anchors = SM_ANCHOR.ALL
-						myField.horizontalAlignment = horizAlign
-						myField.styleClass = 'universallist'
-						myField.editable = false
-						myField.scrollbars = 0
-						myField.transparent = false
-						myField.text = (lineItem.header) ? lineItem.header : nameNameField
-						if (fieldFormat) {
-							myField.format = fieldFormat
-						}
-						if (fieldVL) {
-							myField.valuelist = solutionModel.getValueList(fieldVL)
-						}
+					//when ul not defined, throw in the pk so that field is at least clickable; if there is a pk
+					var datasource = forms[mainTab].foundset.getDataSource()
+					if (!initialUL && datasource) {
+						initialUL = [{
+								fieldName : solutionPrefs.repository.allFormsByTable[databaseManager.getDataSourceServerName(datasource)][databaseManager.getDataSourceTableName(datasource)].primaryKey,
+								header: 'Primary key',
+								width : 20,
+								editable : false,
+								rowDisplay : new Array({isField: false})
+							}]
 					}
 					
-					//assign the secondary form to the main UL with buttons
-					if (navSpecs.barItemAdd || navSpecs.barItemAction || navSpecs.barItemFilter || navSpecs.barItemReport) {
-						forms[navListButtons].elements.tab_ul.addTab(forms[newFormName],'Prefs',null,null,null,null)
-						navigationPrefs.byNavItemID[prefNavID].listData.withButtons = true
-						navigationPrefs.byNavItemID[prefNavID].listData.tabNumber = forms[navListButtons].elements.tab_ul.getMaxTabIndex()
+					if (initialUL) {
+						//create new forms
+						var template = globals.NAV_universal_list_form_to_template(uniList)
+						var myForm = globals.NAV_universal_list_template_to_form(template,newFormName)
 						
-						//switch to this tab
-						forms[navButtons].FORM_on_show(true)
-						listTabForm.elements.tab_content_B.tabIndex = 2
-						forms[navListButtons].elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[prefNavID].listData.tabNumber
-					}
-					//assign the secondary form to the main UL without buttons
-					else {
-						forms[navListButtonsNo].elements.tab_ul.addTab(forms[newFormName],'Prefs',null,null,null,null)
-						navigationPrefs.byNavItemID[prefNavID].listData.withButtons = false
-						navigationPrefs.byNavItemID[prefNavID].listData.tabNumber = forms[navListButtonsNo].elements.tab_ul.getMaxTabIndex()
+						//set datasource
+						myForm.serverName = serverName
+						myForm.tableName = tableName
 						
-						//switch to this tab
-						forms[navButtonsNo].FORM_on_show(true)
-						listTabForm.elements.tab_content_B.tabIndex = 2
-						forms[navListButtonsNo].elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[prefNavID].listData.tabNumber
+						//set events
+						myForm.onShow = solutionModel.getGlobalMethod('NAV_universal_list_show')
+						myForm.onRecordSelection = solutionModel.getGlobalMethod('NAV_universal_list_select')
+						if (!solutionPrefs.config.webClient) {
+							myForm.onRender = solutionModel.getGlobalMethod('NAV_universal_list_render')
+							myForm.rowBGColorCalculation = 'globals.NAV_universal_list_row_background'
+						}
+						
+						//set up UL data
+						for (var i = 0; i < initialUL.length; i++) {
+							var lineItem = initialUL[i]
+							
+							//determine alignment
+							var horizAlign = 2
+							switch (lineItem.align) {
+								case 'left':
+									horizAlign = 2
+									break
+								case 'right':
+									horizAlign = 4
+									break
+								case 'center':
+									horizAlign = 0
+									break
+							}
+							
+							var fieldFormat = null
+							var fieldVL = null
+							
+							//determine format
+							if (lineItem.formatMask == 'Number' || lineItem.formatMask == 'Date') { // || lineItem.formatMask == 'Text') {
+								var fieldFormat = lineItem.format
+							}
+							else if (lineItem.formatMask == 'Valuelist') {
+								var fieldVL = lineItem.format
+							}	
+							
+							//TODO: check for better name
+							var nameNameField = (lineItem.rowDisplay[0].isField) ? lineItem.rowDisplay[0].value : lineItem.fieldName
+							
+							//TODO: error checking for contents of rawDisplay
+							if (!nameNameField) {
+								continue
+							}
+							
+							//create check field
+							if (lineItem.formatMask == 'Check') {
+								var myField = myForm.newCheck(
+												nameNameField,			//dataprovider
+												i,						//x
+												0,						//y
+												lineItem.width,			//width
+												20						//height
+											)
+							}
+							//create normal field
+							else {
+								var myField = myForm.newTextField(
+												nameNameField,			//dataprovider
+												i,						//x
+												0,						//y
+												lineItem.width,			//width
+												20						//height
+											)
+							}
+							
+							myField.name = application.getUUID().toString()
+	//						myField.setOnFocusGainedMethod(globals.NAV_universal_list_select__unhilite)		
+							myField.anchors = SM_ANCHOR.ALL
+							myField.horizontalAlignment = horizAlign
+							myField.styleClass = 'universallist'
+							myField.editable = lineItem.editable
+							myField.scrollbars = 0
+							myField.transparent = true
+							myField.text = (lineItem.header) ? lineItem.header : nameNameField
+							if (fieldFormat) {
+								myField.format = fieldFormat
+							}
+							if (fieldVL) {
+								myField.valuelist = solutionModel.getValueList(fieldVL)
+							}
+							//on right column, give a small margin
+							if (i == initialUL.length - 1) {
+								myField.margin = '0,4,0,4'
+							}
+							
+							if (lineItem.editable) {
+								myField.onRightClick = solutionModel.getGlobalMethod('globals','NAV_universal_list_edit')
+							}
+							else {
+								myField.onRightClick = solutionModel.getGlobalMethod('globals','NAV_universal_list_right_click')
+							}
+						}
+						
+						//assign the secondary form to the main UL with buttons
+						if (navSpecs.barItemAdd || navSpecs.barItemAction || navSpecs.barItemFilter || navSpecs.barItemReport) {
+							forms[navListButtons].elements.tab_ul.addTab(forms[newFormName],'Prefs',null,null,null,null)
+							navigationPrefs.byNavItemID[prefNavID].listData.withButtons = true
+							navigationPrefs.byNavItemID[prefNavID].listData.tabNumber = forms[navListButtons].elements.tab_ul.getMaxTabIndex()
+							
+							//switch to this tab
+							forms[navButtons].FORM_on_show(true)
+							listTabForm.elements.tab_content_B.tabIndex = 2
+							forms[navListButtons].elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[prefNavID].listData.tabNumber
+						}
+						//assign the secondary form to the main UL without buttons
+						else {
+							forms[navListButtonsNo].elements.tab_ul.addTab(forms[newFormName],'Prefs',null,null,null,null)
+							navigationPrefs.byNavItemID[prefNavID].listData.withButtons = false
+							navigationPrefs.byNavItemID[prefNavID].listData.tabNumber = forms[navListButtonsNo].elements.tab_ul.getMaxTabIndex()
+							
+							//switch to this tab
+							forms[navButtonsNo].FORM_on_show(true)
+							listTabForm.elements.tab_content_B.tabIndex = 2
+							forms[navListButtonsNo].elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[prefNavID].listData.tabNumber
+						}
+						
+						//save status info
+						navigationPrefs.byNavItemID[prefNavID].listData.tabFormInstance = newFormName
+						navigationPrefs.byNavItemID[prefNavID].listData.dateAdded = application.getServerTimeStamp()
 					}
-					
-					//save status info
-					navigationPrefs.byNavItemID[prefNavID].listData.tabFormInstance = newFormName
-					navigationPrefs.byNavItemID[prefNavID].listData.dateAdded = application.getServerTimeStamp()
+				}
+				//UL not configured yet...blank tab
+				else {
+					listTabForm.elements.tab_content_B.tabIndex = 1
 				}
 			}
 		}
