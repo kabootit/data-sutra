@@ -719,6 +719,7 @@ if (globals.AC_login_user && globals.AC_login_password) {
 			}
 
 	//sort parameter
+	globals.CODE_ddarray_sort = 'asc'
 	globals.CODE_ddarray_field = 'filterScope'
 
 	//loop over four types of filters, create object representation
