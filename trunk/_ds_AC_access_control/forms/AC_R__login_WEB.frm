@@ -46,6 +46,9 @@ uuid:"27C2EC04-0655-4DA6-B583-ED0AB954CBBF",
 visible:false
 },
 {
+customProperties:"design:{
+placeholderText:\"'Password'\"
+}",
 dataProviderID:"_newPass",
 displayType:6,
 location:"100,430",
@@ -137,6 +140,9 @@ typeid:7,
 uuid:"8D9E6540-62FE-43B4-8789-D979A63F9623"
 },
 {
+customProperties:"design:{
+placeholderText:\"'Full name'\"
+}",
 dataProviderID:"_newName",
 location:"100,350",
 name:"var_newName",
@@ -150,6 +156,9 @@ uuid:"9566D0C0-01C5-41CC-B6BC-60C94B348895",
 visible:false
 },
 {
+customProperties:"design:{
+placeholderText:\"'Username / Email'\"
+}",
 dataProviderID:"_userName",
 location:"100,180",
 name:"var_userName",
@@ -181,6 +190,9 @@ typeid:19,
 uuid:"CEFB7BEB-61D9-455A-85C5-82FB8B01838A"
 },
 {
+customProperties:"design:{
+placeholderText:\"'Password'\"
+}",
 dataProviderID:"_userPass",
 displayType:6,
 location:"100,220",
@@ -193,6 +205,9 @@ typeid:4,
 uuid:"DBB13E7B-1CE0-4450-8187-7DE7E8E6CA39"
 },
 {
+customProperties:"design:{
+placeholderText:\"'Email'\"
+}",
 dataProviderID:"_newUser",
 location:"100,390",
 name:"var_newUser",

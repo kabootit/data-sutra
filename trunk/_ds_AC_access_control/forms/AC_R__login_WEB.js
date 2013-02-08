@@ -20,7 +20,7 @@ var _focusPass = false;
  * 
  * @properties={typeid:35,uuid:"4143AA32-A679-4966-A6B4-24BF238B20C5",variableType:-4}
  */
-var _createAccount = true;
+var _createAccount = false;
 
 /**
  * @type {Number}
@@ -285,23 +285,10 @@ function FORM_on_show(firstShow, event) {
 		
 		_shown = true
 	}
-	
-	//fill place holder texts
-	var elems = [
-		plugins.WebClientUtils.getElementMarkupId(elements.var_userName),
-		plugins.WebClientUtils.getElementMarkupId(elements.var_userPass),
-		plugins.WebClientUtils.getElementMarkupId(elements.var_newName),
-		plugins.WebClientUtils.getElementMarkupId(elements.var_newUser),
-		plugins.WebClientUtils.getElementMarkupId(elements.var_newPass)
-	]
-	var texts = [
-		'Username / Email',
-		'Password',
-		'Full name',
-		'Email',
-		'Password'
-	]
-	plugins.WebClientUtils.executeClientSideJS('setPlaceHolders(' + JSON.stringify(elems) + ',' + JSON.stringify(texts) + ');')
+	//fill place holder texts on 2nd and subsequent visits
+	else {
+		scopes.DS.webStyleCSS(false,new JSEvent(),controller.getName())
+	}
 	
 	//turn off auto-capitalize on iOS and set to use email keyboard (<-- this breaks servoys tie-in)
 	var id = plugins.WebClientUtils.getElementMarkupId(elements.var_userName)
