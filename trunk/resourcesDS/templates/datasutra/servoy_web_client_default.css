@@ -297,6 +297,9 @@ td
 		height: 20px;
 	}
 }
+.ie td {
+	height: 20px;
+}
 
 textarea
 {
@@ -404,6 +407,10 @@ tr.headerbuttons
 		height: 16px;
 		line-height: 16px;
 	}
+}
+.ie tr.headerbuttons td {
+	height: 16px;
+	line-height: 16px;
 }
 
 /** Change the pagination */
@@ -701,6 +708,10 @@ select:focus {
 	div[class*="CPS"][style*="height:40"] select {
 		padding-top: 11px !important;
 	}
+}
+.ie select {
+	width:125% !important;
+	*width:100% !important;
 }
 /* in data sutra tables, make the comboboxes not go outside the row's bounds*/
 div.tableviewcell[class*="CPS"] {

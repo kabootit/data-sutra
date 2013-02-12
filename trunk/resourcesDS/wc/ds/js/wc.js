@@ -22,7 +22,6 @@ if (typeof(DS) == "undefined") {
 	DS = new Object();
 	DS.timer = new Object();
 }
-	
 
 //	Center the login form
 function centerForm(formName) {
@@ -354,6 +353,18 @@ switch (dsFactor()) {
 	 	};
 	},1000)
 })(jQuery);
+
+//  Add extra class to html tag when this is ie	
+(function(){
+	//should be var isIE = /*@cc_on!@*/false, but may get removed during minification
+	var isIE = eval("/*@cc_on!@*/!1");
+	
+	if (isIE) {
+		setTimeout(function(){
+			$('html').addClass('ie');
+		},1500)
+	}
+})();
 
 //  Pump in extra stylesheets at the end of head so that overwrite existing 
 (function(){
