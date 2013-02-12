@@ -5467,6 +5467,9 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 	//call to switch around the iframe
 	var routerCall = 'window.parent.routerReplace'
 	
+	//what is this solution called
+	var appName = forms.DATASUTRA_0F_solution__blank_4.solution_name || 'Data Sutra'
+	
 	//check history for form
 	function historyCheck(formName) {
 		var location = history.getCurrentIndex()
@@ -5644,14 +5647,14 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 			}
 			//no url specified and still not logged in, redirect again
 			else if (url.set == 'DSError_NoURL') {
-				plugins.WebClientUtils.executeClientSideJS(routerCall + '(null,"Data Sutra","' + getURL('login') + '");')
+				plugins.WebClientUtils.executeClientSideJS(routerCall + '(null,"' + appName + '","' + getURL('login') + '");')
 				return
 			}
 		}
 		// specific navitem requested, go to login page first
 		else if (!(url.set == 'DSLogin' || url.set == 'DSLoginSmall')) {
 			if (pathName != prefix + 'login') {
-				plugins.WebClientUtils.executeClientSideJS(routerCall + '(null,"Data Sutra","' + getURL('login') + '");')
+				plugins.WebClientUtils.executeClientSideJS(routerCall + '(null,"' + appName + '","' + getURL('login') + '");')
 			}
 			//we've run once
 			globals.DATASUTRA_router_firstRun = true
