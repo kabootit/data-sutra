@@ -151,15 +151,34 @@ function triggerAjaxUpdate() {
 function routerDelay(p1,p2,p3,p4) {
 	setTimeout(function(){
 		History.pushState(p1,p2,p3)
+		
+		googleAnalytics()
 	},p4);
 }
 
 function routerReplace(p1,p2,p3) {
 	History.replaceState(p1,p2,p3)
+	
+	googleAnalytics()
 }
 
 function reloadPage() {
 	setTimeout(function(){window.location.reload(true)},2500);
+}
+
+// Inform Google Analytics of page change
+	//see discussion (especially comments) https://gist.github.com/balupton/854622
+function googleAnalytics() {
+	//old way (footer include)
+	if (typeof window.pageTracker !== 'undefined') {
+		window.pageTracker._trackPageview(History.getState().url.replace(History.getRootUrl(),''));
+	}
+	//new way (header include) steps on servoy's toes
+	else if (typeof window._gaq !== 'undefined' ) {
+		window._gaq.push(['_trackPageview', History.getState().url.replace(History.getRootUrl(),'')]);
+	}
+	
+	// console.log(History.getState().url.replace(History.getRootUrl(),''));
 }
 
 // use iframe to drive servoy webclient
