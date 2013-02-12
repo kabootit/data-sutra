@@ -290,6 +290,7 @@ td
 {
 	height: 16px;
 	line-height: 16px;
+	vertical-align: top;
 }
 @-moz-document url-prefix() {
 	td { 
