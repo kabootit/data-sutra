@@ -187,6 +187,25 @@ function bigIndicator(toggle,delay) {
 switch (dsFactor()) {
 	// Hook servoy's indicator to the mouse location when running in Desktop moode
 	case 'Desktop':
+		//adjust report preview window to fill available screen real estate
+		setTimeout(function(){
+			function resizeReport() {
+				//150px box-shadow, 100px space away from the edge
+				var width = $(window).width() - 200;
+				var height = $(window).height() - 100;
+				
+				var report = $('#report', window.parent.document)
+				
+				report.width(width)
+				report.css('margin-left','-' + width / 2 + 'px')
+				report.height(height)
+				
+				// console.log("report size: " + width + 'x' + height);
+			}
+			$('body').on('resize', null, $.debounce(300,resizeReport));
+			resizeReport()
+		},1500)
+		
 		//track location of mouse cursor
 			//MEMO: used for indicator, but also for right-click in table views
 		setTimeout(function(){

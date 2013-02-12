@@ -50,9 +50,11 @@ body {
 	margin-left: -500px;
 	width: 1000px;
 	height: 90%;
+	overflow: visible;
 	background-color: #EEE;
 	color: #333;
-	border: 1px solid #202020;
+	border-top-right-radius: 10px;
+	border-bottom-left-radius: 10px;
 	box-shadow: #202020 0 0 75px;
 	-webkit-box-shadow: #202020 0 0 75px;
 	-moz-box-shadow: #202020 0 0 75px;

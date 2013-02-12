@@ -705,7 +705,7 @@ html[dir='ltr'] .splitToolbarButton:first-child,
 html[dir='ltr'] .toolbarButton:first-child,
 html[dir='rtl'] .splitToolbarButton:last-child,
 html[dir='rtl'] .toolbarButton:last-child {
-  margin-left: 4px;
+  margin-left: 14px;
 }
 html[dir='ltr'] .splitToolbarButton:last-child,
 html[dir='ltr'] .toolbarButton:last-child,
@@ -1428,3 +1428,9 @@ canvas {
   }
 }
 
+html, #toolbarViewer {
+	border-top-right-radius: 10px;
+}
+html {
+	border-bottom-left-radius: 9px;
+}

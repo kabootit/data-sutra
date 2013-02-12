@@ -13,7 +13,6 @@ div.check div label {
 }
 
 #report {
-	overflow: auto;
 	-webkit-overflow-scrolling: touch;
 }
 

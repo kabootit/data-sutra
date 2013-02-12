@@ -34,7 +34,7 @@ function printLoad(input) {
 		// '<embed width="100%" height="100%" name="plugin" src="/reports/' + printFile.getName() + '" type="application/pdf">'
 		
 		var wcWindow = swcWindow();
-		var pdfJS = false;
+		var pdfJS = true;
 		
 		var reportContent = document.getElementById('content');
 		
