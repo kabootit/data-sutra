@@ -95,11 +95,8 @@ uuid:"72EA8B74-3453-4FB4-A783-DDEA92A8FB52",
 visible:false
 },
 {
-anchors:0,
 extendsID:"6FD1ED0C-5B3C-432F-81AA-A19CFFCE62FE",
 location:"360,150",
-size:"300,30",
-text:"Sign in",
 typeid:7,
 uuid:"75C1D89E-2BA9-4F55-8EA8-EC65C539861D"
 },
