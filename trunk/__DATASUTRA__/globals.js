@@ -2693,7 +2693,7 @@ function DS_sidebar_toggle(sideToggle, sideWidth, sideExpand)
 		
 		//show center indicator when opening/closing sidebar
 		if (webClient) {
-			scopes.DS.webNavSwitchProgress(true)
+			scopes.DS.webBlockerCentered(true)
 		}
 		
 		//toggle on
@@ -2793,7 +2793,7 @@ function DS_sidebar_toggle(sideToggle, sideWidth, sideExpand)
 		
 		//turn off center spinny
 		if (webClient) {
-			scopes.DS.webNavSwitchProgress(false,300)
+			scopes.DS.webBlockerCentered(false,300)
 		}
 	}
 }
