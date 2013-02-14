@@ -138,13 +138,14 @@ var addToHome = (function (w) {
 			for ( i = 0, l = icons.length; i < l; i++ ) {
 				sizes = icons[i].getAttribute('sizes');
 
-				if ( sizes ) {
-					if ( isRetina && sizes == '114x114' ) {
+				if ( isRetina && sizes ) {
+					if ( sizes == '114x114' || sizes == '144x144' ) {
 						touchIcon = icons[i].href;
 						break;
 					}
 				} else {
 					touchIcon = icons[i].href;
+					break;
 				}
 			}
 
@@ -341,11 +342,13 @@ var addToHome = (function (w) {
 	}
 
 	// Bootstrap!
-	init();
+	// init();
 
 	return {
 		show: manualShow,
 		close: close,
-		reset: reset
+		reset: reset,
+		//DS: TSE allow to update with name of app after loaded
+		init: init
 	};
 })(window);
