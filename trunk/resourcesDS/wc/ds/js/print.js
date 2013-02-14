@@ -15,6 +15,28 @@
  *	This file is for managing print preview.
  */
 
+// load dummy report to get library primed for future use
+function printInit() {
+	var reportContent = document.getElementById('content');
+	
+	//has not been inited yet
+	if (reportContent.innerHTML == "") {
+		//iframe to hold pdf.js stuff
+		var iframeHeader = document.createElement('IFRAME');
+		iframeHeader.id = 'report_pdf';
+		iframeHeader.name = 'report_pdf';
+		iframeHeader.src = '/js/lib/pdf.js/viewer.html?file=' + encodeURIComponent('/reports/blank.pdf');
+		iframeHeader.width = '100%';
+		iframeHeader.height = '100%';
+		iframeHeader.scrolling = 'no';
+		iframeHeader.frameBorder = 0;
+		iframeHeader.seamless = 'seamless';
+			
+		// iframe load
+		reportContent.appendChild(iframeHeader);
+	}
+}
+
 // close report frame and turn off blocker
 function printClose() {	
 	document.getElementById('blocker').style.display = 'none';

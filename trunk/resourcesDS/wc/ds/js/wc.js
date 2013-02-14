@@ -393,6 +393,13 @@ switch (dsFactor()) {
 	}
 })();
 
+//  Lazy load pdf.js library
+(function(){
+	setTimeout(function(){
+		window.parent.printInit();
+	},90000)
+})();
+
 //  Pump in extra stylesheets at the end of head so that overwrite existing 
 (function(){
 	var delayTime = 3500
