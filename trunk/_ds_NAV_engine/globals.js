@@ -3126,8 +3126,13 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		//turn off pulsating
 //		plugins.WebClientUtils.executeClientSideJS('pulseOff();')
 		
+		var customName = ''
+		if (solutionPrefs.config.solutionName && solutionPrefs.config.solutionName != 'Data Sutra') {
+			customName = 'window.parent.addToHomeConfig.message = "Tap %icon and then <strong>Add to Home Screen</strong> to install ' + solutionPrefs.config.solutionName + ' on your %device.";'
+		}
+		
 		//prompt to add to homescreen
-		plugins.WebClientUtils.executeClientSideJS('if (window.parent.addToHome) {window.top.History.replaceState(null,"Data Sutra",window.top.location.pathname);window.parent.addToHome.show();}')
+		plugins.WebClientUtils.executeClientSideJS('if (window.parent.addToHome) {' + customName + 'window.parent.addToHome.init();window.top.History.replaceState(null,"' + solutionPrefs.config.solutionName + '",window.top.location.pathname);window.parent.addToHome.show();}')
 		
 		//increase the size of loading please wait verbage on mobile phones when viewing the desktop version of data sutra
 		if (scopes.DS.deviceFactor == 'iPhone') {
