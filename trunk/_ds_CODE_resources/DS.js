@@ -388,20 +388,30 @@ function webULResizeMonitor() {
 }
 
 /**
- * @param {Boolean} [toggle=true]
- * @param {Number} delay
+ * @param {Boolean} [toggle=true] Status
+ * @param {Number}	[delay] How long to wait before executing
+ * @param {String}	[text] Text to display on blocker (default text is "Loading...").  Note: Keep text to 12 characters or less
  *
  * @properties={typeid:24,uuid:"A8A520A8-7B81-4974-805B-E7E3A49CFE3E"}
  */
-function webBlockerCentered(toggle,delay) {
+function webBlockerCentered(toggle,delay,text) {
 	if (solutionPrefs.config.webClient) {
 		if (typeof toggle != 'boolean') {
 			toggle = true
 		}
+		if (typeof delay != 'number') {
+			delay = 'null'
+		}
+		if (text) {
+			text = '"' + text + '"'
+		}
+		else {
+			text = 'null'
+		}
 		
 //		var fade = toggle ? 'fadeIn' : 'fadeOut'
 //		plugins.WebClientUtils.executeClientSideJS("$('#HUDcenter1')." + fade + "();")
-		plugins.WebClientUtils.executeClientSideJS("bigIndicator(" + (toggle ? 'true' : 'false') + "," + delay + ");")
+		plugins.WebClientUtils.executeClientSideJS("bigIndicator(" + (toggle ? 'true' : 'false') + "," + delay + "," + text + ");")
 	}
 }
 
