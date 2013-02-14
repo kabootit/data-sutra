@@ -70,7 +70,7 @@ function FORM_on_show(firstShow, event) {
 	plugins.WebClientUtils.executeClientSideJS('centerForm("' + controller.getName() + '");')
 	
 	// move indicator to beside the login button
-	plugins.WebClientUtils.executeClientSideJS('loginIndicator(500);')
+//	plugins.WebClientUtils.executeClientSideJS('loginIndicator(500);')
 }
 
 /**
