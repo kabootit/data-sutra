@@ -466,11 +466,11 @@ function INDICATOR(event) {
 	if (solutionPrefs.config.webClient) {
 		//put indicator next to sign up
 		if (event && utils.stringPatternCount(event.getElementName(),'new')) {
-//			plugins.WebClientUtils.executeClientSideJS('loginIndicator(true);')
+			plugins.WebClientUtils.executeClientSideJS('loginIndicator(true);')
 		}
 		//indicator next to sign in
 		else {
-//			plugins.WebClientUtils.executeClientSideJS('loginIndicator();')
+			plugins.WebClientUtils.executeClientSideJS('loginIndicator();')
 		}
 	}
 }
