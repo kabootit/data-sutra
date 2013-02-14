@@ -62,6 +62,9 @@ function FORM_on_show(firstShow, event) {
 	//put a bottom line on the fast find
 	plugins.WebClientUtils.executeClientSideJS('setTimeout(function(){$("#' + plugins.WebClientUtils.getElementMarkupId(elements.fld_find) + '").css("border-bottom","1px solid #E6E6E6")},0);')
 	
+	//attach big cursor for when find occurs
+	plugins.WebClientUtils.executeClientSideJS('$(".fastFind").keydown(function(event){if(event.which == 13){bigIndicator(true,0,"Finding...");}});')
+	
 	//enter the field
 	elements.fld_find.requestFocus()
 }

@@ -1446,9 +1446,13 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 						globals.TRIGGER_ul_refresh_all()
 					}
 				}
-				//update record navigator //if universal list not used
+				//if universal list not used
 				else {
+					//update record navigator 
 					globals.TRIGGER_toolbar_record_navigator_set()
+					
+					//make sure big blocker turned off (only an issue when no UL, but fast find)
+					scopes.DS.webBlockerCentered(false)
 				}
 			}
 			
