@@ -2709,6 +2709,9 @@ document.addEventListener('DOMContentLoaded', function webViewerLoad(evt) {
 
   //DS: TSE hard code to not show open file button
   document.getElementById('openFile').setAttribute('hidden', 'true');
+  
+  //DS: TSE hard code to not show bookmark button
+  document.getElementById('viewBookmark').setAttribute('hidden', 'true');
 
   if (!window.File || !window.FileReader || !window.FileList || !window.Blob) {
     document.getElementById('openFile').setAttribute('hidden', 'true');

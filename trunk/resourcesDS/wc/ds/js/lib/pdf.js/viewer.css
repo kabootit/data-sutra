@@ -711,7 +711,12 @@ html[dir='ltr'] .splitToolbarButton:last-child,
 html[dir='ltr'] .toolbarButton:last-child,
 html[dir='rtl'] .splitToolbarButton:first-child,
 html[dir='rtl'] .toolbarButton:first-child {
-  margin-right: 4px;
+  margin-right: 14px;
+}
+
+
+html[dir='ltr'] .toolbarButton.download:nth-last-child(2) {
+  margin-right: 14px;
 }
 
 .toolbarButtonSpacer {
@@ -890,6 +895,11 @@ html[dir='rtl'] .toolbarButton.pageDown::before {
   -webkit-user-select:none;
   -moz-user-select:none;
   cursor: default;
+}
+
+/**DS: TSE hard code to fix font on iOS*/
+.toolbarLabel {
+  font-family: Helvetica;
 }
 
 #thumbnailView {
