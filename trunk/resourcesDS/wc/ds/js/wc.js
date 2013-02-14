@@ -125,14 +125,19 @@ function loginIndicator(signup) {
 }
 
 //	Large centered "Loading..." indicator
-function bigIndicator(toggle,delay) {
+function bigIndicator(toggle,delay,text) {
 	// var indicator = $('#form_DATASUTRA_WEB_0F');
 	var elem = '#servoy_dataform .webform:first';
 	var indicator = $(elem);
+	
+	//default text when nothing specified
+	if (!text) {
+		text = 'Loading...'
+	}
 		
 	//not enough loaded in yet, try to load up again in half a second
 	if (!indicator.length || delay) {
-		setTimeout(function(){bigIndicator(toggle);},delay || 500);
+		setTimeout(function(){bigIndicator(toggle);},delay || 500,text);
 		return
 	}
 		
@@ -172,6 +177,9 @@ function bigIndicator(toggle,delay) {
 		}
 				
 		if (!skipMe) {
+			//set text
+			$(elem + ' .HUDcenter1 h3').text(text);
+			
 			// console.log("centered: ON");
 			$(elem + ' .HUDcenter1').fadeIn();
 		}
