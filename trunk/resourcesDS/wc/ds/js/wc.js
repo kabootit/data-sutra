@@ -55,21 +55,74 @@ function centerForm(formName) {
 	
 	//part 2: set up indicator
 	setTimeout(function(){
-		//large centered spinny blocker
-		var indicator = $('#indicator');
-		indicator.css({
-				'position':'absolute',
-				'left':'0px',
-				'right':'0px',
-				'z-index':1000
-			});
-		indicator.html('<div class="HUDcenter1"><div class="HUDcenter2"><div class="HUDalpha"><h3>Loading...</h3></div></div></div>');
-		$('#indicator .HUDalpha').activity({ valign: 'top', steps: 3, segments: 12, width: 5.5, space: 5, length: 12,color: '#F2F2F2', speed: 0.75});
-		$('#indicator .sutraBusy').css({'margin-top':'5px','margin-left':'16px'});
+		//running  on ipad, large centered spinny blocker
+		if (dsFactor() == 'iPad') {
+			var indicator = $('#indicator');
+			indicator.css({
+					'position':'absolute',
+					'left':'0px',
+					'right':'0px',
+					'z-index':1000
+				});
+			indicator.html('<div class="HUDcenter1"><div class="HUDcenter2"><div class="HUDalpha"><h3>Loading...</h3></div></div></div>');
+			// indicator.removeStyle('top');
+			// indicator.removeStyle('left');
+			$('#indicator .HUDalpha').activity({ valign: 'top', steps: 3, segments: 12, width: 5.5, space: 5, length: 12,color: '#F2F2F2', speed: 0.75});
+			$('#indicator .sutraBusy').css({'margin-top':'5px','margin-left':'16px'});
+		}
+		//small spinny blocker
+		else {
+			var indicator = $('#indicator');
+			indicator.html('');
+			indicator.css({
+					'position':'absolute',
+					'width':'20px',
+					'height':'20px',
+					'z-index':1000
+				});
+			indicator.activity({segments: 12, align: 'left', valign: 'top', steps: 3, width:2, space: 1, length: 3, color: '#666666', speed: 1.5});
+		}
 		
 		//MEMO: sutraBusy is class for this indicator: $('#indicator .sutraBusy');
 	},1500)
 })();
+
+//	Update indicator to be new style (next to login button)
+function loginIndicator(signup) {
+	//non-tablet only
+	if (dsFactor() != 'iPad') {
+		var indicator = $('#indicator');
+	
+		// sign up button
+		if (signup) {
+			var button = $('.signupDS');
+			var offsetTop = 2;
+			var offsetLeft = -30;
+		}
+		// log in button
+		else {
+			var button = $('.loginDS');
+			var offsetTop = 2;
+			var offsetLeft = -38;
+		}
+	
+		//we have enough things loaded to actually run this method
+		if (button.length && button.offset()) {
+			//put indicator next to toolbar button
+			indicator.offset({
+					top: button.offset().top + offsetTop, 
+					left: button.offset().left + offsetLeft
+				})
+		}
+		//run this function again until enough loaded
+		else {
+			setTimeout(function(){
+				loginIndicator(signup)
+			},500)
+			// console.log('LOGIN indicator waiting....');
+		}
+	}
+}
 
 //	Large centered "Loading..." indicator
 function bigIndicator(toggle,delay,text) {
@@ -174,20 +227,73 @@ switch (dsFactor()) {
 		
 			$('#servoy_page').on('click contextmenu',trackMouse);
 		},1500)
-		
+	
+		function busyCursor(clickPos,turnOn) {
+			var selector = $("#servoy_page");
+	
+			//don't run on login form, we want the cursor in a specific location
+			if ($('.loginDS').length) {
+				return
+			}
+	
+			//we have a jquery selector
+			if (selector.length) {
+				var indicator = $('#indicator')
+				//valid mouse location passed in
+				if ( clickPos ) {
+					function trackMouse(event,position) {
+						var maxWidth = $(document).width() - 36;
+						var maxHeight = $(document).height() - 36;
+					
+						if (event && !position) {
+							position = [event.clientX,event.clientY];
+						}
+					
+						position[0] = (position[0] <= maxWidth) ? position[0] : maxWidth;
+						position[1] = (position[1] <= maxHeight) ? position[1] : maxHeight;
+					
+						indicator.css('top', position[1]+10).css('left', position[0]+10);
+					}
+				
+					trackMouse(null,clickPos);
+	
+					selector.mousemove(trackMouse);
+			
+					//force indicator on (used for programmed busy)
+					if (turnOn) {
+						indicator.show();
+					}
+				}
+				//no mouse location, remove listener
+				else {
+					selector.unbind('mousemove');
+			
+					//make sure that really turned off (sometimes gets stuck)
+					indicator.hide();
+				}
+			}
+		}
+
 		//	Extending Wicket...object to hold original calls
 		var WicketDSExtend = new Object();
 
-		//	Extend wicket calls to hide/show indicator
+		//	Extend wicket calls to hide/show indicator so that follows mouse location
 		WicketDSExtend.showIncrementally = Wicket.showIncrementally;
 		Wicket.showIncrementally = function() {
-			//only show indicator when center blocker not already showing
-			if (!$('#servoy_dataform .webform:first .HUDcenter1').is(':visible')) {
-				//original call
-				WicketDSExtend.showIncrementally.apply(this,arguments);
-			}
+			//original call
+			WicketDSExtend.showIncrementally.apply(this,arguments);
+	
+			//override
+			busyCursor(Wicket.indicatorPosition);
 		}
-		
+		WicketDSExtend.hideIncrementally = Wicket.hideIncrementally;
+		Wicket.hideIncrementally = function() {
+			//original call
+			WicketDSExtend.hideIncrementally.apply(this,arguments);
+	
+			//override
+			busyCursor();
+		}
 		break
 		
 	// Only show indicator when custom center blocker not showing; orientation change
@@ -413,7 +519,7 @@ function callbackConfig(source) {
 
 //	Sniff browser used and disallow login from 'bad' browsers
 function browserCheck() {
-	return true;// $.browser.webkit || $.browser.mozilla;// || $.browser.opera;
+	return $.browser.webkit || $.browser.mozilla;// || $.browser.opera;
 }
 
 //	Form factor used
@@ -790,6 +896,13 @@ function showUL() {
 			if (typeof(DS.timer.showUL) == "undefined") {
 				DS.timer.showUL = new Array();
 			}
+			
+			//attach action to fast find so that blocker shown asap when find happening
+			$('.fastFind').keydown(function(event) {
+				if (event.which == 13){
+					bigIndicator(true,0,'Finding...');
+				}
+			})
 			
 			function fadeIn() {
 				//check to make sure other things aren't in the queue
