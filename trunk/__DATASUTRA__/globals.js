@@ -679,7 +679,9 @@ else {
 						//record navigator status
 						recordNavigatorStatus : true,
 						//external internet access allowed
-						internetAllowed : (forms[prefForm].internet_allow) ? true : false
+						internetAllowed : (forms[prefForm].internet_allow) ? true : false,
+						//solution name
+						solutionName : forms[prefForm].solution_name || ''
 					}
 		
 		//information about client
@@ -5613,6 +5615,9 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 	}
 	// go to login form if not already logged in or in the process of logging in
 	else if ((!application.__parent__.solutionPrefs || !application.__parent__.navigationPrefs)) {
+		//make sure the app name is shown
+		plugins.WebClientUtils.executeClientSideJS('window.parent.document.title = "' + appName + '";')
+		
 		// this method has been run once, go back to login form
 		if (globals.DATASUTRA_router_firstRun) {
 			if (url.set == 'DSLogin') {
