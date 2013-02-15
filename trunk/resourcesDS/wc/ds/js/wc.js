@@ -903,6 +903,10 @@ function showUL() {
 					bigIndicator(true,0,'Finding...');
 				}
 			})
+			//attach action to fast find stop so that blocker shown asap when resetting find
+			$('.fastFindClear').on('click',function(event) {
+				bigIndicator(true,0,'Clearing...');
+			});
 			
 			function fadeIn() {
 				//check to make sure other things aren't in the queue
