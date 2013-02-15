@@ -73,14 +73,6 @@ visible:false
 {
 extendsID:"5B0D4817-FE49-44CC-8861-5E987FC4A56A",
 formIndex:7,
-toolTipText:"<html>
-  <head>
-
-  <\/head>
-  <body>
-    Data Sutra v4.0<br>Revision 992 <em>Unlocked<\/em><br>No expiry
-  <\/body>
-<\/html>",
 typeid:7,
 uuid:"ED75837F-1AE5-45AA-A15E-1AEF64052FE5"
 }
