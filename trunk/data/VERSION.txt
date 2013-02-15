@@ -1,2 +1,17 @@
+4.0.1
+February 17, 2013
+http://community.data-sutra.com/projects/datasutra/wiki/401
+	- unified pdf viewer
+	- firefox compatibility
+	- IE 10 compatibility
+	- list view alignment fix
+	- generic placeholder property
+	- when google analytics present, track navigation item changes
+	- api for start/stop centered spinner
+	- UL right click
+	- comboboxes in tables tweaked
+	- lazy loading some client-side libraries after login
+	- minor bug fixes
+
 4.0.0
 January 16, 2013

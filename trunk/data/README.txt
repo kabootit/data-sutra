@@ -7,6 +7,7 @@ FILES
 
 - LICENSE.txt
 - README.txt
+- VERSION.txt
 - sutra.servoy
 - sutra_no_connector.servoy
 - sutra.jar
