@@ -4968,6 +4968,8 @@ function CODE_url_handler()
 
 var webloc = arguments[0]
 
+var wcOpen = (application.__parent__.solutionPrefs && solutionPrefs.config && solutionPrefs.config.webClient) ? '_top' : null
+
 if (webloc) {
 	var email = utils.stringPatternCount(webloc,'@')
 	
@@ -4978,10 +4980,10 @@ if (webloc) {
 	//http
 	else {
 		if (utils.stringPatternCount(webloc,'://')) {
-			application.showURL(webloc)
+			application.showURL(webloc,wcOpen)
 		}
 		else {
-			application.showURL('http://'+webloc)
+			application.showURL('http://'+webloc,wcOpen)
 		}
 	}
 }
