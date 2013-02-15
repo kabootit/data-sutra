@@ -2710,9 +2710,19 @@ document.addEventListener('DOMContentLoaded', function webViewerLoad(evt) {
   //DS: TSE hard code to not show open file button
   document.getElementById('openFile').setAttribute('hidden', 'true');
   
-  //DS: TSE hard code to not show bookmark button
-  document.getElementById('viewBookmark').setAttribute('hidden', 'true');
-
+  //DS: TSE hard code to not show bookmark button unless iOS webapp
+  // if (!window.parent.navigator.standalone) {
+    document.getElementById('viewBookmark').setAttribute('hidden', 'true');
+  // }
+  
+  // //DS: TSE hard code to disallow download in iOS webapp
+  if (window.parent.navigator.standalone) {
+    document.getElementById('download').setAttribute('hidden', 'true');
+  }
+  
+  //DS: TSE hard code to allow printing
+  // document.getElementById('print').classList.remove('hidden');
+  
   if (!window.File || !window.FileReader || !window.FileList || !window.Blob) {
     document.getElementById('openFile').setAttribute('hidden', 'true');
   } else {
@@ -2753,9 +2763,10 @@ document.addEventListener('DOMContentLoaded', function webViewerLoad(evt) {
     PDFBug.init();
   }
 
-  if (!PDFView.supportsPrinting) {
+  //DS: TSE hard code to disallow printing
+  // if (!PDFView.supportsPrinting) {
     document.getElementById('print').classList.add('hidden');
-  }
+  // }
 
   if (!PDFView.supportsFullscreen) {
     document.getElementById('fullscreen').classList.add('hidden');
@@ -2835,13 +2846,24 @@ document.addEventListener('DOMContentLoaded', function webViewerLoad(evt) {
 
   document.getElementById('print').addEventListener('click',
     function() {
-      window.print();
+      //DS: TSE hard code to set scale at 100% for printing
+	  // var oldValue = document.getElementById('scaleSelect').value
+      // PDFView.parseScale(0.92);
+      // setTimeout(window.print,500);
+	  // setTimeout(function(){PDFView.parseScale(oldValue)},525)
+	  window.print();
     });
 
-  document.getElementById('download').addEventListener('click',
-    function() {
-      PDFView.download();
-    });
+	//DS: TSE hard code to open in safari when iOS webapp
+    if (window.parent.navigator.standalone) {
+      
+	}
+	  else {
+		  document.getElementById('download').addEventListener('click',
+		    function() {
+				PDFView.download();
+		    });
+	  }
 
   document.getElementById('pageNumber').addEventListener('click',
     function() {

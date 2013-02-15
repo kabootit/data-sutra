@@ -1358,6 +1358,8 @@ canvas {
     position: static;
     padding: 0;
     margin: 0;
+/*	DS: TSE hard code to get rid of scrollbar for printing*/
+	overflow: hidden;
   }
 
   .page {
