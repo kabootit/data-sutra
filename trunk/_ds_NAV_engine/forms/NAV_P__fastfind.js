@@ -64,6 +64,7 @@ function FORM_on_show(firstShow, event) {
 	
 	//attach big cursor for when find occurs
 	plugins.WebClientUtils.executeClientSideJS('$(".fastFind").keydown(function(event){if(event.which == 13){bigIndicator(true,0,"Finding...");}});')
+	plugins.WebClientUtils.executeClientSideJS('$(".fastFindClear").on("click",function(event) {bigIndicator(true,0,"Clearing...");});')
 	
 	//enter the field
 	elements.fld_find.requestFocus()
