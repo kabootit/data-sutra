@@ -54,7 +54,6 @@ uuid:"BA371879-B6FE-4142-97CD-9FC1F78951F0"
 name:"MGR_0F_documentation_1L_i18n",
 navigatorID:"-1",
 paperPrintScale:100,
-rowBGColorCalculation:"globals.CODE_row_background",
 scrollbars:33,
 size:"560,189",
 styleName:"_DATASUTRA_",

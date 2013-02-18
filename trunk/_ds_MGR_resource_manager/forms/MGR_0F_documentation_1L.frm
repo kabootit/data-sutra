@@ -68,7 +68,6 @@ uuid:"FB7271E3-1CD5-4887-AC4B-F75E93165724"
 name:"MGR_0F_documentation_1L",
 navigatorID:"-1",
 paperPrintScale:100,
-rowBGColorCalculation:"globals.CODE_row_background",
 scrollbars:33,
 size:"560,189",
 styleName:"_DATASUTRA_",

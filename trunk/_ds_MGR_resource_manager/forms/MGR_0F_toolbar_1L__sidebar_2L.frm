@@ -173,7 +173,6 @@ verticalAlignment:3
 name:"MGR_0F_toolbar_1L__sidebar_2L",
 navigatorID:"-1",
 paperPrintScale:100,
-rowBGColorCalculation:"globals.CODE_row_background",
 scrollbars:34,
 size:"350,142",
 styleName:"_DATASUTRA_",

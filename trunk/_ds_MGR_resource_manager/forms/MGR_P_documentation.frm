@@ -25,7 +25,7 @@ location:"5,40",
 name:"fld_text__plain",
 scrollbars:33,
 size:"300,150",
-styleClass:"noborder_popup",
+styleClass:"noborderpopup",
 transparent:true,
 typeid:4,
 uuid:"092BD622-12BE-47E8-AA41-4FAE42057761"
