@@ -9,7 +9,6 @@ uuid:"77b73771-48d2-49d6-8711-ebb0be290a69"
 ],
 name:"DEV_R_mosaic_log",
 paperPrintScale:100,
-rowBGColorCalculation:"globals.CODE_row_background",
 size:"640,480",
 styleName:"_DATASUTRA_",
 typeid:3,
