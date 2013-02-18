@@ -99,7 +99,6 @@ valuelistID:"71aa423f-4284-4457-8c3b-f655a2bc7b69"
 name:"AC_0F_group__record_1L_filter__database",
 navigatorID:"-1",
 paperPrintScale:100,
-rowBGColorCalculation:"globals.CODE_row_background",
 scrollbars:33,
 size:"700,60",
 styleName:"_DATASUTRA_",

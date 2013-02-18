@@ -83,7 +83,6 @@ uuid:"bd30f6ca-d8e7-4f8b-a1c8-5044442d0f01"
 name:"AC_0F_group_1L_group_action",
 navigatorID:"-1",
 paperPrintScale:100,
-rowBGColorCalculation:"globals.CODE_row_background",
 scrollbars:33,
 size:"450,70",
 styleName:"_DATASUTRA_",

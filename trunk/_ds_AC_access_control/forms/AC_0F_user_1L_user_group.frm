@@ -41,7 +41,6 @@ uuid:"d4118adc-97c8-4a75-828a-1fa7bb30329c"
 name:"AC_0F_user_1L_user_group",
 navigatorID:"-1",
 paperPrintScale:100,
-rowBGColorCalculation:"globals.CODE_row_background",
 scrollbars:33,
 size:"450,70",
 styleName:"_DATASUTRA_",

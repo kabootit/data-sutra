@@ -75,7 +75,6 @@ uuid:"f4307eae-e215-4db1-b721-859ff7ba68b3"
 name:"AC_0F_group_1L_user_group",
 navigatorID:"-1",
 paperPrintScale:100,
-rowBGColorCalculation:"globals.CODE_row_background",
 scrollbars:33,
 size:"450,70",
 styleName:"_DATASUTRA_",

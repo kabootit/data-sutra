@@ -97,7 +97,6 @@ uuid:"fcde5131-e202-4350-9aa1-c1dcfadab678"
 name:"AC_0F_solution__workflow_1F_action_2L",
 navigatorID:"-1",
 paperPrintScale:100,
-rowBGColorCalculation:"globals.CODE_row_background",
 scrollbars:34,
 size:"700,60",
 styleName:"_DATASUTRA_",

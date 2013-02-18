@@ -69,7 +69,6 @@ uuid:"DA3D8693-E741-47C3-9F97-0AB779853622"
 name:"AC_0F_organization__preferences_1F_2L_preference",
 navigatorID:"-1",
 paperPrintScale:100,
-rowBGColorCalculation:"globals.CODE_row_background",
 scrollbars:34,
 size:"700,60",
 styleName:"_DATASUTRA_",

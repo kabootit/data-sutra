@@ -85,7 +85,6 @@ uuid:"e80eeed2-f3bc-486d-9a93-5bee088af78e"
 name:"AC_0F_blog__qotd_1L_blog_quote",
 navigatorID:"-1",
 paperPrintScale:100,
-rowBGColorCalculation:"globals.CODE_row_background",
 scrollbars:33,
 size:"400,90",
 styleName:"_DATASUTRA_",

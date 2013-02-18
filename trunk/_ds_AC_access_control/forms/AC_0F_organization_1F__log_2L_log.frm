@@ -460,7 +460,6 @@ uuid:"F2A86636-04AA-4DE4-A8E5-7D2A183A9197"
 ],
 name:"AC_0F_organization_1F__log_2L_log",
 paperPrintScale:100,
-rowBGColorCalculation:"globals.CODE_row_background",
 scrollbars:33,
 size:"640,236",
 styleName:"_DATASUTRA_",

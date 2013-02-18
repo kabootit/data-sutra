@@ -105,7 +105,6 @@ uuid:"bd6ea6c8-9c88-4fba-836d-0563cc3fbac9"
 ],
 name:"AC_0F_blog__entry_1L_blog_entry",
 paperPrintScale:100,
-rowBGColorCalculation:"globals.CODE_row_background",
 scrollbars:33,
 size:"520,70",
 styleName:"_DATASUTRA_",
