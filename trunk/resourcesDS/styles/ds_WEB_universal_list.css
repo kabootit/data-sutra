@@ -10,6 +10,9 @@ form {
 	border: 0px solid;
 }
 
+form.filter {	
+}
+
 form.list {
 	background-color: #191919;
 }
@@ -112,6 +115,10 @@ grid_header {
 	background-color: #303030;
 	border: 0px solid;
 	color: #999999;
+}
+
+form.filter odd, form.filter even, form.filter selected {
+	background-color: #A1B0CF;
 }
 
 /* grid view */

@@ -18,6 +18,9 @@ form {
 	border: 0px solid;
 }
 
+form.filter {	
+}
+
 form.list {
 	background-color: #D1D7E2;
 }
@@ -396,6 +399,10 @@ selected {
 
 grid_header {
 	
+}
+
+form.filter odd, form.filter even, form.filter selected {
+	background-color: #A1B0CF;
 }
 
 /* grid view */
