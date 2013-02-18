@@ -180,7 +180,6 @@ uuid:"f92f93fa-2062-46a4-a03e-79062e7f7939"
 name:"NAV_R_action_item",
 namedFoundSet:"separate",
 paperPrintScale:100,
-rowBGColorCalculation:"globals.CODE_row_background",
 scrollbars:33,
 size:"320,240",
 styleName:"_DATASUTRA_",

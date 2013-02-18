@@ -235,7 +235,6 @@ name:"NAV_0F_navigation_item_1F__universal_lists_2F_list_display__left_3L_list_d
 navigatorID:"-1",
 onRecordSelectionMethodID:"4b3c3442-3ff7-4fd1-bd9a-d62362e3881a",
 paperPrintScale:100,
-rowBGColorCalculation:"globals.CODE_row_background",
 scrollbars:33,
 size:"620,145",
 styleName:"_DATASUTRA_",

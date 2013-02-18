@@ -143,7 +143,6 @@ uuid:"fc5f232e-a36f-47ff-83c1-57f57825cc2d"
 name:"NAV_R_navigation_item",
 namedFoundSet:"separate",
 paperPrintScale:100,
-rowBGColorCalculation:"globals.CODE_row_background",
 scrollbars:33,
 size:"320,240",
 styleName:"_DATASUTRA_",

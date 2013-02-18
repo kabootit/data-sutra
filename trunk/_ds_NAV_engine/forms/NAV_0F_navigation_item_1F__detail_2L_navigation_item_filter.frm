@@ -137,7 +137,6 @@ uuid:"db48d7ef-89ed-48e0-a740-deca8c5755a5"
 name:"NAV_0F_navigation_item_1F__detail_2L_navigation_item_filter",
 navigatorID:"-1",
 paperPrintScale:100,
-rowBGColorCalculation:"globals.CODE_row_background",
 scrollbars:33,
 size:"350,40",
 styleName:"_DATASUTRA_",

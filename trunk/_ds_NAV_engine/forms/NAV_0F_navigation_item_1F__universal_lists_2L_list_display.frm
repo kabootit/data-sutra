@@ -165,7 +165,6 @@ uuid:"cd0a1b7b-2f2f-46cf-81fe-053166e8cca9"
 name:"NAV_0F_navigation_item_1F__universal_lists_2L_list_display",
 navigatorID:"-1",
 paperPrintScale:100,
-rowBGColorCalculation:"globals.CODE_row_background",
 scrollbars:33,
 size:"500,42",
 styleName:"_DATASUTRA_",

@@ -157,7 +157,6 @@ uuid:"F83CE69C-571B-49D5-AC7E-DCC71796D440"
 name:"NAV_0F_navigation_item_1F__button_2F_action_item__transaction__3L",
 navigatorID:"-1",
 paperPrintScale:100,
-rowBGColorCalculation:"globals.CODE_row_background",
 scrollbars:33,
 size:"150,120",
 styleName:"_DATASUTRA_",

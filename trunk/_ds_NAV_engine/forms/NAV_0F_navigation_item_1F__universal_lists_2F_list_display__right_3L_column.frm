@@ -102,7 +102,6 @@ name:"NAV_0F_navigation_item_1F__universal_lists_2F_list_display__right_3L_colum
 namedFoundSet:"separate",
 navigatorID:"-1",
 paperPrintScale:100,
-rowBGColorCalculation:"globals.CODE_row_background",
 scrollbars:34,
 size:"120,21",
 styleName:"_DATASUTRA_",

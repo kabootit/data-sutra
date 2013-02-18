@@ -310,7 +310,6 @@ name:"NAV_0F_navigation_item_1F__button_2F_action_item__filter_3L_action_item_fi
 navigatorID:"-1",
 onLoadMethodID:"35ca5cc3-628f-4f5d-b40b-6705d2460974",
 paperPrintScale:100,
-rowBGColorCalculation:"globals.CODE_row_background",
 scrollbars:33,
 size:"350,153",
 styleName:"_DATASUTRA_",

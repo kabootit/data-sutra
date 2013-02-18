@@ -163,7 +163,6 @@ uuid:"c5952c5c-85ea-4464-a5ab-d1e1da97ffba"
 name:"NAV_0F_navigation_item_1F__button_2F_action_item__tab_3L",
 navigatorID:"-1",
 paperPrintScale:100,
-rowBGColorCalculation:"globals.CODE_row_background",
 scrollbars:33,
 size:"150,43",
 styleName:"_DATASUTRA_",

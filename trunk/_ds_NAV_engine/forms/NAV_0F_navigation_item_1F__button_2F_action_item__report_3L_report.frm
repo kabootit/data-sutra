@@ -71,7 +71,6 @@ uuid:"f118b190-7818-408b-88f7-e992112700fa"
 name:"NAV_0F_navigation_item_1F__button_2F_action_item__report_3L_report",
 navigatorID:"-1",
 paperPrintScale:100,
-rowBGColorCalculation:"globals.CODE_row_background",
 scrollbars:33,
 size:"350,30",
 styleName:"_DATASUTRA_",
