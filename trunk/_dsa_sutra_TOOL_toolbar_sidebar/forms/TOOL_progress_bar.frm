@@ -61,7 +61,7 @@ uuid:"33594c69-5104-4d32-bebc-12a7f9ff4332"
 },
 {
 anchors:11,
-dataProviderID:"globals.MGR_tool_progress_gif",
+dataProviderID:"_progressOld",
 displayType:8,
 displaysTags:true,
 editable:false,

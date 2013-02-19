@@ -65,4 +65,7 @@ function ACTION_cancel(event) {
 		
 		return true
 	}
+	else {
+		return false
+	}
 }

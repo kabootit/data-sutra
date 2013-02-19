@@ -106,7 +106,7 @@ if (forms[formName] && forms[formName].elements[tabPanelName]) {
 *
 * @properties={typeid:24,uuid:"d7d0db6e-a736-4395-a0e3-da757d161a37"}
 */
-function GRID_new()
+function GRID_new(formName, tabPanelName)
 {
 
 /*
@@ -141,8 +141,8 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	arguments = Arguments.filter(globals.CODE_jsevent_remove)
 }
 
-var formName = (arguments[0]) ? arguments[0] : application.getMethodTriggerFormName()
-var tabPanelName = (arguments[1]) ? arguments[1] : 'tab_detail'
+formName = (arguments[0]) ? arguments[0] : application.getMethodTriggerFormName()
+tabPanelName = (arguments[1]) ? arguments[1] : 'tab_detail'
 
 //if there is a tabpanel on the selected form
 if (forms[formName] && forms[formName].elements[tabPanelName]) {
@@ -162,7 +162,7 @@ if (forms[formName] && forms[formName].elements[tabPanelName]) {
  *
  * @properties={typeid:24,uuid:"1d11e845-6036-42a2-8367-5c8d524edad3"}
  */
-function GRID_change()
+function GRID_change(formName,buttonName,tabPanelName,prefix,btnAdd,btnActions,btnHelp,lblDivider)
 {
 
 /*
@@ -430,7 +430,7 @@ if (forms[formName] && forms[formName].elements[tabPanelName]) {
  *
  * @properties={typeid:24,uuid:"15b31c9f-f3b0-4efb-ba8f-4f3163c962b2"}
  */
-function INLINE_change()
+function INLINE_change(formName,buttonName,tabPanelName,prefix)
 {
 
 /*

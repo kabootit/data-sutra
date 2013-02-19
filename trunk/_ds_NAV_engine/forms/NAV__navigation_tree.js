@@ -425,7 +425,7 @@ function LIST_generate(selected) {
  */
 function LIST_rescroll(idNavItem) {
 	if (plugins.ScrollerPlus) {
-		var scrollRows = plugins.ScrollerPlus.getScroller(controller.getName() + '__rows', SCROLLER_TYPE.FORM, SCROLL_ORIENTATION.VERTICAL)
+		var scrollRows = plugins.ScrollerPlus.getScroller(controller.getName() + '__rows', plugins.ScrollerPlus.SCROLLER_TYPE.FORM, plugins.ScrollerPlus.SCROLL_ORIENTATION.VERTICAL)
 	}
 	
 	//if navigation items in this set, do the appropriate toggle

@@ -666,10 +666,12 @@ if (application.__parent__.solutionPrefs) {
 }
 
 /**
+ * @param {String} flagName
+ * @param {Boolean} stayThere
  *
  * @properties={typeid:24,uuid:"27c1e01f-9681-4099-9c69-fb23ba4783d3"}
  */
-function DEV_quick_buttons()
+function DEV_quick_buttons(flagName,stayThere)
 {
 
 /*
@@ -691,9 +693,6 @@ function DEV_quick_buttons()
  */
 
 if (application.__parent__.solutionPrefs) {
-	
-	var flagName = arguments[0]
-	var stayThere = arguments[1]
 	var currentNavItem = solutionPrefs.config.currentFormID
 	var baseForm = solutionPrefs.config.formNameBase
 	var formName = forms[baseForm].elements.tab_content_B.getTabFormNameAt(forms[baseForm].elements.tab_content_B.tabIndex)

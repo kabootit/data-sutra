@@ -5,7 +5,7 @@ items:[
 extendsID:"2F256807-5D1E-46B4-8E43-421ADB8CB867",
 location:"450,455",
 size:"210,30",
-tabSeq:5,
+tabSeq:6,
 typeid:4,
 uuid:"0CDB546B-4C80-4A78-BB54-2CB996B6A9EB"
 },
@@ -170,7 +170,7 @@ uuid:"9CC1DFF0-7FF2-4C72-AC37-A6A4806DA8F4"
 extendsID:"9566D0C0-01C5-41CC-B6BC-60C94B348895",
 location:"450,365",
 size:"210,30",
-tabSeq:3,
+tabSeq:4,
 typeid:4,
 uuid:"AD707445-A43F-40D3-9FC6-2B8B4FFA5B9C"
 },
@@ -196,7 +196,7 @@ uuid:"BA23AD1B-6CB3-4CD3-AA31-A8897A104C54"
 extendsID:"EB079DDB-6C3E-440B-94D7-65579F4717EF",
 location:"450,410",
 size:"210,30",
-tabSeq:4,
+tabSeq:5,
 typeid:4,
 uuid:"C33DE053-DF5D-4D71-A803-D6DA114FE851"
 },
@@ -228,6 +228,7 @@ visible:false
 extendsID:"8D9E6540-62FE-43B4-8789-D979A63F9623",
 location:"535,278",
 styleClass:null,
+tabSeq:3,
 typeid:7,
 uuid:"F7F97462-6A5F-4B10-A24F-C0C109C232DD",
 visible:false

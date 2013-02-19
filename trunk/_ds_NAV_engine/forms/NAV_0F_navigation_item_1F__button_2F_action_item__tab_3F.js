@@ -2,7 +2,7 @@
  *
  * @properties={typeid:24,uuid:"bbad5519-062f-4c45-aa6b-de14f40f3356"}
  */
-function FILTER_forms()
+function FILTER_forms(oldValue,newValue,event)
 {
 
 if (application.__parent__.solutionPrefs) {

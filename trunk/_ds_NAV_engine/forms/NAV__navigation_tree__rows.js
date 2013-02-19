@@ -193,7 +193,7 @@ function zLIST_redraw(event,itemID,reScroll,skipLoadForms,favoriteMode,selected)
 			else {
 				//get current scroll position
 				if (plugins.ScrollerPlus) {
-					var scrollRows = plugins.ScrollerPlus.getScroller(controller.getName(), SCROLLER_TYPE.FORM, SCROLL_ORIENTATION.VERTICAL)
+					var scrollRows = plugins.ScrollerPlus.getScroller(controller.getName(), plugins.ScrollerPlus.SCROLLER_TYPE.FORM, plugins.ScrollerPlus.SCROLL_ORIENTATION.VERTICAL)
 				}
 				
 				var scrollY = scrollRows ? scrollRows.position : 0
@@ -352,7 +352,7 @@ function LIST_redraw__smartclient(event,itemID,reScroll,skipLoadForms,favoriteMo
 		
 			//get current scroll position
 			if (plugins.ScrollerPlus) {
-				var scrollRows = plugins.ScrollerPlus.getScroller(controller.getName(), SCROLLER_TYPE.FORM, SCROLL_ORIENTATION.VERTICAL)
+				var scrollRows = plugins.ScrollerPlus.getScroller(controller.getName(), plugins.ScrollerPlus.SCROLLER_TYPE.FORM, plugins.ScrollerPlus.SCROLL_ORIENTATION.VERTICAL)
 			}
 			
 			var scrollY = scrollRows ? scrollRows.position : 0

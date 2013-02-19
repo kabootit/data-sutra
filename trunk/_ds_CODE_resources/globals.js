@@ -388,6 +388,27 @@ var DIALOGS = new function() {
 };
 
 /**
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"f30d47f9-1fbb-4c6c-abe4-fb8dd77c4c83"}
+ */
+var DATASUTRA_find = null;
+
+/**
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"1e40b95d-c1f9-412e-af82-63b6e4b860f7"}
+ */
+var DATASUTRA_find_field = '';
+
+/**
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"eee1d8a8-d004-43ff-b546-89ac718bfe9b"}
+ */
+var DATASUTRA_find_pretty = '';
+
+/**
  * @type {Boolean}
  *
  * @properties={typeid:35,uuid:"E652B669-13C6-4D6F-A1FC-D9C32838DC5C",variableType:-4}
@@ -1483,8 +1504,8 @@ function TRIGGER_log_create(logType,valueOne,valueTwo,valueThree,valueFour,value
 				record.navigation_list = valueTwo
 				break
 			case 'Records':
-				record.serverName = valueOne
-				record.tableName = valueTwo
+				record.server_name = valueOne
+				record.table_name = valueTwo
 				record.record_field = valueThree
 				record.record_id = valueFour
 				break
@@ -1517,7 +1538,7 @@ function TRIGGER_log_create(logType,valueOne,valueTwo,valueThree,valueFour,value
 				record.find_records_found = valueSix
 				break
 			case 'UL Reports':
-				record.report_id = valueOne
+				record.id_report = valueOne
 				record.actions_item = valueTwo
 				record.report_form = valueThree
 				record.actions_method = valueFour
@@ -3777,7 +3798,7 @@ if(application.getApplicationType()==5) {
  *
  * @properties={typeid:24,uuid:"422431ed-d24b-4f08-9f47-89da1d3d4c7b"}
  */
-function CODE_highlight_off()
+function CODE_highlight_off(formName)
 {
 
 /*
@@ -3811,7 +3832,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 }
 
 //get form with highlighter
-var formName = (arguments[0]) ? arguments[0] : application.getMethodTriggerFormName()
+formName = (arguments[0]) ? arguments[0] : application.getMethodTriggerFormName()
 
 //hide highlighter(s) if they exist
 var highlight = 'highlighter' // name of highlighter object
@@ -4135,7 +4156,7 @@ else {
  *
  * @properties={typeid:24,uuid:"63e4da9e-40e3-4612-9488-7e9156b584bb"}
  */
-function CODE_property_combobox()
+function CODE_property_combobox(square,size,formName)
 {
 
 /*
@@ -4170,14 +4191,14 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	arguments = Arguments.filter(globals.CODE_jsevent_remove)
 }
 
-var square = (arguments[0]) ? arguments[0] : false
-var size = (arguments[1]) ? arguments[1] : 'small'
+square = (arguments[0]) ? arguments[0] : false
+size = (arguments[1]) ? arguments[1] : 'small'
 
 //only modifies when running on OS X Leopard, and using the Aqua look and feel
 if (application.__parent__.solutionPrefs && 
 	(solutionPrefs.clientInfo.typeOS == 'Mac OS X' && solutionPrefs.clientInfo.typeLAF == 'Mac OS X' && solutionPrefs.clientInfo.verOS >= '10.5' && solutionPrefs.clientInfo.verServoy >= '3.5.7' && solutionPrefs.clientInfo.typeServoy != 'webclient') ||
 	(application.getOSName() == 'Mac OS X' && application.getCurrentLookAndFeelName() == 'Mac OS X' && ((plugins.sutra) ? plugins.sutra.getOSVersion() : '0') >= '10.5' && application.getVersion() >= '3.5.7' && application.getApplicationType() != 5)) {
-	var formName = (arguments[2]) ? arguments[2] : application.getMethodTriggerFormName()
+	formName = (arguments[2]) ? arguments[2] : application.getMethodTriggerFormName()
 	
 	if (forms[formName]) {
 		var allElems = forms[formName].elements.allnames

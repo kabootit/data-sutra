@@ -206,11 +206,11 @@ function FOUNDSET_update_record()
 var dialog = globals.DIALOGS.showQuestionDialog('Update foundset','Do you want to update all records in foundset with the login options of the selected user?','Yes','No')
 
 if (dialog == 'Yes') {
-	var navSet = ac_access_group_to_access_user.login_nav_set
-	var navItem = ac_access_group_to_access_user.login_nav_main
-	var navSubItem = ac_access_group_to_access_user.login_nav_sub
+	var navSet = ac_access_group_to_access_user_group__selected.ac_access_user_group_to_access_user.login_nav_set
+	var navItem = ac_access_group_to_access_user_group__selected.ac_access_user_group_to_access_user.login_nav_main
+	var navSubItem = ac_access_group_to_access_user_group__selected.ac_access_user_group_to_access_user.login_nav_sub
 	
-	var fsUpdater = databaseManager.getFoundSetUpdater(ac_access_group_to_access_user)
+	var fsUpdater = databaseManager.getFoundSetUpdater(ac_access_group_to_access_user_group.ac_access_user_group_to_access_user)
 	fsUpdater.setColumn('login_nav_set', navSet)
 	fsUpdater.setColumn('login_nav_main', navItem)
 	fsUpdater.setColumn('login_nav_sub', navSubItem)

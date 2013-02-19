@@ -6170,7 +6170,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			//TODO: displayType property was added later...so instead of a nasty switch statement, it could be just one myForm.newField()
 		for (var i in objForm.fields) {
 			switch (objForm.fields[i].displayType) {
-				case SM_DISPLAYTYPE.TEXT_FIELD:
+				case JSField.TEXT_FIELD:
 					var myField = myForm.newTextField(
 							objForm.fields[i].dataProviderID,
 							objForm.fields[i].x,
@@ -6179,7 +6179,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 							objForm.fields[i].height
 						)
 					break
-				case SM_DISPLAYTYPE.CALENDAR:
+				case JSField.CALENDAR:
 					var myField = myForm.newCalendar(
 							objForm.fields[i].dataProviderID,
 							objForm.fields[i].x,
@@ -6188,7 +6188,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 							objForm.fields[i].height
 						)
 					break
-				case SM_DISPLAYTYPE.CHECKS:
+				case JSField.CHECKS:
 					var myField = myForm.newCheck(
 							objForm.fields[i].dataProviderID,
 							objForm.fields[i].x,
@@ -6197,7 +6197,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 							objForm.fields[i].height
 						)
 					break
-				case SM_DISPLAYTYPE.COMBOBOX:
+				case JSField.COMBOBOX:
 					var myField = myForm.newComboBox(
 							objForm.fields[i].dataProviderID,
 							objForm.fields[i].x,
@@ -6206,7 +6206,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 							objForm.fields[i].height
 						)
 					break
-				case SM_DISPLAYTYPE.HTML_AREA:
+				case JSField.HTML_AREA:
 					var myField = myForm.newHtmlArea(
 							objForm.fields[i].dataProviderID,
 							objForm.fields[i].x,
@@ -6215,7 +6215,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 							objForm.fields[i].height
 						)
 					break
-				case SM_DISPLAYTYPE.PASSWORD:
+				case JSField.PASSWORD:
 					var myField = myForm.newPassword(
 							objForm.fields[i].dataProviderID,
 							objForm.fields[i].x,
@@ -6224,7 +6224,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 							objForm.fields[i].height
 						)
 					break
-				case SM_DISPLAYTYPE.RADIOS:
+				case JSField.RADIOS:
 					var myField = myForm.newRadios(
 							objForm.fields[i].dataProviderID,
 							objForm.fields[i].x,
@@ -6233,7 +6233,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 							objForm.fields[i].height
 						)
 					break
-				case SM_DISPLAYTYPE.RTF_AREA:
+				case JSField.RTF_AREA:
 					var myField = myForm.newRtfArea(
 							objForm.fields[i].dataProviderID,
 							objForm.fields[i].x,
@@ -6242,7 +6242,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 							objForm.fields[i].height
 						)
 					break
-				case SM_DISPLAYTYPE.TEXT_AREA:
+				case JSField.TEXT_AREA:
 					var myField = myForm.newTextArea(
 							objForm.fields[i].dataProviderID,
 							objForm.fields[i].x,
@@ -6251,7 +6251,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 							objForm.fields[i].height
 						)
 					break
-				case SM_DISPLAYTYPE.TYPE_AHEAD:
+				case JSField.TYPE_AHEAD:
 					var myField = myForm.newTypeAhead(
 							objForm.fields[i].dataProviderID,
 							objForm.fields[i].x,

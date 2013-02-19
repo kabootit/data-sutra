@@ -119,6 +119,7 @@ name:"servoy_version"
 },
 {
 allowNull:true,
+compatibleColumnTypes:"[[3,19,2]]",
 creationOrderIndex:13,
 dataType:3,
 length:19,

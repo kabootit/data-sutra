@@ -553,7 +553,6 @@ globals.TRIGGER_progressbar_start(0,'Exporting...')
 								false,
 								'fwImportExport'
 							)
-					var z = ''
 					if (globals.NAV_importexport_areas) {
 						whatExport = globals.NAV_importexport_areas.split('\n')
 						
@@ -2313,7 +2312,6 @@ globals.TRIGGER_progressbar_start(0,'Exporting...')
 								false,
 								'fwImportExport'
 							)
-					var z = ''
 					if (globals.NAV_importexport_areas) {
 						whatExport = globals.NAV_importexport_areas.split('\n')
 						

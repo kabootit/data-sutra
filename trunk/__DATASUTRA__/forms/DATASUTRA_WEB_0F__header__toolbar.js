@@ -9,7 +9,7 @@ function DS_toolbar_cycle(event) {
  	if (application.__parent__.solutionPrefs) {
  		
  		if (event instanceof JSEvent) {
- 			var rightClick = event.getType() == event.RIGHTCLICK
+ 			var rightClick = event.getType() == JSEvent.RIGHTCLICK
  		}
  		
  		//strip out jsevents

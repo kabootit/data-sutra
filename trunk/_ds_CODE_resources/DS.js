@@ -212,13 +212,14 @@ var print = new function() {
 		/**
 		 * Default location to store reports
 		 * 
-		 * @return {String} 
+		 * @return {String}
 		 */
 		this.getReportDir = function() {
 			var allProps = plugins.sutra.getJavaProperties()
 			for (var i = 0; i < allProps.length; i++) {
 				var prop = allProps[i]
 				if (prop[0] == 'catalina.base') {
+					/** @type {String} */
 					var serverInstall = prop[1]
 					break
 				}

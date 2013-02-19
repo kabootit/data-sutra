@@ -83,27 +83,6 @@ var DATASUTRA_feedback;
 /**
  * @type {String}
  *
- * @properties={typeid:35,uuid:"f30d47f9-1fbb-4c6c-abe4-fb8dd77c4c83"}
- */
-var DATASUTRA_find = null;
-
-/**
- * @type {String}
- *
- * @properties={typeid:35,uuid:"1e40b95d-c1f9-412e-af82-63b6e4b860f7"}
- */
-var DATASUTRA_find_field = '';
-
-/**
- * @type {String}
- *
- * @properties={typeid:35,uuid:"eee1d8a8-d004-43ff-b546-89ac718bfe9b"}
- */
-var DATASUTRA_find_pretty = '';
-
-/**
- * @type {String}
- *
  * @properties={typeid:35,uuid:"28d6987c-cde4-4c1a-b2c6-3eac80aa1cd1"}
  */
 var DATASUTRA_log_status = '';
@@ -4154,7 +4133,7 @@ function DS_toolbar_cycle(event) {
 	if (application.__parent__.solutionPrefs) {
 		
 		if (event instanceof JSEvent) {
-			var rightClick = event.getType() == event.RIGHTCLICK
+			var rightClick = event.getType() == JSEvent.RIGHTCLICK
 		}
 		
 		//strip out jsevents
@@ -4629,10 +4608,11 @@ return panel
 }
 
 /**
+ * @param {Boolean} expanded
  *
  * @properties={typeid:24,uuid:"4a6fa8c4-215e-4493-bc6a-b5c74e42161f"}
  */
-function DS_toolbar_popdown()
+function DS_toolbar_popdown(expanded)
 {
 	
 /*
@@ -4668,8 +4648,6 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	//reassign arguments without jsevents
 	arguments = Arguments.filter(globals.CODE_jsevent_remove)
 }
-
-	var expanded = arguments[0]
 	
 	var baseForm = solutionPrefs.config.formNameBase
 	var statusStartX = forms[baseForm + '__header'].elements.split_tool_find.getX()

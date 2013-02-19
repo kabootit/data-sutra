@@ -30,8 +30,8 @@ function FORM_on_load(event) {
 		application.putClientProperty(APP_UI_PROPERTY.TABLEVIEW_WC_SCROLLABLE_KEEP_LOADED_ROWS,true)
 		
 		//force inclusion of jquery
-		plugins.WebClientUtils.addJsReference(SERVOY_WEB_RESOURCES.JQUERY)
-		plugins.WebClientUtils.addCssReference(SERVOY_WEB_RESOURCES.YUI_CSS_MENU)
+		plugins.WebClientUtils.addJsReference(plugins.WebClientUtils.SERVOY_WEB_RESOURCES.JQUERY)
+		plugins.WebClientUtils.addCssReference(plugins.WebClientUtils.SERVOY_WEB_RESOURCES.YUI_CSS_MENU)
 	}
 }
 
