@@ -386,6 +386,13 @@ name:"ul_busy_indicator"
 },
 {
 allowNull:true,
+creationOrderIndex:57,
+dataType:12,
+length:255,
+name:"url_column"
+},
+{
+allowNull:true,
 creationOrderIndex:55,
 dataType:12,
 length:255,
