@@ -139,27 +139,29 @@ var print = new function() {
 	/**
 	 * Show print preview
 	 * 
-	 * @param {JSRecord} reportName File name for report
-	 * @param {Blob} reportBytes PDF byte array
+	 * @param {String} reportName File name for report
+	 * @param {byte[]} PDFByteArray PDF byte array
+	 * @return {String} Link to PDF
 	 * 
 	 */
-	this.preview = function(reportName,reportBytes) {
+	this.preview = function(reportName,PDFByteArray) {
 		//enough information to proceed
-		if (reportName && reportBytes) {
+		if (reportName && PDFByteArray) {
 			//webclient
 			if (solutionPrefs.config.webClient) {
 				//router
-				if (scopes.globals.DATASUTRA_router_enable) {
-					var reportPath = print.utils.getReportDir()
-					var userDir = print.utils.getUserDir()
+				if (globals.DATASUTRA_router_enable) {
+					var reportPath = scopes.DS_internal.utils.getReportDir()
+					var userDir = scopes.DS_internal.utils.getUserDir()
 					
 					//print file
 					var printFile = plugins.file.createFile(reportPath + userDir + reportName)
-					var success = printFile.setBytes(reportBytes,true)
+					var success = printFile.setBytes(PDFByteArray,true)
 					
 					//load pdf in browser and show it
 					if (success) {
 						plugins.WebClientUtils.executeClientSideJS('window.parent.printLoad("/reports' + userDir + reportName + '");')
+						return '/reports' + userDir + reportName
 					}
 					else {
 						globals.DIALOGS.showErrorDialog('Error','Report was not run successfully.')
@@ -168,7 +170,7 @@ var print = new function() {
 			}
 			//smart client, use standard print preview
 			else {
-				plugins.dialogs.showInfoDialog(
+				globals.DIALOGS.showInfoDialog(
 							'Smart client',
 							'API call not implemented\nUse the web!'
 					)
@@ -177,31 +179,74 @@ var print = new function() {
 	}
 	
 	/**
-	 * Do Servoy form report
+	 * Download requested PDF
 	 * 
-	 * @param {String} formName Servoy form
-	 * @return {byte[]} PDF
+	 * @param {String} reportName File name for report
+	 * @param {byte[]} PDFByteArray PDF byte array
+	 * @return {String} Link to PDF
+	 * 
 	 */
-	this.formBased = function(formName) {
+	this.download = function(reportName,PDFByteArray) {
 		//enough information to proceed
-		if (formName && forms[formName]) {
+		if (reportName && PDFByteArray) {
 			//webclient
 			if (solutionPrefs.config.webClient) {
 				//router
-				if (scopes.globals.DATASUTRA_router_enable) {
-					//get pdf
-					var printerMeta = plugins.pdf_output.startMetaPrintJob()
-					forms[formName].controller.print(false, false, plugins.pdf_output.getPDFPrinter())
-					return plugins.pdf_output.endMetaPrintJob()
+				if (globals.DATASUTRA_router_enable) {
+					var reportPath = scopes.DS_internal.utils.getReportDir()
+					var userDir = scopes.DS_internal.utils.getUserDir()
+					
+					//print file
+					var printFile = plugins.file.createFile(reportPath + userDir + reportName)
+					var success = printFile.setBytes(PDFByteArray,true)
+					
+					//download pdf
+					if (success) {
+						plugins.WebClientUtils.executeClientSideJS('window.parent.printSave("/reports' + userDir + reportName + '");')
+						return '/reports' + userDir + reportName
+					}
+					else {
+						globals.DIALOGS.showErrorDialog('Error','Report was not run successfully.')
+					}
 				}
 			}
 			//smart client, use standard print preview
 			else {
-				plugins.dialogs.showInfoDialog(
+				globals.DIALOGS.showInfoDialog(
 							'Smart client',
 							'API call not implemented\nUse the web!'
 					)
 			}
+		}
+	}
+	
+	/**
+	 * Programatically run registered report
+	 * 
+	 * @param {String} registry Report registry ID
+	 * @return {Boolean} Report was run
+	 * 
+	 */
+	this.trigger = function(registry) {
+		if (registry) {
+			/** @type {JSFoundSet<db:/sutra/sutra_report>} */
+			var fsReport = databaseManager.getFoundSet('db:/sutra/sutra_report')
+			fsReport.find()
+			fsReport.report_id = registry
+			var results = fsReport.search()
+			if (results == 1) {
+				var reportRec = fsReport.getSelectedRecord()
+				
+				scopes.DS_buttons.REPORTS_list_control(reportRec.report_form,reportRec.report_method,reportRec.flag_wrapper,reportRec.source,reportRec.report_description,reportRec.id_report)
+				
+				return true
+			}
+			else {
+				return false
+			}
+		}
+		else {
+			return false
 		}
 	}
 	
@@ -209,40 +254,116 @@ var print = new function() {
 	 * Printing utilities
 	 */
 	this.utils = new function() {
+		
 		/**
-		 * Default location to store reports
-		 * 
-		 * @return {String}
+		 * Convert to PDF from...
 		 */
-		this.getReportDir = function() {
-			var allProps = plugins.sutra.getJavaProperties()
-			for (var i = 0; i < allProps.length; i++) {
-				var prop = allProps[i]
-				if (prop[0] == 'catalina.base') {
-					/** @type {String} */
-					var serverInstall = prop[1]
-					break
+		this.convertToPDFByteArray = new function() {
+			/**
+			 * Convert Servoy form to PDF
+			 * 
+			 * @param {String} formName Servoy form
+			 * @return {byte[]} PDF
+			 */
+			this.fromServoyForm = function(formName) {
+				//enough information to proceed
+				if (formName && forms[formName]) {
+					//get pdf
+					var printerMeta = plugins.pdf_output.startMetaPrintJob()
+					forms[formName].controller.print(false, false, plugins.pdf_output.getPDFPrinter())
+					return plugins.pdf_output.endMetaPrintJob()
 				}
 			}
 			
-			return serverInstall + '/webapps/ROOT/ds/reports'
+			/**
+			 * Convert HTML to PDF
+			 * 
+			 * @param {String} html Block of code to be rendered as PDF
+			 * @return {byte[]} PDF
+			 */
+			this.fromHTMLData = function(html) {
+				//enough information to proceed
+				if (html && plugins.VelocityReport) {
+					return plugins.VelocityReport.getPDFReport(html,{})
+				}
+			}
+			
+			/**
+			 * Convert URL to PDF
+			 * 
+			 * @param {String} url URL to be rendered as PDF
+			 * @param {Object} [auth] Authorization credentials to access url
+			 * @return {byte[]} PDF
+			 */
+			this.fromHTMLURL = function(url,auth) {
+				//enough information to proceed
+				if (url) {
+					var html = plugins.http.getPageData(url)
+					
+					//TODO: need to sanitize the resulting html
+					return print.utils.convertToPDFByteArray.fromHTMLData(html)
+				}
+			}
 		}
 		
 		/**
-		 * Default location to store reports
-		 * 
-		 * @return {String} 
+		 * Grab pre-existing PDF from...
 		 */
-		this.getUserDir = function() {
-			var userDir = '/' + security.getClientID().replace(/-/g,'') + '/'
-			
-			//make sure user directory created
-			var userTest = plugins.file.convertToJSFile(print.utils.getReportDir() + userDir)
-			if (!userTest.exists()) {
-				userTest.mkdirs()
+		this.getPDFByteArray = new function() {
+			/**
+			 * Get PDF from file
+			 * 
+			 * @param {String} [location] Location of pdf
+			 * @return {byte[]} PDF
+			 */
+			this.fromFileSystem = function(location) {
+				/** @type {Function} */
+				var readCall
+				
+				//webclient
+				if (solutionPrefs.config.webClient) {
+					readCall = 'plugins.file.convertToRemoteJSFile'
+				}
+				//smart client
+				else {
+					readCall = 'plugins.file.convertToJSFile'
+					
+					//prompt for file (only smart client)
+					if (!location) {
+						location = plugins.file.showFileOpenDialog(1, null, false)
+						if (location) {
+							location = location.getAbsolutePath()
+						}
+					}
+				}
+				
+				//enough information to proceed
+				if (location) {
+					var filePDF = eval(readCall + "(location)")
+					if (filePDF.exists() && filePDF.getContentType() == 'application/pdf') {
+						var bytes = filePDF.getBytes()
+						return bytes
+					}
+				}
 			}
 			
-			return userDir
+			/**
+			 * Get PDF from media library
+			 * 
+			 * @param {String} location Location of pdf
+			 * @return {byte[]} PDF
+			 */
+			this.fromMediaLibrary = function(location) {
+				//enough information to proceed
+				if (location) {
+					var smMedia = solutionModel.getMedia(location)
+					
+					//get pdf
+					if (smMedia.mimeType == 'application/pdf') {
+						return smMedia.bytes
+					}
+				}
+			}
 		}
 	}
 }

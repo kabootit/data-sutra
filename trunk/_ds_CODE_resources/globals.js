@@ -6586,3 +6586,36 @@ function TRIGGER_mouse_get(event,posn) {
 	
 	return position
 }
+
+/**
+ * Programatically navigate to a different navigation item.
+ * 
+ * @param	{String}	[reportID] The navigation item to jump to.
+ * @return {Boolean} Report found/ran successfully
+ * 
+ * @properties={typeid:24,uuid:"F21FE969-0EFB-42AC-A4F7-8C3F7DC47AAB"}
+ * @AllowToRunInFind
+ */
+function TRIGGER_report_run(reportID) {
+	//solutionPrefs defined
+	if (application.__parent__.solutionPrefs) {
+		var reportID = arguments[0]
+		
+		if (reportID) {
+			/** @type {JSFoundSet<db:/sutra/sutra_report>} */
+			var fsReport = databaseManager.getFoundSet('db:/sutra/sutra_report')
+			fsReport.find()
+			fsReport.report_id = reportID
+			var results = fsReport.search()
+			if (results == 1) {
+				var reportRec = fsReport.getSelectedRecord()
+				
+				scopes.DS_buttons.REPORTS_list_control(reportRec.report_form,reportRec.report_method,reportRec.flag_wrapper,reportRec.source,reportRec.report_description,reportRec.id_report)
+				return true				
+			}
+			else {
+				return false
+			}
+		}
+	}
+}

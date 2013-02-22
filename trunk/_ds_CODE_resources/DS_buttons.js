@@ -690,6 +690,7 @@ function REPORTS_list(event,list) {
 	var reportForms = new Array()
 	var reportMethods = new Array()
 	var reportWrappers = new Array()
+	var reportHTMLs = new Array()
 	var allReports = databaseManager.getFoundSet('sutra','sutra_report')
 	
 	for (var i = 0; i < navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].buttons.reports.length ; i++) {
@@ -706,22 +707,26 @@ function REPORTS_list(event,list) {
 				var reportForm = allReports.report_form
 				var reportMethod = allReports.report_method
 				var reportWrapper = allReports.flag_wrapper
+				var reportHTML = allReports.source
 			}
 			else {
 				var reportForm = null
 				var reportMethod = null
 				var reportWrapper = null
+				var reportHTML = null
 			}
 		}
 		else {
 			var reportForm = null
 			var reportMethod = null
 			var reportWrapper = null
+			var reportHTML = null
 		}
 		
 		reportForms.push(reportForm)
 		reportMethods.push(reportMethod)
 		reportWrappers.push(reportWrapper)
+		reportHTMLs.push(reportHTML)
 	}
 	
 	//only show pop-up if there are enabled values
@@ -730,7 +735,7 @@ function REPORTS_list(event,list) {
 		var menu = new Array()
 		for ( var i = 0 ; i < valueList.length ; i++ ) {
 		    menu[i] = plugins.popupmenu.createMenuItem(valueList[i] + "", REPORTS_list_control)
-			menu[i].setMethodArguments(reportForms[i],reportMethods[i],reportWrappers[i],valueList[i],reportIDs[i])
+			menu[i].setMethodArguments(reportForms[i],reportMethods[i],reportWrappers[i],reportHTMLs[i],valueList[i],reportIDs[i])
 			
 			//disable dividers
 			if (valueList[i] == '-') {
@@ -808,12 +813,13 @@ function REPORTS_list_control() {
 	var formName = arguments[0]
 	var methodName = arguments[1]
 	var wrapper = arguments[2]
-	var itemName = arguments[3]
-	var reportID = arguments[4]
+	var html = arguments[3]
+	var itemName = arguments[4]
+	var reportID = arguments[5]
 	var navItemForm = solutionPrefs.config.currentFormName
 	
-	//prompt for how many records to print
-	if (wrapper) {
+	//prompt for how many records to print unless html specified
+	if (wrapper && !html) {
 		if (navItemForm && forms[navItemForm] && utils.hasRecords(forms[navItemForm].foundset)) {
 			var whatPrint = globals.DIALOGS.showQuestionDialog(
 							'Print report',
@@ -861,13 +867,24 @@ function REPORTS_list_control() {
 	
 	//a form to print, a method to run, and they both exist
 	if (formName && methodName && forms[formName] && forms[formName][methodName]) {
-		//pass foundset from wrapper method (if any), formname
+		//pass foundset from wrapper method (if any), formname, html
 		if (fsToPrint) {
-			forms[formName][methodName](fsToPrint,navItemForm)
+			forms[formName][methodName](fsToPrint,navItemForm,html)
 		}
 		//no foundset from wrapper, pass only formname
+			//TODO: should probably standardize on arguments
 		else {
-			forms[formName][methodName](navItemForm)
+			forms[formName][methodName](navItemForm,html)
+		}
+	}
+	//do something with html; ignoring form
+	else if (html) {
+		//check if valid url or just html
+		if (html.indexOf('http') == 0) {
+			scopes.DS.print.preview(itemName + '.pdf',scopes.DS.print.utils.convertToPDFByteArray.fromHTMLURL(html))
+		}
+		else {
+			scopes.DS.print.preview(itemName + '.pdf',scopes.DS.print.utils.convertToPDFByteArray.fromHTMLData(html))
 		}
 	}
 	//no method, show print preview
@@ -879,7 +896,7 @@ function REPORTS_list_control() {
 		
 		//webclient from router, create pdf, show it inline
 		if (solutionPrefs.config.webClient && scopes.globals.DATASUTRA_router_enable) {
-			scopes.DS.print.preview(formName + '.pdf',scopes.DS.print.formBased(formName))
+			scopes.DS.print.preview(formName + '.pdf',scopes.DS.print.utils.convertToPDFByteArray.fromServoyForm(formName))
 		}
 		//smart client, use standard print preview
 		else {
