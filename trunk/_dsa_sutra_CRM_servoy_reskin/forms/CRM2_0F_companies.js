@@ -116,5 +116,5 @@ function REC_on_select(event) {
  * @properties={typeid:24,uuid:"913C4656-B407-4DAE-A3E0-3C8FCCF75DA1"}
  */
 function REPORT_sample() {
-	scopes.DS.print.preview('customer_activity_weekly.pdf',solutionModel.getMedia('report_example.pdf').bytes)
+	scopes.DS.print.preview('customer_activity_weekly.pdf',scopes.DS.print.utils.getPDFByteArray.fromMediaLibrary('report_example.pdf'))
 }
