@@ -134,7 +134,11 @@ div.radio div.inl:focus,
 div.radioCheckField div.blk:focus,
 div.radioCheckField div.inl:focus
 {
-	outline: 1px dotted black;
+/*	outline: 1px dotted black;*/
+
+outline-offset: -2px;
+outline: -webkit-focus-ring-color auto 5px;
+
 }
 
 div.check div.inl
@@ -851,6 +855,10 @@ tr[height*="40"] div.tableviewcell[class*="CPS"] {
 	display:none;
 }
 
+.forgotPass:focus {
+	outline-offset: -2px;
+	outline: -webkit-focus-ring-color auto 5px;
+}
 .forgotPass:hover {
 	text-decoration: underline;
 }

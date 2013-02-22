@@ -121,3 +121,33 @@ function printLoad(input) {
 		printShow();
 	}
 }
+
+// load report
+function printSave(input) {
+	if (input) {
+		//tack on token that makes it download
+		input += '@download';
+		
+		var reportDownload = document.getElementById('download');
+		
+		//fill with iframe if needed
+		if (reportDownload.innerHTML == "") {
+			//iframe to hold pdf.js stuff
+			var iframeHeader = document.createElement('IFRAME');
+			iframeHeader.id = 'report_download';
+			iframeHeader.name = 'report_download';
+			iframeHeader.src = input;
+			iframeHeader.scrolling = 'no';
+			iframeHeader.frameBorder = 0;
+			iframeHeader.seamless = 'seamless';
+			
+			// iframe load
+			reportDownload.appendChild(iframeHeader);
+		}
+		//update the iframe to download a new file
+		else {
+			var iframeHeader = document.getElementById('report_download');
+			iframeHeader.src = input;
+		}
+	}
+}

@@ -16,6 +16,14 @@
  *	An easy reference instead of digging back through past SVN revisions.
  */
 
+ //simulate webkit focus ring (http://thomas.vondeyen.com/2011/02/22/safari-like-focused-form-elements-styled-with-css3/)
+border: 2px solid #8aade1;
+ -webkit-box-shadow: 0 0 3px #8aade1; /* Safari before v5 and Google Chrome */
+ -moz-box-shadow: 0 0 3px #8aade1; /* Firefox */
+ -o-box-shadow: 0 0 3px #8aade1; /* Opera */
+ box-shadow: 0 0 3px #8aade1; /* CSS3 browsers */
+ outline: none; /* disabling Safaris default behavior*/
+
 // bootstrapppp	
 	<!-- boot strap playground -->
 	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,800">

@@ -2708,7 +2708,7 @@ document.addEventListener('DOMContentLoaded', function webViewerLoad(evt) {
   var file = params.file || DEFAULT_URL;
 
   //DS: TSE hard code to not show open file button
-  document.getElementById('openFile').setAttribute('hidden', 'true');
+  // document.getElementById('openFile').setAttribute('hidden', 'true');
   
   //DS: TSE hard code to not show bookmark button unless iOS webapp
   // if (!window.parent.navigator.standalone) {
@@ -2717,17 +2717,17 @@ document.addEventListener('DOMContentLoaded', function webViewerLoad(evt) {
   
   // //DS: TSE hard code to disallow download in iOS webapp
   if (window.parent.navigator.standalone) {
-    document.getElementById('download').setAttribute('hidden', 'true');
+    document.getElementById('openFile').setAttribute('hidden', 'true');
   }
   
   //DS: TSE hard code to allow printing
   // document.getElementById('print').classList.remove('hidden');
   
-  if (!window.File || !window.FileReader || !window.FileList || !window.Blob) {
-    document.getElementById('openFile').setAttribute('hidden', 'true');
-  } else {
-    document.getElementById('fileInput').value = null;
-  }
+  // if (!window.File || !window.FileReader || !window.FileList || !window.Blob) {
+  //   document.getElementById('openFile').setAttribute('hidden', 'true');
+  // } else {
+  //   document.getElementById('fileInput').value = null;
+  // }
 
   // Special debugging flags in the hash section of the URL.
   var hash = document.location.hash.substring(1);
@@ -2841,7 +2841,9 @@ document.addEventListener('DOMContentLoaded', function webViewerLoad(evt) {
 
   document.getElementById('openFile').addEventListener('click',
     function() {
-      document.getElementById('fileInput').click();
+      //DS: TSE hard code to open instead of downloading
+      // document.getElementById('fileInput').click();
+	  PDFView.download();
     });
 
   document.getElementById('print').addEventListener('click',
@@ -2854,16 +2856,24 @@ document.addEventListener('DOMContentLoaded', function webViewerLoad(evt) {
 	  window.print();
     });
 
-	//DS: TSE hard code to open in safari when iOS webapp
-    if (window.parent.navigator.standalone) {
-      
-	}
-	  else {
-		  document.getElementById('download').addEventListener('click',
-		    function() {
-				PDFView.download();
-		    });
-	  }
+	document.getElementById('download').addEventListener('click', function() {
+		//DS: TSE hard code to open in safari when iOS webapp
+		if (window.parent.navigator.standalone) {
+			// http://stackoverflow.com/questions/7930001/force-link-to-open-in-mobile-safari-from-a-web-app-with-javascript#8833025
+			var a = document.createElement('a');
+			a.setAttribute("href", PDFView.url);
+			a.setAttribute("target", "_blank");
+
+			var dispatch = document.createEvent("HTMLEvents")
+			dispatch.initEvent("click", true, true);
+			a.dispatchEvent(dispatch);
+		}
+		//DS: TSE hard code to use our download functionality
+		else {
+			window.parent.printSave(PDFView.url);
+			// PDFView.download();
+		}
+	});
 
   document.getElementById('pageNumber').addEventListener('click',
     function() {

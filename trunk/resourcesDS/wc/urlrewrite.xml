@@ -128,8 +128,22 @@
 			&dsDev;
 		</condition>
 		<note></note>
-		<from>^/(?:ds)?/quit$</from>
+		<from>^/(?:ds/)?quit$</from>
 		<to last="true">/ds/logout.html</to>
+	</rule>
+	
+	<rule>
+		<name>DS downloads</name>
+		<note>Flag files requested for download so they don't open in the browser</note>
+		<condition name="host" next="or">
+			&dsSutra;
+		</condition>
+		<condition name="host">
+			&dsDev;
+		</condition>
+		<from>^/(?:ds/)?(reports)/((?:.*)/)?(.*)@download$</from>
+		<set type="response-header" name="Content-Disposition">attachment;filename=$3</set>
+		<to last="true">/ds/$1/$2$3</to>
 	</rule>
 	
 	<rule>
@@ -141,7 +155,7 @@
 		<condition name="host">
 			&dsDev;
 		</condition>
-		<from>^/(?:ds)?/(config|css|external|img|js|reports|theme)/(.*)$</from>
+		<from>^/(?:ds/)?(config|css|external|img|js|reports|theme)/(.*)$</from>
 		<to last="true">/ds/$1/$2</to>
 	</rule>
 
@@ -167,10 +181,10 @@
 			&dsDev;
 		</condition>
 		<condition name="user-agent" next="or">^.*iPhone.*$</condition>
-		<condition name="user-agent">^.*iPod.*$</condition>
-		<condition name="user-agent">Android.+Mobile</condition>
+		<condition name="user-agent" next="or">^.*iPod.*$</condition>
+		<condition name="user-agent" next="or">Android.+Mobile</condition>
 		<condition name="user-agent" next="or">^.*Nexus 4.*$</condition>
-		<from>^/(?:ds)?/(.*)$</from>
+		<from>^/(?!servoy-webclient)(?:ds/)?(.*)$</from>
 		<to last="true">/ds/index.iphone.html?path=$1</to>
 	</rule>
 	
@@ -190,7 +204,7 @@
 		<condition name="user-agent" next="or">^.*Silk-Accelerated.*$</condition>
 		<condition name="user-agent" next="or">^.*PlayBook.*$</condition>
 		<condition name="user-agent" next="or">^.*Xoom.*$</condition>
-		<from>^/(?:ds)?/(.*)$</from>
+		<from>^/(?!servoy-webclient)(?:ds/)?(.*)$</from>
 		<to last="true">/ds/index.ipad.html?path=$1</to>
 	</rule>
 	
@@ -203,7 +217,7 @@
 			&dsDev;
 		</condition>
 		<note></note>
-		<from>^/(?:ds)?/(.*)$</from>
+		<from>^/(?!servoy-webclient)(?:ds/)?(.*)$</from>
 		<to last="true">/ds/index.html?path=$1</to>
 	</rule>
 	
