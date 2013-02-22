@@ -215,3 +215,17 @@ else {
 	application.setValueListItems('MGR_report_method_names',new Array())
 }
 }
+
+/**
+ * Perform the element default action.
+ *
+ * @param {JSEvent} event the event that triggered the action
+ *
+ * @properties={typeid:24,uuid:"236F3F4E-9814-4F48-B335-C65FACE3827B"}
+ */
+function EDIT_source(event) {
+	scopes.TAB.GRID_change__detail(null,'MGR_0F_report_1L_2F','tab_d2')
+	
+	//enter the field
+	forms.MGR_0F_report_1L_2F_3F.FORM_on_show()
+}
