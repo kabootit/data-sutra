@@ -126,6 +126,9 @@ else {
 }
 databaseManager.saveData()
 
+//populate column valuelist
+forms.NAV_0F_navigation_item_1F__detail.GET_columns()
+
 }
 
 /**

@@ -347,3 +347,32 @@ function TAB_change(event) {
 	//update vl
 	forms[elements.tab_platform.getTabFormNameAt(elements.tab_platform.tabIndex)].FILTER_forms()
 }
+
+/**
+ * @properties={typeid:24,uuid:"005E641F-DBF9-41EA-89DA-00B35D0F9C8B"}
+ */
+function GET_columns() {
+	var allColumns = new Array()
+	
+	if (form_to_load && forms[form_to_load]) {
+		var datasource = forms[form_to_load].controller.getDataSource()
+		
+		if (datasource) {
+			//columns
+			var dbColumns = databaseManager.getTable(datasource).getColumnNames()
+			//calcs
+			var allCalcs = solutionModel.getDataSourceNode(datasource).getCalculations()
+			allCalcs = allCalcs.map(function(item){return item.getName()})
+			//form variables
+			var allVars = solutionModel.getForm(form_to_load).getVariables().map(function(item){return item.name})
+			//both together
+			allColumns = dbColumns.concat(allCalcs,allVars).sort()
+			//remove stored calculations from showing twice
+			allColumns = allColumns.filter(function(elem, pos) {
+				    return allColumns.indexOf(elem) == pos;
+				})
+		}
+	}
+	
+	application.setValueListItems('NAV_column',allColumns)
+}

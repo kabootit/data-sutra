@@ -188,6 +188,9 @@ else {
 	forms.NAV_0F_navigation_item_1F__button_2F_action_item__filter_3L_action_item_filter__custom.TOGGLE_readonly(true)
 }
 
+//populate vl with columns
+forms.NAV_0F_navigation_item_1F__detail.GET_columns()
+
 //turn busy off
 globals.CODE_cursor_busy(false)
 

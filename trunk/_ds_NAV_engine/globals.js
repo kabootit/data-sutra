@@ -2436,6 +2436,11 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			//load main window if new one different than currently displayed one
 			forms.DATASUTRA_WEB_0F__workflow.setForm(mainTab)
 			
+			//update url with the pk for selected record
+			if (globals.DATASUTRA_router_enable) {
+				plugins.WebClientUtils.executeClientSideJS('window.parent.routerReplace(null,"' + navigationPrefs.byNavItemID[navigationItemID]._about_ + '","' + globals.DS_router_url(navigationPrefs.byNavItemID[navigationItemID].path,navigationItemID,null,forms[mainTab].foundset.getSelectedRecord()) + '");')
+			}
+			
 			//update elements/variables on header toolbar
 			forms.DATASUTRA_WEB_0F__header__actions.BUTTONS_toggle()
 		}
@@ -5321,6 +5326,7 @@ function NAV_universal_list_select(event) {
 	if (solutionPrefs.repository && solutionPrefs.repository.allFormsByTable && solutionPrefs.repository.allFormsByTable[serverName] && solutionPrefs.repository.allFormsByTable[serverName][tableName] && solutionPrefs.repository.allFormsByTable[serverName][tableName].primaryKey) {
 		var pkName = solutionPrefs.repository.allFormsByTable[serverName][tableName].primaryKey
 		var pkActedOn = forms[formName][pkName]
+		var pkRecord = forms[formName].foundset.getSelectedRecord()
 	}
 	else {
 		var pkName = 'repositoryAPINotImplemented'
@@ -5371,6 +5377,9 @@ function NAV_universal_list_select(event) {
 	
 	//run in webclient
 	if (solutionPrefs.config.webClient) {
+		//update url with the pk for this record
+		plugins.WebClientUtils.executeClientSideJS('window.parent.routerReplace(null,"' + navigationPrefs.byNavItemID[currentNavItem]._about_ + '","' + globals.DS_router_url(navigationPrefs.byNavItemID[currentNavItem].path,currentNavItem,pkActedOn,pkRecord) + '");')
+		
 		//request focus elsewhere on desktop
 		if (scopes.DS.deviceFactor == 'Desktop') {
 			forms.NAV_T_universal_list__WEB.elements.var_trap.requestFocus()

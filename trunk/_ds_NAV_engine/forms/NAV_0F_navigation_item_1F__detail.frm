@@ -25,7 +25,7 @@ uuid:"027d2607-3e83-4155-8374-b76cd930db59"
 },
 {
 formIndex:14500,
-location:"36,265",
+location:"36,288",
 mediaOptions:14,
 showClick:false,
 showFocus:false,
@@ -76,7 +76,7 @@ typeid:7,
 uuid:"1585a637-51a4-45a9-a478-9d032a93b234"
 },
 {
-height:630,
+height:640,
 partType:5,
 typeid:19,
 uuid:"15ee1d26-df47-4a08-9a89-322aac3bc5d9"
@@ -84,7 +84,7 @@ uuid:"15ee1d26-df47-4a08-9a89-322aac3bc5d9"
 {
 dataProviderID:"initial_record_label",
 formIndex:14000,
-location:"126,242",
+location:"126,265",
 scrollbars:36,
 size:"290,23",
 styleClass:"standard_table",
@@ -113,7 +113,7 @@ valuelistID:"9612cdc4-9f9f-487f-87eb-93dc04ca70a8"
 dataProviderID:"description",
 displayType:1,
 formIndex:13400,
-location:"126,102",
+location:"126,125",
 scrollbars:33,
 size:"290,37",
 styleClass:"standard_table_textarea_bottom",
@@ -124,7 +124,7 @@ uuid:"2fd2d632-4cac-4dae-a3ae-f70ecdeed3af"
 },
 {
 formIndex:11700,
-location:"181,310",
+location:"181,320",
 mediaOptions:14,
 name:"tab_p3",
 onActionMethodID:"9AE97696-E355-4415-A001-1999F47652EA",
@@ -145,7 +145,7 @@ formIndex:10700,
 items:[
 {
 containsFormID:"8145A217-B22B-4F58-98DB-29BC159B1322",
-location:"36,340",
+location:"36,350",
 relationName:"nav_navigation_item_to_navigation_item",
 text:"NAV_0F_navigation_item_1F__detail_2F__desktop",
 typeid:15,
@@ -153,7 +153,7 @@ uuid:"02B7A3CB-C420-4EFF-9754-F2CAB526581D"
 },
 {
 containsFormID:"865AC39A-EC88-4A1A-AC08-6D70B8891481",
-location:"90,380",
+location:"90,390",
 relationName:"nav_navigation_item_to_navigation_item",
 text:"NAV_0F_navigation_item_1F__detail_2F__phone",
 typeid:15,
@@ -161,14 +161,14 @@ uuid:"035C643B-8915-4CEA-AB26-382F3B6835CA"
 },
 {
 containsFormID:"4F08F80D-AFC6-4606-83CF-5F9517723094",
-location:"60,360",
+location:"60,370",
 relationName:"nav_navigation_item_to_navigation_item",
 text:"NAV_0F_navigation_item_1F__detail_2F__tablet",
 typeid:15,
 uuid:"F7E5328F-4971-40F6-B32E-A23E2C9F0584"
 }
 ],
-location:"16,326",
+location:"16,336",
 name:"tab_platform",
 printable:false,
 size:"656,297",
@@ -180,7 +180,7 @@ uuid:"34C8F572-CC60-40CE-9392-4D2710938C43"
 },
 {
 formIndex:14600,
-location:"126,265",
+location:"126,288",
 mediaOptions:14,
 showClick:false,
 showFocus:false,
@@ -193,7 +193,7 @@ uuid:"3774030e-2544-4f16-991c-0042f640a3ca"
 },
 {
 formIndex:13600,
-location:"36,173",
+location:"36,196",
 mediaOptions:14,
 showClick:false,
 showFocus:false,
@@ -207,7 +207,7 @@ uuid:"3a307df8-fdae-4085-a0e7-7287e01c3125"
 },
 {
 formIndex:10100,
-location:"16,150",
+location:"16,173",
 mediaOptions:14,
 showClick:false,
 showFocus:false,
@@ -218,8 +218,21 @@ typeid:7,
 uuid:"44721eed-82c3-4bbd-b107-1fd5d935fc08"
 },
 {
+dataProviderID:"url_column",
+displayType:10,
+formIndex:13000,
+location:"126,102",
+scrollbars:36,
+size:"290,23",
+styleClass:"standard_table",
+transparent:true,
+typeid:4,
+uuid:"4B819BE1-42F1-4A5E-97D8-C121B187B0B8",
+valuelistID:"F054E9E5-A42B-42F7-B21A-84CE11EDCF79"
+},
+{
 formIndex:13900,
-location:"36,242",
+location:"36,265",
 mediaOptions:14,
 showClick:false,
 showFocus:false,
@@ -247,7 +260,7 @@ uuid:"51371581-d670-44bb-93ee-8d8fac26ddfc"
 },
 {
 formIndex:11600,
-location:"20,310",
+location:"20,320",
 mediaOptions:14,
 name:"tab_p1",
 onActionMethodID:"9AE97696-E355-4415-A001-1999F47652EA",
@@ -266,7 +279,7 @@ uuid:"580B5284-E4CE-449A-B746-14860398EED4"
 formIndex:14800,
 horizontalAlignment:0,
 imageMediaID:"a2e147c1-5027-45cb-abf0-ddf2d8588969",
-location:"396,152",
+location:"396,175",
 mediaOptions:1,
 name:"help_notify",
 onActionMethodID:"6a193823-8789-4ec3-a7bf-45d1238dc5bd",
@@ -283,7 +296,7 @@ uuid:"67f48665-9f9b-4c92-b367-be82043f2161"
 {
 formIndex:11500,
 horizontalAlignment:4,
-location:"95,314",
+location:"95,324",
 mediaOptions:14,
 showClick:false,
 showFocus:false,
@@ -296,7 +309,7 @@ uuid:"6FEAB918-1C5F-4CA1-97EE-A42D848A56D9"
 },
 {
 formIndex:13500,
-location:"36,196",
+location:"36,219",
 mediaOptions:14,
 showClick:false,
 showFocus:false,
@@ -310,7 +323,7 @@ uuid:"74a99774-a561-4e99-a15b-912b80c388cb"
 },
 {
 formIndex:14100,
-location:"36,219",
+location:"36,242",
 mediaOptions:14,
 showClick:false,
 showFocus:false,
@@ -337,7 +350,7 @@ uuid:"7E467753-DAA2-416D-92D9-0314EA20EE9B"
 },
 {
 formIndex:13700,
-location:"16,155",
+location:"16,178",
 mediaOptions:14,
 showClick:false,
 showFocus:false,
@@ -369,7 +382,7 @@ uuid:"845b1374-54aa-46e2-9832-6a9aaf1fbfd9"
 dataProviderID:"ul_busy_indicator",
 displayType:4,
 formIndex:14700,
-location:"129,266",
+location:"129,289",
 size:"25,20",
 tabSeq:10,
 transparent:true,
@@ -378,7 +391,7 @@ uuid:"8f721285-b8c8-47c1-9c5d-2d86307f825d"
 },
 {
 formIndex:14200,
-location:"126,173",
+location:"126,196",
 mediaOptions:14,
 showClick:false,
 showFocus:false,
@@ -390,9 +403,22 @@ typeid:7,
 uuid:"9a12770b-741d-4b9a-b0e1-0c3ee30dfde0"
 },
 {
+formIndex:13100,
+location:"36,102",
+mediaOptions:14,
+showClick:false,
+showFocus:false,
+size:"90,23",
+styleClass:"standard_table",
+text:"URL column",
+transparent:true,
+typeid:7,
+uuid:"AE19EE5F-5FC8-4B5D-99B7-5A326A86BC5F"
+},
+{
 formIndex:11800,
 horizontalAlignment:4,
-location:"175,314",
+location:"175,324",
 mediaOptions:14,
 showClick:false,
 showFocus:false,
@@ -418,7 +444,7 @@ uuid:"F89E4D9A-77CA-4E13-A505-513671579619"
 },
 {
 formIndex:11400,
-location:"101,310",
+location:"101,320",
 mediaOptions:14,
 name:"tab_p2",
 onActionMethodID:"9AE97696-E355-4415-A001-1999F47652EA",
@@ -449,7 +475,7 @@ uuid:"a4eac518-dc7f-4981-8189-f30342e0f692"
 },
 {
 formIndex:13300,
-location:"36,101",
+location:"36,124",
 mediaOptions:14,
 showClick:false,
 showFocus:false,
@@ -464,7 +490,7 @@ uuid:"a8471e4a-7e4c-4e25-9340-8cf95e643da7"
 {
 dataProviderID:"initial_form_label",
 formIndex:13800,
-location:"126,196",
+location:"126,219",
 scrollbars:36,
 size:"290,23",
 styleClass:"standard_table",
@@ -477,7 +503,7 @@ uuid:"c4823459-92ac-4c91-a12d-407a3606468a"
 dataProviderID:"initial_form",
 displayType:4,
 formIndex:14300,
-location:"129,174",
+location:"129,197",
 onDataChangeMethodID:"f16224e3-fda8-49a6-96d3-b2802748f060",
 size:"25,20",
 tabSeq:6,
@@ -550,7 +576,7 @@ uuid:"ebdcb635-a5ad-4d1d-91fd-52c2f759aaa5"
 dataProviderID:"initial_record",
 displayType:4,
 formIndex:14400,
-location:"129,220",
+location:"129,243",
 onDataChangeMethodID:"c1edd38e-2026-48fe-b897-e4e980f433cf",
 size:"25,20",
 tabSeq:8,
@@ -560,7 +586,7 @@ uuid:"f07455e9-20cf-44c6-af87-2ea66f6666b5"
 },
 {
 formIndex:10700,
-location:"126,219",
+location:"126,242",
 mediaOptions:14,
 showClick:false,
 showFocus:false,
