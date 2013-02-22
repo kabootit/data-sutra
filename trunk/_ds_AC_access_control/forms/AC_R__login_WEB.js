@@ -20,7 +20,7 @@ var _focusPass = false;
  * 
  * @properties={typeid:35,uuid:"4143AA32-A679-4966-A6B4-24BF238B20C5",variableType:-4}
  */
-var _createAccount = false;
+var _createAccount = true;
 
 /**
  * @type {Number}
