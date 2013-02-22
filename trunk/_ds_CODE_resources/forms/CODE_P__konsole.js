@@ -374,7 +374,7 @@ oHTML.table = 	"<table cellpadding=0 cellspacing=2 border=0>\n" +
 				"</table>";
 				
 oHTML.header = 	"	<tr>\n" +
-				"		<td width=100><b><<cmd>></b></td><td><<description>></td>\n" +
+				"		<td width=100%><b><<cmd>></b></td><td><<description>></td>\n" +
 				"	</tr>\n";
 				
 oHTML.syntax = 	"	<tr>\n" +
@@ -1546,10 +1546,10 @@ if (bScrollToBottom)
 var oHTML = new Object();
 
 oHTML.page = 	"<html><body>\n" +
-				"	<table cellpadding=0 cellspacing=0 border=0 width=100% height=100%>" +
+				"	<table cellpadding=0 cellspacing=0 border=0 width=\"100%\" height=\"100%\">" +
 				"		<tr>\n" +
 				"			<td valign=bottom height=<<windowHeight>>>\n" +
-				"			<table cellpadding=0 cellspacing=2 border=0 width=100% height=100%>\n" +
+				"			<table cellpadding=0 cellspacing=2 border=0 width=\"100%\" height=\"100%\">\n" +
 				"<<tableBody>>" +
 				"			</table>\n" +
 				"			</td>\n" +
@@ -2716,7 +2716,7 @@ if (aTree && aTree.data) {
 }
 
 
-sHTML = "<table cellpadding=0 cellspacing=0 border=0 width=100%>\n";
+sHTML = "<table cellpadding=0 cellspacing=0 border=0 width=\"100%\">\n";
 
 for (var i = 0; i < aNodeTree.length; i++)
 {
@@ -2751,7 +2751,7 @@ function view_drawTree()
 
 var aTree = arguments[0];
 
-var sHTML = "<table cellpadding=0 cellspacing=0 border=0>\n";
+var sHTML = "<table cellpadding=0 cellspacing=0 border=0 width=\"100%\">\n";
 
 var aNode;
 

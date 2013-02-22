@@ -336,7 +336,7 @@ oHTML.table = 	"<table cellpadding=0 cellspacing=2 border=0>\n" +
 				"</table>";
 				
 oHTML.header = 	"	<tr>\n" +
-				"		<td width=100%><b><<cmd>></b></td><td><<description>></td>\n" +
+				"		<td width=\"100%\"><b><<cmd>></b></td><td><<description>></td>\n" +
 				"	</tr>\n";
 				
 oHTML.syntax = 	"	<tr>\n" +
@@ -1523,10 +1523,10 @@ var formName = 'CODE_0F__konsole__popdown'
 var oHTML = new Object();
 
 oHTML.page = 	"<html><body>\n" +
-				"	<table cellpadding=0 cellspacing=0 border=0 width=100% height=100%>" +
+				"	<table cellpadding=0 cellspacing=0 border=0 width=\"100%\" height=\"100%\">" +
 				"		<tr>\n" +
 				"			<td>\n" +
-				"			<table cellpadding=0 cellspacing=2 border=0 width=100% height=100%>\n" +
+				"			<table cellpadding=0 cellspacing=2 border=0 width=\"100%\" height=\"100%\">\n" +
 				"<<tableBody>>" +
 				"			</table>\n" +
 				"			</td>\n" +
@@ -2637,7 +2637,7 @@ for (var oIndex in aTree.data)
 aNodeTree.sort();
 
 
-sHTML = "<table cellpadding=0 cellspacing=0 border=0 width=100%>\n";
+sHTML = "<table cellpadding=0 cellspacing=0 border=0 width=\"100%\">\n";
 
 for (var i = 0; i < aNodeTree.length; i++)
 {
