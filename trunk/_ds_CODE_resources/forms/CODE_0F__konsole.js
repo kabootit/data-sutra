@@ -2077,7 +2077,7 @@ if (cmdVarBin.hidden != true && sInput != 'hide') {
 		
 		//save down new values
 		cmdVarBin.miniWindowSize = new Object()
-		cmdVarBin.miniWindowSize.width = forms[formName + '__header'].elements.tab_toolbar.getWidth()
+		cmdVarBin.miniWindowSize.width = forms[formName + '__header__toolbar'].elements.tab_toolbar.getWidth()
 		cmdVarBin.miniWindowSize.height = tabHeight
 	}
 	
