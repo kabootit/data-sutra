@@ -582,8 +582,7 @@ if (application.__parent__.solutionPrefs) {
 			forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex = forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getMaxTabIndex()
 			
 			//hide toolbar controls
-			forms[baseForm + '__header__toolbar'].elements.btn_toolbar_toggle.visible = false
-			forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.visible = false
+			forms[baseForm + '__header__toolbar'].elements.toolbar_navigator.visible = false
 			
 			//change header to display that we're in design mode
 		//	forms[prefTab].elements.lbl_title.text = 'Design mode'
@@ -640,9 +639,6 @@ if (application.__parent__.solutionPrefs) {
 			if (solutionPrefs.config.lastSelectedToolbar != forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getMaxTabIndex()) {
 				globals.DS_toolbar_cycle(solutionPrefs.config.lastSelectedToolbar)
 			}
-			
-			//show toolbar controls
-			forms[baseForm + '__header__toolbar'].elements.btn_toolbar_toggle.visible = true
 		}
 		
 		//clear out lastSelectedToolbar
