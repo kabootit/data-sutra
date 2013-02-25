@@ -150,6 +150,7 @@ name:"tab_toolbar_popdown",
 printable:false,
 size:"280,150",
 tabOrientation:-1,
+transparent:true,
 typeid:16,
 uuid:"B64621BC-4B4D-48CD-B20E-EE08E0878670",
 visible:false

@@ -236,8 +236,7 @@ function FORM_setup(baseForm,prefForm) {
 //		}
 //	}
 	forms[baseForm + '__header'].elements.btn_space_dividers.visible = false
-	forms[baseForm + '__header__toolbar'].elements.btn_toolbar_toggle.visible = false
-	forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.visible = false
+	forms[baseForm + '__header__toolbar'].elements.toolbar_navigator.visible = false
 //	forms[baseForm + '__header__fastfind'].elements.btn_find.visible = false
 //	forms[baseForm + '__header__fastfind'].elements.find_mid.visible = false
 //	forms[baseForm + '__header__fastfind'].elements.find_end.visible = false

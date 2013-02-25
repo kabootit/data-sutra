@@ -1792,7 +1792,6 @@ function DS_actions(input) {
 						forms[baseForm + '__header__fastfind'].elements.find_end.enabled = true
 						forms[baseForm + '__header__fastfind'].elements.fld_find.enabled = true
 					}
-					forms[baseForm + '__header__toolbar'].elements.btn_toolbar_toggle.visible = true
 					
 					//set current form back to workflow
 						//MEMO: may be changed by other stuff below
@@ -2084,7 +2083,7 @@ function DS_actions(input) {
 						
 						//disable nav_chooser, find, and toolbar cycle button
 						forms[baseForm + '__header'].elements.btn_navset.enabled = false
-						forms[baseForm + '__header__toolbar'].elements.btn_toolbar_toggle.visible = false
+						forms[baseForm + '__header__toolbar'].elements.toolbar_navigator.visible = false
 						if (!solutionPrefs.config.webClient) {
 							forms[baseForm + '__header__fastfind'].elements.btn_find.enabled = false
 							forms[baseForm + '__header__fastfind'].elements.find_mid.enabled = false
@@ -4134,6 +4133,7 @@ function DS_toolbar_cycle(event) {
 		
 		if (event instanceof JSEvent) {
 			var rightClick = event.getType() == JSEvent.RIGHTCLICK
+			var elemName = event.getElementName()
 		}
 		
 		//strip out jsevents
@@ -4249,8 +4249,44 @@ function DS_toolbar_cycle(event) {
 					return currentTab
 				}
 				
-				//show next enabled view
-				forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex = nextTab(currentTab)
+				function prevTab(currentTab) {
+					//check to find next enabled tab
+					while (!thisTab || !thisTab.enabled) {
+						//if not the last tab
+						if (currentTab > 4) {
+							currentTab --
+						}
+						//last tab, loop
+						else {
+							currentTab = maxTab
+							
+							//check to make sure only loop through past the first entry once to avoid infinite loop if nothing enabled
+							if (looped) {
+								//show title toolbar
+								currentTab = 1
+								break
+							}
+							var looped = true
+						}
+						
+						var thisTab = statusTabs[currentTab - 4]
+					}
+					
+					return currentTab
+				}
+				
+				switch (elemName) {
+					case 'btn_toolbar_prev':
+						//show previous enabled view
+						forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex = prevTab(currentTab)
+						break
+						
+					default:
+					case 'btn_toolbar_next':
+						//show next enabled view
+						forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex = nextTab(currentTab)
+						break
+				}
 			}
 		}
 		
@@ -4265,22 +4301,17 @@ function DS_toolbar_cycle(event) {
 			//set color appropriately (defaults to white if not explicitly set)
 			forms[baseForm + '__header__toolbar'].elements.lbl_color.bgcolor = statusTab.gradientColor
 			
+			//enable group
+			forms[baseForm + '__header__toolbar'].elements.toolbar_navigator.visible = true
+			
 			//set up popDown, if activated
 			var thePopDown = statusTab.popDown
 			var tabParent = statusTab.formName
 			
 			if (thePopDown) {
-				//popdown showing
-				if (forms[tabParent].popDown == 'show') {
-					forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.setImageURL('media:///toolbar_popdown_up.png')
-					forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.toolTipText = 'Hide additional ' + statusTab.tabName + ' info'
-				}
-				//popdown not showing
-				else {
-					forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.setImageURL('media:///toolbar_popdown_down.png')
-					forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.toolTipText = 'Show more info for ' + statusTab.tabName
-				}
-				forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.visible = true
+				//popdown available
+				forms[baseForm + '__header__toolbar'].elements.btn_toolbar_expand.visible = forms[tabParent].popDown != 'show'
+				forms[baseForm + '__header__toolbar'].elements.btn_toolbar_collapse.visible = forms[tabParent].popDown == 'show'
 				
 				forms[popForm].elements.tab_toolbar_popdown.tabIndex = thePopDown.tabIndex
 				
@@ -4294,14 +4325,18 @@ function DS_toolbar_cycle(event) {
 				}
 			}
 			else {
-				forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.visible = false
+				forms[baseForm + '__header__toolbar'].elements.btn_toolbar_expand.visible = false
+				forms[baseForm + '__header__toolbar'].elements.btn_toolbar_collapse.visible = false
+				
 				forms[baseForm].elements.tab_toolbar_popdown.visible = false
 			}
 		}
 		else {
+			//set color appropriately (defaults to white if not explicitly set)
 			forms[baseForm + '__header__toolbar'].elements.lbl_color.bgcolor = '#FFFFFF'
-			forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.visible = false
-			forms[baseForm].elements.tab_toolbar_popdown.visible = false
+			
+			//disable group
+			forms[baseForm + '__header__toolbar'].elements.toolbar_navigator.visible = false
 		}
 	}
 }
@@ -4390,11 +4425,8 @@ if (application.__parent__.solutionPrefs) {
 	forms[baseForm + '__header__toolbar'].elements.tab_toolbar.visible = true
 	
 	//if only one enabled tab, remove tab changer button
-	if (enabledToolbars > 1) {
-		forms[baseForm + '__header__toolbar'].elements.btn_toolbar_toggle.visible = true
-	}
-	else {
-		forms[baseForm + '__header__toolbar'].elements.btn_toolbar_toggle.visible = false
+	if (enabledToolbars == 1) {
+		forms[baseForm + '__header__toolbar'].elements.toolbar_navigator.visible = false
 	}
 }
 
@@ -4648,6 +4680,8 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	//reassign arguments without jsevents
 	arguments = Arguments.filter(globals.CODE_jsevent_remove)
 }
+
+	var expanded = arguments[0]
 	
 	var baseForm = solutionPrefs.config.formNameBase
 	var statusStartX = forms[baseForm + '__header'].elements.split_tool_find.getX()
@@ -4714,8 +4748,8 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		var statusTab = statusTabs[currentTab - 4]
 		//popdown showing
 		if (forms[tabParent].popDown == 'show') {
-			forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.setImageURL('media:///toolbar_popdown_up.png')
-			forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.toolTipText = 'Hide additional ' + statusTab.tabName + ' info'
+			forms[baseForm + '__header__toolbar'].elements.btn_toolbar_expand.visible = false
+			forms[baseForm + '__header__toolbar'].elements.btn_toolbar_collapse.visible = true
 			
 			//fire hook
 			if (downPop.hook) {
@@ -4731,8 +4765,8 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		}
 		//popdown not showing
 		else {
-			forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.setImageURL('media:///toolbar_popdown_down.png')
-			forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.toolTipText = 'Show more info for ' + statusTab.tabName
+			forms[baseForm + '__header__toolbar'].elements.btn_toolbar_expand.visible = true
+			forms[baseForm + '__header__toolbar'].elements.btn_toolbar_collapse.visible = false
 			
 			forms[baseForm].elements.tab_toolbar_popdown.visible = false
 		}
