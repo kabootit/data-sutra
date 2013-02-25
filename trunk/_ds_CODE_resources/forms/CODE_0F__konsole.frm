@@ -25,7 +25,7 @@ uuid:"2BB2E490-76AC-4749-99EE-734133922883"
 anchors:3,
 displaysTags:true,
 formIndex:12200,
-location:"165,7",
+location:"75,10",
 mediaOptions:14,
 name:"lbl_tag",
 onActionMethodID:"DCCACF81-67FB-4C69-B8F6-F20B76F339C9",

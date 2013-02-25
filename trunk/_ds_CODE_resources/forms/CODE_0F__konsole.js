@@ -467,15 +467,15 @@ if (forms[tabParent].popDown == 'show') {
 	
 	//flag to keep from reopening
 	cmdVarBin.hidden = true
-	
-	forms[formName + '__header__toolbar'].elements.btn_toolbar_popdown.setImageURL('media:///toolbar_popdown_down.png')
-	forms[formName + '__header__toolbar'].elements.btn_toolbar_popdown.toolTipText = 'Show more info for ' + solutionPrefs.panel.toolbar[solutionPrefs.panel.toolbar.selectedTab - 4].tabName
 }
 //popdown not showing
 else {
-//	forms[formName + '__header__toolbar'].elements.btn_toolbar_popdown.setImageURL('media:///toolbar_popdown_up.png')
-//	forms[formName + '__header__toolbar'].elements.btn_toolbar_popdown.toolTipText = 'Hide additional ' + solutionPrefs.panel.toolbar[solutionPrefs.panel.toolbar.selectedTab - 4].tabName + ' info'
+	
 }
+
+//popdown available
+forms[formName + '__header__toolbar'].elements.btn_toolbar_expand.visible = forms[tabParent].popDown != 'show'
+forms[formName + '__header__toolbar'].elements.btn_toolbar_collapse.visible = forms[tabParent].popDown == 'show'
 
 return true
 
@@ -2091,9 +2091,9 @@ if (cmdVarBin.hidden != true && sInput != 'hide') {
 		forms[formName].elements.tab_toolbar_popdown.setSize(tabWidth,tabHeight)
 		forms[formName].elements.tab_toolbar_popdown.visible = true
 		
-		//change graphic, if needed
-		forms[formName + '__header__toolbar'].elements.btn_toolbar_popdown.setImageURL('media:///toolbar_popdown_up.png')
-		forms[formName + '__header__toolbar'].elements.btn_toolbar_popdown.toolTipText = 'Hide additional ' + statusTabs[solutionPrefs.panel.toolbar.selectedTab - 4].tabName + ' info'
+		//popdown available
+		forms[formName + '__header__toolbar'].elements.btn_toolbar_expand.visible = forms[tabParent].popDown != 'show'
+		forms[formName + '__header__toolbar'].elements.btn_toolbar_collapse.visible = forms[tabParent].popDown == 'show'
 	}
 	//adjust roll based on height
 	else if (miniHeight != cmdVarBin.miniWindowSize.height) {

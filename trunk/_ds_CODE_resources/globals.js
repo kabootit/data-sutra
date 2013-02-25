@@ -1970,8 +1970,7 @@ function TRIGGER_progressbar_start(progressValue,explanationText,explanationTool
 			forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex = 3
 			
 			//hide toolbar controls
-			forms[baseForm + '__header__toolbar'].elements.btn_toolbar_toggle.visible = false
-			forms[baseForm + '__header__toolbar'].elements.btn_toolbar_popdown.visible = false
+			forms[baseForm + '__header__toolbar'].elements.toolbar_navigator.visible = false
 			
 			//set color of toolbar to toolbar yellow
 			forms[baseForm + '__header__toolbar'].elements.lbl_color.bgcolor = '#f5fbd4'
@@ -2053,9 +2052,6 @@ function TRIGGER_progressbar_stop(forceUpdate) {
 			else {
 				forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex = 1
 			}
-			
-			//show toolbar controls when more than one option
-			forms[baseForm + '__header__toolbar'].elements.btn_toolbar_toggle.visible = solutionPrefs.panel.toolbar.length > 1
 		}
 		
 		//clear out lastSelectedToolbar
