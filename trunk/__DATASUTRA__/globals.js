@@ -4131,6 +4131,11 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 function DS_toolbar_cycle(event) {
 	if (application.__parent__.solutionPrefs) {
 		
+		if (solutionPrefs.config.webClient) {
+			forms.DATASUTRA_WEB_0F__header__toolbar.DS_toolbar_cycle.apply(arguments)
+			return
+		}
+		
 		if (event instanceof JSEvent) {
 			var rightClick = event.getType() == JSEvent.RIGHTCLICK
 			var elemName = event.getElementName()
