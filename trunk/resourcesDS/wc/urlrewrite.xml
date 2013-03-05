@@ -90,6 +90,13 @@
 		<from>^/servoy-webclient/resources/datepicker/images/(.*)$</from>
 		<to last="true">/servoy-webclient/templates/datasutra/override/calendar/images/$1</to>
 	</rule>
+	
+	<rule>
+		<name>Servoy image media graphics</name>
+		<note>Better image media graphics</note>
+		<from>^/servoy-webclient/resources/application/images/(save|open_project|delete).gif$</from>
+		<to last="true">/servoy-webclient/templates/datasutra/override/image_media/images/$1.gif</to>
+	</rule>
 
 	
 <!-- DS WebClient with(out) /ds/ prefix -->
