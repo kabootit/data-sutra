@@ -28,7 +28,7 @@ function FORM_on_show(firstShow,event) {
 		}
 		
 		//when 'previewing' this toolbar, disabled (on the form)
-		if (solutionPrefs.config.currentFormName != 'MGR_0F_toolbar') {	
+		if (solutionPrefs.config.currentFormName != 'MGR_0F_toolbar' && solutionPrefs.config.recordNavigatorStatus) {	
 			//update record navigator
 			globals.TRIGGER_toolbar_record_navigator_set()
 		}
