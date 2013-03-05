@@ -45,8 +45,6 @@ function POPULATE_fields() {
  *
  * @param {JSEvent} event the event that triggered the action
  *
- * @returns {Boolean}
- *
  * @properties={typeid:24,uuid:"1B94F29A-1471-44C2-8776-2EAD218FC39D"}
  */
 function ACTION_cancel(event) {
@@ -64,8 +62,5 @@ function ACTION_cancel(event) {
 		globals.CODE_form_in_dialog_close('crmOrderItem')
 		
 		return true
-	}
-	else {
-		return false
 	}
 }
