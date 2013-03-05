@@ -7,6 +7,14 @@
 var smallScroll = false;
 
 /**
+ * Valid values are Desktop, iPad, iPhone
+ * @type {String}
+ *
+ * @properties={typeid:35,uuid:"780AFC6C-1B34-4D59-B6DE-EAAE9C393BD6"}
+ */
+var deviceFactor = 'Desktop';
+
+/**
  * DS transaction hooks
  * 
  * @properties={typeid:35,uuid:"2E1E3EEB-3A16-4AF0-B50B-C9D93779D6CB",variableType:-4}
@@ -369,12 +377,43 @@ var print = new function() {
 }
 
 /**
- * Valid values are Desktop, iPad, iPhone
- * @type {String}
- *
- * @properties={typeid:35,uuid:"780AFC6C-1B34-4D59-B6DE-EAAE9C393BD6"}
+ * Change the URL for a given page
+ * 
+ * @param {String} [pageTitle] Title of the page (shows up in history/window title)
+ * @param {String} [pageURL] Actual url of page
+ * @param {Object} [pageData] Data to be associated with this history entry
+ * @param {Number} [delay=0] How long to wait before pushing the history item (n/a with replace)
+ * @param {Boolean} [replace=false] Repalce the current history or push; Default is push
+ * 
+ * @properties={typeid:24,uuid:"DAABCA5F-61E1-4656-B56C-058A9146DFA8"}
  */
-var deviceFactor = 'Desktop';
+function webURLSet(pageTitle,pageURL,pageData,delay,replace) {
+	//update url with the pk for this record
+	if (solutionPrefs.config.webClient && globals.DATASUTRA_router_enable) {
+		//pass in null string when no pageData specified
+		if (!pageData) {
+			pageData = 'null'
+		}
+		
+		//content should already be sanitized, but check once more
+		if (typeof pageURL == 'string') {
+			//doesn't replace out / like the other ones do
+			pageURL = pageURL.toLowerCase().replace(/([{}\(\)\^$&._%#!@=<>:;,~`\s\*\?\+\|\[\\\\]|\]|\-)/g,'-').replace(/\-{2,}/g,'-')
+		}
+		
+		//replace current history item
+		if (replace) {
+			plugins.WebClientUtils.executeClientSideJS('window.parent.routerReplace(' + pageData + ',"' + pageTitle + '","' + pageURL + '");')
+		}
+		//push to history stack
+		else {
+			if (typeof delay != 'number') {
+				delay = 0
+			}
+			plugins.WebClientUtils.executeClientSideJS('window.parent.routerDelay(' + pageData + ',"' + pageTitle + '","' + pageURL + '",' + delay + ');')
+		}
+	}
+}
 
 /**
  * @param {String} device The device factor used to view Data Sutra

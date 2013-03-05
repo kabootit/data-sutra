@@ -4189,12 +4189,12 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 
 square = (arguments[0]) ? arguments[0] : false
 size = (arguments[1]) ? arguments[1] : 'small'
+formName = (arguments[2]) ? arguments[2] : application.getMethodTriggerFormName()
 
 //only modifies when running on OS X Leopard, and using the Aqua look and feel
 if (application.__parent__.solutionPrefs && 
 	(solutionPrefs.clientInfo.typeOS == 'Mac OS X' && solutionPrefs.clientInfo.typeLAF == 'Mac OS X' && solutionPrefs.clientInfo.verOS >= '10.5' && solutionPrefs.clientInfo.verServoy >= '3.5.7' && solutionPrefs.clientInfo.typeServoy != 'webclient') ||
 	(application.getOSName() == 'Mac OS X' && application.getCurrentLookAndFeelName() == 'Mac OS X' && ((plugins.sutra) ? plugins.sutra.getOSVersion() : '0') >= '10.5' && application.getVersion() >= '3.5.7' && application.getApplicationType() != 5)) {
-	formName = (arguments[2]) ? arguments[2] : application.getMethodTriggerFormName()
 	
 	if (forms[formName]) {
 		var allElems = forms[formName].elements.allnames
@@ -4216,6 +4216,23 @@ if (application.__parent__.solutionPrefs &&
 	}
 }
 
+//webclient also gets mini (messes up anchoring)
+//if (size == 'mini' && application.__parent__.solutionPrefs && solutionPrefs.config.webClient) {
+//	if (forms[formName]) {
+//		var allElems = forms[formName].elements.allnames
+//		
+//		for (var i = 0; i < allElems.length; i++) {
+//			var elemType = (forms[formName].elements[allElems[i]].getElementType) ? forms[formName].elements[allElems[i]].getElementType() : ''
+//			
+//			//it's a combobox
+//			if (elemType == 'COMBOBOX') {
+//				//valid options: regular, small, mini
+//				forms[formName].elements[allElems[i]].setLocation(forms[formName].elements[allElems[i]].getLocationX(),forms[formName].elements[allElems[i]].getLocationY() + 1)
+//				forms[formName].elements[allElems[i]].setSize(forms[formName].elements[allElems[i]].getWidth(),forms[formName].elements[allElems[i]].getHeight()-3)
+//			}
+//		}
+//	}
+//}
 
 
 }
@@ -5743,10 +5760,16 @@ function TRIGGER_ul_tab_list(input,itemName,tabSelected) {
 			formNames.push(actionItem.formToLoad)
 		}
 		
+		var listTabForm = (solutionPrefs.config.webClient) ? 'DATASUTRA_WEB_0F__list__universal' : 'DATASUTRA_0F_solution'
+		
 		//tack on the selected UL to the top of the pop-down
 		valueList.unshift(navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].universalList.displays[navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].universalList.displays.displayPosn].listTitle || navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].navigationItem.fwListTitle)
-		var navForm = (solutionPrefs.config.webClient) ? '__WEB' : ''
-		formNames.unshift((navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.withButtons) ? 'NAV_T_universal_list' + navForm : 'NAV_T_universal_list__no_buttons' + navForm)
+		if (solutionPrefs.config.webClient) {
+			formNames.unshift((navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.withButtons) ? 'NAV_T_universal_list__WEB__buttons' : 'NAV_T_universal_list__WEB__no_buttons')
+		}
+		else {
+			formNames.unshift((navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.withButtons) ? 'NAV_T_universal_list' : 'NAV_T_universal_list__no_buttons')
+		}
 		
 		//called to depress menu
 		if (input instanceof JSEvent) {
@@ -5760,7 +5783,7 @@ function TRIGGER_ul_tab_list(input,itemName,tabSelected) {
 				var menu = new Array()
 				for ( var i = 0 ; i < valueList.length ; i++ ) {
 				    //set check on universal list
-					if (formNames[i] == forms.DATASUTRA_0F_solution.elements.tab_content_B.getTabFormNameAt(forms.DATASUTRA_0F_solution.elements.tab_content_B.tabIndex)) {
+					if (formNames[i] == forms[listTabForm].elements.tab_content_B.getTabFormNameAt(forms[listTabForm].elements.tab_content_B.tabIndex)) {
 						menu[i] = plugins.popupmenu.createCheckboxMenuItem(valueList[i] + "", TRIGGER_ul_tab_list)
 						menu[i].setSelected(true)
 					}
@@ -5789,10 +5812,12 @@ function TRIGGER_ul_tab_list(input,itemName,tabSelected) {
 				if (forms[popForm].elements[btnInvisible]) {
 					var elem = forms[popForm].elements[btnInvisible]
 					
-					var currentLocationX = elem.getLocationX()
-					var currentLocationY = elem.getLocationY()
-					
-					elem.setLocation(currentLocationX, currentLocationY + 3)
+					if (!solutionPrefs.config.webClient) {
+						var currentLocationX = elem.getLocationX()
+						var currentLocationY = elem.getLocationY()
+						
+						elem.setLocation(currentLocationX, currentLocationY + 3)
+					}
 				}
 				else {
 					var elem = forms[popForm].elements[popElem]
@@ -5804,7 +5829,7 @@ function TRIGGER_ul_tab_list(input,itemName,tabSelected) {
 				}
 				
 				//set invisible btn back to original location
-				if (forms[popForm].elements[btnInvisible]) {
+				if (forms[popForm].elements[btnInvisible] && !solutionPrefs.config.webClient) {
 					elem.setLocation(currentLocationX, currentLocationY)
 				}
 			}
@@ -5814,9 +5839,7 @@ function TRIGGER_ul_tab_list(input,itemName,tabSelected) {
 			var formName = arguments[0]
 			var itemName = arguments[1]
 			var tabSelected = arguments[2]
-			var baseForm = solutionPrefs.config.formNameBase
 			var prefName = 'Custom tab ' + solutionPrefs.config.currentFormID + ': ' + formName
-			var listTabForm = (solutionPrefs.config.webClient) ? 'DATASUTRA_WEB_0F__list__universal' : 'DATASUTRA_0F_solution'
 			
 			if (forms[formName]) {
 				//set global that end users use in their code

@@ -94,6 +94,15 @@ function FORM_on_load(event) {
 						smField.x = smField.x + 4
 						smField.y = smField.y + 1
 					}
+					
+					//comboboxes flagged to be mini
+					
+					if (smForm.onLoad && smForm.onLoad.code && smForm.onLoad.code.match(/globals.CODE_property_combobox\((.*)mini/) && smForm.onLoad.code.match(/globals.CODE_property_combobox\((.*)mini/).length) {
+						//adjust size
+						smField.width = smField.width - 2
+						smField.height = smField.height - 3
+						smField.y = smField.y + 1
+					}
 				}
 				
 				//design time property for placeholder text
