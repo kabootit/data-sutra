@@ -122,7 +122,7 @@ function DEBUG_popup()
 
 globals.CODE_text = globals.NAV_list
 forms.CODE_P__konsole.elements.lbl_header.text = 'Nav Item HTML global 1'
-application.showFormInDialog(forms.CODE_P__konsole,0,750,1000,300,' ',true,false,'my debugger',false)
+globals.CODE_form_in_dialog(forms.CODE_P__konsole,0,750,1000,300,' ',true,false,'my debugger',false)
 
 }
 
