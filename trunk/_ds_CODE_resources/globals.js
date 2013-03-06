@@ -6371,7 +6371,7 @@ function CODE_form_in_dialog(form, x, y, width, height, title, resizable, showTe
 			}
 			
 			//in webclient on an ipad, turn off indicator; fixed position is outside bounds of FiD and makes scroll bars show up
-			if (solutionPrefs.config.webClient && scopes.DS.deviceFactor == 'iPad') {
+			if (application.__parent__.solutionPrefs && solutionPrefs.config.webClient && scopes.DS.deviceFactor == 'iPad') {
 				//there is already an onshow
 				if (smForm.onShow && smForm.onShow.getName()) {
 					//check to see that not already extended, extend
