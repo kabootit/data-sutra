@@ -43,6 +43,16 @@
 		<to last="true">$1</to>
 	</rule>
 	
+	<rule>
+		<name>Servoy admin for development</name>
+		<note>When running in a development environment allow dev host to serve up admin pages</note>
+		<condition name="host">
+			&dsDev;
+		</condition>
+		<from>^/servoy-admin(.*)</from>
+		<to last="true">/servoy-admin$1</to>
+	</rule>
+	
 <!--	Language based redirects (1 rule per domain, 1 rule per folder) -->
 
 	<!--	Example site		-->
