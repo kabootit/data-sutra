@@ -580,12 +580,12 @@ function SET_change(input, formParent) {
 			for ( var i = 0 ; i < valuelist.length ; i++ ) {
 				
 				if (i + 1 == tabSelected) {
-					menu[i] = plugins.popupmenu.createCheckboxMenuItem(valuelist[i],TAB_change_set)
+					menu[i] = plugins.popupmenu.createCheckboxMenuItem(valuelist[i],SET_change)
 					menu[i].setMethodArguments(i + 1,formParent)
 					menu[i].setSelected(true)
 				}
 				else {
-					menu[i] = plugins.popupmenu.createMenuItem(valuelist[i],TAB_change_set)
+					menu[i] = plugins.popupmenu.createMenuItem(valuelist[i],SET_change)
 					menu[i].setMethodArguments(i + 1,formParent)
 				}
 				
