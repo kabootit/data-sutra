@@ -73,15 +73,15 @@ function DATE_range_search()
  */
 
 //grab form name
-globals.DATE_date_range_search_form = application.getMethodTriggerFormName()
+DATE_date_range_search_form = application.getMethodTriggerFormName()
 
 //grab field name
-globals.DATE_date_range_field_name = application.getMethodTriggerElementName().substr(4)
+DATE_date_range_field_name = application.getMethodTriggerElementName().substr(4)
 
 //make sure the frameworks flag is false
 forms.DATE_P__search.FrameworksFastFind = false
 
 //show form in dialog
-globals.CODE_form_in_dialog(forms.DATE_P__search,-1,-1,-1,-1,"Search",false,false,"datePicker")
+CODE_form_in_dialog(forms.DATE_P__search,-1,-1,-1,-1,"Search",false,false,"datePicker")
 
 }
