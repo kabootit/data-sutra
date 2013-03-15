@@ -89,52 +89,52 @@ if (clear) {
 	//clear prototyper mode
 	if (solutionPrefs.design.modes.prototyper) {
 		solutionPrefs.design.modes.prototyper = false
-		globals.DEV_quick_buttons('prototyper')
+		DEV_quick_buttons('prototyper')
 	}
 	//clear navigation mode
 	else if (solutionPrefs.design.modes.navigation && callingMode != 'navigation') {
 		solutionPrefs.design.modes.navigation = false
-		globals.DEV_quick_buttons('navigation',false)
+		DEV_quick_buttons('navigation',false)
 	}
 	//clear universallist mode
 	else if (solutionPrefs.design.modes.universallist) {
 		solutionPrefs.design.modes.universallist = false
-		globals.DEV_quick_buttons('universallist')
+		DEV_quick_buttons('universallist')
 	}
 	//clear fastfind mode
 	else if (solutionPrefs.design.modes.fastfind) {
 		solutionPrefs.design.modes.fastfind = false
-		globals.DEV_quick_buttons('fastfind')
+		DEV_quick_buttons('fastfind')
 	}
 	//clear buttonadd mode
 	else if (solutionPrefs.design.modes.buttonadd && callingMode != 'buttonadd') {
 		solutionPrefs.design.modes.buttonadd = false
-		globals.DEV_quick_buttons('buttonadd',false)
+		DEV_quick_buttons('buttonadd',false)
 	}
 	//clear buttonaction mode
 	else if (solutionPrefs.design.modes.buttonaction) {
 		solutionPrefs.design.modes.buttonaction = false
-		globals.DEV_quick_buttons('buttonaction')
+		DEV_quick_buttons('buttonaction')
 	}
 	//clear buttonreport mode
 	else if (solutionPrefs.design.modes.buttonreport) {
 		solutionPrefs.design.modes.buttonreport = false
-		globals.DEV_quick_buttons('buttonreport')
+		DEV_quick_buttons('buttonreport')
 	}
 	//clear spec mode
 	else if (solutionPrefs.design.modes.spec) {
 		solutionPrefs.design.modes.spec = false
-		globals.DEV_quick_buttons('spec')
+		DEV_quick_buttons('spec')
 	}
 	//clear task mode
 	else if (solutionPrefs.design.modes.task) {
 		solutionPrefs.design.modes.task = false
-		globals.DEV_quick_buttons('task')
+		DEV_quick_buttons('task')
 	}
 	//clear help mode
 	else if (solutionPrefs.design.modes.help) {
 		solutionPrefs.design.modes.help = false
-		globals.DEV_quick_buttons('help')
+		DEV_quick_buttons('help')
 	}
 }
 else {
@@ -591,7 +591,7 @@ if (application.__parent__.solutionPrefs) {
 		
 		//refire selected design mode if there is one selected
 		if (solutionPrefs.design.currentMode) {
-			globals.DEV_quick_buttons(solutionPrefs.design.currentMode,true)
+			DEV_quick_buttons(solutionPrefs.design.currentMode,true)
 		}
 	}
 	//turn off
@@ -637,7 +637,7 @@ if (application.__parent__.solutionPrefs) {
 			
 			//set toolbar to previous if it wasn't the last tab
 			if (solutionPrefs.config.lastSelectedToolbar != forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getMaxTabIndex()) {
-				globals.DS_toolbar_cycle(solutionPrefs.config.lastSelectedToolbar)
+				DS_toolbar_cycle(solutionPrefs.config.lastSelectedToolbar)
 			}
 		}
 		
@@ -646,12 +646,12 @@ if (application.__parent__.solutionPrefs) {
 		
 		//turn everything off, but remember where were for next entrance into design mode
 		var saveMode = solutionPrefs.design.currentMode
-		globals.DEV_clear_modes(true)
+		DEV_clear_modes(true)
 		solutionPrefs.design.currentMode = saveMode
 	}
 	
 	//refire current space
-	globals.TRIGGER_spaces_set(solutionPrefs.config.activeSpace,true,skipUI)
+	TRIGGER_spaces_set(solutionPrefs.config.activeSpace,true,skipUI)
 	
 //	forms.DATASUTRA_0F_solution.elements.bean_main.ignoreRepaint = false
 //	forms.DATASUTRA_0F_solution.elements.bean_list.ignoreRepaint = false
@@ -699,15 +699,15 @@ if (application.__parent__.solutionPrefs) {
 	
 	switch (flagName) {
 		case 'prototyper' :
-			if (globals.PROTO_quick_buttons) {
-				globals.PROTO_quick_buttons(formName,workflowName,listName,workflowNameStd,stayThere)
+			if (PROTO_quick_buttons) {
+				PROTO_quick_buttons(formName,workflowName,listName,workflowNameStd,stayThere)
 			}
 			else {
-				globals.DIALOGS.showErrorDialog(
-								'Prototyper error',
-								'Prototyper is not available. Please check your license key'
-							)
-				globals.DEV_clear_modes(true)
+				DIALOGS.showErrorDialog(
+						'Prototyper error',
+						'Prototyper is not available. Please check your license key'
+					)
+				DEV_clear_modes(true)
 			}
 			break
 		case 'universallist' :
@@ -745,17 +745,17 @@ if (application.__parent__.solutionPrefs) {
 			
 			if (solutionPrefs.design.modes[flagName]) {
 				//clear other modes and refire to exit them
-				globals.DEV_clear_modes(true,flagName)
+				DEV_clear_modes(true,flagName)
 				
 				//dim workflow
-				globals.DEV_lock_workflow(true,true)
+				DEV_lock_workflow(true,true)
 				
 				//punch down this mode as current
 				solutionPrefs.design.currentMode = flagName
 			}
 			else {
 				//undim workflow
-				globals.DEV_lock_workflow(false)
+				DEV_lock_workflow(false)
 				
 				//not in any mode
 				solutionPrefs.design.currentMode = null
@@ -800,7 +800,7 @@ databaseManager.setAutoSave(true)
 forms[solutionPrefs.config.formNameBase].elements.tab_design_popdown.visible = false
 
 //toggle everything back on
-globals.TRIGGER_interface_lock(false,false)
+TRIGGER_interface_lock(false,false)
 
 //set status to unlocked
 solutionPrefs.config.lockStatus = false
@@ -870,7 +870,7 @@ if (proceed) {
 	databaseManager.setAutoSave(true)
 	
 	//toggle things off
-	globals.DEV_quickedit_toggle()
+	DEV_quickedit_toggle()
 	
 	//if method on calling form, execute it
 	if (formName && forms[formName] && forms[formName].ACTION_ok) {
@@ -879,10 +879,10 @@ if (proceed) {
 }
 //something went wrong with validation, show error
 else {
-	globals.DIALOGS.showErrorDialog(
-					'Validation error',
-					'Get message to input here'
-				)
+	DIALOGS.showErrorDialog(
+			'Validation error',
+			'Get message to input here'
+		)
 }
 }
 
@@ -924,7 +924,7 @@ if (formName) {
 		databaseManager.setAutoSave(false)
 		
 		//lock screen
-		globals.TRIGGER_interface_lock(true,true)
+		TRIGGER_interface_lock(true,true)
 		
 		//remove hover guy window if new one different than currently displayed one
 		if (forms[baseForm].elements.tab_design_popdown.tabIndex > 0  && (forms[baseForm].elements.tab_design_popdown.getTabFormNameAt(1) != formName)) {
@@ -990,7 +990,7 @@ else {
 	forms[baseForm].elements.tab_design_popdown.visible = false
 	
 	//unlock screen
-	globals.TRIGGER_interface_lock(false,false)
+	TRIGGER_interface_lock(false,false)
 }
 
 
@@ -1034,7 +1034,7 @@ if (idNavItem && navigationPrefs.byNavItemID[idNavItem] && navigationPrefs.byNav
 }
 //use selected navigation set
 else {
-	var idNavSet = globals.DATASUTRA_navigation_set
+	var idNavSet = DATASUTRA_navigation_set
 }
 
 var displayNavSet = application.getValueListDisplayValue('NAV_navigation_set',idNavSet)
@@ -1085,7 +1085,7 @@ if (results) {
 	navigationPrefs.byNavSetName[displayNavSet].itemsByName[record.item_name] = 
 	navigationPrefs.byNavSetName[displayNavSet].itemsByOrder[itemPosn] = 
 	navigationPrefs.byNavItemID[idNavItem] = 
-		globals.NAV_navigation_item_load(record,true)
+		NAV_navigation_item_load(record,true)
 	
 	//nav item name changed, redraw navitem list
 	if (redraw && redrawRequired) {
