@@ -535,7 +535,7 @@ function TRIGGER_fastfind_display_set(findText,findTooltip,findCheck,setDefault)
 		}
 		
 		//set text in fast find area
-		globals.DATASUTRA_find = findText
+		DATASUTRA_find = findText
 		
 		//only show stop button if a message is passed
 		if (findText) {
@@ -544,16 +544,16 @@ function TRIGGER_fastfind_display_set(findText,findTooltip,findCheck,setDefault)
 		}
 		//set check to appear next to column which was filtered
 		if (findCheck && findCheck != true) {
-			globals.DATASUTRA_find_field = findCheck
+			DATASUTRA_find_field = findCheck
 		}
 		//set check to appear next to 'Filter applied...'
 		else if (findCheck) {
-			globals.DATASUTRA_find_field = 'Filtered'
+			DATASUTRA_find_field = 'Filtered'
 		}
 		//set check to some weird value so nothing will be checked
 		//MEMO: do not set to null because then it will be set to 'Show all' by default
 		else if (!findCheck) {
-			globals.DATASUTRA_find_field = 'NuttinHoney'
+			DATASUTRA_find_field = 'NuttinHoney'
 		}
 		
 		//save down values of last 'find'
@@ -659,7 +659,7 @@ function TRIGGER_fastfind_override(findOverride,itemID) {
 			if (findOverride) {
 				//punch default for this form down (so can roll back)
 				if (!thisNav.fastFindInitial) {
-					thisNav.fastFindInitial = globals.CODE_copy_object(thisNav.fastFind)
+					thisNav.fastFindInitial = CODE_copy_object(thisNav.fastFind)
 				}
 				
 				thisNav.fastFind = findOverride
@@ -667,7 +667,7 @@ function TRIGGER_fastfind_override(findOverride,itemID) {
 			//revert to default
 			else {
 				if (thisNav.fastFindInitial) {
-					thisNav.fastFind = globals.CODE_copy_object(thisNav.fastFindInitial)
+					thisNav.fastFind = CODE_copy_object(thisNav.fastFindInitial)
 				}
 			}
 		}
@@ -698,7 +698,7 @@ function TRIGGER_feedback_create(issue,description,screenshot) {
 		
 		record.feedback_status = 'Pending'
 		record.id_log = solutionPrefs.clientInfo.logID
-		record.id_navigation = globals.DATASUTRA_navigation_set
+		record.id_navigation = DATASUTRA_navigation_set
 		record.id_navigation_item = solutionPrefs.config.currentFormID
 		record.feedback_issue = issue
 		record.feedback_summary = detail
@@ -836,12 +836,12 @@ function TRIGGER_help_navigation_set(itemID, confirmJump, subLanding, showHelp) 
 		if (navItemID) {
 			//confirm to leave current location
 			if (confirm) {
-				var proceed = globals.DIALOGS.showQuestionDialog(
-											'Navigate away',
-											'If you continue, you will leave the screen you are currently viewing',
-											'Yes',
-											'No'
-										)
+				var proceed = DIALOGS.showQuestionDialog(
+									'Navigate away',
+									'If you continue, you will leave the screen you are currently viewing',
+									'Yes',
+									'No'
+								)
 			}
 			else {
 				var proceed = 'Yes'
@@ -860,9 +860,9 @@ function TRIGGER_help_navigation_set(itemID, confirmJump, subLanding, showHelp) 
 				forms.NAV__navigation_tree__rows.LIST_expand_collapse(null,navItemID,'open',navSetID)
 				
 				//if from a different navigation set
-				if (globals.DATASUTRA_navigation_set != navSetID) {
-					navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].lastNavItem = lastItem
-					globals.DATASUTRA_navigation_set = navSetID
+				if (DATASUTRA_navigation_set != navSetID) {
+					navigationPrefs.byNavSetID[DATASUTRA_navigation_set].lastNavItem = lastItem
+					DATASUTRA_navigation_set = navSetID
 					
 					var navigationList = (solutionPrefs.config.webClient) ? 'NAV__navigation_tree__WEB' : 'NAV__navigation_tree'
 					forms[navigationList].LABEL_update()
@@ -888,15 +888,15 @@ function TRIGGER_help_navigation_set(itemID, confirmJump, subLanding, showHelp) 
 				
 				//pop-up help screen for selected element
 				if (showHelp) {
-					globals.TRIGGER_tooltip_help_popup(showHelp.form,showHelp.element,showHelp.tabPanel)
+					TRIGGER_tooltip_help_popup(showHelp.form,showHelp.element,showHelp.tabPanel)
 				}
 			}
 		}
 		else {
-			globals.DIALOGS.showErrorDialog(
-								'Destination error',
-								'The landing destination is not available.  See the administrator'
-							)
+			DIALOGS.showErrorDialog(
+					'Destination error',
+					'The landing destination is not available.  See the administrator'
+				)
 			return false
 		}
 	}
@@ -1398,7 +1398,7 @@ function TRIGGER_interface_lock(freeze,freezeAll,nonTransparent,spinner,nonTrans
 					
 					//developer was locked, return to that state
 					if (solutionPrefs.design.statusLockWorkflow || solutionPrefs.design.statusLockList) {
-						globals.DEV_lock_workflow()
+						DEV_lock_workflow()
 					}
 					
 					//only show active space options
@@ -1608,13 +1608,13 @@ function TRIGGER_navigation_filter_update(forceRefresh,itemID) {
 		}
 		
 		//reassign arguments without jsevents
-		arguments = Arguments.filter(globals.CODE_jsevent_remove)
+		arguments = Arguments.filter(CODE_jsevent_remove)
 	}
 	
 		var forceRefresh = arguments[0]
 		var navItemID = arguments[1]
 		
-		return globals.NAV_foundset_restrict(forceRefresh,navItemID)
+		return NAV_foundset_restrict(forceRefresh,navItemID)
 	}
 	else {
 		return false
@@ -1660,7 +1660,7 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset, idNavigationIt
 		
 			//try to find navigation item from selected set
 			for (var i = 0; i < navItemID.length; i++) {
-				if (navigationPrefs.byNavItemID[navItemID[i]].navigationItem.idNavigation == globals.DATASUTRA_navigation_set) {
+				if (navigationPrefs.byNavItemID[navItemID[i]].navigationItem.idNavigation == DATASUTRA_navigation_set) {
 					var found = true
 					break
 				}
@@ -1695,11 +1695,11 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset, idNavigationIt
 				scopes.DS.webBlockerCentered()
 				
 				//call router to switch entire page when not called from router
-				if (globals.DATASUTRA_router_enable && !idNavigationItem) {
-					globals.DS_router(null,null,navItem.idNavigationItem)
+				if (DATASUTRA_router_enable && !idNavigationItem) {
+					DS_router(null,null,navItem.idNavigationItem)
 					
 					//fill global to be used on second pass through this method (after url is rewritten)
-					globals.DATASUTRA_router_payload = {
+					DATASUTRA_router_payload = {
 							itemID : itemID,
 							setFoundset : setFoundset,
 							useFoundset : (useFoundset) ? useFoundset : forms[application.getMethodTriggerFormName()].foundset
@@ -1708,9 +1708,9 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset, idNavigationIt
 				}
 				else {
 					//if from a different navigation set
-					if (globals.DATASUTRA_navigation_set != navSetID) {
-						navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].lastNavItem = lastItem
-						globals.DATASUTRA_navigation_set = navSetID
+					if (DATASUTRA_navigation_set != navSetID) {
+						navigationPrefs.byNavSetID[DATASUTRA_navigation_set].lastNavItem = lastItem
+						DATASUTRA_navigation_set = navSetID
 						
 						//update text display
 						var navigationList = (solutionPrefs.config.webClient) ? 'NAV__navigation_tree__WEB' : 'NAV__navigation_tree'
@@ -1760,7 +1760,7 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset, idNavigationIt
 				//a foundset was modified, do some more massage
 				if (foundsetSet) {
 					//restrict if required to
-				//	globals.NAV_foundset_restrict(true,null,true)
+				//	NAV_foundset_restrict(true,null,true)
 	
 					//reset the sort
 					if (stringSort && forms[formNameWorkflow].controller.getMaxRecordIndex()) {
@@ -1771,13 +1771,13 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset, idNavigationIt
 					var modifiedFoundset = forms[formNameWorkflow].foundset
 	
 					//show that only a portion of current foundset selected
-					globals.DATASUTRA_find = 'Related subset'
-//					globals.DATASUTRA_find_field = null
+					DATASUTRA_find = 'Related subset'
+//					DATASUTRA_find_field = null
 					
 					//fast find is enabled, track
 					if (navigationPrefs.byNavItemID[navItem.idNavigationItem].fastFind) {
-						navigationPrefs.byNavItemID[navItem.idNavigationItem].fastFind.lastFindValue = globals.DATASUTRA_find
-						navigationPrefs.byNavItemID[navItem.idNavigationItem].fastFind.lastFindField = globals.DATASUTRA_find_field
+						navigationPrefs.byNavItemID[navItem.idNavigationItem].fastFind.lastFindValue = DATASUTRA_find
+						navigationPrefs.byNavItemID[navItem.idNavigationItem].fastFind.lastFindField = DATASUTRA_find_field
 						navigationPrefs.byNavItemID[navItem.idNavigationItem].fastFind.lastFindTip = null
 					}
 	
@@ -1793,7 +1793,7 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset, idNavigationIt
 						}
 						//3.5
 						else {
-							globals.TRIGGER_ul_refresh_all()
+							TRIGGER_ul_refresh_all()
 						}
 					}
 					//custom list based on the same, set it too
@@ -1834,7 +1834,7 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset, idNavigationIt
 			}
 		}
 		else {
-			globals.DIALOGS.showErrorDialog(
+			DIALOGS.showErrorDialog(
 						'Navigation error',
 						'You do not have access to this screen.  Please see administrator'
 				)
@@ -2045,7 +2045,7 @@ function TRIGGER_progressbar_stop(forceUpdate) {
 				}
 				//smart client
 				else {
-					globals.DS_toolbar_cycle(solutionPrefs.config.lastSelectedToolbar)
+					DS_toolbar_cycle(solutionPrefs.config.lastSelectedToolbar)
 				}
 			}
 			//go to solution title
@@ -2094,7 +2094,7 @@ function TRIGGER_registered_action_authenticate(registeredAction,showDialog) {
 	 */
 	function alert(actionName) {
 		if (showDialog) {
-			globals.DIALOGS.showErrorDialog('Error','You do not have permission to:\n' + actionName)
+			DIALOGS.showErrorDialog('Error','You do not have permission to:\n' + actionName)
 		}
 	}
 	
@@ -2205,7 +2205,7 @@ function TRIGGER_spaces_set(spaceName,alwaysFire,skipUI) {
 			}
 			
 			//fire space changer
-			var spaceMethod = solutionPrefs.config.webClient ? forms.DATASUTRA_WEB_0F__header.ACTION_space_change : globals.DS_space_change
+			var spaceMethod = solutionPrefs.config.webClient ? forms.DATASUTRA_WEB_0F__header.ACTION_space_change : DS_space_change
 			spaceMethod('btn_space_'+i,true,alwaysFire,skipUI)
 			
 			return true
@@ -2235,7 +2235,7 @@ function TRIGGER_timer(startStop) {
 		}
 		
 		//reassign arguments without jsevents
-		arguments = Arguments.filter(globals.CODE_jsevent_remove)
+		arguments = Arguments.filter(CODE_jsevent_remove)
 	}
 	
 	var startStop = arguments[0]
@@ -2271,7 +2271,7 @@ function TRIGGER_timer(startStop) {
 			}
 		}
 		else {
-			globals.DIALOGS.showErrorDialog('Timer error','The timer has not been started yet')
+			DIALOGS.showErrorDialog('Timer error','The timer has not been started yet')
 		}
 	}
 }
@@ -2300,7 +2300,7 @@ function TRIGGER_toolbar_record_navigator_set(status,maxWidth) {
 		}
 		
 		//reassign arguments without jsevents
-		arguments = Arguments.filter(globals.CODE_jsevent_remove)
+		arguments = Arguments.filter(CODE_jsevent_remove)
 	}
 	
 		/*************
@@ -2443,7 +2443,7 @@ function TRIGGER_toolbar_set(toolbarName) {
 			
 			//destination toolbar is valid and different than current toolbar, change
 			if (newToolbar != oldToolbar && found) {
-				globals.DS_toolbar_cycle(i + 4)
+				DS_toolbar_cycle(i + 4)
 				
 				return true
 			}
@@ -2507,7 +2507,7 @@ function TRIGGER_tooltip_help_popup(tabPanelName,formName,elemName) {
 		}
 		
 		//reassign arguments without jsevents
-		arguments = Arguments.filter(globals.CODE_jsevent_remove)
+		arguments = Arguments.filter(CODE_jsevent_remove)
 	}
 	
 	var tabPanelName = arguments[0] || 'tab_detail'
@@ -2532,12 +2532,12 @@ function TRIGGER_tooltip_help_popup(tabPanelName,formName,elemName) {
 				
 				//if help found, continue
 				if (firstFound) {
-					globals.CODE_text = firstFound
+					CODE_text = firstFound
 					forms.CODE_P__text.elements.lbl_header.text = 'Inline help'
 						
 					//show window when not already showing
 					if (!application.getWindow('inlineHelp')) {
-						globals.CODE_form_in_dialog(forms.CODE_P__text,-1,-1,-1,-1,' ',true,false,'inlineHelp',false)
+						CODE_form_in_dialog(forms.CODE_P__text,-1,-1,-1,-1,' ',true,false,'inlineHelp',false)
 					}
 					//make sure correct field displayed
 					else {
@@ -2547,12 +2547,12 @@ function TRIGGER_tooltip_help_popup(tabPanelName,formName,elemName) {
 			}
 			//check to see that there is additional help for this element
 			else if (solutionPrefs.i18n[solutionPrefs.config.language][formName] && solutionPrefs.i18n[solutionPrefs.config.language][formName][elemName] && solutionPrefs.i18n[solutionPrefs.config.language][formName][elemName].inlineHelp) {
-				globals.CODE_text = solutionPrefs.i18n[solutionPrefs.config.language][formName][elemName].inlineHelp
+				CODE_text = solutionPrefs.i18n[solutionPrefs.config.language][formName][elemName].inlineHelp
 				forms.CODE_P__text.elements.lbl_header.text = 'Inline help'
 					
 				//show window when not already showing
 				if (!application.getWindow('inlineHelp')) {
-					globals.CODE_form_in_dialog(forms.CODE_P__text,-1,-1,-1,-1,' ',true,false,'inlineHelp',false)
+					CODE_form_in_dialog(forms.CODE_P__text,-1,-1,-1,-1,' ',true,false,'inlineHelp',false)
 				}
 				//make sure correct field displayed
 				else {
@@ -2562,17 +2562,17 @@ function TRIGGER_tooltip_help_popup(tabPanelName,formName,elemName) {
 		}
 		//no default language set up; abort
 		else {
-			globals.DIALOGS.showErrorDialog(
-							'Error',
-							'No default language is specified'
-					)
+			DIALOGS.showErrorDialog(
+					'Error',
+					'No default language is specified'
+				)
 		}
 	}
 	else {
-		globals.DIALOGS.showErrorDialog(
-							'Error',
-							'Inline help/tooltips only work when in Data Sutra'
-					)
+		DIALOGS.showErrorDialog(
+				'Error',
+				'Inline help/tooltips only work when in Data Sutra'
+			)
 	}
 }
 
@@ -2596,7 +2596,7 @@ function TRIGGER_tooltip_set(formName,clearAll) {
 			}
 			
 			//reassign arguments without jsevents
-			arguments = Arguments.filter(globals.CODE_jsevent_remove)
+			arguments = Arguments.filter(CODE_jsevent_remove)
 		}
 		
 		var formName = (arguments[0]) ? arguments[0] : application.getMethodTriggerFormName()
@@ -2647,7 +2647,7 @@ function TRIGGER_ul_display_set(displayPosn) {
 		}
 		
 		//reassign arguments without jsevents
-		arguments = Arguments.filter(globals.CODE_jsevent_remove)
+		arguments = Arguments.filter(CODE_jsevent_remove)
 	}
 		var displayPosn = arguments[0]
 		
@@ -2700,7 +2700,7 @@ if (application.__parent__.solutionPrefs && application.__parent__.navigationPre
 		//only refresh if visited and UL for this nav item
 		if (formUL && forms[formUL]) {
 			forms[formUL].UL_sync_records()
-			globals.TRIGGER_toolbar_record_navigator_set()
+			TRIGGER_toolbar_record_navigator_set()
 		}
 	}
 }
@@ -2745,7 +2745,7 @@ if (application.__parent__.solutionPrefs && application.__parent__.navigationPre
 	//using universal list, do stuff
 	if (navigationPrefs.byNavItemID[navItemID].navigationItem.useFwList) {
 		
-		globals.TRIGGER_ul_refresh_all()
+		TRIGGER_ul_refresh_all()
 		
 		/*
 		databaseManager.saveData()
@@ -2874,15 +2874,11 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	}
 	
 	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
+	arguments = Arguments.filter(CODE_jsevent_remove)
 }
 
 var method = arguments[0]
 var codeType = arguments[1] || 'servoy'
-
-//var fxGetKeywords = globals.CODE_get_function(117)
-//var fxMatch = globals.CODE_get_function(100)
-//var fxGetMatches = globals.CODE_get_function(104)
 
 function fxGetKeywords(str) {
 	return '\\b' + str.replace(/ /g, '\\b|\\b') + '\\b'
@@ -2979,7 +2975,7 @@ if ((!(method == null || method == undefined)) ? method.length : false) {
 				rowObject.rowArray[j] = '&lt;'
 			}
 		}
-		methodArray[i] = rowObject //globals.CODE_copy_object(rowObject)
+		methodArray[i] = rowObject //CODE_copy_object(rowObject)
 	}
 
 //
@@ -3053,22 +3049,22 @@ if ((!(method == null || method == undefined)) ? method.length : false) {
 		methodArray[i] = CODE_color_method_fx(methodArray[i],regexList[1],fxGetMatches,fxMatch)
 		//double/single quoted strings
 		//TODO: '"' contained within each other doesn't work
-		methodArray[i] = globals.CODE_color_method_fx(methodArray[i],regexList[3],fxGetMatches,fxMatch)
-		methodArray[i] = globals.CODE_color_method_fx(methodArray[i],regexList[2],fxGetMatches,fxMatch)
+		methodArray[i] = CODE_color_method_fx(methodArray[i],regexList[3],fxGetMatches,fxMatch)
+		methodArray[i] = CODE_color_method_fx(methodArray[i],regexList[2],fxGetMatches,fxMatch)
 		//() {} brackets
-		methodArray[i] = globals.CODE_color_method_fx(methodArray[i],regexList[4],fxGetMatches,fxMatch)
+		methodArray[i] = CODE_color_method_fx(methodArray[i],regexList[4],fxGetMatches,fxMatch)
 		//numbers
-		methodArray[i] = globals.CODE_color_method_fx(methodArray[i],regexList[5],fxGetMatches,fxMatch)
+		methodArray[i] = CODE_color_method_fx(methodArray[i],regexList[5],fxGetMatches,fxMatch)
 		//comparison operators and [] brackets
-		methodArray[i] = globals.CODE_color_method_fx(methodArray[i],regexList[6],fxGetMatches,fxMatch)
+		methodArray[i] = CODE_color_method_fx(methodArray[i],regexList[6],fxGetMatches,fxMatch)
 		//keywords
-		methodArray[i] = globals.CODE_color_method_fx(methodArray[i],regexList[7],fxGetMatches,fxMatch)
+		methodArray[i] = CODE_color_method_fx(methodArray[i],regexList[7],fxGetMatches,fxMatch)
 		//servoy words
-		methodArray[i] = globals.CODE_color_method_fx(methodArray[i],regexList[8],fxGetMatches,fxMatch)
+		methodArray[i] = CODE_color_method_fx(methodArray[i],regexList[8],fxGetMatches,fxMatch)
 		//special red words
-		methodArray[i] = globals.CODE_color_method_fx(methodArray[i],regexList[9],fxGetMatches,fxMatch)
+		methodArray[i] = CODE_color_method_fx(methodArray[i],regexList[9],fxGetMatches,fxMatch)
 		//operators
-		methodArray[i] = globals.CODE_color_method_fx(methodArray[i],regexList[10],fxGetMatches,fxMatch)
+		methodArray[i] = CODE_color_method_fx(methodArray[i],regexList[10],fxGetMatches,fxMatch)
 	}
 //
 // 4) write out html
@@ -3221,8 +3217,8 @@ for (var j = 0 ; j <= loopEnd ; j++) { //to account for starting and ending
 }
 
 //sort restriction arrays
-returnObject.startRestrict.sort(globals.CODE_sort_numeric)
-returnObject.endRestrict.sort(globals.CODE_sort_numeric)
+returnObject.startRestrict.sort(CODE_sort_numeric)
+returnObject.endRestrict.sort(CODE_sort_numeric)
 
 return returnObject
 }
@@ -3263,7 +3259,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	}
 	
 	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
+	arguments = Arguments.filter(CODE_jsevent_remove)
 }
 
 var original	= arguments[0]
@@ -3321,7 +3317,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	}
 	
 	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
+	arguments = Arguments.filter(CODE_jsevent_remove)
 }
 
 var origObj = arguments[0]
@@ -3337,7 +3333,7 @@ else {
 
 for (var i in origObj) {
 	if (typeof origObj[i] == 'object' && origObj[i] != null) {
-		deepCopyObj[i] = globals.CODE_copy_object(origObj[i])
+		deepCopyObj[i] = CODE_copy_object(origObj[i])
 	}
 	else {
 		deepCopyObj[i] = origObj[i]
@@ -3389,7 +3385,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	}
 	
 	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
+	arguments = Arguments.filter(CODE_jsevent_remove)
 }
 
 var dateIn = arguments[0] || new Date()
@@ -3501,7 +3497,7 @@ function CODE_fid_hide()
  *			  	
  */
 
-return (globals.CODE_hide_form) ? true : false
+return (CODE_hide_form) ? true : false
 }
 
 /**
@@ -3541,7 +3537,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	}
 	
 	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
+	arguments = Arguments.filter(CODE_jsevent_remove)
 }
 
 var fsFile = (arguments[0]) ? (arguments[0]) : forms[application.getMethodTriggerFormName()].foundset
@@ -3574,7 +3570,7 @@ if (fileName) {
 		var fileSize = plugins.file.getFileSize(qualifiedFileName)
 		
 		if (fileSize > 2 * (1024 * 1024)) {
-			var proceed = globals.DIALOGS.showQuestionDialog('Large file','The file selected is over 2 mb.  Continue?','Yes','No')
+			var proceed = DIALOGS.showQuestionDialog('Large file','The file selected is over 2 mb.  Continue?','Yes','No')
 		}
 		else {
 			var proceed = 'Yes'
@@ -3743,7 +3739,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	}
 	
 	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
+	arguments = Arguments.filter(CODE_jsevent_remove)
 }
 
 var fileBlob = arguments[0]
@@ -3824,7 +3820,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	}
 	
 	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
+	arguments = Arguments.filter(CODE_jsevent_remove)
 }
 
 //get form with highlighter
@@ -3926,7 +3922,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	}
 	
 	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
+	arguments = Arguments.filter(CODE_jsevent_remove)
 }
 
 //element passed
@@ -4019,7 +4015,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	}
 	
 	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
+	arguments = Arguments.filter(CODE_jsevent_remove)
 }
 
 var input = arguments[0]
@@ -4115,7 +4111,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	}
 	
 	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
+	arguments = Arguments.filter(CODE_jsevent_remove)
 }
 
 var oldMethod = arguments[0]
@@ -4137,7 +4133,7 @@ if (typeof newMethod == 'func' + 'tion' && application.getApplicationType() == 2
 	}
 	
 	//debugging
-	//globals.DIALOGS.showErrorDialog('Overwritten')
+	//DIALOGS.showErrorDialog('Overwritten')
 	return true
 }
 else {
@@ -4184,7 +4180,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	}
 	
 	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
+	arguments = Arguments.filter(CODE_jsevent_remove)
 }
 
 square = (arguments[0]) ? arguments[0] : false
@@ -4281,7 +4277,7 @@ function CODE_record_duplicate()
 		}
 
 		//reassign arguments without jsevents
-		arguments = Arguments.filter(globals.CODE_jsevent_remove)
+		arguments = Arguments.filter(CODE_jsevent_remove)
 	}
 
 	var srcRecord = arguments[0]
@@ -4381,7 +4377,7 @@ function CODE_record_duplicate()
 		//go through relations and duplicate sub-records
 		for (var i = 0; i < relations.length; i++) {
 			//this relation has multiple levels of children
-			globals.CODE_record_duplicate_fx(srcRecord,destRecord,relations[relations[i]])
+			CODE_record_duplicate_fx(srcRecord,destRecord,relations[relations[i]])
 		}
 
 		if (!noSave) {
@@ -4452,7 +4448,7 @@ if (fsSource && utils.hasRecords(fsSource)) {
 
 		//re-call this Function if there are more levels beneath
 		for (var j = 0; j < node.length; j++) {
-			globals.CODE_record_duplicate_fx(srcChild,destChild,node[node[j]])
+			CODE_record_duplicate_fx(srcChild,destChild,node[node[j]])
 		}
 	}
 }
@@ -4498,7 +4494,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	}
 	
 	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
+	arguments = Arguments.filter(CODE_jsevent_remove)
 }
 
 var record = arguments[0]
@@ -4568,7 +4564,7 @@ if (omitSpecify && omitSpecify.length) {
 for (var i in record) {
 	//omitNull and omitCalc options, record level functions (check if date/array so doesn't hiccup)
 	if (!(omitNull && record[i] == null) && !(omitColumns && omitColumns[i]) && (record[i] instanceof Date || record[i] instanceof Array) || typeof record[i] != 'func' + 'tion') {
-		var display = globals.CODE_text_camel_caps(i,'_')
+		var display = CODE_text_camel_caps(i,'_')
 		returnObj[display] = record[i]
 	}
 }
@@ -4590,8 +4586,8 @@ function CODE_row_background(index, selected, fieldType, fieldName, formName, fi
 //	}
 	
 	//highlight selected record
-	if (globals.CODE_row_background__highlight.status && globals.CODE_row_background__highlight.status() && 
-		globals.CODE_row_background__highlight.form && formName == globals.CODE_row_background__highlight.form()) {
+	if (CODE_row_background__highlight.status && CODE_row_background__highlight.status() && 
+		CODE_row_background__highlight.form && formName == CODE_row_background__highlight.form()) {
 		
 		//white/tan with green highlighter
 		if (selected) {
@@ -4666,7 +4662,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	}
 	
 	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
+	arguments = Arguments.filter(CODE_jsevent_remove)
 }
 
 var array = arguments[0]
@@ -4770,9 +4766,9 @@ function CODE_sort_dd_array()
 var a = arguments[0]
 var b = arguments[1]
 
-var fieldName = globals.CODE_ddarray_field
+var fieldName = CODE_ddarray_field
 var direction = new Array()
-switch (globals.CODE_ddarray_sort) {
+switch (CODE_ddarray_sort) {
 	case 'asc':
 		direction[0] = -1
 		direction[1] = 1
@@ -4855,7 +4851,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	}
 	
 	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
+	arguments = Arguments.filter(CODE_jsevent_remove)
 }
 
 var stringOrig = arguments[0]
@@ -4926,7 +4922,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	}
 	
 	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
+	arguments = Arguments.filter(CODE_jsevent_remove)
 }
 
 var stringOrig = arguments[0]
@@ -5166,7 +5162,7 @@ function CODE_workspace_data()
 				if (!formInfo.serverName && !formInfo.tableName) {
 					//add form
 					if (nonRef) {
-						formsByTable['No datasource'][formInfo.formName] = globals.CODE_copy_object(formInfo)
+						formsByTable['No datasource'][formInfo.formName] = CODE_copy_object(formInfo)
 					}
 					//only used in developer
 					else {
@@ -5197,7 +5193,7 @@ function CODE_workspace_data()
 					
 					//add form
 					if (nonRef) {
-						formsByTable[formInfo.serverName][formInfo.tableName][formInfo.formName] = globals.CODE_copy_object(formInfo)
+						formsByTable[formInfo.serverName][formInfo.tableName][formInfo.formName] = CODE_copy_object(formInfo)
 					}
 					//only used in developer
 					else {
@@ -5381,7 +5377,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	}
 	
 	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
+	arguments = Arguments.filter(CODE_jsevent_remove)
 }
 
 //if, by some chance, this method is run outside of the wrapper, instantiate my global baby
@@ -5442,7 +5438,7 @@ for (var i = 0 ; i < soln.length; i++) {
 			modules = modules.split(',')
 			
 			//pass back modules to processoranator
-			globals.CODE_workspace_module(modules)
+			CODE_workspace_module(modules)
 		}
 	}
 }
@@ -5594,7 +5590,7 @@ function TRIGGER_sidebar_set(sidebarName, showSidebar) {
 				
 				//show sidebar if not currently expanded
 				if (showSidebar && !solutionPrefs.screenAttrib.sidebar.status) {
-					globals.DS_sidebar_toggle(true)
+					DS_sidebar_toggle(true)
 				}
 	
 				return true
@@ -5602,7 +5598,7 @@ function TRIGGER_sidebar_set(sidebarName, showSidebar) {
 			else {
 	
 				if (showSidebar && !solutionPrefs.screenAttrib.sidebar.status) {
-					globals.DS_sidebar_toggle(true)
+					DS_sidebar_toggle(true)
 				}
 	
 				return false
@@ -5622,7 +5618,7 @@ function _1() {
 	var	nHeight = cmdVarBin.windowSize.height
 	var	nWidth = cmdVarBin.windowSize.width
 	
-	globals.CODE_form_in_dialog(forms.CODE_P__konsole, 20, 50, nWidth, nHeight + 20, 'Servoy Konsole',  true,  false, 'KONSOLE', false)
+	CODE_form_in_dialog(forms.CODE_P__konsole, 20, 50, nWidth, nHeight + 20, 'Servoy Konsole',  true,  false, 'KONSOLE', false)
 }
 
 /**
@@ -5735,7 +5731,7 @@ function CODE_license_insert() {
 			plugins.dialogs.showInfoDialog('Completed','Licensing text has been inserted in all ' + cnt - 1 + '.js files.')
 		}
 		//bug with continuations and file plugin?
-//		globals.DIALOGS.showInfoDialog('Completed','Licensing text has been inserted in all ' + cnt - 1 + '.js files.')
+//		DIALOGS.showInfoDialog('Completed','Licensing text has been inserted in all ' + cnt - 1 + '.js files.')
 	}
 }
 
@@ -5843,7 +5839,7 @@ function TRIGGER_ul_tab_list(input,itemName,tabSelected) {
 			
 			if (forms[formName]) {
 				//set global that end users use in their code
-				globals.NAV_universal_selected_tab = formName
+				NAV_universal_selected_tab = formName
 				
 				//if not loaded, add tab
 				if (formName != 'DATASUTRA_0F_solution__blank_2' && !navigationPrefs.byNavSetName.configPanes.itemsByName[prefName]) {
@@ -5879,10 +5875,10 @@ function TRIGGER_ul_tab_list(input,itemName,tabSelected) {
 				}
 				
 				//LOG ul tab change
-				globals.TRIGGER_log_create('UL Tabs',
-									itemName,
-									formName
-								)
+				TRIGGER_log_create('UL Tabs',
+						itemName,
+						formName
+					)
 			}
 		}
 	}
@@ -5953,7 +5949,7 @@ function TRIGGER_ul_button_filter(event) {
  */
 function CODE_cursor_busy(busyCursor) {
 	//running in webclient and logged in, commandeer servoy indicator
-	if (globals.DS_web_cursor) {
+	if (DS_web_cursor) {
 		//web client utils plugin available
 		if (plugins.WebClientUtils) {
 			//busy cursor requested
@@ -6173,7 +6169,7 @@ function TRIGGER_dialog_small(toggle,typeForm,formName,lockScreen,positionX,posi
 		
 		//disable all actions
 		if (lockScreen) {
-			globals.TRIGGER_interface_lock(true,true)
+			TRIGGER_interface_lock(true,true)
 		}
 		
 		//turn on
@@ -6182,7 +6178,7 @@ function TRIGGER_dialog_small(toggle,typeForm,formName,lockScreen,positionX,posi
 	//hide dialog
 	else {
 		dialog.visible = false
-		globals.TRIGGER_interface_lock(false)
+		TRIGGER_interface_lock(false)
 	}
 }
 
@@ -6261,7 +6257,7 @@ function CODE_form_in_dialog(form, x, y, width, height, title, resizable, showTe
 	else {
 		//TODO: in webclient, use dialog plugin for FiDs so continuations baked in
 		if (false && solutionPrefs.config.webClient) {
-			globals.DIALOGS.showFormInModalDialog(
+			DIALOGS.showFormInModalDialog(
 					form.controller.getName(), 
 					x,
 					y,
@@ -6364,7 +6360,7 @@ function CODE_form_in_dialog(form, x, y, width, height, title, resizable, showTe
 				//allow any FiDs to be hidden
 				else {
 					//needed for case when FiD shown and then navigated to other part of solution before closing
-					globals.CODE_hide_form = 1
+					CODE_hide_form = 1
 					
 					application.getWindow(name).destroy()
 				}
@@ -6380,7 +6376,7 @@ function CODE_form_in_dialog(form, x, y, width, height, title, resizable, showTe
 						solutionModel.removeForm(smForm.name)
 						
 						//now update the code
-						smForm.onShow.code = smForm.onShow.code.substr(0,smForm.onShow.code.length - 2) + ";globals.CODE_form_in_dialog_setup_ipad()" + smForm.onShow.code.substr(smForm.onShow.code.length - 2)
+						smForm.onShow.code = smForm.onShow.code.substr(0,smForm.onShow.code.length - 2) + ";CODE_form_in_dialog_setup_ipad()" + smForm.onShow.code.substr(smForm.onShow.code.length - 2)
 						
 						//get the form again
 						form = forms[smForm.name]
@@ -6392,7 +6388,7 @@ function CODE_form_in_dialog(form, x, y, width, height, title, resizable, showTe
 					solutionModel.removeForm(smForm.name)
 					
 					//now create new on show method
-					smForm.onShow = smForm.newMethod("function FORM_on_show__DSWEBCLIENT(firstShow,event){globals.CODE_form_in_dialog_setup_ipad()}")
+					smForm.onShow = smForm.newMethod("function FORM_on_show__DSWEBCLIENT(firstShow,event){CODE_form_in_dialog_setup_ipad()}")
 					
 					//get the form again
 					form = forms[smForm.name]
@@ -6465,17 +6461,17 @@ function CODE_appserver_get(hostName) {
 //	if (application.getApplicationType() == APPLICATION_TYPES.WEB_CLIENT) {
 //		//get url using callback
 //		if (!hostName) {
-//			plugins.WebClientUtils.executeClientSideJS('var host = window.top.location.host;', globals.CODE_appserver_get, ['host'])
+//			plugins.WebClientUtils.executeClientSideJS('var host = window.top.location.host;', CODE_appserver_get, ['host'])
 //			var kont = new Continuation()
 //			application.output(kont)
 //			return kont
 //		}
 ////		//have path, figure out where to navigate to
 ////		else {
-////			if (globals.CODE_continuation) {
-////				var c = globals.CODE_continuation
-////				globals.CODE_continuation = null
-////				globals.CODE_continuation_value = hostName
+////			if (CODE_continuation) {
+////				var c = CODE_continuation
+////				CODE_continuation = null
+////				CODE_continuation_value = hostName
 ////				c()
 ////			}
 ////		}
@@ -6491,7 +6487,7 @@ function CODE_appserver_get(hostName) {
 //application.output('hello world 1')
 //
 ////store method stack
-//globals.CODE_continuation = new Continuation()
+//CODE_continuation = new Continuation()
 //
 ////halt
 //new Continuation()()
