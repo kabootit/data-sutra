@@ -237,10 +237,10 @@ if (forms[formName].foundset.getSize()) {
  */
 function AC_sample_data(org) {
 	//a specific organization requested
-	if (org && org.id_organization != globals.AC_current_organization) {
+	if (org && org.id_organization != AC_current_organization) {
 		var diffOrg = true
-		var oldOrg = globals.AC_current_organization
-		globals.AC_current_organization = org.id_organization
+		var oldOrg = AC_current_organization
+		AC_current_organization = org.id_organization
 	}
 	
 	//many rows
@@ -1057,6 +1057,6 @@ function AC_sample_data(org) {
 	
 	//reset global SaaS to original value
 	if (diffOrg) {
-		globals.AC_current_organization = oldOrg
+		AC_current_organization = oldOrg
 	}
 }
