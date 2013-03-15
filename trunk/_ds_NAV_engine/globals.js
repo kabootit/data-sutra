@@ -278,13 +278,13 @@ if (application.__parent__.solutionPrefs) {
 		var tableName = forms[formName].controller.getTableName()
 	
 		//if running a filter or no find configured, clear out field searching on
-		if (utils.stringPatternCount(globals.DATASUTRA_find,'Filter: ') || !fastFindEnabled) {
+		if (utils.stringPatternCount(DATASUTRA_find,'Filter: ') || !fastFindEnabled) {
 			var searchingOn = null
 			var searchingTip = 'Not searching any field'
 		}
 		//preserve field searching on
 		else {
-			var searchingOn = globals.DATASUTRA_find_field
+			var searchingOn = DATASUTRA_find_field
 			var searchingTip = navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindTip
 		}
 		
@@ -293,11 +293,11 @@ if (application.__parent__.solutionPrefs) {
 		allObject.findName = '<html><strong><em>Show all</em></strong>'
 		allObject.columnName = 'Show all'
 		allObject.columnType = 'SHOWALL'
-		globals.NAV_find_fields_control(allObject)
+		NAV_find_fields_control(allObject)
 		
 		//re-select selected field (checkmark)
 		if (fastFindEnabled) {
-			globals.DATASUTRA_find_field = searchingOn
+			DATASUTRA_find_field = searchingOn
 			navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindField = searchingOn
 			navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindTip = searchingTip
 		}
@@ -359,19 +359,19 @@ if (application.__parent__.solutionPrefs) {
 	var formName = solutionPrefs.config.currentFormName
 	
 	//no value, return search box to default state
-	if (globals.DATASUTRA_find == null) {
+	if (DATASUTRA_find == null) {
 		//forms[baseForm + '__header'].elements.find_end.setImageURL('media:///find_end.png')
 		//application.updateUI()
 	}
 	//show all selected with value, show error
-	else if (globals.DATASUTRA_find_field == 'Show all' && globals.DATASUTRA_find) {
-		globals.DIALOGS.showErrorDialog('Show all', 'Cannot search for '+globals.DATASUTRA_find+ ' when "Show all" item is selected.')
+	else if (DATASUTRA_find_field == 'Show all' && DATASUTRA_find) {
+		DIALOGS.showErrorDialog('Show all', 'Cannot search for '+DATASUTRA_find+ ' when "Show all" item is selected.')
 	}
 	//find field selected (or default find field set and fast find configured) and value present, search
-	else if (globals.DATASUTRA_find_field && globals.DATASUTRA_find_field != 'Show all' && navigationPrefs.byNavItemID[currentNavItem].fastFind && globals.DATASUTRA_find ) {
+	else if (DATASUTRA_find_field && DATASUTRA_find_field != 'Show all' && navigationPrefs.byNavItemID[currentNavItem].fastFind && DATASUTRA_find ) {
 		//forms[baseForm + '__header'].elements.find_end.setImageURL('media:///find_stop.png')
 		
-		var	keyPressed = globals.CODE_key_pressed()
+		var	keyPressed = CODE_key_pressed()
 	
 		var findItems = navigationPrefs.byNavItemID[currentNavItem].fastFind.slice(0)
 		var trigger = 0
@@ -397,7 +397,7 @@ if (application.__parent__.solutionPrefs) {
 		
 		for ( var i = 0 ; i < findItems.length && !trigger ; i++ ) {
 			var findField = (findItems[i].relation != 'NONE') ? findItems[i].relation + '.' + findItems[i].columnName : findItems[i].columnName
-			if (globals.DATASUTRA_find_field == findField) {
+			if (DATASUTRA_find_field == findField) {
 				trigger = 1
 			}
 		}
@@ -405,13 +405,13 @@ if (application.__parent__.solutionPrefs) {
 	}
 	//no finds set up
 	else if (!navigationPrefs.byNavItemID[currentNavItem].fastFind) {
-		globals.DATASUTRA_find = null
-		globals.DIALOGS.showErrorDialog('Not configured', 'No search fields are enabled on this form.')
+		DATASUTRA_find = null
+		DIALOGS.showErrorDialog('Not configured', 'No search fields are enabled on this form.')
 	}
 	//no field selected
-	else if (!globals.DATASUTRA_find_field && globals.DATASUTRA_find) {
-		globals.DIALOGS.showWarningDialog('Alert', 'No find field selected...choose one.')
-		globals.NAV_find_fields()
+	else if (!DATASUTRA_find_field && DATASUTRA_find) {
+		DIALOGS.showWarningDialog('Alert', 'No find field selected...choose one.')
+		NAV_find_fields()
 	}
 }
 }
@@ -449,8 +449,8 @@ if (application.__parent__.solutionPrefs) {
 	if (navigationPrefs.byNavItemID[currentNavItem].fastFind) {
 		/*
 		//if no value yet, set check variable to show all
-		if (globals.DATASUTRA_find_field == null) {
-			globals.DATASUTRA_find_field = 'Show all'
+		if (DATASUTRA_find_field == null) {
+			DATASUTRA_find_field = 'Show all'
 		}
 		*/
 		
@@ -459,7 +459,7 @@ if (application.__parent__.solutionPrefs) {
 		
 		//no searchable items
 		if (findItems == null || (findItems && !findItems.length)) {
-			globals.DIALOGS.showErrorDialog('No find fields!', 'No find fields have been defined in the configuration.', 'OK')
+			DIALOGS.showErrorDialog('No find fields!', 'No find fields have been defined in the configuration.', 'OK')
 		}
 		//searchable items
 		else {
@@ -529,13 +529,13 @@ if (application.__parent__.solutionPrefs) {
 		//get user modes
 			//using access and control, need user modes
 			if (solutionPrefs.access && solutionPrefs.access.accessControl) {
-				var user = globals.CODE_copy_object(solutionPrefs.access.allowedUserPrefs)
+				var user = CODE_copy_object(solutionPrefs.access.allowedUserPrefs)
 			}
 			//no access and control, use default user modes
 			else {
 				//there is a fw config navigation set
 				if (solutionPrefs.config.navigationSetID) {
-					var user = globals.NAV_preference_mode_get('User',solutionPrefs.config.navigationSetID)
+					var user = NAV_preference_mode_get('User',solutionPrefs.config.navigationSetID)
 				}
 			}
 		//add on power replace if present && there are replace items set up
@@ -580,7 +580,7 @@ if (application.__parent__.solutionPrefs) {
 			for (var i = 0 ; i < findItems.length ; i++) {
 				var findField = (findItems[i].relation != 'NONE') ? findItems[i].relation + '.' + findItems[i].columnName : findItems[i].columnName
 				//when a fast find item selected, create checkbox menu item
-				if (globals.DATASUTRA_find_field == findField) {
+				if (DATASUTRA_find_field == findField) {
 					menu[i] = plugins.popupmenu.createCheckboxMenuItem(findItems[i].findName, NAV_find_fields_control)
 					menu[i].setSelected(true)
 				}
@@ -658,15 +658,15 @@ if (application.__parent__.solutionPrefs) {
 	//custom search
 	if (colType == 'CUSTOM') {
 		//show dialog for value to be searched on
-		globals.CODE_form_in_dialog(
-					forms[findValue.formName],
-					-1,-1,-1,-1,
-					' ',
-					true,
-					false,
-					'findPowerSearch',
-					false
-				)
+		CODE_form_in_dialog(
+				forms[findValue.formName],
+				-1,-1,-1,-1,
+				' ',
+				true,
+				false,
+				'findPowerSearch',
+				false
+			)
 		
 		//set tooltiptext to find field
 		forms[findForm].elements.fld_find.toolTipText = 'Power searching...'
@@ -708,23 +708,23 @@ if (application.__parent__.solutionPrefs) {
 		application.setValueListItems('NAV_replace_type',typeDisplay)
 
 		//show popup dialog
-		globals.CODE_form_in_dialog(
-					forms.NAV_P__replace,
-					-1,-1,-1,-1,
-					'Power Replace',
-					false,
-					false,
-					'findPowerReplace',
-					true
-				)
+		CODE_form_in_dialog(
+				forms.NAV_P__replace,
+				-1,-1,-1,-1,
+				'Power Replace',
+				false,
+				false,
+				'findPowerReplace',
+				true
+			)
 	}
 	//only proceed if 1) filter or 2) dividing line was NOT clicked 
 	else if (!(colType == 'FILTER' || findValue.findName == '-')) {
 		//set global used for check mark 
-		globals.DATASUTRA_find_field = (findValue.relation != 'NONE') ? findValue.relation + '.' + findValue.columnName : findValue.columnName
+		DATASUTRA_find_field = (findValue.relation != 'NONE') ? findValue.relation + '.' + findValue.columnName : findValue.columnName
 
 		//set global used for grayed out calc
-		globals.DATASUTRA_find_pretty = findValue.findName
+		DATASUTRA_find_pretty = findValue.findName
 
 		//set properties in code global to remember state of last find_field
 		if (fastFindStatus) {
@@ -736,7 +736,7 @@ if (application.__parent__.solutionPrefs) {
 		//show all records
 		if (colType == 'SHOWALL') {
 			//null out field global
-			globals.DATASUTRA_find = null
+			DATASUTRA_find = null
 			
 			//how many records loaded
 			var oldLoaded = forms[formName].foundset.getSize()
@@ -745,7 +745,7 @@ if (application.__parent__.solutionPrefs) {
 			forms[formName].foundset.loadAllRecords()
 
 			//fire restriction enzyme
-			globals.NAV_foundset_restrict(true,null,true)
+			NAV_foundset_restrict(true,null,true)
 			
 			//run post processing method if present
 			if (forms[formName] && forms[formName].FIND_post_process) {
@@ -869,24 +869,25 @@ if (application.__parent__.solutionPrefs) {
 					forms[formUL].UL_sync_records()
 				}
 
-				globals.TRIGGER_toolbar_record_navigator_set()
+				TRIGGER_toolbar_record_navigator_set()
 			}
 
 			//LOG find
-			globals.TRIGGER_log_create('Fast finds',
-								forms[formName].controller.getServerName(),
-								forms[formName].controller.getTableName(),
-								'Show all'
-								)
+			TRIGGER_log_create(
+					'Fast finds',
+					forms[formName].controller.getServerName(),
+					forms[formName].controller.getTableName(),
+					'Show all'
+				)
 		}
 		//show date picker
 		else if (colType == "DATETIME") {
 			forms.DATE_P__search.FrameworksFastFind = true
 
-			globals.CODE_form_in_dialog(forms.DATE_P__search,-1,-1,-1,-1,"Search",false,false,'datePicker')
+			CODE_form_in_dialog(forms.DATE_P__search,-1,-1,-1,-1,"Search",false,false,'datePicker')
 
 //			//load form into fastfind tab panel
-//			globals.NAV_find_set_popdown('DATE_P__search')
+//			NAV_find_set_popdown('DATE_P__search')
 
 			//set tooltiptext to find field
 			forms[findForm].elements.fld_find.toolTipText = 'Searching in "'+findValue.findName+'"'
@@ -925,20 +926,20 @@ if (application.__parent__.solutionPrefs) {
 			}
 
 			//show dialog for value to be searched on
-			//var vlValue = globals.DIALOGS.showSelectDialog('Valuelist','Choose item from valuelist.',vlDisplay)
-			globals.CODE_form_in_dialog(
-						forms.NAV_P__find,
-						-1,-1,-1,-1,
-						'Valuelist',
-						true,
-						false,
-						'findValuelist',
-						false
-					)
+			//var vlValue = DIALOGS.showSelectDialog('Valuelist','Choose item from valuelist.',vlDisplay)
+			CODE_form_in_dialog(
+					forms.NAV_P__find,
+					-1,-1,-1,-1,
+					'Valuelist',
+					true,
+					false,
+					'findValuelist',
+					false
+				)
 
 		//	//FiD closed with OK, proceed
-		//	if (globals.NAV_search_valuelist) {
-		//		globals.DATASUTRA_find = globals.NAV_search_valuelist
+		//	if (NAV_search_valuelist) {
+		//		DATASUTRA_find = NAV_search_valuelist
 		//	}
 
 			//set tooltiptext to find field
@@ -1042,7 +1043,7 @@ if (application.__parent__.solutionPrefs) {
 	
 	//only actually run this method if greater than 100 ms has passed between gain and loss
 	if (timeElapsed > 100) {
-	/*	if (globals.DATASUTRA_find) {
+	/*	if (DATASUTRA_find) {
 			forms[baseForm + '__header__fastfind'].elements.find_end.setImageURL('media:///find_stop.png')
 		}
 		else {
@@ -1097,7 +1098,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	}
 	
 	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
+	arguments = Arguments.filter(CODE_jsevent_remove)
 }
 
 	/****
@@ -1109,7 +1110,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	var formName = solutionPrefs.config.currentFormName
 	var findForm = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__WEB__fastfind' : baseForm + '__header__fastfind'
 	var currentNavItem = solutionPrefs.config.currentFormID
-	var keyPressed = (arguments[1] != undefined) ? arguments[1] : globals.CODE_key_pressed()
+	var keyPressed = (arguments[1] != undefined) ? arguments[1] : CODE_key_pressed()
 	
 	//only continue with method if there is a fastFind node configured; possible to not have one if default find set to All text batch
 	if (navigationPrefs.byNavItemID[currentNavItem].fastFind) {
@@ -1127,7 +1128,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		var valuelist = arguments[0].valuelist
 		
 		if (!valuelist) {
-			var searchValue = globals.DATASUTRA_find
+			var searchValue = DATASUTRA_find
 		}
 		else {
 			//get vl items
@@ -1137,7 +1138,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			
 			//get the real value for the display value chosen
 			for (var i = 0; i < vlDisplay.length && !searchValue ; i++) {
-				if (vlDisplay[i] == globals.DATASUTRA_find) {
+				if (vlDisplay[i] == DATASUTRA_find) {
 					var searchValue = vlReal[i]
 				}
 			}
@@ -1183,7 +1184,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		//show date picker
 		if (colType == "DATETIME" && searchValue == null) {
 			forms.DATE_P__search.FrameworksFastFind = true
-			globals.CODE_form_in_dialog(forms.DATE_P__search,-1,-1,-1,-1,"Search",false)
+			CODE_form_in_dialog(forms.DATE_P__search,-1,-1,-1,-1,"Search",false)
 		}
 		
 		//if no value to search for, quit
@@ -1201,19 +1202,19 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		}
 		
 		if (!findMode) {
-			globals.DIALOGS.showErrorDialog(
+			DIALOGS.showErrorDialog(
 					'Error',
 					'Outstanding unsaved data.  Find not performed.'
 				)
 			
-			globals.TRIGGER_log_create('Fast finds',
-							serverName,
-							tableName,
-							'Find mode not entered',
-							relation,
-							colName,
-							searchValue
-						)
+			TRIGGER_log_create('Fast finds',
+					serverName,
+					tableName,
+					'Find mode not entered',
+					relation,
+					colName,
+					searchValue
+				)
 		}
 		else {
 			//multiple find requests
@@ -1227,7 +1228,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 					case 'All dates':
 						for (var i = 0; i < allFinds.length; i++) {
 							if (allFinds[i].columnType == 'DATETIME') { // && allFinds[i].relation == 'NONE') {
-								globals.NAV_find_search_request(formName,allFinds[i].relation,allFinds[i].columnName,allFinds[i].columnType,searchValue,newRequest,fullFS)
+								NAV_find_search_request(formName,allFinds[i].relation,allFinds[i].columnName,allFinds[i].columnType,searchValue,newRequest,fullFS)
 								newRequest = true
 							}
 						}
@@ -1235,7 +1236,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 					case 'All numbers':
 						for (var i = 0; i < allFinds.length; i++) {
 							if ((allFinds[i].columnType == 'INTEGER' || allFinds[i].columnType == 'NUMBER')) { // && allFinds[i].relation == 'NONE') {
-								globals.NAV_find_search_request(formName,allFinds[i].relation,allFinds[i].columnName,allFinds[i].columnType,searchValue,newRequest,fullFS)
+								NAV_find_search_request(formName,allFinds[i].relation,allFinds[i].columnName,allFinds[i].columnType,searchValue,newRequest,fullFS)
 								newRequest = true
 							}
 						}
@@ -1243,7 +1244,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 					case 'All text':
 						for (var i = 0; i < allFinds.length; i++) {
 							if (allFinds[i].columnType == 'TEXT') { // && allFinds[i].relation == 'NONE') {
-								var dlgTitle = globals.NAV_find_search_request(formName,allFinds[i].relation,allFinds[i].columnName,allFinds[i].columnType,searchValue,newRequest,fullFS)
+								var dlgTitle = NAV_find_search_request(formName,allFinds[i].relation,allFinds[i].columnName,allFinds[i].columnType,searchValue,newRequest,fullFS)
 								newRequest = true
 							}
 						}
@@ -1254,7 +1255,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			else {	
 				//add find request
 					//Fx method returns break if this method should stop
-				var dlgTitle = globals.NAV_find_search_request(formName,relation,colName,colType,searchValue,undefined,fullFS)
+				var dlgTitle = NAV_find_search_request(formName,relation,colName,colType,searchValue,undefined,fullFS)
 				if (dlgTitle == 'break') {
 					return
 				}
@@ -1265,43 +1266,45 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 				var count = forms[formName].controller.search(false, true)
 				
 				//execute restriction if required; if restricted, reset the count
-				if (globals.NAV_foundset_restrict(true,null,true)) {
+				if (NAV_foundset_restrict(true,null,true)) {
 					count = forms[formName].foundset.getSize()
 				}
 				
 				//LOG find
-				globals.TRIGGER_log_create('Fast finds',
-									serverName,
-									tableName,
-									'Extend',
-									relation,
-									colName,
-									searchValue,
-									count
-								)
+				TRIGGER_log_create(
+						'Fast finds',
+						serverName,
+						tableName,
+						'Extend',
+						relation,
+						colName,
+						searchValue,
+						count
+					)
 			}
 			else if (keyPressed == 2) { //control for extend
 				var count = forms[formName].controller.search(false, false)
 				
 				//execute restriction if required; if restricted, reset the count
-				if (globals.NAV_foundset_restrict(true,null,true)) {
+				if (NAV_foundset_restrict(true,null,true)) {
 					count = forms[formName].foundset.getSize()
 				}
 				
 				//LOG find
-				globals.TRIGGER_log_create('Fast finds',
-									serverName,
-									tableName,
-									'Reduce',
-									relation,
-									colName,
-									searchValue,
-									count
-								)
+				TRIGGER_log_create(
+						'Fast finds',
+						serverName,
+						tableName,
+						'Reduce',
+						relation,
+						colName,
+						searchValue,
+						count
+					)
 				
 				//no new records found, throw up warning
 				if (databaseManager.getFoundSetCount(initialFS) == databaseManager.getFoundSetCount(forms[formName].foundset)) {
-					globals.DIALOGS.showWarningDialog(
+					DIALOGS.showWarningDialog(
 							'No more records', 
 							'<html><body>No additional records found using <strong>"'+searchValue+'"</strong><br>' + 
 							' to search the <strong>'+findName+'</strong> field</body></html>',
@@ -1313,7 +1316,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 				var count = forms[formName].controller.search()
 				
 				//execute restriction if required; if restricted, reset the count
-				if (globals.NAV_foundset_restrict(true,null,true)) {
+				if (NAV_foundset_restrict(true,null,true)) {
 					count = forms[formName].foundset.getSize()
 				}
 				
@@ -1349,15 +1352,16 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 				}
 		
 				//LOG find
-				globals.TRIGGER_log_create('Fast finds',
-									serverName,
-									tableName,
-									'Omit',
-									relation,
-									colName,
-									searchValue,
-									count
-								)
+				TRIGGER_log_create(
+						'Fast finds',
+						serverName,
+						tableName,
+						'Omit',
+						relation,
+						colName,
+						searchValue,
+						count
+					)
 			}
 			else {
 				if (fullFS) {
@@ -1369,20 +1373,21 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 				}
 				
 				//execute restriction if required; if restricted, reset the count
-				if (globals.NAV_foundset_restrict(true,null,true)) {
+				if (NAV_foundset_restrict(true,null,true)) {
 					count = forms[formName].foundset.getSize()
 				}
 				
 				//LOG find
-				globals.TRIGGER_log_create('Fast finds',
-									serverName,
-									tableName,
-									'Normal',
-									relation,
-									colName,
-									searchValue,
-									count
-								)
+				TRIGGER_log_create(
+						'Fast finds',
+						serverName,
+						tableName,
+						'Normal',
+						relation,
+						colName,
+						searchValue,
+						count
+					)
 			}
 			
 			if (count == 0) {
@@ -1401,12 +1406,12 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 					navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindValue = searchValue
 				}
 				
-				globals.DIALOGS.showWarningDialog(
-							dlgTitle, 
-							'<html><body>No records found for <strong>"'+searchValue+'"</strong>' + 
-							' while searching in <strong>'+findName+'</strong> field</body></html>',
-							'OK'
-						)
+				DIALOGS.showWarningDialog(
+						dlgTitle, 
+						'<html><body>No records found for <strong>"'+searchValue+'"</strong>' + 
+						' while searching in <strong>'+findName+'</strong> field</body></html>',
+						'OK'
+					)
 				
 				//load back foundset we started with
 				forms[formName].controller.loadRecords(initialFS)
@@ -1443,13 +1448,13 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 					}
 					//regenerate html list in 3.5.x
 					else if (utils.stringToNumber(solutionPrefs.clientInfo.verServoy) < 4) {
-						globals.TRIGGER_ul_refresh_all()
+						TRIGGER_ul_refresh_all()
 					}
 				}
 				//if universal list not used
 				else {
 					//update record navigator 
-					globals.TRIGGER_toolbar_record_navigator_set()
+					TRIGGER_toolbar_record_navigator_set()
 					
 					//make sure big blocker turned off (only an issue when no UL, but fast find)
 					scopes.DS.webBlockerCentered(false)
@@ -1681,7 +1686,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	}
 	
 	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
+	arguments = Arguments.filter(CODE_jsevent_remove)
 }
 
 var record = arguments[0]
@@ -1699,7 +1704,7 @@ if (utils.hasRecords(record[rlnDisplayItem])) {
 		
 		var displayColumnItem = record[rlnDisplayItem].getRecord(i)
 		
-		displayAbout.rowDisplay = globals.NAV_display_row_set_item(displayColumnItem)
+		displayAbout.rowDisplay = NAV_display_row_set_item(displayColumnItem)
 		displayAbout.width = (displayColumnItem.display_width_percent) ? displayColumnItem.display_width_percent : 20
 		displayAbout.align = displayColumnItem.display_align
 		displayAbout.format = displayColumnItem.display_format
@@ -1784,7 +1789,7 @@ if (record.display) {
 			if (pDisplay.length) {
 				chunk.isField = 0
 				chunk.value = pDisplay
-				displayChunks[i] = globals.CODE_copy_object(chunk)
+				displayChunks[i] = CODE_copy_object(chunk)
 				pDisplay = ""
 				i++
 			}
@@ -1800,7 +1805,7 @@ if (record.display) {
 			if (pDisplay.length) {
 				chunk.isField = 0
 				chunk.value = pDisplay
-				displayChunks[i] = globals.CODE_copy_object(chunk)
+				displayChunks[i] = CODE_copy_object(chunk)
 				pDisplay = ""
 				i++
 			}
@@ -1811,7 +1816,7 @@ if (record.display) {
 			//put field value in displayChunks
 			chunk.isField = 1
 			chunk.value = tagCurrent
-			displayChunks[i] = globals.CODE_copy_object(chunk)
+			displayChunks[i] = CODE_copy_object(chunk)
 			tagCurrent = ""
 			i++
 			
@@ -1831,7 +1836,7 @@ if (record.display) {
 	if (pDisplay.length) {
 		chunk.isField = 0
 		chunk.value = pDisplay
-		displayChunks[i] = globals.CODE_copy_object(chunk)
+		displayChunks[i] = CODE_copy_object(chunk)
 		pDisplay = ""
 	}
 }
@@ -1881,7 +1886,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	}
 	
 	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
+	arguments = Arguments.filter(CODE_jsevent_remove)
 }
 	
 	var rowDisp = arguments[0]
@@ -1935,7 +1940,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	html +=	'</tr></table></body></html>'
 	
 	//assign to header field
-	globals.NAV_list_header = html
+	NAV_list_header = html
 	
 	//save into listData for next use
 	navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.headerHTML = html
@@ -1979,7 +1984,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	}
 	
 	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
+	arguments = Arguments.filter(CODE_jsevent_remove)
 }
 	
 	var record = arguments[0]
@@ -1997,7 +2002,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			var displayItem = record[rlnDisplay].getRecord(i)
 			
 			displayItems[i - 1] = {
-					rawDisplay : globals.NAV_display_row_set(displayItem),
+					rawDisplay : NAV_display_row_set(displayItem),
 					rowPreview : displayItem.display_preview,
 					displayID : displayItem.id_list_display,
 					displayDefault : displayItem.display_default,
@@ -2055,7 +2060,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	}
 	
 	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
+	arguments = Arguments.filter(CODE_jsevent_remove)
 }
 
 var fsNavItem = arguments[0]
@@ -2076,7 +2081,7 @@ if (utils.hasRecords(fsFilter)) {
 		var recordFilterItem = fsFilter.getRecord(i)
 		
 		//plop down filter spec
-		filterNode.push(globals.CODE_record_object(recordFilterItem,true,true))
+		filterNode.push(CODE_record_object(recordFilterItem,true,true))
 	}
 	
 }
@@ -2120,7 +2125,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	}
 	
 	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
+	arguments = Arguments.filter(CODE_jsevent_remove)
 }
 
 var fsNavItem = arguments[0]
@@ -2146,7 +2151,7 @@ for ( var i = 0 ; i < fsFind.getSize() ; i++ ) {
 	}
 }
 
-findItems.sort(globals.CODE_sort_dd_array)
+findItems.sort(CODE_sort_dd_array)
 
 return findItems
 
@@ -2195,7 +2200,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	}
 	
 	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
+	arguments = Arguments.filter(CODE_jsevent_remove)
 }
 	
 	//first time a navigation item visited in webclient
@@ -2368,8 +2373,8 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			if (navSpecs.initialForm && !firstForm) {
 				var formNotLoaded = true
 				
-				globals.CODE_cursor_busy(true)
-				globals.TRIGGER_progressbar_start(-273, navSpecs.initialFormLabel)
+				CODE_cursor_busy(true)
+				TRIGGER_progressbar_start(-273, navSpecs.initialFormLabel)
 			}
 			//update when not showing progress bar to get around multi-threading the navigation item html field
 			else if (!firstForm) {
@@ -2429,7 +2434,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		forms.TOOL_history.REC_on_select()
 		
 		//fire restriction enzyme  //MEMO: will only run if the filters have changed
-		globals.NAV_foundset_restrict()
+		NAV_foundset_restrict()
 		
 		//web client
 		if (solutionPrefs.config.webClient) {
@@ -2437,8 +2442,8 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			forms.DATASUTRA_WEB_0F__workflow.setForm(mainTab)
 			
 			//update url with the pk for selected record
-			if (globals.DATASUTRA_router_enable) {
-				plugins.WebClientUtils.executeClientSideJS('window.parent.routerReplace(null,"' + navigationPrefs.byNavItemID[navigationItemID]._about_ + '","' + globals.DS_router_url(navigationPrefs.byNavItemID[navigationItemID].path,navigationItemID,null,forms[mainTab].foundset.getSelectedRecord()) + '");')
+			if (DATASUTRA_router_enable) {
+				plugins.WebClientUtils.executeClientSideJS('window.parent.routerReplace(null,"' + navigationPrefs.byNavItemID[navigationItemID]._about_ + '","' + DS_router_url(navigationPrefs.byNavItemID[navigationItemID].path,navigationItemID,null,forms[mainTab].foundset.getSelectedRecord()) + '");')
 			}
 			
 			//update elements/variables on header toolbar
@@ -2470,7 +2475,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		}
 		else {
 			//form not yet added, add to lists tab panel
-			if (listTab != 'DATASUTRA_0F_solution__blank_2' && navigationPrefs.byNavItemID[navigationItemID] && !globals.NAV_universal_list_get_status(navigationPrefs.byNavItemID[navigationItemID].listData)) {
+			if (listTab != 'DATASUTRA_0F_solution__blank_2' && navigationPrefs.byNavItemID[navigationItemID] && !NAV_universal_list_get_status(navigationPrefs.byNavItemID[navigationItemID].listData)) {
 				//create new form instances for UL
 				if (navSpecs.useFwList) {
 					//3.5 hacked UL
@@ -2566,8 +2571,8 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 							
 							if (initialUL) {
 								//create new forms
-								var template = globals.NAV_universal_list_form_to_template(uniList)
-								var myForm = globals.NAV_universal_list_template_to_form(template,newFormName)
+								var template = NAV_universal_list_form_to_template(uniList)
+								var myForm = NAV_universal_list_template_to_form(template,newFormName)
 								
 								//set datasource
 								myForm.serverName = serverName
@@ -2835,7 +2840,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 					
 					if (!designList) {
 						//update record navigator
-						globals.TRIGGER_toolbar_record_navigator_set(solutionPrefs.config.recordNavigatorStatus)
+						TRIGGER_toolbar_record_navigator_set(solutionPrefs.config.recordNavigatorStatus)
 						
 						//select tab
 						listTabForm.elements.tab_content_B.tabIndex = listTabForm.elements.tab_content_B.getMaxTabIndex()
@@ -2896,7 +2901,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		
 		//load help window(s) if in help mode
 		if (helpMode) {
-			globals.DS_help(true)
+			DS_help(true)
 			
 			//in help preview mode, update the activate/deactivate toggle
 			if (designMode) {
@@ -2905,7 +2910,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		}
 		//stay in dev mode currently in
 		else if (designMode) {
-			globals.DEV_quick_buttons(designMode,true)
+			DEV_quick_buttons(designMode,true)
 			
 			//update the layout if needed
 			if (solutionPrefs.design.currentMode && 
@@ -2964,29 +2969,29 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		if (solutionPrefs.repository && solutionPrefs.repository.allFormsByTable) {
 			//if both server/table are valid and exist AND not using a separate foundset AND a stored value exists for that location
 			if (serverName && tableName && solutionPrefs.repository.allFormsByTable[serverName] && solutionPrefs.repository.allFormsByTable[serverName][tableName] && solutionPrefs.repository.allFormsByTable[serverName][tableName][mainTab] && !solutionPrefs.repository.allFormsByTable[serverName][tableName][mainTab].useSeparateFoundset && solutionPrefs.fastFind.currentSearch[serverName] && solutionPrefs.fastFind.currentSearch[serverName][tableName]) {
-				globals.DATASUTRA_find = solutionPrefs.fastFind.currentSearch[serverName][tableName].lastFindValue
-				globals.DATASUTRA_find_field = solutionPrefs.fastFind.currentSearch[serverName][tableName].lastFindField
+				DATASUTRA_find = solutionPrefs.fastFind.currentSearch[serverName][tableName].lastFindValue
+				DATASUTRA_find_field = solutionPrefs.fastFind.currentSearch[serverName][tableName].lastFindField
 				forms[findForm].elements.fld_find.toolTipText = solutionPrefs.fastFind.currentSearch[serverName][tableName].lastFindTip
 				
 				navigationPrefs.byNavItemID[navigationItemID].listData.sortField = solutionPrefs.fastFind.currentSearch[serverName][tableName].sortField
 				navigationPrefs.byNavItemID[navigationItemID].listData.sortDirection = solutionPrefs.fastFind.currentSearch[serverName][tableName].sortDirection
 			}
 			else {
-				globals.DATASUTRA_find = (navigationPrefs.byNavItemID[navigationItemID].fastFind && navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFindValue) ? navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFind : null
-				globals.DATASUTRA_find_field = (navigationPrefs.byNavItemID[navigationItemID].fastFind && navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFindField) ? navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFindField : null
+				DATASUTRA_find = (navigationPrefs.byNavItemID[navigationItemID].fastFind && navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFindValue) ? navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFind : null
+				DATASUTRA_find_field = (navigationPrefs.byNavItemID[navigationItemID].fastFind && navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFindField) ? navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFindField : null
 				forms[findForm].elements.fld_find.toolTipText = (navigationPrefs.byNavItemID[navigationItemID].fastFind && navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFindTip) ? navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFindTip : 'Not searching any field'
 			}
 		}
 		else {
-			globals.DATASUTRA_find = (navigationPrefs.byNavItemID[navigationItemID].fastFind && navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFindValue) ? navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFind : null
-			globals.DATASUTRA_find_field = (navigationPrefs.byNavItemID[navigationItemID].fastFind && navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFindField) ? navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFindField : null
+			DATASUTRA_find = (navigationPrefs.byNavItemID[navigationItemID].fastFind && navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFindValue) ? navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFind : null
+			DATASUTRA_find_field = (navigationPrefs.byNavItemID[navigationItemID].fastFind && navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFindField) ? navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFindField : null
 			forms[findForm].elements.fld_find.toolTipText = (navigationPrefs.byNavItemID[navigationItemID].fastFind && navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFindTip) ? navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFindTip : 'Not searching any field'
 		}
 		
 		//check for default find field
 		var findInitial = navSpecs.findDefault
-		if (findInitial && !globals.DATASUTRA_find_field && navigationPrefs.byNavItemID[navigationItemID].fastFind) {
-			globals.DATASUTRA_find_field = findInitial
+		if (findInitial && !DATASUTRA_find_field && navigationPrefs.byNavItemID[navigationItemID].fastFind) {
+			DATASUTRA_find_field = findInitial
 			//get pretty name for chosen column
 			var prettyFind = navigationPrefs.byNavItemID[navigationItemID].fastFind.filter(function(item){return item.columnName == findInitial})
 			forms[findForm].elements.fld_find.toolTipText = 'Searching in "' + (prettyFind.length ? prettyFind[0].findName : findInitial) + '"'
@@ -2995,15 +3000,15 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		//set check on display pop-down
 		//this form has been visited before and has a default display
 		if (navigationPrefs.byNavItemID[navigationItemID].universalList && navigationPrefs.byNavItemID[navigationItemID].universalList.displays && navigationPrefs.byNavItemID[navigationItemID].universalList.displays.displayID) {
-			globals.DATASUTRA_display = navigationPrefs.byNavItemID[navigationItemID].universalList.displays.displayID
+			DATASUTRA_display = navigationPrefs.byNavItemID[navigationItemID].universalList.displays.displayID
 		}
 		//no displays configured
 		else {
-			globals.DATASUTRA_display = null
+			DATASUTRA_display = null
 		}
 		
-		//if above globals.DATASUTRA_find, set appropriate end graphics
-	/*	if (globals.DATASUTRA_find) {
+		//if above DATASUTRA_find, set appropriate end graphics
+	/*	if (DATASUTRA_find) {
 			forms[findForm].elements.find_end.setImageURL('media:///find_stop.png')
 		}
 		else {
@@ -3016,17 +3021,17 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		
 		//space override specifed; activate (only if different than current one)
 		if (spaceOV && spaceOV != solutionPrefs.config.activeSpace) {
-			globals.DS_space_change('btn_space_'+spacesOK[spaceOV],true)
+			DS_space_change('btn_space_'+spacesOK[spaceOV],true)
 		}
 		//activate default space if there is one, it is different than current space;  do this on first time form loaded and all subsequent times until space changed while on this navItem
 		else if (navSpecs.spaceDefault && spacesOK['space_' + (navSpecs.spaceDefault)] != solutionPrefs.config.activeSpace && (!sessionSpaces || ((sessionSpaces && sessionSpaces.lastSpace && sessionSpaces.lastSpace == spacesOK['space_' + navSpecs.spaceDefault]) ? true : false))) {
-			globals.DS_space_change('btn_space_'+navSpecs.spaceDefault,true)
+			DS_space_change('btn_space_'+navSpecs.spaceDefault,true)
 		}
 		//current space is not allowed for this item, 
 		else if (solutionPrefs.config.activeSpace && !spacesOK[spacesOK[solutionPrefs.config.activeSpace] - 1]) {
 			//activate last space on for this item
 			if (sessionSpaces && sessionSpaces.lastSpace && sessionSpaces.lastSpace != solutionPrefs.config.activeSpace) {
-				globals.DS_space_change('btn_space_'+spacesOK[sessionSpaces.lastSpace],true)
+				DS_space_change('btn_space_'+spacesOK[sessionSpaces.lastSpace],true)
 			}
 			//activate first allowable space
 			else {
@@ -3034,14 +3039,14 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 				for (var i = 0; i < spacesOK.length && !escape; i++) {
 					if (spacesOK[i]) {
 						escape = true
-						globals.DS_space_change('btn_space_' + (i+1),true)
+						DS_space_change('btn_space_' + (i+1),true)
 					}
 				}
 			}
 		}
 		//on first load of solution, go to standard view if none specified
 		else if (firstForm) {
-			globals.DS_space_change('btn_space_1',true,true)
+			DS_space_change('btn_space_1',true,true)
 		}
 		
 		var borderEnabled = 'MatteBorder,0,0,0,1,#333333'
@@ -3110,16 +3115,16 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		}
 		
 		//LOG navigation
-		globals.TRIGGER_log_create('Navigation items',
-							mainTab,
-							listTab
-							)
+		TRIGGER_log_create('Navigation items',
+				mainTab,
+				listTab
+			)
 		
 		
 		//form was not in memory, turn off busy bar and busy cursor
 		if (formNotLoaded) {
-			globals.TRIGGER_progressbar_stop()
-			globals.CODE_cursor_busy(false)	
+			TRIGGER_progressbar_stop()
+			CODE_cursor_busy(false)	
 		}
 		
 		//turn ul rec on select back on
@@ -3129,8 +3134,8 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	}
 	
 	// web client hooks on login
-	if (globals.DS_web_login_running) {
-		globals.DS_web_login_running = false
+	if (DS_web_login_running) {
+		DS_web_login_running = false
 		
 		//turn off pulsating
 //		plugins.WebClientUtils.executeClientSideJS('pulseOff();')
@@ -3224,7 +3229,7 @@ function NAV_universal_list_edit(input,elem) {
 		var elem = forms[input.getFormName()].elements[input.getElementName()]
 		
 		//get generic menu
-		var menu = globals.NAV_universal_list_right_click(null,null,true)
+		var menu = NAV_universal_list_right_click(null,null,true)
 		
 		//needs divider
 		if (menu.length) {
@@ -3232,7 +3237,7 @@ function NAV_universal_list_edit(input,elem) {
 		}
 		
 		//tack on edit on top
-		menu.unshift(plugins.popupmenu.createMenuItem('Edit...', globals.NAV_universal_list_edit))
+		menu.unshift(plugins.popupmenu.createMenuItem('Edit...', NAV_universal_list_edit))
 		menu[0].setMethodArguments(null,input)
 		
 		//pop up the popup menu
@@ -3304,7 +3309,7 @@ function NAV_universal_list_right_click(input,elem,list,record) {
 		var displayItems = navigationPrefs.byNavItemID[currentNavItem].universalList.displays
 		//loop through display items to find the selected one
 		for (var i = 0; i < displayItems.length; i++) {
-			if (globals.DATASUTRA_display == displayItems[i].displayID) {
+			if (DATASUTRA_display == displayItems[i].displayID) {
 				break
 			}
 		}
@@ -3324,11 +3329,11 @@ function NAV_universal_list_right_click(input,elem,list,record) {
 		
 		//this is already a favorite, check it
 		if (solutionPrefs.access.favorites.some(favExists)) {
-			menu.push(plugins.popupmenu.createCheckboxMenuItem('Favorite', globals.NAV_universal_list_right_click))
+			menu.push(plugins.popupmenu.createCheckboxMenuItem('Favorite', NAV_universal_list_right_click))
 			menu[menu.length - 1].setSelected(true)
 		}
 		else {
-			menu.push(plugins.popupmenu.createMenuItem('Favorite', globals.NAV_universal_list_right_click))
+			menu.push(plugins.popupmenu.createMenuItem('Favorite', NAV_universal_list_right_click))
 		}
 		
 		menu[menu.length - 1].setMethodArguments(null,null,null,record)
@@ -3379,7 +3384,7 @@ function NAV_universal_list_right_click(input,elem,list,record) {
 				databaseManager.saveData(solutionPrefs.access.user.record)
 				
 				//if in favorites mode, redraw
-				if (globals.DATASUTRA_navigation_set == 0) {
+				if (DATASUTRA_navigation_set == 0) {
 					forms.NAV__navigation_tree__rows.LIST_redraw(null,null,true,false,true,selectFave)
 				}
 			}
@@ -3424,7 +3429,7 @@ function NAV_universal_list_favorite(input,elem,list,record) {
 		var displayItems = navigationPrefs.byNavItemID[currentNavItem].universalList.displays
 		//loop through display items to find the selected one
 		for (var i = 0; i < displayItems.length; i++) {
-			if (globals.DATASUTRA_display == displayItems[i].displayID) {
+			if (DATASUTRA_display == displayItems[i].displayID) {
 				break
 			}
 		}
@@ -3456,7 +3461,7 @@ function NAV_universal_list_favorite(input,elem,list,record) {
 				record.foundset.omitRecord()
 				
 				if (!utils.hasRecords(forms[input.getFormName()].foundset)) {
-					globals.TRIGGER_fastfind_display_set('No favorite records found')
+					TRIGGER_fastfind_display_set('No favorite records found')
 				}
 			}
 		}
@@ -3466,11 +3471,11 @@ function NAV_universal_list_favorite(input,elem,list,record) {
 		databaseManager.saveData(solutionPrefs.access.user.record)
 		
 		//update display to show star
-//		globals.NAV_universal_list_select__unhilite()
+//		NAV_universal_list_select__unhilite()
 		databaseManager.recalculate(record)
 		
 		//if in favorites mode, redraw
-		if (globals.DATASUTRA_navigation_set == 0) {
+		if (DATASUTRA_navigation_set == 0) {
 			forms.NAV__navigation_tree__rows.LIST_redraw(null,null,true,false,true,selectFave)
 		}
 		
@@ -3486,7 +3491,7 @@ function NAV_universal_list_favorite(input,elem,list,record) {
 function NAV_universal_list_detail_view(event) {
 	//something was clicked, go to workflow max view
 	if (event) {
-		globals.TRIGGER_spaces_set('workflow')
+		TRIGGER_spaces_set('workflow')
 	}
 }
 
@@ -3531,7 +3536,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	}
 	
 	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
+	arguments = Arguments.filter(CODE_jsevent_remove)
 }
 	
 	var initialLoad = arguments[0]
@@ -3804,14 +3809,14 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 					navPrefs.byNavSetName[navSetNames[i]].itemsByOrder[j-1] = 
 					navPrefs.byNavItemID[record.id_navigation_item] = 
 					navPrefs.siteMap[navSetPath[i]][record.url_path].details = 
-						globals.NAV_navigation_item_load(record,setExists)
+						NAV_navigation_item_load(record,setExists)
 				}
 				//create nav item node(s) without path
 				else {
 					navPrefs.byNavSetName[navSetNames[i]].itemsByName[record.item_name] = 
 					navPrefs.byNavSetName[navSetNames[i]].itemsByOrder[j-1] = 
 					navPrefs.byNavItemID[record.id_navigation_item] = 
-						globals.NAV_navigation_item_load(record,setExists)
+						NAV_navigation_item_load(record,setExists)
 				}
 			}
 			
@@ -3931,7 +3936,7 @@ if (record[relationName].url_path && record.url_path) {
 		availableSpaces[i] = utils.stringToNumber(availableSpaces[i])
 	}
 	
-	availableSpaces.sort(globals.CODE_sort_numeric)
+	availableSpaces.sort(CODE_sort_numeric)
 	
 	var spaceRealNames = ['standard','list','vertical','centered','classic','wide','workflow',
 			'standard flip','list flip','vertical flip','centered flip','classic flip','wide flip','workflow flip']
@@ -3983,7 +3988,7 @@ if (record[relationName].url_path && record.url_path) {
 	}
 
 //TODO: (not)	BLUEPRINT of navigation item information
-	navItemObj.navigationItem = globals.CODE_record_object(record,true,true)
+	navItemObj.navigationItem = CODE_record_object(record,true,true)
 
 //TODO: (not)	LIST status information
 	if (record.use_fw_list) {
@@ -4022,15 +4027,15 @@ if (record[relationName].url_path && record.url_path) {
 	//only add fast find, power replace, and filter restrictions to non-navigation items
 	if (record.id_navigation != solutionPrefs.config.navigationSetID) {
 //TODO: (not)	FAST FIND information
-		globals.CODE_ddarray_sort = 'asc'
-		globals.CODE_ddarray_field = 'findName'
+		CODE_ddarray_sort = 'asc'
+		CODE_ddarray_field = 'findName'
 		
 		//if there are active find items OR a 'copy' of previously active find items
 		//if (utils.hasRecords(record[rlnFindActive]) || (oldNavItemObj && oldNavItemObj.fastFind)) {
 			//if findValues doesn't exist or is not the same size as the currently active find items
 			//if ((oldNavItemObj && oldNavItemObj.fastFind) ? ((oldNavItemObj && oldNavItemObj.fastFind).length != record[rlnFindActive].getSize()) : true) {
 				//overwrite/create fast find node
-				var findFast = globals.NAV_find_load(record)
+				var findFast = NAV_find_load(record)
 				//check to see if there are finds
 				if (findFast.length) {
 					navItemObj.fastFind = findFast
@@ -4039,15 +4044,15 @@ if (record[relationName].url_path && record.url_path) {
 		//}
 	
 //TODO: (not)	POWER REPLACE information
-		globals.CODE_ddarray_sort = 'asc'
-		globals.CODE_ddarray_field = 'replaceName'
+		CODE_ddarray_sort = 'asc'
+		CODE_ddarray_field = 'replaceName'
 		
 		//if there are active replace items OR a 'copy' of previously active replace items
 		//if (utils.hasRecords(record[rlnReplaceActive]) || (oldNavItemObj && oldNavItemObj.powerReplace)) {
 			//if replaceValues doesn't exist or is not the same size as the currently active replace items
 			//if ((oldNavItemObj && oldNavItemObj.powerReplace) ? (oldNavItemObj && oldNavItemObj.powerReplace.length != record[rlnReplaceActive].getSize()) : true) {
 				//overwrite/create power replace node
-				var replacePower = globals.NAV_replace_load(record)
+				var replacePower = NAV_replace_load(record)
 				//check to see if there are replaces
 				if (replacePower.length) {
 					navItemObj.powerReplace = replacePower
@@ -4056,7 +4061,7 @@ if (record[relationName].url_path && record.url_path) {
 		//}
 		
 //TODO: (not)	FILTER RESTRICTIONS information
-		var restrictFilter = globals.NAV_navigation_item_filter_load(record)
+		var restrictFilter = NAV_navigation_item_filter_load(record)
 		
 		//check to see if there are filters
 		if (restrictFilter.length) {
@@ -4097,13 +4102,13 @@ if (record[relationName].url_path && record.url_path) {
 		}
 		
 		//load list display values
-		globals.CODE_ddarray_sort = 'asc'
-		globals.CODE_ddarray_field = 'displayDefault'
+		CODE_ddarray_sort = 'asc'
+		CODE_ddarray_field = 'displayDefault'
 		
 		//if there are active display
 		if (utils.hasRecords(record[rlnDisplay])) {
 			//overwrite/create displays node
-			navItemObj.universalList.displays = globals.NAV_display_load(record)
+			navItemObj.universalList.displays = NAV_display_load(record)
 			
 			//try to stay on the same display
 			if (oldDisplayID && oldDisplayID != navItemObj.universalList.displays.displayID) {
@@ -4139,7 +4144,7 @@ if (record[relationName].url_path && record.url_path) {
 			//go through all action items and put them into the correct container
 			for (var m = 1; m <= record[relnButton].getSize(); m++) {
 				var recordButton = record[relnButton].getRecord(m)
-				var subItem = globals.CODE_record_object(recordButton,true,true,['method_from_form','method_from_custom'])
+				var subItem = CODE_record_object(recordButton,true,true,['method_from_form','method_from_custom'])
 				
 				switch (subItem.category) {
 					case 'Add':
@@ -4199,7 +4204,7 @@ if (record[relationName].url_path && record.url_path) {
 											var recordFilterItem = recordButton[relnFilter].getRecord(i)
 											
 											//plop down filter spec
-											filterNode.push(globals.CODE_record_object(recordFilterItem,true,true))
+											filterNode.push(CODE_record_object(recordFilterItem,true,true))
 										}
 									}
 									
@@ -4317,19 +4322,19 @@ if (record[relationName].url_path && record.url_path) {
 		
 			//resort actions, reports, and tabs
 			var reSort = new Array('actions','reports','tabs')
-			globals.CODE_ddarray_sort = 'asc'
-			globals.CODE_ddarray_field = 'orderBy'
+			CODE_ddarray_sort = 'asc'
+			CODE_ddarray_field = 'orderBy'
 			
 			for (var i = 0; i < reSort.length; i++) {
 				//check if that item is even present
 				if (navItemObj.buttons[reSort[i]]) {
-					navItemObj.buttons[reSort[i]].sort(globals.CODE_sort_dd_array)
+					navItemObj.buttons[reSort[i]].sort(CODE_sort_dd_array)
 				}
 			}
 			
 			//sort transactions if we have them too
 			if (navItemObj.transactions) {
-				navItemObj.transactions.sort(globals.CODE_sort_dd_array)
+				navItemObj.transactions.sort(CODE_sort_dd_array)
 			}
 		}
 	}
@@ -4376,7 +4381,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	}
 	
 	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
+	arguments = Arguments.filter(CODE_jsevent_remove)
 }
 	
 	var prefPane = arguments[0]
@@ -4485,7 +4490,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	
 	//load list window
 	//form not yet added, add to lists tab panel
-	if (listTab != 'DATASUTRA_0F_solution__blank_2' && navigationPrefs.byNavItemID[prefNavID] && !globals.NAV_universal_list_get_status(navigationPrefs.byNavItemID[prefNavID].listData)) {
+	if (listTab != 'DATASUTRA_0F_solution__blank_2' && navigationPrefs.byNavItemID[prefNavID] && !NAV_universal_list_get_status(navigationPrefs.byNavItemID[prefNavID].listData)) {
 		//create new form instances for UL
 		if (navSpecs.useFwList) {
 			//3.5 hacked UL
@@ -4562,8 +4567,8 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 					
 					if (initialUL) {
 						//create new forms
-						var template = globals.NAV_universal_list_form_to_template(uniList)
-						var myForm = globals.NAV_universal_list_template_to_form(template,newFormName)
+						var template = NAV_universal_list_form_to_template(uniList)
+						var myForm = NAV_universal_list_template_to_form(template,newFormName)
 						
 						//set datasource
 						myForm.serverName = serverName
@@ -4636,7 +4641,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 							}
 							
 							myField.name = application.getUUID().toString()
-	//						myField.setOnFocusGainedMethod(globals.NAV_universal_list_select__unhilite)		
+	//						myField.setOnFocusGainedMethod(NAV_universal_list_select__unhilite)		
 							myField.anchors = SM_ANCHOR.ALL
 							myField.horizontalAlignment = horizAlign
 							myField.styleClass = 'universallist'
@@ -4763,8 +4768,8 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	}
 	
 	//clear globals
-	globals.DATASUTRA_find = null
-	globals.DATASUTRA_find_field = null
+	DATASUTRA_find = null
+	DATASUTRA_find_field = null
 	//forms[baseForm + '__header'].elements.find_end.setImageURL('media:///find_end.png')
 	
 	//if using UL in 35 and active space different than last space, refresh UL
@@ -4779,15 +4784,15 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	//set check on display pop-down
 	//this form has been visited before and has a default display
 	if (navigationPrefs.byNavItemID[prefNavID].universalList && navigationPrefs.byNavItemID[prefNavID].universalList.displays && navigationPrefs.byNavItemID[prefNavID].universalList.displays.displayID) {
-		globals.DATASUTRA_display = navigationPrefs.byNavItemID[prefNavID].universalList.displays.displayID
+		DATASUTRA_display = navigationPrefs.byNavItemID[prefNavID].universalList.displays.displayID
 	}
 	//no displays configured
 	else {
-		globals.DATASUTRA_display = null
+		DATASUTRA_display = null
 	}
 	
-	//if above globals.DATASUTRA_find, set appropriate end graphics
-/*	if (globals.DATASUTRA_find) {
+	//if above DATASUTRA_find, set appropriate end graphics
+/*	if (DATASUTRA_find) {
 		forms[baseForm + '__header'].elements.find_end.setImageURL('media:///find_stop.png')
 	}
 	else {
@@ -4801,13 +4806,13 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		
 		//activate default space if there is one, it is different than current space;  do this on first time form loaded and all subsequent times until space changed while on this navItem
 		if (navSpecs.spaceDefault && spacesOK['space_' + (navSpecs.spaceDefault)] != solutionPrefs.config.activeSpace && (!sessionSpaces || ((sessionSpaces && sessionSpaces.lastSpace && sessionSpaces.lastSpace == spacesOK['space_' + navSpecs.spaceDefault]) ? true : false))) {
-			globals.DS_space_change('btn_space_'+navSpecs.spaceDefault,true)
+			DS_space_change('btn_space_'+navSpecs.spaceDefault,true)
 		}
 		//current space is not allowed for this item, 
 		else if (solutionPrefs.config.activeSpace && !spacesOK[spacesOK[solutionPrefs.config.activeSpace] - 1]) {
 			//activate last space on for this item
 			if (sessionSpaces && sessionSpaces.lastSpace && sessionSpaces.lastSpace != solutionPrefs.config.activeSpace) {
-				globals.DS_space_change('btn_space_'+spacesOK[sessionSpaces.lastSpace],true)
+				DS_space_change('btn_space_'+spacesOK[sessionSpaces.lastSpace],true)
 			}
 			//activate first allowable space
 			else {
@@ -4815,7 +4820,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 				for (var i = 0; i < spacesOK.length && !escape; i++) {
 					if (spacesOK[i]) {
 						escape = true
-						globals.DS_space_change('btn_space_' + (i+1),true)
+						DS_space_change('btn_space_' + (i+1),true)
 					}
 				}
 			}
@@ -4881,13 +4886,13 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	}
 	
 	//LOG configuration
-	globals.TRIGGER_log_create('Configuration panes',
-						prefPane,
-						prefNavID,
-						navSpecs.idNavigation,
-						'Sutra configuration',
-						navSpecs.itemName
-						)
+	TRIGGER_log_create('Configuration panes',
+			prefPane,
+			prefNavID,
+			navSpecs.idNavigation,
+			'Sutra configuration',
+			navSpecs.itemName
+		)
 }
 
 
@@ -4940,7 +4945,7 @@ if (fsNavItem) {
 		})
 	}
 	
-	replaceItems.sort(globals.CODE_sort_dd_array)
+	replaceItems.sort(CODE_sort_dd_array)
 	
 	return replaceItems
 }
@@ -5073,7 +5078,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	}
 	
 	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
+	arguments = Arguments.filter(CODE_jsevent_remove)
 }
 	
 	var forceRefresh = arguments[0]
@@ -5086,7 +5091,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	if (filterSetup) {
 		
 		var theTemplate = filterSetup.blueprint
-		var nowValues = globals.CODE_copy_object(filterSetup.blueprint.slice(0))
+		var nowValues = CODE_copy_object(filterSetup.blueprint.slice(0))
 		
 		//if there are filter, run
 		if (theTemplate && theTemplate.length) {
@@ -5250,18 +5255,18 @@ function NAV_navigation_set_load()
 	var formName = (solutionPrefs.config.webClient) ? 'NAV__navigation_tree__WEB' : 'NAV__navigation_tree'
 	
 	//there is a set
-	if (globals.DATASUTRA_navigation_set >= 0) {
+	if (DATASUTRA_navigation_set >= 0) {
 		//working with favorites
-		if (globals.DATASUTRA_navigation_set == 0) {
+		if (DATASUTRA_navigation_set == 0) {
 			var favoriteMode = true
 		}
 		//this set has been navigated to before, go to last selected item
-		else if (navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set] && navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].lastNavItem && !treeTop) {
-			var itemID = navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].lastNavItem
+		else if (navigationPrefs.byNavSetID[DATASUTRA_navigation_set] && navigationPrefs.byNavSetID[DATASUTRA_navigation_set].lastNavItem && !treeTop) {
+			var itemID = navigationPrefs.byNavSetID[DATASUTRA_navigation_set].lastNavItem
 		}
 		//go to first item in the navigation set
-		else if (navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set] && navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].itemsByOrder && navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].itemsByOrder.length) {
-			var itemID = navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].itemsByOrder[0].navigationItem.idNavigationItem
+		else if (navigationPrefs.byNavSetID[DATASUTRA_navigation_set] && navigationPrefs.byNavSetID[DATASUTRA_navigation_set].itemsByOrder && navigationPrefs.byNavSetID[DATASUTRA_navigation_set].itemsByOrder.length) {
+			var itemID = navigationPrefs.byNavSetID[DATASUTRA_navigation_set].itemsByOrder[0].navigationItem.idNavigationItem
 			var initialLoad = true
 		}
 		//this isn't favorites and there aren't any nav items in this set, load blanks
@@ -5271,8 +5276,8 @@ function NAV_navigation_set_load()
 	}
 	
 	//call router to switch entire page
-	if (globals.DATASUTRA_router_enable && !favoriteMode) {
-		globals.DS_router(null,null,itemID)
+	if (DATASUTRA_router_enable && !favoriteMode) {
+		DS_router(null,null,itemID)
 	}
 	else {
 		//first time set is viewed, collapse all pref enabled, and not favorites
@@ -5318,7 +5323,7 @@ function NAV_universal_list_select(event) {
 	if (navigationPrefs.byNavItemID[currentNavItem].navigationItem.ulBusyIndicator && !solutionPrefs.config.webClient) {
 		var busyIndicator = true
 		
-		globals.CODE_cursor_busy(true)
+		CODE_cursor_busy(true)
 	}
 	
 	//LOG record navigation
@@ -5349,19 +5354,20 @@ function NAV_universal_list_select(event) {
 		
 		//don't turn busy indicator on if it is already on
 		if (!busyIndicator) {
-			globals.CODE_cursor_busy(true)
+			CODE_cursor_busy(true)
 		}
-		globals.TRIGGER_progressbar_start(-273, navigationPrefs.byNavItemID[currentNavItem].navigationItem.initialRecordLabel)
+		TRIGGER_progressbar_start(-273, navigationPrefs.byNavItemID[currentNavItem].navigationItem.initialRecordLabel)
 	}
 	
 	//log if requested
 	if (logClick) {
-		globals.TRIGGER_log_create('Records',
-							serverName,
-							tableName,
-							pkName,
-							pkActedOn
-							)
+		TRIGGER_log_create(
+				'Records',
+				serverName,
+				tableName,
+				pkName,
+				pkActedOn
+			)
 	}
 	
 	//save currently selected index
@@ -5372,13 +5378,13 @@ function NAV_universal_list_select(event) {
 	
 	//update record navigator when showing
 	if (solutionPrefs.panel.toolbar[solutionPrefs.panel.toolbar.selectedTab - 4].formName == 'TOOL_record_navigator') {
-		globals.TRIGGER_toolbar_record_navigator_set()
+		TRIGGER_toolbar_record_navigator_set()
 	}
 	
 	//run in webclient
 	if (solutionPrefs.config.webClient) {
 		//update url with the pk for this record
-		plugins.WebClientUtils.executeClientSideJS('window.parent.routerReplace(null,"' + navigationPrefs.byNavItemID[currentNavItem]._about_ + '","' + globals.DS_router_url(navigationPrefs.byNavItemID[currentNavItem].path,currentNavItem,pkActedOn,pkRecord) + '");')
+		plugins.WebClientUtils.executeClientSideJS('window.parent.routerReplace(null,"' + navigationPrefs.byNavItemID[currentNavItem]._about_ + '","' + DS_router_url(navigationPrefs.byNavItemID[currentNavItem].path,currentNavItem,pkActedOn,pkRecord) + '");')
 		
 		//request focus elsewhere on desktop
 		if (scopes.DS.deviceFactor == 'Desktop') {
@@ -5393,12 +5399,12 @@ function NAV_universal_list_select(event) {
 	else {
 		//record was not in memory, turn off busy bar and busy cursor
 		if (recNotLoaded) {
-			globals.TRIGGER_progressbar_stop()
-			globals.CODE_cursor_busy(false)	
+			TRIGGER_progressbar_stop()
+			CODE_cursor_busy(false)	
 		}
 		//changing record, finished turn off busy indicatar
 		else if (busyIndicator) {
-			globals.CODE_cursor_busy(false)	
+			CODE_cursor_busy(false)	
 		}
 	}
 	
@@ -5406,11 +5412,11 @@ function NAV_universal_list_select(event) {
 	if (solutionPrefs.config.prefs.thatsAllFolks) {
 		forms.NSTL_0F_solution__license.ACTION_status()
 		
-		globals.DIALOGS.showErrorDialog(
-							'Trial expired',
-							'Trial time expired\n' +
-							'Please restart.'
-						)
+		DIALOGS.showErrorDialog(
+				'Trial expired',
+				'Trial time expired\n' +
+				'Please restart.'
+			)
 	}
 }
 
@@ -5556,7 +5562,7 @@ if (application.__parent__.solutionPrefs) {
 		var currentNavItem	= solutionPrefs.config.currentFormID
 		
 		//shift key pressed
-		var shift			= globals.CODE_key_pressed('shift')
+		var shift			= CODE_key_pressed('shift')
 		
 		/***********************
 			next record action
@@ -5603,7 +5609,7 @@ if (application.__parent__.solutionPrefs) {
 			}
 			
 			//update record navigator
-			globals.TRIGGER_toolbar_record_navigator_set()
+			TRIGGER_toolbar_record_navigator_set()
 		}
 		
 		//LOG record navigation
@@ -5622,12 +5628,13 @@ if (application.__parent__.solutionPrefs) {
 			var pkName = 'repositoryAPINotImplemented'
 			var pkActedOn = 0
 		}
-		globals.TRIGGER_log_create('Records',
-							serverName,
-							tableName,
-							pkName,
-							pkActedOn
-							)
+		TRIGGER_log_create(
+				'Records',
+				serverName,
+				tableName,
+				pkName,
+				pkActedOn
+			)
 	}
 }
 }
@@ -5690,7 +5697,7 @@ if (application.__parent__.solutionPrefs) {
 		var currentNavItem	= solutionPrefs.config.currentFormID
 		
 		//shift key pressed
-		var shift			= globals.CODE_key_pressed('shift')
+		var shift			= CODE_key_pressed('shift')
 		
 		/***********************
 			previous record action
@@ -5725,7 +5732,7 @@ if (application.__parent__.solutionPrefs) {
 			}
 			
 			//update record navigator
-			globals.TRIGGER_toolbar_record_navigator_set()
+			TRIGGER_toolbar_record_navigator_set()
 		}
 		
 		//LOG record navigation
@@ -5744,12 +5751,13 @@ if (application.__parent__.solutionPrefs) {
 			var pkName = 'repositoryAPINotImplemented'
 			var pkActedOn = 0
 		}
-		globals.TRIGGER_log_create('Records',
-							serverName,
-							tableName,
-							pkName,
-							pkActedOn
-							)
+		TRIGGER_log_create(
+				'Records',
+				serverName,
+				tableName,
+				pkName,
+				pkActedOn
+			)
 	}
 }
 }
@@ -5770,7 +5778,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	}
 	
 	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
+	arguments = Arguments.filter(CODE_jsevent_remove)
 }	
 
 	var formName = arguments[0]
@@ -5812,7 +5820,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	}
 	
 	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
+	arguments = Arguments.filter(CODE_jsevent_remove)
 }
 
 	//get form and do some stuff
@@ -5970,7 +5978,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	}
 	
 	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
+	arguments = Arguments.filter(CODE_jsevent_remove)
 }
 
 var listData = arguments[0]
@@ -6034,7 +6042,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	}
 	
 	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
+	arguments = Arguments.filter(CODE_jsevent_remove)
 }
 
 var workflowForm = solutionPrefs.config.currentFormName
@@ -6103,7 +6111,7 @@ if (indexStart <= selected && selected <= indexEnd) {
 	//otherwise selected item in viewable area; no action necessary
 }
 else if (selected != 0) {
-	globals.DIALOGS.showErrorDialog( 'ERROR',  "Selected index is not in the universal list", 'OK')
+	DIALOGS.showErrorDialog( 'ERROR',  "Selected index is not in the universal list", 'OK')
 }
 
 //if no scrolling took place, return false
@@ -6126,7 +6134,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	}
 	
 	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
+	arguments = Arguments.filter(CODE_jsevent_remove)
 }	
 
 	var objForm = arguments[0] || application.__parent__.myCoolForm
@@ -6137,7 +6145,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		
 		//if a form with the same name exists (it has already been copied), remove it
 		if (forms[newForm]) {
-			globals.NAV_universal_list_form_remove(newForm)
+			NAV_universal_list_form_remove(newForm)
 		}
 		
 		//create me a form
@@ -6325,10 +6333,10 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		}
 	}
 	else {
-		globals.DIALOGS.showErrorDialog(
-							'Error',
-							'Form global not ready yet'
-						)
+		DIALOGS.showErrorDialog(
+				'Error',
+				'Form global not ready yet'
+			)
 	}
 }
 
@@ -6479,7 +6487,7 @@ if (application.__parent__.repositoryPrefs) {
 				if (formInfo.serverName == 'None' && formInfo.tableName == 'None') {
 					//add form
 					if (nonRef) {
-						formsByTable['No datasource'][formInfo.formName] = globals.CODE_copy_object(formInfo)
+						formsByTable['No datasource'][formInfo.formName] = CODE_copy_object(formInfo)
 					}
 					//only used in developer
 					else {
@@ -6510,7 +6518,7 @@ if (application.__parent__.repositoryPrefs) {
 					
 					//add form
 					if (nonRef) {
-						formsByTable[formInfo.serverName][formInfo.tableName][formInfo.formName] = globals.CODE_copy_object(formInfo)
+						formsByTable[formInfo.serverName][formInfo.tableName][formInfo.formName] = CODE_copy_object(formInfo)
 					}
 					//only used in developer
 					else {
@@ -6562,7 +6570,7 @@ if (! application.__parent__.repositoryPrefs) {
 
 //get currently loaded solution name; start recursion
 var solutionName = application.getSolutionName()
-globals.NAV_meta_module_names_fx([solutionName])
+NAV_meta_module_names_fx([solutionName])
 
 //sort array, remove duplicates, attach root_element_id and active_release
 if (repositoryPrefs.allModules.length) {
@@ -6679,7 +6687,7 @@ for (var i = 0 ; i < solutionName.length; i++) {
 	repositoryPrefs.allModules.push(solutionName[i])
 	
 	//pass back modules to processoranator
-	globals.NAV_meta_module_names_fx(modules)
+	NAV_meta_module_names_fx(modules)
 }
 
 }
@@ -7053,7 +7061,7 @@ function NAV_universal_list_sort(columnName, sortDir, event) {
 			//toggle setting
 			thisNav.universalList.favoriteOnly = !thisNav.universalList.favoriteOnly
 			
-			globals.CODE_cursor_busy(true)
+			CODE_cursor_busy(true)
 			
 			//show only favorites
 			if (thisNav.universalList.favoriteOnly) {
@@ -7090,23 +7098,23 @@ function NAV_universal_list_sort(columnName, sortDir, event) {
 					//punch this down onto the form
 					forms[formName].foundset.loadRecords(fsNew)
 					
-					globals.TRIGGER_fastfind_display_set('Showing favorite records')
+					TRIGGER_fastfind_display_set('Showing favorite records')
 				}
 				//clear form
 				else {
 					forms[formName].foundset.clear()
-					globals.TRIGGER_fastfind_display_set('No favorite records found')
+					TRIGGER_fastfind_display_set('No favorite records found')
 				}
 			}
 			//show everything
 			else {
-				globals.NAV_find_clear()
+				NAV_find_clear()
 				
 				//restore initial sort
 				forms[formName].foundset.sort(forms[formName].foundset.getCurrentSort())
 			}
 			
-			globals.CODE_cursor_busy(false)
+			CODE_cursor_busy(false)
 		}
 	}
 	
