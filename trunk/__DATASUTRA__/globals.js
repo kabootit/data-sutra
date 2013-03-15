@@ -151,18 +151,18 @@ function DATASUTRA_close()
 				logOut = 'Yes'
 			}
 			else {
-				var logOut = globals.DIALOGS.showQuestionDialog(
-							'Logout',
-							'Do you really want to log out?',
-							'Yes',
-							'No'
-						)
+				var logOut = DIALOGS.showQuestionDialog(
+								'Logout',
+								'Do you really want to log out?',
+								'Yes',
+								'No'
+							)
 			}
 			
 			if (logOut == 'Yes') {
 			
-				if (!globals.DATASUTRA_close.inProcess) {
-					globals.DATASUTRA_close.inProcess = true	
+				if (!DATASUTRA_close.inProcess) {
+					DATASUTRA_close.inProcess = true	
 				
 					//working with a validated session
 					if (application.__parent__.solutionPrefs && solutionPrefs.clientInfo && solutionPrefs.clientInfo.logID) {
@@ -316,14 +316,14 @@ function DATASUTRA_close()
 		
 			if (!logoutOK) {
 				//if method gets this far, time to invalidate it
-				globals.DATASUTRA_close.inProcess = null
+				DATASUTRA_close.inProcess = null
 			
 				if (logOut == 'Yes') {
 					//show info that logout canceled
-					globals.DIALOGS.showErrorDialog(
+					DIALOGS.showErrorDialog(
 							'Error',
 							'Log out aborted'
-					)
+						)
 				}
 			
 				return false
@@ -362,7 +362,7 @@ function DATASUTRA_error()
 	var y = arguments[1]
 	var z = arguments[2]
 	
-	globals.DIALOGS.showErrorDialog('Error','Arguments: '+x)
+	DIALOGS.showErrorDialog('Error','Arguments: '+x)
 	
 	/*
 	var error = arguments[0];
@@ -374,7 +374,7 @@ function DATASUTRA_error()
 		application.output('Errorcode: ' + error.getErrorCode())
 	  if (error.getErrorCode() == ServoyException.SAVE_FAILED)
 	  {
-		  globals.DIALOGS.showErrorDialog( 'Error',  'It seems you did not fill in a required field')
+		  DIALOGS.showErrorDialog( 'Error',  'It seems you did not fill in a required field')
 		  
 		  //Get the failed records after a save
 		  var array = databaseManager.getFailedRecords()
@@ -439,7 +439,7 @@ else {
 	var serverName = forms[prefForm].controller.getServerName()
 	
 	//bring in new data if necessary
-	//globals.DS_data_import()
+	//DS_data_import()
 	
 	// //PART I: Create large code global to be used elsewhere
 	
@@ -451,7 +451,7 @@ else {
 	
 	//	//check for correct version of plugin
 	//if incorrect version, abort
-//	if (!globals.DS_plugin_check()) {
+//	if (!DS_plugin_check()) {
 //		//fill enough of solutionPrefs that prompt to quit is not triggered
 //		solutionPrefs.clientInfo = new Object()
 //		
@@ -597,10 +597,10 @@ else {
 		
 		
 		if (!forms.NSTL_0F_solution__license.ACTION_validate(true,true)) {
-		/*	globals.DIALOGS.showErrorDialog(
-							'Licensing error',
-							'The license entered has expired'
-						)
+		/*	DIALOGS.showErrorDialog(
+					'Licensing error',
+					'The license entered has expired'
+				)
 			return	
 			
 			//running in client in trial mode, show license entry page
@@ -612,7 +612,7 @@ else {
 			}
 			//running in non-developer
 			else if (application.getApplicationType() != 3) {
-				globals.DIALOGS.showErrorDialog(
+				DIALOGS.showErrorDialog(
 						'Trial mode',
 						'Data Sutra is running in trial mode.\n\n' +
 						'Client will now close.'
@@ -664,13 +664,13 @@ else {
 					}
 		
 		//information about client
-			solutionPrefs.clientInfo = globals.DS_client_info_load()
+			solutionPrefs.clientInfo = DS_client_info_load()
 			
 		//default screen attributes
-			solutionPrefs.screenAttrib = globals.DS_screen_load()
+			solutionPrefs.screenAttrib = DS_screen_load()
 			
 		//default sleep value for list
-			solutionPrefs.listSetup = globals.DS_list_load()
+			solutionPrefs.listSetup = DS_list_load()
 			
 		//find settings
 			solutionPrefs.fastFind = {
@@ -684,7 +684,7 @@ else {
 		
 		//get tooltips
 		//TODO: store on client
-			solutionPrefs.i18n = globals.DS_tooltip_load()
+			solutionPrefs.i18n = DS_tooltip_load()
 		
 		
 		// //PART V: Get the names of all modules and all forms in this solution
@@ -709,24 +709,24 @@ else {
 			solutionPrefs.repository.workspace = new Object()
 			
 			//get everything in the workspace directory (forms and relations)
-			globals.CODE_workspace_data()
+			CODE_workspace_data()
 			
 			//limit to included modules
-			globals.CODE_workspace_module()
+			CODE_workspace_module()
 			solutionPrefs.repository.allModules = repositoryPrefs.allModules
 		}		
 		//only get methods from repository in <= 3.5.x or >= 4.x client
 		else if (!solutionPrefs.repository.api) {
 			//when in developer, rebuild repositoryPrefs fresh each time
 			if (application.getApplicationType() == APPLICATION_TYPES.SMART_CLIENT && application.isInDeveloper() || application.getApplicationType() == APPLICATION_TYPES.WEB_CLIENT) {
-				globals.NAV_meta_module_names()
+				NAV_meta_module_names()
 				solutionPrefs.repository.allModules = repositoryPrefs.allModules
 				
-				globals.NAV_meta_form_names()
+				NAV_meta_form_names()
 				solutionPrefs.repository.allForms = repositoryPrefs.allForms
 				solutionPrefs.repository.allFormsByTable = repositoryPrefs.allFormsByTable
 				
-				globals.NAV_meta_relation_names()
+				NAV_meta_relation_names()
 				solutionPrefs.repository.relations = repositoryPrefs.relations
 				
 				//null out temporary global var
@@ -1277,11 +1277,11 @@ function DS_actions(input) {
 		if (solutionPrefs.config.prefs.thatsAllFolks) {
 			forms.NSTL_0F_solution__license.ACTION_status()
 			
-			globals.DIALOGS.showErrorDialog(
-								'Trial expired',
-								'Trial time expired\n' +
-								'Please restart.'
-							)
+			DIALOGS.showErrorDialog(
+					'Trial expired',
+					'Trial time expired\n' +
+					'Please restart.'
+				)
 		}
 		
 		var baseForm = solutionPrefs.config.formNameBase
@@ -1294,8 +1294,8 @@ function DS_actions(input) {
 		if (input instanceof JSEvent) {	
 			//using access and control, need allowed configuration modes
 			if (solutionPrefs.access && solutionPrefs.access.accessControl) {
-				var admin = globals.CODE_copy_object(solutionPrefs.access.allowedAdminPrefs)
-				var user = globals.CODE_copy_object(solutionPrefs.access.allowedUserPrefs)
+				var admin = CODE_copy_object(solutionPrefs.access.allowedAdminPrefs)
+				var user = CODE_copy_object(solutionPrefs.access.allowedUserPrefs)
 			}
 			//no access and control, use default configuration modes
 			else {
@@ -1304,10 +1304,10 @@ function DS_actions(input) {
 				//there is a fw config navigation set
 				if (solutionPrefs.config.navigationSetID) {
 					//get admin prefs
-					var admin = globals.NAV_preference_mode_get('Admin',solutionPrefs.config.navigationSetID)
+					var admin = NAV_preference_mode_get('Admin',solutionPrefs.config.navigationSetID)
 					
 					//get user prefs
-					var user = globals.NAV_preference_mode_get('User',solutionPrefs.config.navigationSetID)
+					var user = NAV_preference_mode_get('User',solutionPrefs.config.navigationSetID)
 				}
 			}
 			
@@ -1569,7 +1569,7 @@ function DS_actions(input) {
 				}
 				
 				//pass arguments
-				menu[j].setMethodArguments(htmlTags[2],formList[j],navIDList[j],typeList[j],globals.CODE_key_pressed())
+				menu[j].setMethodArguments(htmlTags[2],formList[j],navIDList[j],typeList[j],CODE_key_pressed())
 				
 				//set tooltip, if there is one
 		//		if (descList[j]) {
@@ -1613,29 +1613,29 @@ function DS_actions(input) {
 				
 				//turn sidebar off
 				if (forms[baseForm].elements.tab_content_D.tabIndex == itemID && forms[baseForm].elements.tab_content_D.visible) {
-					globals.DS_sidebar_toggle(false)
+					DS_sidebar_toggle(false)
 				}
 				//set tab in sidebar
 				else {
 					forms[baseForm].elements.tab_content_D.tabIndex = itemID
 					
 					//if not showing, show sidebar
-					globals.DS_sidebar_toggle(true)
+					DS_sidebar_toggle(true)
 				}
 			}
 			//check for non-standard prefpane logout
 			else if (itemClicked == 'Logout') {
 				//webclient in inline router, redirect url back to wherever called from
-				if (globals.DATASUTRA_router_referrer) {
-					application.showURL(globals.DATASUTRA_router_referrer,'_top')
+				if (DATASUTRA_router_referrer) {
+					application.showURL(DATASUTRA_router_referrer,'_top')
 					security.logout()
 				}
 				//webclient in router, redirect url
-				else if (globals.DATASUTRA_router_enable) {
+				else if (DATASUTRA_router_enable) {
 					application.showURL('/quit','_top')
 					security.logout()
 //					plugins.WebClientUtils.executeClientSideJS('reLogin();')
-				//	globals.DS_router(null,null,null,null,true)
+				//	DS_router(null,null,null,null,true)
 				//	security.logout()
 				}
 				//straight up webclient or smart client
@@ -1684,21 +1684,21 @@ function DS_actions(input) {
 					var screenShot = (new java.awt.Robot()).createScreenCapture(new java.awt.Rectangle(x,y,width,height))
 					var rawData = new java.io.ByteArrayOutputStream()
 					Packages.javax.imageio.ImageIO.write(screenShot,'png',rawData)
-					globals.DATASUTRA_feedback = rawData.toByteArray()
+					DATASUTRA_feedback = rawData.toByteArray()
 				}
 				
 				//show popup dialog
-				globals.CODE_form_in_dialog(forms.DEV_P_feedback,-1,-1,-1,-1,'Submit feedback',false,false,'feedback',true)
+				CODE_form_in_dialog(forms.DEV_P_feedback,-1,-1,-1,-1,'Submit feedback',false,false,'feedback',true)
 			}
 			//check for non-standard prefpane design mode
 			else if (itemClicked == 'Design mode') {
 				//make sure not in help mode
 				if (solutionPrefs.config.helpMode) {
-					globals.DS_help()
+					DS_help()
 				}
 				
 				solutionPrefs.design.statusDesign = !solutionPrefs.design.statusDesign
-				globals.DEV_mode_toggle()
+				DEV_mode_toggle()
 			}
 			//check for non-standard prefpane change password
 			else if (itemClicked == 'Change password') {
@@ -1710,17 +1710,17 @@ function DS_actions(input) {
 			}
 			//check for non-standard prefpane tooltip popup (when shift key pressed)
 			else if (itemClicked == 'Tooltip registry' && keyPressed == 1) {
-				globals.CODE_form_in_dialog(forms.MGR_P_tooltip,-1,-1,-1,-1,' ',null,null,'tooltipFID',false)
+				CODE_form_in_dialog(forms.MGR_P_tooltip,-1,-1,-1,-1,' ',null,null,'tooltipFID',false)
 				
 				//restrict to this form's tooltips
 				if (forms[solutionPrefs.config.currentFormName].controller.getDataSource()) {
-					globals.MGR_tooltip_filter_module = solutionPrefs.repository.allFormsByTable[forms[solutionPrefs.config.currentFormName].controller.getServerName()][forms[solutionPrefs.config.currentFormName].controller.getTableName()][solutionPrefs.config.currentFormName].moduleName
+					MGR_tooltip_filter_module = solutionPrefs.repository.allFormsByTable[forms[solutionPrefs.config.currentFormName].controller.getServerName()][forms[solutionPrefs.config.currentFormName].controller.getTableName()][solutionPrefs.config.currentFormName].moduleName
 				}
 				else {
-					globals.MGR_tooltip_filter_module = solutionPrefs.repository.allFormsByTable['No datasource'][solutionPrefs.config.currentFormName].moduleName
+					MGR_tooltip_filter_module = solutionPrefs.repository.allFormsByTable['No datasource'][solutionPrefs.config.currentFormName].moduleName
 				}
 				forms.MGR_0F_tooltip_1L_2L__filter.ACTION_vl_forms()
-				globals.MGR_tooltip_filter_form = solutionPrefs.config.currentFormName
+				MGR_tooltip_filter_form = solutionPrefs.config.currentFormName
 				forms.MGR_0F_tooltip_1L_2L__filter.ACTION_filter()
 			}
 			//anything that needs to exit design mode (help or preferences)
@@ -1752,26 +1752,26 @@ function DS_actions(input) {
 					}
 					
 					solutionPrefs.design.statusDesign = false
-					globals.DEV_mode_toggle(true)
+					DEV_mode_toggle(true)
 				}
 				
 				//check for non-standard prefpane help
 				if (itemClicked == 'Help' || itemClicked == 'Leave help') {
-					globals.DS_help()
+					DS_help()
 				}
 				//exit from settings mode
 				else if (itemClicked == 'Exit configuration') {
 					//turn on progress indicator
-					globals.TRIGGER_progressbar_start(-273,'Loading new configuration data...','This process will soon only update changed information')
+					TRIGGER_progressbar_start(-273,'Loading new configuration data...','This process will soon only update changed information')
 					
 					//recreate navigationPrefs
 					//with a/c
 					if (solutionPrefs.access && solutionPrefs.access.accessControl) {
-						globals.NAV_navigation_load(false,solutionPrefs.access.groupID)
+						NAV_navigation_load(false,solutionPrefs.access.groupID)
 					}
 					//login disabled
 					else {
-						globals.NAV_navigation_load(false)
+						NAV_navigation_load(false)
 					}
 					
 					//save information about current config space setup
@@ -1826,16 +1826,16 @@ function DS_actions(input) {
 					//check that last viewed navigation set still ok
 					var foundSet = false
 					for (var i in navigationPrefs.byNavSetID ) {
-						if (i == globals.DATASUTRA_navigation_set && navigationPrefs.byNavSetID[i] != null) {
+						if (i == DATASUTRA_navigation_set && navigationPrefs.byNavSetID[i] != null) {
 							foundSet = true
 						}
 					}
 					
 					//check that last viewed navigation item still ok
 					var foundItem = false
-					if (navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set]) {
-						for (var j = 0; j < navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].itemsByOrder.length && !foundItem; j++) {
-							if (navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].itemsByOrder[j].navigationItem.idNavigationItem == solutionPrefs.config.currentFormID) {
+					if (navigationPrefs.byNavSetID[DATASUTRA_navigation_set]) {
+						for (var j = 0; j < navigationPrefs.byNavSetID[DATASUTRA_navigation_set].itemsByOrder.length && !foundItem; j++) {
+							if (navigationPrefs.byNavSetID[DATASUTRA_navigation_set].itemsByOrder[j].navigationItem.idNavigationItem == solutionPrefs.config.currentFormID) {
 								foundItem = true
 							}
 						}
@@ -1851,21 +1851,21 @@ function DS_actions(input) {
 					
 					//last navigation set still present, load at will
 					if (foundSet && foundItem) {
-						globals.NAV_navigation_set_load(true)
+						NAV_navigation_set_load(true)
 						
 						//refire load forms method to bring in previous display
-						globals.NAV_workflow_load(null,solutionPrefs.config.currentHistoryPosition,null,null,solutionPrefs.config.prefs.workflowSpace)
+						NAV_workflow_load(null,solutionPrefs.config.currentHistoryPosition,null,null,solutionPrefs.config.prefs.workflowSpace)
 					}
 					//find how much has changed
 					else {
 						//get new item to highlight
-						if (navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set]) {
-							if (navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].lastNavItem) {
-								var lastItemID = navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].lastNavItem
+						if (navigationPrefs.byNavSetID[DATASUTRA_navigation_set]) {
+							if (navigationPrefs.byNavSetID[DATASUTRA_navigation_set].lastNavItem) {
+								var lastItemID = navigationPrefs.byNavSetID[DATASUTRA_navigation_set].lastNavItem
 							}
 							//go to first item in the navigation set
-							else if (navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].itemsByOrder.length) {
-								var lastItemID = navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].itemsByOrder[0].navigationItem.idNavigationItem
+							else if (navigationPrefs.byNavSetID[DATASUTRA_navigation_set].itemsByOrder.length) {
+								var lastItemID = navigationPrefs.byNavSetID[DATASUTRA_navigation_set].itemsByOrder[0].navigationItem.idNavigationItem
 							}
 							//there aren't any nav items in this set, load blanks
 							else {
@@ -1875,26 +1875,26 @@ function DS_actions(input) {
 						
 						//there are still items in this set, go to one of them
 						if (foundSet && lastItemID) {
-							globals.NAV_navigation_set_load(true,true)
+							NAV_navigation_set_load(true,true)
 							
 							//refire default load forms method
-							globals.NAV_workflow_load(lastItemID,null,true)
+							NAV_workflow_load(lastItemID,null,true)
 						}
 						//load blank screen
 						else {
-							globals.DATASUTRA_navigation_set = 0
+							DATASUTRA_navigation_set = 0
 							
-							globals.NAV_navigation_set_load(true,null)
+							NAV_navigation_set_load(true,null)
 							
 							//refire default load forms method
-							globals.NAV_workflow_load(null,null)
+							NAV_workflow_load(null,null)
 						}
 					}
 					
 					//reload toolbars and sidebars
-					solutionPrefs.panel = globals.DS_panel_load(globals.AC_current_group)
-					globals.DS_toolbar_load()
-					globals.DS_sidebar_load()
+					solutionPrefs.panel = DS_panel_load(AC_current_group)
+					DS_toolbar_load()
+					DS_sidebar_load()
 					
 					//return toolbar window to most recent position and then clear out the stored value
 					if (solutionPrefs.config.prefs.toolbarTabSelected) {
@@ -1926,13 +1926,13 @@ function DS_actions(input) {
 					
 					//show sidebar
 					if (solutionPrefs.config.prefs.sidebar) {
-						globals.DS_sidebar_toggle(true,null,true)
+						DS_sidebar_toggle(true,null,true)
 						
 						delete solutionPrefs.config.prefs.sidebar
 					}
 					
 					//reload tooltips
-					solutionPrefs.i18n = globals.DS_tooltip_load()
+					solutionPrefs.i18n = DS_tooltip_load()
 					
 					//if we were in designMode, go back to it
 					if (solutionPrefs.config.prefs.designMode) {
@@ -1942,7 +1942,7 @@ function DS_actions(input) {
 							solutionPrefs.design.modes[solutionPrefs.config.prefs.currentMode] = true
 						}
 						
-						globals.DEV_mode_toggle()
+						DEV_mode_toggle()
 					}
 					
 					//show normal frameworks action graphic if not in design mode
@@ -1996,7 +1996,7 @@ function DS_actions(input) {
 					}
 					
 					//re-set progress indicator toolbar => issue with restoring last selected toolbar
-					globals.TRIGGER_progressbar_stop()
+					TRIGGER_progressbar_stop()
 					forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex = 1
 					
 					//turn licensing check back on
@@ -2011,8 +2011,8 @@ function DS_actions(input) {
 					if (solutionPrefs.config.prefs.configNotify) {
 						var currentToolbar = forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex
 						
-						globals.CODE_cursor_busy(true)
-						globals.TRIGGER_progressbar_start(-273,'Loading ' + itemClicked + '. Please wait...')
+						CODE_cursor_busy(true)
+						TRIGGER_progressbar_start(-273,'Loading ' + itemClicked + '. Please wait...')
 					}
 					
 					//entering a preference for the first time
@@ -2047,7 +2047,7 @@ function DS_actions(input) {
 						if (solutionPrefs.screenAttrib.sidebar.status) {
 							solutionPrefs.config.prefs.sidebar = true
 							
-							globals.DS_sidebar_toggle(false,null,true)
+							DS_sidebar_toggle(false,null,true)
 							application.updateUI()
 						}
 						
@@ -2059,7 +2059,7 @@ function DS_actions(input) {
 						//save down workflow name, id and selected space
 						solutionPrefs.config.prefs.workflowFormName = solutionPrefs.config.currentFormName
 						solutionPrefs.config.prefs.workflowFormID = 
-						navigationPrefs.byNavSetID[globals.DATASUTRA_navigation_set].lastNavItem = 
+						navigationPrefs.byNavSetID[DATASUTRA_navigation_set].lastNavItem = 
 							solutionPrefs.config.currentFormID
 						solutionPrefs.config.prefs.workflowSpace = solutionPrefs.config.activeSpace
 						
@@ -2102,12 +2102,12 @@ function DS_actions(input) {
 					solutionPrefs.config.prefs.paneSelected = itemID
 					
 					//load selected preference
-					globals.NAV_preference_load(itemClicked,itemID)
+					NAV_preference_load(itemClicked,itemID)
 					
 					//turn off progress indicator when enabled
 					if (solutionPrefs.config.prefs.configNotify) {
-//						globals.TRIGGER_progressbar_stop()
-						globals.CODE_cursor_busy(false)
+//						TRIGGER_progressbar_stop()
+						CODE_cursor_busy(false)
 					}
 					
 					//change header to display preference selected
@@ -2155,7 +2155,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	}
 	
 	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
+	arguments = Arguments.filter(CODE_jsevent_remove)
 }
 	var baseForm = solutionPrefs.config.formNameBase
 	var currentNavItem = solutionPrefs.config.currentFormID
@@ -2172,7 +2172,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		//activate
 		if (!solutionPrefs.config.helpMode || stayInHelp) {
 			//set flag that in helpmode
-			globals.DEV_clear_modes()
+			DEV_clear_modes()
 			solutionPrefs.config.helpMode = true
 			
 			//we're in design mode, mark that we are in the help config pane
@@ -2189,7 +2189,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			}
 			
 			//set help text
-			globals.DEV_help_description = helpDesc
+			DEV_help_description = helpDesc
 			forms[helpList].elements.lbl_record_heading.text = 'Help: ' + navigationPrefs.byNavItemID[currentNavItem].navigationItem.itemName
 			
 			//set colors
@@ -2232,11 +2232,11 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			solutionPrefs.config.helpMode = false
 			
 			//fire load_forms
-			globals.NAV_workflow_load(null,solutionPrefs.config.currentHistoryPosition)
+			NAV_workflow_load(null,solutionPrefs.config.currentHistoryPosition)
 		}
 	}
 	else {
-		globals.DIALOGS.showWarningDialog('No help','There is no active help screen for this area')
+		DIALOGS.showWarningDialog('No help','There is no active help screen for this area')
 		solutionPrefs.config.helpMode = false
 	}
 }
@@ -2283,7 +2283,7 @@ if (application.__parent__.solutionPrefs) {
 		//activate
 		if (!solutionPrefs.config.helpMode || stayInHelp) {
 			//set flag that in helpmode
-			globals.DEV_clear_modes()
+			DEV_clear_modes()
 			solutionPrefs.config.helpMode = true
 			
 			//we're in design mode, mark that we are in the help config pane
@@ -2300,7 +2300,7 @@ if (application.__parent__.solutionPrefs) {
 			}
 			
 			//set help text
-			globals.DEV_help_description = helpDesc
+			DEV_help_description = helpDesc
 			forms[helpList].elements.lbl_record_heading.text = 'Help: ' + navigationPrefs.byNavItemID[currentNavItem].navigationItem.itemName
 			
 			//set colors
@@ -2343,11 +2343,11 @@ if (application.__parent__.solutionPrefs) {
 			solutionPrefs.config.helpMode = false
 			
 			//fire load_forms
-			globals.NAV_workflow_load(null,solutionPrefs.config.currentHistoryPosition)
+			NAV_workflow_load(null,solutionPrefs.config.currentHistoryPosition)
 		}
 	}
 	else {
-		globals.DIALOGS.showWarningDialog('No help','There is no active help screen for this area')
+		DIALOGS.showWarningDialog('No help','There is no active help screen for this area')
 		solutionPrefs.config.helpMode = false
 	}
 }
@@ -2366,11 +2366,11 @@ function DS_navigation_set(input) {
 	if (solutionPrefs.config.prefs.thatsAllFolks) {
 		forms.NSTL_0F_solution__license.ACTION_status()
 		
-		globals.DIALOGS.showErrorDialog(
-							'Trial expired',
-							'Trial time expired\n' +
-							'Please restart.'
-						)
+		DIALOGS.showErrorDialog(
+				'Trial expired',
+				'Trial time expired\n' +
+				'Please restart.'
+			)
 	}
 	
 	//get menu list from a value list
@@ -2398,7 +2398,7 @@ function DS_navigation_set(input) {
 		var menu = new Array()
 		for ( var i = 0 ; i < vlDisplay.length ; i++ ) {
 			//create checkbox menu item if selected
-			if (globals.DATASUTRA_navigation_set == vlReal[i]) {
+			if (DATASUTRA_navigation_set == vlReal[i]) {
 				menu[i] = plugins.popupmenu.createCheckboxMenuItem(vlDisplay[i] + "", DS_navigation_set)
 				menu[i].setSelected(true)
 			}
@@ -2426,7 +2426,7 @@ function DS_navigation_set(input) {
 	//menu shown and item chosen
 	else if (application.__parent__.solutionPrefs && application.__parent__.navigationPrefs) {
 	
-		var oldItem = globals.DATASUTRA_navigation_set
+		var oldItem = DATASUTRA_navigation_set
 		
 		if (input >= 0) {
 			//save last selected item when changing navigation sets
@@ -2435,9 +2435,9 @@ function DS_navigation_set(input) {
 					navigationPrefs.byNavSetID[oldItem].lastNavItem = solutionPrefs.config.currentFormID
 				}
 				
-				globals.DATASUTRA_navigation_set = input
+				DATASUTRA_navigation_set = input
 				
-				globals.NAV_navigation_set_load()
+				NAV_navigation_set_load()
 			}
 		}
 	}
@@ -2470,7 +2470,7 @@ function DS_plugin_check()
 //check if plugin
 if (plugins.sutra && plugins.sutra.executeFunction) {
 	var args = new Array(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4], arguments[5], arguments[6])
-	var success = plugins.sutra.executeFunction(globals.DS_plugin_check,args,"00000000-1111-1111-1111-000000000000")
+	var success = plugins.sutra.executeFunction(DS_plugin_check,args,"00000000-1111-1111-1111-000000000000")
 
 	//check if plugin called correctly
 	if (success) {
@@ -2606,7 +2606,7 @@ if (application.__parent__.solutionPrefs) {
 function DS_sidebar_toggle(sideToggle, sideWidth, sideExpand)
 {
 	if (typeof sideExpand != 'boolean') {
-		sideExpand = !globals.CODE_key_pressed('shift')
+		sideExpand = !CODE_key_pressed('shift')
 	}
 	
 	if (application.__parent__.solutionPrefs) {	
@@ -2614,7 +2614,7 @@ function DS_sidebar_toggle(sideToggle, sideWidth, sideExpand)
 		if (solutionPrefs.config.prefs.thatsAllFolks) {
 			forms.NSTL_0F_solution__license.ACTION_status()
 			
-			globals.DIALOGS.showErrorDialog(
+			DIALOGS.showErrorDialog(
 								'Trial expired',
 								'Trial time expired\n' +
 								'Please restart.'
@@ -2633,7 +2633,7 @@ function DS_sidebar_toggle(sideToggle, sideWidth, sideExpand)
 		
 		//helper to make sure tables loaded in in sidebar
 		function rejiggle() {
-			var callback = plugins.WebClientUtils.generateCallbackScript(globals.DS_router_bean_resize);
+			var callback = plugins.WebClientUtils.generateCallbackScript(DS_router_bean_resize);
 			var jsCallback = 'function resetBeans(){' + callback + '}';
 			plugins.WebClientUtils.executeClientSideJS('resetBeanSizes(' + jsCallback + ');')
 		}
@@ -2720,11 +2720,11 @@ function DS_sidebar_toggle(sideToggle, sideWidth, sideExpand)
 			
 			//if first tab showing (help), enter help mode
 			if (forms.DATASUTRA__sidebar.elements.tab_content.tabIndex == 1) {
-				globals.DS_help(true)
+				DS_help(true)
 			}
 			//not on first tab, but in help mode; leave help
 			else if (solutionPrefs.config.helpMode) {
-				globals.DS_help(false)
+				DS_help(false)
 			}
 		}
 		//toggle off
@@ -2850,7 +2850,7 @@ function DS_sidebar_enable(state) {
 			//a sidebar is showing
 			if (solutionPrefs.screenAttrib.sidebar.status) {
 				forms.DATASUTRA__sidebar__header.ACTION_collapse()
-//				globals.DS_sidebar_toggle(false,null,expandType)
+//				DS_sidebar_toggle(false,null,expandType)
 				
 				solutionPrefs.screenAttrib.sidebar.wasOpen = true
 			}
@@ -2887,7 +2887,7 @@ function DS_sidebar_enable(state) {
 			if (solutionPrefs.screenAttrib.sidebar.wasOpen && solutionPrefs.panel.sidebar.selectedTab) {
 				delete solutionPrefs.screenAttrib.sidebar.wasOpen
 				
-//				globals.DS_sidebar_toggle(true,null,expandType)
+//				DS_sidebar_toggle(true,null,expandType)
 				//web client
 				if (solutionPrefs.config.webClient) {
 					forms.DATASUTRA_WEB_0F__header.SIDEBAR_expand()
@@ -2950,18 +2950,18 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	}
 	
 	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
+	arguments = Arguments.filter(CODE_jsevent_remove)
 }
 
 	//timed out, throw up error
 	if (solutionPrefs.config.prefs.thatsAllFolks) {
 		forms.NSTL_0F_solution__license.ACTION_status()
 		
-		globals.DIALOGS.showErrorDialog(
-							'Trial expired',
-							'Trial time expired\n' +
-							'Please restart.'
-						)
+		DIALOGS.showErrorDialog(
+				'Trial expired',
+				'Trial time expired\n' +
+				'Please restart.'
+			)
 	}
 	
 	var baseForm = solutionPrefs.config.formNameBase
@@ -3410,7 +3410,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			
 		//activate this space; only if the space switching to is different (unless forced to fire)
 		if (buttonName == elem && (oldSpace != spaceName || noFlip)) {
-			globals.CODE_cursor_busy(true)
+			CODE_cursor_busy(true)
 			
 			var bkgndLight = new Packages.java.awt.Color(13752290)
 			var bkgndDark = new Packages.java.awt.Color(10596559)
@@ -3485,7 +3485,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			}
 			
 			//LOG windowing
-			globals.TRIGGER_log_create('Flexible windowing',
+			TRIGGER_log_create('Flexible windowing',
 					oldSpace,
 					spaceName,
 					null,
@@ -3500,7 +3500,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			forms[baseForm + '__header'].elements[elem].setImageURL(imageActiveURL)
 			
 			//DS_space_flexible method sets the correct border and turns off dividers if showing
-			globals.DS_space_flexible(true,skipUI)
+			DS_space_flexible(true,skipUI)
 			
 			//set background color to be dark again (so dividers show up)
 				forms[baseForm].elements.bean_wrapper_1.background = bkgndDark
@@ -3530,7 +3530,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 				}
 			}
 			
-			globals.CODE_cursor_busy(false)
+			CODE_cursor_busy(false)
 		}
 		//leave graphic on depressed state if same button clicked
 		else if (buttonName == elem && oldSpace == spaceName) {
@@ -3597,7 +3597,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	}
 	
 	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
+	arguments = Arguments.filter(CODE_jsevent_remove)
 }
 
 	var baseForm = solutionPrefs.config.formNameBase
@@ -4015,7 +4015,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			}
 			
 			//LOG windowing
-			globals.TRIGGER_log_create('Flexible windowing',
+			TRIGGER_log_create('Flexible windowing',
 					solutionPrefs.config.activeSpace,
 					solutionPrefs.config.activeSpace,
 					dimensionOneStart,
@@ -4024,7 +4024,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 					dimensionTwoEnd,
 					application.getWindowWidth(),
 					application.getWindowHeight()
-					)
+				)
 			
 			//TODO: only do if changed spaces have different dimensions
 			//running in 3.5?
@@ -4040,7 +4040,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			
 			//TODO: only do if changed spaces have different dimensions
 			//favorites mode on, refresh so get full width available
-			if (globals.DATASUTRA_navigation_set == 0) {
+			if (DATASUTRA_navigation_set == 0) {
 				//which record is selected
 				var navForm = solutionModel.getForm('NAV__navigation_tree__rows')
 				var allComponents = navForm.getComponents()
@@ -4116,7 +4116,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	
 	//in design mode and locked, update lock
 	if (solutionPrefs.design.statusDesign && solutionPrefs.design.statusLockWorkflow) {
-		globals.DEV_lock_workflow(true,solutionPrefs.design.statusLockList)
+		DEV_lock_workflow(true,solutionPrefs.design.statusLockList)
 	}
 }
 }
@@ -4150,18 +4150,18 @@ function DS_toolbar_cycle(event) {
 			}
 			
 			//reassign arguments without jsevents
-			arguments = Arguments.filter(globals.CODE_jsevent_remove)
+			arguments = Arguments.filter(CODE_jsevent_remove)
 		}
 	
 		//timed out, throw up error
 		if (solutionPrefs.config.prefs.thatsAllFolks) {
 			forms.NSTL_0F_solution__license.ACTION_status()
 			
-			globals.DIALOGS.showErrorDialog(
-								'Trial expired',
-								'Trial time expired\n' +
-								'Please restart.'
-							)
+			DIALOGS.showErrorDialog(
+					'Trial expired',
+					'Trial time expired\n' +
+					'Please restart.'
+				)
 		}
 		
 		var tabShow = arguments[0]
@@ -4173,7 +4173,7 @@ function DS_toolbar_cycle(event) {
 		var statusTabs = solutionPrefs.panel.toolbar
 		
 		//right-click or shift-click will open menu
-		var showMenu = rightClick || globals.CODE_key_pressed('shift')
+		var showMenu = rightClick || CODE_key_pressed('shift')
 		
 		//hide popDown sheet when moving to a new item, but not when showing options to choose from
 		if (tabShow || !showMenu) {
@@ -4201,7 +4201,7 @@ function DS_toolbar_cycle(event) {
 					var thisTab = statusTabs[i]
 					//only show enabled toolbars
 					if (thisTab.enabled) {	
-						menu[i] = plugins.popupmenu.createCheckboxMenuItem(thisTab.tabName, globals.DS_toolbar_cycle)
+						menu[i] = plugins.popupmenu.createCheckboxMenuItem(thisTab.tabName, DS_toolbar_cycle)
 						
 						//set menu method arguments
 						menu[i].setMethodArguments(thisTab.tabName)
@@ -4322,7 +4322,7 @@ function DS_toolbar_cycle(event) {
 				
 				//show if showing
 				if (forms[statusTab.formName].popDown == 'show') {
-					globals.DS_toolbar_popdown(true)
+					DS_toolbar_popdown(true)
 				}
 				//hide
 				else {
@@ -4378,7 +4378,7 @@ if (application.__parent__.solutionPrefs) {
 	var toolbars = solutionPrefs.panel.toolbar
 	var enabledToolbars = 0
 	
-	var cycleMethod = globals.DS_toolbar_cycle
+	var cycleMethod = DS_toolbar_cycle
 	if (solutionPrefs.config.webClient) {
 		cycleMethod = forms.DATASUTRA_WEB_0F__header__toolbar.DS_toolbar_cycle
 	}
@@ -4485,9 +4485,9 @@ if (onlyTitle) {
 }
 //load everything
 else {
-	var theToolbars = globals.DS_panel_load_fx(1,groupID)
+	var theToolbars = DS_panel_load_fx(1,groupID)
 	
-	var theSidebars = globals.DS_panel_load_fx(2,groupID)	
+	var theSidebars = DS_panel_load_fx(2,groupID)	
 	
 	//punch back out all our toolbar and sidebar panels
 	return {
@@ -4683,7 +4683,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	}
 	
 	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
+	arguments = Arguments.filter(CODE_jsevent_remove)
 }
 
 	var expanded = arguments[0]
@@ -4818,7 +4818,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	}
 	
 	//reassign arguments without jsevents
-	arguments = Arguments.filter(globals.CODE_jsevent_remove)
+	arguments = Arguments.filter(CODE_jsevent_remove)
 }
 
 	var expanded = (typeof arguments[0] == 'boolean') ? arguments[0] : null
@@ -4831,9 +4831,9 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	
 	//help, close sidebar and pop the help screen out into non-modal dialog
 	if (solutionPrefs.config.helpMode) {
-		globals.DS_sidebar_toggle(false)
+		DS_sidebar_toggle(false)
 		
-		globals.CODE_form_in_dialog(
+		CODE_form_in_dialog(
 				forms.MGR_P_documentation,
 				-1,-1,-1,-1,
 				'Help',
@@ -4854,7 +4854,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		
 		//show form in dialog
 		if (expanded) {
-			globals.CODE_form_in_dialog(
+			CODE_form_in_dialog(
 					forms[tabName],
 					-1,-1,tabWidth,tabHeight,
 					thisTab.tabName,
@@ -4879,7 +4879,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		}
 		//close form in dialog
 		else {
-			globals.CODE_form_in_dialog_close('SIDE_' + currentTab + '_' + tabParent)
+			CODE_form_in_dialog_close('SIDE_' + currentTab + '_' + tabParent)
 		}
 		
 		forms[sideForm + '__header'].elements.btn_popin.visible = expanded
@@ -5433,7 +5433,7 @@ function DS_font_fix() {
 function DATASUTRA_open(skipFontFix) {
 	//when re-log in to the solution, don't need to fire font fix
 	if (!skipFontFix) {
-		globals.DS_font_fix()
+		DS_font_fix()
 	}
 }
 
@@ -5458,7 +5458,7 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 	
 	//prefill url from history
 	if (p1 == 'DSHistory') {
-		var hixItem = globals.DATASUTRA_router[globals.DATASUTRA_router.length - 1]
+		var hixItem = DATASUTRA_router[DATASUTRA_router.length - 1]
 		var url = hixItem.pathObject
 		itemID = hixItem.navItemID
 		pathName = hixItem.pathString
@@ -5467,19 +5467,19 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 	//get url using callback
 	else if (!pathName) {
 		plugins.WebClientUtils.executeClientSideJS('var path = window.parent.location.pathname;', DS_router, [null,null,null,null,null,'path'])
-		globals.DATASUTRA_router_arguments = arguments
+		DATASUTRA_router_arguments = arguments
 		return
 	}
 	//url callback was made, use other arguments as well
-	else if (globals.DATASUTRA_router_arguments.length) {
-		p1 = globals.DATASUTRA_router_arguments[0]
-		params = globals.DATASUTRA_router_arguments[1]
-		itemID = globals.DATASUTRA_router_arguments[2]
-		launch = globals.DATASUTRA_router_arguments[3]
-		logout = globals.DATASUTRA_router_arguments[4]
+	else if (DATASUTRA_router_arguments.length) {
+		p1 = DATASUTRA_router_arguments[0]
+		params = DATASUTRA_router_arguments[1]
+		itemID = DATASUTRA_router_arguments[2]
+		launch = DATASUTRA_router_arguments[3]
+		logout = DATASUTRA_router_arguments[4]
 		
 		//reset to default value
-		globals.DATASUTRA_router_arguments = eval(solutionModel.getGlobalVariable('globals','DATASUTRA_router_arguments').defaultValue)
+		DATASUTRA_router_arguments = eval(solutionModel.getGlobalVariable('globals','DATASUTRA_router_arguments').defaultValue)
 	}
 	
 	//number of ms to wait before replacing state
@@ -5574,8 +5574,8 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 			url.referrer = scopes.NCRYPT.util.UTF8.bytesToString(fromBase64.decodeBuffer(params[item]))
 			
 			//store down referrer for this session
-			if (!globals.DATASUTRA_router_referrer && !globals.DATASUTRA_router.length) {
-				globals.DATASUTRA_router_referrer = url.referrer
+			if (!DATASUTRA_router_referrer && !DATASUTRA_router.length) {
+				DATASUTRA_router_referrer = url.referrer
 			}
 		}
 	}
@@ -5590,7 +5590,7 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 						'DSHistory'
 					]
 	if (specialRequests.indexOf(url.set) == -1 && pathName != prefix + 'login' && DS_router_url() != prefix && p1 != 'DSHistory') {
-		globals.DATASUTRA_router.push(getNode())
+		DATASUTRA_router.push(getNode())
 	}
 	
 	// if logout, redirect url
@@ -5600,7 +5600,7 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 	}
 	
 	//this must be called from the router and therefore we must be running in the iframe router wrapper
-	globals.DATASUTRA_router_enable = true
+	DATASUTRA_router_enable = true
 	
 	//set up callback on form for navigating when in router wrapper
 		//MEMO: only needed when url manually typed in
@@ -5617,7 +5617,7 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 		plugins.WebClientUtils.executeClientSideJS('window.parent.document.title = "' + appName + '";')
 		
 		// this method has been run once, go back to login form
-		if (globals.DATASUTRA_router_firstRun) {
+		if (DATASUTRA_router_firstRun) {
 			if (url.set == 'DSLogin') {
 				var goHere = historyCheck('AC_R__login_WEB')
 				//navigate to the form
@@ -5660,7 +5660,7 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 				plugins.WebClientUtils.executeClientSideJS(routerCall + '(null,"' + appName + '","' + DS_router_url('login') + '");')
 			}
 			//we've run once
-			globals.DATASUTRA_router_firstRun = true
+			DATASUTRA_router_firstRun = true
 			return
 		}
 	}
@@ -5670,15 +5670,15 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 	
 	// check for special status codes
 	if (p1 == 'DSLoginSmall') {
-		globals.DATASUTRA_router_login = true
+		DATASUTRA_router_login = true
 		
 		//url to redirect to on successful logout (only take from initial login location)
-		if (!globals.DATASUTRA_router_referrer) {
-			globals.DATASUTRA_router_referrer = url.referrer || 'http://www.data-mosaic.com/data-sutra'
+		if (!DATASUTRA_router_referrer) {
+			DATASUTRA_router_referrer = url.referrer || 'http://www.data-mosaic.com/data-sutra'
 		}
 		
 		//we've run once
-		globals.DATASUTRA_router_firstRun = true
+		DATASUTRA_router_firstRun = true
 		return
 	}
 	else if (p1 == 'DSLogin') {
@@ -5686,8 +5686,8 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 		if (application.__parent__.navigationPrefs) {
 			
 			//TODO: use DATASUTRA_router to navigate history stack
-//			if (globals.DATASUTRA_router.length) {
-//				var itemID = globals.DATASUTRA_router[globals.DATASUTRA_router.length - 1].itemID
+//			if (DATASUTRA_router.length) {
+//				var itemID = DATASUTRA_router[DATASUTRA_router.length - 1].itemID
 //			}
 			itemID = solutionPrefs.config.currentFormID
 			
@@ -5703,7 +5703,7 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 		}
 		
 		//we've run once
-		globals.DATASUTRA_router_firstRun = true
+		DATASUTRA_router_firstRun = true
 		return
 	}
 	else if (p1 == 'DSLogout') {
@@ -5713,15 +5713,15 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 		}
 		// run logout portion of this script
 		else {
-			globals.DS_actions('Logout')
+			DS_actions('Logout')
 			return
 		}
 	}
 	//special case call for when changing dimensions -- like from external login form to full blown app
 	else if (p1 == 'DSHomeCall') {
 		//take last item in history stack
-		if (globals.DATASUTRA_router.length) {
-			itemID = globals.DATASUTRA_router[globals.DATASUTRA_router.length - 1].navItemID
+		if (DATASUTRA_router.length) {
+			itemID = DATASUTRA_router[DATASUTRA_router.length - 1].navItemID
 		}
 		
 		//go to initial landing spot if not valid itemID
@@ -5743,7 +5743,7 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 			var slot = (url && url.history) ? url.history : 0
 			
 			//figure out which navigation item is being requested (same as DS_router_callback)
-			var path = globals.DATASUTRA_router[slot].pathString
+			var path = DATASUTRA_router[slot].pathString
 			path = path.split('/')
 			//pop off first/, ds, and last/
 			if (!path[0]) {
@@ -5844,7 +5844,7 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 //		setTimeout(function(){DS_universalList.scrollHijack(newVal)},1500);
 
 		//something was specified to navigate to, load it up
-		var payload = globals.DATASUTRA_router_payload || new Object()
+		var payload = DATASUTRA_router_payload || new Object()
 		
 		//payload trumps pk
 		if (pk && !payload.setFoundset) {
@@ -5853,10 +5853,10 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 		}
 		
 		// load in correct state of requested resource
-		globals.TRIGGER_navigation_set(payload.itemID,payload.setFoundset,payload.useFoundset,itemID)
+		TRIGGER_navigation_set(payload.itemID,payload.setFoundset,payload.useFoundset,itemID)
 		
 		//reset payload (values only used immediately after set)
-		globals.DATASUTRA_router_payload = eval(solutionModel.getGlobalVariable('globals','DATASUTRA_router_payload').defaultValue)
+		DATASUTRA_router_payload = eval(solutionModel.getGlobalVariable('globals','DATASUTRA_router_payload').defaultValue)
 		
 		// make sure on correct top level form
 		var goHere = historyCheck('DATASUTRA_WEB_0F')
@@ -5869,7 +5869,7 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 			forms.DATASUTRA_WEB_0F.controller.show()
 		}
 		
-		globals.DS_router_recreateUI()
+		DS_router_recreateUI()
 		
 		//hoist divs up if still in a transaction
 		if (solutionPrefs.config.lockStatus) {
@@ -6006,15 +6006,15 @@ function DS_router_visibility(hidden,params) {
 	
 	//there is at least one other form hidden, need to start refreshing
 	//TODO: but not if this is the first time this form has been loaded
-	if (globals.DATASUTRA_router_invisible && globals.DATASUTRA_router_invisible != path) {
-		globals.DATASUTRA_router_refresh = true
+	if (DATASUTRA_router_invisible && DATASUTRA_router_invisible != path) {
+		DATASUTRA_router_refresh = true
 	}
 	
 	//need to refresh a form that has been hidden before
-	if (globals.DATASUTRA_router_refresh && !hidden) {
+	if (DATASUTRA_router_refresh && !hidden) {
 		//set global that coming from small login screen to big one, need to rejiggle the beans
 		if (path != prefix + 'loginInline') {
-			globals.DATASUTRA_router_login = true
+			DATASUTRA_router_login = true
 		}
 		
 		plugins.WebClientUtils.executeClientSideJS('refreshOnShow();')
@@ -6029,11 +6029,11 @@ function DS_router_visibility(hidden,params) {
 	
 	//store the form that has been hidden
 	if (hidden) {
-		globals.DATASUTRA_router_invisible = path
+		DATASUTRA_router_invisible = path
 	}
 	//shown form is same as one that was hidden, no need to track
-	else if (globals.DATASUTRA_router_invisible == path) {
-		globals.DATASUTRA_router_invisible = ''
+	else if (DATASUTRA_router_invisible == path) {
+		DATASUTRA_router_invisible = ''
 	}
 }
 
@@ -6056,13 +6056,13 @@ function DS_router_recreateUI() {
 	plugins.WebClientUtils.executeClientSideJS('dimSpace("' + elemID +'");')
 	
 	//things that must be resized after small login
-	if (globals.DATASUTRA_router_login) {
-		var callback = plugins.WebClientUtils.generateCallbackScript(globals.DS_router_bean_resize);
+	if (DATASUTRA_router_login) {
+		var callback = plugins.WebClientUtils.generateCallbackScript(DS_router_bean_resize);
 		var jsCallback = 'function resetBeans(){' + callback + '}';
 		plugins.WebClientUtils.executeClientSideJS('resetBeanSizes(' + jsCallback + ');')
 		
 		//make sure this only runs one time
-		globals.DATASUTRA_router_login = false
+		DATASUTRA_router_login = false
 	}
 }
 
@@ -6143,7 +6143,7 @@ function DS_router_callback(path,callback) {
 		//navigate to the correct form if not already there
 		if (itemID && itemID != solutionPrefs.config.currentFormID) {
 			//something was specified to navigate to, load it up
-			var payload = globals.DATASUTRA_router_payload || new Object()
+			var payload = DATASUTRA_router_payload || new Object()
 			
 			//payload trumps pk
 			if (pk && !payload.setFoundset) {
@@ -6151,10 +6151,10 @@ function DS_router_callback(path,callback) {
 				payload.useFoundset = [pk]
 			}
 			
-			globals.TRIGGER_navigation_set(null,payload.setFoundset,payload.useFoundset,itemID)
+			TRIGGER_navigation_set(null,payload.setFoundset,payload.useFoundset,itemID)
 			
 			//reset payload (values only used immediately after set)
-			globals.DATASUTRA_router_payload = eval(solutionModel.getGlobalVariable('globals','DATASUTRA_router_payload').defaultValue)
+			DATASUTRA_router_payload = eval(solutionModel.getGlobalVariable('globals','DATASUTRA_router_payload').defaultValue)
 		}
 	}
 }
