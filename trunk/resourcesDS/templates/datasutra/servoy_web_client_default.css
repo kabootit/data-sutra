@@ -718,6 +718,7 @@ select:focus {
 	*width:100% !important;
 }
 /* in data sutra tables, make the comboboxes not go outside the row's bounds*/
+td > div[class*="CPS"],
 div.tableviewcell[class*="CPS"] {
 	-moz-border-radius: 0px 0px 0px 0px !important;
 	-webkit-border-radius: 0px 0px 0px 0px !important;
@@ -727,46 +728,60 @@ div.tableviewcell[class*="CPS"] {
 	
 	background-color: transparent !important;
 }
-tr[height*="18"] div.tableviewcell[class*="CPS"] {
+tr[height*="18"] div.tableviewcell[class*="CPS"],
+tr[height*="18"] > td > div[class*="CPS"] {
 	height: 17px !important;
 }
-tr[height*="19"] div.tableviewcell[class*="CPS"] {
+tr[height*="19"] div.tableviewcell[class*="CPS"],
+tr[height*="19"] > td > div[class*="CPS"] {
 	height: 18px !important;
 }
-tr[height*="20"] div.tableviewcell[class*="CPS"] {
+tr[height*="20"] div.tableviewcell[class*="CPS"],
+tr[height*="20"] > td > div[class*="CPS"] {
 	height: 19px !important;
 }
-tr[height*="21"] div.tableviewcell[class*="CPS"] {
+tr[height*="21"] div.tableviewcell[class*="CPS"],
+tr[height*="21"] > td > div[class*="CPS"] {
 	height: 20px !important;
 }
-tr[height*="22"] div.tableviewcell[class*="CPS"] {
+tr[height*="22"] div.tableviewcell[class*="CPS"],
+tr[height*="22"] > td > div[class*="CPS"] {
 	height: 21px !important;
 }
-tr[height*="23"] div.tableviewcell[class*="CPS"] {
+tr[height*="23"] div.tableviewcell[class*="CPS"],
+tr[height*="23"] > td > div[class*="CPS"] {
 	height: 22px !important;
 }
-tr[height*="24"] div.tableviewcell[class*="CPS"] {
+tr[height*="24"] div.tableviewcell[class*="CPS"],
+tr[height*="24"] > td > div[class*="CPS"] {
 	height: 23px !important;
 }
-tr[height*="25"] div.tableviewcell[class*="CPS"] {
+tr[height*="25"] div.tableviewcell[class*="CPS"],
+tr[height*="25"] > td > div[class*="CPS"] {
 	height: 24px !important;
 }
-tr[height*="26"] div.tableviewcell[class*="CPS"] {
+tr[height*="26"] div.tableviewcell[class*="CPS"],
+tr[height*="26"] > td > div[class*="CPS"] {
 	height: 25px !important;
 }
-tr[height*="27"] div.tableviewcell[class*="CPS"] {
+tr[height*="27"] div.tableviewcell[class*="CPS"],
+tr[height*="27"] > td > div[class*="CPS"] {
 	height: 26px !important;
 }
-tr[height*="28"] div.tableviewcell[class*="CPS"] {
+tr[height*="28"] div.tableviewcell[class*="CPS"],
+tr[height*="28"] > td > div[class*="CPS"] {
 	height: 27px !important;
 }
-tr[height*="29"] div.tableviewcell[class*="CPS"] {
+tr[height*="29"] div.tableviewcell[class*="CPS"],
+tr[height*="29"] > td > div[class*="CPS"] {
 	height: 27px !important;
 }
-tr[height*="30"] div.tableviewcell[class*="CPS"] {
+tr[height*="30"] div.tableviewcell[class*="CPS"],
+tr[height*="30"] > td > div[class*="CPS"] {
 	height: 29px !important;
 }
-tr[height*="40"] div.tableviewcell[class*="CPS"] {
+tr[height*="40"] div.tableviewcell[class*="CPS"],
+tr[height*="40"] > td > div[class*="CPS"] {
 	height: 39px !important;
 }
 
