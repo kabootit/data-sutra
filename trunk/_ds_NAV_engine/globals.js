@@ -5377,7 +5377,7 @@ function NAV_universal_list_select(event) {
 	navigationPrefs.byNavItemID[currentNavItem].listData.visitedPKs[(pkName != 'repositoryAPINotImplemented') ? forms[formName][pkName] : pkActedOn] = application.getServerTimeStamp()
 	
 	//update record navigator when showing
-	if (solutionPrefs.panel.toolbar[solutionPrefs.panel.toolbar.selectedTab - 4].formName == 'TOOL_record_navigator') {
+	if (solutionPrefs.panel.toolbar.selectedTab > 3 && solutionPrefs.panel.toolbar[solutionPrefs.panel.toolbar.selectedTab - 4].formName == 'TOOL_record_navigator') {
 		TRIGGER_toolbar_record_navigator_set()
 	}
 	
