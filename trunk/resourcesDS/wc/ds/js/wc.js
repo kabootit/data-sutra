@@ -588,7 +588,7 @@ function toggleClass(id, className, forceOn) {
 	//	Extending Wicket...object to hold original calls
 	var ServoyDSExtend = new Object();
 
-	//	Extend wicket calls to hide/show indicator so that follows mouse location
+	//	Extend wicket calls to prettify UL
 	ServoyDSExtend.needToUpdateRowsBuffer = Servoy.TableView.needToUpdateRowsBuffer;
 	Servoy.TableView.needToUpdateRowsBuffer = function() {
 		//override
@@ -596,6 +596,16 @@ function toggleClass(id, className, forceOn) {
 		
 		//original call
 		return ServoyDSExtend.needToUpdateRowsBuffer.apply(this,arguments);
+	}
+	
+	//	Extend wicket calls to redo combobox styling in table views
+	ServoyDSExtend.setRowStyle = Servoy.TableView.setRowStyle;
+	Servoy.TableView.setRowStyle = function() {
+		//override
+		setTimeout(styleCSS4Parent,500);
+		
+		//original call
+		return ServoyDSExtend.setRowStyle.apply(this,arguments);
 	}
 })();
 
@@ -803,7 +813,7 @@ function prettifyUL(maxTimeOut,fsSize,noShow) {
 				var selectHEX = '#262626';
 			
 				//header
-				$("#form_NAV_T_universal_list__WEB__list table tbody td th table").css("background-color","transparent");
+				$("#form_NAV_T_universal_list__WEB__list table tbody td th, #form_NAV_T_universal_list__WEB__list table tbody td th table").css("background-color","transparent");
 
 				//selected row
 				$('#form_NAV_T_universal_list__WEB__list td[style*="background-color:' + selectRGB + ';"] div[name*=sutra_favorite_badge], #form_NAV_T_universal_list__WEB__list table tbody td[style*="background-color:' + selectRGB + ';"], #form_NAV_T_universal_list__WEB__list table tbody td[style*="background-color:' + selectRGB + ';"] input, #form_NAV_T_universal_list__WEB__list table tbody td[style*="background-color:' + selectRGB + ';"] div div'
