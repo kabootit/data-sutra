@@ -143,23 +143,25 @@ function swcWindow() {
 function triggerAjaxUpdate() {
 	var wcWindow = swcWindow();
 	if (wcWindow && wcWindow.triggerAjaxUpdate) {
-		wcWindow.triggerAjaxUpdate.apply(arguments)
+		wcWindow.triggerAjaxUpdate.apply(arguments);
 	}
 }
 
 // delay running of router until webclient form loaded in
 function routerDelay(p1,p2,p3,p4) {
 	setTimeout(function(){
-		History.pushState(p1,p2,p3)
+		History.pushState(p1,p2,p3);
 		
-		googleAnalytics()
+		googleAnalytics();
 	},p4);
 }
 
 function routerReplace(p1,p2,p3) {
-	History.replaceState(p1,p2,p3)
+	setTimeout(function(){
+		History.replaceState(p1,p2,p3);
 	
-	googleAnalytics()
+		googleAnalytics();
+	},0);
 }
 
 function reloadPage() {
