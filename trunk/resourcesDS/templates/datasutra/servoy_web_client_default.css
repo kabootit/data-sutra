@@ -333,11 +333,12 @@ th.sortable
 	padding: 1px 2px 1px 2px;
 }
 
-th.sortable a
+th.sortable a,
+th.sortable a:visited
 {
 	text-decoration: none;
-	color: #333333;
-	text-shadow: #fff 0 1px 0;
+	color: #666;
+	text-shadow: #F1F1F1 0 1px 0;
 	background-position: right;
 	background-repeat: no-repeat;
 	display: block;
@@ -346,16 +347,7 @@ th.sortable a
 th.sortable a:hover
 {
 	text-decoration: underline;
-	color: #000000;
-	text-shadow: #fff 0 1px 0;
-}
-
-th.sortable a:visited
-{
-	text-decoration: none;
-	color: #000000;
-	text-shadow: #fff 0 1px 0;
-/*	font-weight: bold;*/
+	text-shadow: #F1F1F1 0 1px 0;
 }
 
 #form_DATASUTRA_WEB_0F__list__universal tr td {
@@ -674,7 +666,7 @@ select:focus {
 }
 @-moz-document url-prefix() {
 	select {
-		width:125% !important;
+		width:calc(100% + 20px) !important;
 		*width:100% !important;
 	}
 	
@@ -714,7 +706,7 @@ select:focus {
 	}
 }
 .ie select {
-	width:125% !important;
+	width:calc(100% + 22px) !important;
 	*width:100% !important;
 }
 /* in data sutra tables, make the comboboxes not go outside the row's bounds*/
