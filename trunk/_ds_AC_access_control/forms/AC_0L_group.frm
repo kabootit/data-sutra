@@ -137,6 +137,7 @@ uuid:"e9e1754e-a08d-419d-b74e-c3873fb51482"
 ],
 name:"AC_0L_group",
 navigatorID:"-1",
+onShowMethodID:"B330449F-7C84-44DA-800B-8A7B28604962",
 paperPrintScale:100,
 scrollbars:33,
 size:"150,57",

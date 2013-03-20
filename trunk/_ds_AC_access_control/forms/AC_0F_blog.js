@@ -269,3 +269,17 @@ if (elements[elem].getWidth() != this[elem+'Width']) {
 }
 */
 }
+
+/**
+ * Callback method for when form is shown.
+ *
+ * @param {Boolean} firstShow form is shown first time after load
+ * @param {JSEvent} event the event that triggered the action
+ *
+ * @properties={typeid:24,uuid:"5E95CBA4-695A-42CB-9F6B-D8F1A9B30BE8"}
+ */
+function FORM_on_show(firstShow, event) {
+	if (!firstShow) {
+		globals.NAV_universal_list_select(event)
+	}
+}

@@ -35,6 +35,20 @@ globals.CODE_cursor_busy(true)
 
 globals.NAV_navigation_item_selected = id_navigation_item
 
+//update url with the pk for this record
+scopes.DS.webURLSet(
+		navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID]._about_,
+		globals.DS_router_url(
+			navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].path + '/' + id_navigation,
+			solutionPrefs.config.currentFormID,
+			id_navigation_item,
+			foundset.getSelectedRecord()
+		),
+		null,
+		null,
+		true
+	)
+
 //turn busy off
 globals.CODE_cursor_busy(false)
 }

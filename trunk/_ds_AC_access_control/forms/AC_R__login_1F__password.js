@@ -169,7 +169,6 @@ else {
  */
 function LOGIN_user(event,alert)
 {
-
 /*
  *	TITLE    :	LOGIN_user
  *			  	
@@ -188,7 +187,8 @@ function LOGIN_user(event,alert)
  *	MODIFIED :	April 7, 2009 -- Troy Elliott, Data Mosaic
  *			  	
  */
-
+ /** @type {{ description: {String}, value : {Number}}} */
+var bob
 function dialog(title,text) {
 	if (alert) {
 		alert(title,text)

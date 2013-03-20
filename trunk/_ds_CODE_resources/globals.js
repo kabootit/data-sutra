@@ -1972,8 +1972,8 @@ function TRIGGER_progressbar_start(progressValue,explanationText,explanationTool
 			//hide toolbar controls
 			forms[baseForm + '__header__toolbar'].elements.toolbar_navigator.visible = false
 			
-			//set color of toolbar to toolbar yellow
-			forms[baseForm + '__header__toolbar'].elements.lbl_color.bgcolor = '#f5fbd4'
+			//set color of toolbar to toolbar white
+			forms[baseForm + '__header__toolbar'].elements.lbl_color.bgcolor = '#ffffff'
 		}
 		
 		//turn on progressbar elements
@@ -6633,4 +6633,37 @@ function TRIGGER_report_run(reportID) {
 			}
 		}
 	}
+}
+
+/**
+ * Display information about the calling method
+ * 
+ * @param {Function} callee
+ * @param {Controller} [control] Controller called from
+ * @param {Boolean} [separator=false] Show : after
+ * @return {String}
+ *
+ * @properties={typeid:24,uuid:"06FDBEC2-156A-40EE-882E-85395FEA6D93"}
+ */
+function CODE_debug_context(callee,control,separator) {
+	var whereAt = ''
+	if (callee) {
+		if (callee._scopename_) {
+			if (callee._scopename_ != 'globals') {
+				whereAt += 'scopes.'
+			}
+			whereAt += callee._scopename_ + '.'
+		}
+		else if (control && typeof control.getName == 'function') {
+			whereAt += 'forms.' + control.getName() + '.'
+		}
+		
+		whereAt += callee._methodname_
+		
+		if (separator) {
+			whereAt += ': '
+		}
+	}
+	
+	return whereAt
 }

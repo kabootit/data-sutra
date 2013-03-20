@@ -366,3 +366,28 @@ for (var i = 1 ; i <= foundset.getSize() ; i++) {
 	}
 }
 }
+
+/**
+ * Callback method for when form is shown.
+ *
+ * @param {Boolean} firstShow form is shown first time after load
+ * @param {JSEvent} event the event that triggered the action
+ *
+ * @properties={typeid:24,uuid:"BD100D98-EA61-48A1-B2C9-FEE0743AB9B4"}
+ */
+function FORM_on_show(firstShow, event) {
+	if (!firstShow) {
+		scopes.DS.webURLSet(
+			navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID]._about_,
+			globals.DS_router_url(
+				navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].path + '/' + id_navigation,
+				solutionPrefs.config.currentFormID,
+				id_navigation_item,
+				foundset.getSelectedRecord()
+			),
+			null,
+			null,
+			true
+		)
+	}
+}

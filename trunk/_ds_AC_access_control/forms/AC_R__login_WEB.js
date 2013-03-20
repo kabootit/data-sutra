@@ -195,9 +195,9 @@ function LOGIN(event,webkit) {
 			forms.AC_R__login_WEB__small_loggedIn.controller.show()
 			history.go(-1)
 			
-			//go to nav item requested
+			//go to nav item requested (prefernces hardcoded against because problem with entering preference before form setup fully)
 			var prefix = '/'
-			if (globals.DATASUTRA_router.length && globals.DATASUTRA_router[0].pathString != prefix + 'login') {
+			if (globals.DATASUTRA_router.length && globals.DATASUTRA_router[0].pathString != prefix + 'login' && globals.DATASUTRA_router[0].pathString.indexOf('/data-sutra/') != 0) {
 				globals.DATASUTRA_router_initialHix = true
 				globals.DS_router('DSHistory')
 			}

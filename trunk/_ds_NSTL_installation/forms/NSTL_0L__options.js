@@ -310,6 +310,17 @@ function GO_generic(buttonName,formName,listName,listTitle) {
 		if (solutionPrefs.config.webClient) {
 			//load main window
 			forms.DATASUTRA_WEB_0F__workflow.setForm(formName)
+			
+			//update url
+			var lastSlot = elements['btn_' + buttonName].text || ''
+			scopes.DS.webURLSet(
+					navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID]._about_,
+					globals.DS_router_url(
+							navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].path + '/' + lastSlot),
+					null,
+					null,
+					true
+				)
 		}
 		//smart client
 		else {

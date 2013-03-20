@@ -170,3 +170,17 @@ function REC_new() {
 		forms.MGR_0L_valuelist_1L.REC_on_select()
 	}
 }
+
+/**
+ * Callback method for when form is shown.
+ *
+ * @param {Boolean} firstShow form is shown first time after load
+ * @param {JSEvent} event the event that triggered the action
+ *
+ * @properties={typeid:24,uuid:"6274CE65-1C79-4DBC-9C43-8A024C9E22B1"}
+ */
+function FORM_on_show(firstShow, event) {
+	if (!firstShow) {
+		forms.MGR_0L_valuelist_1L.REC_on_select()
+	}
+}

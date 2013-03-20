@@ -328,7 +328,7 @@ function TOGGLE_color() {
 		elements.lbl_color.bgcolor = background_color
 	}
 	else {
-		elements.lbl_color.bgcolor = '#f5fbd4'
+		elements.lbl_color.bgcolor = '#ffffff'
 	}
 }
 

@@ -104,8 +104,8 @@ globals.TAB_change_grid_init()
  * @properties={typeid:24,uuid:"020803D8-D993-4224-8B0A-C1ED2EF3A3E8"}
  */
 function FORM_on_show(firstShow, event) {
-	var baseForm = solutionPrefs.config.formNameBase
+	var listTabForm = (solutionPrefs.config.webClient) ? forms.DATASUTRA_WEB_0F__list__universal : forms.DATASUTRA_0F_solution
 	
 	//turn list area off
-	forms[baseForm].elements.tab_content_B.tabIndex = 1
+//	listTabForm.elements.tab_content_B.tabIndex = 1
 }

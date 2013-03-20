@@ -62,6 +62,13 @@ var DATASUTRA_router_login = false;
 var DATASUTRA_router_enable = false;
 
 /**
+ * @type {Number}
+ *
+ * @properties={typeid:35,uuid:"94B153E9-928F-48F1-8B53-10DA911D7E98",variableType:4}
+ */
+var DATASUTRA_router_index = 0;
+
+/**
  * @type {Array}
  *
  * @properties={typeid:35,uuid:"010DF121-E0C9-478C-B54D-B818ABF11B8E",variableType:-4}
@@ -1761,8 +1768,20 @@ function DS_actions(input) {
 				}
 				//exit from settings mode
 				else if (itemClicked == 'Exit configuration') {
+					if (solutionPrefs.config.webClient) {
+						//turn off urlrewriting so that only fires once
+							//MEMO: can fire 1) firstShow, 2) recSelect, 3) triggerNavSet
+						scopes.DS.webURLSetStatus = false
+					}
+					
 					//turn on progress indicator
 					TRIGGER_progressbar_start(-273,'Loading new configuration data...','This process will soon only update changed information')
+					
+					//turn off urlrewriting so that only fires once
+							//MEMO: can fire 1) firstShow, 2) recSelect, 3) triggerNavSet
+					if (solutionPrefs.config.webClient) {
+						scopes.DS.webURLSetStatus = false
+					}
 					
 					//recreate navigationPrefs
 					//with a/c
@@ -1995,6 +2014,13 @@ function DS_actions(input) {
 						}
 					}
 					
+					if (solutionPrefs.config.webClient) {
+						scopes.DS.webURLSetStatus = true
+						
+						//replace with specific record (recall downstream when UL enabled)
+						
+					}
+					
 					//re-set progress indicator toolbar => issue with restoring last selected toolbar
 					TRIGGER_progressbar_stop()
 					forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex = 1
@@ -2094,8 +2120,8 @@ function DS_actions(input) {
 						//hide frameworks action graphic, showing red outline underneath
 						forms[baseForm + '__header'].elements.btn_fw_action.visible = false
 						
-						//set background color to be frameworks yellow
-						forms[baseForm + '__header__toolbar'].elements.lbl_color.bgcolor = '#f5fbd4'
+						//set background color to be white
+						forms[baseForm + '__header__toolbar'].elements.lbl_color.bgcolor = '#ffffff'
 					}
 					
 					//set flag for check of selected preference
@@ -5459,7 +5485,6 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 	//prefill url from history
 	if (p1 == 'DSHistory') {
 		var hixItem = DATASUTRA_router[DATASUTRA_router.length - 1]
-		var url = hixItem.pathObject
 		itemID = hixItem.navItemID
 		pathName = hixItem.pathString
 		pk = pathName.split('/')[4]
@@ -5485,9 +5510,6 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 	//number of ms to wait before replacing state
 	var delay = 0
 	
-	//call to switch around the iframe
-	var routerCall = 'window.parent.routerReplace'
-	
 	//what is this solution called
 	var appName = forms.DATASUTRA_0F_solution__blank_4.solution_name || 'Data Sutra'
 	
@@ -5511,35 +5533,6 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 		}
 	}
 	
-	//helper function to get node, if not already defined
-	var dataNode = new Object()
-	function getNode(pathO, pathS, navI, req) {
-//		dataNode = {
-//			pathObject : url,
-//			pathString : DS_router_url(),
-//			navItemID: itemID,
-//			request : application.getUUID().toString()
-//		}
-		
-		if (pathO || !dataNode.pathObject) {
-			dataNode.pathObject = url
-		}
-		
-		if (pathS || !dataNode.pathString) {
-			dataNode.pathString = pathName || DS_router_url(pathS)
-		}
-		
-		if (navI || !dataNode.navItemID) {
-			dataNode.navItemID = itemID
-		}
-		
-		if (req || !dataNode.request) {
-			dataNode.request = application.getUUID().toString()
-		}
-		
-		return dataNode
-	}
-	
 	function setError(code, message) {
 		if (forms.DATASUTRA_WEB__error) {
 			forms.DATASUTRA_WEB__error._errorCode = code || ''
@@ -5559,7 +5552,11 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 		else if ( item == "p1" ) {
 			url.item = params[item] 
 		}
-		// 3rd slot is pretty name (not used for anything), 4th slot is pk of record
+		// 3rd slot is pretty name (only used for preferences)
+		else if ( item == "p2" ) {
+			var slot3 = params[item]
+		}
+		//4th slot is pk of record
 		else if ( item == "p3" ) {
 			var pk = params[item]
 		}
@@ -5578,19 +5575,6 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 				DATASUTRA_router_referrer = url.referrer
 			}
 		}
-	}
-	
-	// log this router request unless special requests (history included)
-	var specialRequests = [
-						'DSLogin',
-						'DSLoginSmall',
-						'DSLogout',
-						'DSHomeCall',
-						'DSError_NoURL',
-						'DSHistory'
-					]
-	if (specialRequests.indexOf(url.set) == -1 && pathName != prefix + 'login' && DS_router_url() != prefix && p1 != 'DSHistory') {
-		DATASUTRA_router.push(getNode())
 	}
 	
 	// if logout, redirect url
@@ -5650,14 +5634,35 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 			}
 			//no url specified and still not logged in, redirect again
 			else if (url.set == 'DSError_NoURL') {
-				plugins.WebClientUtils.executeClientSideJS(routerCall + '(null,"' + appName + '","' + DS_router_url('login') + '");')
+				scopes.DS.webURLSet(
+						appName,
+						DS_router_url('login'),
+						null,
+						null,
+						true
+					)
 				return
 			}
 		}
 		// specific navitem requested, go to login page first
 		else if (!(url.set == 'DSLogin' || url.set == 'DSLoginSmall')) {
 			if (pathName != prefix + 'login') {
-				plugins.WebClientUtils.executeClientSideJS(routerCall + '(null,"' + appName + '","' + DS_router_url('login') + '");')
+				var dataNode = {
+						pathString : pathName,
+						navItemID: null,
+						request : application.getUUID().toString(),
+						pk : null
+					}
+				DATASUTRA_router_index = DATASUTRA_router.length
+				DATASUTRA_router.push(dataNode)
+				
+				scopes.DS.webURLSet(
+						appName,
+						DS_router_url('login'),
+						null,
+						null,
+						true
+					)
 			}
 			//we've run once
 			DATASUTRA_router_firstRun = true
@@ -5692,7 +5697,18 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 			itemID = solutionPrefs.config.currentFormID
 			
 			if (solutionPrefs.config.currentFormID) {
-				plugins.WebClientUtils.executeClientSideJS('window.parent.routerDelay(null,"' + navigationPrefs.byNavItemID[itemID]._about_ + '","' + DS_router_url(navigationPrefs.byNavItemID[itemID].path) + '",' + delay + ');')
+//				plugins.WebClientUtils.executeClientSideJS('window.parent.routerDelay(null,"' + navigationPrefs.byNavItemID[itemID]._about_ + '","' + DS_router_url(navigationPrefs.byNavItemID[itemID].path) + '",' + delay + ');')
+				
+				scopes.DS.webURLSet(
+						navigationPrefs.byNavItemID[itemID]._about_,
+						DS_router_url(
+							navigationPrefs.byNavItemID[itemID].path,
+							itemID,
+							pk
+						),
+						null,
+						delay
+					)
 			}
 		}
 		else {
@@ -5731,7 +5747,17 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 		
 		//redirect to correct url
 		if (navigationPrefs.byNavItemID[itemID].path) {
-			plugins.WebClientUtils.executeClientSideJS('preRender(null,"' + navigationPrefs.byNavItemID[itemID]._about_ + '","' + DS_router_url(navigationPrefs.byNavItemID[itemID].path) + '",' + delay + ');')
+//			plugins.WebClientUtils.executeClientSideJS('preRender(null,"' + navigationPrefs.byNavItemID[itemID]._about_ + '","' + DS_router_url(navigationPrefs.byNavItemID[itemID].path) + '",' + delay + ');')
+			
+			scopes.DS.webURLSet(
+					navigationPrefs.byNavItemID[itemID]._about_,
+					DS_router_url(
+						navigationPrefs.byNavItemID[itemID].path,null,null,null,true
+					),
+					null,
+					delay
+				)
+			
 			return
 		}
 	}
@@ -5739,11 +5765,8 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 	else if (p1 == 'DSHistory') {
 		//nothing specified, try to figure it out
 		if (!url.set) {
-			//TODO: ability to specify which history item to go to
-			var slot = (url && url.history) ? url.history : 0
-			
 			//figure out which navigation item is being requested (same as DS_router_callback)
-			var path = DATASUTRA_router[slot].pathString
+			var path = DATASUTRA_router[DATASUTRA_router_index].pathString
 			path = path.split('/')
 			//pop off first/, ds, and last/
 			if (!path[0]) {
@@ -5757,7 +5780,7 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 				set : path[0],
 				item : path[1]
 			}
-			pk = path[2]
+			pk = path[3]
 		}
 		
 		// particular item specified
@@ -5777,13 +5800,33 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 		}
 		
 		if (navigationPrefs.byNavItemID[itemID]) {
-			plugins.WebClientUtils.executeClientSideJS(routerCall + '(null,"' + navigationPrefs.byNavItemID[itemID]._about_ + '","' + DS_router_url(navigationPrefs.byNavItemID[itemID].path,itemID,pk) + '",' + delay + ');')
-			return
+			//this is a preference
+			if (navigationPrefs.byNavItemID[itemID].navigationItem.configType == 'Admin') {
+//				goPreference()
+			}
+			//normal navigation item
+			else {
+				scopes.DS.webURLSet(
+						navigationPrefs.byNavItemID[itemID]._about_,
+						DS_router_url(
+							navigationPrefs.byNavItemID[itemID].path,
+							itemID,
+							pk
+						),
+						null,
+						delay,
+						true
+					)
+				return
+			}
 		}
 	}
 	else if (p1 == 'DSError_NoURL') {
 		setError('404','No page requested')
-		plugins.WebClientUtils.executeClientSideJS(routerCall + '(null,"Data Sutra: Error page: No URL","' + DS_router_url('error') + '");')
+		scopes.DS.webURLSet(
+				"Data Sutra: Error page: No URL",
+				DS_router_url('error')
+			)
 		return
 	}
 	// called internally, replace url but don't navigate
@@ -5796,14 +5839,38 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 			}
 			//normal call to rewrite history stack
 			else {
-				plugins.WebClientUtils.executeClientSideJS('preRender(null,"' + navigationPrefs.byNavItemID[itemID]._about_ + '","' + DS_router_url(navigationPrefs.byNavItemID[itemID].path) + '",' + delay + ');')
+//				plugins.WebClientUtils.executeClientSideJS('preRender(null,"' + navigationPrefs.byNavItemID[itemID]._about_ + '","' + DS_router_url(navigationPrefs.byNavItemID[itemID].path) + '",' + delay + ');')
+				
+				var fullURL = DS_router_url(
+						navigationPrefs.byNavItemID[itemID].path
+					)
+				//called when navigating to form already visited (commented out because it will restrict foundset when clicking between navitems)
+//				if (!(arguments[0] && arguments[1]) && navigationPrefs.byNavItemID[itemID].navigationItem.formToLoad && navigationPrefs.byNavItemID[itemID].navigationItem.formToLoad in forms) {
+//					var fullURL = DS_router_url(
+//							navigationPrefs.byNavItemID[itemID].path,
+//							itemID,
+//							null,
+//							forms[navigationPrefs.byNavItemID[itemID].navigationItem.formToLoad].foundset.getSelectedRecord()
+//						)
+//				}
+				
+				scopes.DS.webURLSet(
+						navigationPrefs.byNavItemID[itemID]._about_,
+						//refigure url so gets pushed to history
+						globals.DS_router_url(navigationPrefs.byNavItemID[itemID].path,null,null,null,true),
+						null,
+						delay
+					)
 			}
 			return
 		}
 		// path not set up correctly
 		else {
 			setError('15','Requested navigation item does not have a webclient path set')
-			plugins.WebClientUtils.executeClientSideJS(routerCall + '(null,"Data Sutra: Error page","' + DS_router_url('error') + '");')
+			scopes.DS.webURLSet(
+					"Data Sutra: Error page",
+					DS_router_url('error')
+				)
 		}
 		return
 	}
@@ -5817,7 +5884,10 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 			}
 			else {
 				setError('13','Requested navigation item does not exist')
-				plugins.WebClientUtils.executeClientSideJS(routerCall + '(null,"Data Sutra: Error page","' + DS_router_url('error') + '");')
+				scopes.DS.webURLSet(
+						"Data Sutra: Error page",
+						DS_router_url('error')
+					)
 				return
 			}
 		}
@@ -5832,31 +5902,46 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 		// some sort of error, go to generic error page
 		else {
 			setError('14','Requested navigation set does not exist')
-			plugins.WebClientUtils.executeClientSideJS(routerCall + '(null,"Data Sutra: Error page","' + DS_router_url('error') + '");')
+			scopes.DS.webURLSet(
+					"Data Sutra: Error page",
+					DS_router_url('error')
+				)
 			return
 		}
 	}
 	
 	// everything good, go there
 	if ( itemID ) {
-		// reset scroll of ul
-//		plugins.WebClientUtils.executeClientSideJS('setTimeout(function(){DS_universalList.scrollReset()},2000);')
-//		setTimeout(function(){DS_universalList.scrollHijack(newVal)},1500);
-
-		//something was specified to navigate to, load it up
-		var payload = DATASUTRA_router_payload || new Object()
-		
-		//payload trumps pk
-		if (pk && !payload.setFoundset) {
-			payload.setFoundset = true
-			payload.useFoundset = [pk]
+		//this is a preference
+		if (navigationPrefs.byNavItemID[itemID].navigationItem.configType == 'Admin') {
+			goPreference()
 		}
-		
-		// load in correct state of requested resource
-		TRIGGER_navigation_set(payload.itemID,payload.setFoundset,payload.useFoundset,itemID)
-		
-		//reset payload (values only used immediately after set)
-		DATASUTRA_router_payload = eval(solutionModel.getGlobalVariable('globals','DATASUTRA_router_payload').defaultValue)
+		//normal navigation item
+		else {
+			// reset scroll of ul
+	//		plugins.WebClientUtils.executeClientSideJS('setTimeout(function(){DS_universalList.scrollReset()},2000);')
+	//		setTimeout(function(){DS_universalList.scrollHijack(newVal)},1500);
+			
+			//in a preference, exit
+			if (solutionPrefs.config.prefs.preferenceMode) {
+				DS_actions('Exit configuration')
+			}
+			
+			//something was specified to navigate to, load it up
+			var payload = DATASUTRA_router_payload || new Object()
+			
+			//payload trumps pk
+			if (pk && !payload.setFoundset) {
+				payload.setFoundset = true
+				payload.useFoundset = [pk]
+			}
+			
+			// load in correct state of requested resource
+			TRIGGER_navigation_set(payload.itemID,payload.setFoundset,payload.useFoundset,itemID)
+			
+			//reset payload (values only used immediately after set)
+			DATASUTRA_router_payload = eval(solutionModel.getGlobalVariable('globals','DATASUTRA_router_payload').defaultValue)
+		}
 		
 		// make sure on correct top level form
 		var goHere = historyCheck('DATASUTRA_WEB_0F')
@@ -5879,8 +5964,57 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 	// something happened, error out
 	else {
 		setError('404','No page found at requested URL')
-		plugins.WebClientUtils.executeClientSideJS(routerCall + '(null,"Data Sutra: Error page","' + DS_router_url('error') + '");')
+		scopes.DS.webURLSet(
+				"Data Sutra: Error page",
+				DS_router_url('error')
+			)
 		return  
+	}
+	
+	function goPreference() {
+		var dsDetails = navigationPrefs.byNavItemID[itemID].navigationItem
+		//enter preference mode if we're not already there
+		DS_actions(dsDetails.itemName,dsDetails.formToLoad,itemID,dsDetails.configType)
+		
+		//exceptions to rule
+		if (dsDetails.itemName == 'Navigation engine' && slot3 && pk) {
+			forms.NAV_0L_navigation_1L.foundset.selectRecord(slot3)
+			forms.NAV_0L_navigation_item_1L.foundset.selectRecord(pk)
+		}
+		//valuelists
+		else if (dsDetails.itemName == 'Valuelist registry' && slot3 && pk) {
+			forms.MGR_0L_valuelist_1L.REC_on_select(null,null,pk)
+		}
+		//navigate using label based nav pane
+		else {
+			//third slot in use
+			if (slot3) {
+				//search for text in labels on loaded nav form
+				var navPaneForm = forms.DATASUTRA_WEB_0F__list__navigation.elements.tab_content_A.getTabNameAt(forms.DATASUTRA_WEB_0F__list__navigation.elements.tab_content_A.tabIndex)
+				
+				if (forms[navPaneForm].elements.highlighter) {
+					var allElems = forms[navPaneForm].elements.allnames
+					
+					//get name of selected item
+					for (var i = 0; i < allElems.length; i++) {
+						var elemName = allElems[i]
+						var elemPath = forms[navPaneForm].elements[elemName].text || ''
+						elemPath = elemPath.toLowerCase().replace(/([{}\(\)\^$&._%#!@=<>:;,~`\s\*\?\/\+\|\[\\\\]|\]|\-)/g,'-').replace(/\-{2,}/g,'-')
+						
+						//found my element
+						if (slot3 == elemPath) {
+							var methodName = 'GO_' + elemName.split('_')[1]
+							
+							//run method and pass in pk to be fondled with downstream
+							if (forms[navPaneForm][methodName]) {
+								forms[navPaneForm][methodName](null,pk)
+								break
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -5891,23 +6025,44 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
  * @param {Number}	[itemID] Navigation item ID (used to get information about navigation items)
  * @param {Number|UUID} [pk] PK of selected/requested record
  * @param {JSRecord}	[record] Record that has the pk (saves a few finds)
+ * @param {Boolean}	[pushHix=false] Record this request in the history
  *
  * @properties={typeid:24,uuid:"5A6C2322-CDBB-4159-906B-752C92BB946D"}
  */
-function DS_router_url(path,itemID,pk,record) {
+function DS_router_url(path,itemID,pk,record,pushHix) {
 	var prefix = '/'
 	var urlString = prefix
 	var navItem = application.__parent__.navigationPrefs ? navigationPrefs.byNavItemID[itemID] : new Object()
 	
 	// page specified
-	if (path) {
+	if (typeof path == 'string') {
+		//content should already be sanitized, but check once more
+		//doesn't replace out / like the other ones do
+		path = path.toLowerCase().replace(/([{}\(\)\^$&._%#!@=<>:;,~`\s\*\?\+\|\[\\\\]|\]|\-)/g,'-').replace(/\-{2,}/g,'-')
+		
 		urlString += path
 		
-		//passed pk or record for selected navigation item; tack on record slot
-		if (itemID && navItem.path == path && (pk || record)) {
-			var formName = navItem.navigationItem.formToLoad
-			var serverName = databaseManager.getDataSourceServerName(forms[formName].controller.getDataSource())
-			var tableName = databaseManager.getDataSourceTableName(forms[formName].controller.getDataSource())
+		//passed pk or record for selected navigation item and on the correct item; tack on record slot
+		if (itemID && path.indexOf(navItem.path) == 0 && (pk || record)) {
+			var serverName = ''
+			var tableName = ''
+			
+			//passed record, get server/table from there
+			if (record) {
+				serverName = databaseManager.getDataSourceServerName(record.getDataSource())
+				tableName = databaseManager.getDataSourceTableName(record.getDataSource())
+			}
+			//try and look up from workflow form
+			else {
+				var formName = navItem.navigationItem.formToLoad
+				serverName = databaseManager.getDataSourceServerName(forms[formName].controller.getDataSource())
+				tableName = databaseManager.getDataSourceTableName(forms[formName].controller.getDataSource())
+			}
+			
+			//path doesn't match exactly; third slot comandeered for something else
+			if (navItem.path != path) {
+				var skipPretty = true
+			}
 			
 			//empty values so we don't mess up too much
 			var pkKey = ''
@@ -5959,8 +6114,27 @@ function DS_router_url(path,itemID,pk,record) {
 				
 				//when no pk available, don't tack anything on
 				if (recID != '-') {
-					urlString += '/' + recName + '/' + recID
+					//complex layouts where navigation pane replaced hijacks the 3rd slot for navigation purposes
+					if (skipPretty) {
+						urlString += '/' + recID
+					}
+					//display human readable form of record
+					else {
+						urlString += '/' + recName + '/' + recID
+					}
 				}
+			}
+			
+			//push to history stack
+			if (pushHix) {
+				var dataNode = {
+						pathString : path,
+						navItemID: itemID,
+						request : application.getUUID().toString(),
+						pk : recID
+					}
+				DATASUTRA_router_index = DATASUTRA_router.length
+				DATASUTRA_router.push(dataNode)
 			}
 		}
 	}
@@ -6093,19 +6267,19 @@ function DS_router_logout() {
  * Drive navigation from callback on form, not iframe url changes. OR
  * Get current pathname in webclient
  * 
- * @param {String} 		path	The current pathname.
+ * @param {String} 		pathString	The current pathname.
  * @param {Function} 	[callback] Method to pass pathname to.
  * 
  * @properties={typeid:24,uuid:"75330960-68A3-4298-9BE2-074A78F5B819"}
  */
-function DS_router_callback(path,callback) {
+function DS_router_callback(pathString,callback) {
 	//get url using callback
-	if (!path) {
-		plugins.WebClientUtils.executeClientSideJS('var path = window.parent.location.pathname;', callback || DS_router_callback, ['path'])
+	if (!pathString) {
+		plugins.WebClientUtils.executeClientSideJS('var pathString = window.parent.location.pathname;', callback || DS_router_callback, ['pathString'])
 	}
 	//have path, figure out where to navigate to
 	else {
-		path = path.split('/')
+		var path = pathString.split('/')
 		//pop off first and last /
 		if (!path[0]) {
 			path.splice(0,1)
@@ -6151,7 +6325,18 @@ function DS_router_callback(path,callback) {
 				payload.useFoundset = [pk]
 			}
 			
+			var dataNode = {
+					pathString : pathString,
+					navItemID: itemID,
+					request : application.getUUID().toString(),
+					pk : pk
+				}
+			DATASUTRA_router_index = DATASUTRA_router.length
+			DATASUTRA_router.push(dataNode)
+			
 			TRIGGER_navigation_set(null,payload.setFoundset,payload.useFoundset,itemID)
+			
+			//TODO: here is where we want to replace out with current record when coming from a preference
 			
 			//reset payload (values only used immediately after set)
 			DATASUTRA_router_payload = eval(solutionModel.getGlobalVariable('globals','DATASUTRA_router_payload').defaultValue)

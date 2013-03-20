@@ -123,3 +123,15 @@ function REC_new()
 {
 forms.AC_0F_group.REC_new()
 }
+
+/**
+ * @param {Boolean} firstShow form is shown first time after load
+ * @param {JSEvent} event the event that triggered the action
+ *
+ * @properties={typeid:24,uuid:"B330449F-7C84-44DA-800B-8A7B28604962"}
+ */
+function FORM_on_show(firstShow, event) {
+	if (!firstShow) {
+		forms.AC_0L_group_1L.REC_on_select()
+	}
+}

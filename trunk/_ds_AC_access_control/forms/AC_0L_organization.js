@@ -152,3 +152,15 @@ function REC_new()
 		databaseManager.saveData()
 	}
 }
+
+/**
+ * @param {Boolean} firstShow form is shown first time after load
+ * @param {JSEvent} event the event that triggered the action
+ *
+ * @properties={typeid:24,uuid:"CB71B159-7E72-4350-ADDE-6C560E31BA15"}
+ */
+function FORM_on_show(firstShow, event) {
+	if (!firstShow) {
+		forms.AC_0L_organization_1L.REC_on_select()
+	}
+}

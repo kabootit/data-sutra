@@ -138,6 +138,7 @@ uuid:"9da66d37-a7c8-4a4e-b779-5f116283629e"
 ],
 name:"AC_0L_user",
 navigatorID:"-1",
+onShowMethodID:"31B07FF6-B304-4FA8-95FB-4B02C86C25D1",
 paperPrintScale:100,
 scrollbars:33,
 size:"150,57",

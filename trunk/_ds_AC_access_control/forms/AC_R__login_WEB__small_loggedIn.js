@@ -81,7 +81,8 @@ function FORM_on_show(firstShow, event) {
  * @properties={typeid:24,uuid:"E604DACC-EACD-4B19-A288-F0954A541F36"}
  */
 function LOGOUT(event) {
-	plugins.WebClientUtils.executeClientSideJS('reLogin(true);')
+	globals.DS_actions('Logout')
+//	plugins.WebClientUtils.executeClientSideJS('reLogin(true);')
 }
 
 /**

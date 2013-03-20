@@ -125,7 +125,7 @@ forms.NAV_0F_navigation_item__inline.controller.loadRecords(forms[formName][rela
 forms.NAV_0F_navigation_item__inline.controller.sort('node_1 asc, node_2 asc')
 
 //refire rec_on_select for tano
-forms.NAV_0L_navigation_item_1L.REC_on_select()
+//forms.NAV_0L_navigation_item_1L.REC_on_select()
 
 //turn busy off
 globals.CODE_cursor_busy(false)

@@ -377,6 +377,14 @@ var print = new function() {
 }
 
 /**
+ * Status of setting the URL
+ * 
+ * @type {Boolean}
+ * @properties={typeid:35,uuid:"1FF81510-A80F-48D4-8BEB-548888A52A0C",variableType:-4}
+ */
+var webURLSetStatus = true;
+
+/**
  * Change the URL for a given page
  * 
  * @param {String} [pageTitle] Title of the page (shows up in history/window title)
@@ -390,27 +398,35 @@ var print = new function() {
 function webURLSet(pageTitle,pageURL,pageData,delay,replace) {
 	//update url with the pk for this record
 	if (solutionPrefs.config.webClient && globals.DATASUTRA_router_enable) {
-		//pass in null string when no pageData specified
-		if (!pageData) {
-			pageData = 'null'
-		}
-		
-		//content should already be sanitized, but check once more
-		if (typeof pageURL == 'string') {
-			//doesn't replace out / like the other ones do
-			pageURL = pageURL.toLowerCase().replace(/([{}\(\)\^$&._%#!@=<>:;,~`\s\*\?\+\|\[\\\\]|\]|\-)/g,'-').replace(/\-{2,}/g,'-')
-		}
-		
-		//replace current history item
-		if (replace) {
-			plugins.WebClientUtils.executeClientSideJS('window.parent.routerReplace(' + pageData + ',"' + pageTitle + '","' + pageURL + '");')
-		}
-		//push to history stack
-		else {
-			if (typeof delay != 'number') {
-				delay = 0
+		if (webURLSetStatus) {
+			//pass in null string when no pageData specified
+			if (!pageData) {
+				pageData = 'null'
 			}
-			plugins.WebClientUtils.executeClientSideJS('window.parent.routerDelay(' + pageData + ',"' + pageTitle + '","' + pageURL + '",' + delay + ');')
+			
+			//content should already be sanitized, but check once more
+			if (typeof pageURL == 'string') {
+				//doesn't replace out / like the other ones do
+				pageURL = pageURL.toLowerCase().replace(/([{}\(\)\^$&._%#!@=<>:;,~`\s\*\?\+\|\[\\\\]|\]|\-)/g,'-').replace(/\-{2,}/g,'-')
+			}
+			
+			//replace current history item
+			if (replace) {
+				plugins.WebClientUtils.executeClientSideJS('window.parent.routerReplace(' + pageData + ',"' + pageTitle + '","' + pageURL + '");')
+				application.output(globals.CODE_debug_context(arguments.callee,null,true) + 'replaced ' + pageURL,LOGGINGLEVEL.DEBUG)
+			}
+			//push to history stack
+			else {
+				if (typeof delay != 'number') {
+					delay = 0
+				}
+				plugins.WebClientUtils.executeClientSideJS('window.parent.routerDelay(' + pageData + ',"' + pageTitle + '","' + pageURL + '",' + delay + ');')
+				application.output(globals.CODE_debug_context(arguments.callee,null,true) + 'pushed ' + pageURL,LOGGINGLEVEL.DEBUG)
+			}
+		}
+		//skipping for some reason
+		else {
+			application.output(globals.CODE_debug_context(arguments.callee,null,true) + 'skipped',LOGGINGLEVEL.DEBUG)
 		}
 	}
 }

@@ -2203,13 +2203,23 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	arguments = Arguments.filter(CODE_jsevent_remove)
 }
 	
-	//first time a navigation item visited in webclient
-	if (solutionPrefs.config.webClient && forms.DATASUTRA_WEB_0F.elements.gfx_curtain_login.visible) {
-		//hide the shield
-		forms.DATASUTRA_WEB_0F.elements.gfx_curtain_login.visible = false
+	
+	if (solutionPrefs.config.webClient) {
+		//first time a navigation item visited in webclient
+		if (forms.DATASUTRA_WEB_0F.elements.gfx_curtain_login.visible) {
+			//hide the shield
+			forms.DATASUTRA_WEB_0F.elements.gfx_curtain_login.visible = false
+			
+			//hook up left hand listener method
+			scopes.DS.webULResizeMonitor()
+		}
 		
-		//hook up left hand listener method
-		scopes.DS.webULResizeMonitor()
+		//turn off urlrewriting so that only fires once
+			//MEMO: can fire 1) firstShow, 2) recSelect, 3) triggerNavSet
+		if (!scopes.DS.webURLSetStatus) {
+			var leaveOff = true
+		}
+		scopes.DS.webURLSetStatus = false
 	}
 
 	var navigationItemID = arguments[0] || null
@@ -2442,8 +2452,21 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			forms.DATASUTRA_WEB_0F__workflow.setForm(mainTab)
 			
 			//update url with the pk for selected record
-			if (DATASUTRA_router_enable) {
-				plugins.WebClientUtils.executeClientSideJS('window.parent.routerReplace(null,"' + navigationPrefs.byNavItemID[navigationItemID]._about_ + '","' + DS_router_url(navigationPrefs.byNavItemID[navigationItemID].path,navigationItemID,null,forms[mainTab].foundset.getSelectedRecord()) + '");')
+			if (!leaveOff) {
+				scopes.DS.webURLSetStatus = true
+				scopes.DS.webURLSet(
+						navigationPrefs.byNavItemID[navigationItemID]._about_,
+						DS_router_url(
+							navigationPrefs.byNavItemID[navigationItemID].path,
+							navigationItemID,
+							null,
+							forms[mainTab].foundset.getSelectedRecord()
+						),
+						null,
+						null,
+						true
+					)
+				scopes.DS.webURLSetStatus = false
 			}
 			
 			//update elements/variables on header toolbar
@@ -3133,6 +3156,11 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		}
 	}
 	
+	//re-enable massaging of the url
+	if (solutionPrefs.config.webClient && !leaveOff) {
+		scopes.DS.webURLSetStatus = true
+	}
+	
 	// web client hooks on login
 	if (DS_web_login_running) {
 		DS_web_login_running = false
@@ -3681,13 +3709,13 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	navigationSets.push(solutionPrefs.config.navigationSetID)
 	navSetNames.push('configPanes')
 	navSetDefault.push(null)
-	navSetPath.push('sutra_admin')
-	
+	navSetPath.push('data-sutra')
+
 	//add in favorites place holder
 	navigationSets.push(0)
 	navSetNames.push('favoriteRecords')
 	navSetDefault.push(null)
-	navSetPath.push('sutra_user_favorites')
+	navSetPath.push('favorites')
 	
 	//create objects the first time around
 	if (initialLoad) {
@@ -4413,6 +4441,24 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	
 	//specs for this form
 	var navSpecs = navigationPrefs.byNavItemID[prefNavID].navigationItem
+	
+	//update url with info for this preference if not navigating here using the url
+	var requestedPath = ''
+	if (DATASUTRA_router.length) {
+		var lastHix = DATASUTRA_router[DATASUTRA_router.length - 1]
+		requestedPath = lastHix.pathString
+		requestedPath = requestedPath.split('/')
+		requestedPath = '/' + requestedPath[1] + '/' + requestedPath[2]
+	}
+	
+	var thisPath = DS_router_url(navigationPrefs.byNavItemID[prefNavID].path)
+	if (thisPath != requestedPath) {
+		scopes.DS.webURLSet(
+				navigationPrefs.byNavItemID[prefNavID]._about_,
+				//we call it again so that it is pushed the history stack
+				DS_router_url(navigationPrefs.byNavItemID[prefNavID].path,null,null,null,true)
+			)
+	}
 	
 	//deactivate help-mode
 	solutionPrefs.config.helpMode = false
@@ -5294,7 +5340,7 @@ function NAV_navigation_set_load()
 	
 	//favorite mode, rewrite url
 	if (favoriteMode) {
-		plugins.WebClientUtils.executeClientSideJS('preRender(null,"Favorite records","/favorites",0);')
+//		plugins.WebClientUtils.executeClientSideJS('preRender(null,"Favorite records","/favorites",0);')
 	}
 }
 
@@ -5384,8 +5430,21 @@ function NAV_universal_list_select(event) {
 	//run in webclient
 	if (solutionPrefs.config.webClient) {
 		//update url with the pk for this record
-		plugins.WebClientUtils.executeClientSideJS('window.parent.routerReplace(null,"' + navigationPrefs.byNavItemID[currentNavItem]._about_ + '","' + DS_router_url(navigationPrefs.byNavItemID[currentNavItem].path,currentNavItem,pkActedOn,pkRecord) + '");')
-		
+		if (DATASUTRA_router_enable) {
+			scopes.DS.webURLSet(
+					navigationPrefs.byNavItemID[currentNavItem]._about_,
+					DS_router_url(
+						navigationPrefs.byNavItemID[currentNavItem].path,
+						currentNavItem,
+						pkActedOn,
+						pkRecord
+					),
+					null,
+					null,
+					true
+				)
+		}
+	
 		//request focus elsewhere on desktop
 		if (scopes.DS.deviceFactor == 'Desktop') {
 			forms.NAV_T_universal_list__WEB.elements.var_trap.requestFocus()

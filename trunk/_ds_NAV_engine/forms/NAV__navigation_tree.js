@@ -96,24 +96,41 @@ function ACTIONS_list(input) {
 function FORM_on_show(firstShow, event) {
 	if (firstShow && application.__parent__.solutionPrefs && application.__parent__.navigationPrefs) {
 		//url was requested before login; go there now
-		if (globals.DATASUTRA_router.length && globals.DATASUTRA_router[0] && globals.DATASUTRA_router[0].path && globals.DATASUTRA_router[0].path.set != 'DSLogin') {
+		if (globals.DATASUTRA_router.length && globals.DATASUTRA_router[0] && globals.DATASUTRA_router[0].pathString) {
+			var path = globals.DATASUTRA_router[0].pathString
+			path = path.split('/')
+			//pop off first and last /
+			if (!path[0]) {
+				path.splice(0,1)
+			}
+			if (!path[path.length - 1]) {
+				path.pop()
+			}
+			
+			var url = {
+				set : path[0],
+				item : path[1]
+			}
+			
 			var nav = navigationPrefs.siteMap
-			var url = globals.DATASUTRA_router[0].path
 			var itemID
 			
-			//particular item specified
-			if (url.set && nav[url.set] && url.item) {
-				//this item exists
-				if (nav[url.set][url.item]) {
-					itemID = nav[url.set][url.item].navItemID
+			//don't navigtate to login
+			if (url.set != 'DSLogin') {
+				//particular item specified
+				if (url.set && nav[url.set] && url.item) {
+					//this item exists
+					if (nav[url.set][url.item]) {
+						itemID = nav[url.set][url.item].navItemID
+					}
 				}
-			}
-			//only nav set specified, grab first navigation item
-			else if (url.set && nav[url.set]) {
-				//don't really need a loop, but need to grab an element inside the set referenced
-				for (var i in nav[url.set]) {
-					itemID = navigationPrefs.byNavSetID[nav[url.set][i].details.navigationItem.idNavigation].itemsByOrder[0].navigationItem.idNavigationItem
-					break
+				//only nav set specified, grab first navigation item
+				else if (url.set && nav[url.set]) {
+					//don't really need a loop, but need to grab an element inside the set referenced
+					for (var i in nav[url.set]) {
+						itemID = navigationPrefs.byNavSetID[nav[url.set][i].details.navigationItem.idNavigation].itemsByOrder[0].navigationItem.idNavigationItem
+						break
+					}
 				}
 			}
 		}
@@ -151,7 +168,7 @@ function FORM_on_show(firstShow, event) {
 		}
 		
 		//show highlighter
-		if (solutionPrefs.config.webClient = forms.NAV__navigation_tree__rows._elementSelected) {
+		if (solutionPrefs.config.webClient) {
 			plugins.WebClientUtils.setExtraCssClass(forms.NAV__navigation_tree__rows.elements[forms.NAV__navigation_tree__rows._elementSelected], 'gfxLeftHilite')
 		}
 	}

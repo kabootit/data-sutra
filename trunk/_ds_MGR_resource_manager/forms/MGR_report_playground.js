@@ -103,7 +103,7 @@ function DS_print_preview(event) {
  */
 function DS_print_download(event) {
 	var arg = 'report_example.pdf'
-	SET_label('scopes.DS.print.download("' + arg + '")')
+	SET_label('scopes.DS.print.download("' + arg + '", scopes.DS.print.utils.getPDFByteArray.fromMediaLibrary("' + arg + '")')
 	
 	var results = scopes.DS.print.download('test_print_download.pdf',scopes.DS.print.utils.getPDFByteArray.fromMediaLibrary(arg))
 	

@@ -112,15 +112,15 @@ function FORM_on_show() {
  *
  * @properties={typeid:24,uuid:"377112cf-f796-46ac-87f1-1fbb34123a5b"}
  */
-function GO_five() {
-	GO_generic('five','AC_0F_organization','AC_0L_organization','Access & control Organizations')
+function GO_five(event,pk) {
+	GO_generic('five','AC_0F_organization','AC_0L_organization','Access & control Organizations',pk)
 }
 
 /**
  *
  * @properties={typeid:24,uuid:"9a8a6ec2-3a1a-4feb-a6b8-fc1bfbc37ed3"}
  */
-function GO_four() {
+function GO_four(event,pk) {
 	GO_generic('four','AC_0F_solution__workflow')
 }
 
@@ -128,7 +128,7 @@ function GO_four() {
  *
  * @properties={typeid:24,uuid:"2ece98de-eb81-4a37-9308-35de70291fa9"}
  */
-function GO_one() {
+function GO_one(event,pk) {
 	GO_generic('one','AC_0F_solution__setup')
 	
 	//set graphic to be of selected variety
@@ -149,23 +149,23 @@ function GO_one() {
  *
  * @properties={typeid:24,uuid:"c8db8d00-9a43-4163-8f42-debed6632892"}
  */
-function GO_three() {
-	GO_generic('three','AC_0F_user','AC_0L_user','Access & control Users')
+function GO_three(event,pk) {
+	GO_generic('three','AC_0F_user','AC_0L_user','Access & control Users',pk)
 }
 
 /**
  *
  * @properties={typeid:24,uuid:"73c74217-4d4b-4b15-87d4-988d4ef82409"}
  */
-function GO_two() {
-	GO_generic('two','AC_0F_group','AC_0L_group','Access & control Groups')
+function GO_two(event,pk) {
+	GO_generic('two','AC_0F_group','AC_0L_group','Access & control Groups',pk)
 }
 
 /**
  *
  * @properties={typeid:24,uuid:"8ED2FF08-C75B-4124-9985-E7BCDF81F515"}
  */
-function GO_oneone() {
+function GO_oneone(event,pk) {
 	GO_generic('oneone','AC_0F_rules')
 }
 
@@ -173,7 +173,7 @@ function GO_oneone() {
  *
  * @properties={typeid:24,uuid:"BADF5F73-456A-4093-B564-91A9A5911D4B"}
  */
-function GO_onetwo() {
+function GO_onetwo(event,pk) {
 	GO_generic('onetwo','AC_0F_filter')
 }
 
@@ -181,14 +181,15 @@ function GO_onetwo() {
  *
  * @properties={typeid:24,uuid:"F8D46015-FE74-4635-8774-5DBACB2F3E89"}
  */
-function GO_onethree() {
-	GO_generic('onethree','AC_0F_organization','AC_0L_organization','Access & control Organisation')
+function GO_onethree(event,pk) {
+	GO_generic('onethree','AC_0F_organization','AC_0L_organization','Access & control Organization',pk)
 }
 
 /**
  * @properties={typeid:24,uuid:"C929C311-19CF-4FD6-912C-34CADB24A87D"}
+ * @AllowToRunInFind
  */
-function GO_generic(buttonName,formName,listName,listTitle) {
+function GO_generic(buttonName,formName,listName,listTitle,pk) {
 	var listTabForm = (solutionPrefs.config.webClient) ? forms.DATASUTRA_WEB_0F__list__universal : forms.DATASUTRA_0F_solution
 	
 	//highlighter map
@@ -306,6 +307,57 @@ function GO_generic(buttonName,formName,listName,listTitle) {
 		//web client
 		if (solutionPrefs.config.webClient) {
 			forms.DATASUTRA_WEB_0F__workflow.setForm(formName)
+			
+			//find correct record
+			if (pk) {
+				//valid list or workflow
+				var fs = forms[listName].foundset ? forms[listName].foundset : forms[formName].foundset
+				
+				//try just to select requested record
+				fs.selectRecord(pk)
+				
+				//whats the name of the pk
+				var jsTable = databaseManager.getTable(forms[listName].foundset.getDataSource())
+				if (!jsTable) {
+					jsTable = databaseManager.getTable(forms[formName].foundset.getDataSource())
+				}
+				if (jsTable) {
+					var pkName = jsTable.getRowIdentifierColumnNames()[0]
+				}
+				
+				//need to do a find
+				if (pkName && fs.getSelectedRecord()[pkName] != pk) {
+					fs.find()
+					fs[pkName] = pk
+					fs.search()
+				}
+			}
+			
+			//update url with info for this preference if not already here or if not called downstream (on recSelect of something we're tracking)
+			if (!listName) {
+				var lastHix = globals.DATASUTRA_router[globals.DATASUTRA_router.length - 1]
+				var requestedPath = lastHix.pathString
+				requestedPath = requestedPath.split('/')
+				var requestPath = ''
+				//we do this to discard the pk
+				for (var i = 0; i < requestedPath.length && i < 3; i++) {
+					requestPath += '/' + requestedPath[i]
+				}
+				
+				var lastSlot = elements['btn_' + buttonName].text || ''
+				lastSlot = utils.stringReplace(lastSlot,'/','-')
+				var thisPath = globals.DS_router_url(navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].path + '/' + lastSlot)
+				
+				if (thisPath != requestedPath) {
+					scopes.DS.webURLSet(
+							navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID]._about_,
+							globals.DS_router_url(navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].path + '/' + lastSlot,null,null,null,true),
+							null,
+							null,
+							true
+						)
+				}
+			}
 		}
 		//smart client
 		else {
@@ -316,7 +368,5 @@ function GO_generic(buttonName,formName,listName,listTitle) {
 			forms[baseForm].elements.tab_content_C.addTab(forms[formName],'')
 			forms[baseForm].elements.tab_content_C.tabIndex = forms[baseForm].elements.tab_content_C.getMaxTabIndex()
 		}
-		
-		
 	}
 }

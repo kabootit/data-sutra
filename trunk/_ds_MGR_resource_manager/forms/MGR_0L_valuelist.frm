@@ -137,6 +137,7 @@ uuid:"F969496A-F660-4341-B014-C66A17A5EC00"
 name:"MGR_0L_valuelist",
 navigatorID:"-1",
 onLoadMethodID:"431BABE5-77A4-423F-89A6-A9305DAA6D3B",
+onShowMethodID:"6274CE65-1C79-4DBC-9C43-8A024C9E22B1",
 paperPrintScale:100,
 scrollbars:33,
 size:"150,57",
