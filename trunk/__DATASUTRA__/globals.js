@@ -5653,8 +5653,12 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 						request : application.getUUID().toString(),
 						pk : null
 					}
-				DATASUTRA_router_index = DATASUTRA_router.length
-				DATASUTRA_router.push(dataNode)
+				
+				//only push history if we have something
+				if (pathName != prefix) {
+					DATASUTRA_router_index = DATASUTRA_router.length
+					DATASUTRA_router.push(dataNode)
+				}
 				
 				scopes.DS.webURLSet(
 						appName,
@@ -5800,7 +5804,7 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 		}
 		
 		if (navigationPrefs.byNavItemID[itemID]) {
-			//this is a preference
+			//this is a preference (this is mainly for case when logging in and going to specific preference...which is disabled now)
 			if (navigationPrefs.byNavItemID[itemID].navigationItem.configType == 'Admin') {
 //				goPreference()
 			}
