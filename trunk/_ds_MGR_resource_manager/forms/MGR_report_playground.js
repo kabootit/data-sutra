@@ -192,7 +192,7 @@ function DS_print_utils_getPDFByteArray_fromFileSystem(event) {
 	
 	var results = scopes.DS.print.utils.getPDFByteArray.fromFileSystem(arg)
 	
-	SET_output(results,null,'Test failed.\nPlease make sure "sample.pdf" exists it the root of your filesystem.')
+	SET_output(results,null,'Test failed.\nPlease make sure "sample.pdf" exists in the root of your filesystem.')
 }
 
 /**
@@ -210,4 +210,28 @@ function DS_print_utils_getPDFByteArray_fromMediaLibrary(event) {
 	var results = scopes.DS.print.utils.getPDFByteArray.fromMediaLibrary(arg)
 	
 	SET_output(results)
+}
+
+
+/**
+ * Callback method for when form is shown.
+ *
+ * @param {Boolean} firstShow form is shown first time after load
+ * @param {JSEvent} event the event that triggered the action
+ *
+ * @properties={typeid:24,uuid:"E53D48F6-AA46-404C-BB21-877C454F1648"}
+ */
+function FORM_on_show(firstShow, event) {
+	globals.TRIGGER_toolbar_record_navigator_set(false)
+}
+
+/**
+ * Handle hide window.
+ *
+ * @param {JSEvent} event the event that triggered the action
+ *
+ * @properties={typeid:24,uuid:"F87E613F-0794-4152-AF33-2E384F1A1815"}
+ */
+function FORM_on_hide(event) {
+	globals.TRIGGER_toolbar_record_navigator_set(true)
 }

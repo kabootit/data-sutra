@@ -19,6 +19,7 @@ uuid:"8A3EC3D3-3634-456D-ABBE-230CD92682CF"
 ],
 name:"DATASUTRA_WEB__html_1",
 navigatorID:"-1",
+onHideMethodID:"11D95A0A-7F48-4EA6-8ABF-929B54130378",
 onShowMethodID:"7A37EFD7-CDC0-40A7-8070-124F761E604B",
 paperPrintScale:100,
 scrollbars:36,
