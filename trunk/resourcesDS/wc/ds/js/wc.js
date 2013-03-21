@@ -80,7 +80,7 @@ function centerForm(formName) {
 					'height':'20px',
 					'z-index':1000
 				});
-			indicator.activity({segments: 12, align: 'left', valign: 'top', steps: 3, width:2, space: 1, length: 3, color: '#666666', speed: 1.5});
+			indicator.activity({segments: 12, align: 'left', valign: 'top', steps: 3, width:2, space: 1, length: 3, color: '#777777', speed: 1.5});
 		}
 		
 		//MEMO: sutraBusy is class for this indicator: $('#indicator .sutraBusy');
@@ -222,10 +222,11 @@ switch (dsFactor()) {
 				position[0] = (e.pageX) ? e.pageX : 0;
 				position[1] = (e.pageY) ? e.pageY : 0;
 			
-				Wicket.indicatorPosition = position;
+				Wicket[e.data.slot] = position;
 			}
 		
-			$('#servoy_page').on('click contextmenu',trackMouse);
+			$('#servoy_dataform').on('click contextmenu',{slot: 'clickPosition'},trackMouse);
+			$('#servoy_dataform').on('mousemove',{slot: 'indicatorPosition'},trackMouse);
 		},1500)
 	
 		function busyCursor(clickPos,turnOn) {
@@ -248,7 +249,7 @@ switch (dsFactor()) {
 						if (event && !position) {
 							position = [event.clientX,event.clientY];
 						}
-					
+						
 						position[0] = (position[0] <= maxWidth) ? position[0] : maxWidth;
 						position[1] = (position[1] <= maxHeight) ? position[1] : maxHeight;
 					
