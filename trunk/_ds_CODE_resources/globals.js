@@ -2382,8 +2382,10 @@ function TRIGGER_toolbar_record_navigator_set(status,maxWidth) {
 			var recordDivisor	= (thisIndex / loaded) ? thisIndex / loaded : 0
 			var recordWidth		= maxWidth * recordDivisor
 			
+			var height = solutionPrefs.config.webClient ? 6 : 8
+			
 			//display record object
-			forms[formNameRN].elements.obj_records.setSize(recordWidth, forms[formNameRN].elements.obj_records.getHeight())
+			forms[formNameRN].elements.obj_records.setSize(recordWidth, height)
 					
 			//display label
 			var recDisplay = "Record " + utils.numberFormat(thisIndex,'###,###,###,###') + " of " + utils.numberFormat(loaded,'###,###,###,###')
