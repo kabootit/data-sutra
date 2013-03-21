@@ -1,7 +1,7 @@
 This is an installer of Data Sutra application platform with Demo CRM.
 
 For the most up to date version of these instructions, please visit:
-http://community.data-sutra.com/projects/datasutra/wiki/Developer_installation
+http://community.data-sutra.com/projects/datasutra/wiki/Installation
 
 FILES
 
@@ -65,11 +65,16 @@ INSTALLATION
 		http://www.servoyforge.net/projects/keylisteners
 	- Web Client Utils:
 		https://www.servoyforge.net/projects/webclientutils
+	- VelocityReport Plugin
+		https://www.servoyforge.net/projects/velocity-report
 		
 
 - import the sutra.servoy (or sutra_no_connector.servoy, if upgrading) file
 
 - place the contents of the ROOT directory in the ROOT directory
+
+- check the entire solution out from the SVN repository (optional)
+	- https://data-mosaic.svn.beanstalkapp.com/sutra/
 
 
 SERVER SETTINGS
