@@ -86,7 +86,7 @@ var transaction = new function() {
 	/**
 	 * Toggle elements for given form
 	 * 
-	 * @param {JSForm} form Form to modify
+	 * @param {Form} form Form to modify
 	 * @param {Boolean} [toggle=true] Show/hide status
 	 */
 	this.toggle = function(form,toggle) {
@@ -95,7 +95,7 @@ var transaction = new function() {
 			if (typeof toggle != 'boolean') {
 				toggle = true
 			}
-			/** @type {Array} */
+			
 			var allElems = form.elements.allnames
 			
 			//elements that need to be treated differently
@@ -149,7 +149,7 @@ var print = new function() {
 	 * 
 	 * @param {String} reportName File name for report
 	 * @param {byte[]} PDFByteArray PDF byte array
-	 * @return {String} Link to PDF
+	 * @return {String|undefined} Link to PDF
 	 * 
 	 */
 	this.preview = function(reportName,PDFByteArray) {
@@ -182,6 +182,7 @@ var print = new function() {
 							'Smart client',
 							'API call not implemented\nUse the web!'
 					)
+				
 			}
 		}
 	}
@@ -191,7 +192,7 @@ var print = new function() {
 	 * 
 	 * @param {String} reportName File name for report
 	 * @param {byte[]} PDFByteArray PDF byte array
-	 * @return {String} Link to PDF
+	 * @return {String|undefined} Link to PDF
 	 * 
 	 */
 	this.download = function(reportName,PDFByteArray) {
@@ -271,13 +272,13 @@ var print = new function() {
 			 * Convert Servoy form to PDF
 			 * 
 			 * @param {String} formName Servoy form
-			 * @return {byte[]} PDF
+			 * @return {byte[]|undefined} PDF
 			 */
 			this.fromServoyForm = function(formName) {
 				//enough information to proceed
 				if (formName && forms[formName]) {
 					//get pdf
-					var printerMeta = plugins.pdf_output.startMetaPrintJob()
+					plugins.pdf_output.startMetaPrintJob()
 					forms[formName].controller.print(false, false, plugins.pdf_output.getPDFPrinter())
 					return plugins.pdf_output.endMetaPrintJob()
 				}
@@ -287,7 +288,7 @@ var print = new function() {
 			 * Convert HTML to PDF
 			 * 
 			 * @param {String} html Block of code to be rendered as PDF
-			 * @return {byte[]} PDF
+			 * @return {byte[]|undefined} PDF
 			 */
 			this.fromHTMLData = function(html) {
 				//enough information to proceed
@@ -301,7 +302,7 @@ var print = new function() {
 			 * 
 			 * @param {String} url URL to be rendered as PDF
 			 * @param {Object} [auth] Authorization credentials to access url
-			 * @return {byte[]} PDF
+			 * @return {byte[]|undefined} PDF
 			 */
 			this.fromHTMLURL = function(url,auth) {
 				//enough information to proceed
@@ -322,7 +323,9 @@ var print = new function() {
 			 * Get PDF from file
 			 * 
 			 * @param {String} [location] Location of pdf
-			 * @return {byte[]} PDF
+			 * @return {byte[]|undefined} PDF
+			 * 
+			 * @SuppressWarnings (deprecated)
 			 */
 			this.fromFileSystem = function(location) {
 				/** @type {Function} */
@@ -347,6 +350,7 @@ var print = new function() {
 				
 				//enough information to proceed
 				if (location) {
+					/** @type {JSFile} */
 					var filePDF = eval(readCall + "(location)")
 					if (filePDF.exists() && filePDF.getContentType() == 'application/pdf') {
 						var bytes = filePDF.getBytes()
@@ -359,7 +363,7 @@ var print = new function() {
 			 * Get PDF from media library
 			 * 
 			 * @param {String} location Location of pdf
-			 * @return {byte[]} PDF
+			 * @return {byte[]|undefined} PDF
 			 */
 			this.fromMediaLibrary = function(location) {
 				//enough information to proceed
