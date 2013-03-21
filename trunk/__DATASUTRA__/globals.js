@@ -446,7 +446,7 @@ else {
 	var serverName = forms[prefForm].controller.getServerName()
 	
 	//bring in new data if necessary
-	//DS_data_import()
+	DS_data_import()
 	
 	// //PART I: Create large code global to be used elsewhere
 	
@@ -900,341 +900,100 @@ else {
  * @properties={typeid:24,uuid:"0d123e49-aae2-458f-abb2-daefe014614e"}
  * @AllowToRunInFind
  */
-function DS_data_import()
-{
-
-/*
- *	TITLE    :	DS_data_import
- *			  	
- *	MODULE   :	_DATASUTRA_
- *			  	
- *	ABOUT    :	add new navigation items to configuration navigation set
- *			  	
- *	INPUT    :	
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
- *	MODIFIED :	Mar 26, 2008 -- Troy Elliott, Data Mosaic
- *			  	
- */
-
-var serverName = forms.DATASUTRA_0F_solution.controller.getServerName()
-var navSet = databaseManager.getFoundSet(serverName, 'sutra_navigation')
-var navSetItem = databaseManager.getFoundSet(serverName, 'sutra_navigation_item')
-var nav_to_navItem = 'nav_navigation_to_navigation_item__all'
-var navItem_to_action = 'nav_navigation_item_to_action_item'
-var navItem_to_column = 'nav_navigation_item_to_column'
-var navItem_to_listDisplay = 'nav_navigation_item_to_list_display'
-var listDisplay_to_listDisplayItem = 'nav_list_display_to_list_display_item'
-
-//find config navigation set
-navSet.find()
-navSet.flag_config = 1
-var results = navSet.search()
-
-//set 12 to be the default navigation set if there isn't one
-if (results == 0) {
+function DS_data_import() {
+	var updates = {
+			'Navigation engine': {
+					url_path : 'nav-engine',
+					url_column : 'item_name'
+				},
+			'Access & control': {
+					url_path : 'access-control'
+				},
+			'Solution configuration': {
+					url_path : 'config',
+					url_column : 'item_name'
+				},
+			'Documentation': {
+					url_path : 'documentation',
+					url_column : 'title'
+				},
+			'Developer tools': {
+					url_path : 'tools'
+				},
+			'Blog setup': {
+					url_path : 'blog',
+					url_column : 'blog_name'
+				},
+			'Report registry': {
+					url_path : 'report-registry',
+					url_column : 'report_description'
+				},
+			'Toolbars & sidebars': {
+					url_path : 'toolbar-sidebar',
+					url_column : 'tab_name'
+				},
+			'Tooltip registry': {
+					url_path : 'tooltip-registry',
+					url_column : 'tooltip'
+				},
+			'Valuelist registry': {
+					url_path : 'valuelist-registry',
+					url_column : 'valuelist_name'
+				},
+			'Installation': {
+					url_path : 'install'
+				},
+			'SaaS': {
+					url_path : 'saas'
+				}			
+		}
+	
+	/** @type {JSFoundSet<db:/sutra/sutra_navigation>} */
+	var navSet = databaseManager.getFoundSet('sutra', 'sutra_navigation')
+	
+	//find config navigation set
 	navSet.find()
-	navSet.id_navigation = 12
+	navSet.flag_config = 1
 	var results = navSet.search()
 	
-	//they are using my default set, set it
-	if (results == 1) {
-		navSet.flag_config = 1
-		databaseManager.saveData()
-	}
-}
-
-//by hook or crook, the navSet contains the configuration nav set
-if (results) {
-	var navSetID = navSet.id_navigation
-	
-	//check to see if config records categorized
-	navSetItem.find()
-	navSetItem.id_navigation = navSetID
-	navSetItem.config_type = 'Admin'
-	results = navSetItem.search()
-	
-	//no admin records, set all configs to be admin
-	if (results == 0) {
-		navSetItem.find()
-		navSetItem.id_navigation = navSetID
-		results = navSetItem.search()
-	
-		var fsUpdater = databaseManager.getFoundSetUpdater(navSetItem)
-		fsUpdater.setColumn('config_type','Admin')
-		fsUpdater.performUpdate()
-	}
-	
-	//check to see if access and control already created
-	navSetItem.find()
-	navSetItem.id_navigation = navSetID
-	navSetItem.item_name = 'Access & control'
-	results = navSetItem.search()
-	
-	//create access and control
-	if (results == 0) {
-		//create navigation item
-		var record = navSetItem.getRecord(navSetItem.newRecord(false,true))
-		
-		record.id_navigation = navSetID
-		record.item_name = 'Access & control'
-		record.description = 'Settings for multi-user mode'
-		record.form_to_load = 'AC_0F_group'
-		record.node_1 = navSet[nav_to_navItem].getSize() + 1
-		record.node_2 = 0
-		record.row_status_show = 1
-		record.use_fw_list = 1
-		record.ds_list_title = 'Security'
-		record.bar_item_add = 1
-		record.bar_item_action = 1
-		record.bar_item_filter = 0
-		record.bar_item_tab = 1
-		record.form_to_load_table = 'sutra_access_group'
-		record.module_filter = 'ds_AC_access_control'
-		record.config_type = 'Admin'
-		
-	}
-/*
-	//check to see if blog already created
-	navSetItem.find()
-	navSetItem.id_navigation = navSetID
-	navSetItem.item_name = 'Blog setup'
-	var results = navSetItem.search()
-	
+	// navSet contains the configuration nav set
 	if (results) {
-		navSetItem.deleteAllRecords()
+		var configNav = navSet.getSelectedRecord()
+		var fsNavItem = configNav.nav_navigation_to_navigation_item__all
+		
+		//has this update already happened?
+		if (configNav.url_path != 'data-sutra') {
+		
+			//update the config nav set
+			configNav.url_path = 'data-sutra'
+			configNav.nav_name = 'DS Config'
+			
+			//update all navigation items
+			for (var i = 1; i <= fsNavItem.getSize(); i++) {
+				var navItem = fsNavItem.getRecord(i)
+				
+				//do we have updates for this record?
+				if (updates.hasOwnProperty(navItem.item_name)) {
+					for (var j in updates[navItem.item_name]) {
+						navItem[j] = updates[navItem.item_name][j]
+					}
+				}
+			}
+			
+			databaseManager.saveData(fsNavItem)
+			databaseManager.saveData(configNav)
+		}
 	}
 	
-	//blog setup
-	if (results == 0) {
-		//create navigation item
-		var record = navSetItem.getRecord(navSetItem.newRecord(false,true))
+	//additional api data points
+	navSet.find()
+	navSet.id_navigation = 55
+	results = navSet.search()
+	
+	//this is the developer nav set, add on a few extra navigation items for reporting api
+	if (results == 1) {
 		
-		record.id_navigation = navSetID
-		record.node_1 = navSet[nav_to_navItem].getSize() + 1
-		record.node_2 = 0
-		record.row_status_show = 1
-		record.use_fw_list = 1
-		record.bar_item_filter = 0
-		record.bar_item_tab = 0
-		record.module_filter = 'ds_AC_access_control'
-		record.config_type = 'Admin'
 	}
-	else {
-		//get navigation item
-		var record = navSetItem.getRecord(1)
-		
-		record[navItem_to_listDisplay].deleteAllRecords()
-	}
-	
-	//continue pumping in the data
-	record.item_name = 'Blog setup'
-	record.form_to_load_table = 'sutra_blog'
-	record.form_to_load = 'AC_0F_blog'
-	record.fw_list_title = 'Blogs'
-	record.bar_item_add = 1
-	record.bar_item_action = 1
-	record.space_available = '14\n2\n7'
-	record.space_default = 2
-	
-	//create universal list display
-	var record2 = record[navItem_to_listDisplay].getRecord(record[navItem_to_listDisplay].newRecord(false,true))
-	
-	record2.display_default = 1
-	
-	//create universal list display items
-	var record3 = record2[listDisplay_to_listDisplayItem].getRecord(record2[listDisplay_to_listDisplayItem].newRecord(false,true))
-	
-	record3.display = '<<blog_name>>'
-	record3.row_order = 1
-	record3.display_align = 'left'
-	record3.header = 'Name'
-	record3.field_name = 'blog_name'
-	record3.display_width_percent = 80
-	
-	var record4 = record2[listDisplay_to_listDisplayItem].getRecord(record2[listDisplay_to_listDisplayItem].newRecord(false,true))
-	
-	record4.display = '<<total_posts>>'
-	record4.row_order = 2
-	record4.display_align = 'left'
-	record4.header = 'Post'
-	record4.display_format = 'Number'
-	record4.format_mask = '###,###,###'
-	record4.field_name = 'total_posts'
-	record4.display_width_percent = 20
-*/	
-	//check to see if report already created
-	navSetItem.find()
-	navSetItem.id_navigation = navSetID
-	navSetItem.item_name = 'Report registry'
-	var results = navSetItem.search()
-	
-	//report setup
-	if (results == 0) {
-		//create navigation item
-		var record = navSetItem.getRecord(navSetItem.newRecord(false,true))
-		
-		record.id_navigation = navSetID
-		record.item_name = 'Report registry'
-		record.description = 'Register report layouts for the print action'
-		record.form_to_load = 'MGR_0F_report'
-		record.node_1 = navSet[nav_to_navItem].getSize() + 1
-		record.node_2 = 0
-		record.row_status_show = 1
-		record.use_fw_list = 0
-		record.bar_item_add = 0
-		record.bar_item_action = 0
-		record.bar_item_filter = 0
-		record.bar_item_tab = 0
-		record.form_to_load_table = 'sutra_report'
-		record.module_filter = 'rsrc_RPT_report'
-		record.config_type = 'Admin'
-	}
-	else {
-		//get navigation item
-		var record = navSetItem.getRecord(1)
-		
-		record.space_available = '7'
-	}
-	
-	
-	
-	//check to see if deployment node already created
-	navSetItem.find()
-	navSetItem.id_navigation = navSetID
-	navSetItem.item_name = 'Deployment'
-	var results = navSetItem.search()
-	
-	//deployment setup
-	if (results == 0) {
-		//create navigation item
-		var record = navSetItem.getRecord(navSetItem.newRecord(false,true))
-		
-		record.id_navigation = navSetID
-		record.item_name = 'Deployment'
-		record.description = 'Licensing, static object creation, and other things deployment related'
-		record.node_1 = navSet[nav_to_navItem].getSize() + 1
-		record.node_2 = 0
-		record.row_status_show = 1
-		record.use_fw_list = 0
-		record.bar_item_add = 0
-		record.bar_item_action = 0
-		record.bar_item_filter = 0
-		record.bar_item_tab = 0
-		record.config_type = 'Admin'
-	}
-	
-	
-	//check to see if developer tools already created
-	navSetItem.find()
-	navSetItem.id_navigation = navSetID
-	navSetItem.item_name = 'Developer tools'
-	var results = navSetItem.search()
-	
-	//developer tools setup
-	if (results == 0) {
-		//create navigation item
-		var record = navSetItem.getRecord(navSetItem.newRecord(false,true))
-		
-		record.id_navigation = navSetID
-		record.item_name = 'Developer tools'
-		record.description = 'Useful tools and reports for the Data Sutra developer'
-		record.node_1 = navSet[nav_to_navItem].getSize() + 1
-		record.node_2 = 0
-		record.row_status_show = 1
-		record.use_fw_list = 0
-		record.bar_item_add = 0
-		record.bar_item_action = 0
-		record.bar_item_filter = 0
-		record.bar_item_tab = 0
-		record.config_type = 'Admin'
-	}
-		
-	//check to see if feedback already created
-	navSetItem.find()
-	navSetItem.id_navigation = navSetID
-	navSetItem.item_name = 'Feedback'
-	var results = navSetItem.search()
-	
-	//feedback setup
-	if (results == 0) {
-		//create navigation item
-		var record = navSetItem.getRecord(navSetItem.newRecord(false,true))
-		
-		record.id_navigation = navSetID
-		record.item_name = 'Feedback'
-		record.description = 'Leave feedback for the current screen showing'
-		record.node_1 = navSet[nav_to_navItem].getSize() + 1
-		record.node_2 = 0
-		record.row_status_show = 1
-		record.use_fw_list = 0
-		record.bar_item_add = 0
-		record.bar_item_action = 0
-		record.bar_item_filter = 0
-		record.bar_item_tab = 0
-		record.config_type = 'User'
-	}
-		
-	//check to see if power replace already created
-	navSetItem.find()
-	navSetItem.id_navigation = navSetID
-	navSetItem.item_name = 'Power Replace'
-	var results = navSetItem.search()
-	
-	//power replace setup
-	if (results == 0) {
-		//create navigation item
-		var record = navSetItem.getRecord(navSetItem.newRecord(false,true))
-		
-		record.id_navigation = navSetID
-		record.item_name = 'Power Replace'
-		record.description = 'Replace the existing contents of a field in all current records'
-		record.node_1 = navSet[nav_to_navItem].getSize() + 1
-		record.node_2 = 0
-		record.row_status_show = 1
-		record.use_fw_list = 0
-		record.bar_item_add = 0
-		record.bar_item_action = 0
-		record.bar_item_filter = 0
-		record.bar_item_tab = 0
-		record.config_type = 'User'
-	}
-		
-	//check to see if help already created
-	navSetItem.find()
-	navSetItem.id_navigation = navSetID
-	navSetItem.item_name = 'Help'
-	var results = navSetItem.search()
-	
-	//help setup
-	if (results == 0) {
-		//create navigation item
-		var record = navSetItem.getRecord(navSetItem.newRecord(false,true))
-		
-		record.id_navigation = navSetID
-		record.item_name = 'Help'
-		record.description = 'Toggle inline help for the workflow screen showing'
-		record.node_1 = navSet[nav_to_navItem].getSize() + 1
-		record.node_2 = 0
-		record.row_status_show = 1
-		record.use_fw_list = 0
-		record.bar_item_add = 0
-		record.bar_item_action = 0
-		record.bar_item_filter = 0
-		record.bar_item_tab = 0
-		record.config_type = 'User'
-	}
-	
-	databaseManager.saveData()
-}
-
-
-
-
-
 }
 
 /**
