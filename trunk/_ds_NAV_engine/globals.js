@@ -3381,7 +3381,7 @@ function NAV_universal_list_right_click(input,elem,list,record) {
 				//store menu to be used momentarily
 				NAV_universal_list_right_click.popupMenu = menu
 				
-				plugins.WebClientUtils.executeClientSideJS('var posn = Wicket.indicatorPosition;', NAV_universal_list_right_click__wc, ['posn'])
+				plugins.WebClientUtils.executeClientSideJS('var posn = Wicket.clickPosition;', NAV_universal_list_right_click__wc, ['posn'])
 			}
 			//smart client popup
 			else {
