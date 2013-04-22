@@ -1049,7 +1049,16 @@ and (max-device-width : 1024px) {
 
 /* split pane customizations */
 .yui-resize {
-	background-color: #262626 !important;
+	background-color: #DEDEDE !important;
+}
+
+#form_DATASUTRA_WEB_0F > * > * > * > .yui-resize {
+	background-image: url(/servoy-webclient/templates/datasutra/images/linen_lowlight.jpg) !important;
+}
+
+#form_DATASUTRA_WEB_0F__main > * > * > * > .yui-resize,
+#form_DATASUTRA_WEB_0F__list > * > * > * > .yui-resize {
+	background-image: url(/servoy-webclient/templates/datasutra/images/linen_highlight.jpg) !important;
 }
 
 .yui-resize .yui-resize-handle-b {
