@@ -5134,7 +5134,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	var filterSetup = navigationPrefs.byNavItemID[currentNavItem].filters
 
 	//get new values of filters
-	if (filterSetup) {
+	if (filterSetup && forms[formName]) {
 		
 		var theTemplate = filterSetup.blueprint
 		var nowValues = CODE_copy_object(filterSetup.blueprint.slice(0))
@@ -5161,7 +5161,9 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 					var args = (theTemplate[i].columnValue) ? theTemplate[i].columnValue : null
 					
 					//update value
-					nowValues[i].columnValue = method(args)
+					if (typeof method == 'function') {
+						nowValues[i].columnValue = method(args)
+					}
 				}
 			}
 			
