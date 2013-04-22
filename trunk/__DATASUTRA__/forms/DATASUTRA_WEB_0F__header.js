@@ -747,6 +747,8 @@ function ACTION_space_flexible(event) {
 			
 			//sidebar bean
 			forms[baseForm].elements.tab_wrapper.dividerSize = 0
+			forms.DATASUTRA__sidebar.elements.lbl_cliff.visible = true
+			forms.DATASUTRA__sidebar__header.elements.lbl_cliff.visible = true
 			
 			//header tool/find bean
 			forms[baseForm + '__header'].elements.split_tool_find.dividerSize = 0
@@ -792,6 +794,8 @@ function ACTION_space_flexible(event) {
 			
 			//sidebar bean
 			forms[baseForm].elements.tab_wrapper.dividerSize = (sidebarStatus) ? 8 : 0
+			forms.DATASUTRA__sidebar.elements.lbl_cliff.visible = false
+			forms.DATASUTRA__sidebar__header.elements.lbl_cliff.visible = false
 			
 			//header tool/find bean
 			forms[baseForm + '__header'].elements.split_tool_find.dividerSize = 8
