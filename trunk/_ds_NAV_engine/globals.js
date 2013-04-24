@@ -5134,7 +5134,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	var filterSetup = navigationPrefs.byNavItemID[currentNavItem].filters
 
 	//get new values of filters
-	if (filterSetup && forms[formName]) {
+	if (filterSetup) {
 		
 		var theTemplate = filterSetup.blueprint
 		var nowValues = CODE_copy_object(filterSetup.blueprint.slice(0))
@@ -5186,8 +5186,8 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 				var executeFilters = true
 			}
 			
-			//we need to run the filters
-			if (executeFilters || forceRefresh) {
+			//we need to run the filters and the form is available
+			if ((executeFilters || forceRefresh) && forms[formName]) {
 				
 				if (!forceNoReset) {
 					//load all records so we can search on them
