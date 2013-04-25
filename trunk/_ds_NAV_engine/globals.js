@@ -3378,10 +3378,8 @@ function NAV_universal_list_right_click(input,elem,list,record) {
 		if (input instanceof JSEvent) {
 			//webclient popup
 			if (solutionPrefs.config.webClient) {
-				//store menu to be used momentarily
-				NAV_universal_list_right_click.popupMenu = menu
-				
-				plugins.WebClientUtils.executeClientSideJS('var posn = Wicket.clickPosition;', NAV_universal_list_right_click__wc, ['posn'])
+				scopes.DS.webPopup.popupMenu = menu
+				scopes.DS.webPopup()
 			}
 			//smart client popup
 			else {
@@ -3423,17 +3421,6 @@ function NAV_universal_list_right_click(input,elem,list,record) {
 	function favExists(item) {
 		return item && item.datasource == fave.datasource && item.pk == fave.pk
 	}
-}
-
-/**
- * Helper function.
- * Once I figure out how continuations work, I won't need this anymore.
- * 
- * @properties={typeid:24,uuid:"725F88B2-4D63-42D4-B067-B9ED2BFB51FC"}
- */
-function NAV_universal_list_right_click__wc(posn) {
-	posn = posn.split(',')
-	plugins.popupmenu.showPopupMenu(posn[0], posn[1], NAV_universal_list_right_click.popupMenu)
 }
 
 /**
