@@ -622,3 +622,26 @@ function webCallbacks() {
 		plugins.WebClientUtils.executeClientSideJS('callbackConfig(' + jsCallback + ');')
 	}
 }
+/**
+ * Helper function to make pop ups go in the right place.
+ * Once I figure out how continuations work, I won't need this anymore.
+ * 
+ * TODO: allow to work with deprecated popupmenu and supported window calls
+ * 
+ * @param {String}	[posn] The co-ordinates just fired.
+ * 
+ * @properties={typeid:24,uuid:"487DA917-3C82-490A-8F2C-2DAF78FCC5D2"}
+ */
+function webPopup(posn) {
+	if (solutionPrefs.config.webClient) {
+		//need to grab position
+		if (typeof posn != 'string') {
+			plugins.WebClientUtils.executeClientSideJS('var posn = Wicket.clickPosition;', webPopup, ['posn'])
+		}
+		//we have enough information
+		else if (webPopup.popupMenu instanceof Array) {
+			posn = posn.split(',')
+			plugins.popupmenu.showPopupMenu(posn[0], posn[1], webPopup.popupMenu)
+		}
+	}
+}
