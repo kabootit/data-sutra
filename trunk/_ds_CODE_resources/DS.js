@@ -124,8 +124,17 @@ var transaction = new function() {
 			for (var i = 0; i < normalElems.length; i++) {
 				var elem = normalElems[i]
 				
+				//checks are not editable, try enabled
+				if (solutionModel.getForm(form.controller.getName()).getComponent(elem).displayType == JSField.CHECKS && typeof form.elements[elem].enabled != 'undefined') {
+					form.elements[elem].enabled = toggle
+					
+					//can set transparent on this property
+					if (typeof form.elements[elem].transparent != undefined) {
+						form.elements[elem].transparent = toggle
+					}
+				}
 				//can set editable on this property
-				if (form.elements[elem] && typeof form.elements[elem].editable != 'undefined') {
+				else if (form.elements[elem] && typeof form.elements[elem].editable != 'undefined') {
 					form.elements[elem].editable = toggle
 					
 					//can set transparent on this property
@@ -626,8 +635,6 @@ function webCallbacks() {
  * Helper function to make pop ups go in the right place.
  * Once I figure out how continuations work, I won't need this anymore.
  * 
- * TODO: allow to work with deprecated popupmenu and supported window calls
- * 
  * @param {String}	[posn] The co-ordinates just fired.
  * 
  * @properties={typeid:24,uuid:"487DA917-3C82-490A-8F2C-2DAF78FCC5D2"}
@@ -638,10 +645,17 @@ function webPopup(posn) {
 		if (typeof posn != 'string') {
 			plugins.WebClientUtils.executeClientSideJS('var posn = Wicket.clickPosition;', webPopup, ['posn'])
 		}
-		//we have enough information
-		else if (webPopup.popupMenu instanceof Array) {
+		else {
 			posn = posn.split(',')
-			plugins.popupmenu.showPopupMenu(posn[0], posn[1], webPopup.popupMenu)
+			
+			//deprecated popupmenu
+			if (webPopup.popupMenu instanceof Array) {
+				plugins.popupmenu.showPopupMenu(posn[0], posn[1], webPopup.popupMenu)
+			}
+			//supported popup call
+			else if (webPopup.popupMenu instanceof Popup) {
+				webPopup.popupMenu.show(posn[0], posn[1])
+			}
 		}
 	}
 }
