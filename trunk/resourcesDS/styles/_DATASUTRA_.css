@@ -430,6 +430,12 @@ tabpanel.grid_secondary {
 	border-top-color: #647B95;
 }
 
+tabpanel.filter_bar {
+	background: #A1B0CF;
+	border: 0px solid #323A4B;
+	border-bottom-width: 1px;
+}
+
 /* settings for label on custom tab controllers */
 label.grid_pri_tab_select, label.grid_pri_tab_unselect, label.grid_sec_tab_select, label.grid_sec_tab_unselect {
 	font-size: 10pt;
