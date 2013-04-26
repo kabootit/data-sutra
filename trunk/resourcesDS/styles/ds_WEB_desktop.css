@@ -23,9 +23,6 @@ form {
 	border: 0px solid;
 }
 
-form.filter {	
-}
-
 form.list {
 	background-color: #262626;
 }
@@ -36,6 +33,9 @@ form.workarea1 {
 
 form.workarea2 {
 	background-color: #999999;
+}
+
+form.no_selection {	
 }
 
 label, button, field, check, radio {
@@ -91,7 +91,7 @@ field.fastfind {
 	background-color: #dcdcdc;
 }
 
-field.customlist, field.noborderhtml {
+field.customlist {
 	margin: 0px 0px 0px 0px; 
 }
 
@@ -101,6 +101,10 @@ field.navigationset {
 
 field.noborderbold {
 	font-weight: bold;
+}
+
+field.noborderhtml {
+	margin: 4px 4px 4px 4px; 
 }
 
 field.noedit {
@@ -386,6 +390,10 @@ selected {
 	background-color: #BED7F7;
 }
 
+form.no_selection odd, form.no_selection even, form.no_selection selected {
+	background-color: transparent;
+}
+
 grid_header {
 	background-image: linear-gradient(top, #F6F6F7, #BBBBBB);
 	
@@ -398,10 +406,6 @@ grid_header {
 	text-align: left;*/
 	vertical-align: center;
 	color: #333333;
-}
-
-form.filter odd, form.filter even, form.filter selected {
-	background-color: #A1B0CF;
 }
 
 /* grid view */

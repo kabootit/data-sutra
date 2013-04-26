@@ -18,9 +18,6 @@ form {
 	border: 0px solid;
 }
 
-form.filter {	
-}
-
 form.list {
 	background-color: #D1D7E2;
 }
@@ -31,6 +28,9 @@ form.workarea1 {
 
 form.workarea2 {
 	background-color: #D1D7E2;
+}
+
+form.no_selection {	
 }
 
 label, button, field, check, radio {
@@ -241,11 +241,6 @@ label.list {
 	font-size: 10pt;
 }
 
-label.login_action {
-	font-size: 10pt;
-	color: #999999; 
-}
-
 label.recordnavigator, label.solutionlogstatus, label.solutionsubheader {
 	font-family: TrebuchetMS;
 	color: #333333;
@@ -404,10 +399,6 @@ selected {
 
 grid_header {
 	
-}
-
-form.filter odd, form.filter even, form.filter selected {
-	background-color: #A1B0CF;
 }
 
 /* grid view */
