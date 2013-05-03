@@ -511,10 +511,10 @@ function SHA256 (message, options) {
 }
 
 /**
- * @param hasher
- * @param message
- * @param key
- * @param options
+ * @param hasher Hasher type
+ * @param message A salt
+ * @param key Another salt
+ * @param options Return type of String | Bytes | Hex, default is Bytes
  * 
  * @example  
  * 		scopes.NCRYPT.HMAC(scopes.NCRYPT.MD5,"Message","some key")
