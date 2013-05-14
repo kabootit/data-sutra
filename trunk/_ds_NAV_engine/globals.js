@@ -297,26 +297,7 @@ if (application.__parent__.solutionPrefs) {
 		
 		//re-select selected field (checkmark)
 		if (fastFindEnabled) {
-			DATASUTRA_find_field = searchingOn
-			navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindField = searchingOn
-			navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindTip = searchingTip
-		}
-		
-		//refresh tooltiptext on find field
-		forms[findForm].elements.fld_find.toolTipText = searchingTip
-		
-		//only run when if required data is available
-		if (solutionPrefs.repository && solutionPrefs.repository.allFormsByTable && 
-			solutionPrefs.repository.allFormsByTable[serverName] && 
-			solutionPrefs.repository.allFormsByTable[serverName][tableName] && 
-			solutionPrefs.repository.allFormsByTable[serverName][tableName][formName]) {
-			
-			//position in code global assured by NAV_find_fields_control
-			//check if not using separateFoundset
-			if (!solutionPrefs.repository.allFormsByTable[serverName][tableName][formName].useSeparateFoundset) {
-				solutionPrefs.fastFind.currentSearch[serverName][tableName].lastFindField = searchingOn
-				solutionPrefs.fastFind.currentSearch[serverName][tableName].lastFindTip = searchingTip
-			}
+			TRIGGER_fastfind_display_set(null,searchingTip,searchingOn)
 		}
 	}
 	
@@ -524,7 +505,7 @@ if (application.__parent__.solutionPrefs) {
 			}
 			
 			//add prefix
-			//findItems.unshift(allObject,filterObject,blankObject)
+//			findItems.unshift(allObject,filterObject,blankObject)
 			
 		//get user modes
 			//using access and control, need user modes
@@ -558,27 +539,27 @@ if (application.__parent__.solutionPrefs) {
 			}
 			
 //			//add suffices: disabled because of performance hit
-//				//divider
-//				if (addDate || addNum || addText) {
-//					findItems.push(blankObject)
-//				}
-//				//date
-//				if (addDate) {
-//					findItems.push(dateObject)
-//				}
-//				//number or integer
-//				if (addNum) {
-//					findItems.push(numObject)
-//				}
-//				//text
-//				if (addText) {
-//					findItems.push(textObject)
-//				}
+				//divider
+				if (addDate || addNum || addText) {
+					findItems.push(blankObject)
+				}
+				//date
+				if (addDate) {
+					findItems.push(dateObject)
+				}
+				//number or integer
+				if (addNum) {
+					findItems.push(numObject)
+				}
+				//text
+				if (addText) {
+					findItems.push(textObject)
+				}
 				
 			//build menu
 			var menu = new Array()
 			for (var i = 0 ; i < findItems.length ; i++) {
-				var findField = (findItems[i].relation != 'NONE') ? findItems[i].relation + '.' + findItems[i].columnName : findItems[i].columnName
+				var findField = (findItems[i].relation != 'NONE' && typeof findItems[i].relation != 'undefined') ? findItems[i].relation + '.' + findItems[i].columnName : findItems[i].columnName
 				//when a fast find item selected, create checkbox menu item
 				if (DATASUTRA_find_field == findField) {
 					menu[i] = plugins.popupmenu.createCheckboxMenuItem(findItems[i].findName, NAV_find_fields_control)
@@ -669,10 +650,7 @@ if (application.__parent__.solutionPrefs) {
 			)
 		
 		//set tooltiptext to find field
-		forms[findForm].elements.fld_find.toolTipText = 'Power searching...'
-		if (fastFindStatus) {
-			navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindTip = 'Power searching...'
-		}
+		TRIGGER_fastfind_display_set('Power searching...','Power searching...')
 	}
 	//replace called
 	else if (colType == 'REPLACE') {
@@ -720,16 +698,14 @@ if (application.__parent__.solutionPrefs) {
 	}
 	//only proceed if 1) filter or 2) dividing line was NOT clicked 
 	else if (!(colType == 'FILTER' || findValue.findName == '-')) {
-		//set global used for check mark 
-		DATASUTRA_find_field = (findValue.relation != 'NONE') ? findValue.relation + '.' + findValue.columnName : findValue.columnName
-
+		TRIGGER_fastfind_display_set(
+					null,
+					null,
+					(findValue.relation != 'NONE') ? findValue.relation + '.' + findValue.columnName : findValue.columnName
+				)
+		
 		//set global used for grayed out calc
 		DATASUTRA_find_pretty = findValue.findName
-
-		//set properties in code global to remember state of last find_field
-		if (fastFindStatus) {
-			navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindField = findValue.columnName
-		}
 
 		//perform find
 
@@ -843,24 +819,23 @@ if (application.__parent__.solutionPrefs) {
 
 				//check if not using separateFoundset
 				if (!solutionPrefs.repository.allFormsByTable[serverName][tableName][formName].useSeparateFoundset) {
-					solutionPrefs.fastFind.currentSearch[serverName][tableName].lastFindValue = null
-					solutionPrefs.fastFind.currentSearch[serverName][tableName].lastFindField = null
+					TRIGGER_fastfind_display_set(
+							null,
+							'Not searching any field',
+							null
+						)
+					
 					solutionPrefs.fastFind.currentSearch[serverName][tableName].sortField = null
 					solutionPrefs.fastFind.currentSearch[serverName][tableName].sortDirection = null
-					solutionPrefs.fastFind.currentSearch[serverName][tableName].lastFindTip = 'Not searching any field'		
 				}
 			}
-
-			forms[findForm].elements.fld_find.toolTipText = 'Searching in "'+findValue.findName+'"'
-			if (fastFindStatus) {
-				navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindTip = 'Searching in "'+findValue.findName+'"'
-			}
 			
-			//null out stored values of last find
-			if (fastFindStatus) {
-				navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindValue = null
-			}
-
+			TRIGGER_fastfind_display_set(
+					DATASUTRA_find,
+					'Searching in "'+findValue.findName+'"',
+					DATASUTRA_find_field
+				)
+			
 			//using universal list, use selected list display options to create it
 			if (navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].navigationItem.useFwList) {
 				//serclipse < 4
@@ -941,21 +916,21 @@ if (application.__parent__.solutionPrefs) {
 		//	if (NAV_search_valuelist) {
 		//		DATASUTRA_find = NAV_search_valuelist
 		//	}
-
-			//set tooltiptext to find field
-			forms[findForm].elements.fld_find.toolTipText = 'Searching in "'+findValue.findName+'"'
-			if (fastFindStatus) {
-				navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindTip = 'Searching in "'+findValue.findName+'"'
-			}
+			
+			TRIGGER_fastfind_display_set(
+					DATASUTRA_find,
+					'Searching in "'+findValue.findName+'"',
+					DATASUTRA_find_field
+				)
 		}
 		else {
 			forms[findForm].elements.fld_find.requestFocus(true)
 
-			//set tooltiptext to find field
-			forms[findForm].elements.fld_find.toolTipText = 'Searching in "'+findValue.findName+'"'
-			if (fastFindStatus) {
-				navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindTip = 'Searching in "'+findValue.findName+'"'
-			}
+			TRIGGER_fastfind_display_set(
+					DATASUTRA_find,
+					'Searching in "'+findValue.findName+'"',
+					DATASUTRA_find_field
+				)
 		}
 		
 		//re-show form-popup

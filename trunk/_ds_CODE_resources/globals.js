@@ -589,6 +589,12 @@ function TRIGGER_fastfind_display_set(findText,findTooltip,findCheck,setDefault)
 				navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindValue = findText
 				navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindField = (findCheck && findCheck != true) ? findCheck : null
 				navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindTip = findTooltip
+				
+				//in web client, update placeholder text to be field currently searching on
+				var findField = navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindField || DATASUTRA_find_field
+				var findSelected = navigationPrefs.byNavItemID[currentNavItem].fastFind.filter(function (item) {return (item.relation != 'NONE' ? item.relation + '.' + item.columnName : item.columnName) == findField})
+				var findPretty = findSelected.length ? findSelected[0].findName : findField
+				scopes.DS.webFindSet(findPretty)
 			}
 		}
 		
@@ -1771,16 +1777,8 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset, idNavigationIt
 					var modifiedFoundset = forms[formNameWorkflow].foundset
 	
 					//show that only a portion of current foundset selected
-					DATASUTRA_find = 'Related subset'
-//					DATASUTRA_find_field = null
+					TRIGGER_fastfind_display_set('Related subset',null,null)
 					
-					//fast find is enabled, track
-					if (navigationPrefs.byNavItemID[navItem.idNavigationItem].fastFind) {
-						navigationPrefs.byNavItemID[navItem.idNavigationItem].fastFind.lastFindValue = DATASUTRA_find
-						navigationPrefs.byNavItemID[navItem.idNavigationItem].fastFind.lastFindField = DATASUTRA_find_field
-						navigationPrefs.byNavItemID[navItem.idNavigationItem].fastFind.lastFindTip = null
-					}
-	
 					//using UL, refresh
 					if (navItem.useFwList) {
 						//serclipse 4
@@ -1830,6 +1828,9 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset, idNavigationIt
 				}
 			}
 			else {
+				//make sure to update the fast find appropriately
+				TRIGGER_fastfind_display_set(null,null,null,true)
+				
 				return null
 			}
 		}

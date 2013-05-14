@@ -66,6 +66,9 @@ function FORM_on_show(firstShow, event) {
 	plugins.WebClientUtils.executeClientSideJS('$(".fastFind").keydown(function(event){if(event.which == 13){bigIndicator(true,0,"Finding...");}});')
 	plugins.WebClientUtils.executeClientSideJS('$(".fastFindClear").on("click",function(event) {bigIndicator(true,0,"Clearing...");});')
 	
+	//set placeholder find text
+	globals.TRIGGER_fastfind_display_set(null,null,null,true)
+				
 	//enter the field
 	elements.fld_find.requestFocus()
 }

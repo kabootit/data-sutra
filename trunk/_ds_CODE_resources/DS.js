@@ -631,6 +631,7 @@ function webCallbacks() {
 		plugins.WebClientUtils.executeClientSideJS('callbackConfig(' + jsCallback + ');')
 	}
 }
+
 /**
  * Helper function to make pop ups go in the right place.
  * Once I figure out how continuations work, I won't need this anymore.
@@ -657,5 +658,28 @@ function webPopup(posn) {
 				webPopup.popupMenu.show(posn[0], posn[1])
 			}
 		}
+	}
+}
+
+/**
+ * Set placeholder property of fast find fields
+ * 
+ * @param {String}	[findField] Pretty name of find field selected.
+ * 
+ * @properties={typeid:24,uuid:"10ECF00C-A563-49A2-8A26-74A1D433FD5B"}
+ */
+function webFindSet(findField) {
+	if (solutionPrefs.config.webClient) {
+		var placeHolderElem = [
+				plugins.WebClientUtils.getElementMarkupId(forms.NAV_P__fastfind.elements.fld_find),
+				plugins.WebClientUtils.getElementMarkupId(forms.NAV_T_universal_list__WEB__fastfind.elements.fld_find)
+			]
+		var placeHolderText = [
+				findField,
+				findField
+			]
+		
+		//set place holder text
+		plugins.WebClientUtils.executeClientSideJS('setPlaceHolders(' + JSON.stringify(placeHolderElem) + ',' + JSON.stringify(placeHolderText) + ');')
 	}
 }
