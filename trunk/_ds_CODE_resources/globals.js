@@ -946,6 +946,7 @@ function TRIGGER_interface_lock(freeze,freezeAll,nonTransparent,spinner,nonTrans
 			forms.DATASUTRA__sidebar.elements.gfx_curtain.visible = freeze
 			
 			//adjust z-index
+				//MEMO: this doesn't fire the first time edit button pressed after page loaded; client-side triggered when button clicked to handle this condition
 			plugins.WebClientUtils.executeClientSideJS('triggerInterfaceLock(' + freeze + ');')
 		}
 		//smart client
@@ -1739,6 +1740,12 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset, idNavigationIt
 						
 				//we're passed an array, convert to dataset
 				if (callingFoundset instanceof Array) {
+					//supposed to be uuids, convert
+					function convertUUID(uuid) {return application.getUUID(uuid.substr(0,8) + '-' + uuid.substr(8,4) + '-' + uuid.substr(12,4) + '-' + uuid.substr(16,4) + '-'+ uuid.substr(20))}
+					if (callingFoundset[0] && callingFoundset[0].length && convertUUID(callingFoundset[0]) instanceof UUID) {
+						callingFoundset = callingFoundset.map(function(item) {return convertUUID(item)})
+					}
+					
 					var ds = databaseManager.convertToDataSet(callingFoundset)
 	
 					forms[formNameWorkflow].controller.loadRecords(ds)
