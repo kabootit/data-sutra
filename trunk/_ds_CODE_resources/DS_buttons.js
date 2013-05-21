@@ -1075,7 +1075,7 @@ function TABS_list_control() {
 }
 
 /**
-* @param {JSEvent} event
+* @param {JSEvent} [event]
 * 
 * @properties={typeid:24,uuid:"4FEC9A26-4000-4FCC-BCEF-F8049DEA2DC8"}
 */
@@ -1136,7 +1136,7 @@ function TRANSACTION_start(event) {
 }
 
 /**
-* @param {JSEvent} event
+* @param {JSEvent} [event]
 * 
 * @properties={typeid:24,uuid:"FAA198D9-93DE-4DAE-9653-9478C3FEA47A"}
 */
@@ -1204,7 +1204,7 @@ function TRANSACTION_save(event) {
 }
 
 /**
-* @param {JSEvent} event
+* @param {JSEvent} [event]
 * 
 * @properties={typeid:24,uuid:"F53BDA26-BC1F-46E0-B5FB-92D6C3054F89"}
 */
