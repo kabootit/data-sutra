@@ -156,14 +156,19 @@ var print = new function() {
 	/**
 	 * Show print preview
 	 * 
-	 * @param {String} reportName File name for report
-	 * @param {byte[]} PDFByteArray PDF byte array
+	 * @param {String} [reportName] File name for report
+	 * @param {byte[]|String} source PDF byte array (for reports generated) or URL of pre-generated PDF
 	 * @return {String|undefined} Link to PDF
 	 * 
 	 */
-	this.preview = function(reportName,PDFByteArray) {
-		//enough information to proceed
-		if (reportName && PDFByteArray) {
+	this.preview = function(reportName,source) {
+		//this is a byte array
+		if (source instanceof Array) {
+			//no report name specified
+			if (!reportName) {
+				reportName = application.getUUID().toString() + '.pdf'
+			}
+			
 			//webclient
 			if (solutionPrefs.config.webClient) {
 				//router
@@ -173,7 +178,7 @@ var print = new function() {
 					
 					//print file
 					var printFile = plugins.file.createFile(reportPath + userDir + reportName)
-					var success = printFile.setBytes(PDFByteArray,true)
+					var success = printFile.setBytes(source,true)
 					
 					//load pdf in browser and show it
 					if (success) {
@@ -194,19 +199,40 @@ var print = new function() {
 				
 			}
 		}
+		//this is a url, feed it to the preview routine
+		else if (typeof source == 'string') {
+			//webclient
+			if (solutionPrefs.config.webClient) {
+				plugins.WebClientUtils.executeClientSideJS('window.parent.printLoad("' + source + '");')
+				return source
+			}
+			//smart client, use standard print preview
+			else {
+				globals.DIALOGS.showInfoDialog(
+							'Smart client',
+							'API call not implemented\nUse the web!'
+					)
+				
+			}
+		}
 	}
 	
 	/**
 	 * Download requested PDF
 	 * 
-	 * @param {String} reportName File name for report
-	 * @param {byte[]} PDFByteArray PDF byte array
+	 * @param {String} [reportName] File name for report
+	 * @param {byte[]|String} source PDF byte array (for reports generated) or URL of pre-generated PDF
 	 * @return {String|undefined} Link to PDF
 	 * 
 	 */
-	this.download = function(reportName,PDFByteArray) {
-		//enough information to proceed
-		if (reportName && PDFByteArray) {
+	this.download = function(reportName,source) {
+		//this is a byte array
+		if (source instanceof Array) {
+			//no report name specified
+			if (!reportName) {
+				reportName = application.getUUID().toString() + '.pdf'
+			}
+			
 			//webclient
 			if (solutionPrefs.config.webClient) {
 				//router
@@ -216,7 +242,7 @@ var print = new function() {
 					
 					//print file
 					var printFile = plugins.file.createFile(reportPath + userDir + reportName)
-					var success = printFile.setBytes(PDFByteArray,true)
+					var success = printFile.setBytes(source,true)
 					
 					//download pdf
 					if (success) {
@@ -234,6 +260,22 @@ var print = new function() {
 							'Smart client',
 							'API call not implemented\nUse the web!'
 					)
+			}
+		}
+		//this is a url, feed it to the preview routine
+		else if (typeof source == 'string') {
+			//webclient
+			if (solutionPrefs.config.webClient) {
+				plugins.WebClientUtils.executeClientSideJS('window.parent.printSave("' + source + '");')
+				return source
+			}
+			//smart client, use standard print preview
+			else {
+				globals.DIALOGS.showInfoDialog(
+							'Smart client',
+							'API call not implemented\nUse the web!'
+					)
+				
 			}
 		}
 	}
@@ -411,6 +453,9 @@ var webURLSetStatus = true;
 function webURLSet(pageTitle,pageURL,pageData,delay,replace) {
 	//update url with the pk for this record
 	if (solutionPrefs.config.webClient && globals.DATASUTRA_router_enable) {
+		//only show debug messages on troy's computer
+		var itsTroy = utils.stringPatternCount(plugins.sutra.getWorkspace(),'/Users/troj/Documents/Serclipse')
+		
 		if (webURLSetStatus) {
 			//pass in null string when no pageData specified
 			if (!pageData) {
@@ -426,7 +471,7 @@ function webURLSet(pageTitle,pageURL,pageData,delay,replace) {
 			//replace current history item
 			if (replace) {
 				plugins.WebClientUtils.executeClientSideJS('window.parent.routerReplace(' + pageData + ',"' + pageTitle + '","' + pageURL + '");')
-				application.output(globals.CODE_debug_context(arguments.callee,null,true) + 'replaced ' + pageURL,LOGGINGLEVEL.DEBUG)
+				if (itsTroy) {application.output(globals.CODE_debug_context(arguments.callee,null,true) + 'replaced ' + pageURL,LOGGINGLEVEL.DEBUG)}
 			}
 			//push to history stack
 			else {
@@ -434,12 +479,12 @@ function webURLSet(pageTitle,pageURL,pageData,delay,replace) {
 					delay = 0
 				}
 				plugins.WebClientUtils.executeClientSideJS('window.parent.routerDelay(' + pageData + ',"' + pageTitle + '","' + pageURL + '",' + delay + ');')
-				application.output(globals.CODE_debug_context(arguments.callee,null,true) + 'pushed ' + pageURL,LOGGINGLEVEL.DEBUG)
+				if (itsTroy) {application.output(globals.CODE_debug_context(arguments.callee,null,true) + 'pushed ' + pageURL,LOGGINGLEVEL.DEBUG)}
 			}
 		}
 		//skipping for some reason
 		else {
-			application.output(globals.CODE_debug_context(arguments.callee,null,true) + 'skipped',LOGGINGLEVEL.DEBUG)
+			if (itsTroy) {application.output(globals.CODE_debug_context(arguments.callee,null,true) + 'skipped',LOGGINGLEVEL.DEBUG)}
 		}
 	}
 }
@@ -630,6 +675,9 @@ function webCallbacks() {
 		var jsCallback = 'function dsNavigate(){' + callback + '}';
 		plugins.WebClientUtils.executeClientSideJS('callbackConfig(' + jsCallback + ');')
 	}
+	
+	//adjust transaction z-index client-side to get around 1st time not working
+	plugins.WebClientUtils.executeClientSideJS("$('#" + plugins.WebClientUtils.getElementMarkupId(forms.DATASUTRA_WEB_0F__header__actions.elements.btn_edit) + "').on('click','span',function(){triggerInterfaceLock(true);});")
 }
 
 /**
