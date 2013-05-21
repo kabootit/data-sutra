@@ -162,7 +162,7 @@ if (forms[formName] && forms[formName].elements[tabPanelName]) {
  *
  * @properties={typeid:24,uuid:"1d11e845-6036-42a2-8367-5c8d524edad3"}
  */
-function GRID_change(formName,buttonName,tabPanelName,prefix,btnAdd,btnActions,btnHelp,lblDivider)
+function GRID_change(formName,buttonName,tabPanelName,prefix,btnAdd,btnActions,btnHelp,lblDivider,currentTab)
 {
 
 /*
@@ -213,6 +213,7 @@ var btnAdd = (arguments[4]) ? arguments[4] : 'btn_add'
 var btnActions = (arguments[5]) ? arguments[5] : 'btn_actions'
 var btnHelp = (arguments[6]) ? arguments[6] : 'btn_help'
 var lblDivider = (arguments[7]) ? arguments[7] : 'lbl_' + tabPanelName + '_divider'
+var currentTab = (arguments[8]) ? arguments[8] : forms[formName].elements[tabPanelName].tabIndex
 
 //make sure that element clicked is actually a custom tab controller
 if (!utils.stringPatternCount(buttonName,prefix)) {
@@ -226,9 +227,6 @@ var tabTotal = forms[formName].elements[tabPanelName].getMaxTabIndex()
 if (!tabTotal) {
 	return
 }
-
-//get current tab
-var currentTab = forms[formName].elements[tabPanelName].tabIndex
 
 function webFontAdjust(fontString) {
 	if (solutionPrefs.config.webClient) {
@@ -313,7 +311,7 @@ if (buttonName) {
 	if (forms[tabFormName]) {
 		var txnEnable = (solutionPrefs.config.webClient && application.__parent__.navigationPrefs && solutionPrefs.config.currentFormID) ? (navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].transactions ? true : false) : false
 		
-		var showAdd = (forms[tabFormName].REC_new && !txnEnable || (txnEnable && scopes.DS.transaction.getStatus())) ? true : false
+		var showAdd = forms[tabFormName].REC_new && (!txnEnable || (txnEnable && (scopes.DS.transaction.getStatus() || forms[tabFormName].TXN_new))) ? true : false
 		var showActions = (forms[tabFormName].ACTIONS_list) ? true : false
 		var showDivider = showAdd && showActions
 		var showHelp = false
@@ -626,13 +624,14 @@ function GRID_actions__detail(event,formName) {
 }
 
 /**
- * @param {JSEvent} [event]
- * @param {String} [formName]
- * @param {String} [elemName]
+ * @param {JSEvent}	[event]
+ * @param {String}	[formName]
+ * @param {String}	[elemName]
+ * @param {Number}	[selectedTab]
  * 
  * @properties={typeid:24,uuid:"98E39441-7771-41AB-857A-0D1090C5011E"}
  */
-function GRID_change__detail(event,formName,elemName) {
+function GRID_change__detail(event,formName,elemName,selectedTab) {
 	if (event instanceof JSEvent) {
 		//no form name specified, try to get from event
 		if (!formName) {
@@ -652,7 +651,8 @@ function GRID_change__detail(event,formName,elemName) {
 			'btn_add',
 			'btn_actions',
 			'btn_help',
-			'lbl_tab_detail_divider'
+			'lbl_tab_detail_divider',
+			selectedTab
 		)
 }
 
@@ -731,13 +731,14 @@ function GRID_actions__list(event,formName) {
 }
 
 /**
- * @param {JSEvent} [event]
- * @param {String} [formName]
- * @param {String} [elemName]
+ * @param {JSEvent}	[event]
+ * @param {String}	[formName]
+ * @param {String}	[elemName]
+ * @param {Number}	[selectedTab]
  * 
  * @properties={typeid:24,uuid:"9BFB8469-3A06-4129-9A6E-56E07AFCB59E"}
  */
-function GRID_change__list(event,formName,elemName) {
+function GRID_change__list(event,formName,elemName,selectedTab) {
 	if (event instanceof JSEvent) {
 		//no form name specified, try to get from event
 		if (!formName) {
@@ -757,7 +758,8 @@ function GRID_change__list(event,formName,elemName) {
 			'btn_list_add',
 			'btn_list_actions',
 			'btn_list_help',
-			'lbl_tab_list_divider'
+			'lbl_tab_list_divider',
+			selectedTab
 		)
 }
 
@@ -836,13 +838,14 @@ function GRID_actions__primary(event,formName) {
 }
 
 /**
- * @param {JSEvent} [event]
- * @param {String} [formName]
- * @param {String} [elemName]
+ * @param {JSEvent}	[event]
+ * @param {String}	[formName]
+ * @param {String}	[elemName]
+ * @param {Number}	[selectedTab]
  * 
  * @properties={typeid:24,uuid:"B0BE29D2-B40A-4FA2-84B1-1C643C7E4A6D"}
  */
-function GRID_change__primary(event,formName,elemName) {
+function GRID_change__primary(event,formName,elemName,selectedTab) {
 	if (event instanceof JSEvent) {
 		//no form name specified, try to get from event
 		if (!formName) {
@@ -862,7 +865,8 @@ function GRID_change__primary(event,formName,elemName) {
 			'btn_primary_add',
 			'btn_primary_actions',
 			'btn_primary_help',
-			'lbl_tab_primary_divider'
+			'lbl_tab_primary_divider',
+			selectedTab	
 		)
 }
 
@@ -941,13 +945,14 @@ function GRID_actions__secondary(event,formName) {
 }
 
 /**
- * @param {JSEvent} event
- * @param {String} [formName]
- * @param {String} [elemName]
+ * @param {JSEvent}	event
+ * @param {String}	[formName]
+ * @param {String}	[elemName]
+ * @param {Number}	[selectedTab]
  * 
  * @properties={typeid:24,uuid:"4715371F-B77E-4E00-B931-0DBE79C3E229"}
  */
-function GRID_change__secondary(event,formName,elemName) {
+function GRID_change__secondary(event,formName,elemName,selectedTab) {
 	if (event instanceof JSEvent) {
 		//no form name specified, try to get from event
 		if (!formName) {
@@ -967,7 +972,8 @@ function GRID_change__secondary(event,formName,elemName) {
 			'btn_secondary_add',
 			'btn_secondary_actions',
 			'btn_secondary_help',
-			'lbl_tab_secondary_divider'
+			'lbl_tab_secondary_divider',
+			selectedTab
 		)
 }
 
@@ -1046,13 +1052,14 @@ function GRID_actions__summary(event,formName) {
 }
 
 /**
- * @param {JSEvent} [event]
- * @param {String} [formName]
- * @param {String} [elemName]
+ * @param {JSEvent}	[event]
+ * @param {String}	[formName]
+ * @param {String}	[elemName]
+ * @param {Number}	[selectedTab]
  * 
  * @properties={typeid:24,uuid:"C03F856C-B58B-46FE-B51B-9558D76FF926"}
  */
-function GRID_change__summary(event,formName,elemName) {
+function GRID_change__summary(event,formName,elemName,selectedTab) {
 	if (event instanceof JSEvent) {
 		//no form name specified, try to get from event
 		if (!formName) {
@@ -1072,7 +1079,8 @@ function GRID_change__summary(event,formName,elemName) {
 			'btn_summary_add',
 			'btn_summary_actions',
 			'btn_summary_help',
-			'lbl_tab_summary_divider'
+			'lbl_tab_summary_divider',
+			selectedTab
 		)
 }
 
