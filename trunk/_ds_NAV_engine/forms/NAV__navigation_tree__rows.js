@@ -575,4 +575,7 @@ function LIST_redraw__webclient__continue(scrollTop) {
 	if (_elementSelected) {
 		plugins.WebClientUtils.setExtraCssClass(elements[_elementSelected], 'gfxLeftHilite')
 	}
+	
+	//flip on navigation switcher immediately
+	plugins.WebClientUtils.executeClientSideJS("setTimeout(function(){$('#form_NAV__navigation_tree__rows div > div > div > span:parent:not([id])').on('click',null,function(){bigIndicator(true);});},0);")
 }
