@@ -38,7 +38,6 @@ uuid:"7CCF88FE-57F1-485E-B82B-161E8E09F8E6"
 {
 anchors:11,
 dataProviderID:"globals.DATASUTRA_find",
-displaysTags:true,
 formIndex:1,
 location:"7,6",
 name:"fld_find",
@@ -49,7 +48,6 @@ scrollbars:36,
 selectOnEnter:true,
 size:"86,23",
 styleClass:"fastfind",
-toolTipText:"Not searching any field",
 typeid:4,
 uuid:"8EF50E90-AB78-4C60-B42A-FDC752DF8010"
 },

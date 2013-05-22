@@ -865,7 +865,7 @@ if (application.__parent__.solutionPrefs) {
 //			NAV_find_set_popdown('DATE_P__search')
 
 			//set tooltiptext to find field
-			forms[findForm].elements.fld_find.toolTipText = 'Searching in "'+findValue.findName+'"'
+			forms[findForm].elements.fld_find.toolTipText = (solutionPrefs.config.webClient) ? null : 'Searching in "'+findValue.findName+'"'
 			if (fastFindStatus) {
 				navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindTip = 'Searching in "'+findValue.findName+'"'
 			}
@@ -2969,7 +2969,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			if (serverName && tableName && solutionPrefs.repository.allFormsByTable[serverName] && solutionPrefs.repository.allFormsByTable[serverName][tableName] && solutionPrefs.repository.allFormsByTable[serverName][tableName][mainTab] && !solutionPrefs.repository.allFormsByTable[serverName][tableName][mainTab].useSeparateFoundset && solutionPrefs.fastFind.currentSearch[serverName] && solutionPrefs.fastFind.currentSearch[serverName][tableName]) {
 				DATASUTRA_find = solutionPrefs.fastFind.currentSearch[serverName][tableName].lastFindValue
 				DATASUTRA_find_field = solutionPrefs.fastFind.currentSearch[serverName][tableName].lastFindField
-				forms[findForm].elements.fld_find.toolTipText = solutionPrefs.fastFind.currentSearch[serverName][tableName].lastFindTip
+				forms[findForm].elements.fld_find.toolTipText = (solutionPrefs.config.webClient) ? null : solutionPrefs.fastFind.currentSearch[serverName][tableName].lastFindTip
 				
 				navigationPrefs.byNavItemID[navigationItemID].listData.sortField = solutionPrefs.fastFind.currentSearch[serverName][tableName].sortField
 				navigationPrefs.byNavItemID[navigationItemID].listData.sortDirection = solutionPrefs.fastFind.currentSearch[serverName][tableName].sortDirection
@@ -2977,13 +2977,13 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			else {
 				DATASUTRA_find = (navigationPrefs.byNavItemID[navigationItemID].fastFind && navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFindValue) ? navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFind : null
 				DATASUTRA_find_field = (navigationPrefs.byNavItemID[navigationItemID].fastFind && navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFindField) ? navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFindField : null
-				forms[findForm].elements.fld_find.toolTipText = (navigationPrefs.byNavItemID[navigationItemID].fastFind && navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFindTip) ? navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFindTip : 'Not searching any field'
+				forms[findForm].elements.fld_find.toolTipText = (solutionPrefs.config.webClient) ? null : (navigationPrefs.byNavItemID[navigationItemID].fastFind && navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFindTip) ? navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFindTip : 'Not searching any field'
 			}
 		}
 		else {
 			DATASUTRA_find = (navigationPrefs.byNavItemID[navigationItemID].fastFind && navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFindValue) ? navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFind : null
 			DATASUTRA_find_field = (navigationPrefs.byNavItemID[navigationItemID].fastFind && navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFindField) ? navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFindField : null
-			forms[findForm].elements.fld_find.toolTipText = (navigationPrefs.byNavItemID[navigationItemID].fastFind && navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFindTip) ? navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFindTip : 'Not searching any field'
+			forms[findForm].elements.fld_find.toolTipText = (solutionPrefs.config.webClient) ? null : (navigationPrefs.byNavItemID[navigationItemID].fastFind && navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFindTip) ? navigationPrefs.byNavItemID[navigationItemID].fastFind.lastFindTip : 'Not searching any field'
 		}
 		
 		//check for default find field
@@ -2992,7 +2992,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			DATASUTRA_find_field = findInitial
 			//get pretty name for chosen column
 			var prettyFind = navigationPrefs.byNavItemID[navigationItemID].fastFind.filter(function(item){return item.columnName == findInitial})
-			forms[findForm].elements.fld_find.toolTipText = 'Searching in "' + (prettyFind.length ? prettyFind[0].findName : findInitial) + '"'
+			forms[findForm].elements.fld_find.toolTipText = (solutionPrefs.config.webClient) ? null : 'Searching in "' + (prettyFind.length ? prettyFind[0].findName : findInitial) + '"'
 		}
 		
 		//set check on display pop-down
