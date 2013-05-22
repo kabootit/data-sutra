@@ -173,7 +173,7 @@ function FORM_on_show(firstShow, event) {
 			plugins.WebClientUtils.setExtraCssClass(forms.NAV__navigation_tree__rows.elements[forms.NAV__navigation_tree__rows._elementSelected], 'gfxLeftHilite')
 			
 			//flip on navigation switcher immediately
-			plugins.WebClientUtils.executeClientSideJS("setTimeout(function(){$('#form_NAV__navigation_tree__rows div > div > div > span:parent:not([id])').on('click',null,function(){bigIndicator(true);});},0);")
+			plugins.WebClientUtils.executeClientSideJS("setTimeout(function(){$('#form_NAV__navigation_tree__rows div > div > div > span:parent:not([id])').on('click',null,function(){bigIndicator(true);});},1500);")
 		}
 	}
 }

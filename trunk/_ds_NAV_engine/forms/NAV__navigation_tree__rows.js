@@ -577,5 +577,5 @@ function LIST_redraw__webclient__continue(scrollTop) {
 	}
 	
 	//flip on navigation switcher immediately
-	plugins.WebClientUtils.executeClientSideJS("setTimeout(function(){$('#form_NAV__navigation_tree__rows div > div > div > span:parent:not([id])').on('click',null,function(){bigIndicator(true);});},0);")
+	plugins.WebClientUtils.executeClientSideJS("setTimeout(function(){$('#form_NAV__navigation_tree__rows div > div > div > span:parent:not([id])').on('click',null,function(){bigIndicator(true);});},1500);")
 }
