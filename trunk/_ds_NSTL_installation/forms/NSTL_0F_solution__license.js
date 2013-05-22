@@ -414,8 +414,12 @@ if (utils.hasRecords(foundset)) {
 	//client has not been validated, check concurrent number against license amount
 	if (!clientOK) {
 		//a trial license
-		if (license_type == 'Trial' || license_type == 'Community') {
+		if (license_type == 'Trial') {
 			var licenses = 5
+		}
+		//community gets 1000 licenses
+		else if (license_type == 'Community') {
+			var licenses = 1000
 		}
 		//a real license
 		else if (license_type == 'Purchased') {
