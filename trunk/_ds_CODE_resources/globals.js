@@ -601,7 +601,8 @@ function TRIGGER_fastfind_display_set(findText,findTooltip,findCheck,setDefault)
 		//set tooltip if provided
 		if (findTooltip != null) {
 			var findForm = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__WEB__fastfind' : baseForm + '__header__fastfind'
-			forms[findForm].elements.fld_find.toolTipText = findTooltip
+			
+			forms[findForm].elements.fld_find.toolTipText = (solutionPrefs.config.webClient) ? null : findTooltip
 		}
 	}
 }
