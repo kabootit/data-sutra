@@ -489,6 +489,9 @@ function webURLSet(pageTitle,pageURL,pageData,delay,replace) {
 				webURLSet.firstRan = true
 				plugins.WebClientUtils.executeClientSideJS("setTimeout(function(){$('#" + plugins.WebClientUtils.getElementMarkupId(forms.DATASUTRA_WEB_0F__header__actions.elements.btn_edit) + "').on('click',null,function(){triggerInterfaceLock(true);});},2000);")
 			}
+			else {
+				plugins.WebClientUtils.executeClientSideJS("setTimeout(function(){triggerInterfaceLock(true);},4000);")
+			}
 			
 			if (itsTroy) {application.output(globals.CODE_debug_context(arguments.callee,null,true) + 'skipped',LOGGINGLEVEL.DEBUG)}
 		}
