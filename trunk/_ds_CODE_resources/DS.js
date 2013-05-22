@@ -484,6 +484,12 @@ function webURLSet(pageTitle,pageURL,pageData,delay,replace) {
 		}
 		//skipping for some reason
 		else {
+			//first skips (when first launching web client) needs a little help
+			if (!webURLSet.firstRan) {
+				webURLSet.firstRan = true
+				plugins.WebClientUtils.executeClientSideJS("setTimeout(function(){$('#" + plugins.WebClientUtils.getElementMarkupId(forms.DATASUTRA_WEB_0F__header__actions.elements.btn_edit) + "').on('click',null,function(){triggerInterfaceLock(true);});},2000);")
+			}
+			
 			if (itsTroy) {application.output(globals.CODE_debug_context(arguments.callee,null,true) + 'skipped',LOGGINGLEVEL.DEBUG)}
 		}
 	}
@@ -677,7 +683,7 @@ function webCallbacks() {
 	}
 	
 	//adjust transaction z-index client-side to get around 1st time not working
-	plugins.WebClientUtils.executeClientSideJS("$('#" + plugins.WebClientUtils.getElementMarkupId(forms.DATASUTRA_WEB_0F__header__actions.elements.btn_edit) + "').on('click','span',function(){triggerInterfaceLock(true);});")
+	plugins.WebClientUtils.executeClientSideJS("$('#" + plugins.WebClientUtils.getElementMarkupId(forms.DATASUTRA_WEB_0F__header__actions.elements.btn_edit) + "').on('click',null,function(){triggerInterfaceLock(true);});")
 }
 
 /**
