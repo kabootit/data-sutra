@@ -88,12 +88,16 @@ var transaction = new function() {
 	 * 
 	 * @param {Form} form Form to modify
 	 * @param {Boolean} [toggle=true] Show/hide status
+	 * @param {String[]} [restricted=[]] Elements to be disabled always
 	 */
-	this.toggle = function(form,toggle) {
+	this.toggle = function(form,toggle,restricted) {
 		if (form) {
 			//default to showing
 			if (typeof toggle != 'boolean') {
 				toggle = true
+			}
+			if (!(restricted instanceof Array)) {
+				restricted = new Array()
 			}
 			
 			var allElems = form.elements.allnames
@@ -114,32 +118,48 @@ var transaction = new function() {
 				var pairNoedit = pairedElems[0]
 				var pairEdit = pairNoedit.substr(0,pairNoedit.length - '__no_edit'.length)
 				
-				if (form.elements[pairEdit]) {
-					form.elements[pairEdit].visible = toggle
+				//this element is not editable
+				if (restricted.indexOf(pairEdit) != -1) {
+					var display = false
 				}
-				form.elements[pairNoedit].visible = !toggle
+				else {
+					display = toggle
+				}
+				
+				if (form.elements[pairEdit]) {
+					form.elements[pairEdit].visible = display
+				}
+				form.elements[pairNoedit].visible = !display
 			}
 			
 			//normal elements get editability and transparency toggled
 			for (var i = 0; i < normalElems.length; i++) {
 				var elem = normalElems[i]
 				
+				//this element is not editable
+				if (restricted.indexOf(elem) != -1) {
+					display = false
+				}
+				else {
+					display = toggle
+				}
+				
 				//checks are not editable, try enabled
 				if (solutionModel.getForm(form.controller.getName()).getComponent(elem).displayType == JSField.CHECKS && typeof form.elements[elem].enabled != 'undefined') {
-					form.elements[elem].enabled = toggle
+					form.elements[elem].enabled = display
 					
 					//can set transparent on this property
 					if (typeof form.elements[elem].transparent != undefined) {
-						form.elements[elem].transparent = toggle
+						form.elements[elem].transparent = display
 					}
 				}
 				//can set editable on this property
 				else if (form.elements[elem] && typeof form.elements[elem].editable != 'undefined') {
-					form.elements[elem].editable = toggle
+					form.elements[elem].editable = display
 					
 					//can set transparent on this property
 					if (typeof form.elements[elem].transparent != undefined) {
-						form.elements[elem].transparent = toggle
+						form.elements[elem].transparent = display
 					}
 				}
 			}
