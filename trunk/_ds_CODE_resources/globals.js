@@ -6678,3 +6678,37 @@ function CODE_debug_context(callee,control,separator) {
 	
 	return whereAt
 }
+
+/**
+ * Debug appropriately in smart/web clients
+ * 
+ * To turn on, "run globals.CODE_debug_log.enabled = true" in konsole
+ * or the same command without run from developer's command console
+ * 
+ * @param {String}	msg Message to output
+ * @param {Number}	[level=LOGGINGLEVEL.DEBUG] Optional logging level
+ *
+ * @properties={typeid:24,uuid:"98ACA3EC-2038-4C22-A6E2-302FFFC04E8C"}
+ */
+function CODE_debug_log(msg,level) {
+	//no level specified, use debug
+	if (!level) {
+		level = LOGGINGLEVEL.DEBUG
+	}
+	
+	//enabled or not
+	if (CODE_debug_log.enabled) {
+		//webclient
+		if (application.__parent__.solutionPrefs && solutionPrefs.config.webClient) {
+			plugins.WebClientUtils.executeClientSideJS('console.log("' + msg + '");')
+		}
+		//smart client (assumed)
+		else {
+			application.output(msg,level)
+		}
+	}
+	//when smart client and not developer, always log when level specified
+	else if (arguments[1]) {
+		application.output(msg,level)
+	}
+}
