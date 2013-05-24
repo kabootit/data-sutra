@@ -1398,6 +1398,10 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 					forms[navigationPrefs.byNavItemID[currentNavItem].listData.tabFormInstance].controller.loadRecords(initialFS)
 					//forms.NAV_T_universal_list.DISPLAY_cycle(true)
 				}
+				else {
+					//make sure big blocker turned off (only an issue when no UL, but fast find)
+					scopes.DS.webBlockerCentered(false)
+				}
 				
 				forms[findForm].elements.fld_find.requestFocus(true)
 			}
