@@ -516,8 +516,9 @@ div.wicket-modal div.w_caption {
 
 /*Styling the dialog close button*/
 div.wicket-modal div.w_blue a.w_close {
-	background-image: url(/servoy-webclient/templates/datasutra/images/blank.png) !important;
-	background-image: url(/servoy-webclient/templates/datasutra/images/blank.png) !important;
+	display: none !important;
+/*	background-image: url(/servoy-webclient/templates/datasutra/images/blank.png) !important;
+	background-image: url(/servoy-webclient/templates/datasutra/images/blank.png) !important;*/
 }
 
 /*disabling default dialog styling*/
@@ -830,6 +831,8 @@ img[alt="Remove media"] {
 .yuimenubaritem,
 .yuimenuitemlabel  {
 /*    text-shadow: #fff 0 1px 0;*/
+	border-top: solid 1px transparent !important;
+	border-bottom: solid 1px transparent !important;
 }
 
 .yuimenuitem-selected,
@@ -839,6 +842,18 @@ img[alt="Remove media"] {
 	color: black;
 	text-decoration: none;
 	outline-width: 0;
+}
+
+.yuimenuitem-selected,
+.yuimenubaritem-selected {
+    background-color:#d1d1d1 !important;
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ebebeb', endColorstr='#a1a1a1') !important; /* for IE */
+	background: -webkit-gradient(linear, left top, left bottom, from(#ebebeb), to(#a1a1a1)) !important; /* for webkit browsers */
+	background: -moz-linear-gradient(top,  #ebebeb,  #a1a1a1) !important; /* for firefox 3.6+ */
+    text-decoration:none !important;
+    color:#000000 !important;
+	border-top: solid 1px #6d6d6d !important;
+	border-bottom: solid 1px #6d6d6d !important;
 }
 
 .yuimenuitem a.selected,
