@@ -46,7 +46,6 @@ uuid:"5967C4F2-FE12-4175-8C43-23EAAD4F3EED"
 background:"#ffffff",
 extendsID:"8EF50E90-AB78-4C60-B42A-FDC752DF8010",
 formIndex:1,
-location:"0,6",
 onActionMethodID:"9396FD73-63FD-45EF-B3F9-D104B7AA5A46",
 size:"156,23",
 toolTipText:null,

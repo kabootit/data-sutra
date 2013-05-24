@@ -347,7 +347,7 @@ if (globals.NAV_find_relation != '-') {
 						}
 						//columnName not in columnNameStored, so add to sutra_column
 						else {
-							forms[colFormName].controller.newRecord(false,true)
+							forms[colFormName].controller.newRecord(false)
 							forms[colFormName].name_column = colName
 							forms[colFormName].type_column = colType
 							forms[colFormName].id_navigation_item = navItem
