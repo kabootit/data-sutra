@@ -115,7 +115,7 @@ var transaction = new function() {
 			
 			//special elements get visibility toggle
 			for (var i = 0; i < pairedElems.length; i++) {
-				var pairNoedit = pairedElems[0]
+				var pairNoedit = pairedElems[i]
 				var pairEdit = pairNoedit.substr(0,pairNoedit.length - '__no_edit'.length)
 				
 				//this element is not editable
