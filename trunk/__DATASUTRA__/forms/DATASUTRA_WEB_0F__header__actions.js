@@ -199,7 +199,7 @@ function EDIT_elements() {
 /**
  * Perform the element default action.
  *
- * @param {JSEvent} event the event that triggered the action
+ * @param {JSEvent} [event] the event that triggered the action
  *
  * @properties={typeid:24,uuid:"EB7C403A-0777-4FEC-A0EF-54D1E74C53E6"}
  */
