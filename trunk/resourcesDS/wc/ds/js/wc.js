@@ -408,6 +408,9 @@ switch (dsFactor()) {
 	setTimeout(function(){
 		//custom overrides on a client by client basis
 		$('head').append('<link rel="stylesheet" type="text/css" href="/ds/css/ds.custom.css" />');
+		
+		//custom overrides on a client by client basis
+		$('head').append('<script type="text/javascript" src="/ds/js/ds.custom.js"></script>');		
 	},delayTime)
 })();
 
