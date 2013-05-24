@@ -5881,8 +5881,8 @@ function DS_router_url(path,itemID,pk,record,pushHix) {
 					if (skipPretty) {
 						urlString += '/' + recID
 					}
-					//display human readable form of record
-					else {
+					//display human readable form of record when UL turned on
+					else if (navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].navigationItem.useFwList) {
 						urlString += '/' + recName + '/' + recID
 					}
 				}
