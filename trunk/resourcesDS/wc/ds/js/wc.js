@@ -352,33 +352,8 @@ switch (dsFactor()) {
 		//	Extend jQuery to give us css4 parent selectors (https://github.com/Idered/cssParentSelector)
 		$('head').append('<script type="text/javascript" src="/ds/js/lib/jQuery.cssParentSelector.min.js"></script>');
 		
-		//	Allow for disabling of selection
-	    $.fn.disableSelection = function() {
-	        return this
-	                 .attr('unselectable', 'on')
-	                 .css({
-							'user-select': 'none',
-							'-moz-user-select': 'none',
-							'-khtml-user-select': 'none',
-							'-o-user-select': 'none',
-							'-webkit-user-select': 'none'
-						})
-	                 .on('selectstart', false);
-		}
-		
-		//	Extend jquery to be able to remove styles (http://stackoverflow.com/questions/2465158)
-	 	$.fn.removeStyle = function(style)
-	 	{
-	 		var search = new RegExp(style + '[^;]+;?', 'g');
-
-	 		return this.each(function()
-	 		{
-	 			$(this).attr('style', function(i, style)
-	 			{
-	 				return style.replace(search, '');
-	 			});
-	 		});
-	 	};
+		//	Extend jQuery style handling
+		$('head').append('<script type="text/javascript" src="/ds/js/lib/jquery.style.js"></script>');
 	},1000)
 })(jQuery);
 
@@ -397,7 +372,9 @@ switch (dsFactor()) {
 //  Lazy load pdf.js library
 (function(){
 	setTimeout(function(){
-		window.parent.printInit();
+		if (window.parent.printInit != undefined) {
+			window.parent.printInit();
+		}
 	},90000)
 })();
 
@@ -410,7 +387,7 @@ switch (dsFactor()) {
 		$('head').append('<link rel="stylesheet" type="text/css" href="/ds/css/ds.custom.css" />');
 		
 		//custom overrides on a client by client basis
-		$('head').append('<script type="text/javascript" src="/ds/js/ds.custom.js"></script>');		
+		$('head').append('<script type="text/javascript" src="/ds/js/ds.custom.js"></script>');
 	},delayTime)
 })();
 
@@ -994,9 +971,9 @@ function styleCSS4Parent() {
 				comboParents.each(function(){$(this).removeClass(this.className)});
 				
 				//(re-)apply
-				$.fn.cssParentSelector();
+				$().cssParentSelector();
 				
-				// console.log('Styled');
+				//console.log('Styled');
 		}
 	}
 }
