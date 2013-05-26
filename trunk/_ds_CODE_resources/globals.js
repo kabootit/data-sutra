@@ -3372,7 +3372,7 @@ function CODE_date_format()
  *			  	2) how to format (optional)
  *			  		- 'full' format – Tuesday, January 1, 1970 (default)
  *			  		- 'current' format – (see Preferences for i18n format)
- *			  		- 'specify' format – (see http://java.sun.com/j2se/1.4.2/docs/api/java/text/SimpleDateFormat.html for all options)
+ *			  		- 'specify' format – (see http://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html for all options)
  *			  	3) custom format string (optional)
  *			  	4) locale to format date in (optional)
  *			  	
@@ -6687,13 +6687,29 @@ function CODE_debug_context(callee,control,separator) {
  * 
  * @param {String}	msg Message to output
  * @param {Number}	[level=LOGGINGLEVEL.DEBUG] Optional logging level
+ * @param {JSFile}	[file] File to append this log to
  *
  * @properties={typeid:24,uuid:"98ACA3EC-2038-4C22-A6E2-302FFFC04E8C"}
  */
-function CODE_debug_log(msg,level) {
+function CODE_debug_log(msg,level,file) {
 	//no level specified, use debug
 	if (!level) {
 		level = LOGGINGLEVEL.DEBUG
+	}
+	
+	function appendLog() {
+		var levelMap = {
+				0 : 'DEBUG',
+				3 : 'ERROR',
+				4 : 'FATAL',
+				1 : 'INFO',
+				2 : 'WARNING'
+			}
+		
+		plugins.file.appendToTXTFile(
+				file,
+				globals.CODE_date_format(null,'specify','yyyy-MM-dd HH:mm:ss.SSS') + ' [' + levelMap[level] + '] ' + msg + '\n'
+			)
 	}
 	
 	//enabled or not
@@ -6706,9 +6722,11 @@ function CODE_debug_log(msg,level) {
 		else {
 			application.output(msg,level)
 		}
+		appendLog()
 	}
-	//when smart client and not developer, always log when level specified
+	// always log when level specified
 	else if (arguments[1]) {
 		application.output(msg,level)
+		appendLog()
 	}
 }
