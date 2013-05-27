@@ -308,8 +308,10 @@ function DATASUTRA_close()
 					}						
 				
 					//mark this client as non-validated
-					application.setUserProperty('sutraValid-' + application.getSolutionName() + '-' + application.getServerURL().substr(7),'false')
-				
+					if (application && application.getSolutionName && application.getServerURL) {
+						application.setUserProperty('sutraValid-' + application.getSolutionName() + '-' + application.getServerURL().substr(7),'false')
+					}
+					
 					//when closed from logout option in action wheel, will reopen
 					//when closed from x icon in windowing, will close client
 					application.closeSolution(application.getSolutionName())
