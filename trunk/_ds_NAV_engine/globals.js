@@ -239,6 +239,7 @@ var NAV_universal_selected_tab = '';
 /**
  *
  * @properties={typeid:24,uuid:"94b6d117-2046-4255-8994-dfc4477a34f4"}
+ * @AllowToRunInFind
  */
 function NAV_find_clear()
 {
@@ -267,10 +268,14 @@ if (application.__parent__.solutionPrefs) {
 	var formName = solutionPrefs.config.currentFormName
 	var fastFindEnabled = navigationPrefs.byNavItemID[currentNavItem].fastFind
 	var findForm = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__WEB__fastfind' : baseForm + '__header__fastfind'
+	//base form where searching originates has been overridden
+	if (fastFindEnabled && navigationPrefs.byNavItemID[currentNavItem].fastFind.searchForm) {
+		formName = navigationPrefs.byNavItemID[currentNavItem].fastFind.searchForm
+	}
 	
 	//first time find is cleared, there is no value, so we set at a second to make sure and trigger the rest of the method
 	var timeElapsed = (solutionPrefs.fastFind.findClear) ? new Date() - solutionPrefs.fastFind.findClear : 1000
-	
+			
 	//only actually run this method if greater than 250 ms has passed since last time find was cleared
 	//and find values configured
 	if (timeElapsed > 250) { // && navigationPrefs.byNavItemID[currentNavItem].fastFind) {
@@ -288,12 +293,22 @@ if (application.__parent__.solutionPrefs) {
 			var searchingTip = navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindTip
 		}
 		
+		//if form is set as empty default foundset, clear
+		if (solutionModel.getForm(formName).namedFoundSet == JSForm.EMPTY_FOUNDSET) {
+			forms[formName].foundset.clear()
+			
+			if (forms[formName] && forms[formName].FIND_post_process) {
+				forms[formName].FIND_post_process()
+			}
+		}
 		//remove find restrictions
-		var allObject = new Object()
-		allObject.findName = '<html><strong><em>Show all</em></strong>'
-		allObject.columnName = 'Show all'
-		allObject.columnType = 'SHOWALL'
-		NAV_find_fields_control(allObject)
+		else {
+			var allObject = new Object()
+			allObject.findName = '<html><strong><em>Show all</em></strong>'
+			allObject.columnName = 'Show all'
+			allObject.columnType = 'SHOWALL'
+			NAV_find_fields_control(allObject)
+		}
 		
 		//re-select selected field (checkmark)
 		if (fastFindEnabled) {
