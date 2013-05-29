@@ -637,8 +637,11 @@ function TRIGGER_fastfind_display_set(findText,findTooltip,findCheck,setDefault)
  *			toolTip		: 'ToolTip displayed when fast find item hovered over'
  *		})
  *	
- *	//where do we want to find on it (only needed if searching not on the main form
+ *	//where do we want to find on it (only needed if searching not on the main form)
  *	findOV.searchForm = 'my_form'
+ *	
+ *	//if record searched for that is filtered from view, allow to view it
+ *	findOV.lenient = true
  *	
  *	//override fast find
  *	globals.TRIGGER_fastfind_override(findOV)
@@ -669,7 +672,14 @@ function TRIGGER_fastfind_override(findOverride,itemID) {
 					thisNav.fastFindInitial = CODE_copy_object(thisNav.fastFind)
 				}
 				
-				thisNav.fastFind = findOverride
+				//there are find items to search on
+				if (findOverride.length) {
+					thisNav.fastFind = findOverride
+				}
+				//nothing configured, but lenient mode enabled
+				else if (findOverride.lenient) {
+					thisNav.fastFind.lenient = true
+				}
 			}
 			//revert to default
 			else {
