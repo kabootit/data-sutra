@@ -875,6 +875,7 @@ if (application.__parent__.solutionPrefs) {
 			forms.DATE_P__search.FrameworksFastFind = true
 
 			CODE_form_in_dialog(forms.DATE_P__search,-1,-1,-1,-1,"Search",false,false,'datePicker')
+			scopes.DS.continuation.start(scopes.DS.continuation.setLocation('DATE_P__search'))
 
 //			//load form into fastfind tab panel
 //			NAV_find_set_popdown('DATE_P__search')
@@ -1175,6 +1176,8 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		if (colType == "DATETIME" && searchValue == null) {
 			forms.DATE_P__search.FrameworksFastFind = true
 			CODE_form_in_dialog(forms.DATE_P__search,-1,-1,-1,-1,"Search",false)
+			
+			scopes.DS.continuation.start(scopes.DS.continuation.setLocation('DATE_P__search'))
 		}
 		
 		//if no value to search for, quit
@@ -1255,9 +1258,22 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			if (keyPressed == 1) { //shift for reduce
 				var count = forms[formName].controller.search(false, true)
 				
+				//lenient mode turned on, hold on to the foundset
+				if (navigationPrefs.byNavItemID[currentNavItem].fastFind.lenient) {
+					var duped = forms[formName].foundset.duplicateFoundSet()
+				}
+				
 				//execute restriction if required; if restricted, reset the count
 				if (NAV_foundset_restrict(true,null,true)) {
-					count = forms[formName].foundset.getSize()
+					var newCount = forms[formName].foundset.getSize()
+					
+					//we're lenient
+					if (navigationPrefs.byNavItemID[currentNavItem].fastFind.lenient && !newCount && count == 1) {
+						forms[formName].foundset.loadRecords(duped)
+					}
+					else {
+						count = newCount
+					}
 				}
 				
 				//LOG find
@@ -1275,9 +1291,22 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			else if (keyPressed == 2) { //control for extend
 				var count = forms[formName].controller.search(false, false)
 				
+				//lenient mode turned on, hold on to the foundset
+				if (navigationPrefs.byNavItemID[currentNavItem].fastFind.lenient) {
+					var duped = forms[formName].foundset.duplicateFoundSet()
+				}
+				
 				//execute restriction if required; if restricted, reset the count
 				if (NAV_foundset_restrict(true,null,true)) {
-					count = forms[formName].foundset.getSize()
+					var newCount = forms[formName].foundset.getSize()
+					
+					//we're lenient
+					if (navigationPrefs.byNavItemID[currentNavItem].fastFind.lenient && !newCount && count == 1) {
+						forms[formName].foundset.loadRecords(duped)
+					}
+					else {
+						count = newCount
+					}
 				}
 				
 				//LOG find
@@ -1305,9 +1334,22 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			else if (keyPressed == 8) { //option/alt for omit
 				var count = forms[formName].controller.search()
 				
+				//lenient mode turned on, hold on to the foundset
+				if (navigationPrefs.byNavItemID[currentNavItem].fastFind.lenient) {
+					var duped = forms[formName].foundset.duplicateFoundSet()
+				}
+				
 				//execute restriction if required; if restricted, reset the count
 				if (NAV_foundset_restrict(true,null,true)) {
-					count = forms[formName].foundset.getSize()
+					var newCount = forms[formName].foundset.getSize()
+					
+					//we're lenient
+					if (navigationPrefs.byNavItemID[currentNavItem].fastFind.lenient && !newCount && count == 1) {
+						forms[formName].foundset.loadRecords(duped)
+					}
+					else {
+						count = newCount
+					}
 				}
 				
 				//there is something to omit
@@ -1362,9 +1404,22 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 					var count = forms[formName].controller.search()
 				}
 				
+				//lenient mode turned on, hold on to the foundset
+				if (navigationPrefs.byNavItemID[currentNavItem].fastFind.lenient) {
+					var duped = forms[formName].foundset.duplicateFoundSet()
+				}
+				
 				//execute restriction if required; if restricted, reset the count
 				if (NAV_foundset_restrict(true,null,true)) {
-					count = forms[formName].foundset.getSize()
+					var newCount = forms[formName].foundset.getSize()
+					
+					//we're lenient
+					if (navigationPrefs.byNavItemID[currentNavItem].fastFind.lenient && !newCount && count == 1) {
+						forms[formName].foundset.loadRecords(duped)
+					}
+					else {
+						count = newCount
+					}
 				}
 				
 				//LOG find
