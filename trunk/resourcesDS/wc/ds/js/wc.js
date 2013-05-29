@@ -81,6 +81,14 @@ function centerForm(formName) {
 					'z-index':1000
 				});
 			indicator.activity({segments: 12, align: 'left', valign: 'top', steps: 3, width:2, space: 1, length: 3, color: '#777777', speed: 1.5});
+			
+			//listen for error calling server text and blow spinny cursor back in
+			$("#servoy_page").on('mousemove',null,function() {
+				if ($("#indicator").text() == 'Error calling server') {
+					$("#indicator").html('');
+					$("#indicator").activity({segments: 12, align: 'left', valign: 'top', steps: 3, width:2, space: 1, length: 3, color: '#777777', speed: 1.5});
+				}
+			})
 		}
 		
 		//MEMO: sutraBusy is class for this indicator: $('#indicator .sutraBusy');
@@ -349,12 +357,12 @@ switch (dsFactor()) {
 		//	Extend jQuery to give us scrollstart / scrollstop events (https://github.com/ssorallen/jquery-scrollstop)
 		$('head').append('<script type="text/javascript" src="/ds/js/lib/jquery.scrollstop.js"></script>');
 		
-		//	Extend jQuery to give us css4 parent selectors (https://github.com/Idered/cssParentSelector)
-		$('head').append('<script type="text/javascript" src="/ds/js/lib/jQuery.cssParentSelector.min.js"></script>');
-		
 		//	Extend jQuery style handling
 		$('head').append('<script type="text/javascript" src="/ds/js/lib/jquery.style.js"></script>');
-	},1000)
+		
+		//	Extend jQuery to give us css4 parent selectors (https://github.com/Idered/cssParentSelector)
+		$('head').append('<script type="text/javascript" src="/ds/js/lib/jQuery.cssParentSelector.min.js"></script>');
+	},1250)
 })(jQuery);
 
 //  Add extra class to html tag when this is ie	
@@ -378,7 +386,7 @@ switch (dsFactor()) {
 	},90000)
 })();
 
-//  Pump in extra stylesheets at the end of head so that overwrite existing 
+//  Pump in client custom css and js
 (function(){
 	var delayTime = 3500
 	
