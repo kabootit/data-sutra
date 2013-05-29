@@ -148,7 +148,7 @@ var transaction = new function() {
 			databaseManager.saveData()
 		}
 		
-		status = databaseManager.setAutoSave(true)
+		status = !databaseManager.setAutoSave(true)
 		
 		return status
 	}
@@ -162,9 +162,9 @@ var transaction = new function() {
 	this.cancel = function(record) {
 		databaseManager.revertEditedRecords()
 		
-		status = databaseManager.setAutoSave(true)
+		status = !databaseManager.setAutoSave(true)
 		
-		return status
+		return !status
 	}
 	
 	/**
