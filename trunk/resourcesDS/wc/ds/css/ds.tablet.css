@@ -12,18 +12,18 @@ div.check div label {
 	vertical-align: -10%;
 }
 
-#report {
+#overlay {
 	-webkit-overflow-scrolling: touch;
 }
 
 @media only screen and (orientation:landscape) { 
-    #report { 
+    #overlay { 
 		width: 900px;
 		margin-left: -450px;
 	}
 }
 @media only screen and (orientation:portrait) {
-    #report { 
+    #overlay { 
 		width: 700px;
 		margin-left: -350px;
 	}

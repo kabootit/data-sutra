@@ -12,20 +12,73 @@
  */
 
 /*
- *	This file is for managing print preview.
+ *	This file is for managing the print preview and URL overlay.
  */
+
+// close overlay frame and turn off blocker
+function overlayClose() {	
+	document.getElementById('blocker').style.display = 'none';
+	document.getElementById('overlay').style.display = 'none';
+	
+	var url = document.getElementById('overlay_url')
+	if (url) {
+		url.style.display = 'none';
+	}
+	var pdf = document.getElementById('report_pdf')
+	if (pdf) {
+		pdf.style.display = 'none';
+	}
+	
+	return false;
+}
+
+// show overlay frame
+function overlayShow() {
+	document.getElementById('blocker').style.display = 'block';
+	document.getElementById('overlay').style.display = 'block';
+}
+
+// load URL
+function urlLoad(input) {
+	var container = document.getElementById('content');
+	var url = document.getElementById('overlay_url');
+	
+	//has been inited, whack it
+	if (url) {
+		url.parentNode.removeChild(url);
+	}
+	
+	//iframe to hold web stuff
+	var iframeHeader = document.createElement('IFRAME');
+	iframeHeader.id = 'overlay_url';
+	iframeHeader.name = 'overlay_url';
+	iframeHeader.src = input;
+	iframeHeader.width = '100%';
+	iframeHeader.height = '100%';
+	iframeHeader.scrolling = 'no';
+	iframeHeader.frameBorder = 0;
+	iframeHeader.seamless = 'seamless';
+			
+	// iframe load
+	container.appendChild(iframeHeader);
+	
+	//show it
+	document.getElementById('overlay_url').style.display = 'block';
+	overlayShow();
+}
 
 // load dummy report to get library primed for future use
 function printInit() {
-	var reportContent = document.getElementById('content');
+	var container = document.getElementById('content');
+	var report = document.getElementById('report_pdf');
 	
 	//has not been inited yet
-	if (reportContent.innerHTML == "") {
+	if (!report) {
 		//iframe to hold pdf.js stuff
 		var iframeHeader = document.createElement('IFRAME');
 		iframeHeader.id = 'report_pdf';
 		iframeHeader.name = 'report_pdf';
-		iframeHeader.src = '/js/lib/pdf.js/viewer.html?file=' + encodeURIComponent('/reports/blank.pdf');
+		iframeHeader.src = '/js/lib/pdf.js/viewer.html?file=/reports/blank.pdf';
 		iframeHeader.width = '100%';
 		iframeHeader.height = '100%';
 		iframeHeader.scrolling = 'no';
@@ -33,21 +86,8 @@ function printInit() {
 		iframeHeader.seamless = 'seamless';
 			
 		// iframe load
-		reportContent.appendChild(iframeHeader);
+		container.appendChild(iframeHeader);
 	}
-}
-
-// close report frame and turn off blocker
-function printClose() {	
-	document.getElementById('blocker').style.display = 'none';
-	document.getElementById('report').style.display = 'none';
-	return false;
-}
-
-// show reporsetTimeout(t
-function printShow() {
-	document.getElementById('blocker').style.display = 'block';
-	document.getElementById('report').style.display = 'block';
 }
 
 // load report
@@ -58,12 +98,13 @@ function printLoad(input) {
 		var wcWindow = swcWindow();
 		var pdfJS = true;
 		
-		var reportContent = document.getElementById('content');
+		var container = document.getElementById('content');
+		var report = document.getElementById('report_pdf');
 		
 		// using firefox or this type of pdf renderer requested
 		if (pdfJS || (wcWindow && wcWindow.$ && wcWindow.$.browser && wcWindow.$.browser.mozilla)) {
 			//fill with iframe if needed
-			if (reportContent.innerHTML == "") {
+			if (!report) {
 				//iframe to hold pdf.js stuff
 				var iframeHeader = document.createElement('IFRAME');
 				iframeHeader.id = 'report_pdf';
@@ -76,7 +117,7 @@ function printLoad(input) {
 				iframeHeader.seamless = 'seamless';
 			
 				// iframe load
-				reportContent.appendChild(iframeHeader);
+				container.appendChild(iframeHeader);
 			}
 			//update the pdf it is showing
 			else {
@@ -118,7 +159,8 @@ function printLoad(input) {
 			reportContent.appendChild(reportPDF);	
 		}
 		
-		printShow();
+		document.getElementById('report_pdf').style.display = 'block';
+		overlayShow();
 	}
 }
 

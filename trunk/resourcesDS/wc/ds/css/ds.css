@@ -41,7 +41,7 @@ body {
 	opacity:0.3;
 }
 
-#report {
+#overlay {
 	display: none;
 	z-index: 101;
 	position: fixed;
@@ -60,7 +60,7 @@ body {
 	-moz-box-shadow: #202020 0 0 75px;
 }
 
-#report a.close {
+#overlay a.close {
 	display: block;
 	position: absolute;
 	top: -21px;
@@ -74,13 +74,20 @@ body {
 	cursor: pointer;
 }
 
-#report a.close:focus {
+#overlay a.close:focus {
 	outline: none;
 }
 
-#report .content {
+#overlay .content {
 	width: 100%;
 	height: 100%;
+}
+
+iframe[seamless]{
+    background-color: transparent;
+    border: 0px none transparent;
+    padding: 0px;
+    overflow: hidden;
 }
 
 #download {
