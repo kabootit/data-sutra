@@ -15,6 +15,99 @@ var smallScroll = false;
 var deviceFactor = 'Desktop';
 
 /**
+ * Continuations :: Only for webclient
+ * 
+ * @properties={typeid:35,uuid:"8A02EEBC-E46C-4247-BD25-9B8F8E476526",variableType:-4}
+ */
+var continuation = new function() {
+	/**
+	 * Helper variable that does the stop portion of a continuation
+	 * @type {Continuation|undefined}
+	 * @private 
+	 */
+	var terminator = (application.getApplicationType() == APPLICATION_TYPES.WEB_CLIENT ? new Continuation() : null);
+	
+	/** Variable that stores the continuation for resumption later
+	 * @type {Continuation[]}
+	 * @private
+	 */
+	var kont = new Array();
+	
+	/**
+	 * Variable that stores continuation array position by form name
+	 * @type {Object}
+	 * @private
+	 */
+	var kontLocation = new Object();
+	
+	/**
+	 * Continuation set location (must happen before can be started).
+	 * @param {String} [formName] Name of form in dialog to associate this continuation with
+	 * @return {Number|Boolean} The slot of this continuation
+	 */
+	this.setLocation = function(formName) {
+		if (application.getApplicationType() == APPLICATION_TYPES.WEB_CLIENT) {
+			kont.push(new Continuation())
+			
+			if (formName) {
+				kontLocation[formName] = kont.length
+			}
+			
+			return kont.length
+		}
+		return false
+	}
+	
+	/**
+	 * Continuation start (pause).
+	 * @param {Number} [slot]
+	 * @param {String} [formName] Get slot based of formname (so don't need to manage kontLocation externally)
+	 * @return {Boolean}
+	 */
+	this.start = function(slot,formName) {
+		if (typeof slot != 'number') {
+			slot = kontLocation[formName]
+		}
+			
+		if (typeof slot == 'number' && kont.length && kont[slot-1]) {
+			//application.output('Starting continuation ' + slot)
+			terminator()
+		}
+		return false
+	}
+	
+	/**
+	 * Continuation stop (resume), if there is one to resume.
+	 * @param {Number} [slot]
+	 * @param {String} [formName] Name of form in dialog to close
+	 * @return {Boolean}
+	 */
+	this.stop = function(slot,formName) {
+		if (typeof slot != 'number') {
+			slot = kontLocation[formName]
+			delete kontLocation[formName]
+		}
+		
+		if (typeof slot == 'number' && kont.length && kont[slot-1]) {
+			//application.output('Stopping continuation ' + slot)
+			
+			//grab c into a variable so don't re-run this continuation holding place
+			var c = kont[slot-1]
+			kont[slot - 1] = null
+			
+//			//form in dialog hanging out there, close it down
+//			if (false) {
+//				globals.CODE_form_in_dialog_close(formName)
+//			}
+			
+			//execute continuation
+			c()
+		}
+		return false
+	}
+}
+
+/**
  * DS transaction hooks
  * 
  * @properties={typeid:35,uuid:"2E1E3EEB-3A16-4AF0-B50B-C9D93779D6CB",variableType:-4}
