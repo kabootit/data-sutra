@@ -2308,7 +2308,7 @@ if (sTo)
  */
 function SITE_adblocks()
 {
-globals.CODE_url_handler('http://www.adblocks.com/')
+globals.CODE_url_handler('http://www.adblocks.com/',null,true)
 }
 
 /**
