@@ -5007,24 +5007,39 @@ function CODE_url_handler()
  *			  	
  */ 
 
+//url to navigate to
 var webloc = arguments[0]
+// _top _blank, etc options
+var wcOpen = arguments[1]
+// open in lightbox
+var lightbox = arguments[2]
 
-var wcOpen = (application.__parent__.solutionPrefs && solutionPrefs.config && solutionPrefs.config.webClient) ? '_top' : null
+if (!wcOpen) {
+	wcOpen = (application.__parent__.solutionPrefs && solutionPrefs.config && solutionPrefs.config.webClient) ? '_top' : null
+}
 
 if (webloc) {
-	var email = utils.stringPatternCount(webloc,'@')
+	var email = utils.stringPatternCount(webloc,'@') && !utils.stringPatternCount(webloc,'://')
 	
 	//email
 	if (email) {
-		application.showURL('mailto:'+webloc)
+		application.showURL('mailto:'+webloc,'_blank')
 	}
 	//http
 	else {
-		if (utils.stringPatternCount(webloc,'://')) {
-			application.showURL(webloc,wcOpen)
+		webloc = utils.stringPatternCount(webloc,'://') ? webloc : 'http://' + webloc
+			
+		//lightbox requested and minimum requirements met
+		if (lightbox && application.__parent__.solutionPrefs && solutionPrefs.config && solutionPrefs.config.webClient && globals.DATASUTRA_router_enable) {
+			plugins.WebClientUtils.executeClientSideJS('window.parent.urlLoad("' + webloc + '");')
 		}
 		else {
-			application.showURL('http://'+webloc,wcOpen)
+			if (utils.stringPatternCount(webloc,'://')) {
+				application.showURL(webloc,wcOpen)
+			}
+			else {
+				application.showURL(webloc,wcOpen)
+			}
 		}
 	}
 }
