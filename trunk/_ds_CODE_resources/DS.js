@@ -148,7 +148,7 @@ var transaction = new function() {
 			databaseManager.saveData()
 		}
 		
-		status = !databaseManager.setAutoSave(true)
+		status = databaseManager.setAutoSave(true)
 		
 		return status
 	}
