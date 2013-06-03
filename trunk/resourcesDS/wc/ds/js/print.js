@@ -55,7 +55,7 @@ function urlLoad(input) {
 	iframeHeader.src = input;
 	iframeHeader.width = '100%';
 	iframeHeader.height = '100%';
-	iframeHeader.scrolling = 'no';
+	// iframeHeader.scrolling = 'no';
 	iframeHeader.frameBorder = 0;
 	iframeHeader.seamless = 'seamless';
 			
@@ -87,6 +87,9 @@ function printInit() {
 			
 		// iframe load
 		container.appendChild(iframeHeader);
+		
+		//hide it
+		iframeHeader.style.display = 'none';
 	}
 }
 
