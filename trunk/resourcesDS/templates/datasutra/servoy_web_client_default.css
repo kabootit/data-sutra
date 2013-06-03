@@ -517,7 +517,7 @@ div.wicket-modal div.w_caption {
 /*Styling the dialog close button*/
 div.wicket-modal div.w_blue a.w_close {
 	display: none !important;
-	margin-right: 5px;
+	margin-right: 3px;
 	background-image: url(/servoy-webclient/templates/datasutra/images/frame-grey-1-alpha.png) !important;
 /*	background-image: url(/servoy-webclient/templates/datasutra/images/blank.png) !important;
 	background-image: url(/servoy-webclient/templates/datasutra/images/blank.png) !important;*/
