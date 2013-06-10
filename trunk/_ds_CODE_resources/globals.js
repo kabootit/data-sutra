@@ -5033,7 +5033,7 @@ if (webloc) {
 	
 	//email
 	if (email) {
-		application.showURL('mailto:'+webloc,'_blank')
+		application.showURL('mailto:'+webloc,'_self')
 	}
 	//http
 	else {
