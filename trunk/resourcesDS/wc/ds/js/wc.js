@@ -251,8 +251,8 @@ switch (dsFactor()) {
 				//valid mouse location passed in
 				if ( clickPos ) {
 					function trackMouse(event,position) {
-						var maxWidth = $(document).width() - 36;
-						var maxHeight = $(document).height() - 36;
+						var maxWidth = $(document).width() - 45;
+						var maxHeight = $(document).height() - 45;
 					
 						if (event && !position) {
 							position = [event.clientX,event.clientY];
