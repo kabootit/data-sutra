@@ -803,44 +803,6 @@ function webCallbacks() {
 }
 
 /**
- * Helper function to make pop ups go in the right place.
- * Once I figure out how continuations work, I won't need this anymore.
- * 
- * scopes.DS.webPopup.popupMenu holds menu to be displayed
- * scopes.DS.webPopup.url holds link of this page
- * 
- * @param {String}	[posn] The co-ordinates just fired.
- * @param {String}	[path] The place fired from.
- * 
- * @properties={typeid:24,uuid:"487DA917-3C82-490A-8F2C-2DAF78FCC5D2"}
- */
-function webPopup(posn,path) {
-	if (solutionPrefs.config.webClient) {
-		//store where called from
-		if (typeof path == 'string') {
-			webPopup.url = path
-		}
-		
-		//need to grab position
-		if (typeof posn != 'string') {
-			plugins.WebClientUtils.executeClientSideJS('var posn = Wicket.clickPosition;', webPopup, ['posn','window.parent.location.origin'])
-		}
-		else {
-			posn = posn.split(',')
-			
-			//deprecated popupmenu
-			if (webPopup.popupMenu instanceof Array) {
-				plugins.popupmenu.showPopupMenu(posn[0], posn[1], webPopup.popupMenu)
-			}
-			//supported popup call
-			else if (webPopup.popupMenu instanceof Popup) {
-				webPopup.popupMenu.show(posn[0], posn[1])
-			}
-		}
-	}
-}
-
-/**
  * Set placeholder property of fast find fields
  * 
  * @param {String}	[findField] Pretty name of find field selected.

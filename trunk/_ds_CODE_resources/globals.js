@@ -6755,3 +6755,95 @@ function CODE_debug_log(msg,level,file) {
 		appendLog()
 	}
 }
+
+/**
+ * Helper function to make pop ups go in the right place.
+ * 
+ * globals.CODE_popup.popupMenu holds menu to be displayed
+ * globals.CODE_popup.url holds link of this page
+ * 
+ * @param {String}	[posn] The co-ordinates just fired.
+ * @param {String}	[path] The place fired from.
+ * @param {RuntimeComponent}	[elem] Bind to particular element.
+ * 
+ * @properties={typeid:24,uuid:"487DA917-3C82-490A-8F2C-2DAF78FCC5D2"}
+ */
+function CODE_popup(posn,path,elem) {
+	//when element specified, allow smart client to use this method too
+	if (solutionPrefs.config.webClient || elem) {
+		var noCheck = solutionPrefs.config.webClient
+		
+		//store where called from
+		if (typeof path == 'string') {
+			CODE_popup.url = path
+		}
+		
+		//need to grab position
+		if (!elem && typeof posn != 'string') {
+			plugins.WebClientUtils.executeClientSideJS('var posn = Wicket.clickPosition;', CODE_popup, ['posn','window.parent.location.origin'])
+		}
+		else {
+			posn = posn && posn.length ? posn.split(',') : new Array()
+			
+			//deprecated popupmenu
+			if (CODE_popup.popupMenu instanceof Array) {
+				//special handling of selected items so that table view doeesn't expand over whole screen
+				if (noCheck) {
+					for (var i = 0; i < CODE_popup.popupMenu.length; i++) {
+						var item = CODE_popup.popupMenu[i]
+						
+						//item is a checkbox, redo without check
+						if (item && item.selected) {
+							CODE_popup.popupMenu[i] = plugins.popupmenu.createMenuItem('\u2713 ' + item.text,CODE_popup)
+							CODE_popup.popupMenu[i].methodArguments = item.methodArguments
+							CODE_popup.popupMenu[i].enabled = false//item.enabled
+						}
+					}
+				}
+				
+				//attach to element
+				if (elem) {
+					plugins.popupmenu.showPopupMenu(elem, CODE_popup.popupMenu)
+				}
+				//attach to mouse location
+				else {
+					plugins.popupmenu.showPopupMenu(posn[0], posn[1], CODE_popup.popupMenu)
+				}
+			}
+			//supported popup call
+			else if (CODE_popup.popupMenu instanceof Popup) {
+				//special handling of selected items so that table view doeesn't expand over whole screen
+				if (noCheck) {
+					for (var i = 0; i < CODE_popup.popupMenu.getItemCount(); i++) {
+						var item = CODE_popup.popupMenu.getItem(i)
+						
+						//item is a checkbox, redo without check
+						if (item && item.selected) {
+							var newItem = CODE_popup.popupMenu.addMenuItem(i)
+							newItem.text = '\u2713 ' + item.text
+							newItem.setMethod(CODE_popup)
+							newItem.methodArguments = item.methodArguments
+							newItem.enabled = false//item.enabled
+							
+							//remove checked item
+							CODE_popup.popupMenu.removeItem(i+1)
+						}
+					}
+				}
+				
+				//attach to element with offset
+				if (elem && posn.length == 2) {
+					CODE_popup.popupMenu.show(elem, posn[0], posn[1])
+				}
+				//attach to element
+				else if (elem) {
+					CODE_popup.popupMenu.show(elem)
+				}
+				//attach to mouse location
+				else {
+					CODE_popup.popupMenu.show(posn[0], posn[1])
+				}
+			}
+		}
+	}
+}
