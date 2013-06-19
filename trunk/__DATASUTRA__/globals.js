@@ -491,13 +491,15 @@ else {
 		// //PART II: swap stylesheets (do before!!! touching any form)
 		var verOS = (plugins.sutra) ? plugins.sutra.getOSVersion() : ''
 		var styleNames = new Array('_DATASUTRA_','ds_WIN','ds_MAC','ds_MAC_leopard','ds_LINUX')
+		var baseStyle
 		
 		if (webClient) {
-			application.overrideStyle('_DATASUTRA_','ds_WEB_desktop')
-			application.overrideStyle('ds_WIN','ds_WEB_desktop')
-			application.overrideStyle('ds_MAC','ds_WEB_desktop')
-			application.overrideStyle('ds_MAC_leopard','ds_WEB_desktop')
-			application.overrideStyle('ds_LINUX','ds_WEB_desktop')
+			baseStyle = 'ds_WEB_desktop'
+			application.overrideStyle('_DATASUTRA_',baseStyle)
+			application.overrideStyle('ds_WIN',baseStyle)
+			application.overrideStyle('ds_MAC',baseStyle)
+			application.overrideStyle('ds_MAC_leopard',baseStyle)
+			application.overrideStyle('ds_LINUX',baseStyle)
 			
 			solutionModel.getForm('NAV_T_universal_list_1L').styleName = 'ds_WEB_universal_list'
 		}
@@ -555,53 +557,30 @@ else {
 			//swap stylesheets (expected behavior is that only _DATASUTRA_ has anything assigned to it, but to cover the old ID 10 T error....
 			if (application.getOSName() == 'Mac OS X') {
 				//special leopard stylesheet
-				if (utils.stringPatternCount(verOS,'10.5') || utils.stringPatternCount(verOS,'10.6') || utils.stringPatternCount(verOS,'10.7') || utils.stringPatternCount(verOS,'10.8')) {
-					//if _DATASUTRA_ is the same as *, don't swap (always swap when in developer)
-					if (styleNames['_DATASUTRA_'] != styleNames['ds_MAC_leopard'] || application.isInDeveloper()) {
-						application.overrideStyle('_DATASUTRA_','ds_MAC_leopard')
-					}
-					application.overrideStyle('ds_WIN','ds_MAC_leopard')
-					application.overrideStyle('ds_MAC','ds_MAC_leopard')
-					application.overrideStyle('ds_LINUX','ds_MAC_leopard')
-					
-//					solutionModel.getForm('NAV_T_universal_list_1L').styleName = 'ds_MAC_universal_list'
+				if (utils.stringPatternCount(verOS,'10.5') || utils.stringPatternCount(verOS,'10.6') || utils.stringPatternCount(verOS,'10.7') || utils.stringPatternCount(verOS,'10.8') || utils.stringPatternCount(verOS,'10.9') || utils.stringPatternCount(verOS,'10.10')) {
+					baseStyle = 'ds_MAC_leopard'
 				}
 				//tiger, panther, jaguar or there isn't a fw plugin installed
 				else {
-					//if _DATASUTRA_ is the same as *, don't swap
-					if (styleNames['_DATASUTRA_'] != styleNames['ds_MAC'] || application.isInDeveloper()) {
-						application.overrideStyle('_DATASUTRA_','ds_MAC')
-					}
-					application.overrideStyle('ds_WIN','ds_MAC')
-					application.overrideStyle('ds_MAC_leopard','ds_MAC')
-					application.overrideStyle('ds_LINUX','ds_MAC')
-					
-//					solutionModel.getForm('NAV_T_universal_list_1L').styleName = 'ds_MAC_universal_list'
+					baseStyle = 'ds_MAC'
 				}
 			}
 			//linux
 			else if (utils.stringPatternCount(application.getOSName(),'Linux')) {
-				//if _DATASUTRA_ is the same as *, don't swap
-				if (styleNames['_DATASUTRA_'] != styleNames['ds_LINUX'] || application.isInDeveloper()) {
-					application.overrideStyle('_DATASUTRA_','ds_LINUX')
-				}
-				application.overrideStyle('ds_MAC','ds_LINUX')
-				application.overrideStyle('ds_MAC_leopard','ds_LINUX')
-				application.overrideStyle('ds_WIN','ds_LINUX')
-				
-//				solutionModel.getForm('NAV_T_universal_list_1L').styleName = 'ds_LINUX_universal_list'
+				baseStyle = 'ds_LINUX'
 			}
 			else {
-				//if _DATASUTRA_ is the same as *, don't swap
-				if (styleNames['_DATASUTRA_'] != styleNames['ds_WIN'] || application.isInDeveloper()) {
-					application.overrideStyle('_DATASUTRA_','ds_WIN')
-				}
-				application.overrideStyle('ds_MAC','ds_WIN')
-				application.overrideStyle('ds_MAC_leopard','ds_WIN')
-				application.overrideStyle('ds_LINUX','ds_WIN')
-				
-//				solutionModel.getForm('NAV_T_universal_list_1L').styleName = 'ds_WIN_universal_list'
+				baseStyle = 'ds_WIN'
 			}
+			
+			//if _DATASUTRA_ is the same as *, don't swap (always swap when in developer)
+			if (styleNames['_DATASUTRA_'] != styleNames[baseStyle] || application.isInDeveloper()) {
+				application.overrideStyle('_DATASUTRA_',baseStyle)
+			}
+			application.overrideStyle('ds_WIN',baseStyle)
+			application.overrideStyle('ds_MAC',baseStyle)
+			application.overrideStyle('ds_MAC_leopard',baseStyle)
+			application.overrideStyle('ds_LINUX',baseStyle)			
 		}
 		
 		
@@ -674,6 +653,7 @@ else {
 		
 		//information about client
 			solutionPrefs.clientInfo = DS_client_info_load()
+			solutionPrefs.clientInfo.baseStyle = baseStyle
 			
 		//default screen attributes
 			solutionPrefs.screenAttrib = DS_screen_load()
@@ -1356,11 +1336,9 @@ function DS_actions(input) {
 			
 			forms[baseForm + '__header'].elements[btnInvisible].setLocation(currentLocationX - maxLength * 5.5, currentLocationY)
 			
-			//pop left popup menu
-			var elem = forms[baseForm + '__header'].elements[btnInvisible]
-			if (elem != null) {
-				plugins.popupmenu.showPopupMenu(elem, menu)
-			}
+			//popup menu
+			globals.CODE_popup.popupMenu = menu
+			globals.CODE_popup(null,null,forms[baseForm + '__header'].elements[btnInvisible])
 			
 			//set invisible btn back to original location
 			forms[baseForm + '__header'].elements[btnInvisible].setLocation(currentLocationX, currentLocationY)
@@ -2203,12 +2181,9 @@ function DS_navigation_set(input) {
 			}
 		}
 		
-		//pop menu down
-		var elem = forms[input.getFormName()].elements[input.getElementName()]
-		if (elem != null && menu.length) {
-			plugins.popupmenu.showPopupMenu(elem, menu)
-		}
-	
+		//popup menu
+		globals.CODE_popup.popupMenu = menu
+		globals.CODE_popup(null,null,forms[input.getFormName()].elements[input.getElementName()])
 	}
 	//menu shown and item chosen
 	else if (application.__parent__.solutionPrefs && application.__parent__.navigationPrefs) {
