@@ -287,10 +287,8 @@ function PICK_relation_1(event) {
 		}
 		
 		//popup
-		var elem = elements[event.getElementName()]
-		if (elem != null && menu.length > 1) {
-			plugins.popupmenu.showPopupMenu(elem, menu)
-		}
+		globals.CODE_popup.popupMenu = menu
+		globals.CODE_popup(null,null,elements[event.getElementName()])
 	}
 	//menu shown and item chosen
 	else {
