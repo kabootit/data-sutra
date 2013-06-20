@@ -152,10 +152,8 @@ if (typeof input != 'number') {
 	}
 	
 	//popup
-	var elem = elements[application.getMethodTriggerElementName()]
-	if (elem != null && menu.length > 1) {
-		plugins.popupmenu.showPopupMenu(elem, menu)
-	}
+	globals.CODE_popup.popupMenu = menu
+	globals.CODE_popup(null,null,elements[application.getMethodTriggerElementName()])
 }
 //menu shown and item chosen
 else {
