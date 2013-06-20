@@ -105,11 +105,9 @@ function ACTIONS_list(event,list) {
 			//move "up" button to correct location
 			elements[btnInvisible].setLocation(currentLocationX, currentLocationY - (topShift + (menu.length * lineHeight)))
 			
-			//pop up the popup menu
-			var elem = elements[btnInvisible]
-			if (elem != null) {
-			    plugins.popupmenu.showPopupMenu(elem, menu);
-			}
+			//popup menu
+			globals.CODE_popup.popupMenu = menu
+			globals.CODE_popup(null,null,elements[btnInvisible])
 			
 			//set invisible btn back to original location
 			elements[btnInvisible].setLocation(currentLocationX, currentLocationY)
@@ -266,11 +264,9 @@ function FILTERS_list(event,list) {
 			//move "up" button to correct location
 			elements[btnInvisible].setLocation(currentLocationX, currentLocationY - (topShift + (menuMain.length * lineHeight)))
 			
-			//pop up the popup menu
-			var elem = elements[btnInvisible]
-			if (elem != null) {
-			    plugins.popupmenu.showPopupMenu(elem, menuMain);
-			}
+			//popup menu
+			globals.CODE_popup.popupMenu = menuMain
+			globals.CODE_popup(null,null,elements[btnInvisible])
 			
 			//set invisible btn back to original location
 			elements[btnInvisible].setLocation(currentLocationX, currentLocationY)
@@ -775,11 +771,9 @@ function REPORTS_list(event,list) {
 			//move "up" button to correct location
 			elements[btnInvisible].setLocation(currentLocationX, currentLocationY - (topShift + (menu.length * lineHeight)))
 			
-			//pop up the popup menu
-			var elem = elements[btnInvisible]
-			if (elem != null) {
-			    plugins.popupmenu.showPopupMenu(elem, menu);
-			}
+			//popup menu
+			globals.CODE_popup.popupMenu = menu
+			globals.CODE_popup(null,null,elements[btnInvisible])
 			
 			//set invisible btn back to original location
 			elements[btnInvisible].setLocation(currentLocationX, currentLocationY)
@@ -993,10 +987,8 @@ function TABS_list(event) {
 			forms[formName].elements[btnInvisible].setLocation(currentLocationX, currentLocationY + 3)
 			
 			//popup menu
-			var elem = forms[formName].elements[btnInvisible]
-			if (elem != null) {
-			    plugins.popupmenu.showPopupMenu(elem, menu)
-			}
+			globals.CODE_popup.popupMenu = menu
+			globals.CODE_popup(null,null,elements[btnInvisible])
 			
 			//set invisible btn back to original location
 			forms[formName].elements[btnInvisible].setLocation(currentLocationX, currentLocationY)
@@ -1174,7 +1166,7 @@ function TRANSACTION_save(event) {
 		}
 		
 		//css4 parent selectors (for comboboxes)
-		scopes.DS.webStyleCSS4()		
+		scopes.DS.webStyleCSS4()
 		
 		if (redrawUL) {
 			scopes.DS.webULPrettify(true)

@@ -14,7 +14,7 @@
 var cache = {};
 
 /**
- * @properties={typeid:35,uuid:"7612D7FA-E7B6-4EB0-8599-1C3143244546",variableType:-4}
+ * @properties={typeid:35,uuid:"B567BFF7-481E-4C9F-9551-B668D4739D58",variableType:-4}
  */
 var BS = /\\/g,
     CR = /\r/g,
@@ -27,7 +27,7 @@ var BS = /\\/g,
     TB = /\t/g;
 
 /**
- * @properties={typeid:35,uuid:"D7B7438F-A831-4516-BFC1-4145CC6C7CBA",variableType:-4}
+ * @properties={typeid:35,uuid:"BBAAF58A-6757-4C53-A008-B394FBF81FAB",variableType:-4}
  */
 var HCHARS = new RegExp(/[&<>\"]/),
     AMP    = /&/g,
