@@ -143,6 +143,6 @@ function URL_branding()
  */
 
 if (solution_icon_url) {
-	globals.CODE_url_handler(solution_icon_url)
+	globals.CODE_url_handler(solution_icon_url,null,true)
 }
 }

@@ -149,6 +149,6 @@ else {
 	pageString += globals.TOOL_weather_zip
 }
 
-globals.CODE_url_handler(pageString)
+globals.CODE_url_handler(pageString,null,true)
 
 }
