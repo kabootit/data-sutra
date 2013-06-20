@@ -74,6 +74,11 @@ function CURTAIN_action() {
 	if (solutionPrefs.access.lockStatus) {
 		
 	}
+	
+	//hoist divs up if still in a transaction
+	if (solutionPrefs.config.lockStatus) {
+		plugins.WebClientUtils.executeClientSideJS('triggerInterfaceLock(false);')
+	}
 }
 
 /**
