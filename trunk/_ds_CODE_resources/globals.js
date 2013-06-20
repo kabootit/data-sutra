@@ -2401,7 +2401,8 @@ function TRIGGER_toolbar_record_navigator_set(status,maxWidth) {
 			var recordDivisor	= (thisIndex / loaded) ? thisIndex / loaded : 0
 			var recordWidth		= maxWidth * recordDivisor
 			
-			var height = solutionPrefs.config.webClient ? 6 : 8
+			var height = forms[formNameRN].elements.obj_records.getHeight()
+//				solutionPrefs.config.webClient ? 6 : 8
 			
 			//display record object
 			forms[formNameRN].elements.obj_records.setSize(recordWidth, height)
@@ -6771,7 +6772,7 @@ function CODE_debug_log(msg,level,file) {
 function CODE_popup(posn,path,elem) {
 	//when element specified, allow smart client to use this method too
 	if (solutionPrefs.config.webClient || elem) {
-		var noCheck = solutionPrefs.config.webClient
+		var noCheck = false//solutionPrefs.config.webClient
 		
 		//store where called from
 		if (typeof path == 'string') {
