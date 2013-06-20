@@ -5993,7 +5993,9 @@ function DS_router_bean_resize() {
 	}
 	
 	//reset split between toolbar and fastfind
-	forms.DATASUTRA_WEB_0F__header.FORM_on_show(true)
+	if (solutionPrefs.config.webClient) {
+		forms.DATASUTRA_WEB_0F__header.FORM_on_show(true)
+	}
 }
 
 /**
