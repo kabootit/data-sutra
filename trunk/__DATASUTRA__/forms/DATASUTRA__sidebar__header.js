@@ -293,10 +293,8 @@ function TAB_popdown(input) {
 			}
 			
 			//popup
-			var elem = elements.btn_tab
-			if (elem != null && menu.length) {
-				plugins.popupmenu.showPopupMenu(elem, menu)
-			}
+			globals.CODE_popup.popupMenu = menu
+			globals.CODE_popup(null,null,elements.btn_tab)
 		}
 		//menu shown and item chosen
 		else {

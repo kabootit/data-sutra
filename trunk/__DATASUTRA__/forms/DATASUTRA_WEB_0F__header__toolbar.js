@@ -90,11 +90,9 @@ function DS_toolbar_cycle(event) {
  					}
  				}
  				
- 				//pop up the popup menu
- 				var elem = forms[baseForm + '__header__toolbar'].elements[application.getMethodTriggerElementName()]
- 				if (elem != null) {
- 					plugins.popupmenu.showPopupMenu(elem, menu)
- 				}
+ 				//popup menu
+ 				globals.CODE_popup.popupMenu = menu
+ 				globals.CODE_popup(null,null,forms[baseForm + '__header__toolbar'].elements[application.getMethodTriggerElementName()])
  				
  				return
  			}
