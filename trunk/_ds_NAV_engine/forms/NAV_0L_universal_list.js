@@ -2076,19 +2076,19 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	
 	//css
 	htmlHead += '<style type="text/css" media="screen"><!--'
-	htmlHead += 'table { table-layout: fixed; width: 100%; border-spacing: 0px; border: 0px; }'
-	htmlHead += 'td { text-indent: 5px; white-space: nowrap; overflow: hidden; border: 0px; padding-top: 2px; padding-right: 3px; padding-bottom: 2px; padding-left: 3px; height: 20; line-height: 20; background-color: ' + solutionPrefs.listSetup.listBackground + '; }'
-	htmlHead += 'th { font-weight: normal; text-indent: 5px; white-space: nowrap; overflow: hidden; border: 0px; padding-top: 2px; padding-right: 3px; padding-bottom: 2px; padding-left: 3px; height: 20; line-height: 20; background-color: transparent; }' //hackjob extrodinaire: first/last rows (when more data) are th with transparency
-	htmlHead += '.rowSelected  { color: white; text-decoration: none; font-weight: bold; background-image: url("media:///row_selected.png"); }'
-	htmlHead += 'td.rowSelected a { color: white; text-decoration: none; font-weight: bold; }'
-	htmlHead += 'a { color: black; text-decoration: none; }'
+	htmlHead += 'table.sutra { table-layout: fixed; width: 100%; border-spacing: 0px; border: 0px; }'
+	htmlHead += 'table.sutra td { text-indent: 5px; white-space: nowrap; overflow: hidden; border: 0px; padding-top: 2px; padding-right: 3px; padding-bottom: 2px; padding-left: 3px; height: 20; line-height: 20; background-color: ' + solutionPrefs.listSetup.listBackground + '; }'
+	htmlHead += 'table.sutra th { font-weight: normal; text-indent: 5px; white-space: nowrap; overflow: hidden; border: 0px; padding-top: 2px; padding-right: 3px; padding-bottom: 2px; padding-left: 3px; height: 20; line-height: 20; background-color: transparent; }' //hackjob extrodinaire: first/last rows (when more data) are th with transparency
+	htmlHead += 'table.sutra .rowSelected  { color: white; text-decoration: none; font-weight: bold; background-image: url("media:///row_selected.png"); }'
+	htmlHead += 'table.sutra td.rowSelected a { color: white; text-decoration: none; font-weight: bold; }'
+	htmlHead += 'table.sutra a { color: black; text-decoration: none; }'
 	htmlHead += '--></style></head>'
 	
 	//body
 	htmlHead += '<body>'
 	
 	//table
-	htmlHead += '<table>'
+	htmlHead += '<table class="sutra">'
 	
 	//all other rows
 	var html = '<html><head><body><table>'
