@@ -69,11 +69,8 @@ for ( var i = 0 ; i < valueList.length ; i++ ) {
 
 
 //popdown popup menu if enabled
-var elem = elements[triggerElem]
-if (elem != null && elem.enabled == true) {
-    plugins.popupmenu.showPopupMenu(elem, menu)
-}
-
+globals.CODE_popup.popupMenu = menu
+globals.CODE_popup(null,null,elements[triggerElem])
 
 }
 

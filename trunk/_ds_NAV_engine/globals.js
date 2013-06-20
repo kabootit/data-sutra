@@ -599,10 +599,9 @@ if (application.__parent__.solutionPrefs) {
 //				}
 			}
 			
-			var elem = forms[event.getFormName()].elements.btn_find
-			if (elem != null) {
-				plugins.popupmenu.showPopupMenu(elem, menu)
-			}
+			//popup menu
+			globals.CODE_popup.popupMenu = menu
+			globals.CODE_popup(null,null,forms[event.getFormName()].elements.btn_find)
 		}
 	}
 }
@@ -1946,19 +1945,19 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	
 	//css
 	html += '<style type="text/css" media="screen"><!-- '
-	html += 'table { table-layout: fixed; width: 100%; border-spacing: 0px; border: 0px; } '
-	html += 'td  {  text-indent: 4px; white-space: nowrap; overflow: hidden; border: 0px; '
+	html += 'table.sutra { table-layout: fixed; width: 100%; border-spacing: 0px; border: 0px; } '
+	html += 'table.sutra td  {  text-indent: 4px; white-space: nowrap; overflow: hidden; border: 0px; '
 		html += 'padding-top: 2px; padding-right: 3px; padding-bottom: 2px; padding-left: 3px; height: 20; line-height: 20; '
 		html += 'color: "#323A4B"; text-decoration: none; font-weight: bold; background-image: url("media:///bck_sub_blue.png"); } '
-	html += '.asc { background-image: url("media:///bck_sub_sort_asc.png"); } '
-	html += '.desc { background-image: url("media:///bck_sub_sort_desc.png"); } '
-	html += 'a { color: "#323A4B"; text-decoration: none; font-weight: bold; } '
+	html += 'table.sutra .asc { background-image: url("media:///bck_sub_sort_asc.png"); } '
+	html += 'table.sutra .desc { background-image: url("media:///bck_sub_sort_desc.png"); } '
+	html += 'table.sutra a { color: "#323A4B"; text-decoration: none; font-weight: bold; } '
 	html += '--></style></head>'
 	
 	
 	//body
 	html += '<body>'
-	html += '<table>'
+	html += '<table class="sutra">'
 	html += '<tr>'
 	for ( var m = 0 ; m < rowDisp.length ; m++ ) {
 		var prettyName = rowDisp[m].header
@@ -2912,7 +2911,11 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 					
 					if (!designList) {
 						//update record navigator
-						TRIGGER_toolbar_record_navigator_set(solutionPrefs.config.recordNavigatorStatus)
+						var recNavStatus = solutionPrefs.config.recordNavigatorStatus
+						if (forms[mainTab].controller.getDataSource() == null) {
+							recNavStatus = false
+						}
+						TRIGGER_toolbar_record_navigator_set(recNavStatus)
 						
 						//select tab
 						listTabForm.elements.tab_content_B.tabIndex = listTabForm.elements.tab_content_B.getMaxTabIndex()
@@ -2929,7 +2932,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 				listTabForm.elements.tab_content_B.tabIndex = 1
 				
 				//turn off spinny indicator
-				scopes.DS.webBlockerCentered(false)
+				scopes.DS.webBlockerCentered(false,250)
 			}
 			//form already exists, set tab index
 			else if (!designList) {
@@ -2963,6 +2966,13 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 					//set to correct tab
 					else {
 						listTabForm.elements.tab_content_B.tabIndex = navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber
+						
+						//update record navigator
+						var recNavStatus = solutionPrefs.config.recordNavigatorStatus
+						if (forms[mainTab].controller.getDataSource() == null) {
+							recNavStatus = false
+						}
+						TRIGGER_toolbar_record_navigator_set(recNavStatus)
 						
 						//turn off spinny indicator
 						scopes.DS.webBlockerCentered(false)
@@ -3317,10 +3327,9 @@ function NAV_universal_list_edit(input,elem) {
 		menu.unshift(plugins.popupmenu.createMenuItem('Edit...', NAV_universal_list_edit))
 		menu[0].setMethodArguments(null,input)
 		
-		//pop up the popup menu
-		if (elem != null) {
-		    plugins.popupmenu.showPopupMenu(elem, menu)
-		}
+		//popup menu
+		globals.CODE_popup.popupMenu = menu
+		globals.CODE_popup(null,null,elem)
 	}
 	else {
 		//enter field for editing
@@ -3425,18 +3434,9 @@ function NAV_universal_list_right_click(input,elem,list,record) {
 	if (menu.length) {
 		//called to depress menu
 		if (input instanceof JSEvent) {
-			//webclient popup
-			if (solutionPrefs.config.webClient) {
-				scopes.DS.webPopup.popupMenu = menu
-				scopes.DS.webPopup()
-			}
-			//smart client popup
-			else {
-				var elem = forms[input.getFormName()].elements[input.getElementName()]
-				if (elem != null) {
-				    plugins.popupmenu.showPopupMenu(elem, menu)
-				}
-			}
+			//popup menu
+			globals.CODE_popup.popupMenu = menu
+			globals.CODE_popup(null,null,(solutionPrefs.config.webClient ? null : forms[input.getFormName()].elements[input.getElementName()]))
 		}
 		//run actions
 		else {

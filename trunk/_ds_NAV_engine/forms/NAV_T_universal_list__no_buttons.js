@@ -172,10 +172,8 @@ function DISPLAY_list(event) {
 				elements[btnInvisible].setLocation(currentLocationX, currentLocationY + 3)
 				
 				//popup menu
-				var elem = elements[btnInvisible]
-				if (elem != null) {
-				    plugins.popupmenu.showPopupMenu(elem, menu);
-				}
+				globals.CODE_popup.popupMenu = menu
+				globals.CODE_popup(null,null,elements[btnInvisible])
 				
 				//set invisible btn back to original location
 				elements[btnInvisible].setLocation(currentLocationX, currentLocationY)
