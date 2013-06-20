@@ -9,13 +9,13 @@ if (contact_id) {
 	var itemName = (name_lf) ? name_lf : 'UNKNOWN'
 	
 	var html = '<html><head><style type="text/css" media="screen"><!--'
-	html += 'table { table-layout: fixed; width: 100%; border-spacing: 0px; border: 0px; }'
-	html += 'td  { text-indent: 5px; white-space: nowrap; overflow: hidden; border: 0px; padding: 2px; height: 20; line-height: 20; }'
-	html += '.rowSelected  { color: white; text-decoration: none; font-weight: bold; background-image: url("media:///row_selected.png"); }'
-	html += 'td.rowSelected a { color: white; text-decoration: none; }'
+	html += 'table.sutra { table-layout: fixed; width: 100%; border-spacing: 0px; border: 0px; }'
+	html += 'table.sutra td  { text-indent: 5px; white-space: nowrap; overflow: hidden; border: 0px; padding: 2px; height: 20; line-height: 20; }'
+	html += 'table.sutra .rowSelected  { color: white; text-decoration: none; font-weight: bold; background-image: url("media:///row_selected.png"); }'
+	html += 'table.sutra td.rowSelected a { color: white; text-decoration: none; }'
 	html += '--></style></head>'
 	if (globals.CRM_contacts_selected == contact_id) {
-		html += '<table><tr>'
+		html += '<table class="sutra"><tr>'
 		html += '<td class = "rowSelected">' + itemName + '</td>'
 		html += '</tr></table></html>'
 	}
