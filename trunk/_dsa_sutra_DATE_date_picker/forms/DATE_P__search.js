@@ -30,7 +30,10 @@ if (!globals.CODE_hide_form) {
 	globals.CODE_hide_form = 1
 	
 	globals.CODE_form_in_dialog_close('datePicker')
+	
+	scopes.DS.continuation.stop(null,controller.getName())
 }
+return true
 }
 
 /**
@@ -453,7 +456,9 @@ if (this.FrameworksFastFind) {
 	
 	//date ranges need to be prefixed by # to get the full day of the last day in the range
 	globals.DATASUTRA_find = (globals.DATE_date_range_type != 'Time') ? '#' + globals.DATE_date_range_entry : globals.DATE_date_range_entry
-	globals.NAV_find_end_normal()
+	
+	scopes.DS.continuation.stop(null,controller.getName())
+//	globals.NAV_find_end_normal()
 
 }
 //non-Data Sutra calling of date picker
