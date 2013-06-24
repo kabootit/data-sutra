@@ -281,17 +281,10 @@ if (application.__parent__.solutionPrefs) {
 	if (timeElapsed > 250) { // && navigationPrefs.byNavItemID[currentNavItem].fastFind) {
 		var serverName = forms[formName].controller.getServerName()
 		var tableName = forms[formName].controller.getTableName()
-	
-		//if running a filter or no find configured, clear out field searching on
-		if (utils.stringPatternCount(DATASUTRA_find,'Filter: ') || !fastFindEnabled) {
-			var searchingOn = null
-			var searchingTip = 'Not searching any field'
-		}
+		
 		//preserve field searching on
-		else {
-			var searchingOn = DATASUTRA_find_field
-			var searchingTip = navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindTip
-		}
+		var searchingOn = DATASUTRA_find_field
+		var searchingTip = navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindTip
 		
 		//if form is set as empty default foundset, clear
 		if (solutionModel.getForm(formName).namedFoundSet == JSForm.EMPTY_FOUNDSET) {
@@ -2250,6 +2243,29 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	//reassign arguments without jsevents
 	arguments = Arguments.filter(CODE_jsevent_remove)
 }
+
+	//re-set the record navigator status if changed because previous item didn't have a datasource assigned
+	if (typeof NAV_workflow_load.recNavStat == 'boolean') {
+		TRIGGER_toolbar_record_navigator_set(NAV_workflow_load.recNavStat)
+		delete NAV_workflow_load.recNavStat
+	}
+
+	/**
+	 * hide record navigator if wf not based on a table
+	 */
+	function recNav() {
+		var recNavStatus = solutionPrefs.config.recordNavigatorStatus
+		if (forms[mainTab].controller.getDataSource() == null) {
+			recNavStatus = false
+		}
+		
+		//keep track of how we set this so we can undo when moving to another navigation item
+		if (typeof NAV_workflow_load.recNavStat != 'boolean' && recNavStatus != solutionPrefs.config.recordNavigatorStatus) {
+			NAV_workflow_load.recNavStat = solutionPrefs.config.recordNavigatorStatus
+		}
+		
+		TRIGGER_toolbar_record_navigator_set(recNavStatus)
+	}
 	
 	
 	if (solutionPrefs.config.webClient) {
@@ -2911,11 +2927,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 					
 					if (!designList) {
 						//update record navigator
-						var recNavStatus = solutionPrefs.config.recordNavigatorStatus
-						if (forms[mainTab].controller.getDataSource() == null) {
-							recNavStatus = false
-						}
-						TRIGGER_toolbar_record_navigator_set(recNavStatus)
+						recNav()
 						
 						//select tab
 						listTabForm.elements.tab_content_B.tabIndex = listTabForm.elements.tab_content_B.getMaxTabIndex()
@@ -2933,6 +2945,9 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 				
 				//turn off spinny indicator
 				scopes.DS.webBlockerCentered(false,250)
+				
+				//update record navigator
+				recNav()
 			}
 			//form already exists, set tab index
 			else if (!designList) {
@@ -2968,11 +2983,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 						listTabForm.elements.tab_content_B.tabIndex = navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber
 						
 						//update record navigator
-						var recNavStatus = solutionPrefs.config.recordNavigatorStatus
-						if (forms[mainTab].controller.getDataSource() == null) {
-							recNavStatus = false
-						}
-						TRIGGER_toolbar_record_navigator_set(recNavStatus)
+						recNav()
 						
 						//turn off spinny indicator
 						scopes.DS.webBlockerCentered(false)
