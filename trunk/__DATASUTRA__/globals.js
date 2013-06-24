@@ -5958,25 +5958,27 @@ function DS_router_visibility(hidden,params) {
  * @properties={typeid:24,uuid:"BEF91922-AC33-4BB4-8CD6-8F77AB522B20"}
  */
 function DS_router_recreateUI() {
-	//disable selected spaces button
-	var spaceConversion = {
-			standard: 1,
-			'list flip': 9,
-			list: 2,
-			'workflow flip': 14,
-			'workflow': 7
-		}
-	var elemID = plugins.WebClientUtils.getElementMarkupId(forms.DATASUTRA_WEB_0F__header.elements['btn_space_' + spaceConversion[solutionPrefs.config.activeSpace]])
-	plugins.WebClientUtils.executeClientSideJS('dimSpace("' + elemID +'");')
-	
-	//things that must be resized after small login
-	if (DATASUTRA_router_login) {
-		var callback = plugins.WebClientUtils.generateCallbackScript(DS_router_bean_resize);
-		var jsCallback = 'function resetBeans(){' + callback + '}';
-		plugins.WebClientUtils.executeClientSideJS('resetBeanSizes(' + jsCallback + ');')
+	if (solutionPrefs.config.webClient) {
+		//disable selected spaces button
+		var spaceConversion = {
+				standard: 1,
+				'list flip': 9,
+				list: 2,
+				'workflow flip': 14,
+				'workflow': 7
+			}
+		var elemID = plugins.WebClientUtils.getElementMarkupId(forms.DATASUTRA_WEB_0F__header.elements['btn_space_' + spaceConversion[solutionPrefs.config.activeSpace]])
+		plugins.WebClientUtils.executeClientSideJS('dimSpace("' + elemID +'");')
 		
-		//make sure this only runs one time
-		DATASUTRA_router_login = false
+		//things that must be resized after small login
+		if (DATASUTRA_router_login) {
+			var callback = plugins.WebClientUtils.generateCallbackScript(DS_router_bean_resize);
+			var jsCallback = 'function resetBeans(){' + callback + '}';
+			plugins.WebClientUtils.executeClientSideJS('resetBeanSizes(' + jsCallback + ');')
+			
+			//make sure this only runs one time
+			DATASUTRA_router_login = false
+		}
 	}
 }
 
