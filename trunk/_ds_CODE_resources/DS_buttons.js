@@ -988,7 +988,7 @@ function TABS_list(event) {
 			
 			//popup menu
 			globals.CODE_popup.popupMenu = menu
-			globals.CODE_popup(null,null,elements[btnInvisible])
+			globals.CODE_popup(null,null,forms[formName].elements[btnInvisible])
 			
 			//set invisible btn back to original location
 			forms[formName].elements[btnInvisible].setLocation(currentLocationX, currentLocationY)
