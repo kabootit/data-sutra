@@ -347,6 +347,19 @@ switch (dsFactor()) {
 //	Extensions to jQuery
 (function($) {
 	setTimeout(function(){
+		//	SlickGrid stuff
+		$('head').append('<link rel="stylesheet" type="text/css" href="/ds/js/lib/slickgrid/slick.grid.css" />');
+		$('head').append('<link rel="stylesheet" type="text/css" href="/ds/js/lib/slickgrid/css/smoothness/jquery-ui-1.8.16.custom.css" />');
+		$('head').append('<script type="text/javascript" src="/ds/js/lib/slickgrid/lib/jquery.event.drag-2.2.js"></script>');
+		$('head').append('<script type="text/javascript" src="/ds/js/lib/slickgrid/lib/jquery-ui-1.8.16.custom.min.js"></script>');
+		$('head').append('<script type="text/javascript" src="/ds/js/lib/slickgrid/slick.core.js"></script>');
+		$('head').append('<script type="text/javascript" src="/ds/js/lib/slickgrid/plugins/slick.cellrangedecorator.js"></script>');
+		$('head').append('<script type="text/javascript" src="/ds/js/lib/slickgrid/plugins/slick.cellrangeselector.js"></script>');
+		$('head').append('<script type="text/javascript" src="/ds/js/lib/slickgrid/plugins/slick.cellselectionmodel.js"></script>');
+		$('head').append('<script type="text/javascript" src="/ds/js/lib/slickgrid/slick.formatters.js"></script>');
+		$('head').append('<script type="text/javascript" src="/ds/js/lib/slickgrid/slick.editors.js"></script>');
+		$('head').append('<script type="text/javascript" src="/ds/js/lib/slickgrid/slick.grid.js"></script>');
+		
 		//	Extend jquery to handle cookies (https://github.com/carhartl/jquery-cookie)
 		$('head').append('<script type="text/javascript" src="/ds/js/lib/jquery.cookie.js"></script>');
 		
