@@ -1143,3 +1143,14 @@ and (max-device-width : 1024px) {
 .yuimenubaritemlabel-disabled a {
 	color: #666666 !important;
 }
+
+/* slickgrid */
+.slick-row.odd {
+	background: #FFFFFF;
+}
+.slick-row.even {
+	background: #FBFBFB;
+}
+.slick-row.active {
+	background: #BED7F7;
+}
