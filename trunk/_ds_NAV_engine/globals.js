@@ -546,7 +546,7 @@ if (application.__parent__.solutionPrefs) {
 				}
 			}
 			
-//			//add suffices: disabled because of performance hit
+//			//add suffices
 				//divider
 				if (addDate || addNum || addText) {
 					findItems.push(blankObject)
