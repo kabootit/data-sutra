@@ -4780,7 +4780,8 @@ function DS_client_info_load()
  */
 
 	//get uuid of client (comes from clients_stats table in repository)
-	var uuidServoy = plugins.sutra.getClientID()
+	var uuidServoy = plugins.UserManager.Client().clientId
+//		plugins.sutra.getClientID()
 	
 	//process os and servoy version
 	var nameOS = application.getOSName()
@@ -4872,10 +4873,13 @@ function DS_client_info_load()
 		
 		//get external ip address if connection available
 		if (pingResult) {
-			var ipExternal = plugins.http.getPageData('http://automation.whatismyip.com/n09230945.asp')
+			var ipExternal = plugins.http.getPageData('http://api.hostip.info/get_json.php')
 		}
 		if (!ipExternal || ipExternal.indexOf('Error',0) != -1) {
 			ipExternal = 'UNKNOWN'
+		}
+		else {
+			ipExternal = JSON.parse(ipExternal).ip
 		}
 	}
 	
