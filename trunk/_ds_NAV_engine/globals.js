@@ -385,7 +385,7 @@ if (application.__parent__.solutionPrefs) {
 		findItems.push(dateObject,numObject,textObject)
 		
 		for ( var i = 0 ; i < findItems.length && !trigger ; i++ ) {
-			var findField = (findItems[i].relation != 'NONE') ? findItems[i].relation + '.' + findItems[i].columnName : findItems[i].columnName
+			var findField = (findItems[i].relation && findItems[i].relation != 'NONE') ? findItems[i].relation + '.' + findItems[i].columnName : findItems[i].columnName
 			if (DATASUTRA_find_field == findField) {
 				trigger = 1
 			}
