@@ -1,3 +1,5 @@
+@import url('/ds/js/lib/slickgrid/css/sutra.css');
+
 .field
 {
 	padding: 1px 1px 1px 1px;
@@ -1142,15 +1144,4 @@ and (max-device-width : 1024px) {
 .yuimenuitemlabel-disabled a,
 .yuimenubaritemlabel-disabled a {
 	color: #666666 !important;
-}
-
-/* slickgrid */
-.slick-row.odd {
-	background: #FFFFFF;
-}
-.slick-row.even {
-	background: #FBFBFB;
-}
-.slick-row.active {
-	background: #BED7F7;
 }

@@ -5,101 +5,101 @@ No built-in (selected, editable, highlight, flashing, invalid, loading, :focus) 
 classes should alter those!
 */
 
-.slick-header-columns {
+div[class*="slickgrid_"] .slick-header-columns {
   background: url('../images/header-columns-bg.gif') repeat-x center bottom;
   border-bottom: 1px solid silver;
 }
 
-.slick-header-column {
+div[class*="slickgrid_"] .slick-header-column {
   background: url('../images/header-columns-bg.gif') repeat-x center bottom;
   border-right: 1px solid silver;
 }
 
-.slick-header-column:hover, .slick-header-column-active {
+div[class*="slickgrid_"] .slick-header-column:hover, .slick-header-column-active {
   background: white url('../images/header-columns-over-bg.gif') repeat-x center bottom;
 }
 
-.slick-headerrow {
+div[class*="slickgrid_"] .slick-headerrow {
   background: #fafafa;
 }
 
-.slick-headerrow-column {
+div[class*="slickgrid_"] .slick-headerrow-column {
   background: #fafafa;
   border-bottom: 0;
   height: 100%;
 }
 
-.slick-row.ui-state-active {
+div[class*="slickgrid_"] .slick-row.ui-state-active {
   background: #F5F7D7;
 }
 
-.slick-row {
+div[class*="slickgrid_"] .slick-row {
   position: absolute;
   background: white;
   border: 0px;
   line-height: 20px;
 }
 
-.slick-row.selected {
+div[class*="slickgrid_"] .slick-row.selected {
   z-index: 10;
   background: #DFE8F6;
 }
 
-.slick-cell {
+div[class*="slickgrid_"] .slick-cell {
   padding-left: 4px;
   padding-right: 4px;
 }
 
-.slick-group {
+div[class*="slickgrid_"] .slick-group {
   border-bottom: 2px solid silver;
 }
 
-.slick-group-toggle {
+div[class*="slickgrid_"] .slick-group-toggle {
   width: 9px;
   height: 9px;
   margin-right: 5px;
 }
 
-.slick-group-toggle.expanded {
+div[class*="slickgrid_"] .slick-group-toggle.expanded {
   background: url(../images/collapse.gif) no-repeat center center;
 }
 
-.slick-group-toggle.collapsed {
+div[class*="slickgrid_"] .slick-group-toggle.collapsed {
   background: url(../images/expand.gif) no-repeat center center;
 }
 
-.slick-group-totals {
+div[class*="slickgrid_"] .slick-group-totals {
   color: gray;
   background: white;
 }
 
-.slick-cell.selected {
+div[class*="slickgrid_"] .slick-cell.selected {
   background-color: beige;
 }
 
-.slick-cell.active {
+div[class*="slickgrid_"] .slick-cell.active {
   border-color: gray;
   border-style: solid;
 }
 
-.slick-sortable-placeholder {
+div[class*="slickgrid_"] .slick-sortable-placeholder {
   background: silver !important;
 }
 
-.slick-row.odd {
+div[class*="slickgrid_"] .slick-row.odd {
   background: #fafafa;
 }
 
-.slick-row.ui-state-active {
+div[class*="slickgrid_"] .slick-row.ui-state-active {
   background: #F5F7D7;
 }
 
-.slick-row.loading {
+div[class*="slickgrid_"] .slick-row.loading {
   opacity: 0.5;
   filter: alpha(opacity = 50);
 }
 
-.slick-cell.invalid {
+div[class*="slickgrid_"] .slick-cell.invalid {
   border-color: red;
   -moz-animation-duration: 0.2s;
   -webkit-animation-duration: 0.2s;
