@@ -708,7 +708,7 @@ if (application.__parent__.solutionPrefs) {
 		TRIGGER_fastfind_display_set(
 					null,
 					null,
-					(findValue.relation != 'NONE') ? findValue.relation + '.' + findValue.columnName : findValue.columnName
+					(findValue.relation && findValue.relation != 'NONE') ? findValue.relation + '.' + findValue.columnName : findValue.columnName
 				)
 		
 		//set global used for grayed out calc
