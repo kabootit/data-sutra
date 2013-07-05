@@ -1654,15 +1654,6 @@ function DS_actions(input) {
 					DS_toolbar_load()
 					DS_sidebar_load()
 					
-					//return toolbar window to most recent position and then clear out the stored value
-					if (solutionPrefs.config.prefs.toolbarTabSelected) {
-						//formerly selected tab no longer available
-//						if (solutionPrefs.config.prefs.toolbarTabSelected <= forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getMaxTabIndex()) {
-							forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex = solutionPrefs.config.prefs.toolbarTabSelected
-//						}
-						delete solutionPrefs.config.prefs.toolbarTabSelected
-					}
-					
 					//return sidebar window to most recent position and then clear out the stored value
 					if (solutionPrefs.config.prefs.sidebarTabSelected) {
 						//web client
@@ -1762,7 +1753,18 @@ function DS_actions(input) {
 					
 					//re-set progress indicator toolbar => issue with restoring last selected toolbar
 					TRIGGER_progressbar_stop()
-					forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex = 1
+					
+					//return toolbar window to most recent position and then clear out the stored value
+					if (solutionPrefs.config.prefs.toolbarTabSelected) {
+						//formerly selected tab no longer available
+//						if (solutionPrefs.config.prefs.toolbarTabSelected <= forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getMaxTabIndex()) {
+							forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex = solutionPrefs.config.prefs.toolbarTabSelected
+//						}
+						delete solutionPrefs.config.prefs.toolbarTabSelected
+					}
+					else {
+						forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex = 1
+					}
 					
 					//turn licensing check back on
 					if (baDeeBaDee) {
@@ -1771,14 +1773,7 @@ function DS_actions(input) {
 				}
 				//go to a specific preference
 				else if (itemClicked != '-' && itemClicked != 'Design mode') {
-					
-					//turn on progress indicator when enabled
-					if (solutionPrefs.config.prefs.configNotify) {
-						var currentToolbar = forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex
-						
-						CODE_cursor_busy(true)
-						TRIGGER_progressbar_start(-273,'Loading ' + itemClicked + '. Please wait...')
-					}
+					var currentToolbar = forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex
 					
 					//entering a preference for the first time
 					if (!solutionPrefs.config.prefs.preferenceMode) {
@@ -1796,6 +1791,12 @@ function DS_actions(input) {
 						
 						//save current toolbar tab
 						solutionPrefs.config.prefs.toolbarTabSelected = currentToolbar
+						
+						//turn on progress indicator when enabled
+						if (solutionPrefs.config.prefs.configNotify) {
+							CODE_cursor_busy(true)
+							TRIGGER_progressbar_start(-273,'Loading ' + itemClicked + '. Please wait...')
+						}
 						
 						//web client
 						if (solutionPrefs.config.webClient) {
@@ -1861,6 +1862,14 @@ function DS_actions(input) {
 						
 						//set background color to be white
 						forms[baseForm + '__header__toolbar'].elements.lbl_color.bgcolor = '#ffffff'
+					}
+					//still need notifications even when not the first time
+					else {
+						//turn on progress indicator when enabled
+						if (solutionPrefs.config.prefs.configNotify) {
+							CODE_cursor_busy(true)
+							TRIGGER_progressbar_start(-273,'Loading ' + itemClicked + '. Please wait...')
+						}
 					}
 					
 					//set flag for check of selected preference
@@ -3934,6 +3943,9 @@ function DS_toolbar_cycle(event) {
 		var maxTab = forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getMaxTabIndex()
 		var statusTabs = solutionPrefs.panel.toolbar
 		
+		//how many tabs are enabled
+		var totalTabs = statusTabs.filter(function(item) {return item.enabled}).length
+		
 		//right-click or shift-click will open menu
 		var showMenu = rightClick || CODE_key_pressed('shift')
 		
@@ -4069,7 +4081,7 @@ function DS_toolbar_cycle(event) {
 			forms[baseForm + '__header__toolbar'].elements.lbl_color.bgcolor = statusTab.gradientColor
 			
 			//enable group
-			forms[baseForm + '__header__toolbar'].elements.toolbar_navigator.visible = true
+			forms[baseForm + '__header__toolbar'].elements.toolbar_navigator.visible = (totalTabs > 1)
 			
 			//set up popDown, if activated
 			var thePopDown = statusTab.popDown
@@ -4139,6 +4151,7 @@ if (application.__parent__.solutionPrefs) {
 	var popForm = 'DATASUTRA__toolbar__popdown'
 	var toolbars = solutionPrefs.panel.toolbar
 	var enabledToolbars = 0
+	var firstTab
 	
 	var cycleMethod = DS_toolbar_cycle
 	if (solutionPrefs.config.webClient) {
@@ -4172,6 +4185,10 @@ if (application.__parent__.solutionPrefs) {
 				
 				if (toolTab.enabled) {
 					enabledToolbars ++
+					
+					if (!firstTab) {
+						firstTab = i + 4
+					}
 				}
 			}
 			//remove from toolbars
@@ -4180,8 +4197,8 @@ if (application.__parent__.solutionPrefs) {
 			}
 		}
 		
-		//select first tab
-		cycleMethod(4)
+		//select first enabled tab
+		cycleMethod(firstTab)
 	}
 	//select solution title tab
 	else {
@@ -4780,8 +4797,7 @@ function DS_client_info_load()
  */
 
 	//get uuid of client (comes from clients_stats table in repository)
-	var uuidServoy = plugins.UserManager.Client().clientId
-//		plugins.sutra.getClientID()
+	var uuidServoy = (plugins.UserManager && plugins.UserManager.Client()) ? plugins.UserManager.Client().clientId : plugins.sutra.getClientID()
 	
 	//process os and servoy version
 	var nameOS = application.getOSName()
