@@ -578,4 +578,6 @@ function LIST_redraw__webclient__continue(scrollTop) {
 	
 	//flip on navigation switcher immediately
 	plugins.WebClientUtils.executeClientSideJS("setTimeout(function(){$('#form_NAV__navigation_tree__rows div > div > div > span:parent:not([id])').on('click',null,function(){bigIndicator(true);});},7500);")
+	
+	forms[solutionPrefs.config.webClient ? 'NAV__navigation_tree__WEB' : 'NAV__navigation_tree'].LABEL_update()
 }

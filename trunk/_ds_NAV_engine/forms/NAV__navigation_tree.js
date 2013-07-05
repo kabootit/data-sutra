@@ -215,7 +215,8 @@ function LABEL_update(optionsVisible) {
 	}
 	
 	//update label
-	elements.lbl_header.text = (displayValue) ? displayValue.toUpperCase() : 'NAVIGATION'
+	elements.lbl_header.text = (displayValue) ? displayValue.toUpperCase() : 'WORKSPACE'
+	elements.lbl_header.toolTipText = (displayValue) ? '<html><strong>' + displayValue + '</strong> workspace' : ''
 }
 
 /**

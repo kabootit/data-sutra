@@ -39,6 +39,7 @@ formIndex:1,
 location:"8,2",
 size:"90,18",
 styleClass:"tree_header",
+text:"WORKSPACE",
 typeid:7,
 uuid:"DF782542-4645-400D-BEBB-D27101B802DC"
 },
