@@ -1,0 +1,10 @@
+customProperties:"design:{
+viewType:\"'slickView'\"
+}",
+dataSource:"db:/sutra_example/sutra_example",
+extendsID:"5FCD6463-9DD9-4BAC-A244-9C9939D5FCD0",
+name:"CRM_0L_example__fast",
+navigatorID:"-1",
+styleName:"_DATASUTRA_",
+typeid:3,
+uuid:"9012EF35-6EED-4543-B096-0C00CC378A58"
