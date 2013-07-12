@@ -1,4 +1,6 @@
-customProperties:"",
+customProperties:"design:{
+viewType:\"'slickView'\"
+}",
 dataSource:"db:/sutra_example/addresses",
 items:[
 {
