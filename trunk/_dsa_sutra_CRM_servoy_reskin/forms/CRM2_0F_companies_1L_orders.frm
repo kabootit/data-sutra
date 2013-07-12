@@ -1,3 +1,6 @@
+customProperties:"design:{
+viewType:\"'slickView'\"
+}",
 dataSource:"db:/sutra_example/orders",
 initialSort:"order_date desc",
 items:[
@@ -21,6 +24,7 @@ borderType:"SpecialMatteBorder,0.0,0.0,1.0,0.0,#000000,#000000,#999999,#000000,0
 dataProviderID:"terms",
 editable:false,
 formIndex:11200,
+horizontalAlignment:0,
 location:"453,34",
 size:"120,22",
 styleClass:"tableview",

@@ -1,3 +1,6 @@
+customProperties:"design:{
+viewType:\"'slickView'\"
+}",
 dataSource:"db:/sutra_example/contacts",
 initialSort:"name_last asc, name_first asc",
 items:[

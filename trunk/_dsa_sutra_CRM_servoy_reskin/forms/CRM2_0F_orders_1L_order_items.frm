@@ -1,3 +1,6 @@
+customProperties:"design:{
+viewType:\"'slickView'\"
+}",
 dataSource:"db:/sutra_example/order_items",
 items:[
 {

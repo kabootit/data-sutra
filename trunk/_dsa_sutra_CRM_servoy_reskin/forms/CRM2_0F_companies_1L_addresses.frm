@@ -1,3 +1,4 @@
+customProperties:"",
 dataSource:"db:/sutra_example/addresses",
 items:[
 {
