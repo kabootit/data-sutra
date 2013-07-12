@@ -2467,6 +2467,12 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		else {
 			var serverName = forms[mainTab].controller.getServerName()
 			var tableName = forms[mainTab].controller.getTableName()
+			
+			//this is a slickgrid form
+			var customViews = ['slickView','slickEdit']
+			if (solutionPrefs.config.webClient && customViews.indexOf(forms[mainTab].controller.getDesignTimeProperty('viewType')) != -1) {
+				mainTab = mainTab + '__slick'
+			}
 		}
 		
 		//if navigate to a new form when not at end of history stack, clear end

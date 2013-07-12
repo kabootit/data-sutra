@@ -306,9 +306,14 @@ if (buttonName) {
 	//set tab index
 	forms[formName].elements[tabPanelName].tabIndex = i
 	
-	//show/hide + button
+	//show/hide +, actinon wheel, help buttons
 	var tabFormName = forms[formName].elements[tabPanelName].getTabFormNameAt(i)
 	if (forms[tabFormName]) {
+		//this is an initialized slick grid, update (when first loading a form, don't run)
+		if (forms[tabFormName].controller.getDesignTimeProperty('SlickGrid') && solutionModel.getForm(tabFormName).getMethod('SLICK_call') && forms[tabFormName]._gridShown) {
+			forms[tabFormName].SLICK_call()
+		}
+		
 		var txnEnable = (solutionPrefs.config.webClient && application.__parent__.navigationPrefs && solutionPrefs.config.currentFormID) ? (navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].transactions ? true : false) : false
 		
 		var showAdd = forms[tabFormName].REC_new && (!txnEnable || (txnEnable && (scopes.DS.transaction.getStatus() || forms[tabFormName].TXN_new))) ? true : false

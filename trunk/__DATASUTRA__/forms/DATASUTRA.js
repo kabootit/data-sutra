@@ -131,6 +131,11 @@ function FORM_on_load(event) {
 			}
 		}
 		
+		//slick grid component available, replace out all tables flagged
+		if (scopes.SLICK) {
+			scopes.SLICK.hookup()
+		}
+		
 		forms.DATASUTRA_WEB_0F.controller.show()
 	}
 	//show empty form
