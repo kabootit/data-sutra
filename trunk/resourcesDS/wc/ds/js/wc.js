@@ -1016,45 +1016,213 @@ function triggerInterfaceLock(toggle,delay) {
 }
 
 //slickgrid wrapper
-/*DS.grid = new function(id,data,columns,options) {
-	var selector = $("#" + id);
+DS.grid = function(id,data,columns,actions,options,optionOverwrite,sample) {
+	var selector = $("#" + id).parent();
 	var isGrid = false;
-	var init = '<div id="__slick" style="width:600px;height:500px;"></div>';
+	var init = '<div id="' + id + '" class="sutraSlick"></div>';
 	
-	//dummy placeholder data
-    function formatter(row, cell, value, columnDef, dataContext) {
-        return value;
-    }
-	data = [];
-	columns = [
-		{id: "title", name: "Title", field: "title", width: 120, cssClass: "cell-title", formatter: formatter},
-		{id: "duration", name: "Duration", field: "duration"},
-		{id: "%", name: "% Complete", field: "percentComplete", width: 80, resizable: false, formatter: Slick.Formatters.PercentCompleteBar},
-		{id: "start", name: "Start", field: "start", minWidth: 60},
-		{id: "finish", name: "Finish", field: "finish", minWidth: 60},
-		{id: "effort-driven", name: "Effort Driven", sortable: false, width: 80, minWidth: 20, maxWidth: 80, cssClass: "cell-effort-driven", field: "effortDriven", formatter: Slick.Formatters.Checkmark}
-	];
-	options = {
+	var optionsBase = {
 		editable: false,
 		enableAddRow: false,
-		enableCellNavigation: true
-	};	
-	for (var i = 0; i < 5; i++) {
-		var d = (data[i] = {});
-
-		d["title"] = "<a href='#' tabindex='0'>Task</a> " + i;
-		d["duration"] = "5 days";
-		d["percentComplete"] = Math.min(100, Math.round(Math.random() * 110));
-		d["start"] = "01/01/2009";
-		d["finish"] = "01/05/2009";
-		d["effortDriven"] = (i % 5 == 0);
+		enableCellNavigation: true,
+		enableColumnReorder: true, 
+		forceFitColumns: true, 
+		forceSyncScrolling: true,
+		fullWidthRows: true, 
+		syncColumnCellResize: true,
+		rowHeight: 22,
+		headerRowHeight: 22
+	};
+	if (!options || typeof options != 'object') {
+		options = new Object()
 	}
 	
-	//this id has not already been wrapped as a slickgrid, initialize it
-	if (!isGrid) {
-		//set up requested id with framework to hang slickgrid on
-		selector.html = init.replace('__slick',id + '__slick');
+	//advanced sorting
+	var currentSortCol = new Object()
+	
+	//actions
+	var gridClick = new Array()
+	var gridDoubleClick = new Array()
+	var gridRightClick = new Array()
+	
+	//image formatter
+	function imageFormatter(row, cell, value, columnDef, dataContext) {
+		var myReturn = '<span class="action table" style="background: url(/servoy-webclient/resources/servoy/media?id='
+		myReturn += value.replace(/dsImg/,'')
+		myReturn += ') no-repeat center center;"></span>'
 		
-		var grid = new Slick.Grid("#" + id, data, columns, options);
+		return myReturn
 	}
-}*/
+	
+	if (selector.length) {
+		//fill with sample grid -- example 2
+		if (sample) {
+			//demonstrating a simple formatter
+			function formatter(row, cell, value, columnDef, dataContext) {
+				return value;
+			}
+			
+			//help in calculating random date in the past few years
+			function randomDate(start, end) {
+			    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()))
+			}
+			
+			//clear out data so can take sample
+			data = [];
+			
+			//set up columns for display
+				//MEMO: Slick calls are evaled so that SlickGrid has time to load in before object instantiated
+			columns = [
+				{id: "title", name: "Title", field: "title", sortable: true, width: 120, cssClass: "cell-title", formatter: formatter},
+				{id: "duration", name: "Duration", field: "duration", sortable: true},
+				{id: "%", name: "% Complete", field: "percentComplete", sortable: true, width: 80, resizable: false, formatter: eval('Slick.Formatters.PercentCompleteBar')},
+				{id: "start", name: "Start", field: "start", sortable: true, minWidth: 60},
+				{id: "finish", name: "Finish", field: "finish", sortable: true, minWidth: 60},
+				{id: "effort-driven", name: "Effort Driven", sortable: true, sortable: false, width: 80, minWidth: 20, maxWidth: 80, cssClass: "cell-effort-driven", field: "effortDriven", sortable: true, formatter: eval('Slick.Formatters.Checkmark')}
+			];
+			
+			//fill with 25000 rows
+			for (var i = 0; i < 25000; i++) {
+				var d = (data[i] = {});
+
+				d["title"] = "<a href='#' tabindex='0'>Task</a> " + i;
+				d["duration"] = "5 days";
+				d["percentComplete"] = Math.min(100, Math.round(Math.random() * 110));
+				d["start"] = $.datepicker.formatDate('mm/dd/yy', randomDate(new Date(2012, 0, 1), new Date()));
+				d["finish"] = $.datepicker.formatDate('mm/dd/yy', randomDate(new Date(2012, 0, 1), new Date()));
+				d["effortDriven"] = (Math.round(Math.random() * 2) == 0);
+			}
+			
+			//use default options
+			optionOverwrite = false
+		}
+		
+		//we're using the base template for a data sutra grid
+		if (!optionOverwrite) {
+			//add base options that haven't been overridden
+			for (var i in optionsBase) {
+				if (!options.hasOwnProperty(i)) {
+					options[i] = optionsBase[i]
+				}
+			}
+		}
+		
+		//process data sutra columns into slick grid columns
+		for (var i = 0; i < columns.length; i++) {
+			var column = columns[i];
+			
+			//cast string to defined function (should probably check to see if exists first)
+			if (typeof column.formatter == 'string') {
+				column.formatter = eval(column.formatter);
+			}
+		}
+		
+		//this id has not already been wrapped as a slickgrid, initialize it
+		if (!isGrid) {
+			//set up requested id with framework to hang slickgrid on
+				//MEMO: we are actually trashing the div where servoy puts the html area field so anything directly configured on that element in servoy designer will be lost
+			selector.html = init;
+			
+			//set up container for all grids
+			if (!DS.grid.table) {
+				DS.grid.table = new Object()
+			}
+			
+			//grab selectedindex
+			var index = 0
+			if (options.dsSelectedIndex) {
+				index = options.dsSelectedIndex
+				delete options.dsSelectedIndex
+			}
+			
+			var grid = 
+			DS.grid.table[id] = 
+				new Slick.Grid("#" + id, data, columns, options);
+			
+			//show tooltips when grid width can't show entire contents
+		    grid.registerPlugin(new Slick.AutoTooltips({ 
+				enableForHeaderCells: true 
+			}));
+			
+			//basic sorting
+			grid.onSort.subscribe(function(e, args) {
+				var field = args.sortCol.field;
+				
+				data.sort(function(a, b){
+					var result = 
+						a[field] > b[field] ? 1 :
+						a[field] < b[field] ? -1 :
+							0;
+					
+					return args.sortAsc ? result : -result;
+				});
+				
+				//send callback letting servoy know that sort updated
+				// callback(args.sortCol.field,args.sortAsc ? 'asc' : 'desc')
+				
+				grid.invalidate();
+			});
+			
+			//loop all events and subscribe appropriately
+			for (var i in actions) {
+				//column events
+				if (i == 'onClick' || i == 'onDblClick' || i == 'onContextMenu') {
+					for (var j in actions[i]) {
+						
+					}
+				}
+				//some nested mumbo-jumbo
+				else if (actions[i] instanceof Array) {
+					// for (var j = 0; j < actions[i].length; j++) {
+					// 	grid[i].subscribe(actions[i][j])
+					// }
+				}
+				//subscribe method
+				else {
+					function subClosure(fxBody) {
+						grid[i].subscribe(function(e, args) {
+							eval(fxBody);
+						});
+					}
+					
+					subClosure(actions[i]);
+				}
+			}
+			
+			//single click
+			if (actions.onClick) {
+				grid.onClick.subscribe(function(e, args) {
+					var cell = args.cell;
+					var row = args.rows;
+					var cellID = grid.getColumns()[cell].id;
+					
+					for (var i in actions.onClick) {
+						if (cellID == i) {
+							eval(actions.onClick[i]);
+							// grid.updateRow(cell.row);
+							e.stopPropagation();
+						}
+					}
+				});
+			}
+			
+			
+			//double click
+			
+			
+			//right-click
+			
+			//(re-)render the grid
+		    grid.render();
+			
+			//select the selected row and make sure visible
+			grid.setSelectionModel(new Slick.RowSelectionModel({selectActiveRow: true}));
+			grid.setSelectedRows([index]);
+			grid.scrollRowToTop(index-5)
+		}
+		//restore state of grid
+		else {
+			
+		}
+	}
+}
