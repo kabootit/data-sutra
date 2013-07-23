@@ -58,7 +58,13 @@
 	            text = text.substr(0, options.maxToolTipLength - 3) + "...";
 	          }
 	        } else {
-	          text = "";
+				var thisColumn = _grid.getColumns()[cell.cell];
+				if (thisColumn.tooltip) {
+					text = thisColumn.tooltip;
+				}
+				else {
+					text = "";
+				}
 	        }
 	        $node.attr("title", text);
 		}
