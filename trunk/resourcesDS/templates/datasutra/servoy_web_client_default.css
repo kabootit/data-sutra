@@ -625,6 +625,43 @@ div.wicket-aa ul li.selected {
 
 /* combobox */
 div! > select {
+	/* same definition as below but must be separate because ! doesn't get parsed by css engine <4 */
+	overflow:hidden;
+			
+	-moz-border-radius: 3px 3px 3px 3px;
+	-webkit-border-radius: 3px 3px 3px 3px;
+	border-radius: 3px 3px 3px 3px;
+			
+	box-shadow: 1px 1px 5px #666;
+			
+	background: url(/servoy-webclient/templates/datasutra/images/select-tick.png) no-repeat right center,
+				-moz-linear-gradient(center bottom, #ccc 0%, #eee 60%) no-repeat right top,
+				-moz-linear-gradient(top, #ccc 0%, #ccc 100%) no-repeat right top;
+	background: url(/servoy-webclient/templates/datasutra/images/select-tick.png) no-repeat right center,
+				-webkit-gradient(linear, left bottom, left top, color-stop(0, #ccc), color-stop(0.6, #eee)) no-repeat right top,
+				-webkit-gradient(linear, left top, right top, color-stop(0,#ccc), color-stop(1,#ccc)) no-repeat right top;
+	background: url(/servoy-webclient/templates/datasutra/images/select-tick.png) no-repeat right center,
+				-webkit-linear-gradient(center bottom, #ccc 0%, #eee 60%) no-repeat right top,
+				-webkit-linear-gradient(top, #cccccc 0%,#cccccc 100%) no-repeat right top;
+	background: url(/servoy-webclient/templates/datasutra/images/select-tick.png) no-repeat right center,
+				-o-linear-gradient(bottom, #ccc 0%, #eee 60%) no-repeat right top,
+				-o-linear-gradient(top, #ccc 0%,#ccc 100%) no-repeat right top;
+	background: url(/servoy-webclient/templates/datasutra/images/select-tick.png) no-repeat right center,
+				-ms-linear-gradient(top, #ccc 0%, #eee 60%) no-repeat right top,
+				-ms-linear-gradient(top, #ccc 0%, #ccc 100%) no-repeat right top;
+	background: url(/servoy-webclient/templates/datasutra/images/select-tick.png) no-repeat right center,
+				linear-gradient(top, #ccc 0%, #eee 60%) no-repeat right top,
+				linear-gradient(to bottom, #ccc 0%, #ccc 100%) no-repeat right top;
+			
+	-moz-background-size: auto, 17px 100%, 18px 100%;
+	-webkit-background-size: auto, 17px 100%, 18px 100%;
+	-o-background-size: auto, 17px 100%, 18px 100%;
+	-ms-background-size: auto, 17px 100%, 18px 100%;
+	background-size: auto, 17px 100%, 18px 100%;
+	
+	background-color: #FFF;
+}
+div.select_wrapper {
 	overflow:hidden;
 			
 	-moz-border-radius: 3px 3px 3px 3px;
@@ -850,25 +887,14 @@ img[alt="Remove media"] {
 
 .yuimenuitem-selected,
 .yuimenubaritem-selected {
-    background-color:#d1d1d1 !important;
-	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ebebeb', endColorstr='#a1a1a1') !important; /* for IE */
-	background: -webkit-gradient(linear, left top, left bottom, from(#ebebeb), to(#a1a1a1)) !important; /* for webkit browsers */
-	background: -moz-linear-gradient(top,  #ebebeb,  #a1a1a1) !important; /* for firefox 3.6+ */
     text-decoration:none !important;
     color:#000000 !important;
-	border-top: solid 1px #6d6d6d !important;
-	border-bottom: solid 1px #6d6d6d !important;
 }
 
 .yuimenuitem a.selected,
 .yuimenubaritem a.selected {
-    background-color:#d1d1d1 !important;
-	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ebebeb', endColorstr='#a1a1a1') !important; /* for IE */
-	background: -webkit-gradient(linear, left top, left bottom, from(#ebebeb), to(#a1a1a1)) !important; /* for webkit browsers */
-	background: -moz-linear-gradient(top,  #ebebeb,  #a1a1a1) !important; /* for firefox 3.6+ */
     text-decoration:none !important;
     color:#000000 !important;
-	border: solid 1px #6d6d6d !important;
 }
 
 /* lozenges example	*/
