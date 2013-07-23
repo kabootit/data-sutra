@@ -1017,7 +1017,8 @@ function triggerInterfaceLock(toggle,delay) {
 
 //slickgrid wrapper
 DS.grid = function(id,data,columns,actions,options,optionOverwrite,sample) {
-	var selector = $("#" + id).parent();
+	var parentID = $("#" + id).parent().attr('id');
+	var selector = $("#" + parentID);
 	var isGrid = false;
 	var init = '<div id="' + id + '" class="sutraSlick"></div>';
 	
@@ -1026,6 +1027,7 @@ DS.grid = function(id,data,columns,actions,options,optionOverwrite,sample) {
 		enableAddRow: false,
 		enableCellNavigation: true,
 		enableColumnReorder: true, 
+		enableTextSelectionOnCells: true,
 		forceFitColumns: true, 
 		forceSyncScrolling: true,
 		fullWidthRows: true, 
@@ -1047,9 +1049,10 @@ DS.grid = function(id,data,columns,actions,options,optionOverwrite,sample) {
 	
 	//image formatter
 	function imageFormatter(row, cell, value, columnDef, dataContext) {
-		var myReturn = '<span class="action table" style="background: url(/servoy-webclient/resources/servoy/media?id='
-		myReturn += value.replace(/dsImg/,'')
-		myReturn += ') no-repeat center center;"></span>'
+		var myReturn = '<span class="action table" style="background: url(/servoy-webclient/resources/servoy/media?id=';
+		myReturn += columnDef.field.replace(/dsImg/,'');
+		// console.log("%O", columnDef);
+		myReturn += ') no-repeat center center;"></span>';
 		
 		return myReturn
 	}
@@ -1121,47 +1124,58 @@ DS.grid = function(id,data,columns,actions,options,optionOverwrite,sample) {
 		if (!isGrid) {
 			//set up requested id with framework to hang slickgrid on
 				//MEMO: we are actually trashing the div where servoy puts the html area field so anything directly configured on that element in servoy designer will be lost
+			// $('#' + id).remove();
 			selector.html = init;
+			// $(init).appendTo(selector);
 			
 			//set up container for all grids
 			if (!DS.grid.table) {
-				DS.grid.table = new Object()
+				DS.grid.table = new Object();
 			}
 			
 			//grab selectedindex
-			var index = 0
-			if (options.dsSelectedIndex) {
-				index = options.dsSelectedIndex
-				delete options.dsSelectedIndex
+			var index = 0;
+			if (options.hasOwnProperty('dsSelectedIndex') && typeof options.dsSelectedIndex == 'number') {
+				index = options.dsSelectedIndex;
+				delete options.dsSelectedIndex;
+			}
+			
+			//broker between data array and grid
+			var dataView = new Slick.Data.DataView();
+			
+			//custom row background colors specified
+			if (options.dsRowBGColor) {
+				//remove flag
+				delete options.dsRowBGColor
+			
+				dataView.getItemMetadata = function(row) {
+					if (this.getItem(row) && this.getItem(row).cssClass) {
+						return {
+							'cssClasses': this.getItem(row).cssClass
+						};
+					}
+				}
 			}
 			
 			var grid = 
 			DS.grid.table[id] = 
-				new Slick.Grid("#" + id, data, columns, options);
+				new Slick.Grid("#" + id, dataView, columns, options);
 			
-			//show tooltips when grid width can't show entire contents
-		    grid.registerPlugin(new Slick.AutoTooltips({ 
-				enableForHeaderCells: true 
-			}));
-			
-			//basic sorting
-			grid.onSort.subscribe(function(e, args) {
-				var field = args.sortCol.field;
-				
-				data.sort(function(a, b){
-					var result = 
-						a[field] > b[field] ? 1 :
-						a[field] < b[field] ? -1 :
-							0;
-					
-					return args.sortAsc ? result : -result;
-				});
-				
-				//send callback letting servoy know that sort updated
-				// callback(args.sortCol.field,args.sortAsc ? 'asc' : 'desc')
-				
-				grid.invalidate();
+			// wire up model events to drive the grid
+			dataView.onRowCountChanged.subscribe(function (e, args) {
+				grid.updateRowCount();
+				grid.render();
 			});
+			dataView.onRowsChanged.subscribe(function (e, args) {
+				grid.invalidateRows(args.rows);
+				grid.render();
+			});
+			
+			
+			//feed data into dataview
+			dataView.beginUpdate();
+			dataView.setItems(data);
+			dataView.endUpdate();
 			
 			//loop all events and subscribe appropriately
 			for (var i in actions) {
@@ -1212,13 +1226,16 @@ DS.grid = function(id,data,columns,actions,options,optionOverwrite,sample) {
 			
 			//right-click
 			
-			//(re-)render the grid
-		    grid.render();
+			
+			//show tooltips when grid width can't show entire contents
+					    grid.registerPlugin(new Slick.AutoTooltips({ 
+				enableForHeaderCells: true 
+			}));
 			
 			//select the selected row and make sure visible
 			grid.setSelectionModel(new Slick.RowSelectionModel({selectActiveRow: true}));
 			grid.setSelectedRows([index]);
-			grid.scrollRowToTop(index-5)
+			grid.scrollRowToTop(index-5);
 		}
 		//restore state of grid
 		else {

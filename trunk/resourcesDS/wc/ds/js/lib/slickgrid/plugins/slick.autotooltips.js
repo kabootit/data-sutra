@@ -49,15 +49,19 @@
       if (cell) {
         var $node = $(_grid.getCellNode(cell.row, cell.cell));
         var text;
-        if ($node.innerWidth() < $node[0].scrollWidth) {
-          text = $.trim($node.text());
-          if (options.maxToolTipLength && text.length > options.maxToolTipLength) {
-            text = text.substr(0, options.maxToolTipLength - 3) + "...";
-          }
-        } else {
-          text = "";
-        }
-        $node.attr("title", text);
+		
+		//when there is already tooltip text, don't overwrite
+		if (!$node.attr("title")) {
+		   if ($node.innerWidth() < $node[0].scrollWidth) {
+	          text = $.trim($node.text());
+	          if (options.maxToolTipLength && text.length > options.maxToolTipLength) {
+	            text = text.substr(0, options.maxToolTipLength - 3) + "...";
+	          }
+	        } else {
+	          text = "";
+	        }
+	        $node.attr("title", text);
+		}
       }
     }
     

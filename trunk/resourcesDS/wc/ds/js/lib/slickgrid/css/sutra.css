@@ -1,6 +1,5 @@
 @import url('slick-default-theme.css');
 
-
 div[class*="slickgrid_"] ul {
 	margin-left: 0;
 	padding: 0;
@@ -345,6 +344,42 @@ div[class*="slickgrid_"] .slick-cell.alignRight {
 
 div[class*="slickgrid_"] .slick-cell.alignCenter {
 	text-align: center;
+}
+
+	/* green row bg color */
+div[class*="slickgrid_"] .slick-row.odd.colorGreen,
+div[class*="slickgrid_"] .slick-row.even.colorGreen {
+	background: #DBF5DB;
+}
+div[class*="slickgrid_"] .slick-row.colorGreen .slick-cell  {
+	border-bottom-color: #B6E6B6;
+	border-right-color: #B6E6B6;
+}
+div[class*="slickgrid_"] .slick-row.active.colorGreen,
+div[class*="slickgrid_"] .slick-row.colorGreen .slick-cell.selected {
+	background: #B6E6B6;
+}
+div[class*="slickgrid_"] .slick-row.active.colorGreen .slick-cell,
+div[class*="slickgrid_"] .slick-row.colorGreen .slick-cell.selected {
+	border-right-color: #DBF5DB;
+}
+
+	/* red row bg color */
+div[class*="slickgrid_"] .slick-row.odd.colorRed,
+div[class*="slickgrid_"] .slick-row.even.colorRed {
+	background: #F5DBDB;
+}
+div[class*="slickgrid_"] .slick-row.colorRed .slick-cell  {
+	border-bottom-color: #E6B6B6;
+	border-right-color: #E6B6B6;
+}
+div[class*="slickgrid_"] .slick-row.active.colorRed,
+div[class*="slickgrid_"] .slick-row.colorRed .slick-cell.selected {
+	background: #E6B6B6;
+}
+div[class*="slickgrid_"] .slick-row.active.colorRed .slick-cell,
+div[class*="slickgrid_"] .slick-row.colorRed .slick-cell.selected {
+	border-right-color: #F5DBDB;
 }
 
 /* UL grid */
