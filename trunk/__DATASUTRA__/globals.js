@@ -1933,88 +1933,89 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 }
 	var baseForm = solutionPrefs.config.formNameBase
 	var currentNavItem = solutionPrefs.config.currentFormID
-	var helpDesc = navigationPrefs.byNavItemID[currentNavItem].navigationItem.helpDescription
-	var helpForm = navigationPrefs.byNavItemID[currentNavItem].navigationItem.helpFormToLoad
-	var helpList = 'DEV_0F_navigation_item__help'
-	var prefName = 'Inline Help'
-	var helpTextColor = navigationPrefs.byNavItemID[currentNavItem].navigationItem.helpColorText
-	var helpBkgndColor = navigationPrefs.byNavItemID[currentNavItem].navigationItem.helpColorBackground
-	var helpAvailable = helpForm || helpDesc //navigationPrefs.byNavItemID[currentNavItem].navigationItem.helpAvailable
-	var stayInHelp = arguments[0]
-	
-	if (helpAvailable || solutionPrefs.design.statusDesign) {
-		//activate
-		if (!solutionPrefs.config.helpMode || stayInHelp) {
-			//set flag that in helpmode
-			DEV_clear_modes()
-			solutionPrefs.config.helpMode = true
-			
-			//we're in design mode, mark that we are in the help config pane
-			if (solutionPrefs.design.statusDesign) {
-				solutionPrefs.design.modes.help = true
-				solutionPrefs.design.currentMode = 'help'
-			}
-			
-			//replace workflow area with help screen, if defined and available
-			if ((helpForm) ? forms[helpForm] : false) {
-				forms[baseForm].elements.tab_content_C.removeAllTabs()
-				forms[baseForm].elements.tab_content_C.addTab(forms[helpForm],'')
-				forms[baseForm].elements.tab_content_C.tabIndex = forms[baseForm].elements.tab_content_C.getMaxTabIndex()
-			}
-			
-			//set help text
-			DEV_help_description = helpDesc
-			forms[helpList].elements.lbl_record_heading.text = 'Help: ' + navigationPrefs.byNavItemID[currentNavItem].navigationItem.itemName
-			
-			//set colors
-			if (helpTextColor) {
-				forms[helpList].elements.fld_help_description.fgcolor = '#'+helpTextColor
-			}
-			else {
-				forms[helpList].elements.fld_help_description.fgcolor = '#000000'
-			}
-			if (helpBkgndColor) {
-				forms[helpList].elements.color_background.bgcolor = '#'+helpBkgndColor
-			}
-			else {
-				forms[helpList].elements.color_background.bgcolor = '#D1D7E2'
-			}
-			
-			//if not loaded, add tab
-			if (!navigationPrefs.byNavSetName.configPanes.itemsByName[prefName]) {
+	if (currentNavItem) {
+		var helpDesc = navigationPrefs.byNavItemID[currentNavItem].navigationItem.helpDescription
+		var helpForm = navigationPrefs.byNavItemID[currentNavItem].navigationItem.helpFormToLoad
+		var helpList = 'DEV_0F_navigation_item__help'
+		var prefName = 'Inline Help'
+		var helpTextColor = navigationPrefs.byNavItemID[currentNavItem].navigationItem.helpColorText
+		var helpBkgndColor = navigationPrefs.byNavItemID[currentNavItem].navigationItem.helpColorBackground
+		var helpAvailable = helpForm || helpDesc //navigationPrefs.byNavItemID[currentNavItem].navigationItem.helpAvailable
+		var stayInHelp = arguments[0]
+		
+		if (helpAvailable || solutionPrefs.design.statusDesign) {
+			//activate
+			if (!solutionPrefs.config.helpMode || stayInHelp) {
+				//set flag that in helpmode
+				DEV_clear_modes()
+				solutionPrefs.config.helpMode = true
 				
-				//assign to list tab panel
-				forms[baseForm].elements.tab_content_B.addTab(forms[helpList],'View help',null,null,null,null)
-				forms[baseForm].elements.tab_content_B.tabIndex = forms[baseForm].elements.tab_content_B.getMaxTabIndex()
+				//we're in design mode, mark that we are in the help config pane
+				if (solutionPrefs.design.statusDesign) {
+					solutionPrefs.design.modes.help = true
+					solutionPrefs.design.currentMode = 'help'
+				}
 				
-				//save status info
-				navigationPrefs.byNavSetName.configPanes.itemsByName[prefName] = new Object()
-				navigationPrefs.byNavSetName.configPanes.itemsByName[prefName].listData = {
-											tabNumber : forms[baseForm].elements.tab_content_B.tabIndex,
-											dateAdded : application.getServerTimeStamp()
-									}
+				//replace workflow area with help screen, if defined and available
+				if ((helpForm) ? forms[helpForm] : false) {
+					forms[baseForm].elements.tab_content_C.removeAllTabs()
+					forms[baseForm].elements.tab_content_C.addTab(forms[helpForm],'')
+					forms[baseForm].elements.tab_content_C.tabIndex = forms[baseForm].elements.tab_content_C.getMaxTabIndex()
+				}
 				
+				//set help text
+				DEV_help_description = helpDesc
+				forms[helpList].elements.lbl_record_heading.text = 'Help: ' + navigationPrefs.byNavItemID[currentNavItem].navigationItem.itemName
+				
+				//set colors
+				if (helpTextColor) {
+					forms[helpList].elements.fld_help_description.fgcolor = '#'+helpTextColor
+				}
+				else {
+					forms[helpList].elements.fld_help_description.fgcolor = '#000000'
+				}
+				if (helpBkgndColor) {
+					forms[helpList].elements.color_background.bgcolor = '#'+helpBkgndColor
+				}
+				else {
+					forms[helpList].elements.color_background.bgcolor = '#D1D7E2'
+				}
+				
+				//if not loaded, add tab
+				if (!navigationPrefs.byNavSetName.configPanes.itemsByName[prefName]) {
+					
+					//assign to list tab panel
+					forms[baseForm].elements.tab_content_B.addTab(forms[helpList],'View help',null,null,null,null)
+					forms[baseForm].elements.tab_content_B.tabIndex = forms[baseForm].elements.tab_content_B.getMaxTabIndex()
+					
+					//save status info
+					navigationPrefs.byNavSetName.configPanes.itemsByName[prefName] = new Object()
+					navigationPrefs.byNavSetName.configPanes.itemsByName[prefName].listData = {
+												tabNumber : forms[baseForm].elements.tab_content_B.tabIndex,
+												dateAdded : application.getServerTimeStamp()
+										}
+					
+				}
+				//form already exists, set tab index
+				else {
+					forms[baseForm].elements.tab_content_B.tabIndex = navigationPrefs.byNavSetName.configPanes.itemsByName[prefName].listData.tabNumber
+				}
 			}
-			//form already exists, set tab index
+			//deactivate
 			else {
-				forms[baseForm].elements.tab_content_B.tabIndex = navigationPrefs.byNavSetName.configPanes.itemsByName[prefName].listData.tabNumber
+				//set flag that not in helpmode
+				solutionPrefs.config.helpMode = false
+				
+				//fire load_forms
+				NAV_workflow_load(null,solutionPrefs.config.currentHistoryPosition)
 			}
 		}
-		//deactivate
 		else {
-			//set flag that not in helpmode
+			DIALOGS.showWarningDialog('No help','There is no active help screen for this area')
 			solutionPrefs.config.helpMode = false
-			
-			//fire load_forms
-			NAV_workflow_load(null,solutionPrefs.config.currentHistoryPosition)
 		}
-	}
-	else {
-		DIALOGS.showWarningDialog('No help','There is no active help screen for this area')
-		solutionPrefs.config.helpMode = false
 	}
 }
-
 }
 
 /**
