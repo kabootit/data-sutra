@@ -1028,6 +1028,7 @@ DS.grid = function(id,data,columns,actions,options,optionOverwrite,sample) {
 	var parentID = $("#" + id).parent().attr('id');
 	var selector = $("#" + parentID);
 	var isGrid = $("#" + id + '[class*="slickgrid_"]').length == 1;
+	isGrid = false;
 	var init = '<div id="' + id + '" class="sutraSlick"></div>';
 	
 	var optionsBase = {
@@ -1059,11 +1060,30 @@ DS.grid = function(id,data,columns,actions,options,optionOverwrite,sample) {
 	function imageFormatter(row, cell, value, columnDef, dataContext) {
 		var myReturn = '<span class="action table" style="background: url(/servoy-webclient/resources/servoy/media?id=';
 		myReturn += columnDef.field.replace(/dsImg/,'');
-		// console.log("%O", columnDef);
 		myReturn += ') no-repeat center center;"></span>';
-		
 		return myReturn
 	}
+	
+	//date formatter
+    function dateFormatter(row, cell, value, columnDef, dataContext) {
+		var format = columnDef.dsFormat;
+		
+		//will not handle times at this time
+		format = format.replace(/h/g,'');
+		format = format.replace(/m/g,'');
+		format = format.replace(/s/g,'');
+		format = format.replace(/a/g,'');
+		format = format.replace(/\:/g,'');
+		format = format.replace(/\s/g,'');
+		
+		//replace servoy date to standard js date
+		format = format.replace(/yy/g,'y');
+		format = format.replace(/M/g,'m');
+		
+		console.log(format);
+		
+        return $.datepicker.formatDate(format,new Date(value));
+    }
 	
 	if (selector.length) {
 		//fill with sample grid -- example 2
@@ -1179,7 +1199,6 @@ DS.grid = function(id,data,columns,actions,options,optionOverwrite,sample) {
 				grid.render();
 			});
 			
-			
 			//feed data into dataview
 			dataView.beginUpdate();
 			dataView.setItems(data);
@@ -1201,13 +1220,13 @@ DS.grid = function(id,data,columns,actions,options,optionOverwrite,sample) {
 				}
 				//subscribe method
 				else {
-					function subClosure(fxBody) {
-						grid[i].subscribe(function(e, args) {
+					function subClosure(fx,fxBody) {
+						grid[fx].subscribe(function(e, args) {
 							eval(fxBody);
 						});
 					}
 					
-					subClosure(actions[i]);
+					subClosure(i,actions[i]);
 				}
 			}
 			
@@ -1267,6 +1286,7 @@ DS.grid = function(id,data,columns,actions,options,optionOverwrite,sample) {
 			dataView.beginUpdate();
 			dataView.setItems(data);
 			dataView.endUpdate();
+			dataView.syncGridSelection(grid, true);
 				
 			//handle selectedindex (should we set the index or not?)
 			var index = 0;
