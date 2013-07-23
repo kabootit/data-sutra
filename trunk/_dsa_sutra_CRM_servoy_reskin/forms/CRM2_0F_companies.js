@@ -83,9 +83,8 @@ function FORM_on_show(firstShow, event) {
 		EDIT_toggle(true)
 	}
 	
-	if (scopes.NT) {
-		scopes.NT.sidebarSet(event)
-	}
+	//re-run onSelect when form reloaded
+	REC_on_select(event)
 }
 
 /**
@@ -109,6 +108,10 @@ function FORM_on_load(event) {
 function REC_on_select(event) {
 	if (scopes.NT) {
 		scopes.NT.sidebarSet(event)
+	}
+	
+	if (scopes.SLICK) {
+		scopes.SLICK.parentRecSelect(controller.getName())
 	}
 }
 
