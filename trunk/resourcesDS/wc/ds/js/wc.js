@@ -21,6 +21,7 @@
 if (typeof(DS) == "undefined") {
 	DS = new Object();
 	DS.timer = new Object();
+	DS.version = 6.1
 }
 
 //	Center the login form
@@ -520,11 +521,15 @@ function setPlaceHolders(elements,texts,delay) {
 }
 
 //	Callback to setup callback method
-function callbackConfig(source) {
+function callbackConfig(source,version) {
 	var script = document.createElement('script');
 	script.type = 'text/javascript';
 	script.text = source;
 	$("#servoy_page").append(script);
+	
+	if (version) {
+		DS.version = Number(version);
+	}
 }
 
 //	Sniff browser used and disallow login from 'bad' browsers
@@ -987,22 +992,25 @@ function orientLandscape() {
 
 //style comboboxes
 function styleCSS4Parent() {
-	//available and ready
-	if ($ && $.fn && $.fn.cssParentSelector) {
-		var comboParents = $('select').parent()
+	//do we still need to run this?
+	if (DS.version < 6.16) {
+		//available and ready
+		if ($ && $.fn && $.fn.cssParentSelector) {
+			var comboParents = $('select').parent()
 		
-		//no things have had their parents' styled OR
-		if (!$('[class^="CPS"]').length ||
-		//not all selects have been styled
-			(comboParents.length != comboParents.filter(function(){return (this.className || '').search(/CPS/) != -1}).length)
-			) {
-				//remove existing styling
-				comboParents.each(function(){$(this).removeClass(this.className)});
+			//no things have had their parents' styled OR
+			if (!$('[class^="CPS"]').length ||
+			//not all selects have been styled
+				(comboParents.length != comboParents.filter(function(){return (this.className || '').search(/CPS/) != -1}).length)
+				) {
+					//remove existing styling
+					comboParents.each(function(){$(this).removeClass(this.className)});
 				
-				//(re-)apply
-				$().cssParentSelector();
+					//(re-)apply
+					$().cssParentSelector();
 				
-				//console.log('Styled');
+					//console.log('Styled');
+			}
 		}
 	}
 }
@@ -1019,7 +1027,7 @@ function triggerInterfaceLock(toggle,delay) {
 DS.grid = function(id,data,columns,actions,options,optionOverwrite,sample) {
 	var parentID = $("#" + id).parent().attr('id');
 	var selector = $("#" + parentID);
-	var isGrid = false;
+	var isGrid = $("#" + id + '[class*="slickgrid_"]').length == 1;
 	var init = '<div id="' + id + '" class="sutraSlick"></div>';
 	
 	var optionsBase = {
@@ -1100,16 +1108,6 @@ DS.grid = function(id,data,columns,actions,options,optionOverwrite,sample) {
 			optionOverwrite = false
 		}
 		
-		//we're using the base template for a data sutra grid
-		if (!optionOverwrite) {
-			//add base options that haven't been overridden
-			for (var i in optionsBase) {
-				if (!options.hasOwnProperty(i)) {
-					options[i] = optionsBase[i]
-				}
-			}
-		}
-		
 		//process data sutra columns into slick grid columns
 		for (var i = 0; i < columns.length; i++) {
 			var column = columns[i];
@@ -1121,7 +1119,17 @@ DS.grid = function(id,data,columns,actions,options,optionOverwrite,sample) {
 		}
 		
 		//this id has not already been wrapped as a slickgrid, initialize it
-		if (!isGrid) {
+		if (!isGrid || (isGrid && !(DS.grid.table && DS.grid.table[id]))) {
+			//we're using the base template for a data sutra grid
+			if (!optionOverwrite) {
+				//add base options that haven't been overridden
+				for (var i in optionsBase) {
+					if (!options.hasOwnProperty(i)) {
+						options[i] = optionsBase[i]
+					}
+				}
+			}
+			
 			//set up requested id with framework to hang slickgrid on
 				//MEMO: we are actually trashing the div where servoy puts the html area field so anything directly configured on that element in servoy designer will be lost
 			// $('#' + id).remove();
@@ -1214,21 +1222,33 @@ DS.grid = function(id,data,columns,actions,options,optionOverwrite,sample) {
 						if (cellID == i) {
 							eval(actions.onClick[i]);
 							// grid.updateRow(cell.row);
-							e.stopPropagation();
+							// e.stopPropagation();
 						}
 					}
 				});
 			}
 			
 			
-			//double click
+			//double click (need to combine with single click so as not to run when a double)
 			
 			
 			//right-click
-			
+			if (actions.onContextMenu) {
+				grid.onContextMenu.subscribe(function(e, args) {
+					var cell = args.cell;
+					var row = args.rows;
+					var cellID = grid.getColumns()[cell].id;
+					
+					for (var i in actions.onContextMenu) {
+						if (cellID == i) {
+							eval(actions.onContextMenu[i]);
+						}
+					}
+				});
+			}
 			
 			//show tooltips when grid width can't show entire contents
-					    grid.registerPlugin(new Slick.AutoTooltips({ 
+			grid.registerPlugin(new Slick.AutoTooltips({ 
 				enableForHeaderCells: true 
 			}));
 			
@@ -1238,8 +1258,24 @@ DS.grid = function(id,data,columns,actions,options,optionOverwrite,sample) {
 			grid.scrollRowToTop(index-5);
 		}
 		//restore state of grid
+			//for now, just pumping in new data and adjust so can see selected record
 		else {
+			var grid = DS.grid.table[id];
 			
+			//push in new data
+			var dataView = grid.getData();
+			dataView.beginUpdate();
+			dataView.setItems(data);
+			dataView.endUpdate();
+				
+			//handle selectedindex (should we set the index or not?)
+			var index = 0;
+			if (options.hasOwnProperty('dsSelectedIndex') && typeof options.dsSelectedIndex == 'number') {
+				index = options.dsSelectedIndex;
+				delete options.dsSelectedIndex;
+			}	
+			grid.setSelectedRows([index]);
+			grid.scrollRowToTop(index-5);
 		}
 	}
 }
