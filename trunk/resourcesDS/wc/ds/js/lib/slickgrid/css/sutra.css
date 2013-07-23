@@ -364,6 +364,24 @@ div[class*="slickgrid_"] .slick-row.colorGreen .slick-cell.selected {
 	border-right-color: #DBF5DB;
 }
 
+	/* yellow row bg color */
+div[class*="slickgrid_"] .slick-row.odd.colorYellow,
+div[class*="slickgrid_"] .slick-row.even.colorYellow {
+	background: #FBFFD2;
+}
+div[class*="slickgrid_"] .slick-row.colorYellow .slick-cell  {
+	border-bottom-color: #EBF4A2;
+	border-right-color: #EBF4A2;
+}
+div[class*="slickgrid_"] .slick-row.active.colorYellow,
+div[class*="slickgrid_"] .slick-row.colorYellow .slick-cell.selected {
+	background: #EBF4A2;
+}
+div[class*="slickgrid_"] .slick-row.active.colorYellow .slick-cell,
+div[class*="slickgrid_"] .slick-row.colorYellow .slick-cell.selected {
+	border-right-color: #FBFFD2;
+}
+
 	/* red row bg color */
 div[class*="slickgrid_"] .slick-row.odd.colorRed,
 div[class*="slickgrid_"] .slick-row.even.colorRed {
@@ -380,6 +398,25 @@ div[class*="slickgrid_"] .slick-row.colorRed .slick-cell.selected {
 div[class*="slickgrid_"] .slick-row.active.colorRed .slick-cell,
 div[class*="slickgrid_"] .slick-row.colorRed .slick-cell.selected {
 	border-right-color: #F5DBDB;
+}
+
+	/* gray row bg color */
+div[class*="slickgrid_"] .slick-row.odd.colorGray,
+div[class*="slickgrid_"] .slick-row.even.colorGray {
+	background: #BFBFBF;
+	color: #2F2F2F;
+}
+div[class*="slickgrid_"] .slick-row.colorGray .slick-cell  {
+	border-bottom-color: #DFDFDF;
+	border-right-color: #DFDFDF;
+}
+div[class*="slickgrid_"] .slick-row.active.colorGray,
+div[class*="slickgrid_"] .slick-row.colorGray .slick-cell.selected {
+	background: #DFDFDF;
+}
+div[class*="slickgrid_"] .slick-row.active.colorGray .slick-cell,
+div[class*="slickgrid_"] .slick-row.colorGray .slick-cell.selected {
+	border-right-color: #BFBFBF;
 }
 
 /* UL grid */
