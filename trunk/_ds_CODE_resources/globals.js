@@ -1758,10 +1758,12 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset, idNavigationIt
 					}
 					
 					var ds = databaseManager.convertToDataSet(callingFoundset)
-	
-					forms[formNameWorkflow].controller.loadRecords(ds)
 					
-					foundsetSet = true
+					if (forms[formNameWorkflow]) {
+						forms[formNameWorkflow].controller.loadRecords(ds)
+					
+						foundsetSet = true
+					}
 				}
 				//working with foundset, verify that based on same table
 				else {
