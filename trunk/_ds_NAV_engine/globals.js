@@ -2773,112 +2773,114 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 									}
 								}
 								
-								var dsNode = solutionModel.getDataSourceNode('db:/' + serverName + '/' + tableName)
-								
-								//width/height for favorite and arrow
-								var height = solutionPrefs.config.webClient ? 18 : 17
-								var width = solutionPrefs.config.webClient ? 15 : 12
-								
-								//add favorite column to universal list
-								if (solutionPrefs.access.accessControl && navSpecs.favoritable) {
-									//add calculation to show favorite star if hasn't been added already
-									var starCalc = dsNode.getCalculation('sutra_favorite_badge')
-									if (!starCalc) {
-										starCalc = dsNode.newCalculation(
-												['function sutra_favorite_badge() {',
-													'var badge = "";',
-													'var record = foundset.getRecord(currentRecordIndex);',
-													'function favExists (item) {',
-														'return item && item.datasource == record.getDataSource() && item.pk == record.getPKs()[0];',
-													'}',
-													//this is a favorite, we need some kind of image
-													'if (solutionPrefs.access.favorites.some(favExists)) {',
-														'badge += \'<html><center><img src="media:///\';',
-														
-														//web client
-														'if (solutionPrefs.config.webClient) {',
-															'badge += "btn_favorite_web_selected.png";',
+								if (serverName && tableName) {
+									var dsNode = solutionModel.getDataSourceNode('db:/' + serverName + '/' + tableName)
+									
+									//width/height for favorite and arrow
+									var height = solutionPrefs.config.webClient ? 18 : 17
+									var width = solutionPrefs.config.webClient ? 15 : 12
+									
+									//add favorite column to universal list
+									if (solutionPrefs.access.accessControl && navSpecs.favoritable) {
+										//add calculation to show favorite star if hasn't been added already
+										var starCalc = dsNode.getCalculation('sutra_favorite_badge')
+										if (!starCalc) {
+											starCalc = dsNode.newCalculation(
+													['function sutra_favorite_badge() {',
+														'var badge = "";',
+														'var record = foundset.getRecord(currentRecordIndex);',
+														'function favExists (item) {',
+															'return item && item.datasource == record.getDataSource() && item.pk == record.getPKs()[0];',
 														'}',
-														//smart client row is selected
-														'else if (foundset.getSelectedIndex() == foundset.getRecordIndex(record)) {',
-															'badge += "btn_favorite_selected.png";',
+														//this is a favorite, we need some kind of image
+														'if (solutionPrefs.access.favorites.some(favExists)) {',
+															'badge += \'<html><center><img src="media:///\';',
+															
+															//web client
+															'if (solutionPrefs.config.webClient) {',
+																'badge += "btn_favorite_web_selected.png";',
+															'}',
+															//smart client row is selected
+															'else if (foundset.getSelectedIndex() == foundset.getRecordIndex(record)) {',
+																'badge += "btn_favorite_selected.png";',
+															'}',
+															//smart client row is not selected
+															'else {',
+																'badge += "btn_favorite_unselected.png";',
+															'}',
+															'badge += \'" width=15 height=20></center>\';',
 														'}',
-														//smart client row is not selected
-														'else {',
-															'badge += "btn_favorite_unselected.png";',
-														'}',
-														'badge += \'" width=15 height=20></center>\';',
-													'}',
+														'return badge;',
+													'}'].join('')
+												)
+										}
+										
+										var starField = myForm.newLabel(
+															'',						//text on label
+															i++,					//x
+															0,						//y
+															(solutionPrefs.config.webClient ? 25 : 23),						//width
+															20						//height
+														)
+							
+										starField.name = 'sutra_favorite_badge'
+										starField.dataProviderID = 'sutra_favorite_badge'
+										starField.onAction = solutionModel.getGlobalMethod('globals','NAV_universal_list_favorite')
+										starField.onRightClick = solutionModel.getGlobalMethod('globals','NAV_universal_list_right_click')
+										starField.anchors = SM_ANCHOR.DEFAULT
+										starField.horizontalAlignment = SM_ALIGNMENT.LEFT
+										starField.styleClass = 'universallist'
+										starField.borderType = 'EmptyBorder,0,0,0,0'
+										starField.transparent = true
+										starField.displaysTags = true
+										starField.rolloverCursor = SM_CURSOR.HAND_CURSOR
+										//commented out because gets stuck on when updating a record
+		//								starField.rolloverImageMedia = solutionModel.getMedia('btn_favorite_rollover.png')
+										starField.toolTipText = 'Toggle favorite'//'%%sutra_favorite_tooltip%%'
+										starField.showClick = false
+										var headStar = solutionPrefs.config.webClient ? 'btn_favorite_web_selected.png' : 'btn_favorite_dark.png'
+										starField.text = '<html><center><img src="media:///' + headStar + '" width=' + width + ' height=' + height + '></center>'
+											
+										//override sort on form so that will toggle favorite mode on off for this field
+										myForm.onSortCmd = solutionModel.getGlobalMethod('globals','NAV_universal_list_sort')
+									}
+									
+									//add detail button for workflow when in maximized list view
+									var detailView = myForm.newLabel(
+														'',						//text on label
+														i++,					//x
+														0,						//y
+														(solutionPrefs.config.webClient ? 25 : 24),					//width
+														20						//height
+													)
+									
+									var detailCalc = dsNode.getCalculation('sutra_detail_view')
+									if (!detailCalc) {
+										detailCalc = dsNode.newCalculation(
+												['function sutra_detail_view() {',
+													'var badge = \'<html><center><img src="media:///\';',
+													'badge += "arrow_white_right_over.png";',
+													'badge += \'" width=20 height=20></center>\';',
 													'return badge;',
 												'}'].join('')
 											)
 									}
 									
-									var starField = myForm.newLabel(
-														'',						//text on label
-														i++,					//x
-														0,						//y
-														(solutionPrefs.config.webClient ? 25 : 23),						//width
-														20						//height
-													)
-						
-									starField.name = 'sutra_favorite_badge'
-									starField.dataProviderID = 'sutra_favorite_badge'
-									starField.onAction = solutionModel.getGlobalMethod('globals','NAV_universal_list_favorite')
-									starField.onRightClick = solutionModel.getGlobalMethod('globals','NAV_universal_list_right_click')
-									starField.anchors = SM_ANCHOR.DEFAULT
-									starField.horizontalAlignment = SM_ALIGNMENT.LEFT
-									starField.styleClass = 'universallist'
-									starField.borderType = 'EmptyBorder,0,0,0,0'
-									starField.transparent = true
-									starField.displaysTags = true
-									starField.rolloverCursor = SM_CURSOR.HAND_CURSOR
-									//commented out because gets stuck on when updating a record
-	//								starField.rolloverImageMedia = solutionModel.getMedia('btn_favorite_rollover.png')
-									starField.toolTipText = 'Toggle favorite'//'%%sutra_favorite_tooltip%%'
-									starField.showClick = false
-									var headStar = solutionPrefs.config.webClient ? 'btn_favorite_web_selected.png' : 'btn_favorite_dark.png'
-									starField.text = '<html><center><img src="media:///' + headStar + '" width=' + width + ' height=' + height + '></center>'
-										
-									//override sort on form so that will toggle favorite mode on off for this field
-									myForm.onSortCmd = solutionModel.getGlobalMethod('globals','NAV_universal_list_sort')
+									detailView.name = 'sutra_detail_view'
+									detailView.dataProviderID = 'sutra_detail_view'
+									detailView.onAction = solutionModel.getGlobalMethod('globals','NAV_universal_list_detail_view')
+									detailView.anchors = SM_ANCHOR.DEFAULT
+									detailView.horizontalAlignment = SM_ALIGNMENT.LEFT
+									detailView.styleClass = 'universallist'
+									detailView.borderType = 'EmptyBorder,0,0,0,0'
+									detailView.transparent = true
+									detailView.displaysTags = true
+									detailView.rolloverCursor = SM_CURSOR.HAND_CURSOR
+									detailView.toolTipText = 'View details'
+									detailView.showClick = false
+									detailView.text = '<html><center><img src="media:///arrow_white_right_over.png" width=' + height + ' height=' + height + '></center>'
+									detailView.visible = solutionPrefs.config.activeSpace == 'workflow flip'
 								}
-								
-								//add detail button for workflow when in maximized list view
-								var detailView = myForm.newLabel(
-													'',						//text on label
-													i++,					//x
-													0,						//y
-													(solutionPrefs.config.webClient ? 25 : 24),					//width
-													20						//height
-												)
-								
-								var detailCalc = dsNode.getCalculation('sutra_detail_view')
-								if (!detailCalc) {
-									detailCalc = dsNode.newCalculation(
-											['function sutra_detail_view() {',
-												'var badge = \'<html><center><img src="media:///\';',
-												'badge += "arrow_white_right_over.png";',
-												'badge += \'" width=20 height=20></center>\';',
-												'return badge;',
-											'}'].join('')
-										)
-								}
-								
-								detailView.name = 'sutra_detail_view'
-								detailView.dataProviderID = 'sutra_detail_view'
-								detailView.onAction = solutionModel.getGlobalMethod('globals','NAV_universal_list_detail_view')
-								detailView.anchors = SM_ANCHOR.DEFAULT
-								detailView.horizontalAlignment = SM_ALIGNMENT.LEFT
-								detailView.styleClass = 'universallist'
-								detailView.borderType = 'EmptyBorder,0,0,0,0'
-								detailView.transparent = true
-								detailView.displaysTags = true
-								detailView.rolloverCursor = SM_CURSOR.HAND_CURSOR
-								detailView.toolTipText = 'View details'
-								detailView.showClick = false
-								detailView.text = '<html><center><img src="media:///arrow_white_right_over.png" width=' + height + ' height=' + height + '></center>'
-								detailView.visible = solutionPrefs.config.activeSpace == 'workflow flip'
 								
 								//assign the secondary form to the main UL with buttons
 								if (navSpecs.barItemAdd || navSpecs.barItemAction || navSpecs.barItemFilter || navSpecs.barItemReport) {
