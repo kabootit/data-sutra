@@ -384,6 +384,10 @@ switch (dsFactor()) {
 		
 		//	Extend jQuery to give us css4 parent selectors (https://github.com/Idered/cssParentSelector)
 		$('head').append('<script type="text/javascript" src="/ds/js/lib/jQuery.cssParentSelector.min.js"></script>');
+		
+		//	Moment.js (http://momentjs.com/)
+		$('head').append('<script type="text/javascript" src="/ds/js/lib/moment.min.js"></script>');
+		
 	},1250)
 })(jQuery);
 
@@ -1028,7 +1032,7 @@ DS.grid = function(id,data,columns,actions,options,optionOverwrite,sample) {
 	var parentID = $("#" + id).parent().attr('id');
 	var selector = $("#" + parentID);
 	var isGrid = $("#" + id + '[class*="slickgrid_"]').length == 1;
-	isGrid = false;
+	// isGrid = false;
 	var init = '<div id="' + id + '" class="sutraSlick"></div>';
 	
 	var optionsBase = {
@@ -1068,21 +1072,22 @@ DS.grid = function(id,data,columns,actions,options,optionOverwrite,sample) {
     function dateFormatter(row, cell, value, columnDef, dataContext) {
 		var format = columnDef.dsFormat;
 		
-		//will not handle times at this time
-		format = format.replace(/h/g,'');
-		format = format.replace(/m/g,'');
-		format = format.replace(/s/g,'');
-		format = format.replace(/a/g,'');
-		format = format.replace(/\:/g,'');
-		format = format.replace(/\s/g,'');
+		// convert as needed (https://docs.google.com/spreadsheet/ccc?key=0AtgZluze7WMJdDBOLUZfSFIzenIwOHNjaWZoeGFqbWc&hl=en_US#gid=0)
+		format = format.replace(/y/g,'Y');
+		format = format.replace(/d/g,'D');
+		format = format.replace(/EEEE/gi,'dddd');
+		format = format.replace(/EEE/gi,'ddd');
+		format = format.replace(/aa/g,'a');
+		format = format.replace(/AA/g,'A');
 		
-		//replace servoy date to standard js date
-		format = format.replace(/yy/g,'y');
-		format = format.replace(/M/g,'m');
-		
-		console.log(format);
-		
-        return $.datepicker.formatDate(format,new Date(value));
+		//grab date representation
+		var theDate = moment(new Date(value));
+		if (theDate.isValid()) {
+			return theDate.format(format);
+		}
+		else {
+			return $.datepicker.formatDate('m-d-yy',new Date(value));
+		}
     }
 	
 	if (selector.length) {
