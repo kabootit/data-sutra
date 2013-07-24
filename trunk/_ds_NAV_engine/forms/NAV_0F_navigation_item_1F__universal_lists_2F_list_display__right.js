@@ -101,6 +101,10 @@ if (globals.CODE_key_pressed('shift')) {
 		if (input == 'Yes') {
 			forms[colFormName].foundset.deleteAllRecords()
 			var hardRefresh = true
+			var newRecs = 'Yes'
+		}
+		else {
+			return
 		}
 	}
 }
@@ -115,7 +119,7 @@ if (globals.NAV_column_relation != '-') {
 	var results = forms[colFormName].controller.search(true)
 	
 	//ask to refresh if records already exist
-	if (results) {
+	if (results && input != 'Yes') {
 		var newRecs = globals.DIALOGS.showQuestionDialog('Get columns','Do you want to refresh the columns','Yes','No')
 	}
 	else {
@@ -235,7 +239,7 @@ if (globals.NAV_column_relation != '-') {
 							var colName = columnNames[j+m].nameColumn
 							var colType = columnNames[j+m].typeColumn
 							
-							forms[colFormName].controller.newRecord(false,true)
+							forms[colFormName].controller.newRecord(false)
 							forms[colFormName].name_column = colName
 							forms[colFormName].type_column = colType
 							forms[colFormName].id_navigation_item = navItem
