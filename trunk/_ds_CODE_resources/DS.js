@@ -321,11 +321,8 @@ var print = new function() {
 			}
 			//smart client, use standard print preview
 			else {
-				globals.DIALOGS.showInfoDialog(
-							'Smart client',
-							'API call not implemented\nUse the web!'
-					)
-				
+				//open pdf in native viewer
+				globals.CODE_file_open(print.utils.getPDFByteArray.fromURL(source),reportName)
 			}
 		}
 	}
@@ -538,6 +535,20 @@ var print = new function() {
 					if (smMedia.mimeType == 'application/pdf') {
 						return smMedia.bytes
 					}
+				}
+			}
+			
+			/**
+			 * Get PDF from URL
+			 * 
+			 * @param {String} url URL to be rendered as PDF
+			 * @param {Object} [auth] Authorization credentials to access url
+			 * @return {byte[]|undefined} PDF
+			 */
+			this.fromURL = function(url,auth) {
+				//enough information to proceed
+				if (url) {
+					return plugins.http.getMediaData(url)
 				}
 			}
 		}
