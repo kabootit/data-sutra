@@ -687,6 +687,13 @@ function webStyleCSS(firstShow, event, formName) {
  * @properties={typeid:24,uuid:"D82963A5-C7B5-4255-A254-D10E39FC59BE"}
  */
 function webStyleCSS4() {
+	//extra wrapper div around comboboxes present, don't need this hack
+	var version = application.getVersion()
+	var verSplit = version.split('.')
+	if (utils.stringPatternCount(version,'6.1.') && utils.stringToNumber(verSplit[verSplit.length - 1]) < 6) {
+		return
+	}
+	
 	if (solutionPrefs.config.webClient) {
 		plugins.WebClientUtils.executeClientSideJS("styleCSS4Parent();");
 	}
@@ -791,11 +798,13 @@ function webCallbacks() {
 //		plugins.WebClientUtils.executeClientSideJS('callbackConfig(' + jsCallback + ');')
 	}
 	
+	var version = application.getVersion().split('.')
+	
 	//running in the router
 	if (globals.DATASUTRA_router_enable) {
 		var callback = plugins.WebClientUtils.generateCallbackScript(globals.DS_router_callback,null,false)
 		var jsCallback = 'function dsNavigate(){' + callback + '}';
-		plugins.WebClientUtils.executeClientSideJS('callbackConfig(' + jsCallback + ');')
+		plugins.WebClientUtils.executeClientSideJS('callbackConfig(' + jsCallback + ',"' + version.shift() + '.' + utils.stringToNumber(version.join('')) + '");')
 	}
 	
 	//adjust transaction z-index client-side to get around 1st time not working
