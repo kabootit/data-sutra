@@ -3774,10 +3774,6 @@ var tmpfile
 
 if (fileBlob) {
 	tmpfile = plugins.file.createTempFile(fileName.substring(0,fileName.length - (fileExt.length)),'.' + fileExt)
-	
-	//replace backslashes with forward slashes to avoid escaping problems
-	tmpfile = utils.stringReplace(tmpfile,"\\", "/")
-	
 	plugins.file.writeFile(tmpfile,fileBlob)
 	
 	if (utils.stringMiddle(application.getOSName(),1,7) == "Windows") { 
