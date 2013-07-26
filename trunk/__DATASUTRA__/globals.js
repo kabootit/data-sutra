@@ -1386,7 +1386,14 @@ function DS_actions(input) {
 				}
 				//straight up webclient or smart client
 				else {
-					security.logout(application.getSolutionName(),'DATASUTRA_open','true')
+					//full screen mode quits
+					if (solutionPrefs.screenAttrib.kiosk.fullScreen) {
+						application.exit()
+					}
+					//normally logs out
+					else {
+						security.logout(application.getSolutionName(),'DATASUTRA_open','true')
+					}
 				}
 			}
 			//check for non-standard prefpane lock session
@@ -2379,6 +2386,11 @@ function DS_sidebar_toggle(sideToggle, sideWidth, sideExpand)
 {
 	if (typeof sideExpand != 'boolean') {
 		sideExpand = !CODE_key_pressed('shift')
+	}
+	
+	//when in kiosk mode, keep inside window dimensions
+	if (solutionPrefs.screenAttrib.kiosk.fullScreen) {
+		sideExpand = false
 	}
 	
 	if (application.__parent__.solutionPrefs) {	
