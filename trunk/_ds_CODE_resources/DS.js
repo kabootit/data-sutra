@@ -148,9 +148,11 @@ var transaction = new function() {
 			databaseManager.saveData()
 		}
 		
-		status = databaseManager.setAutoSave(true)
+		//we want auto save to be true, so status is false (no longer in a transaction)
+		status = !databaseManager.setAutoSave(true)
 		
-		return status
+		//we need to return the result of autosave
+		return !status
 	}
 	
 	/**
@@ -238,12 +240,12 @@ var transaction = new function() {
 				}
 				
 				//checks are not editable, try enabled
-				if (solutionModel.getForm(form.controller.getName()).getComponent(elem).displayType == JSField.CHECKS && typeof form.elements[elem].enabled != 'undefined') {
+				if (solutionModel.getForm(form.controller.getName()).getComponent(elem) && solutionModel.getForm(form.controller.getName()).getComponent(elem).displayType == JSField.CHECKS && typeof form.elements[elem].enabled != 'undefined') {
 					form.elements[elem].enabled = display
 					
 					//can set transparent on this property
 					if (typeof form.elements[elem].transparent != undefined) {
-						form.elements[elem].transparent = display
+						form.elements[elem].transparent = !display
 					}
 				}
 				//can set editable on this property
