@@ -1510,11 +1510,11 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			//add table name if not already
 			if (!solutionPrefs.fastFind.currentSearch[serverName][tableName]) {
 				solutionPrefs.fastFind.currentSearch[serverName][tableName] = new Object()
-				}
+			}
 			//only run when using query based way to hit repository
 			if (solutionPrefs.repository && solutionPrefs.repository.allFormsByTable) {
 				//check if not using separateFoundset
-				if (!solutionPrefs.repository.allFormsByTable[serverName][tableName][formName].useSeparateFoundset) {
+				if (solutionPrefs.repository.allFormsByTable[serverName][tableName][formName] && !solutionPrefs.repository.allFormsByTable[serverName][tableName][formName].useSeparateFoundset) {
 					solutionPrefs.fastFind.currentSearch[serverName][tableName].lastFindValue = searchValue
 					solutionPrefs.fastFind.currentSearch[serverName][tableName].lastFindField = colName
 					solutionPrefs.fastFind.currentSearch[serverName][tableName].lastFindTip = navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindTip
@@ -6639,6 +6639,11 @@ if (application.__parent__.repositoryPrefs) {
 					//only used in developer
 					else {
 						formsByTable[formInfo.serverName][formInfo.tableName][formInfo.formName] = formInfo
+					}
+					
+					//slick grid version of this form exists, slot it in too
+					if (solutionModel.getForm(formInfo.formName + '__slick')) {
+						formsByTable[formInfo.serverName][formInfo.tableName][formInfo.formName + '__slick'] = formInfo
 					}
 				}
 			}
