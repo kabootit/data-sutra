@@ -1914,7 +1914,7 @@ function onShow(firstShow,event)
 	@history:	07/26/2006	JAG Created
 ********************************************************************************/
 
-if (firstShow) {
+if (firstShow && solutionPrefs.config.webClient) {
 	plugins.WebClientUtils.setExtraCssClass(elements.fldInput, 'noWebkitOutline')
 }
 
