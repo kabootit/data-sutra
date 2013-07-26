@@ -245,7 +245,7 @@ var transaction = new function() {
 					
 					//can set transparent on this property
 					if (typeof form.elements[elem].transparent != undefined) {
-						form.elements[elem].transparent = !display
+						form.elements[elem].transparent = display
 					}
 				}
 				//can set editable on this property
