@@ -1029,10 +1029,17 @@ function triggerInterfaceLock(toggle,delay) {
 
 //slickgrid wrapper
 DS.grid = function(id,data,columns,actions,options,optionOverwrite,sample) {
+	//re-call method in 1.25 seconds if slickgrid not available yet
+	if (!window.Slick) {
+		setTimeout(function() {
+			DS.grid(id,data,columns,actions,options,optionOverwrite,sample);
+		},1250)
+		return
+	}
+	
 	var parentID = $("#" + id).parent().attr('id');
 	var selector = $("#" + parentID);
 	var isGrid = $("#" + id + '[class*="slickgrid_"]').length == 1;
-	// isGrid = false;
 	var init = '<div id="' + id + '" class="sutraSlick"></div>';
 	
 	var optionsBase = {
@@ -1050,6 +1057,11 @@ DS.grid = function(id,data,columns,actions,options,optionOverwrite,sample) {
 	};
 	if (!options || typeof options != 'object') {
 		options = new Object()
+	}
+	//we're working with universal list, override wrapper
+	else if (options.dsUL) {
+		delete options.dsUL;
+		init = '<div id="' + id + '" class="sutraSlick universalList"></div>';
 	}
 	
 	//advanced sorting
@@ -1157,9 +1169,9 @@ DS.grid = function(id,data,columns,actions,options,optionOverwrite,sample) {
 			
 			//set up requested id with framework to hang slickgrid on
 				//MEMO: we are actually trashing the div where servoy puts the html area field so anything directly configured on that element in servoy designer will be lost
-			// $('#' + id).remove();
-			selector.html = init;
-			// $(init).appendTo(selector);
+			$('#' + id).remove();
+			$(init).appendTo(selector);
+			// selector.html = init;
 			
 			//set up container for all grids
 			if (!DS.grid.table) {
@@ -1261,11 +1273,14 @@ DS.grid = function(id,data,columns,actions,options,optionOverwrite,sample) {
 				grid.onContextMenu.subscribe(function(e, args) {
 					var cell = args.cell;
 					var row = args.rows;
-					var cellID = grid.getColumns()[cell].id;
 					
-					for (var i in actions.onContextMenu) {
-						if (cellID == i) {
-							eval(actions.onContextMenu[i]);
+					if (cell && grid.getColumns()[cell]) {
+						var cellID = grid.getColumns()[cell].id;
+					
+						for (var i in actions.onContextMenu) {
+							if (cellID == i) {
+								eval(actions.onContextMenu[i]);
+							}
 						}
 					}
 				});
@@ -1287,20 +1302,33 @@ DS.grid = function(id,data,columns,actions,options,optionOverwrite,sample) {
 			var grid = DS.grid.table[id];
 			
 			//push in new data
-			var dataView = grid.getData();
-			dataView.beginUpdate();
-			dataView.setItems(data);
-			dataView.endUpdate();
-			dataView.syncGridSelection(grid, true);
+			if (data instanceof Array) {
+				var dataView = grid.getData();
+				dataView.beginUpdate();
+				dataView.setItems(data);
+				dataView.endUpdate();
+				dataView.syncGridSelection(grid, true);
+			}
 				
 			//handle selectedindex (should we set the index or not?)
 			var index = 0;
 			if (options.hasOwnProperty('dsSelectedIndex') && typeof options.dsSelectedIndex == 'number') {
 				index = options.dsSelectedIndex;
 				delete options.dsSelectedIndex;
-			}	
-			grid.setSelectedRows([index]);
-			grid.scrollRowToTop(index-5);
+			}
+			//if index different, set it
+			if (grid.getSelectedRows().indexOf(index) == -1) {
+				grid.resetActiveCell()
+				
+				grid.setSelectedRows([index]);
+				// grid.scrollRowToTop(index-5);
+				grid.scrollRowIntoView(index);
+				
+				grid.invalidate();
+			}
 		}
+		
+		//most recently painted grid
+		DS.grid.table.last = id
 	}
 }

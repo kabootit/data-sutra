@@ -465,14 +465,26 @@ function DISPLAY_list_control(rawDisplay,theDisplayID,listTitle,formName,recSele
 			detailView.text = '<html><center><img src="media:///arrow_white_right_over.png" width=' + height + ' height=' + height + '></center>'
 			detailView.visible = solutionPrefs.config.activeSpace == 'workflow flip'
 			
+			//slick grid is turned on, convert this servoy form to a slick form
+			if (scopes.SLICK && scopes.SLICK.CONST.enabled) {
+				var slickForm = scopes.SLICK.bindView(myForm)
+				
+				if (slickForm instanceof JSForm) {
+					newFormName = slickForm.name
+				}
+			}
+			
 			//assign the secondary form to the main UL at the tab right behind where it used to be (when deleted, the others slid over to fill its spot)
 			tabPanel.addTab(forms[newFormName],'UL Record: ' + theDisplayPosn,null,null,null,null,null,null,newFormTab - 1)
 			navigationPrefs.byNavItemID[currentNavItem].listData.dateAdded = application.getServerTimeStamp()
+			navigationPrefs.byNavItemID[navigationItemID].listData.slickGrid = forms[newFormName].controller.getDesignTimeProperty('SlickGrid') ? true : false
 			
 			tabPanel.tabIndex = newFormTab
 			
 			//make UL prettified again
-			scopes.DS.webULPrettify()
+			if (!slickForm) {
+				scopes.DS.webULPrettify()
+			}
 			
 			//LOG ul display change
 			var serverName = forms[formName].controller.getServerName()

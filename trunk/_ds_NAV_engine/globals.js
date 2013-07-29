@@ -850,6 +850,12 @@ if (application.__parent__.solutionPrefs) {
 					var formUL = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.tabFormInstance
 					forms[formUL].UL_sync_records()
 				}
+				else {
+					//refresh slick grid's data
+					if (navigationPrefs.byNavItemID[currentNavItem].listData.slickGrid) {
+						scopes.SLICK.update(navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.tabFormInstance)
+					}
+				}
 
 				TRIGGER_toolbar_record_navigator_set()
 			}
@@ -1462,7 +1468,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 				}
 				else {
 					//make sure big blocker turned off (only an issue when no UL, but fast find)
-					scopes.DS.webBlockerCentered(false)
+//					scopes.DS.webBlockerCentered(false)
 				}
 				
 				forms[findForm].elements.fld_find.requestFocus(true)
@@ -1481,10 +1487,16 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 				if (navigationPrefs.byNavItemID[currentNavItem].navigationItem.useFwList) {
 					//UL in servoy greater than 4.1
 					if (utils.stringToNumber(solutionPrefs.clientInfo.verServoy) >= 4) {
-						forms[navigationPrefs.byNavItemID[currentNavItem].listData.tabFormInstance].controller.loadRecords(
-									databaseManager.getSQL(forms[formName].foundset),
-									databaseManager.getSQLParameters(forms[formName].foundset)
-								)
+//						forms[navigationPrefs.byNavItemID[currentNavItem].listData.tabFormInstance].controller.loadRecords(
+//									databaseManager.getSQL(forms[formName].foundset),
+//									databaseManager.getSQLParameters(forms[formName].foundset)
+//								)
+						
+						//refresh slick grid's data
+						if (navigationPrefs.byNavItemID[currentNavItem].listData.slickGrid) {
+							scopes.SLICK.update(navigationPrefs.byNavItemID[currentNavItem].listData.tabFormInstance)
+						}
+						
 						//forms.NAV_T_universal_list.DISPLAY_cycle(true)
 					}
 					//regenerate html list in 3.5.x
@@ -2626,7 +2638,6 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 							}
 						}
 					}
-					
 					//4.1+ Solution Model
 					else if (utils.stringToNumber(solutionPrefs.clientInfo.verServoy) >= 4) {
 						var uniList = 'NAV_T_universal_list_1L'
@@ -2882,6 +2893,16 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 									detailView.visible = solutionPrefs.config.activeSpace == 'workflow flip'
 								}
 								
+								
+								//slick grid is turned on, convert this servoy form to a slick form
+								if (scopes.SLICK && scopes.SLICK.CONST.enabled) {
+									var slickForm = scopes.SLICK.bindView(myForm,true)
+									
+									if (slickForm instanceof JSForm) {
+										newFormName = slickForm.name
+									}
+								}
+								
 								//assign the secondary form to the main UL with buttons
 								if (navSpecs.barItemAdd || navSpecs.barItemAction || navSpecs.barItemFilter || navSpecs.barItemReport) {
 									forms[navListButtons].elements.tab_ul.addTab(forms[newFormName],'UL Records',null,null,null,null)
@@ -2898,6 +2919,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 								//save status info
 								navigationPrefs.byNavItemID[navigationItemID].listData.tabFormInstance = newFormName
 								navigationPrefs.byNavItemID[navigationItemID].listData.dateAdded = application.getServerTimeStamp()
+								navigationPrefs.byNavItemID[navigationItemID].listData.slickGrid = forms[newFormName].controller.getDesignTimeProperty('SlickGrid') ? true : false
 								
 								//only switch to this tab if not on any of the developer modes
 								if (!designMode) {
@@ -2982,6 +3004,11 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 							forms[navButtonsNo].FORM_on_show()
 							listTabForm.elements.tab_content_B.tabIndex = 3
 							forms[navListButtonsNo].elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[navigationItemID].listData.tabNumber
+						}
+						
+						//pump in new slickgrid on this ul
+						if (navigationPrefs.byNavItemID[navigationItemID].listData.slickGrid) {
+							forms[navigationPrefs.byNavItemID[navigationItemID].listData.tabFormInstance].SLICK_call()
 						}
 						
 						scopes.DS.webULPrettify()						
@@ -3258,6 +3285,11 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		if (scopes.DS.deviceFactor == 'iPhone') {
 			plugins.WebClientUtils.executeClientSideJS('$("#addToHomeScreen", window.parent.document).css("zoom","300%");')
 		}
+	}
+	
+	//slickgrid, make sure center blocker turned off
+	if (scopes.SLICK && scopes.SLICK.CONST.enabled) {
+		scopes.DS.webBlockerCentered(false)
 	}
 }
 }

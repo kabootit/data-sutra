@@ -498,24 +498,16 @@ var consoleOutput = '';
 function TRIGGER_fastfind_display_set(findText,findTooltip,findCheck,setDefault) {
 	//solutionPrefs defined and frameworks not in a locked status
 	if (application.__parent__.solutionPrefs && !solutionPrefs.config.lockStatus) {
-	
-		var findText = arguments[0]
-		var findTooltip = arguments[1]
-		var findCheck = arguments[2]
+		
+		var findText = ''
+		var findCheck = ''
+		var findTooltip = ''
 		var setDefault = arguments[3]
 		var baseForm = solutionPrefs.config.formNameBase
 		var currentNavItem = solutionPrefs.config.currentFormID
 		
-		if (findCheck == undefined) {
-			findCheck = true
-		}
-		
 		//reset fast find to whatever is supposed to be in there
 		if (setDefault) {
-			findText = ''
-			findCheck = ''
-			findTooltip = ''
-			
 			var findInitial = navigationPrefs.byNavItemID[currentNavItem].navigationItem.findDefault
 			
 			if (navigationPrefs.byNavItemID[currentNavItem].fastFind && navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindField) {
@@ -534,6 +526,20 @@ function TRIGGER_fastfind_display_set(findText,findTooltip,findCheck,setDefault)
 			}
 		}
 		
+		if (arguments[0]) {
+			findText = arguments[0]
+		}
+		if (arguments[1]) {
+			findTooltip = arguments[1]
+		}
+		if (arguments[2]) {
+			findCheck = arguments[2]
+		}
+		
+		if (findCheck == undefined) {
+			findCheck = true
+		}
+		
 		//set text in fast find area
 		DATASUTRA_find = findText
 		
@@ -546,15 +552,15 @@ function TRIGGER_fastfind_display_set(findText,findTooltip,findCheck,setDefault)
 		if (findCheck && findCheck != true) {
 			DATASUTRA_find_field = findCheck
 		}
-		//set check to appear next to 'Filter applied...'
-		else if (findCheck) {
-			DATASUTRA_find_field = 'Filtered'
-		}
-		//set check to some weird value so nothing will be checked
-		//MEMO: do not set to null because then it will be set to 'Show all' by default
-		else if (!findCheck) {
-			DATASUTRA_find_field = 'NuttinHoney'
-		}
+//		//set check to appear next to 'Filter applied...'
+//		else if (findCheck) {
+//			DATASUTRA_find_field = 'Filtered'
+//		}
+//		//set check to some weird value so nothing will be checked
+//		//MEMO: do not set to null because then it will be set to 'Show all' by default
+//		else if (!findCheck) {
+//			DATASUTRA_find_field = 'NuttinHoney'
+//		}
 		
 		//save down values of last 'find'
 		if (application.__parent__.solutionPrefs) {
@@ -1739,6 +1745,10 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset, idNavigationIt
 					forms.NAV__navigation_tree__rows.LIST_expand_collapse(null,navItem.idNavigationItem,'open',navSetID)
 				}
 			}
+			//make sure to hit all showing slickgrids (except UL)
+			else {
+				scopes.SLICK.updateAll(true)
+			}
 			
 			//bring foundset over
 			if (setFoundset) {
@@ -1767,7 +1777,6 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset, idNavigationIt
 				}
 				//working with foundset, verify that based on same table
 				else {
-	
 					var dataSourceOne = callingFoundset.getDataSource()
 					var dataSourceTwo = forms[formNameWorkflow].controller.getDataSource()
 	
@@ -1779,10 +1788,13 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset, idNavigationIt
 						//load related foundset
 						forms[formNameWorkflow].controller.loadRecords(callingFoundset.unrelate())
 						
+						var relationBased = true
 						foundsetSet = true
 					}
 				}
-	
+				
+				var formUL = navigationPrefs.byNavItemID[navItem.idNavigationItem].listData.tabFormInstance
+				
 				//a foundset was modified, do some more massage
 				if (foundsetSet) {
 					//restrict if required to
@@ -1797,7 +1809,10 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset, idNavigationIt
 					var modifiedFoundset = forms[formNameWorkflow].foundset
 	
 					//show that only a portion of current foundset selected
-					TRIGGER_fastfind_display_set('Related subset',null,null)
+					TRIGGER_fastfind_display_set('Related subset',null,null,true)
+					
+					//upgrade record navigator if showing
+					TRIGGER_toolbar_record_navigator_set()
 					
 					//using UL, refresh
 					if (navItem.useFwList) {
@@ -1805,7 +1820,7 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset, idNavigationIt
 						if (utils.stringToNumber(solutionPrefs.clientInfo.verServoy) >= 4) {
 							var formUL = navigationPrefs.byNavItemID[navItem.idNavigationItem].listData.tabFormInstance
 							
-							if (forms[formUL]) {
+							if (relationBased && forms[formUL]) {
 								forms[formUL].controller.loadRecords(modifiedFoundset.unrelate())
 							}
 						}
@@ -1833,14 +1848,15 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset, idNavigationIt
 									forms[formNameList + '_1L'].controller.loadRecords(modifiedFoundset.unrelate())
 								}
 							}
-	
-							return true
 						}
 					}
 					else {
 						return false
 					}
-	
+					
+					if (navigationPrefs.byNavItemID[navItem.idNavigationItem].listData.slickGrid) {
+						scopes.SLICK.update(formUL)
+					}
 					return true
 				}
 				else {
@@ -2387,6 +2403,11 @@ function TRIGGER_toolbar_record_navigator_set(status,maxWidth) {
 				
 				if (limitStart && limitEnd) {
 					//setSize = " List showing " + utils.numberFormat(limitStart,'###,###,###,###') + "-" + utils.numberFormat(limitEnd,'###,###,###,###') + "."
+				}
+				
+				//update selected index in slick grid
+				if (navigationPrefs.byNavItemID[currentNavItem].listData.slickGrid) {
+					forms[navigationPrefs.byNavItemID[currentNavItem].listData.tabFormInstance].SLICK_setSelectedIndex()
 				}
 			}
 			

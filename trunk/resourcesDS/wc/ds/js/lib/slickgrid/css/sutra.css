@@ -420,65 +420,63 @@ div[class*="slickgrid_"] .slick-row.colorGray .slick-cell.selected {
 }
 
 /* UL grid */
-div#ulGrid {
+div#form_NAV_T_universal_list__WEB__list {
 	background-color: transparent;
 	width: 100%;
 	height: 100%;
 }
 
-div#form_GRID_slickness__ul .ui-widget-content,
-div#form_GRID_slickness__ul .ui-state-default {
+div#form_NAV_T_universal_list__WEB__list .ui-widget-content,
+div#form_NAV_T_universal_list__WEB__list .ui-state-default {
 	color: #999999;
 }
 
-div#form_GRID_slickness__ul div[class*="slickgrid_"] .slick-row {
+div#form_NAV_T_universal_list__WEB__list div[class*="slickgrid_"] .slick-row {
 	line-height: 20px;
 }
 
-div#form_GRID_slickness__ul div[class*="slickgrid_"] .slick-row.odd {
+div#form_NAV_T_universal_list__WEB__list div[class*="slickgrid_"] .slick-row.odd,
+div#form_NAV_T_universal_list__WEB__list div[class*="slickgrid_"] .slick-row.even {
 	background-color: transparent;
 }
 
-div#form_GRID_slickness__ul div[class*="slickgrid_"] .slick-row.even {
-	background-color: transparent;
-}
-
-div#form_GRID_slickness__ul div[class*="slickgrid_"] .slick-row.active {
+div#form_NAV_T_universal_list__WEB__list div[class*="slickgrid_"] .slick-row.active,
+div#form_NAV_T_universal_list__WEB__list div[class*="slickgrid_"] .slick-cell.selected {
 	background-image: url(/servoy-webclient/templates/datasutra/images/linen_highlight.jpg);
 }
 
-div#form_GRID_slickness__ul div[class*="slickgrid_"] .slick-cell, 
-div#form_GRID_slickness__ul div[class*="slickgrid_"] .slick-headerrow-column {
+div#form_NAV_T_universal_list__WEB__list div[class*="slickgrid_"] .slick-cell, 
+div#form_NAV_T_universal_list__WEB__list div[class*="slickgrid_"] .slick-headerrow-column {
 	border-width: 0px;
 	height: 20px;
 	padding-left: 4px;
 }
 
-div#form_GRID_slickness__ul div[class*="slickgrid_"] .slick-header.ui-state-default {
+div#form_NAV_T_universal_list__WEB__list div[class*="slickgrid_"] .slick-header.ui-state-default {
 	border-bottom: 0px solid;
 	height: 20px;
 }
 
-div#form_GRID_slickness__ul div[class*="slickgrid_"] .slick-header-columns {
+div#form_NAV_T_universal_list__WEB__list div[class*="slickgrid_"] .slick-header-columns {
 	background-color: transparent;
 	background-image: none;
 }
 
-div#form_GRID_slickness__ul div[class*="slickgrid_"] .slick-header-column {
+div#form_NAV_T_universal_list__WEB__list div[class*="slickgrid_"] .slick-header-column {
 	border-right: 0px solid !important;
 	text-shadow: none;
 	text-align: left;
 	text-decoration: underline;
 }
 
-div#form_GRID_slickness__ul div[class*="slickgrid_"] .slick-header-column.ui-state-default {
+div#form_NAV_T_universal_list__WEB__list div[class*="slickgrid_"] .slick-header-column.ui-state-default {
 	padding-left: 4px;
     height: 20px;
     line-height: 20px;
 }
 
-div#form_GRID_slickness__ul div[class*="slickgrid_"] .slick-header-column:hover,
-div#form_GRID_slickness__ul div[class*="slickgrid_"] .slick-header-column-active {
+div#form_NAV_T_universal_list__WEB__list div[class*="slickgrid_"] .slick-header-column:hover,
+div#form_NAV_T_universal_list__WEB__list div[class*="slickgrid_"] .slick-header-column-active {
 	background-color: transparent;
 	background-image: none;
 }

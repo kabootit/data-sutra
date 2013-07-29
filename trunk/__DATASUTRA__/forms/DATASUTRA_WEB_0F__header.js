@@ -731,6 +731,11 @@ function ACTION_space_flexible(event) {
 		if (application.__parent__.navigationPrefs && navigationPrefs.byNavItemID && solutionPrefs.config.currentFormID) {
 //			scopes.DS.webULPrettify(false,true)
 		}
+		
+		//slickgrid, make sure center blocker turned off
+		if (scopes.SLICK && scopes.SLICK.CONST.enabled) {
+			scopes.SLICK.updateAll()
+		}
 	}
 }
 

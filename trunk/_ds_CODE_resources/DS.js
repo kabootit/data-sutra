@@ -737,22 +737,27 @@ function webSmallScroller(formName) {
  */
 function webULPrettify(ulClick,extraPause) {
 	if (solutionPrefs.config.webClient) {
-		//check to see how many records are loaded
-		var chunks = Math.ceil(forms[solutionPrefs.config.currentFormName].foundset.getSize() / 50)
-		
-		//no delay when clicking in UL
-		if (ulClick) {
-			plugins.WebClientUtils.executeClientSideJS('prettifyUL();')
+		if (scopes.SLICK && scopes.SLICK.CONST.enabled) {
+			
 		}
-		//delay and scrollbars
 		else {
-			if (extraPause) {
-				plugins.WebClientUtils.executeClientSideJS('setTimeout(function(){prettifyUL(100,' + chunks + ')},500);')
+			//check to see how many records are loaded
+			var chunks = Math.ceil(forms[solutionPrefs.config.currentFormName].foundset.getSize() / 50)
+			
+			//no delay when clicking in UL
+			if (ulClick) {
+				plugins.WebClientUtils.executeClientSideJS('prettifyUL();')
 			}
+			//delay and scrollbars
 			else {
-				plugins.WebClientUtils.executeClientSideJS('prettifyUL(100,' + chunks + ');')
+				if (extraPause) {
+					plugins.WebClientUtils.executeClientSideJS('setTimeout(function(){prettifyUL(100,' + chunks + ')},500);')
+				}
+				else {
+					plugins.WebClientUtils.executeClientSideJS('prettifyUL(100,' + chunks + ');')
+				}
+				webSmallScroller()
 			}
-			webSmallScroller()
 		}
 	}
 }
@@ -761,10 +766,14 @@ function webULPrettify(ulClick,extraPause) {
  * @properties={typeid:24,uuid:"82CC64E3-C1BC-4A88-8D8A-3CD6A35BDE98"}
  */
 function webULResizeMonitor() {
-	plugins.WebClientUtils.executeClientSideJS('lefthandListen();')
+	if (!(scopes.SLICK && scopes.SLICK.CONST.enabled)) {
+		plugins.WebClientUtils.executeClientSideJS('lefthandListen();')
+	}
 }
 
 /**
+ * Set status of large blocking indicator
+ * 
  * @param {Boolean} [toggle=true] Status
  * @param {Number}	[delay] How long to wait before executing
  * @param {String}	[text] Text to display on blocker (default text is "Loading...").  Note: Keep text to 12 characters or less
