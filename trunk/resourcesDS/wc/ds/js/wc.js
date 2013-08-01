@@ -367,6 +367,7 @@ switch (dsFactor()) {
 		$('head').append('<script type="text/javascript" src="/ds/js/lib/slickgrid/controls/slick.columnpicker.js"></script>');
 		$('head').append('<script type="text/javascript" src="/ds/js/lib/slickgrid/slick.formatters.js"></script>');
 		$('head').append('<script type="text/javascript" src="/ds/js/lib/slickgrid/slick.editors.js"></script>');
+		$('head').append('<script type="text/javascript" src="/ds/js/lib/slickgrid/slick.remotemodel.js"></script>');
 		$('head').append('<script type="text/javascript" src="/ds/js/lib/slickgrid/slick.grid.js"></script>');
 		$('head').append('<script type="text/javascript" src="/ds/js/lib/slickgrid/slick.dataview.js"></script>');
 		
@@ -1051,6 +1052,7 @@ DS.grid = function(id,data,columns,actions,options,optionOverwrite,sample) {
 		forceFitColumns: true, 
 		forceSyncScrolling: true,
 		fullWidthRows: true, 
+		multiSelect: false,
 		syncColumnCellResize: true,
 		rowHeight: 22,
 		headerRowHeight: 22
@@ -1153,6 +1155,11 @@ DS.grid = function(id,data,columns,actions,options,optionOverwrite,sample) {
 			if (typeof column.formatter == 'string') {
 				column.formatter = eval(column.formatter);
 			}
+		}
+		
+		//try to get data from cached copy
+		if (!data.length && DS.grid && DS.grid.table && DS.grid.table[id] && typeof DS.grid.table[id].getData == 'function') {
+			data = DS.grid.table[id].getData().getItems();
 		}
 		
 		//this id has not already been wrapped as a slickgrid, initialize it
