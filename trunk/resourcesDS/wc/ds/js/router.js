@@ -61,7 +61,7 @@
 		}
 		// keep running for 5 seconds or until changed once
 			//will not get changed if really slow network or if webclient already started
-		else {
+		else if (timeOut < 100) {
 			setTimeout(checkStat,50);
 		}
 	}
@@ -232,8 +232,6 @@ function routerIframe(data) {
 	
 	//tack on referrer (as long as it isn't servoy-webclient...get around logout issue)
 	if (document.referrer && (document.referrer.indexOf('servoy-webclient') == -1)) {
-		//replace all slashes out with tab characters because servoy is de-encoding at some point
-		// var refer = document.referrer.replace(/\//g,'%09')
 		var refer = window.btoa(unescape(encodeURIComponent( document.referrer )));
 		
 		append += 'refer/' + refer + '/';
