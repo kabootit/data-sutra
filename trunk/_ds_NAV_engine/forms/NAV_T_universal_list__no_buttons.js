@@ -467,7 +467,7 @@ function DISPLAY_list_control(rawDisplay,theDisplayID,listTitle,formName,recSele
 			
 			//slick grid is turned on, convert this servoy form to a slick form
 			if (scopes.SLICK && scopes.SLICK.CONST.enabled) {
-				var slickForm = scopes.SLICK.bindView(myForm)
+				var slickForm = scopes.SLICK.bindView(myForm,true)
 				
 				if (slickForm instanceof JSForm) {
 					newFormName = slickForm.name
@@ -477,7 +477,7 @@ function DISPLAY_list_control(rawDisplay,theDisplayID,listTitle,formName,recSele
 			//assign the secondary form to the main UL at the tab right behind where it used to be (when deleted, the others slid over to fill its spot)
 			tabPanel.addTab(forms[newFormName],'UL Record: ' + theDisplayPosn,null,null,null,null,null,null,newFormTab - 1)
 			navigationPrefs.byNavItemID[currentNavItem].listData.dateAdded = application.getServerTimeStamp()
-			navigationPrefs.byNavItemID[navigationItemID].listData.slickGrid = forms[newFormName].controller.getDesignTimeProperty('SlickGrid') ? true : false
+			navigationPrefs.byNavItemID[currentNavItem].listData.slickGrid = forms[newFormName].controller.getDesignTimeProperty('SlickGrid') ? true : false
 			
 			tabPanel.tabIndex = newFormTab
 			

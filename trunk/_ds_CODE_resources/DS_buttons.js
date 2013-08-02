@@ -624,6 +624,11 @@ function REC_new() {
 		else {
 			forms[formName].foundset.newRecord(forms[formName].foundset.getSelectedIndex(),true)
 		}
+		
+		//add in new blank row when this is slickgrid
+		if (navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.slickGrid) {
+			forms[navigationPrefs.byNavItemID[navigationItemID].listData.tabFormInstance].SLICK_newRecord()
+		}
 	
 		//LOG ul add
 		var serverName = forms[formName].controller.getServerName()

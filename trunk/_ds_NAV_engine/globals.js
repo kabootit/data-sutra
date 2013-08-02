@@ -3289,7 +3289,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	
 	//slickgrid, make sure center blocker turned off
 	if (scopes.SLICK && scopes.SLICK.CONST.enabled) {
-		scopes.DS.webBlockerCentered(false)
+//		scopes.DS.webBlockerCentered(false)
 	}
 }
 }
@@ -5747,13 +5747,18 @@ if (application.__parent__.solutionPrefs) {
 				forms[formName].controller.setSelectedIndex(index)
 			}
 			
-			//universal list in 3.5
-			if (navigationPrefs.byNavItemID[currentNavItem].navigationItem.useFwList && 
-				(utils.stringToNumber(solutionPrefs.clientInfo.verServoy) < 4)) {
-				
-				var formUL = navigationPrefs.byNavItemID[currentNavItem].listData.tabFormInstance + '_1L'
-				forms[formUL].foundset.setSelectedIndex(index)
-				forms[formUL].UL_set_selected()
+			//universal list
+			if (navigationPrefs.byNavItemID[currentNavItem].navigationItem.useFwList) {
+				//in 3.5 	
+				if (utils.stringToNumber(solutionPrefs.clientInfo.verServoy) < 4) {
+					var formUL = navigationPrefs.byNavItemID[currentNavItem].listData.tabFormInstance + '_1L'
+					forms[formUL].foundset.setSelectedIndex(index)
+					forms[formUL].UL_set_selected()
+				}
+				//update selected index in slick grid
+				if (navigationPrefs.byNavItemID[currentNavItem].listData.slickGrid) {
+					forms[navigationPrefs.byNavItemID[currentNavItem].listData.tabFormInstance].SLICK_setSelectedIndex()
+				}
 			}
 			
 			//update record navigator
@@ -5870,13 +5875,210 @@ if (application.__parent__.solutionPrefs) {
 			
 			forms[formName].controller.setSelectedIndex(index)
 			
-			//universal list in 3.5
-			if (navigationPrefs.byNavItemID[currentNavItem].navigationItem.useFwList && 
-				(utils.stringToNumber(solutionPrefs.clientInfo.verServoy) < 4)) {
-				
-				var formUL = navigationPrefs.byNavItemID[currentNavItem].listData.tabFormInstance + '_1L'
-				forms[formUL].foundset.setSelectedIndex(index)
-				forms[formUL].UL_set_selected()
+			//universal list
+			if (navigationPrefs.byNavItemID[currentNavItem].navigationItem.useFwList) {
+				//in 3.5 	
+				if (utils.stringToNumber(solutionPrefs.clientInfo.verServoy) < 4) {
+					var formUL = navigationPrefs.byNavItemID[currentNavItem].listData.tabFormInstance + '_1L'
+					forms[formUL].foundset.setSelectedIndex(index)
+					forms[formUL].UL_set_selected()
+				}
+				//update selected index in slick grid
+				if (navigationPrefs.byNavItemID[currentNavItem].listData.slickGrid) {
+					forms[navigationPrefs.byNavItemID[currentNavItem].listData.tabFormInstance].SLICK_setSelectedIndex()
+				}
+			}
+			
+			//update record navigator
+			TRIGGER_toolbar_record_navigator_set()
+		}
+		
+		//LOG record navigation
+		var serverName = forms[formName].foundset.getServerName()
+		var tableName = forms[formName].foundset.getTableName()
+		//run if data is available
+		if (solutionPrefs.repository && solutionPrefs.repository.allFormsByTable && 
+			solutionPrefs.repository.allFormsByTable[serverName] && 
+			solutionPrefs.repository.allFormsByTable[serverName][tableName] && 
+			solutionPrefs.repository.allFormsByTable[serverName][tableName].primaryKey) {
+			
+			var pkName = solutionPrefs.repository.allFormsByTable[serverName][tableName].primaryKey
+			var pkActedOn = forms[formName][pkName]
+		}
+		else {
+			var pkName = 'repositoryAPINotImplemented'
+			var pkActedOn = 0
+		}
+		TRIGGER_log_create(
+				'Records',
+				serverName,
+				tableName,
+				pkName,
+				pkActedOn
+			)
+	}
+}
+}
+
+/**
+*
+* @properties={typeid:24,uuid:"0F58E4B1-4E6A-4E5C-BFE5-8F9C5BF718ED"}
+*/
+function NAV_record_first()
+{
+
+
+if (application.__parent__.solutionPrefs) {
+	
+	//amount to require between clicking through records
+	var delay = solutionPrefs.listSetup.delay
+	
+	//do not run method if in viewer setup or if run in previous x seconds
+	if (solutionPrefs.config.currentFormName != 'MGR_0F_toolbar' && ((new Date() - solutionPrefs.listSetup.lastStart) > delay)) {
+		
+		solutionPrefs.listSetup.lastStart = new Date()
+		
+		/*************
+			inputs
+		*************/
+		
+		//get form name
+		var formName 		= solutionPrefs.config.currentFormName
+		
+		//get current index
+		var index 			= forms[formName].foundset.getSelectedIndex()
+		
+		//loaded records size
+		var loaded			= forms[formName].foundset.getSize()
+		
+		//get max table size
+		var size 			= databaseManager.getFoundSetCount(forms[formName].foundset)
+		
+		//maximum number of records to display in universal list
+		var maxRecs			= solutionPrefs.listSetup.maxRecords
+		
+		//get current id of loaded form
+		var currentNavItem	= solutionPrefs.config.currentFormID
+		
+		/***********************
+			first record action
+		************************/
+		
+		if (index > 1) {
+
+			index = 1
+			
+			forms[formName].controller.setSelectedIndex(index)
+			
+			//universal list
+			if (navigationPrefs.byNavItemID[currentNavItem].navigationItem.useFwList) {
+				//in 3.5 	
+				if (utils.stringToNumber(solutionPrefs.clientInfo.verServoy) < 4) {
+					var formUL = navigationPrefs.byNavItemID[currentNavItem].listData.tabFormInstance + '_1L'
+					forms[formUL].foundset.setSelectedIndex(index)
+					forms[formUL].UL_set_selected()
+				}
+				//update selected index in slick grid
+				if (navigationPrefs.byNavItemID[currentNavItem].listData.slickGrid) {
+					forms[navigationPrefs.byNavItemID[currentNavItem].listData.tabFormInstance].SLICK_setSelectedIndex()
+				}
+			}
+			
+			//update record navigator
+			TRIGGER_toolbar_record_navigator_set()
+		}
+		
+		//LOG record navigation
+		var serverName = forms[formName].foundset.getServerName()
+		var tableName = forms[formName].foundset.getTableName()
+		//run if data is available
+		if (solutionPrefs.repository && solutionPrefs.repository.allFormsByTable && 
+			solutionPrefs.repository.allFormsByTable[serverName] && 
+			solutionPrefs.repository.allFormsByTable[serverName][tableName] && 
+			solutionPrefs.repository.allFormsByTable[serverName][tableName].primaryKey) {
+			
+			var pkName = solutionPrefs.repository.allFormsByTable[serverName][tableName].primaryKey
+			var pkActedOn = forms[formName][pkName]
+		}
+		else {
+			var pkName = 'repositoryAPINotImplemented'
+			var pkActedOn = 0
+		}
+		TRIGGER_log_create(
+				'Records',
+				serverName,
+				tableName,
+				pkName,
+				pkActedOn
+			)
+	}
+}
+}
+
+/**
+*
+* @properties={typeid:24,uuid:"7C0E02B8-6FAA-4A14-B995-68D00C9EE2A0"}
+*/
+function NAV_record_last()
+{
+
+
+if (application.__parent__.solutionPrefs) {
+	
+	//amount to require between clicking through records
+	var delay = solutionPrefs.listSetup.delay
+	
+	//do not run method if in viewer setup or if run in previous x seconds
+	if (solutionPrefs.config.currentFormName != 'MGR_0F_toolbar' && ((new Date() - solutionPrefs.listSetup.lastStart) > delay)) {
+		
+		solutionPrefs.listSetup.lastStart = new Date()
+		
+		/*************
+			inputs
+		*************/
+		
+		//get form name
+		var formName 		= solutionPrefs.config.currentFormName
+		
+		//get current index
+		var index 			= forms[formName].foundset.getSelectedIndex()
+		
+		//loaded records size
+		var loaded			= forms[formName].foundset.getSize()
+		
+		//get max table size
+		var size 			= databaseManager.getFoundSetCount(forms[formName].foundset)
+		
+		//maximum number of records to display in universal list
+		var maxRecs			= solutionPrefs.listSetup.maxRecords
+		
+		//get current id of loaded form
+		var currentNavItem	= solutionPrefs.config.currentFormID
+		
+		/***********************
+			last record action
+		************************/
+		
+		if (index != size) {
+
+			index = size
+			
+			while (forms[formName].controller.getSelectedIndex() != index) {
+				forms[formName].controller.setSelectedIndex(index)
+			}
+			
+			//universal list
+			if (navigationPrefs.byNavItemID[currentNavItem].navigationItem.useFwList) {
+				//in 3.5 	
+				if (utils.stringToNumber(solutionPrefs.clientInfo.verServoy) < 4) {
+					var formUL = navigationPrefs.byNavItemID[currentNavItem].listData.tabFormInstance + '_1L'
+					forms[formUL].foundset.setSelectedIndex(index)
+					forms[formUL].UL_set_selected()
+				}
+				//update selected index in slick grid
+				if (navigationPrefs.byNavItemID[currentNavItem].listData.slickGrid) {
+					forms[navigationPrefs.byNavItemID[currentNavItem].listData.tabFormInstance].SLICK_setSelectedIndex()
+				}
 			}
 			
 			//update record navigator
