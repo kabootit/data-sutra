@@ -498,6 +498,11 @@ var consoleOutput = '';
 function TRIGGER_fastfind_display_set(findText,findTooltip,findCheck,setDefault) {
 	//solutionPrefs defined and frameworks not in a locked status
 	if (application.__parent__.solutionPrefs && !solutionPrefs.config.lockStatus) {
+		//save local copy of arguments
+		var Arguments = new Array()
+		for (var i = 0; i < arguments.length; i++) {
+			Arguments.push(arguments[i])
+		}
 		
 		var findText = ''
 		var findCheck = ''
@@ -526,14 +531,14 @@ function TRIGGER_fastfind_display_set(findText,findTooltip,findCheck,setDefault)
 			}
 		}
 		
-		if (arguments[0]) {
-			findText = arguments[0]
+		if (Arguments[0]) {
+			findText = Arguments[0]
 		}
-		if (arguments[1]) {
-			findTooltip = arguments[1]
+		if (Arguments[1]) {
+			findTooltip = Arguments[1]
 		}
-		if (arguments[2]) {
-			findCheck = arguments[2]
+		if (Arguments[2]) {
+			findCheck = Arguments[2]
 		}
 		
 		if (findCheck == undefined) {
@@ -2403,11 +2408,6 @@ function TRIGGER_toolbar_record_navigator_set(status,maxWidth) {
 				
 				if (limitStart && limitEnd) {
 					//setSize = " List showing " + utils.numberFormat(limitStart,'###,###,###,###') + "-" + utils.numberFormat(limitEnd,'###,###,###,###') + "."
-				}
-				
-				//update selected index in slick grid
-				if (navigationPrefs.byNavItemID[currentNavItem].listData.slickGrid) {
-					forms[navigationPrefs.byNavItemID[currentNavItem].listData.tabFormInstance].SLICK_setSelectedIndex()
 				}
 			}
 			
