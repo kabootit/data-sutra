@@ -68,6 +68,38 @@ function GO_previous(event) {
 }
 
 /**
+ * Perform the element default action.
+ *
+ * @param {JSEvent} event the event that triggered the action
+ *
+ * @properties={typeid:24,uuid:"5DBA1503-4D1C-4D58-B779-B8EC59BE4B1B"}
+ */
+function GO_first(event) {
+	//make sure we know about the correct sizing of the form
+	if (solutionPrefs.config.webClient) {
+		plugins.WebClientUtils.executeClientSideJS('recNavFirstShow();')
+	}
+	
+	globals.NAV_record_first()
+}
+
+/**
+ * Perform the element default action.
+ *
+ * @param {JSEvent} event the event that triggered the action
+ *
+ * @properties={typeid:24,uuid:"0DC78322-61F3-47CD-9249-258D6BC4E96F"}
+ */
+function GO_last(event) {
+	//make sure we know about the correct sizing of the form
+	if (solutionPrefs.config.webClient) {
+		plugins.WebClientUtils.executeClientSideJS('recNavFirstShow();')
+	}
+	
+	globals.NAV_record_last()
+}
+
+/**
  * Callback method when form is (re)loaded.
  *
  * @param {JSEvent} event the event that triggered the action
