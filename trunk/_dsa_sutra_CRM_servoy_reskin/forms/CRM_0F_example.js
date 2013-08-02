@@ -1,3 +1,10 @@
+/**
+ * @type {Number}
+ *
+ * @properties={typeid:35,uuid:"110FDFB5-8737-4E27-9567-4B146942D8C7",variableType:4}
+ */
+var test_id = null;
+
 
 /**
  * Handle record selected.

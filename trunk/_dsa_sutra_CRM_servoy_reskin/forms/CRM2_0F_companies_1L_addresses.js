@@ -20,9 +20,11 @@ function REC_delete() {
  * @AllowToRunInFind
  */
 function REC_edit() {
-	//enter transaction
-	databaseManager.saveData()
-	databaseManager.setAutoSave(false)
+	//enter transaction if not already in one
+	if (!scopes.DS.transaction.getStatus()) {
+		databaseManager.saveData()
+		databaseManager.setAutoSave(false)
+	}
 	
 	forms.CRM_P_addresses.foundset.loadRecords(foundset)
 	
@@ -36,9 +38,11 @@ function REC_edit() {
  * @AllowToRunInFind
  */
 function REC_new() {
-	//enter transaction
-	databaseManager.saveData()
-	databaseManager.setAutoSave(false)
+	//enter transaction if not already in one
+	if (!scopes.DS.transaction.getStatus()) {
+		databaseManager.saveData()
+		databaseManager.setAutoSave(false)
+	}
 	
 	foundset.newRecord(false,true)
 	

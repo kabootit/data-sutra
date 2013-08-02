@@ -68,6 +68,9 @@ function EDIT_toggle(toggle) {
 	//related addresses
 	forms.CRM2_0F_companies_1L_addresses.elements.btn_delete.visible = toggle
 	forms.CRM2_0F_companies_1L_addresses.elements.btn_edit.visible = toggle
+	
+	//re-fire tab change to update possible actions
+	scopes.TAB.GRID_change__detail(null,controller.getName(),'tab_d' + elements.tab_detail.tabIndex)
 }
 /**
  * Callback method for when form is shown.

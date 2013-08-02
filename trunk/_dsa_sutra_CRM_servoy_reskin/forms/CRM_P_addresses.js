@@ -3,10 +3,17 @@
  * @properties={typeid:24,uuid:"971731ba-47ab-402a-90f2-755832283df1"}
  */
 function ACTION_done() {
-	databaseManager.saveData()
+	//when in transaction, don't save
+	if (!scopes.DS.transaction.getStatus()) {
+		databaseManager.saveData()
+		
+		//turn autosave back on
+		databaseManager.setAutoSave(true)		
+	}
 	
-	//turn autosave back on
-	databaseManager.setAutoSave(true)
+	if (scopes.SLICK && scopes.SLICK.CONST.enabled) {
+		forms.CRM2_0F_companies_1L_addresses__slick.SLICK_newRecord()
+	}
 	
 	//enable closing the form
 	globals.CODE_hide_form = 1	
@@ -40,10 +47,13 @@ function ACTION_cancel(event) {
 	//not already ok to close, cancel
 	if (!globals.CODE_hide_form) {
 		//rollback edited records
-		databaseManager.revertEditedRecords()
+		databaseManager.revertEditedRecords(foundset)
 		
-		//turn autosave back on
-		databaseManager.setAutoSave(true)
+		//when in transaction, don't save
+		if (!scopes.DS.transaction.getStatus()) {
+			//turn autosave back on
+			databaseManager.setAutoSave(true)
+		}
 		
 		//enable closing the form
 		globals.CODE_hide_form = 1

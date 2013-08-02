@@ -11,6 +11,7 @@ function REC_delete() {
 	
 	if (delRec == 'Yes') {
 		controller.deleteRecord()
+		
 	}
 }
 
@@ -23,5 +24,5 @@ function REC_delete() {
  */
 function onRecordSelection(event) {
 	globals.TRIGGER_toolbar_record_navigator_set()
-	application.output('onrecselect: ' + foundset.getSelectedIndex())
+//	application.output('onrecselect: ' + foundset.getSelectedIndex())
 }
