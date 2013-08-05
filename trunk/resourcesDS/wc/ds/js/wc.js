@@ -1412,6 +1412,20 @@ DS.grid = new function() {
 						dataView.setItems(data);
 						dataView.endUpdate();
 						dataView.syncGridSelection(grid, true);
+						
+						//custom row background colors specified
+						if (options.dsRowBGColor) {
+							//remove flag
+							delete options.dsRowBGColor
+			
+							dataView.getItemMetadata = function(row) {
+								if (this.getItem(row) && this.getItem(row).cssClass) {
+									return {
+										'cssClasses': this.getItem(row).cssClass
+									};
+								}
+							}
+						}
 					}
 				
 					//handle selectedindex (should we set the index or not?)
