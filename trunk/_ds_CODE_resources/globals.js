@@ -1751,7 +1751,7 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset, idNavigationIt
 				}
 			}
 			//make sure to hit all showing slickgrids (except UL)
-			else {
+			else if (scopes.SLICK && scopes.SLICK.CONST.enabled) {
 				scopes.SLICK.updateAll(true)
 			}
 			
@@ -3794,6 +3794,9 @@ var fileExt = (arguments[2]) ? arguments[2] : 'pdf'
 var tmpfile
 
 if (fileBlob) {
+//	fileName = plugins.file.getHomeDirectory()+'/.servoy/' + fileName
+//	tmpfile = plugins.file.createFile(fileName)
+//	plugins.file.writeFile(tmpfile,fileBlob)
 	tmpfile = plugins.file.createTempFile(fileName.substring(0,fileName.length - (fileExt.length)),'.' + fileExt)
 	plugins.file.writeFile(tmpfile,fileBlob)
 	
