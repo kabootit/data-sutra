@@ -311,7 +311,7 @@ if (buttonName) {
 	if (forms[tabFormName]) {
 		//this is an initialized slick grid, update (when first loading a form, don't run)
 		if (forms[tabFormName].controller.getDesignTimeProperty('SlickGrid') && solutionModel.getForm(tabFormName).getMethod('SLICK_call') && forms[tabFormName]._gridShown) {
-			forms[tabFormName].SLICK_call()
+			forms[tabFormName].SLICK_call(false)
 		}
 		
 		var txnEnable = (solutionPrefs.config.webClient && application.__parent__.navigationPrefs && solutionPrefs.config.currentFormID) ? (navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].transactions ? true : false) : false
