@@ -4973,11 +4973,13 @@ var stringOrig = arguments[0]
 
 var whiteSpace = /\s/
 var stringTemp = stringOrig.split(whiteSpace)
-whiteSpace = /(\S)(\S+)/
 
 for (var i = 0; i < stringTemp.length; i++) {
-	whiteSpace.exec(stringTemp[i])
-	stringTemp[i] = RegExp.$1.toUpperCase() + RegExp.$2.toLowerCase()
+	whiteSpace = /(\S)(\S+)/
+	var results = whiteSpace.exec(stringTemp[i])
+	if (results) {
+		stringTemp[i] = results[1].toUpperCase() + results[2].toLowerCase()
+	}
 }
 
 return stringTemp.join(' ')
