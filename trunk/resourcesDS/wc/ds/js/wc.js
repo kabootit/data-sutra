@@ -1054,14 +1054,16 @@ DS.grid = new function() {
 		if (where && where.hasOwnProperty('id')) {
 			var id = where.id
 	
-			var parentID = $("#" + id).parent().attr('id');
+			var parentID = $("body #" + id).parent().attr('id');
 			var selector = $("#" + parentID);
-			var isGrid = $("#" + id + '[class*="slickgrid_"]').length == 1;
+			var isGrid = $("body #" + id + '[class*="slickgrid_"]').length == 1;
 			var init = '<div id="' + id + '" class="sutraSlick"></div>';
 	
 			//make sure we're passed an array for data
+			var noCache = true;
 			if (!(data instanceof Array)) {
 				data = new Array();
+				noCache = false;
 			}
 	
 			var optionsBase = {
@@ -1204,12 +1206,30 @@ DS.grid = new function() {
 				}
 		
 				//try to get data from cached copy
-				if (!data.length && DS.grid && DS.grid.table && DS.grid.table[id] && typeof DS.grid.table[id].getData == 'function') {
+				if (!noCache && !data.length && DS.grid && DS.grid.table && DS.grid.table[id] && typeof DS.grid.table[id].getData == 'function') {
 					data = DS.grid.table[id].getData().getItems();
 				}
-		
-				//this id has not already been wrapped as a slickgrid, initialize it
-				if (!isGrid || (isGrid && !(DS.grid.table && DS.grid.table[id]))) {
+				
+				//this slickgrid is hanging out elsewhere and not enough has changed, just go nab it
+				if (!noCache && $('head #' + id + '[class*="slickgrid_"]').length && columns.length == DS.grid.table[id].getColumns().length) {
+					$('body #' + id).remove();
+					$('head #' + id + '[class*="slickgrid_"]').appendTo(selector);
+					
+					//grab selectedindex
+					var index = 0;
+					if (options.hasOwnProperty('dsSelectedIndex') && typeof options.dsSelectedIndex == 'number' && options.dsSelectedIndex >= 0) {
+						index = options.dsSelectedIndex;
+						delete options.dsSelectedIndex;
+					}
+					
+					grid.setSelectedRows([index]);
+					grid.scrollRowIntoView(index);
+				
+					//log index too
+					toLog.index = index;
+				}
+				//this id has not already been wrapped as a slickgrid and the columns are the same, initialize it
+				else if (!isGrid || (isGrid && !(DS.grid.table && DS.grid.table[id])) || columns.length != DS.grid.table[id].getColumns().length) {
 					//we're using the base template for a data sutra grid
 					if (!optionOverwrite) {
 						//add base options that haven't been overridden
@@ -1225,12 +1245,7 @@ DS.grid = new function() {
 					$('#' + id).remove();
 					$(init).appendTo(selector);
 					// selector.html = init;
-			
-					//set up container for all grids
-					if (!DS.grid.table) {
-						DS.grid.table = new Object();
-					}
-			
+					
 					//grab selectedindex
 					var index = 0;
 					if (options.hasOwnProperty('dsSelectedIndex') && typeof options.dsSelectedIndex == 'number' && options.dsSelectedIndex >= 0) {
@@ -1395,7 +1410,6 @@ DS.grid = new function() {
 				
 					//log index too
 					toLog.index = index;
-			
 				}
 				//restore state of grid
 					//for now, just pumping in new data and adjust so can see selected record
@@ -1434,8 +1448,9 @@ DS.grid = new function() {
 						index = options.dsSelectedIndex;
 						delete options.dsSelectedIndex;
 					}
-					//if index different, set it
-					if (grid.getSelectedRows().indexOf(index) == -1) {
+					//if index different or 0, set it
+						//need to always set when 0 to make sure correct row is selected when coming from empty
+					if (index == 0 || grid.getSelectedRows().indexOf(index) == -1) {
 						//deselect current cell(s)
 						grid.resetActiveCell()
 					
@@ -1508,7 +1523,9 @@ DS.grid = new function() {
 			
 			//delete row
 			var dataView = grid.getData();
-			dataView.deleteItem(pk);
+			if (pk) {
+				dataView.deleteItem(pk);
+			}
 			
 			//update selection
 			grid.setSelectedRows([index]);
