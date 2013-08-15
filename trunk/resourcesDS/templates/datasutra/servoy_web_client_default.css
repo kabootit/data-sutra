@@ -662,7 +662,7 @@ div! > select {
 	background-color: #FFF;
 }
 div.select_wrapper {
-	overflow:hidden;
+	overflow: hidden !important;
 			
 	-moz-border-radius: 3px 3px 3px 3px;
 	-webkit-border-radius: 3px 3px 3px 3px;
@@ -714,36 +714,64 @@ select:focus {
 	
 	div[class*="CPS"][style*="height:18"] select,
 	div[class*="CPS"][style*="height:19"] select,
-	div[class*="CPS"][style*="height:20"] select {
+	div[class*="CPS"][style*="height:20"] select,
+	div.select_wrapper[style*="height:18"] select,
+	div.select_wrapper[style*="height:19"] select,
+	div.select_wrapper[style*="height:20"] select,
+	tr[height*="18"] div.tableviewcell.select_wrapper,
+	tr[height*="19"] div.tableviewcell.select_wrapper,
+	tr[height*="20"] div.tableviewcell.select_wrapper {
 		padding-top: 1px !important;
 	}
 	
-	div[class*="CPS"][style*="height:21"] select {
+	div[class*="CPS"][style*="height:21"] select,
+	div.select_wrapper[style*="height:21"] select,
+	tr[height*="21"] div.tableviewcell.select_wrapper {
 		padding-top: 2px !important;
 	}
 	
 	div[class*="CPS"][style*="height:22"] select,
-	div[class*="CPS"][style*="height:23"] select {
+	div[class*="CPS"][style*="height:23"] select,
+	div.select_wrapper[style*="height:22"] select,
+	div.select_wrapper[style*="height:23"] select,
+	tr[height*="22"] div.tableviewcell.select_wrapper,
+	tr[height*="23"] div.tableviewcell.select_wrapper {
 		padding-top: 3px !important;
 	}
 	
 	div[class*="CPS"][style*="height:24"] select,
 	div[class*="CPS"][style*="height:25"] select,
-	div[class*="CPS"][style*="height:26"] select {
+	div[class*="CPS"][style*="height:26"] select,
+	div.select_wrapper[style*="height:24"] select,
+	div.select_wrapper[style*="height:25"] select,
+	div.select_wrapper[style*="height:26"] select,
+	tr[height*="24"] div.tableviewcell.select_wrapper,
+	tr[height*="25"] div.tableviewcell.select_wrapper,
+	tr[height*="26"] div.tableviewcell.select_wrapper {
 		padding-top: 4px !important;
 	}
 	
 	div[class*="CPS"][style*="height:27"] select,
-	div[class*="CPS"][style*="height:28"] select {
+	div[class*="CPS"][style*="height:28"] select,
+	div.select_wrapper[style*="height:27"] select,
+	div.select_wrapper[style*="height:28"] select,
+	tr[height*="27"] div.tableviewcell.select_wrapper,
+	tr[height*="28"] div.tableviewcell.select_wrapper {
 		padding-top: 5px !important;
 	}
 	
 	div[class*="CPS"][style*="height:29"] select,
-	div[class*="CPS"][style*="height:30"] select {
+	div[class*="CPS"][style*="height:30"] select,
+	div.select_wrapper[style*="height:29"] select,
+	div.select_wrapper[style*="height:30"] select,
+	tr[height*="29"] div.tableviewcell.select_wrapper,
+	tr[height*="30"] div.tableviewcell.select_wrapper {
 		padding-top: 6px !important;
 	}
 	
-	div[class*="CPS"][style*="height:40"] select {
+	div[class*="CPS"][style*="height:40"] select,
+	div.select_wrapper[style*="height:40"] select,
+	tr[height*="40"] div.tableviewcell.select_wrapper {
 		padding-top: 11px !important;
 	}
 }
@@ -753,7 +781,8 @@ select:focus {
 }
 /* in data sutra tables, make the comboboxes not go outside the row's bounds*/
 td > div[class*="CPS"],
-div.tableviewcell[class*="CPS"] {
+div.tableviewcell[class*="CPS"],
+div.tableviewcell.select_wrapper {
 	-moz-border-radius: 0px 0px 0px 0px !important;
 	-webkit-border-radius: 0px 0px 0px 0px !important;
 	border-radius: 0px 0px 0px 0px !important;
@@ -762,60 +791,74 @@ div.tableviewcell[class*="CPS"] {
 	
 	background-color: transparent !important;
 }
+tr[height*="18"] > td > div[class*="CPS"],
 tr[height*="18"] div.tableviewcell[class*="CPS"],
-tr[height*="18"] > td > div[class*="CPS"] {
+tr[height*="18"] div.tableviewcell.select_wrapper {
 	height: 17px !important;
 }
+tr[height*="19"] > td > div[class*="CPS"],
 tr[height*="19"] div.tableviewcell[class*="CPS"],
-tr[height*="19"] > td > div[class*="CPS"] {
+tr[height*="19"] div.tableviewcell.select_wrapper {
 	height: 18px !important;
 }
+tr[height*="20"] > td > div[class*="CPS"],
 tr[height*="20"] div.tableviewcell[class*="CPS"],
-tr[height*="20"] > td > div[class*="CPS"] {
+tr[height*="20"] div.tableviewcell.select_wrapper {
 	height: 19px !important;
 }
+tr[height*="21"] > td > div[class*="CPS"],
 tr[height*="21"] div.tableviewcell[class*="CPS"],
-tr[height*="21"] > td > div[class*="CPS"] {
+tr[height*="21"] div.tableviewcell.select_wrapper {
 	height: 20px !important;
 }
+tr[height*="22"] > td > div[class*="CPS"],
 tr[height*="22"] div.tableviewcell[class*="CPS"],
-tr[height*="22"] > td > div[class*="CPS"] {
+tr[height*="22"] div.tableviewcell.select_wrapper {
 	height: 21px !important;
 }
+tr[height*="23"] > td > div[class*="CPS"],
 tr[height*="23"] div.tableviewcell[class*="CPS"],
-tr[height*="23"] > td > div[class*="CPS"] {
+tr[height*="23"] div.tableviewcell.select_wrapper {
 	height: 22px !important;
 }
+tr[height*="24"] > td > div[class*="CPS"],
 tr[height*="24"] div.tableviewcell[class*="CPS"],
-tr[height*="24"] > td > div[class*="CPS"] {
+tr[height*="24"] div.tableviewcell.select_wrapper {
 	height: 23px !important;
 }
+tr[height*="25"] > td > div[class*="CPS"],
 tr[height*="25"] div.tableviewcell[class*="CPS"],
-tr[height*="25"] > td > div[class*="CPS"] {
+tr[height*="25"] div.tableviewcell.select_wrapper {
 	height: 24px !important;
 }
+tr[height*="26"] > td > div[class*="CPS"],
 tr[height*="26"] div.tableviewcell[class*="CPS"],
-tr[height*="26"] > td > div[class*="CPS"] {
+tr[height*="26"] div.tableviewcell.select_wrapper {
 	height: 25px !important;
 }
+tr[height*="27"] > td > div[class*="CPS"],
 tr[height*="27"] div.tableviewcell[class*="CPS"],
-tr[height*="27"] > td > div[class*="CPS"] {
+tr[height*="27"] div.tableviewcell.select_wrapper {
 	height: 26px !important;
 }
+tr[height*="28"] > td > div[class*="CPS"],
 tr[height*="28"] div.tableviewcell[class*="CPS"],
-tr[height*="28"] > td > div[class*="CPS"] {
+tr[height*="28"] div.tableviewcell.select_wrapper {
 	height: 27px !important;
 }
+tr[height*="29"] > td > div[class*="CPS"],
 tr[height*="29"] div.tableviewcell[class*="CPS"],
-tr[height*="29"] > td > div[class*="CPS"] {
+tr[height*="29"] div.tableviewcell.select_wrapper {
 	height: 27px !important;
 }
+tr[height*="30"] > td > div[class*="CPS"],
 tr[height*="30"] div.tableviewcell[class*="CPS"],
-tr[height*="30"] > td > div[class*="CPS"] {
+tr[height*="30"] div.tableviewcell.select_wrapper {
 	height: 29px !important;
 }
+tr[height*="40"] > td > div[class*="CPS"],
 tr[height*="40"] div.tableviewcell[class*="CPS"],
-tr[height*="40"] > td > div[class*="CPS"] {
+tr[height*="40"] div.tableviewcell.select_wrapper {
 	height: 39px !important;
 }
 
