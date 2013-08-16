@@ -718,15 +718,15 @@ select:focus {
 	div.select_wrapper[style*="height:18"] select,
 	div.select_wrapper[style*="height:19"] select,
 	div.select_wrapper[style*="height:20"] select,
-	tr[height*="18"] div.tableviewcell.select_wrapper,
-	tr[height*="19"] div.tableviewcell.select_wrapper,
-	tr[height*="20"] div.tableviewcell.select_wrapper {
+	tr[height*="18"] div.tableviewcell.select_wrapper select,
+	tr[height*="19"] div.tableviewcell.select_wrapper select,
+	tr[height*="20"] div.tableviewcell.select_wrapper select {
 		padding-top: 1px !important;
 	}
 	
 	div[class*="CPS"][style*="height:21"] select,
 	div.select_wrapper[style*="height:21"] select,
-	tr[height*="21"] div.tableviewcell.select_wrapper {
+	tr[height*="21"] div.tableviewcell.select_wrapper select {
 		padding-top: 2px !important;
 	}
 	
@@ -734,8 +734,8 @@ select:focus {
 	div[class*="CPS"][style*="height:23"] select,
 	div.select_wrapper[style*="height:22"] select,
 	div.select_wrapper[style*="height:23"] select,
-	tr[height*="22"] div.tableviewcell.select_wrapper,
-	tr[height*="23"] div.tableviewcell.select_wrapper {
+	tr[height*="22"] div.tableviewcell.select_wrapper select,
+	tr[height*="23"] div.tableviewcell.select_wrapper select {
 		padding-top: 3px !important;
 	}
 	
@@ -745,9 +745,9 @@ select:focus {
 	div.select_wrapper[style*="height:24"] select,
 	div.select_wrapper[style*="height:25"] select,
 	div.select_wrapper[style*="height:26"] select,
-	tr[height*="24"] div.tableviewcell.select_wrapper,
-	tr[height*="25"] div.tableviewcell.select_wrapper,
-	tr[height*="26"] div.tableviewcell.select_wrapper {
+	tr[height*="24"] div.tableviewcell.select_wrapper select,
+	tr[height*="25"] div.tableviewcell.select_wrapper select,
+	tr[height*="26"] div.tableviewcell.select_wrapper select {
 		padding-top: 4px !important;
 	}
 	
@@ -755,8 +755,8 @@ select:focus {
 	div[class*="CPS"][style*="height:28"] select,
 	div.select_wrapper[style*="height:27"] select,
 	div.select_wrapper[style*="height:28"] select,
-	tr[height*="27"] div.tableviewcell.select_wrapper,
-	tr[height*="28"] div.tableviewcell.select_wrapper {
+	tr[height*="27"] div.tableviewcell.select_wrapper select,
+	tr[height*="28"] div.tableviewcell.select_wrapper select {
 		padding-top: 5px !important;
 	}
 	
@@ -764,14 +764,14 @@ select:focus {
 	div[class*="CPS"][style*="height:30"] select,
 	div.select_wrapper[style*="height:29"] select,
 	div.select_wrapper[style*="height:30"] select,
-	tr[height*="29"] div.tableviewcell.select_wrapper,
-	tr[height*="30"] div.tableviewcell.select_wrapper {
+	tr[height*="29"] div.tableviewcell.select_wrapper select,
+	tr[height*="30"] div.tableviewcell.select_wrapper select {
 		padding-top: 6px !important;
 	}
 	
 	div[class*="CPS"][style*="height:40"] select,
 	div.select_wrapper[style*="height:40"] select,
-	tr[height*="40"] div.tableviewcell.select_wrapper {
+	tr[height*="40"] div.tableviewcell.select_wrapper select {
 		padding-top: 11px !important;
 	}
 }
