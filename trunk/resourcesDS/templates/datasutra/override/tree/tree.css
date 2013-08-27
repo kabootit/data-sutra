@@ -1,142 +1,131 @@
-/*
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-table.wicket-tree-content {
+#form_DATASUTRA_WEB_0F__list table.wicket-tree-content,
+#form_DATASUTRA_WEB_0F__list table.wicket-tree-content table.icon-panel {
 	border-collapse: collapse;
 	empty-cells: show;
 	height: 22px;
 }
 
-table.wicket-tree-content,
-table.wicket-tree-content td,
-table.wicket-tree-content tr,
-table.wicket-tree-content th {
+#form_DATASUTRA_WEB_0F__list table.wicket-tree-content,
+#form_DATASUTRA_WEB_0F__list table.wicket-tree-content td,
+#form_DATASUTRA_WEB_0F__list table.wicket-tree-content tr,
+#form_DATASUTRA_WEB_0F__list table.wicket-tree-content th {
 	padding: 0px;
 	margin: 0px;
 	vertical-align: middle;
 }
 
-table.wicket-tree-content td.spacer {
-	width: 18px;
-	height: 100%;
+#form_DATASUTRA_WEB_0F__list table.wicket-tree-content td.spacer,
+#form_DATASUTRA_WEB_0F__list table.wicket-tree-content td.line,
+#form_DATASUTRA_WEB_0F__list table.wicket-tree-content td.half-line {
+	width: 15px;
 }
 
-table.wicket-tree-content td.spacer span,
-table.wicket-tree-content td.line span {
+
+#form_DATASUTRA_WEB_0F__list table.wicket-tree-content td.spacer span,
+#form_DATASUTRA_WEB_0F__list table.wicket-tree-content td.line span,
+#form_DATASUTRA_WEB_0F__list table.wicket-tree-content a.junction-open,
+#form_DATASUTRA_WEB_0F__list table.wicket-tree-content a.junction-closed,
+#form_DATASUTRA_WEB_0F__list table.wicket-tree-content span.junction-open,
+#form_DATASUTRA_WEB_0F__list table.wicket-tree-content span.junction-closed,
+#form_DATASUTRA_WEB_0F__list table.wicket-tree-content span.junction-corner {
+	width: 15px;
+	height: 22px;
 	display: block;
-	width: 18px;
-	height: 18px;
-}
-
-table.wicket-tree-content td.line {
-	width: 18px;
-	height: 100%;
-/*	background-image: url("base-tree-images.png");*/
-	background-position: -36px center;
-	background-repeat: repeat-y;
-}
-
-table.wicket-tree-content td.half-line {
-	width: 18px;
-	height: 100%;
-/*	background-image: url("base-tree-images.png");*/
-	background-position: -72px center;
 	background-repeat: no-repeat;
+/*	margin: 0px; padding: 0px; border-width: 0px;*/
 }
 
-table.wicket-tree-content a.junction-open,
-table.wicket-tree-content a.junction-closed,
-table.wicket-tree-content span.junction-open,
-table.wicket-tree-content span.junction-closed,
-table.wicket-tree-content span.junction-corner {
-	width: 18px;
-	height: 18px;
-	display: block;
-/*	background-image: url("base-tree-images.png");*/
-	background-repeat: no-repeat;
-	margin: 0px; padding: 0px; border-width: 0px;
+#form_DATASUTRA_WEB_0F__list table.wicket-tree-content span.junction-open,
+#form_DATASUTRA_WEB_0F__list table.wicket-tree-content a.junction-open {
+	background-image: url(/servoy-webclient/resources/servoy/media?id=row_expanded.png);
 }
 
-table.wicket-tree-content span.junction-open,
-table.wicket-tree-content a.junction-open {
-	background-image: url("/servoy-webclient/resources/servoy/media?id=row_expanded.png");
+#form_DATASUTRA_WEB_0F__list table.wicket-tree-content span.junction-closed,
+#form_DATASUTRA_WEB_0F__list table.wicket-tree-content a.junction-closed {
+	background-image: url(/servoy-webclient/resources/servoy/media?id=row_collapsed.png);
 }
 
-table.wicket-tree-content span.junction-closed,
-table.wicket-tree-content a.junction-closed {
-	background-image: url("/servoy-webclient/resources/servoy/media?id=row_collapsed.png");
-}
-
-table.wicket-tree-content span.junction-corner {
-	background-position: -54px center;
-}
-
-table.wicket-tree-content table.icon-panel {
-	border-collapse: collapse;
-	empty-cells: show;
-}
-
-table.wicket-tree-content table.icon-panel, 
-table.wicket-tree-content table.icon-panel tr,
-table.wicket-tree-content table.icon-panel td {
+#form_DATASUTRA_WEB_0F__list table.wicket-tree-content table.icon-panel, 
+#form_DATASUTRA_WEB_0F__list table.wicket-tree-content table.icon-panel tr,
+#form_DATASUTRA_WEB_0F__list table.wicket-tree-content table.icon-panel td {
 	margin: 0px;
 	padding: 0px;
 }
 
-table.wicket-tree-content table.icon-panel img {
+#form_DATASUTRA_WEB_0F__list table.wicket-tree-content table.icon-panel {
+	width: 100%;
+}
+
+#form_DATASUTRA_WEB_0F__list table.wicket-tree-content table.icon-panel td.content {
+	width: 100%;
+	white-space: nowrap;
+}
+
+#form_DATASUTRA_WEB_0F__list table.wicket-tree-content table.icon-panel td.content a {
+	padding-right: 0.4em;
+	white-space: nowrap;
+}
+
+#form_DATASUTRA_WEB_0F__list table.wicket-tree-content table.icon-panel img {
 	padding: 0px;
 	margin: 0px;
 	display: block;
 	border-width: 0px;
-	margin-left: 2px;
 	margin-top: -1px;
 }
 
-table.wicket-tree-content.selected {
-	width: 100%;
-	background-image: url(/servoy-webclient/templates/datasutra/images/linen_highlight.jpg);
+#form_DATASUTRA_WEB_0F__list table.wicket-tree-content table.icon-panel img.icon {
+	cursor: pointer;
 }
 
-table.wicket-tree-content.selected .content {
-	
-}
-
-
-table.wicket-tree-content table.icon-panel a,
-table.wicket-tree-content table.icon-panel a:hover {
+#form_DATASUTRA_WEB_0F__list table.wicket-tree-content table.icon-panel a,
+#form_DATASUTRA_WEB_0F__list table.wicket-tree-content table.icon-panel a:hover {
 	text-decoration: none;
 	font-size: 11px !important;
 	color: #999;
 }
 
-table.wicket-tree-content table.icon-panel img.icon {
-	cursor: pointer;
-}
-
-table.icon-panel {
+#form_DATASUTRA_WEB_0F__list table.wicket-tree-content.selected {
 	width: 100%;
+	background-image: url(/servoy-webclient/templates/datasutra/images/linen_highlight.jpg);
 }
 
-table.icon-panel td.content {
-	width: 100%;
-	white-space: nowrap;
+/* thanks to http://kubyshkin.ru/posts/custom-checkbox-in-webkit-with-css3.html */
+#form_DATASUTRA_WEB_0F__list table.wicket-tree-content table.icon-panel input[type=checkbox] {
+	font-size: 16px;
+	position: relative;
+	border: 1px solid #262626;
+	display: inline-block;
+/*	line-height: 1em;*/
+	margin-right: 5px;
+	padding: 0;
+	width: 14px;
+	height: 14px;
+	vertical-align: text-top;
+	background: -webkit-linear-gradient(
+		top, rgba(255,255,255,0.4), rgba(255,255,255,0.1)
+	);
+	-webkit-appearance: none;
+	-webkit-box-shadow: 0 1px 0 rgba(255,255,255, 0.1),
+		inset 0 0 1px rgba(255,255,255, 0.4);
+	-webkit-border-radius: 3px;
 }
 
-table.icon-panel td.content a {
-	padding-right: 0.4em;
-	white-space: nowrap;
+#form_DATASUTRA_WEB_0F__list table.wicket-tree-content table.icon-panel input[type=checkbox]:active {
+	background: -webkit-linear-gradient(
+		top, rgba(255,255,255,0.05), rgba(255,255,255,0.2)
+	);
+}
+
+#form_DATASUTRA_WEB_0F__list table.wicket-tree-content table.icon-panel input[type=checkbox]:checked::after {
+	position: absolute;
+	content: '';
+	left: 15%;
+	top: -10%;
+	height: 35%;
+	width: 90%;
+	border-bottom: 2px solid #bbb;
+	border-left: 2px solid #bbb;
+	-webkit-box-shadow: -1px 1px 0 rgba(0,0,0,0.8);
+	-webkit-transform: rotate(-45deg);
 }
