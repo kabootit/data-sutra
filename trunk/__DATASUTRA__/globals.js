@@ -4908,7 +4908,10 @@ function DS_client_info_load()
 			ipExternal = 'UNKNOWN'
 		}
 		else {
-			ipExternal = JSON.parse(ipExternal).ip
+			try {
+				ipExternal = JSON.parse(ipExternal).ip
+			}
+			catch (e) {}
 		}
 	}
 	
