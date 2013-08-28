@@ -389,6 +389,9 @@ switch (dsFactor()) {
 		//	Moment.js (http://momentjs.com/)
 		$('head').append('<script type="text/javascript" src="/ds/js/lib/moment.min.js"></script>');
 		
+		// Porthole cross-domain communication
+		// $('head').append('<script type="text/javascript" src="/ds/js/lib/porthole.min.js"></script>');
+		
 	},1250)
 })(jQuery);
 
@@ -443,6 +446,28 @@ switch (dsFactor()) {
 			}
 		}
 	})
+})();
+
+//	Generic call to allow calling methods from non-servoy html/iframes in wc (uses browser suite naming) (only implements receiving)
+	//sendNSCommand needs to be implemented using webClientUtils
+(function iframePorthole(){
+	var portholeMethodOn = window.addEventListener ? "addEventListener" : "attachEvent";
+	var portholeMethodOff = window.addEventListener ? "removeEventListener" : "detachEvent";
+	var portholeEvent = portholeMethodOn == "attachEvent" ? "onmessage" : "message";
+	
+	function portholeSetup(e) {
+		if (typeof sendNSCommand == 'function' && e && e.data && e.data.hasOwnProperty && e.data.hasOwnProperty('method')) {
+			//turn on spinny indicator
+			bigIndicator();
+			
+			//call servoy method (turn off indicator as part of servoy routine)
+			sendNSCommand(e.data.method,e.data.arg);
+		}
+	
+		//trash this listener once it has been fired once
+		// this[portholeMethodOff](portholeEvent,portholeSetup);
+	}
+	 window[portholeMethodOn](portholeEvent,portholeSetup,false);
 })();
 
 //	Refresh UL list
