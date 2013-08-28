@@ -6924,7 +6924,7 @@ if (! application.__parent__.repositoryPrefs) {
 }
 
 //get currently loaded solution name; start recursion
-var solutionName = application.getSolutionName()
+var solutionName = arguments[0] || application.getSolutionName()
 NAV_meta_module_names_fx([solutionName])
 
 //sort array, remove duplicates, attach root_element_id and active_release
