@@ -386,14 +386,11 @@ selected {
 grid_header {
 	background-image: linear-gradient(top, #F6F6F7, #BBBBBB);
 	
-	border: 0px solid;
-	border-right: 1px solid gray;
-	border-bottom: 1px solid #999999;
+	border: 1px solid gray;
+	border-top-width: 0px;
+	border-left-width: 0px;
+	border-bottom-color: #929292;
 	
-	/*font-size: 11pt;
-	font-weight: bold;
-	font-style: normal;
-	text-align: left;*/
 	vertical-align: center;
 	color: #666666;
 }
