@@ -394,7 +394,8 @@ tr.headerbuttons
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #f5f5f5), color-stop(1, #dedede));
 	/* For Mozilla/Gecko (Firefox etc) */
 	background: -moz-linear-gradient(top center, #f5f5f5 0%, #dedede 100%);
-	height: 12px;
+	height: 17px;
+	line-height: 17px;
 	background-color: #ffffff;
 	background-position: center center;
 	border-bottom: 1px solid #000000;
@@ -402,13 +403,13 @@ tr.headerbuttons
 }
 @-moz-document url-prefix() {
 	tr.headerbuttons td {
-		height: 16px;
-		line-height: 16px;
+		height: 17px;
+		line-height: 17px;
 	}
 }
 .ie tr.headerbuttons td {
-	height: 16px;
-	line-height: 16px;
+	height: 17px;
+	line-height: 17px;
 }
 
 /** Change the pagination */

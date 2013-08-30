@@ -35,9 +35,6 @@ form.workarea2 {
 	background-color: #999999;
 }
 
-form.no_selection {	
-}
-
 label, button, field, check, radio {
 	font-family: Verdana,'Helvetica Neue', Arial, Helvetica, sans-serif;
 	font-size: 9px;
@@ -91,7 +88,7 @@ field.fastfind {
 	background-color: #dcdcdc;
 }
 
-field.customlist {
+field.customlist, field.noborderhtml {
 	margin: 0px 0px 0px 0px; 
 }
 
@@ -101,10 +98,6 @@ field.navigationset {
 
 field.noborderbold {
 	font-weight: bold;
-}
-
-field.noborderhtml {
-	margin: 4px 4px 4px 4px; 
 }
 
 field.noedit {
@@ -390,22 +383,19 @@ selected {
 	background-color: #BED7F7;
 }
 
-form.no_selection odd, form.no_selection even, form.no_selection selected {
-	background-color: transparent;
-}
-
 grid_header {
 	background-image: linear-gradient(top, #F6F6F7, #BBBBBB);
 	
 	border: 0px solid;
 	border-right: 1px solid gray;
+	border-bottom: 1px solid #999999;
 	
 	/*font-size: 11pt;
 	font-weight: bold;
 	font-style: normal;
 	text-align: left;*/
 	vertical-align: center;
-	color: #333333;
+	color: #666666;
 }
 
 /* grid view */
@@ -434,12 +424,6 @@ tabpanel.grid_secondary {
 	border: 1px solid #E6E6E6;
 	border-bottom-width: 3px;
 	border-top-color: #999999;
-}
-
-tabpanel.filter_bar {
-	background: #CCCCCC;
-	border: 0px solid #999999;
-	border-bottom-width: 1px;
 }
 
 /* settings for label on custom tab controllers */

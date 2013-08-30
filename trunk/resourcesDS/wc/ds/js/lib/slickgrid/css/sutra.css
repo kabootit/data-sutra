@@ -292,6 +292,7 @@ div[class*="slickgrid_"] .slick-header-columns {
 div[class*="slickgrid_"] .slick-header-column {
 	background: transparent;
 	border-right-color: #AAA !important;
+	border-bottom: 1px solid #999;
 	text-align: center;
 /*	font-weight: bold;*/
 /*	font-size: 10px;*/
