@@ -11,7 +11,6 @@ function REC_delete() {
 	
 	if (delRec == 'Yes') {
 		controller.deleteRecord()
-		
 	}
 }
 
