@@ -487,7 +487,7 @@ var consoleOutput = '';
 
 /**
  * Set text and tooltip of fast find field.
- * 
+ *
  * @param	{String}	findText Text to display in the fast find field.
  * @param	{String}	[findTooltip] Tooltip to display on hover of the fast find field.
  * @param	{String}	[findCheck] Column name to check in the fast find field pop-up menu.
@@ -503,18 +503,18 @@ function TRIGGER_fastfind_display_set(findText,findTooltip,findCheck,setDefault)
 		for (var i = 0; i < arguments.length; i++) {
 			Arguments.push(arguments[i])
 		}
-		
+
 		var findText = ''
 		var findCheck = ''
 		var findTooltip = ''
 		var setDefault = arguments[3]
 		var baseForm = solutionPrefs.config.formNameBase
 		var currentNavItem = solutionPrefs.config.currentFormID
-		
+
 		//reset fast find to whatever is supposed to be in there
 		if (setDefault) {
 			var findInitial = navigationPrefs.byNavItemID[currentNavItem].navigationItem.findDefault
-			
+
 			if (navigationPrefs.byNavItemID[currentNavItem].fastFind && navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindField) {
 				findText = navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindValue
 				findCheck = navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindField
@@ -522,7 +522,7 @@ function TRIGGER_fastfind_display_set(findText,findTooltip,findCheck,setDefault)
 			}
 			else if (findInitial) {
 				findCheck = findInitial
-				
+
 				//get pretty name for chosen column
 				var prettyFind = navigationPrefs.byNavItemID[currentNavItem].fastFind.filter(function(item){return item.columnName == findInitial})
 				if (prettyFind.length) {
@@ -530,7 +530,7 @@ function TRIGGER_fastfind_display_set(findText,findTooltip,findCheck,setDefault)
 				}
 			}
 		}
-		
+
 		if (Arguments[0]) {
 			findText = Arguments[0]
 		}
@@ -540,14 +540,14 @@ function TRIGGER_fastfind_display_set(findText,findTooltip,findCheck,setDefault)
 		if (Arguments[2]) {
 			findCheck = Arguments[2]
 		}
-		
+
 		if (findCheck == undefined) {
 			findCheck = true
 		}
-		
+
 		//set text in fast find area
 		DATASUTRA_find = findText
-		
+
 		//only show stop button if a message is passed
 		if (findText) {
 			//show stop button
@@ -566,13 +566,13 @@ function TRIGGER_fastfind_display_set(findText,findTooltip,findCheck,setDefault)
 //		else if (!findCheck) {
 //			DATASUTRA_find_field = 'NuttinHoney'
 //		}
-		
+
 		//save down values of last 'find'
 		if (application.__parent__.solutionPrefs) {
 			var formName = solutionPrefs.config.currentFormName
 			var serverName = forms[formName].controller.getServerName()
 			var tableName = forms[formName].controller.getTableName()
-			
+
 			//add server name if not already
 			if (!solutionPrefs.fastFind.currentSearch[serverName]) {
 				solutionPrefs.fastFind.currentSearch[serverName] = new Object()
@@ -582,11 +582,11 @@ function TRIGGER_fastfind_display_set(findText,findTooltip,findCheck,setDefault)
 				solutionPrefs.fastFind.currentSearch[serverName][tableName] = new Object()
 			}
 			//only run when data is available
-			if (solutionPrefs.repository && solutionPrefs.repository.allFormsByTable && 
-				solutionPrefs.repository.allFormsByTable[serverName] && 
-				solutionPrefs.repository.allFormsByTable[serverName][tableName] && 
+			if (solutionPrefs.repository && solutionPrefs.repository.allFormsByTable &&
+				solutionPrefs.repository.allFormsByTable[serverName] &&
+				solutionPrefs.repository.allFormsByTable[serverName][tableName] &&
 				solutionPrefs.repository.allFormsByTable[serverName][tableName][formName]) {
-			
+
 				//check if not using separateFoundset
 				if (!solutionPrefs.repository.allFormsByTable[serverName][tableName][formName].useSeparateFoundset) {
 					solutionPrefs.fastFind.currentSearch[serverName][tableName].lastFindValue = findText
@@ -594,13 +594,13 @@ function TRIGGER_fastfind_display_set(findText,findTooltip,findCheck,setDefault)
 					solutionPrefs.fastFind.currentSearch[serverName][tableName].lastFindTip = findTooltip
 				}
 			}
-			
+
 			//fast find is enabled, track
 			if (navigationPrefs.byNavItemID[currentNavItem].fastFind) {
 				navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindValue = findText
 				navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindField = (findCheck && findCheck != true) ? findCheck : null
 				navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindTip = findTooltip
-				
+
 				//in web client, update placeholder text to be field currently searching on
 				var findField = navigationPrefs.byNavItemID[currentNavItem].fastFind.lastFindField || DATASUTRA_find_field
 				var findSelected = navigationPrefs.byNavItemID[currentNavItem].fastFind.filter(function (item) {return (item.relation != 'NONE' ? item.relation + '.' + item.columnName : item.columnName) == findField})
@@ -608,11 +608,11 @@ function TRIGGER_fastfind_display_set(findText,findTooltip,findCheck,setDefault)
 				scopes.DS.webFindSet(findPretty)
 			}
 		}
-		
+
 		//set tooltip if provided
 		if (findTooltip != null) {
 			var findForm = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__WEB__fastfind' : baseForm + '__header__fastfind'
-			
+
 			forms[findForm].elements.fld_find.toolTipText = (solutionPrefs.config.webClient) ? null : findTooltip
 		}
 	}
@@ -620,15 +620,15 @@ function TRIGGER_fastfind_display_set(findText,findTooltip,findCheck,setDefault)
 
 /**
  * Override/Revert fast find options for selected navigation item.
- * 
+ *
  * @param	{Object[]|Boolean}	findOverride Items describing fast find possibilities. A value of false reverts to default fast find.
  * @param	{String}	[findOverride.searchForm] Overrides the form where a find begins.
  * @param	{Number}	[itemID] The navigation item whose fast find is changed.
  *
  * @example
- * 
+ *
  *	var findOV = new Array()
- *	
+ *
  *	//item 1: a sample
  *	findOV.push({
  *			//the name displayed in the fast find dropdown
@@ -647,42 +647,42 @@ function TRIGGER_fastfind_display_set(findText,findTooltip,findCheck,setDefault)
  *			//displays more info about what the fast find item actually is
  *			toolTip		: 'ToolTip displayed when fast find item hovered over'
  *		})
- *	
+ *
  *	//where do we want to find on it (only needed if searching not on the main form)
  *	findOV.searchForm = 'my_form'
- *	
+ *
  *	//if record searched for that is filtered from view, allow to view it
  *	findOV.lenient = true
- *	
+ *
  *	//override fast find
  *	globals.TRIGGER_fastfind_override(findOV)
- * 
+ *
  * @example
- * 
+ *
  * 	//reset fast find to default (undoes a previous fastfind override)
  * 	globals.TRIGGER_fastfind_override(false)
- * 	
+ *
  * @properties={typeid:24,uuid:"1544c9a7-7107-4c73-8d7e-eb00586dc023"}
  */
 function TRIGGER_fastfind_override(findOverride,itemID) {
 	//solutionPrefs defined and frameworks not in a locked status
 	if (application.__parent__.solutionPrefs && !solutionPrefs.config.lockStatus) {
-	
+
 		var findOverride = arguments[0]
 		var itemID = arguments[1] || solutionPrefs.config.currentFormID
-		
+
 		var baseForm = solutionPrefs.config.formNameBase
-		
+
 		if (itemID && navigationPrefs.byNavItemID[itemID]) {
 			var thisNav = navigationPrefs.byNavItemID[itemID]
-			
+
 			//find override present, override
 			if (findOverride) {
 				//punch default for this form down (so can roll back)
 				if (!thisNav.fastFindInitial) {
 					thisNav.fastFindInitial = CODE_copy_object(thisNav.fastFind)
 				}
-				
+
 				//there are find items to search on
 				if (findOverride.length) {
 					thisNav.fastFind = findOverride
@@ -704,7 +704,7 @@ function TRIGGER_fastfind_override(findOverride,itemID) {
 
 /**
  * Leave feedback in the developer feedback area.
- * 
+ *
  * @param	{String}	issue A concise name for the feedback.
  * @param	{String}	description More precise details regarding the feedback.
  * @param	{Boolean}	[screenshot=false] Take a snapshot of the main Servoy window at the time feedback is created.
@@ -716,47 +716,47 @@ function TRIGGER_feedback_create(issue,description,screenshot) {
 	var issue = arguments[0]
 	var detail = arguments[1]
 	var screenshot = arguments[2]
-	
+
 	//any arguments given, run method
 	if (issue || detail || screenshot) {
 		//get foundset
 		/** @type {JSFoundSet<db:/sutra/sutra_feedback>}*/
 		var fsFeedback = databaseManager.getFoundSet('sutra','sutra_feedback')
 		var record = fsFeedback.getRecord(fsFeedback.newRecord(false,true))
-		
+
 		record.feedback_status = 'Pending'
 		record.id_log = solutionPrefs.clientInfo.logID
 		record.id_navigation = DATASUTRA_navigation_set
 		record.id_navigation_item = solutionPrefs.config.currentFormID
 		record.feedback_issue = issue
 		record.feedback_summary = detail
-		
+
 		if (screenshot) {
 			//get screensize of window
 			var x = application.getWindowX()
 			var y = application.getWindowY()
 			var width = application.getWindowWidth()
 			var height =  application.getWindowHeight()
-			
+
 			//get screenshot
 			var screenShot = (new java.awt.Robot()).createScreenCapture(new java.awt.Rectangle(x,y,width,height))
 			var rawData = new java.io.ByteArrayOutputStream()
 			Packages.javax.imageio.ImageIO.write(screenShot,'png',rawData)
-			
+
 			record.feedback_screenshot = rawData.toByteArray()
 		}
-		
+
 		if (solutionPrefs.access && solutionPrefs.access.userName) {
 			record.feedback_author = solutionPrefs.access.userName
 		}
-	
+
 		databaseManager.saveData(record)
 	}
 }
 
 /**
  * Sets the window title and/or icon for specified window.
- * 
+ *
  * @param	{String}	windowTitle New title for window.
  * @param	{String}	windowIcon Image to use for icon. Can be url from Servoy media library ("media:///my_image.gif").
  * @param	{String}	[frameName=<top level servoy window>] Name of window to operate on.
@@ -768,26 +768,26 @@ function TRIGGER_frame_title_set(windowTitle, windowIcon, frameName) {
 	var windowIcon = arguments[1]
 	var frameName = arguments[2]
 	var callingForm = application.getMethodTriggerFormName()
-	
+
 	//check if in developer or client
 	if (application.__parent__.solutionPrefs && solutionPrefs.clientInfo && (solutionPrefs.clientInfo.typeServoy == 'client' || solutionPrefs.clientInfo.typeServoy == 'developer')) {
 		//all frames in use
 		var allFrames = Packages.java.awt.Frame.getFrames()
-		
+
 		//find frame to operate on
 		if (frameName) {
-			
+
 		}
 		//use top level servoy window
 		else {
 			var frame = Packages.java.awt.Frame.getFrames()[0]
 		}
-		
+
 		//set new window title
 		if (windowTitle) {
 			frame.setTitle(windowTitle)
 		}
-		
+
 		//set new window icon
 		if (windowIcon) {
 			//image coming from media library
@@ -807,7 +807,7 @@ function TRIGGER_frame_title_set(windowTitle, windowIcon, frameName) {
 				catch {}
 				*/
 			}
-			
+
 			if (iconImage) {
 				frame.setIconImage(iconImage)
 			}
@@ -817,7 +817,7 @@ function TRIGGER_frame_title_set(windowTitle, windowIcon, frameName) {
 
 /**
  * Navigates to a registered form (navigation item) from within inline help.
- * 
+ *
  * @param	{Number}	itemID Registry of navigation_item to jump to.
  * @param	{Boolean}	[confirmJump] Prompt to leave current location.
  * @param	{String}	[subLanding] Sub tab panel and tab to show on arrival.
@@ -827,17 +827,17 @@ function TRIGGER_frame_title_set(windowTitle, windowIcon, frameName) {
  */
 function TRIGGER_help_navigation_set(itemID, confirmJump, subLanding, showHelp) {
 //TODO: check to see if group is allowed to navigate here
-	
+
 	//solutionPrefs defined and frameworks not in a locked status
 	if (application.__parent__.solutionPrefs && !solutionPrefs.config.lockStatus) {
-	
+
 		var itemID = arguments[0]
 		var confirm = arguments[1]
 		var subLanding = arguments[2]
 		var showHelp = arguments[3]
-		
+
 		var baseForm = solutionPrefs.config.formNameBase
-		
+
 	/*	var subLanding = {
 						form: ,			//name of form
 						tabPanel: , 	//tab panel on form
@@ -851,7 +851,7 @@ function TRIGGER_help_navigation_set(itemID, confirmJump, subLanding, showHelp) 
 						element: 		//name of element with tooltip to trigger
 					}
 	*/
-		
+
 		//loop through all available items until the specified one found (will find first occurrence)
 		var navItemID = false
 		for (var i in navigationPrefs.byNavItemID) {
@@ -859,7 +859,7 @@ function TRIGGER_help_navigation_set(itemID, confirmJump, subLanding, showHelp) 
 				navItemID = i
 			}
 		}
-		
+
 		//selected navigation item is available for this user
 		if (navItemID) {
 			//confirm to leave current location
@@ -874,46 +874,46 @@ function TRIGGER_help_navigation_set(itemID, confirmJump, subLanding, showHelp) 
 			else {
 				var proceed = 'Yes'
 			}
-			
+
 			if (proceed == 'Yes') {
 				//close the opened help dialog box
 				forms.CODE_P__konsole.ACTION_close()
-				
+
 				var navSetID = navigationPrefs.byNavItemID[navItemID].navigationItem.idNavigation
 				var formNameWorkflow = navigationPrefs.byNavItemID[navItemID].navigationItem.formToLoad
-				
+
 				var lastitem = solutionPrefs.config.currentFormID
-				
+
 				//redraw list; make sure row is expanded if node2; load new item
 				forms.NAV__navigation_tree__rows.LIST_expand_collapse(null,navItemID,'open',navSetID)
-				
+
 				//if from a different navigation set
 				if (DATASUTRA_navigation_set != navSetID) {
 					navigationPrefs.byNavSetID[DATASUTRA_navigation_set].lastNavItem = lastItem
 					DATASUTRA_navigation_set = navSetID
-					
+
 					var navigationList = (solutionPrefs.config.webClient) ? 'NAV__navigation_tree__WEB' : 'NAV__navigation_tree'
 					forms[navigationList].LABEL_update()
 				}
-				
+
 				//move around to land on correct spot of this form
 				if (subLanding) {
 					//quasi-record navigator
 					if (subLanding.pseudo &&
 						subLanding.form && forms[subLanding.form] && subLanding.action && forms[subLanding.form][subLanding.action]) {
-						
+
 						//get there
 						forms[subLanding.form][subLanding.action]()
-						
+
 						//set tab
 						if (forms[baseForm].elements.tab_content_C.getTabFormNameAt(1)) {
 							subLanding.form = forms[baseForm].elements.tab_content_C.getTabFormNameAt(1)
 						}
 					}
-					
-					
+
+
 				}
-				
+
 				//pop-up help screen for selected element
 				if (showHelp) {
 					TRIGGER_tooltip_help_popup(showHelp.form,showHelp.element,showHelp.tabPanel)
@@ -932,7 +932,7 @@ function TRIGGER_help_navigation_set(itemID, confirmJump, subLanding, showHelp) 
 
 /**
  * Disables all data sutra related actions.
- * 
+ *
  * @param	{Boolean}	freeze Freezes/Unfreezes everything except the main workflow area.
  * @param	{Boolean}	[freezeAll] Freezes the workflow area too.
  * @param	{Boolean}	[nonTransparent] Turn off transparency so stuff frozen also invisible.
@@ -945,28 +945,28 @@ function TRIGGER_help_navigation_set(itemID, confirmJump, subLanding, showHelp) 
 function TRIGGER_interface_lock(freeze,freezeAll,nonTransparent,spinner,nonTransparentText,oldMode) {
 //TODO:
 		//trap the state of everything on the workflow form and set it back as it was before being enabled/disabled when running in oldMode
-	
+
 	var freeze = arguments[0]
 	var freezeAll = arguments[1]
 	var nonTransparent = arguments[2]
 	var spinner = arguments[3]
 	var nonTransparentText = arguments[4]
 	var oldMode = arguments[5]
-	
+
 	//check to see that solutionPrefs is defined and parameter passed
 	if (application.__parent__.solutionPrefs && typeof freeze == 'boolean') {
 		var baseForm = solutionPrefs.config.formNameBase
 		var workflowForm = solutionPrefs.config.currentFormName
-		
+
 		var lockWorkflow = false
 		var lockList = true
 		var lockNavigation = true
-		
+
 		//web client	only implements freeze for now
 		if (solutionPrefs.config.webClient) {
 			forms.DATASUTRA_WEB_0F__main.elements.gfx_curtain.visible = freeze
 			forms.DATASUTRA__sidebar.elements.gfx_curtain.visible = freeze
-			
+
 			//adjust z-index
 				//MEMO: this doesn't fire the first time edit button pressed after page loaded; client-side triggered when button clicked to handle this condition
 			plugins.WebClientUtils.executeClientSideJS('triggerInterfaceLock(' + freeze + ');')
@@ -975,7 +975,7 @@ function TRIGGER_interface_lock(freeze,freezeAll,nonTransparent,spinner,nonTrans
 		else {
 			//MEMO: 44 is offset for normal header
 			var divider = 8
-			
+
 			//all gfx
 			var gfxTop = forms[baseForm].elements.gfx_curtain_top
 			var gfxLeftOne = forms[baseForm].elements.gfx_curtain_left_1
@@ -984,7 +984,7 @@ function TRIGGER_interface_lock(freeze,freezeAll,nonTransparent,spinner,nonTrans
 			var gfxRightOne = forms[baseForm].elements.gfx_curtain_right_1
 			var gfxRightTwo = forms[baseForm].elements.gfx_curtain_right_2
 			var gfxCurtain = forms[baseForm].elements.gfx_curtain
-			
+
 			//turn everything off
 			forms[baseForm].elements.gfx_curtain_header.visible = false
 			gfxTop.visible = false
@@ -994,7 +994,7 @@ function TRIGGER_interface_lock(freeze,freezeAll,nonTransparent,spinner,nonTrans
 			gfxRightOne.visible = false
 			gfxRightTwo.visible = false
 			gfxCurtain.visible = false
-			
+
 			//return curtain to default state
 			gfxCurtain.text = null
 			gfxCurtain.transparent = true
@@ -1002,22 +1002,22 @@ function TRIGGER_interface_lock(freeze,freezeAll,nonTransparent,spinner,nonTrans
 			gfxCurtain.setBorder('EmptyBorder,0,0,0,0')
 			gfxCurtain.text = null
 			gfxCurtain.toolTipText = null
-			
+
 			//graphic 1
 			var x = 0
 			var y = 44
 			var gfx1 = gfxCurtain
-			
+
 			//graphic 2
 			var x2 = 0
 			var y2 = 44
 			var gfx2 = gfxLeftOne
-			
+
 			//graphic 3
 			var x3 = 0
 			var y3 = 44
 			var gfx3 = gfxTop
-			
+
 			//if in design mode....
 			if (solutionPrefs.design.statusDesign) {
 				//height of design mode bar
@@ -1025,13 +1025,13 @@ function TRIGGER_interface_lock(freeze,freezeAll,nonTransparent,spinner,nonTrans
 				y2 += 42
 				y3 += 42
 			}
-			
+
 			//figure out location of curtain
 			switch (solutionPrefs.config.activeSpace) {
 				case 'standard':
 					x += solutionPrefs.screenAttrib.spaces.standard.currentHorizontal
 					y2 += solutionPrefs.screenAttrib.spaces.standard.currentVertical
-					
+
 					if (solutionPrefs.config.flexibleSpace) {
 						x += divider
 						y2 += divider
@@ -1040,105 +1040,105 @@ function TRIGGER_interface_lock(freeze,freezeAll,nonTransparent,spinner,nonTrans
 				case 'standard flip':
 					x += solutionPrefs.screenAttrib.spaces.standard.currentHorizontal
 					y3 += solutionPrefs.screenAttrib.spaces.standard.currentVertical
-					
+
 					if (solutionPrefs.config.flexibleSpace) {
 						x += divider
 						y3 += divider
 					}
-					
+
 					gfx2 = gfxTop
 					gfx3 = gfxLeftOne
 					break
-					
+
 				case 'list':
 					x += solutionPrefs.screenAttrib.spaces.list.currentHorizontal
-					
+
 					if (solutionPrefs.config.flexibleSpace) {
 						x += divider
 					}
-					
+
 					var nonNavigation = true
 					break
-				
+
 				case 'list flip':
 					x += solutionPrefs.screenAttrib.spaces.list.currentHorizontal
-					
+
 					if (solutionPrefs.config.flexibleSpace) {
 						x += divider
 					}
-					
+
 					var nonList = true
-					
+
 					gfx3 = gfxLeftOne
 					break
-					
+
 				case 'vertical':
 					x += solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalOne + solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalTwo
 					x2 += solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalOne
-					
+
 					if (solutionPrefs.config.flexibleSpace) {
 						x += divider
 						x2 += divider
 					}
-					
+
 					gfx3 = gfxLeftTwo
 					break
 				case 'vertical flip':
 					x += solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalOne + solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalTwo
 					x3 += solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalOne
-					
+
 					if (solutionPrefs.config.flexibleSpace) {
 						x += divider
 						x3 += divider
 					}
-					
+
 					gfx2 = gfxLeftTwo
 					gfx3 = gfxLeftOne
 					break
-					
+
 				case 'centered':
 					x += solutionPrefs.screenAttrib.spaces.centered.currentHorizontalOne
 					x2 += application.getWindowWidth(null) - solutionPrefs.screenAttrib.spaces.centered.currentHorizontalTwo
-					
+
 					if (solutionPrefs.screenAttrib.sidebar.status) {
 						x2 -= solutionPrefs.screenAttrib.sidebar.currentSize
 					}
-					
+
 					if (solutionPrefs.config.flexibleSpace) {
 						x += divider
 						x2 += divider
 					}
-					
+
 					gfx2 = gfxRightOne
 					gfx3 = gfxLeftOne
 					break
 				case 'centered flip':
 					x += solutionPrefs.screenAttrib.spaces.centered.currentHorizontalOne
 					x3 += application.getWindowWidth(null) - solutionPrefs.screenAttrib.spaces.centered.currentHorizontalTwo
-					
+
 					if (solutionPrefs.screenAttrib.sidebar.status) {
 						x3 -= solutionPrefs.screenAttrib.sidebar.currentSize
 					}
-					
+
 					if (solutionPrefs.config.flexibleSpace) {
 						x += divider
 						x3 += divider
 					}
-					
+
 					gfx3 = gfxRightOne
 					break
-					
+
 				case 'classic':
 					x += solutionPrefs.screenAttrib.spaces.classic.currentHorizontal
 					x2 += solutionPrefs.screenAttrib.spaces.classic.currentHorizontal
 					y += solutionPrefs.screenAttrib.spaces.classic.currentVertical
-					
+
 					if (solutionPrefs.config.flexibleSpace) {
 						x += divider
 						x2 += divider
 						y += divider
 					}
-					
+
 					gfx2 = gfxLeftRight
 					gfx3 = gfxLeftOne
 					break
@@ -1146,49 +1146,49 @@ function TRIGGER_interface_lock(freeze,freezeAll,nonTransparent,spinner,nonTrans
 					x += solutionPrefs.screenAttrib.spaces.classic.currentHorizontal
 					x3 += solutionPrefs.screenAttrib.spaces.classic.currentHorizontal
 					y += solutionPrefs.screenAttrib.spaces.classic.currentVertical
-					
+
 					if (solutionPrefs.config.flexibleSpace) {
 						x += divider
 						x3 += divider
 						y += divider
 					}
-					
+
 					gfx2 = gfxLeftOne
 					gfx3 = gfxLeftRight
 					break
-					
+
 				case 'wide':
 					x2 += solutionPrefs.screenAttrib.spaces.wide.currentHorizontal
 					y += solutionPrefs.screenAttrib.spaces.wide.currentVertical
-					
+
 					if (solutionPrefs.config.flexibleSpace) {
 						x2 += divider
 						y += divider
 					}
-					
+
 					gfx2 = gfxLeftRight
 					gfx3 = gfxTop
 					break
 				case 'wide flip':
 					x3 += solutionPrefs.screenAttrib.spaces.wide.currentHorizontal
 					y += solutionPrefs.screenAttrib.spaces.wide.currentVertical
-					
+
 					if (solutionPrefs.config.flexibleSpace) {
 						x3 += divider
 						y += divider
 					}
-					
+
 					gfx2 = gfxTop
 					gfx3 = gfxLeftRight
 					break
-					
+
 				case 'workflow':
 					if (solutionPrefs.config.activeSpace == 'workflow') {
 						var nonList = true
 						var nonNavigation = true
 					}
 					break
-					
+
 				case 'workflow flip':
 					if (!lockList) {
 						var nonList = true
@@ -1196,7 +1196,7 @@ function TRIGGER_interface_lock(freeze,freezeAll,nonTransparent,spinner,nonTrans
 					var nonNavigation = true
 					break
 			}
-			
+
 			//set up spinner to show progress
 			if (spinner) {
 	//			forms[baseForm].elements.gfx_spinner.setSize(application.getWindowWidth(),32)
@@ -1206,72 +1206,72 @@ function TRIGGER_interface_lock(freeze,freezeAll,nonTransparent,spinner,nonTrans
 			else {
 				forms[baseForm].elements.gfx_spinner.visible = false
 			}
-			
+
 			//resize curtain to cover everything and then show it
 			if (freezeAll) {
 				//height of normal header (44)
 				var y = 0
-				
+
 				//if in design mode....
 				if (solutionPrefs.design.statusDesign) {
 					//height of design mode bar
 					y += 42
-					
+
 					var designBar = 'DEV_0F_solution__designbar'
-					
+
 					//design bar form exists, go exploring
 					if (forms[designBar]) {
 						//turn off everything
 						forms[designBar].controller.enabled = false
-						
+
 						//active tab
 						var designTab = forms[designBar].elements.tab_action.getTabFormNameAt(forms[designBar].elements.tab_action.tabIndex)
-						
+
 						//light background in main design bar
 						if (forms[designBar].elements.gfx_header) {
 							forms[designBar].elements.gfx_header.enabled = true
 						}
-						
+
 						//highlighter in main design bar
 						if (forms[designBar].elements.highlighter) {
 							forms[designBar].elements.highlighter.enabled = true
 						}
-						
+
 						//design bar action form exists, go exploring
 						if (forms[designTab]) {
 							//light background in main design bar
 							if (forms[designTab].elements.gfx_header) {
 								forms[designTab].elements.gfx_header.enabled = true
 							}
-							
+
 							//highlighter in main design bar
 							if (forms[designTab].elements.highlighter) {
 								forms[designTab].elements.highlighter.enabled = true
 							}
 						}
 					}
-					
+
 					//just turn off the second curtain so don't get double effect
 					forms[baseForm].elements.gfx_curtain_2.visible = false
 				}
-				
+
 				//set location
 				forms[baseForm].elements.gfx_curtain.setLocation(0,y)
 				//set size
 				forms[baseForm].elements.gfx_curtain.setSize(application.getWindowWidth(),application.getWindowHeight())
-				
+
 				//non-transparent, set up
 				if (nonTransparent) {
 					forms[baseForm].elements.gfx_curtain.transparent = false
 					forms[baseForm].elements.gfx_curtain.setImageURL(null)
 					forms[baseForm].elements.gfx_curtain.setBorder('MatteBorder,0,0,200,0,#323A4B')
-					
+
 					//set text
 					if (nonTransparentText) {
 						forms[baseForm].elements.gfx_curtain.text = nonTransparentText
 					}
 				}
-				
+
 				forms[baseForm].elements.gfx_curtain.enabled = true
 				forms[baseForm].elements.gfx_curtain.visible = true
 			}
@@ -1281,32 +1281,32 @@ function TRIGGER_interface_lock(freeze,freezeAll,nonTransparent,spinner,nonTrans
 				if (oldMode) {
 					//turn off everything
 					forms[baseForm].controller.enabled = false
-					
+
 					//turn on grafx stuff
 						//header/footer
 						forms[baseForm + '__header'].elements.gfx_header.enabled = true
 						forms[baseForm + '__footer'].elements.gfx_footer.enabled = true
-						
+
 						//check content panels for subheader element
 						var tabPanels = ['A','B','C','D']
 						for (var i = 0; i < tabPanels.length; i++) {
 							var tabPanel = 'tab_content_' + tabPanels[i]
-							
+
 							//there is a form in this tab panel
 							if (forms[baseForm].elements[tabPanel].tabIndex) {
 								var formName = forms[baseForm].elements[tabPanel].getTabFormNameAt(forms[baseForm].elements[tabPanel].tabIndex)
-								
+
 								//if a subheader present, turn it on
 								if (forms[formName] && forms[formName].elements.gfx_subheader) {
 									forms[formName].elements.gfx_subheader.enabled = true
 								}
 							}
 						}
-						
+
 						//check active toolbar for background elements
 						if (forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex) {
 							var formName = forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getTabFormNameAt(forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex)
-							
+
 							//if toolbar background graphics present, turn them on
 							if (forms[formName].elements.gfx_tool_left) {
 								forms[formName].elements.gfx_tool_left.enabled = true
@@ -1318,13 +1318,13 @@ function TRIGGER_interface_lock(freeze,freezeAll,nonTransparent,spinner,nonTrans
 								forms[formName].elements.gfx_tool_right.enabled = true
 							}
 						}
-					
+
 					//set space borders to light color
 					var borderDisabled = 'MatteBorder,0,0,0,1,#797778'
 					for (var i = 1; i <= 14 && ((i== 1 || i == 8) ? i++ : i); i++) {
 						forms[baseForm + '__header'].elements['btn_space_' + i].setBorder(borderDisabled)
 					}
-					
+
 					//turn on workflow form
 					forms[workflowForm].controller.enabled = true
 				}
@@ -1340,7 +1340,7 @@ function TRIGGER_interface_lock(freeze,freezeAll,nonTransparent,spinner,nonTrans
 						//turn off curtain
 						forms[baseForm].elements.gfx_curtain_header.visible = false
 					}
-					
+
 				//CURTAIN ONE
 					if (lockWorkflow && solutionPrefs.config.activeSpace != 'workflow flip') {
 						//set location
@@ -1350,11 +1350,11 @@ function TRIGGER_interface_lock(freeze,freezeAll,nonTransparent,spinner,nonTrans
 									forms[baseForm].elements.tab_content_C.getWidth(),
 									forms[baseForm].elements.tab_content_C.getHeight()
 								)
-						
+
 						//turn on curtain
 						gfx1.visible = true
 					}
-					
+
 				//CURTAIN TWO
 					if (lockList && !nonList) {
 						//set location
@@ -1364,11 +1364,11 @@ function TRIGGER_interface_lock(freeze,freezeAll,nonTransparent,spinner,nonTrans
 									forms[baseForm].elements.tab_content_B.getWidth(),
 									forms[baseForm].elements.tab_content_B.getHeight()
 								)
-						
+
 						//turn on curtain
 						gfx2.visible = true
 					}
-				
+
 				//CURTAIN THREE
 					if (lockNavigation && !nonNavigation) {
 						//set location
@@ -1378,11 +1378,11 @@ function TRIGGER_interface_lock(freeze,freezeAll,nonTransparent,spinner,nonTrans
 									forms[baseForm].elements.tab_content_A.getWidth(),
 									forms[baseForm].elements.tab_content_A.getHeight()
 								)
-						
+
 						//turn on curtain
 						gfx3.visible = true
 					}
-					
+
 				//CURTAIN SIDEBAR
 					if (freeze && solutionPrefs.screenAttrib.sidebar.status) {
 						//set location
@@ -1395,7 +1395,7 @@ function TRIGGER_interface_lock(freeze,freezeAll,nonTransparent,spinner,nonTrans
 									forms[baseForm].elements.tab_content_D.getWidth(),
 									forms[baseForm].elements.tab_content_D.getHeight() - 44
 								)
-						
+
 						//turn on curtain
 						gfxRightTwo.visible = true
 					}
@@ -1407,36 +1407,36 @@ function TRIGGER_interface_lock(freeze,freezeAll,nonTransparent,spinner,nonTrans
 				if (oldMode) {
 					//turn on everything
 					forms[baseForm].controller.enabled = true
-					
+
 					//turn off curtain
 					if (forms[baseForm].elements.gfx_curtain.visible) {
 						forms[baseForm].elements.gfx_curtain.visible = false
-					}	
+					}
 	//				//return curtain to default state
 	//				forms[baseForm].elements.gfx_curtain.transparent = true
 	//				forms[baseForm].elements.gfx_curtain.setImageURL('media:///curtain_5E6166.png')
 	//				forms[baseForm].elements.gfx_curtain.setBorder('EmptyBorder,0,0,0,0')
-	//				
+	//
 	//				forms[baseForm].elements.gfx_curtain.text = null
 	//				forms[baseForm].elements.gfx_curtain.toolTipText = null
-					
+
 					//turn off curtain3
 					if (forms[baseForm].elements.gfx_spinner.visible) {
 						forms[baseForm].elements.gfx_spinner.visible = false
 					}
-					
+
 					//developer was locked, return to that state
 					if (solutionPrefs.design.statusLockWorkflow || solutionPrefs.design.statusLockList) {
 						DEV_lock_workflow()
 					}
-					
+
 					//only show active space options
 					var borderEnabled = 'MatteBorder,0,0,0,1,#333333'
 					var borderDisabled = 'MatteBorder,0,0,0,1,#797778'
 					var spacesOK = (navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID] && navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].spaceSetup) ? navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].spaceSetup : new Array(true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true)
 					for (var i = 1; i <= 14; i++) {
 						forms[baseForm + '__header'].elements['btn_space_' + i].enabled = spacesOK[i-1]
-						
+
 						if (i != 1 && i != 8) {
 							forms[baseForm + '__header'].elements['btn_space_' + i].setBorder(spacesOK[i-1] ? borderEnabled : borderDisabled)
 						}
@@ -1444,7 +1444,7 @@ function TRIGGER_interface_lock(freeze,freezeAll,nonTransparent,spinner,nonTrans
 				}
 			}
 		}
-		
+
 		//save down current locked status
 		solutionPrefs.config.lockStatus = freeze
 	}
@@ -1452,7 +1452,7 @@ function TRIGGER_interface_lock(freeze,freezeAll,nonTransparent,spinner,nonTrans
 
 /**
  * Logs a Data Sutra event.
- * 
+ *
  * @param	{String}	logType Type of log. Possible values:<br>
  * 						Custom,Configuration panes,Fast finds,Flexible windowing,Navigation items,<br>
  *			  			Records,UL Add,UL Actions,UL Displays,UL Filters,UL Print,UL Sorts,UL Tabs
@@ -1465,11 +1465,11 @@ function TRIGGER_interface_lock(freeze,freezeAll,nonTransparent,spinner,nonTrans
  * @param	{String}	valueSeven
  * @param	{String}	valueEight
  * @param	{String}	valueNine
- * 
+ *
  * @properties={typeid:24,uuid:"d905985b-6355-4c9c-9e36-d69a2cf797eb"}
  */
 function TRIGGER_log_create(logType,valueOne,valueTwo,valueThree,valueFour,valueFive,valueSix,valueSeven,valueEight,valueNine) {
-	
+
 	var logType = arguments[0]
 	var valueOne = arguments[1]
 	var valueTwo = arguments[2]
@@ -1480,14 +1480,14 @@ function TRIGGER_log_create(logType,valueOne,valueTwo,valueThree,valueFour,value
 	var valueSeven = arguments[7]
 	var valueEight = arguments[8]
 	var valueNine = arguments[9]
-	
+
 	//logType parameter passed in, solutionPrefs defined, analytics turned on, and logging for logType
 	if (logType && application.__parent__.solutionPrefs && solutionPrefs.analytics && solutionPrefs.analytics.logging[utils.stringReplace(logType,' ','_')]) {
 		//get foundset
 		/** @type {JSFoundSet<db:/sutra/sutra_log>}*/
 		var fsLog = databaseManager.getFoundSet('sutra','sutra_log')
 		var record = fsLog.getRecord(fsLog.newRecord())
-		
+
 		//set basic log information
 		record.log_type = logType
 		record.id_organization = (solutionPrefs.access.organizationID) ? solutionPrefs.access.organizationID : null
@@ -1500,7 +1500,7 @@ function TRIGGER_log_create(logType,valueOne,valueTwo,valueThree,valueFour,value
 			record.navigation_set = solutionPrefs.history[solutionPrefs.config.currentHistoryPosition].navigationSetName
 			record.navigation_item = solutionPrefs.history[solutionPrefs.config.currentHistoryPosition].navigationSetID
 		}
-		
+
 		switch (logType) {
 			case 'Configuration panes':
 				record.config_pane = valueOne
@@ -1590,13 +1590,13 @@ function TRIGGER_log_create(logType,valueOne,valueTwo,valueThree,valueFour,value
 				record.custom_value = valueOne
 				break
 		}
-		
+
 		databaseManager.saveData(record)
 	}
-	
-	
+
+
 	/*
-	
+
 				record. = valueOne
 				record. = valueTwo
 				record. = valueThree
@@ -1614,19 +1614,19 @@ function TRIGGER_log_create(logType,valueOne,valueTwo,valueThree,valueFour,value
 /**
  * Programatically trigger a navigation item filter parameter refresh.<br>
  * Only re-filter if the filter values have changed.
- * 
+ *
  * @param	{Boolean}	[forceRefresh] Force a refresh even if filters have not been changed.<br>
  * 						Note: all finds/filters/etc will be reset.
  * @param	{Number}	[itemID] The navigation item to re-filter.
  *
  * @returns	{Boolean}	Refresh performed.
- * 
+ *
  * @properties={typeid:24,uuid:"c3da0de9-3fb6-48ba-8406-2bb1060e48f7"}
  */
 function TRIGGER_navigation_filter_update(forceRefresh,itemID) {
 	//solutionPrefs defined and frameworks not in a locked status
 	if (application.__parent__.solutionPrefs && solutionPrefs.config && solutionPrefs.config.currentFormID && !solutionPrefs.config.lockStatus) {
-	
+
 	//MEMO: need to somehow put this section in a Function of it's own
 	//running in Tano...strip out jsevents for now
 	if (utils.stringToNumber(application.getVersion()) >= 5) {
@@ -1635,14 +1635,14 @@ function TRIGGER_navigation_filter_update(forceRefresh,itemID) {
 		for (var i = 0; i < arguments.length; i++) {
 			Arguments.push(arguments[i])
 		}
-		
+
 		//reassign arguments without jsevents
 		arguments = Arguments.filter(CODE_jsevent_remove)
 	}
-	
+
 		var forceRefresh = arguments[0]
 		var navItemID = arguments[1]
-		
+
 		return NAV_foundset_restrict(forceRefresh,navItemID)
 	}
 	else {
@@ -1653,30 +1653,30 @@ function TRIGGER_navigation_filter_update(forceRefresh,itemID) {
 /**
  * Programatically navigate to a different navigation item.<br>
  * Note: the sort of the target form will be reset to it's default state.
- * 
+ *
  * @param	{String}	[itemID] The navigation item to jump to.
  * @param	{Boolean}	[setFoundset] Modify the foundset on the new navigation item.
  * @param	{JSFoundSet|Number[]|UUID[]}	[useFoundset] Foundset or array of primary keys to restore on the destination form.
  * @param	{Number}	[idNavigationItem] The pk for the navigation item to jump to. (will override itemID)
  *
  * @returns	{Boolean}	Success of loading the foundset requested.
- * 
+ *
  * @properties={typeid:24,uuid:"e58b6503-e021-452d-b2b1-075c79e44ddd"}
  */
 function TRIGGER_navigation_set(itemID, setFoundset, useFoundset, idNavigationItem) {
 //TODO: when navitem filters on, record will not be preserved when new records loaded in
-	
+
 	//solutionPrefs defined and frameworks not in a locked status
 	if (application.__parent__.solutionPrefs && !solutionPrefs.config.lockStatus) {
-	
+
 		var itemID = arguments[0]
 		var setFoundset = arguments[1]
 		var useFoundset = arguments[2]
 		var idNavigationItem = arguments[3]
-		
+
 		//variable letting us know if foundset was intentionally modified
 		var foundsetSet = false
-		
+
 		//navigate by registry
 		if (!idNavigationItem) {
 			//loop through all available items, finding everything with this registry
@@ -1686,7 +1686,7 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset, idNavigationIt
 					navItemID.push(i)
 				}
 			}
-		
+
 			//try to find navigation item from selected set
 			for (var i = 0; i < navItemID.length; i++) {
 				if (navigationPrefs.byNavItemID[navItemID[i]].navigationItem.idNavigation == DATASUTRA_navigation_set) {
@@ -1694,7 +1694,7 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset, idNavigationIt
 					break
 				}
 			}
-			
+
 			//prefer navigation item from selected set
 			if (found) {
 				var navItem = navigationPrefs.byNavItemID[navItemID[i]].navigationItem
@@ -1708,25 +1708,25 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset, idNavigationIt
 		else {
 			var navItem = navigationPrefs.byNavItemID[idNavigationItem].navigationItem
 		}
-		
-	
+
+
 		if (navItem) {
 			var navSetID = navItem.idNavigation
 			var formNameWorkflow = navItem.formToLoad
 			var formNameList = navItem.listToLoad
 			var stringSort = navItem.sortString
-			
+
 			var lastItem = solutionPrefs.config.currentFormID
-			
+
 			//need to change navigation items
 			if (lastItem != navItem.idNavigationItem) {
 				//make sure indicator is showing
 				scopes.DS.webBlockerCentered()
-				
+
 				//call router to switch entire page when not called from router
 				if (DATASUTRA_router_enable && !idNavigationItem) {
 					DS_router(null,null,navItem.idNavigationItem)
-					
+
 					//fill global to be used on second pass through this method (after url is rewritten)
 					DATASUTRA_router_payload = {
 							itemID : itemID,
@@ -1740,12 +1740,12 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset, idNavigationIt
 					if (DATASUTRA_navigation_set != navSetID) {
 						navigationPrefs.byNavSetID[DATASUTRA_navigation_set].lastNavItem = lastItem
 						DATASUTRA_navigation_set = navSetID
-						
+
 						//update text display
 						var navigationList = (solutionPrefs.config.webClient) ? 'NAV__navigation_tree__WEB' : 'NAV__navigation_tree'
 						forms[navigationList].LABEL_update()
 					}
-					
+
 					//redraw list; make sure row is expanded if node2; load new item
 					forms.NAV__navigation_tree__rows.LIST_expand_collapse(null,navItem.idNavigationItem,'open',navSetID)
 				}
@@ -1754,16 +1754,16 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset, idNavigationIt
 			else if (scopes.SLICK && scopes.SLICK.CONST.enabled) {
 				scopes.SLICK.updateAll(true)
 			}
-			
+
 			//bring foundset over
 			if (setFoundset) {
 				var callingFoundset = (useFoundset) ? useFoundset : (application.getMethodTriggerFormName() ? forms[application.getMethodTriggerFormName()].foundset : null)
-				
+
 				//don't have a foundset, stop trying to set it
 				if (!callingFoundset) {
 					return
 				}
-						
+
 				//we're passed an array, convert to dataset
 				if (callingFoundset instanceof Array) {
 					//supposed to be uuids, convert
@@ -1771,12 +1771,12 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset, idNavigationIt
 					if (callingFoundset[0] && callingFoundset[0].length && convertUUID(callingFoundset[0]) instanceof UUID) {
 						callingFoundset = callingFoundset.map(function(item) {return convertUUID(item)})
 					}
-					
+
 					var ds = databaseManager.convertToDataSet(callingFoundset)
-					
+
 					if (forms[formNameWorkflow]) {
 						forms[formNameWorkflow].controller.loadRecords(ds)
-					
+
 						foundsetSet = true
 					}
 				}
@@ -1784,47 +1784,47 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset, idNavigationIt
 				else {
 					var dataSourceOne = callingFoundset.getDataSource()
 					var dataSourceTwo = forms[formNameWorkflow].controller.getDataSource()
-	
+
 					var formOne = databaseManager.getDataSourceServerName(dataSourceOne) + '—' + databaseManager.getDataSourceTableName(dataSourceOne)
 					var formTwo = databaseManager.getDataSourceServerName(dataSourceTwo) + '—' + databaseManager.getDataSourceTableName(dataSourceTwo)
-	
+
 					//check that the two forms are based on the same table from the same server
 					if (formOne == formTwo) {
 						//load related foundset
 						forms[formNameWorkflow].controller.loadRecords(callingFoundset.unrelate())
-						
+
 						var relationBased = true
 						foundsetSet = true
 					}
 				}
-				
+
 				var formUL = navigationPrefs.byNavItemID[navItem.idNavigationItem].listData.tabFormInstance
-				
+
 				//a foundset was modified, do some more massage
 				if (foundsetSet) {
 					//restrict if required to
 				//	NAV_foundset_restrict(true,null,true)
-	
+
 					//reset the sort
 					if (stringSort && forms[formNameWorkflow].controller.getMaxRecordIndex()) {
 						forms[formNameWorkflow].controller.sort(stringSort)
 					}
-	
+
 					//modified foundset
 					var modifiedFoundset = forms[formNameWorkflow].foundset
-	
+
 					//show that only a portion of current foundset selected
 					TRIGGER_fastfind_display_set('Related subset',null,null,true)
-					
+
 					//upgrade record navigator if showing
 					TRIGGER_toolbar_record_navigator_set()
-					
+
 					//using UL, refresh
 					if (navItem.useFwList) {
 						//serclipse 4
 						if (utils.stringToNumber(solutionPrefs.clientInfo.verServoy) >= 4) {
 							var formUL = navigationPrefs.byNavItemID[navItem.idNavigationItem].listData.tabFormInstance
-							
+
 							if (relationBased && forms[formUL]) {
 								forms[formUL].controller.loadRecords(modifiedFoundset.unrelate())
 							}
@@ -1838,12 +1838,12 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset, idNavigationIt
 					else if (formNameList && forms[formNameList]) {
 						var dataSourceThree = forms[formNameWorkflow].controller.getDataSource()
 						var formThree = databaseManager.getDataSourceServerName(dataSourceThree) + '—' + databaseManager.getDataSourceTableName(dataSourceThree)
-	
+
 						//check that the two forms are based on the same table from the same server
 						if (formTwo == formThree) {
 							//load related foundset
 							forms[formNameList].controller.loadRecords(modifiedFoundset.unrelate())
-	
+
 							//crazy hack for our nested unrelated panes
 							if (forms[formNameList + '_1L']) {
 								var dataSourceFour = forms[formNameList + '_1L'].controller.getDataSource()
@@ -1858,7 +1858,7 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset, idNavigationIt
 					else {
 						return false
 					}
-					
+
 					if (navigationPrefs.byNavItemID[navItem.idNavigationItem].listData.slickGrid) {
 						scopes.SLICK.update(formUL)
 					}
@@ -1871,7 +1871,7 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset, idNavigationIt
 			else {
 				//make sure to update the fast find appropriately
 				TRIGGER_fastfind_display_set(null,null,null,true)
-				
+
 				return null
 			}
 		}
@@ -1887,19 +1887,19 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset, idNavigationIt
 
 /**
  * Get the status of the progress toolbar.
- * 
- * @returns	{Array}	Current status of the progrress toolbar [progressValue, explanationText, explanationText, progressMaxValue]<br>	
+ *
+ * @returns	{Array}	Current status of the progrress toolbar [progressValue, explanationText, explanationText, progressMaxValue]<br>
  * 					progressValue Current value of the progress bean (null means that indeterminate or not shown).<br>
  *					explanationText Current explanatory text.<br>
  * 					explanationText Current tooltip of explanatory text.
  * 					progressMaxValue Current maximum value of the progress bean.
- * 
+ *
  * @properties={typeid:24,uuid:"7e91ecfd-e090-4d7b-83cf-782473b41028"}
  */
 function TRIGGER_progressbar_get() {
 	if (application.__parent__.solutionPrefs && forms[solutionPrefs.config.formNameBase+'__header__toolbar'].elements.tab_toolbar.tabIndex == 3) {
 		var formName = 'TOOL_progress_bar'
-		
+
 		//get progressbar value if showing
 		if (forms[formName].elements.bean_progress.visible && !forms[formName].elements.bean_progress.indeterminate) {
 			var progressValue = forms[formName].elements.bean_progress.value
@@ -1908,7 +1908,7 @@ function TRIGGER_progressbar_get() {
 		else {
 			var progressValue = null
 		}
-		
+
 		//get text
 		if (forms[formName].elements.lbl_progress_text.visible && forms[formName].elements.lbl_progress_text.text) {
 			var explanationText = forms[formName].elements.lbl_progress_text.text
@@ -1916,7 +1916,7 @@ function TRIGGER_progressbar_get() {
 		else {
 			var explanationText = null
 		}
-		
+
 		//get toolTip
 		if (forms[formName].elements.lbl_progress_text.visible && forms[formName].elements.lbl_progress_text.toolTipText) {
 			var explanationToolTip = forms[formName].elements.lbl_progress_text.toolTipText
@@ -1924,35 +1924,35 @@ function TRIGGER_progressbar_get() {
 		else if (explanationToolTip) {
 			var explanationToolTip = null
 		}
-		
+
 		return [progressValue,explanationText,explanationToolTip,progressMaxValue]
 	}
 }
 
 /**
  * Set the status of the progress toolbar.
- * 
+ *
  * @param	{Number}	[progressValue] Value for progress bean.
  * @param	{String}	[explanationText] Explanatory text (null clears existing text, empty will not change existing value, non-empty will set new value).
  * @param	{String}	[explanationToolTip] Tooltip for explanatory text.
- * 
+ *
  * @properties={typeid:24,uuid:"13108d13-f698-45c1-a3d7-0b1c4547e37f"}
  */
 function TRIGGER_progressbar_set(progressValue,explanationText,explanationToolTip) {
 	if (application.__parent__.solutionPrefs) {
-	
+
 		var formName = 'TOOL_progress_bar'
-		
+
 		var progressValue = arguments[0]
 		var explanationText = arguments[1]
 		var explanationToolTip = arguments[2]
-		
+
 		//set new progress value
 		if (typeof progressValue == 'number') {
 			forms[formName].elements.bean_progress.value = progressValue
 			forms[formName].elements.bean_progress.updateUI()
 		}
-		
+
 		//set text
 		if (explanationText == null && typeof explanationText == 'object') {
 			forms[formName].elements.lbl_progress_text.text = null
@@ -1960,7 +1960,7 @@ function TRIGGER_progressbar_set(progressValue,explanationText,explanationToolTi
 		else if (explanationText) {
 			forms[formName].elements.lbl_progress_text.text = explanationText
 		}
-		
+
 		//set toolTip
 		if (explanationToolTip == null && typeof explanationToolTip == 'object') {
 			forms[formName].elements.lbl_progress_text.toolTipText = null
@@ -1968,61 +1968,61 @@ function TRIGGER_progressbar_set(progressValue,explanationText,explanationToolTi
 		else if (explanationToolTip) {
 			forms[formName].elements.lbl_progress_text.toolTipText = explanationToolTip
 		}
-		
+
 		application.updateUI()
 	}
 }
 
 /**
  * Show and set the initial status of the progress toolbar.
- * 
+ *
  * @param	{Number}	progressValue Value for progress bean (usually 0; null will show indeterminate progressbar; -273 will show animated gif).
  * @param	{String}	[explanationText] Explanatory text (empty string will hide element).
  * @param	{String}	[explanationToolTip] Tooltip for explanatory text.
  * @param	{Number}	[minimum=0] Minimum value for progress bean.
  * @param	{Number}	[maximum=100] Maximum value for progress bean.
- * 
+ *
  * @properties={typeid:24,uuid:"99d4d8c5-a92a-4793-a10a-04bb647a2d68"}
  */
 function TRIGGER_progressbar_start(progressValue,explanationText,explanationToolTip,minimum,maximum) {
 	if (application.__parent__.solutionPrefs) {
-	
+
 		var formName = 'TOOL_progress_bar'
 		var baseForm = solutionPrefs.config.formNameBase
-		
+
 		var progressValue = arguments[0]
 		var explanationText = arguments[1]
 		var explanationToolTip = arguments[2]
 		var minimum = (typeof arguments[3] == 'number') ? arguments[3] : 0
 		var maximum = (typeof arguments[4] == 'number') ? arguments[4] : 100
-		
+
 		//hide bean stuff to make sure the passed values are obeyed
 		forms[formName].elements.lbl_progress_text.visible = false
 		forms[formName].elements.bean_progress.indeterminate = false
 		forms[formName].elements.bean_progress.value = 0
 		forms[formName].elements.bean_progress.visible = false
 		forms[formName].elements.gfx_progress.visible = false
-		
+
 		//only run if progressbar not selected
 		if (forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex != 3) {
 			//save down active toolbar to restore
 			solutionPrefs.config.lastSelectedToolbar = forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex
-			
+
 			//load progressbar tab
 			forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex = 3
-			
+
 			//hide toolbar controls
 			forms[baseForm + '__header__toolbar'].elements.toolbar_navigator.visible = false
-			
+
 			//set color of toolbar to toolbar white
 			forms[baseForm + '__header__toolbar'].elements.lbl_color.bgcolor = '#ffffff'
 		}
-		
+
 		//turn on progressbar elements
 		forms[formName].elements.bean_progress.visible = true
 		forms[formName].elements.lbl_progress_text.visible = (explanationText) ? true : false
 		forms[formName].elements.gfx_progress.visible = false
-		
+
 		//indeterminate gif
 		if (progressValue == -273) {
 			forms[formName].elements.bean_progress.visible = false
@@ -2041,19 +2041,19 @@ function TRIGGER_progressbar_start(progressValue,explanationText,explanationTool
 			else {
 				forms[formName].elements.bean_progress.value = 0
 			}
-			
+
 			//min/max
 			forms[formName].elements.bean_progress.minimum = minimum
 			forms[formName].elements.bean_progress.maximum = maximum
 		}
-		
-		
+
+
 		//set text
 		if (explanationText) {
 			forms[formName].elements.lbl_progress_text.text = explanationText
 			forms[formName].elements.lbl_progress_text.toolTipText = explanationToolTip
 		}
-		
+
 		//two updates (maybe more required)
 	//	application.updateUI()
 	//	application.updateUI()
@@ -2063,16 +2063,16 @@ function TRIGGER_progressbar_start(progressValue,explanationText,explanationTool
 
 /**
  * Remove progress toolbar and re-select the last toolbar the user was viewing.
- * 
+ *
  * @param	{Boolean}	[forceUpdate=false] Redraws the screen when finished.
- * 
+ *
  * @properties={typeid:24,uuid:"705d0fdd-b2f9-48a4-9495-d3762c0cb104"}
  */
 function TRIGGER_progressbar_stop(forceUpdate) {
 	if (application.__parent__.solutionPrefs) {
 		var baseForm = solutionPrefs.config.formNameBase
 		var formName = 'TOOL_progress_bar'
-		
+
 		//progress toolbar is showing, go back to last selected toolbar
 		if (forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex == 3) {
 			//set toolbar to preference pane when in a preference
@@ -2095,10 +2095,10 @@ function TRIGGER_progressbar_stop(forceUpdate) {
 				forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex = 1
 			}
 		}
-		
+
 		//clear out lastSelectedToolbar
 		delete solutionPrefs.config.lastSelectedToolbar
-		
+
 		//hide bean stuff to be ready for next time
 		forms[formName].elements.lbl_progress_text.visible = false
 		forms[formName].elements.bean_progress.indeterminate = false
@@ -2106,7 +2106,7 @@ function TRIGGER_progressbar_stop(forceUpdate) {
 		forms[formName].elements.bean_progress.visible = false
 		forms[formName].elements.gfx_progress.visible = false
 	}
-	
+
 	if (forceUpdate) {
 		application.updateUI()
 	}
@@ -2114,12 +2114,12 @@ function TRIGGER_progressbar_stop(forceUpdate) {
 
 /**
  * Checks if the group of the currently logged in user is permitted to perform action.
- * 
+ *
  * @param	{String}	registeredAction Registered action (configured in Access & control).
  * @param	{Boolean}	[showDialog=false] Show error dialog when action not allowed.
- * 
+ *
  * @returns	{Boolean}	Action authorized status.
- * 
+ *
  * @properties={typeid:24,uuid:"32c5064f-1136-410e-8f08-900c0872fc96"}
  * @AllowToRunInFind
  */
@@ -2128,10 +2128,10 @@ function TRIGGER_registered_action_authenticate(registeredAction,showDialog) {
 	if (typeof showDialog != 'boolean') {
 		showDialog = false
 	}
-	
+
 	/**
 	 * Show dialog popup indicating why failed.
-	 * 
+	 *
 	 * @param {String} actionName
 	 */
 	function alert(actionName) {
@@ -2139,35 +2139,35 @@ function TRIGGER_registered_action_authenticate(registeredAction,showDialog) {
 			DIALOGS.showErrorDialog('Error','You do not have permission to:\n' + actionName)
 		}
 	}
-	
+
 	//check to see that solutionPrefs is defined
 	if (application.__parent__.solutionPrefs) {
 		//check to see that access and control is enabled
 		if (solutionPrefs.access && solutionPrefs.access.groupID) {
 			var registeredAction = arguments[0]
-			
+
 			/** @type {JSFoundSet<db:/sutra/sutra_access_action>}*/
 			var allActions = databaseManager.getFoundSet('sutra', 'sutra_access_action')
 			allActions.clear()
-			
+
 			allActions.find()
 			allActions.action_id = registeredAction
 			var results = allActions.search()
-			
+
 			//the specified action does exist
 			if (results) {
 				var actionID = allActions.id_action
-				
+
 				/** @type {JSFoundSet<db:/sutra/sutra_access_group_action>}*/
 				var groupActions = databaseManager.getFoundSet('sutra', 'sutra_access_group_action')
 				groupActions.clear()
-				
+
 				groupActions.find()
 				groupActions.id_action = actionID
 				groupActions.id_group = solutionPrefs.access.groupID
 				groupActions.flag_enabled = 1
 				results = groupActions.search()
-				
+
 				//action allowed
 				if (results) {
 					return true
@@ -2198,30 +2198,30 @@ function TRIGGER_registered_action_authenticate(registeredAction,showDialog) {
 
 /**
  * Makes the specified space active.
- * 
+ *
  * @param	{String}	spaceName Space name to jump to. Valid inputs are:<br>
  * 						'standard','list','vertical','centered','classic','wide','workflow',<br>
  *						'standard flip','list flip','vertical flip','centered flip','classic flip','wide flip','workflow flip'
  * @param	{Boolean}	[alwaysFire] Go to requested space even if already there.
  * @param	{Boolean}	[skipUI] Do not application.updateUI() as the method runs.
- * 
+ *
  * @returns	{Boolean}	Space was changed.
- * 
+ *
  * @properties={typeid:24,uuid:"16e4b4b2-b0ef-4af5-81e5-4a1fb2c76a84"}
  */
 function TRIGGER_spaces_set(spaceName,alwaysFire,skipUI) {
 //TODO: only allow spaces enabled for navItem to be navigable
-	
+
 	//solutionPrefs defined and frameworks not in a locked status
 	if (application.__parent__.solutionPrefs && !solutionPrefs.config.lockStatus) {
 		var oldSpace = solutionPrefs.config.activeSpace
 		var newSpace = arguments[0]
 		var alwaysFire = arguments[1]
 		var skipUI = arguments[2]
-		
+
 		var spaceNames = [	'standard','list','vertical','centered','classic','wide','workflow',
 							'standard flip','list flip','vertical flip','centered flip','classic flip','wide flip','workflow flip']
-		
+
 		//check to make sure that newSpace is a valid input
 		var found = false
 		for (var i = 0; i < spaceNames.length && !found; i++) {
@@ -2229,11 +2229,11 @@ function TRIGGER_spaces_set(spaceName,alwaysFire,skipUI) {
 				found = true
 			}
 		}
-		
+
 		//destination space is valid and different than current space
 		if ((newSpace != oldSpace || alwaysFire) && found) {
 			var baseForm = solutionPrefs.config.formNameBase
-			
+
 			if (!solutionPrefs.config.webClient) {
 				//hide complement and show current
 				if (i < 8) {
@@ -2245,11 +2245,11 @@ function TRIGGER_spaces_set(spaceName,alwaysFire,skipUI) {
 				forms[baseForm + '__header'].elements['btn_space_'+i].visible = true
 				forms[baseForm + '__header'].elements['btn_space_'+complement].visible = false
 			}
-			
+
 			//fire space changer
 			var spaceMethod = solutionPrefs.config.webClient ? forms.DATASUTRA_WEB_0F__header.ACTION_space_change : DS_space_change
 			spaceMethod('btn_space_'+i,true,alwaysFire,skipUI)
-			
+
 			return true
 		}
 		else {
@@ -2260,13 +2260,13 @@ function TRIGGER_spaces_set(spaceName,alwaysFire,skipUI) {
 
 /**
  * Starts/stops a timer used for debugging. Elapsed time displayed in status area of main window.
- * 
+ *
  * @param	{String}	startStop Command to "start" or "stop" the timer.
- * 
+ *
  * @properties={typeid:24,uuid:"388b465a-89a4-471f-9ad9-8a862a505fe3"}
  */
 function TRIGGER_timer(startStop) {
-	
+
 	//MEMO: need to somehow put this section in a Function of it's own
 	//running in Tano...strip out jsevents for now
 	if (utils.stringToNumber(application.getVersion()) >= 5) {
@@ -2275,13 +2275,13 @@ function TRIGGER_timer(startStop) {
 		for (var i = 0; i < arguments.length; i++) {
 			Arguments.push(arguments[i])
 		}
-		
+
 		//reassign arguments without jsevents
 		arguments = Arguments.filter(CODE_jsevent_remove)
 	}
-	
+
 	var startStop = arguments[0]
-	
+
 	//check for solutionPrefs
 	if (!application.__parent__.solutionPrefs) {
 		solutionPrefs = {config : {timer: new Object()}}
@@ -2294,8 +2294,8 @@ function TRIGGER_timer(startStop) {
 	else if (!solutionPrefs.config.timer) {
 		solutionPrefs.config.timer = new Object()
 	}
-	
-	
+
+
 	//start timing
 	if (startStop == 'start') {
 		solutionPrefs.config.timer.timeStart = new Date().getTime()
@@ -2304,9 +2304,9 @@ function TRIGGER_timer(startStop) {
 	else if (startStop == 'stop') {
 		if (solutionPrefs.config.timer.timeStart) {
 			var endTime = solutionPrefs.config.timer.timeEnd = new Date().getTime()
-			
+
 			var elapsed = solutionPrefs.config.timer.timeEnd - solutionPrefs.config.timer.timeStart
-			
+
 			//only set when trial mode not expired
 			if (!solutionPrefs.config.trialModeExpired) {
 				application.setStatusText('Elapsed time is: '+ elapsed +' ms.  Finished '+utils.dateFormat(endTime, 'H:MM:ss'))
@@ -2320,18 +2320,18 @@ function TRIGGER_timer(startStop) {
 
 /**
  * Update record navigator toolbar graphical objects to reflect current record.
- * 
+ *
  * @param	{Boolean}	[status] Enable/disable the record navigator.<br>
  * 						Note: if false passed, true must be specified before navigator will work on other future forms.
  * @param	{Number}	[maxWidth] Width of progress indicator (needed for webclient)
- * 
+ *
  * @properties={typeid:24,uuid:"545d621f-ead0-4ac5-99aa-7e3a05c85e41"}
  */
 function TRIGGER_toolbar_record_navigator_set(status,maxWidth) {
 
 	//solutionPrefs defined and frameworks not in a locked status
 	if (application.__parent__.solutionPrefs && !solutionPrefs.config.lockStatus) {
-	
+
 	//MEMO: need to somehow put this section in a Function of it's own
 	//running in Tano...strip out jsevents for now
 	if (utils.stringToNumber(application.getVersion()) >= 5) {
@@ -2340,19 +2340,19 @@ function TRIGGER_toolbar_record_navigator_set(status,maxWidth) {
 		for (var i = 0; i < arguments.length; i++) {
 			Arguments.push(arguments[i])
 		}
-		
+
 		//reassign arguments without jsevents
 		arguments = Arguments.filter(CODE_jsevent_remove)
 	}
-	
+
 		/*************
 			inputs
 		*************/
-		
+
 		//record navigator status
 		if (typeof arguments[0] == 'boolean') {
-			var rnStatus = 
-			solutionPrefs.config.recordNavigatorStatus = 
+			var rnStatus =
+			solutionPrefs.config.recordNavigatorStatus =
 				arguments[0]
 		}
 		else {
@@ -2361,31 +2361,31 @@ function TRIGGER_toolbar_record_navigator_set(status,maxWidth) {
 				plugins.WebClientUtils.executeClientSideJS('var selector = $(".gfxRecNavigator"); var recNavWidth = (selector.length) ? selector.width() : 0;', TRIGGER_toolbar_record_navigator_set, [null,'recNavWidth'])
 				return
 			}
-			
+
 			var rnStatus = solutionPrefs.config.recordNavigatorStatus
 		}
-		
+
 		//get record navigator form name
 		var formNameRN	 	= 'TOOL_record_navigator'
-		
+
 		//get form name
 		var formName 		= solutionPrefs.config.currentFormName
-		
+
 		//get current index
 		var thisIndex 		= forms[formName].controller.getSelectedIndex()
-		
+
 		//loaded records size
 		var loaded			= forms[formName].controller.getMaxRecordIndex()
-		
+
 		//get max table size
 		var size 			= databaseManager.getFoundSetCount(forms[formName].foundset)
-		
+
 		//set range
 		var setSize			= ""
-		
+
 		//get current id of loaded form
 		var currentNavItem	= solutionPrefs.config.currentFormID
-		
+
 		//update record navigator normally
 		if (rnStatus) {
 			//enable elements if needed
@@ -2393,43 +2393,43 @@ function TRIGGER_toolbar_record_navigator_set(status,maxWidth) {
 				forms[formNameRN].elements.btn_rec_left.enabled = true
 				forms[formNameRN].elements.btn_rec_right.enabled = true
 			}
-			
-			
+
+
 			/***************************
 				universal list specific
 			****************************/
-			
+
 			//using universal list, do stuff
 			if (navigationPrefs.byNavItemID[currentNavItem] && navigationPrefs.byNavItemID[currentNavItem].navigationItem.useFwList) {
 				navigationPrefs.byNavItemID[currentNavItem].listData.index.selected = thisIndex
-					
+
 				var limitStart = navigationPrefs.byNavItemID[currentNavItem].listData.index.start
 				var limitEnd = navigationPrefs.byNavItemID[currentNavItem].listData.index.end
-				
+
 				if (limitStart && limitEnd) {
 					//setSize = " List showing " + utils.numberFormat(limitStart,'###,###,###,###') + "-" + utils.numberFormat(limitEnd,'###,###,###,###') + "."
 				}
 			}
-			
-				
+
+
 			/***************************
 				current record display
 			****************************/
-			
+
 			//figure out record object display length
 			if (!maxWidth) {
 				maxWidth = forms[formNameRN].elements.obj_records_max.getWidth()
 			}
-			
+
 			var recordDivisor	= (thisIndex / loaded) ? thisIndex / loaded : 0
 			var recordWidth		= maxWidth * recordDivisor
-			
+
 			var height = forms[formNameRN].elements.obj_records.getHeight()
 //				solutionPrefs.config.webClient ? 6 : 8
-			
+
 			//display record object
 			forms[formNameRN].elements.obj_records.setSize(recordWidth, height)
-					
+
 			//display label
 			var recDisplay = "Record " + utils.numberFormat(thisIndex,'###,###,###,###') + " of " + utils.numberFormat(loaded,'###,###,###,###')
 			if (loaded == size) {
@@ -2445,7 +2445,7 @@ function TRIGGER_toolbar_record_navigator_set(status,maxWidth) {
 		else {
 			forms[formNameRN].elements.obj_records.setSize(forms[formNameRN].elements.obj_records_max.getWidth(), forms[formNameRN].elements.obj_records.getHeight())
 			forms[formNameRN].elements.lbl_records.text = 'Record Navigator inactive'
-			
+
 			//disable elements
 			forms[formNameRN].elements.btn_rec_left.enabled = false
 			forms[formNameRN].elements.btn_rec_right.enabled = false
@@ -2455,41 +2455,41 @@ function TRIGGER_toolbar_record_navigator_set(status,maxWidth) {
 
 /**
  * Navigates to the specified toolbar if it is available for the logged in user.
- * 
+ *
  * @param	{String}	toolbarName Toolbar name to jump to (defined in toolbar config "tab name").
- * 
+ *
  * @returns	{Boolean}	Toolbar able to be changed.
- * 
+ *
  * @properties={typeid:24,uuid:"900fee92-988b-4c95-aca8-0072b6277768"}
  */
 function TRIGGER_toolbar_set(toolbarName) {
 	//solutionPrefs defined and frameworks not in a locked status
 	if (application.__parent__.solutionPrefs && !solutionPrefs.config.lockStatus) {
-	
+
 		var baseForm = solutionPrefs.config.formNameBase
-		
+
 		//only run when not in a preference
 		if (!solutionPrefs.config.prefs.preferenceMode) {
 			var allToolbars = solutionPrefs.panel.toolbar
-			
+
 			var newToolbar = toolbarName
 			var oldToolbar = (allToolbars[forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex - 4]) ? allToolbars[forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex - 4].tabName : ''
-				
+
 			//check to make sure that newToolbar is a valid input
 			var found = false
 			for (var i = 0; i < allToolbars.length && !found; i++) {
 				var thisToolbar = allToolbars[i]
-				
+
 				if (thisToolbar.tabName == newToolbar && thisToolbar.enabled) {
 					found = true
 					break
 				}
 			}
-			
+
 			//destination toolbar is valid and different than current toolbar, change
 			if (newToolbar != oldToolbar && found) {
 				DS_toolbar_cycle(i + 4)
-				
+
 				return true
 			}
 			else {
@@ -2501,10 +2501,10 @@ function TRIGGER_toolbar_set(toolbarName) {
 
 /**
  * Set the state of a toolbar
- * 
+ *
  * @param	{String}	toolbarName Name of toolbar that needs to be dis/enabled.
  * @param	{Boolean}	status Force status of toolbar.
- * 
+ *
  * @properties={typeid:24,uuid:"8A2E04BD-EE95-41A4-82CF-C0C2392FBFC6"}
  */
 function TRIGGER_toolbar_toggle(toolbarName,status) {
@@ -2513,17 +2513,17 @@ function TRIGGER_toolbar_toggle(toolbarName,status) {
 		var baseForm = solutionPrefs.config.formNameBase
 		var allToolbars = solutionPrefs.panel.toolbar
 		var newToolbar = toolbarName
-		
+
 		//find requested toolbar and set enabled status appropriately
 		for (var i = 0; i < allToolbars.length; i++) {
 			var thisToolbar = allToolbars[i]
-			                              
+
 			if (thisToolbar.tabName == newToolbar) {
 				//nothing specified, toggle
 				if (typeof status != 'boolean') {
 					status = !thisToolbar.enabled
 				}
-				
+
 				thisToolbar.enabled = status
 				break
 			}
@@ -2533,15 +2533,15 @@ function TRIGGER_toolbar_toggle(toolbarName,status) {
 
 /**
  * Shows detailed view of tooltip in a FiD.
- * 
+ *
  * @param	{String}	tabPanelName Name of tab panel that has help.
  * @param	{String}	formName Name of form that has help.
  * @param	{String}	elemName Name of element that has help.
- * 
+ *
  * @properties={typeid:24,uuid:"6a193823-8789-4ec3-a7bf-45d1238dc5bd"}
  */
 function TRIGGER_tooltip_help_popup(tabPanelName,formName,elemName) {
-	
+
 	//MEMO: need to somehow put this section in a Function of it's own
 	//running in Tano...strip out jsevents for now
 	if (utils.stringToNumber(application.getVersion()) >= 5) {
@@ -2550,15 +2550,15 @@ function TRIGGER_tooltip_help_popup(tabPanelName,formName,elemName) {
 		for (var i = 0; i < arguments.length; i++) {
 			Arguments.push(arguments[i])
 		}
-		
+
 		//reassign arguments without jsevents
 		arguments = Arguments.filter(CODE_jsevent_remove)
 	}
-	
+
 	var tabPanelName = arguments[0] || 'tab_detail'
 	var formName = arguments[1] || application.getMethodTriggerFormName()
 	var elemName = arguments[2] || application.getMethodTriggerElementName()
-	
+
 	if (application.__parent__.solutionPrefs) {
 		//there is a default language configured
 		if (solutionPrefs.config && solutionPrefs.config.language) {
@@ -2566,7 +2566,7 @@ function TRIGGER_tooltip_help_popup(tabPanelName,formName,elemName) {
 			if (elemName == 'btn_help' && forms[formName].elements[tabPanelName]) {
 				var tabFormName = forms[formName].elements[tabPanelName].getTabFormNameAt(forms[formName].elements[tabPanelName].tabIndex)
 				var firstFound = false
-				
+
 				//loop through all inline help and get the first help one available
 				for (var j in solutionPrefs.i18n[solutionPrefs.config.language][tabFormName]) {
 					if (solutionPrefs.i18n[solutionPrefs.config.language][tabFormName][j].help) {
@@ -2574,12 +2574,12 @@ function TRIGGER_tooltip_help_popup(tabPanelName,formName,elemName) {
 						break
 					}
 				}
-				
+
 				//if help found, continue
 				if (firstFound) {
 					CODE_text = firstFound
 					forms.CODE_P__text.elements.lbl_header.text = 'Inline help'
-						
+
 					//show window when not already showing
 					if (!application.getWindow('inlineHelp')) {
 						CODE_form_in_dialog(forms.CODE_P__text,-1,-1,-1,-1,' ',true,false,'inlineHelp',false)
@@ -2594,7 +2594,7 @@ function TRIGGER_tooltip_help_popup(tabPanelName,formName,elemName) {
 			else if (solutionPrefs.i18n[solutionPrefs.config.language][formName] && solutionPrefs.i18n[solutionPrefs.config.language][formName][elemName] && solutionPrefs.i18n[solutionPrefs.config.language][formName][elemName].inlineHelp) {
 				CODE_text = solutionPrefs.i18n[solutionPrefs.config.language][formName][elemName].inlineHelp
 				forms.CODE_P__text.elements.lbl_header.text = 'Inline help'
-					
+
 				//show window when not already showing
 				if (!application.getWindow('inlineHelp')) {
 					CODE_form_in_dialog(forms.CODE_P__text,-1,-1,-1,-1,' ',true,false,'inlineHelp',false)
@@ -2623,10 +2623,10 @@ function TRIGGER_tooltip_help_popup(tabPanelName,formName,elemName) {
 
 /**
  * Sets tooltips on all named elements of current form.
- * 
+ *
  * @param	{String}	[formName] Form to work on.
  * @param	{String}	[clearAll] Clear tooltips on all non-Data Sutra managed elements.
- * 
+ *
  * @properties={typeid:24,uuid:"cdd6b7fe-1a1c-496d-857e-0ab7b32088f4"}
  */
 function TRIGGER_tooltip_set(formName,clearAll) {
@@ -2639,23 +2639,23 @@ function TRIGGER_tooltip_set(formName,clearAll) {
 			for (var i = 0; i < arguments.length; i++) {
 				Arguments.push(arguments[i])
 			}
-			
+
 			//reassign arguments without jsevents
 			arguments = Arguments.filter(CODE_jsevent_remove)
 		}
-		
+
 		var formName = (arguments[0]) ? arguments[0] : application.getMethodTriggerFormName()
 		var clearAll = (arguments[1]) ? arguments[1] : false
 		var langName = solutionPrefs.config.language
-		
+
 		//check to see that default language is specified, there are values for it, the form is specified, and exists
 		if (langName && solutionPrefs.i18n[langName] && formName && forms[formName]) {
 			var allElements = forms[formName].elements.allnames
-			
+
 			//loop through all named elements on this form
 			for (var i = 0; i < allElements.length; i++) {
 				var elemName = allElements[i]
-				
+
 				//a tooltip exists for this form/element combo and the element can take a tooltip
 				if (solutionPrefs.i18n[langName][formName] && solutionPrefs.i18n[langName][formName][elemName] && typeof forms[formName].elements[elemName].toolTipText != undefined) {
 					//set tooltip
@@ -2672,16 +2672,16 @@ function TRIGGER_tooltip_set(formName,clearAll) {
 
 /**
  * Go to the specified universal list display for selected navigation item.
- * 
+ *
  * @param	{Number}	[displayPosn] Position of UL display in the display array.
- * 
+ *
  * @properties={typeid:24,uuid:"49c0f6ce-61b1-4b64-8b4b-f6d493783dc0"}
  */
 function TRIGGER_ul_display_set(displayPosn) {
 
 	//solutionPrefs defined and frameworks not in a locked status
 	if (application.__parent__.solutionPrefs && !solutionPrefs.config.lockStatus) {
-	
+
 	//MEMO: need to somehow put this section in a Function of it's own
 	//running in Tano...strip out jsevents for now
 	if (utils.stringToNumber(application.getVersion()) >= 5) {
@@ -2690,23 +2690,23 @@ function TRIGGER_ul_display_set(displayPosn) {
 		for (var i = 0; i < arguments.length; i++) {
 			Arguments.push(arguments[i])
 		}
-		
+
 		//reassign arguments without jsevents
 		arguments = Arguments.filter(CODE_jsevent_remove)
 	}
 		var displayPosn = arguments[0]
-		
+
 		//check that on a form that has a universal list
 		if (solutionPrefs.config.currentFormID && navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID] && navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].navigationItem && navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].navigationItem.useFwList) {
 			forms[navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.tabFormInstance].DISPLAY_list(true,displayPosn)
 		}
-		
+
 	}
 }
 
 /**
  * @deprecated
- * 
+ *
  * @properties={typeid:24,uuid:"80b5f03d-6fe0-4ee7-a801-7fd0c6a6238e"}
  */
 function TRIGGER_ul_refresh_all()
@@ -2714,34 +2714,34 @@ function TRIGGER_ul_refresh_all()
 
 /*
  *	TITLE    :	TRIGGER_ul_refresh_all
- *			  	
+ *
  *	MODULE   :	rsrc_CODE_sutra
- *			  	
+ *
  *	ABOUT    :	updates entire universal list if used on this form anywhere in the entire frameworks
- *			  	
- *	INPUT    :	
- *			  	
- *	OUTPUT   :	
- *			  	
+ *
+ *	INPUT    :
+ *
+ *	OUTPUT   :
+ *
  *	REQUIRES :	universal list in use on current form, solutionPrefs
- *			  	
+ *
  *	MODIFIED :	Oct 26, 2007 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 //solutionPrefs & navigationPrefs defined and frameworks not in a locked status
 	//and in less than 4
-if (application.__parent__.solutionPrefs && application.__parent__.navigationPrefs && !solutionPrefs.config.lockStatus && 
+if (application.__parent__.solutionPrefs && application.__parent__.navigationPrefs && !solutionPrefs.config.lockStatus &&
 	utils.stringToNumber(solutionPrefs.clientInfo.verServoy) < 4) {
-	
+
 	var navItemID = solutionPrefs.config.currentFormID
-	
+
 	//using universal list, do stuff
 	if (navigationPrefs.byNavItemID[navItemID].navigationItem.useFwList) {
 		databaseManager.saveData()
-		
+
 		var formUL = navigationPrefs.byNavItemID[navItemID].listData.tabFormInstance
-		
+
 		//only refresh if visited and UL for this nav item
 		if (formUL && forms[formUL]) {
 			forms[formUL].UL_sync_records()
@@ -2756,7 +2756,7 @@ if (application.__parent__.solutionPrefs && application.__parent__.navigationPre
 
 /**
  * @deprecated
- * 
+ *
  * @properties={typeid:24,uuid:"02f4edfb-7cb2-4a99-aeda-ac167959430b"}
  */
 function TRIGGER_ul_refresh_on_delete()
@@ -2766,45 +2766,45 @@ function TRIGGER_ul_refresh_on_delete()
 
 /*
  *	TITLE    :	TRIGGER_ul_refresh_on_delete
- *			  	
+ *
  *	MODULE   :	rsrc_CODE_sutra
- *			  	
+ *
  *	ABOUT    :	updates universal list data after record deletion
- *			  	
- *	INPUT    :	
- *			  	
- *	OUTPUT   :	
- *			  	
+ *
+ *	INPUT    :
+ *
+ *	OUTPUT   :
+ *
  *	REQUIRES :	universal list in use on current form, solutionPrefs, navigationPrefs
- *			  	
+ *
  *	USAGE    :	TRIGGER_ul_refresh_on_delete(displayPosition) Pass in the position of the display on the currently showing form
- *			  	
+ *
  *	MODIFIED :	August 6, 2009 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 if (application.__parent__.solutionPrefs && application.__parent__.navigationPrefs) {
 	var navItemID = solutionPrefs.config.currentFormID
 	var navItemForm = solutionPrefs.config.currentFormName
-	
+
 	//using universal list, do stuff
 	if (navigationPrefs.byNavItemID[navItemID].navigationItem.useFwList) {
-		
+
 		TRIGGER_ul_refresh_all()
-		
+
 		/*
 		databaseManager.saveData()
-		
+
 		var formUL = navigationPrefs.byNavItemID[navItemID].listData.tabFormInstance
-		
+
 		var workflowFoundset = forms[navItemForm].foundset
 		var ulFoundset = forms[formUL+'_1L'].foundset
-		
+
 		//check to see if index is different than workflow form; if it is omit selected - 1
 		if (workflowFoundset.getSelectedIndex() != ulFoundset.getSelectedIndex()) {
 			//TODO: add to garbage collector
 			navigationPrefs.foundsetPool.recyclePKs.push(ulFoundset.getRecord(ulFoundset.getSelectedIndex() - 1).id_universal_list)
-			
+
 			//remove from foundset
 			forms[formUL+'_1L'].foundset.omitRecord(ulFoundset.getSelectedIndex() - 1)
 		}
@@ -2812,13 +2812,13 @@ if (application.__parent__.solutionPrefs && application.__parent__.navigationPre
 		else {
 			//TODO: add to garbage collector
 			navigationPrefs.foundsetPool.recyclePKs.push(ulFoundset.id_universal_list)
-			
+
 			//remove from foundset
 			forms[formUL+'_1L'].foundset.omitRecord(ulFoundset.getSelectedIndex())
 		}
-		
+
 		//TODO: save down some state information and update the record_navigator
-		
+
 		//re-highlight the record under this index
 		forms[formUL + '_1L'].REC_refresh()
 		*/
@@ -2828,7 +2828,7 @@ if (application.__parent__.solutionPrefs && application.__parent__.navigationPre
 
 /**
  * @deprecated
- * 
+ *
  * @properties={typeid:24,uuid:"50d8a27a-2321-4118-b4f7-db097f8c0f0a"}
  */
 function TRIGGER_ul_refresh_selected()
@@ -2836,35 +2836,35 @@ function TRIGGER_ul_refresh_selected()
 
 /*
  *	TITLE    :	TRIGGER_ul_refresh_selected
- *			  	
+ *
  *	MODULE   :	rsrc_CODE_sutra
- *			  	
+ *
  *	ABOUT    :	updates universal list data for currently selected record
  *			  	method may be attached to onRecSave of form used in workflow area to keep UL in sync with changes that user is making
- *			  	
- *	INPUT    :	
- *			  	
- *	OUTPUT   :	
- *			  	
+ *
+ *	INPUT    :
+ *
+ *	OUTPUT   :
+ *
  *	REQUIRES :	universal list in use on current form, solutionPrefs
- *			  	
+ *
  *	MODIFIED :	June 17, 2008 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 //solutionPrefs & navigationPrefs defined and not skipping a refresh
 	//and in less than 4
-if (application.__parent__.solutionPrefs && application.__parent__.navigationPrefs && 
+if (application.__parent__.solutionPrefs && application.__parent__.navigationPrefs &&
 	!application.__parent__.skipULRefreshOne && utils.stringToNumber(solutionPrefs.clientInfo.verServoy) < 4) {
-	
+
 	var navItemID = solutionPrefs.config.currentFormID
-	
+
 	//using universal list, do stuff
 	if (navigationPrefs.byNavItemID[navItemID].navigationItem.useFwList) {
 		databaseManager.saveData()
-		
+
 		var formUL = navigationPrefs.byNavItemID[navItemID].listData.tabFormInstance
-		
+
 		//only refresh if visited and UL for this nav item
 		if (formUL && forms[formUL]) {
 			forms[formUL + '_1L'].REC_refresh()
@@ -2875,7 +2875,7 @@ if (application.__parent__.solutionPrefs && application.__parent__.navigationPre
 
 /**
  * Remove tab navigated to using the tab controller on the universal list and return universal list
- * 
+ *
  * @properties={typeid:24,uuid:"2eb30059-9a36-47f9-8f8b-1fac91db90c8"}
  */
 function TRIGGER_ul_tab_exit() {
@@ -2894,19 +2894,19 @@ function CODE_color_method()
 
 /*
  *	TITLE    :	CODE_color_method
- *			  	
+ *
  *	MODULE   :	rsrc_CODE_sutra
- *			  	
+ *
  *	ABOUT    :	color a given method
- *			  	
+ *
  *	INPUT    :	string to be colored
- *			  	
+ *
  *	REQUIRES :	globals.CODE_color_method_fx
- *			  	
+ *
  *	OUTPUT   :	html colored string
- *			  	
+ *
  *	MODIFIED :	Oct 25, 2007 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 //MEMO: need to somehow put this section in a Function of it's own
@@ -2917,7 +2917,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	for (var i = 0; i < arguments.length; i++) {
 		Arguments.push(arguments[i])
 	}
-	
+
 	//reassign arguments without jsevents
 	arguments = Arguments.filter(CODE_jsevent_remove)
 }
@@ -2931,25 +2931,25 @@ function fxGetKeywords(str) {
 
 function fxMatch(value, index, css) {
 	var objReturn = new Object()
-	
+
 	objReturn.value = value
 	objReturn.index = index
 	objReturn.length = value.length
 	objReturn.css = css
-	
+
 	return objReturn
 }
 
 function fxGetMatches(code, regex, css, func) {
 	var fxMatch = func
-	
+
 	var index = 0
 	var match = null
 	var matches = new Array()
-	
-	while((match = regex.exec(code)) != null) 
+
+	while((match = regex.exec(code)) != null)
 		matches[matches.length] = fxMatch(match[0], match.index, css)
-	
+
 	return matches
 }
 
@@ -2962,12 +2962,12 @@ switch (codeType) {
 						'default delete do else enum export extends final finally float for ' +
 						'Function if implements import in instanceof interface package return super switch ' +
 						'this throw throws transient try typeof var void while with';
-		
+
 		var servoy =	'application controller currentcontroller databaseManager elements forms foundset ' +
 						'globals history i18n plugins security ServoyException utils';
-		
+
 		var special =	'null undefined NaN';
-		
+
 		var regexList = [
 			{ regex: new RegExp('/\\*[\\s\\S]*?\\*/', 'gm'),				css: 'comment' },			// multiline comments //[0]
 			{ regex: new RegExp('//[^TODO,MEMO].*$', 'gm'),					css: 'comment' },			// one line comments //[1]
@@ -2992,9 +2992,9 @@ switch (codeType) {
 
 
 // a value present to be colored
-if ((!(method == null || method == undefined)) ? method.length : false) { 
+if ((!(method == null || method == undefined)) ? method.length : false) {
 	var methodArray = method.split('\n')
-	
+
 	//replace each element of methodArray with an object containing the original contents
 	//and an array where there is 1 letter per element
 	for (var i = 0 ; i < methodArray.length ; i++) {
@@ -3006,7 +3006,7 @@ if ((!(method == null || method == undefined)) ? method.length : false) {
 		//
 		for (var j = 0 ; j < rowObject.rowData.length ; j++) {
 			rowObject.rowArray[j] = rowObject.rowData.charAt(j)
-			
+
 			//replace tabs with spaces
 			if (rowObject.rowArray[j] == '\t') {
 				rowObject.rowArray[j] = '&nbsp;&nbsp;&nbsp;&nbsp;'
@@ -3029,17 +3029,17 @@ if ((!(method == null || method == undefined)) ? method.length : false) {
 
 	//positions and lengths of all multiline comments
 	var posnColor = fxGetMatches(method,regexList[0].regex,regexList[0].css,fxMatch)
-	
+
 	if (posnColor.length) {
 		var spanInsert = '<span class="' + posnColor[0].css + '">'
 		var j = 0 //cumulative character count
 		var k = 0 //array index
-		
+
 		//go through all multiline comments
 		for (var i = 0 ; i < posnColor.length ; i++) {
 			var indexStart = posnColor[i].index
 			var indexEnd = posnColor[i].index + posnColor[i].length - 1
-			
+
 			//go to starting position
 			var exitLoop = false
 			//k is row in methodArray, j is number of characters in all rows up to k - 1
@@ -3052,11 +3052,11 @@ if ((!(method == null || method == undefined)) ? method.length : false) {
 					exitLoop = true
 				}
 			}
-			
+
 			//insert begin span for multiline comment (and restriction)
 			methodArray[k].rowArray[indexStart - j] = spanInsert + methodArray[k].rowArray[indexStart - j]
 			methodArray[k].startRestrict[methodArray[k].startRestrict.length] = indexStart - j
-			
+
 			//go to ending position
 			exitLoop = false
 			//k is row in methodArray, j is number of characters in all rows up to k - 1
@@ -3072,7 +3072,7 @@ if ((!(method == null || method == undefined)) ? method.length : false) {
 						methodArray[k+1].rowArray[0] = spanInsert + methodArray[k+1].rowArray[0]
 					}
 					methodArray[k+1].startRestrict[methodArray[k+1].startRestrict.length] = 0
-					
+
 					//advance
 					j += methodArray[k].rowArray.length + 1
 					k++
@@ -3115,7 +3115,7 @@ if ((!(method == null || method == undefined)) ? method.length : false) {
 // 4) write out html
 //
 	var html = '<html><head>'
-	
+
 	//css
 	html += '<style type="text/css" media="screen"><!--'
 	html += '.syntax { font-family: "Consolas", "Courier New", Courier, mono, serif; font-size: 12pt; background-color: #E7E5DC; width: 100%; margin: 0px 0 18px 0 !important; }'
@@ -3123,7 +3123,7 @@ if ((!(method == null || method == undefined)) ? method.length : false) {
 	html += '.syntax ol li { background-color: #F8F8F8; padding: 0 3px 0 10px !important; }'
 	html += '.syntax ol li.alt { background-color: #FFFFFF; }'
 	html += '.syntax ol li span { color: black; font-weight: normal; }'
-	
+
 	//css servoy colors
 	html += '.syntax .comment { color: #1B8A28; font-style: italic; font-weight: bold; }'
 	html += '.syntax .string { color: gray; }'
@@ -3132,16 +3132,16 @@ if ((!(method == null || method == undefined)) ? method.length : false) {
 	html += '.syntax .special { color: #FF1300; font-weight: bold; }'
 	html += '.syntax .devnotes { color: #B00D00; font-style: italic; }'
 	html += '.syntax .number { color: #FF00FF; }'
-	
+
 	html += '--></style></head>'
-	
+
 	//body
 	html += '<body>'
 	var todayDate = new Date()
 	html += '<div class="syntax">'
 	html += 'The contents of this method were last refreshed on ' + utils.dateFormat(todayDate,'MM-d-yyyy') + ' at ' + utils.dateFormat(todayDate,'HH:mm:ss')
 	html += '<ol>'
-	
+
 	for (var i = 0 ; i < methodArray.length ; i++) {
 		if (i % 2 == 0) {
 			html+= '\n<li class="alt">'
@@ -3156,7 +3156,7 @@ if ((!(method == null || method == undefined)) ? method.length : false) {
 		html += '</span>' //put ending span on the row
 		html += '</li>'
 	}
-	
+
 	//continue alternating background color if less than ~20 rows
 	if (i < 20) {
 		for (i ; i < 21 ; i++) {
@@ -3169,10 +3169,10 @@ if ((!(method == null || method == undefined)) ? method.length : false) {
 			html += '<span></span></li>' //empty row contents for row background
 		}
 	}
-	
+
 	//wrap up
 	html += '</ol></div></body></html>'
-	
+
 	return html
 }
 }
@@ -3186,19 +3186,19 @@ function CODE_color_method_fx()
 
 /*
  *	TITLE    :	CODE_color_method_fx
- *			  	
+ *
  *	MODULE   :	rsrc_CODE_sutra
- *			  	
+ *
  *	ABOUT    :	process one line, skipping restrictions
- *			  	
+ *
  *	INPUT    :	object containing startRestrict, endRestrict, rowData, rowArray; regex; and two Functions
- *			  	
+ *
  *	OUTPUT   :	modified object
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	REQUIRES :
+ *
  *	MODIFIED :	Oct 25, 2007 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 var returnObject = arguments[0]
@@ -3244,17 +3244,17 @@ for (var j = 0 ; j <= loopEnd ; j++) { //to account for starting and ending
 	}
 
 	var posnColor = fxGetMatches(noFormat,regexItem.regex,regexItem.css,fxMatch)
-	
+
 	//match found
 	if (posnColor.length) {
-		spanInsert = '<span class="' + posnColor[0].css + '">'	
+		spanInsert = '<span class="' + posnColor[0].css + '">'
 		for (var k = 0 ; k < posnColor.length ; k++) {
 			var indexStart = posnColor[k].index + indexOffset
 			var indexEnd = posnColor[k].index + posnColor[k].length - 1 + indexOffset
-			
+
 			returnObject.rowArray[indexStart] = spanInsert + returnObject.rowArray[indexStart]
 			returnObject.startRestrict[returnObject.startRestrict.length] = indexStart
-			
+
 			returnObject.rowArray[indexEnd] += '</span>'
 			returnObject.endRestrict[returnObject.endRestrict.length] = indexEnd
 		}
@@ -3277,21 +3277,21 @@ function CODE_copy_dataset()
 
 /*
  *	TITLE    :	CODE_copy_dataset
- *			  	
+ *
  *	MODULE   :	rsrc_CODE_sutra
- *			  	
+ *
  *	ABOUT    :	creates a copy of a dataset (not a reference), and returns it
- *			  	
+ *
  *	INPUT    :	dataset
- *			  	
+ *
  *	OUTPUT   :	copy of dataset
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	REQUIRES :
+ *
  *	USAGE    :	CODE_copy_dataset(dataset) Input a dataset to make a copy
- *			  	
+ *
  *	MODIFIED :	Jul 2008 -- David Workman, Data Mosaic
- *			  	
+ *
  */
 
 //MEMO: need to somehow put this section in a Function of it's own
@@ -3302,7 +3302,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	for (var i = 0; i < arguments.length; i++) {
 		Arguments.push(arguments[i])
 	}
-	
+
 	//reassign arguments without jsevents
 	arguments = Arguments.filter(CODE_jsevent_remove)
 }
@@ -3337,19 +3337,19 @@ function CODE_copy_object()
 
 /*
  *	TITLE    :	CODE_copy_object
- *			  	
+ *
  *	MODULE   :	rsrc_CODE_sutra
- *			  	
+ *
  *	ABOUT    :	creates a copy of an object (not a reference), and returns it
- *			  	
+ *
  *	INPUT    :	object
- *			  	
+ *
  *	OUTPUT   :	copy of object
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	REQUIRES :
+ *
  *	MODIFIED :	Mar 2008 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 //MEMO: need to somehow put this section in a Function of it's own
@@ -3360,7 +3360,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	for (var i = 0; i < arguments.length; i++) {
 		Arguments.push(arguments[i])
 	}
-	
+
 	//reassign arguments without jsevents
 	arguments = Arguments.filter(CODE_jsevent_remove)
 }
@@ -3397,11 +3397,11 @@ function CODE_date_format()
 
 /*
  *	TITLE    :	CODE_date_format
- *			  	
+ *
  *	MODULE   :	rsrc_CODE_sutra
- *			  	
+ *
  *	ABOUT    :	formats input date as dayOfWeek, Month day, year
- *			  	
+ *
  *	INPUT    :	1) date field
  *			  	2) how to format (optional)
  *			  		- 'full' format – Tuesday, January 1, 1970 (default)
@@ -3409,15 +3409,15 @@ function CODE_date_format()
  *			  		- 'specify' format – (see http://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html for all options)
  *			  	3) custom format string (optional)
  *			  	4) locale to format date in (optional)
- *			  	
+ *
  *	OUTPUT   :	string
- *			  	
+ *
  *	REQUIRES :	solutionPrefs.config.language
- *			  	
+ *
  *	USAGE    :	CODE_date_format(dateField) Returns a formatted version of the date (Tuesday, January 1, 1970)
- *			  	
+ *
  *	MODIFIED :	January 16, 2009 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 //MEMO: need to somehow put this section in a Function of it's own
@@ -3428,7 +3428,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	for (var i = 0; i < arguments.length; i++) {
 		Arguments.push(arguments[i])
 	}
-	
+
 	//reassign arguments without jsevents
 	arguments = Arguments.filter(CODE_jsevent_remove)
 }
@@ -3442,7 +3442,7 @@ var customLocale = arguments[3]
 if (dateIn instanceof Date) {
 	var dateFormatSimple = (application.__parent__.solutionPrefs && solutionPrefs.fastFind && solutionPrefs.fastFind.dateFormat) ? solutionPrefs.fastFind.dateFormat : i18n.getDefaultDateFormat()
 	var dateFormatFull = 'EEEE, MMMM d, yyyy'
-	
+
 	switch (formatType) {
 		case 'specify':
 			var dateFormat = (customFormat) ? customFormat : dateFormatSimple
@@ -3457,11 +3457,11 @@ if (dateIn instanceof Date) {
 			var dateFormat = dateFormatFull
 			break
 	}
-	
-	var currentLocale = new java.util.Locale((customLocale) ? customLocale : ((application.__parent__.solutionPrefs && solutionPrefs.config && solutionPrefs.config.language) ? solutionPrefs.config.language : 'en')) 
+
+	var currentLocale = new java.util.Locale((customLocale) ? customLocale : ((application.__parent__.solutionPrefs && solutionPrefs.config && solutionPrefs.config.language) ? solutionPrefs.config.language : 'en'))
 	var formatter = new java.text.SimpleDateFormat(dateFormat, currentLocale)
 	var stringOut = formatter.format(dateIn)
-	
+
 	return stringOut
 }
 //passed some non-date thing; abort
@@ -3482,37 +3482,37 @@ function CODE_dialog_button()
 
 /*
  *	TITLE    :	CODE_dialog_button
- *			  	
+ *
  *	MODULE   :	rsrc_CODE_sutra
- *			  	
+ *
  *	ABOUT    :	switches placement of ok/cancel button depending on os in use
  *			  	attach to onLoad form event and buttons ok/cancel
- *			  	
- *	INPUT    :	
- *			  	
- *	OUTPUT   :	
- *			  	
+ *
+ *	INPUT    :
+ *
+ *	OUTPUT   :
+ *
  *	REQUIRES :	btnOK, btnCancel elements
- *			  	
+ *
  *	MODIFIED :	Sept 2007 -- Robert Ivens, ROCLASI Software Solutions
- *			  	
+ *
  */
 
 
-var sOSname    = application.getOSName(), 
-    sFormName  = application.getMethodTriggerFormName(), 
+var sOSname    = application.getOSName(),
+    sFormName  = application.getMethodTriggerFormName(),
     nOffset    = 0
 
 
-if (sOSname != 'Mac OS X') { 
-     var nOKPos       = forms[sFormName].elements.btnOK.getLocationX(), 
-         nCancelPos   = forms[sFormName].elements.btnCancel.getLocationX(), 
-         nOKWidth     = forms[sFormName].elements.btnOK.getWidth(), 
+if (sOSname != 'Mac OS X') {
+     var nOKPos       = forms[sFormName].elements.btnOK.getLocationX(),
+         nCancelPos   = forms[sFormName].elements.btnCancel.getLocationX(),
+         nOKWidth     = forms[sFormName].elements.btnOK.getWidth(),
          nCancelWidth = forms[sFormName].elements.btnCancel.getWidth()
      nOffset = Math.abs(nOKWidth - nCancelWidth)
      forms[sFormName].elements.btnOK.setLocation(nCancelPos,forms[sFormName].elements.btnOK.getLocationY())
      forms[sFormName].elements.btnCancel.setLocation(nOKPos + nOffset,forms[sFormName].elements.btnCancel.getLocationY())
-} 
+}
 
 }
 
@@ -3525,21 +3525,21 @@ function CODE_fid_hide()
 
 /*
  *	TITLE    :	CODE_fid_hide
- *			  	
+ *
  *	MODULE   :	rsrc_CODE_sutra
- *			  	
+ *
  *	ABOUT    :	attach to form in dialog formOnHide method to prevent close button
  *			  		- globals.CODE_hide_form == 1, form closes
  *			  		- globals.CODE_hide_form == 0, form doesn't close
- *			  	
- *	INPUT    :	
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	INPUT    :
+ *
+ *	OUTPUT   :
+ *
+ *	REQUIRES :
+ *
  *	MODIFIED :	Mar 2008 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 return (CODE_hide_form) ? true : false
@@ -3554,22 +3554,22 @@ function CODE_file_import()
 
 /*
  *	TITLE    :	CODE_file_import
- *			  	
+ *
  *	MODULE   :	rsrc_CODE_sutra
- *			  	
+ *
  *	ABOUT    :	open file in native viewer
- *			  	
+ *
  *	INPUT    :	1- foundset (optional)
  *			  	2- record (optional)
  *			  	3- file name to read in (optional)
  *			  	4- array of field names (optional)
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	OUTPUT   :
+ *
+ *	REQUIRES :
+ *
  *	MODIFIED :	December 15, 2008 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 //MEMO: need to somehow put this section in a Function of it's own
@@ -3580,7 +3580,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	for (var i = 0; i < arguments.length; i++) {
 		Arguments.push(arguments[i])
 	}
-	
+
 	//reassign arguments without jsevents
 	arguments = Arguments.filter(CODE_jsevent_remove)
 }
@@ -3606,28 +3606,28 @@ var nameText = fieldNames[9] || 'file_text'
 if (fileName) {
 	//replace backslashes with slashes so windows or other filename and path are the same
 	var qualifiedFileName = utils.stringReplace(fileName, "\\", "/")
-	
+
 	if (qualifiedFileName) {
 		//name of file
 		var fileName = qualifiedFileName.substr(qualifiedFileName.lastIndexOf("/")+1)
-		
+
 		//get the document size
 		var fileSize = plugins.file.getFileSize(qualifiedFileName)
-		
+
 		if (fileSize > 2 * (1024 * 1024)) {
 			var proceed = DIALOGS.showQuestionDialog('Large file','The file selected is over 2 mb.  Continue?','Yes','No')
 		}
 		else {
 			var proceed = 'Yes'
 		}
-		
+
 		if (proceed == 'Yes') {
-			
+
 			//get the document specifications
 			var fileBlob = plugins.file.readFile(qualifiedFileName)
 			var imageTemp =  plugins.images.getImage(fileBlob)
 			var fileType = imageTemp.getContentType()
-			
+
 			//get extension
 			var ext = fileName.split('.')
 			//file has an extension
@@ -3638,28 +3638,28 @@ if (fileName) {
 			else if (fileType) {
 				var fileExt = fileType.substr(fileType.lastIndexOf("/")+1).toLowerCase()
 			}
-			
+
 			//text file
-			if (!fileType && (fileExt.equalsIgnoreCase('txt') || fileExt.equalsIgnoreCase('sql') || 
-				fileExt.equalsIgnoreCase('xml') || fileExt.equalsIgnoreCase('js') || fileExt.equalsIgnoreCase('servoyjs') || 
+			if (!fileType && (fileExt.equalsIgnoreCase('txt') || fileExt.equalsIgnoreCase('sql') ||
+				fileExt.equalsIgnoreCase('xml') || fileExt.equalsIgnoreCase('js') || fileExt.equalsIgnoreCase('servoyjs') ||
 				fileExt.equalsIgnoreCase('java') || fileExt.equalsIgnoreCase('php') || fileExt.equalsIgnoreCase('css') ||
 				fileExt.equalsIgnoreCase('html') || fileExt.equalsIgnoreCase('htm') || fileExt.equalsIgnoreCase('properties'))) {
-				
+
 				var textFile = true
-				
+
 				fileType = 'text'
-				
+
 				var origText = new java.lang.String(fileBlob)
 				origText = origText.substring(0,1000)
-				
+
 				var textSnippet = ''
-				
+
 				//put line breaks in
 				for (var i = 1; i <= 10 && i <= Math.ceil(origText.length/100); i++) {
-					
+
 					var start = (posn) ? posn : 0
 					var posn = i * 100
-					
+
 					//find place to chop
 					if (origText.length >= posn) {
 						while (origText.charAt(posn) != ' ') {
@@ -3669,13 +3669,13 @@ if (fileName) {
 					else {
 						posn = origText.length
 					}
-					
+
 					textSnippet += origText.substring(start,posn) + '<br>&nbsp;&nbsp;&nbsp;' //+ origText.substring(i*100)
 				}
-				
+
 				//take off final <br>
 				textSnippet = textSnippet.substr(0,textSnippet.length-28)
-				
+
 			}
 			//unknown file type
 			else if (!fileType && fileExt) {
@@ -3689,29 +3689,29 @@ if (fileName) {
 			if (!fileExt) {
 				var fileExt = '???'
 			}
-			
+
 			//load pdf so i can get the page dimensions if jpedal available (in lib directory)
 			if (false) {	//fileType == "application/pdf" && Packages.org.jpedal.PdfDecoder) {
 				var pdfDecoder = new Packages.org.jpedal.PdfDecoder
-				
+
 				pdfDecoder.openPdfArray(fileBlob)
 				pdfDecoder.setPageParameters(1,1)
-				
+
 				var pageCount = pdfDecoder.getPageCount()
-				var width = pdfDecoder.getPDFWidth()	
+				var width = pdfDecoder.getPDFWidth()
 				var height = pdfDecoder.getPDFHeight()
-				
+
 				var bufferedImage = pdfDecoder.getPageAsThumbnail(1,320)
 				var rawData = new java.io.ByteArrayOutputStream()
 				Packages.javax.imageio.ImageIO.write(bufferedImage,'jpg',rawData)
-				
+
 				var thumb = rawData.toByteArray()
 			}
 			//get dimensions using image
 			else if (!textFile) {
 				var width = imageTemp.getWidth()
 				var height = imageTemp.getHeight()
-				
+
 				//a picture and large, make a small one
 				if (width > 320 || height > 320) {
 					var thumb = imageTemp.resize(320,320)
@@ -3721,7 +3721,7 @@ if (fileName) {
 					var thumb = fileBlob
 				}
 			}
-			
+
 			//create the new attachment record
 			if (!recordFile) {
 				var record = fsFile.getRecord(fsFile.newRecord(false,true))
@@ -3730,7 +3730,7 @@ if (fileName) {
 			else {
 				var record = recordFile
 			}
-			
+
 			record[nameFile] = fileName
 			record[nameBlob] = fileBlob
 			record[nameSize] = fileSize
@@ -3741,7 +3741,7 @@ if (fileName) {
 			record[namePages] = pageCount
 			record[nameThumb] = thumb
 			record[nameText] = (textSnippet) ? textSnippet : null
-			
+
 			databaseManager.saveData()
 		}
 	}
@@ -3757,21 +3757,21 @@ function CODE_file_open()
 
 /*
  *	TITLE    :	CODE_file_open
- *			  	
+ *
  *	MODULE   :	rsrc_CODE_sutra
- *			  	
+ *
  *	ABOUT    :	open file in native viewer
- *			  	
+ *
  *	INPUT    :	1- file blob
  *			  	2- file name
  *			  	3- file extension
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	OUTPUT   :
+ *
+ *	REQUIRES :
+ *
  *	MODIFIED :	December 15, 2008 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */	//TODO: integrate Westy code when in webclient
 
 //MEMO: need to somehow put this section in a Function of it's own
@@ -3782,7 +3782,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	for (var i = 0; i < arguments.length; i++) {
 		Arguments.push(arguments[i])
 	}
-	
+
 	//reassign arguments without jsevents
 	arguments = Arguments.filter(CODE_jsevent_remove)
 }
@@ -3799,15 +3799,15 @@ if (fileBlob) {
 //	plugins.file.writeFile(tmpfile,fileBlob)
 	tmpfile = plugins.file.createTempFile(fileName.substring(0,fileName.length - (fileExt.length)),'.' + fileExt)
 	plugins.file.writeFile(tmpfile,fileBlob)
-	
-	if (utils.stringMiddle(application.getOSName(),1,7) == "Windows") { 
-	   application.executeProgram('rundll32', 'url.dll,FileProtocolHandler',tmpfile) 
+
+	if (utils.stringMiddle(application.getOSName(),1,7) == "Windows") {
+	   application.executeProgram('rundll32', 'url.dll,FileProtocolHandler',tmpfile)
 	}
-	else if (utils.stringMiddle(application.getOSName(),1,7) == "FreeBSD" || utils.stringMiddle(application.getOSName(),1,5) == "Linux") { 
-	   application.executeProgram('mozilla', tmpfile) 
+	else if (utils.stringMiddle(application.getOSName(),1,7) == "FreeBSD" || utils.stringMiddle(application.getOSName(),1,5) == "Linux") {
+	   application.executeProgram('mozilla', tmpfile)
 	}
-	else if (utils.stringMiddle(application.getOSName(),1,6) == "Mac OS") { 
-	   application.executeProgram('open', tmpfile) 
+	else if (utils.stringMiddle(application.getOSName(),1,6) == "Mac OS") {
+	   application.executeProgram('open', tmpfile)
 	}
 }
 
@@ -3816,7 +3816,7 @@ if(application.getApplicationType()==5) {
 	//wc from developer needs error trapping to use different install dir
 		//adrian suggested
 		installdir = utils.stringReplace(installdir,'developer','application_server')
-	
+
 	var installdir = java.lang.System.getProperty("user.dir")
 	installdir = utils.stringReplace(installdir,'\\','\/')
 	var uuid =application.getNewUUID()
@@ -3839,19 +3839,19 @@ function CODE_highlight_off(formName)
 
 /*
  *	TITLE    :	CODE_highlight_off
- *			  	
+ *
  *	MODULE   :	rsrc_CODE_sutra
- *			  	
+ *
  *	ABOUT    :	turn off highlighter for selected field
- *			  	
- *	INPUT    :	
- *			  	
+ *
+ *	INPUT    :
+ *
  *	REQUIRES :	'highlighter element' on form
- *			  	
- *	OUTPUT   :	
- *			  	
+ *
+ *	OUTPUT   :
+ *
  *	MODIFIED :	Nov 5, 2007 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 //MEMO: need to somehow put this section in a Function of it's own
@@ -3862,7 +3862,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	for (var i = 0; i < arguments.length; i++) {
 		Arguments.push(arguments[i])
 	}
-	
+
 	//reassign arguments without jsevents
 	arguments = Arguments.filter(CODE_jsevent_remove)
 }
@@ -3891,19 +3891,19 @@ function CODE_highlight_on()
 
 /*
  *	TITLE    :	CODE_highlight_on
- *			  	
+ *
  *	MODULE   :	rsrc_CODE_sutra
- *			  	
+ *
  *	ABOUT    :	turn on highlighter for selected field
- *			  	
- *	INPUT    :	
- *			  	
+ *
+ *	INPUT    :
+ *
  *	REQUIRES :	calling element to be named, 'highlighter element' on form, z-axis to be set appropriately for highlighter (behind all fields, in front of all other objects)
- *			  	
- *	OUTPUT   :	
- *			  	
+ *
+ *	OUTPUT   :
+ *
  *	MODIFIED :	Nov 5, 2007 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 //get field to be surrounded
@@ -3939,21 +3939,21 @@ function CODE_java_component()
 
 /*
  *	TITLE    :	CODE_java_component
- *			  	
+ *
  *	MODULE   :	rsrc_CODE_sutra
- *			  	
+ *
  *	ABOUT    :	returns the java componenet for calling/passed in element
- *			  	
+ *
  *	INPUT    :	(optional) element to do deep magic on
- *			  	
+ *
  *	OUTPUT   :	java component or false if no element could be found
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	REQUIRES :
+ *
  *	USAGE    :	CODE_java_component([elemName]) Returns the java componenet of any servoy element
- *			  	
+ *
  *	MODIFIED :	September 1, 2008 -- Matt and James, adBlocks
- *			  	
+ *
  */
 
 //MEMO: need to somehow put this section in a Function of it's own
@@ -3964,7 +3964,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	for (var i = 0; i < arguments.length; i++) {
 		Arguments.push(arguments[i])
 	}
-	
+
 	//reassign arguments without jsevents
 	arguments = Arguments.filter(CODE_jsevent_remove)
 }
@@ -3976,13 +3976,13 @@ var elem = arguments[0]
 if (!elem) {
 	var formName = application.getMethodTriggerFormName()
 	var elemName = application.getMethodTriggerElementName()
-	
+
 	if (formName && elemName && forms[formName] && forms[formName].elements[elemName]) {
 		var elem = forms[formName].elements[elemName]
 	}
 }
 
-//we have something, Scotty, where's my flux capacitor?  hmmm, wait a minute.... 
+//we have something, Scotty, where's my flux capacitor?  hmmm, wait a minute....
 if (elem) {
 	return new Packages.java.lang.ref.SoftReference(elem).get()
 }
@@ -4015,7 +4015,7 @@ function CODE_jsevent_remove()
 	//	typeof item.getSource == 'func' + 'tion' &&
 	//	typeof item.getTimestamp == 'func' + 'tion' &&
 	//	typeof item.getType == 'func' + 'tion') {
-	//	
+	//
 	//	return false
 	//}
 	//else {
@@ -4032,21 +4032,21 @@ function CODE_key_pressed()
 
 /*
  *	TITLE    :	CODE_key_pressed
- *			  	
+ *
  *	MODULE   :	rsrc_CODE_sutra
- *			  	
+ *
  *	ABOUT    :	there are two modes of operation; the first mode is the default
  *			  		1- return the number of the last key pressed; no input
  *			  		2- return true/false if key (combination) pressed; input required
- *			  	
+ *
  *	INPUT    :	key (combination) -- valid choices are: shift, ctrl, meta, and alt; they may be strung together with a - separating them
- *			  	
+ *
  *	OUTPUT   :	true/false whether that key (combination) pressed
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	REQUIRES :
+ *
  *	MODIFIED :	July 31, 2008 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */	//TODO: check out RDC when on a mac
 
 //MEMO: need to somehow put this section in a Function of it's own
@@ -4057,7 +4057,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	for (var i = 0; i < arguments.length; i++) {
 		Arguments.push(arguments[i])
 	}
-	
+
 	//reassign arguments without jsevents
 	arguments = Arguments.filter(CODE_jsevent_remove)
 }
@@ -4075,12 +4075,12 @@ if (input) {
 	var keyValue = input.split('-')
 	var keyValues = new Object()
 	var keys = 0
-	
+
 	//convert array to object
 	for (var i = 0; i < keyValue.length; i++) {
 		keyValues[keyValue[i]] = true
 	}
-	
+
 	//shift key
 	if (keyValues.shift) {
 		keys += 1
@@ -4101,7 +4101,7 @@ if (input) {
 	if (keys == 0) {
 		keys = 'none'
 	}
-	
+
 	//application.setStatusText(input + ((keys == keyPressed) ? ' was ' : ' was NOT ') + 'pressed')
 	return keys == keyPressed
 }
@@ -4127,22 +4127,22 @@ function CODE_method_rewrite()
 
 /*
  *	TITLE    :	CODE_method_rewrite
- *			  	
+ *
  *	MODULE   :	rsrc_CODE_sutra
- *			  	
+ *
  *	ABOUT    :	overwrites one method with another
  *			  	WARNING: this only works in client
  *			  	NOTE: if you are creating methods on the fly, they must be created in the context where you will use them
- *			  	
+ *
  *	INPUT    :	1- old method
  *			  	2- new method
- *			  	
+ *
  *	OUTPUT   :	success boolean
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	REQUIRES :
+ *
  *	MODIFIED :	January 7, 2009 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 //MEMO: need to somehow put this section in a Function of it's own
@@ -4153,7 +4153,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	for (var i = 0; i < arguments.length; i++) {
 		Arguments.push(arguments[i])
 	}
-	
+
 	//reassign arguments without jsevents
 	arguments = Arguments.filter(CODE_jsevent_remove)
 }
@@ -4165,7 +4165,7 @@ var newMethod = arguments[1]
 if (typeof newMethod == 'func' + 'tion' && application.getApplicationType() == 2) {
 	var formName = oldMethod.__parent__._formname_
 	var methodName = oldMethod._methodname_
-	
+
 	//overwrite old method with new
 	if (formName) {
 		forms[formName][methodName] = newMethod
@@ -4175,7 +4175,7 @@ if (typeof newMethod == 'func' + 'tion' && application.getApplicationType() == 2
 		globals[methodName] = newMethod
 		globals[methodName]._methodname_ = methodName
 	}
-	
+
 	//debugging
 	//DIALOGS.showErrorDialog('Overwritten')
 	return true
@@ -4197,21 +4197,21 @@ function CODE_property_combobox(square,size,formName)
 
 /*
  *	TITLE    :	CODE_property_combobox
- *			  	
+ *
  *	MODULE   :	rsrc_CODE_sutra
- *			  	
+ *
  *	ABOUT    :	modifies comboboxes on Mac Leopard
- *			  	
+ *
  *	INPUT    :	1- boolean to set square status
  *			  	2- size (regular, small, mini)
  *			  	3- form name to work on (optional)
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	OUTPUT   :
+ *
+ *	REQUIRES :
+ *
  *	MODIFIED :	October 6, 2008 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 //MEMO: need to somehow put this section in a Function of it's own
@@ -4222,7 +4222,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	for (var i = 0; i < arguments.length; i++) {
 		Arguments.push(arguments[i])
 	}
-	
+
 	//reassign arguments without jsevents
 	arguments = Arguments.filter(CODE_jsevent_remove)
 }
@@ -4232,16 +4232,16 @@ size = (arguments[1]) ? arguments[1] : 'small'
 formName = (arguments[2]) ? arguments[2] : application.getMethodTriggerFormName()
 
 //only modifies when running on OS X Leopard, and using the Aqua look and feel
-if (application.__parent__.solutionPrefs && 
+if (application.__parent__.solutionPrefs &&
 	(solutionPrefs.clientInfo.typeOS == 'Mac OS X' && solutionPrefs.clientInfo.typeLAF == 'Mac OS X' && solutionPrefs.clientInfo.verOS >= '10.5' && solutionPrefs.clientInfo.verServoy >= '3.5.7' && solutionPrefs.clientInfo.typeServoy != 'webclient') ||
 	(application.getOSName() == 'Mac OS X' && application.getCurrentLookAndFeelName() == 'Mac OS X' && ((plugins.sutra) ? plugins.sutra.getOSVersion() : '0') >= '10.5' && application.getVersion() >= '3.5.7' && application.getApplicationType() != 5)) {
-	
+
 	if (forms[formName]) {
 		var allElems = forms[formName].elements.allnames
-		
+
 		for (var i = 0; i < allElems.length; i++) {
 			var elemType = (forms[formName].elements[allElems[i]].getElementType) ? forms[formName].elements[allElems[i]].getElementType() : ''
-			
+
 			//it's a combobox
 			if (elemType == 'COMBOBOX') {
 				if (square) {
@@ -4260,10 +4260,10 @@ if (application.__parent__.solutionPrefs &&
 //if (size == 'mini' && application.__parent__.solutionPrefs && solutionPrefs.config.webClient) {
 //	if (forms[formName]) {
 //		var allElems = forms[formName].elements.allnames
-//		
+//
 //		for (var i = 0; i < allElems.length; i++) {
 //			var elemType = (forms[formName].elements[allElems[i]].getElementType) ? forms[formName].elements[allElems[i]].getElementType() : ''
-//			
+//
 //			//it's a combobox
 //			if (elemType == 'COMBOBOX') {
 //				//valid options: regular, small, mini
@@ -4286,25 +4286,25 @@ function CODE_record_duplicate()
 
 	/*
 	 *	TITLE    :	CODE_record_duplicate
-	 *			  	
+	 *
 	 *	MODULE   :	rsrc_CODE_sutra
-	 *			  	
+	 *
 	 *	ABOUT    :	create a duplicate of record, and optionally all children
-	 *			  	
+	 *
 	 *	INPUT    :	1- a record from some foundset
 	 *			  	2- array of relations to copy through
 	 *			  	3- overwrite array (from autoenter/relations/etc) with values from copying record
 	 * 					- array of arrays with info about which columns to overwrite
 	 *			  	4- option to disable autosave
-	 *			  	
+	 *
 	 *	OUTPUT   :	new parent record
-	 *			  	
-	 *	REQUIRES :	
-	 *			  	
+	 *
+	 *	REQUIRES :
+	 *
 	 *	USAGE    :	CODE_record_duplicate(record, [relationArray], [overwrite]) Duplicates a record and (optionally) all children
-	 *			  	
+	 *
 	 *	MODIFIED :	August 23, 2010 -- Troy Elliott, Data Mosaic
-	 *			  	
+	 *
 	 */
 
 	//first, create object of relations
@@ -4328,7 +4328,7 @@ function CODE_record_duplicate()
 	var relationArray = arguments[1]
 	if (arguments[2] instanceof Array) {
 		var overwriteOK = arguments[2]
-		
+
 		//ensure there are enough items in overwrite
 		for (var i = overwriteOK.length; i <= relationArray.length; i++) {
 			overwriteOK[i] = null
@@ -4345,7 +4345,7 @@ function CODE_record_duplicate()
 
 	//object to store all relations
 		//tree required for construction
-	var relations = 
+	var relations =
 		tree = new Object()
 	var tree
 
@@ -4396,7 +4396,7 @@ function CODE_record_duplicate()
 					//on final branch, tag on overwrite rules
 					if (j + 1 == item.length) {
 						tree[item[j]].overwrite = overwriteOK[i + 1]
-					}				
+					}
 
 					//set tree to newly created item
 					tree = tree[item[j]]
@@ -4427,7 +4427,7 @@ function CODE_record_duplicate()
 		if (!noSave) {
 			databaseManager.saveData()
 		}
-		
+
 		return destRecord
 	}
 }
@@ -4438,7 +4438,7 @@ function CODE_record_duplicate()
  */
 function CODE_data_export() {
 	// here we call the record duplicate method with a special parameter that returns the data that would have been exported
-	
+
 }
 
 /**
@@ -4450,24 +4450,24 @@ function CODE_record_duplicate_fx()
 
 /*
  *	TITLE    :	CODE_record_duplicate_fx
- *			  	
+ *
  *	MODULE   :	rsrc_CODE_sutra
- *			  	
+ *
  *	ABOUT    :	create a duplicate of record, and optionally all children
- *			  	
+ *
  *	INPUT    :	1- source record
  *			  	2- destination record
  *			  	3- object of relations
  *			  	4- overwrite bool
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	OUTPUT   :
+ *
+ *	REQUIRES :
+ *
  *	USAGE    :	CODE_record_duplicate_fx(sourceRecord, destinationRecord, subRelationArray, objectRecord, [overwrite]) Duplicates all children
- *			  	
+ *
  *	MODIFIED :	August 23, 2010 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 var srcRecord = arguments[0]
@@ -4482,7 +4482,7 @@ var fsSource = eval('srcRecord.' + node._relation_)
 var fsDest = eval('destRecord.' + node._relation_)
 
 if (fsSource && utils.hasRecords(fsSource)) {
-	//go through children, call 
+	//go through children, call
 	for (var i = 1; i <= fsSource.getSize(); i++) {
 		//create duplicate record
 		var srcChild = fsSource.getRecord(i)
@@ -4508,24 +4508,24 @@ function CODE_record_object()
 
 /*
  *	TITLE    :	CODE_record_object
- *			  	
+ *
  *	MODULE   :	rsrc_CODE_sutra
- *			  	
- *	ABOUT    :	
- *			  	
+ *
+ *	ABOUT    :
+ *
  *	INPUT    :	1- a record from some foundset
  *			  	2- omit null values (optional)
  *			  	3- omit unstored calculations (optional)
  *			  	4- array of columns to omit (optional)
- *			  	
+ *
  *	OUTPUT   :	object with all info about record passed in
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	REQUIRES :
+ *
  *	USAGE    :	CODE_record_object(record, [omitNull], [omitUnstoredCalc]) Creates an object representation of a record
- *			  	
+ *
  *	MODIFIED :	November 13, 2009 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */	//TODO: foundsets gotten through any other way then just from a table don't have a prototype
 
 //MEMO: need to somehow put this section in a Function of it's own
@@ -4536,7 +4536,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	for (var i = 0; i < arguments.length; i++) {
 		Arguments.push(arguments[i])
 	}
-	
+
 	//reassign arguments without jsevents
 	arguments = Arguments.filter(CODE_jsevent_remove)
 }
@@ -4551,7 +4551,7 @@ var returnObj = new Object()
 //get list of calcs
 if (omitCalc) {
 	var omitColumns = new Object()
-	
+
 	//only run in less than 4
 	if (utils.stringToNumber(application.getVersion()) < 4) {
 		//hack to make omitCalc work on navigation_item and action_item tables
@@ -4559,7 +4559,7 @@ if (omitCalc) {
 			var serverName = record.foundset.getServerName()
 			var tableName = record.foundset.getTableName()
 			//var recordFS = databaseManager.getFoundSet(serverName, tableName)
-			
+
 			if (tableName == 'sutra_navigation_item') {
 				var recordFS = forms.NAV_R_navigation_item.foundset
 			}
@@ -4573,17 +4573,17 @@ if (omitCalc) {
 		else {
 			var recordFS = record.foundset
 		}
-		
+
 		//does this table have calcs?
 		if (recordFS.__proto__ != undefined) {
 			for (var i in recordFS.foundset.__proto__) {
 				omitColumns[i] = 'Calculation'
 			}
-			
+
 			//get db columns
 			var table = databaseManager.getTable(record.foundset.getServerName(),record.foundset.getTableName())
 			var columnNames = table.getColumnNames()
-			
+
 			//remove calcs that have a column
 			for (var i = 0; i < columnNames.length; i++) {
 				if (omitColumns[columnNames[i]]) {
@@ -4628,11 +4628,11 @@ function CODE_row_background(index, selected, fieldType, fieldName, formName, fi
 //	if (!fieldState[fieldName]) {
 //		return "#FF0000"
 //	}
-	
+
 	//highlight selected record
-	if (CODE_row_background__highlight.status && CODE_row_background__highlight.status() && 
+	if (CODE_row_background__highlight.status && CODE_row_background__highlight.status() &&
 		CODE_row_background__highlight.form && formName == CODE_row_background__highlight.form()) {
-		
+
 		//white/tan with green highlighter
 		if (selected) {
 			return '#B6E6B6'
@@ -4680,20 +4680,20 @@ function CODE_search_array()
 
 /*
  *	TITLE    :	CODE_search_array
- *			  	
+ *
  *	MODULE   :	rsrc_CODE_sutra
- *			  	
+ *
  *	ABOUT    :	returns an array of positions where an element is found in an array
- *			  	
+ *
  *	INPUT    :	1- array
  *			  	2- value to find
- *			  	
+ *
  *	OUTPUT   :	position(s) of found element
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	REQUIRES :
+ *
  *	MODIFIED :	June 18, 2008 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 //MEMO: need to somehow put this section in a Function of it's own
@@ -4704,7 +4704,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	for (var i = 0; i < arguments.length; i++) {
 		Arguments.push(arguments[i])
 	}
-	
+
 	//reassign arguments without jsevents
 	arguments = Arguments.filter(CODE_jsevent_remove)
 }
@@ -4745,20 +4745,20 @@ function CODE_search_object_array()
 
 /*
  *	TITLE    :	CODE_search_object_array
- *			  	
+ *
  *	MODULE   :	rsrc_CODE_sutra
- *			  	
+ *
  *	ABOUT    :	returns the position of an element (arg[1]) in an array of objects (arg[0])
  *			  	-1 means not in array
- *			  	
+ *
  *	INPUT    :	array of objects, value to find, property to search
- *			  	
+ *
  *	OUTPUT   :	position of found element
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	REQUIRES :
+ *
  *	MODIFIED :	Sept 2007 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 var arraySort = arguments[0]
@@ -4792,19 +4792,19 @@ function CODE_sort_dd_array()
 
 /*
  *	TITLE    :	CODE_sort_dd_array
- *			  	
+ *
  *	MODULE   :	rsrc_CODE_sutra
- *			  	
+ *
  *	ABOUT    :	sorts multi-D array on the field/element of internal array
- *			  	
- *	INPUT    :	
- *			  	
- *	OUTPUT   :	
- *			  	
+ *
+ *	INPUT    :
+ *
+ *	OUTPUT   :
+ *
  *	REQUIRES :	globals.CODE_ddarray_field to have valid property name, called as parameter to sort routine
- *			  	
+ *
  *	MODIFIED :	Sept 2007 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */	//TODO: globals.CODE_ddarray_field can be multiple fields
 
 var a = arguments[0]
@@ -4839,19 +4839,19 @@ function CODE_sort_numeric()
 
 /*
  *	TITLE    :	CODE_sort_numeric
- *			  	
+ *
  *	MODULE   :	rsrc_CODE_sutra
- *			  	
+ *
  *	ABOUT    :	sorts an array in numerical order
- *			  	
- *	INPUT    :	
- *			  	
- *	OUTPUT   :	
- *			  	
+ *
+ *	INPUT    :
+ *
+ *	OUTPUT   :
+ *
  *	REQUIRES :	called as parameter to sort routine
- *			  	
+ *
  *	MODIFIED :	Sept 2007 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 var a = arguments[0]
@@ -4869,20 +4869,20 @@ function CODE_text_camel_caps()
 
 /*
  *	TITLE    :	CODE_text_camel_caps
- *			  	
+ *
  *	MODULE   :	rsrc_CODE_sutra
- *			  	
+ *
  *	ABOUT    :	returns camel caps of what is passed
- *			  	
+ *
  *	INPUT    :	1) text to be operated on
  *			  	2) regex describing dividing character (optional)
- *			  	
+ *
  *	OUTPUT   :	reformatted text
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	REQUIRES :
+ *
  *	MODIFIED :	Jun 2008 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 //MEMO: need to somehow put this section in a Function of it's own
@@ -4893,7 +4893,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	for (var i = 0; i < arguments.length; i++) {
 		Arguments.push(arguments[i])
 	}
-	
+
 	//reassign arguments without jsevents
 	arguments = Arguments.filter(CODE_jsevent_remove)
 }
@@ -4914,12 +4914,12 @@ if (stringTemp.length) {
 //remaining words are upper case
 for (var i = 1; i < stringTemp.length; i++) {
 	var stringWord = stringTemp[i]
-	
+
 	//if string is a number, change to word representation
 	if (utils.stringToNumber(stringWord.charAt(0)) == stringWord.charAt(0)) {
 		stringWord = reference[utils.stringToNumber(stringWord.charAt(0))] + stringWord.slice(1)
 	}
-	
+
 	whiteSpace.exec(stringWord)
 	stringTemp[i] = RegExp.$1.toUpperCase() + RegExp.$2.toLowerCase()
 }
@@ -4932,6 +4932,126 @@ return stringTemp.join('')
 
 }
 
+
+/**
+ * Hijacked from: http://stackoverflow.com/q/1068834
+ * @properties={typeid:24,uuid:"FE2D22DE-B08F-429C-B256-C41DBFD8A919"}
+ */
+function CODE_compare_object() {
+	var leftChain, rightChain;
+
+	function compare2Objects (x, y) {
+		var p;
+
+		// remember that NaN === NaN returns false
+		// and isNaN(undefined) returns true
+		if (isNaN(x) && isNaN(y) && typeof x === 'number' && typeof y === 'number') {
+				 return true;
+		}
+
+		// Compare primitives and functions.
+		// Check if both arguments link to the same object.
+		// Especially useful on step when comparing prototypes
+		if (x === y) {
+				return true;
+		}
+
+		// Works in case when functions are created in constructor.
+		// Comparing dates is a common scenario. Another built-ins?
+		// We can even handle functions passed across iframes
+		if ((typeof x === 'function' && typeof y === 'function') ||
+			 (x instanceof Date && y instanceof Date) ||
+			 (x instanceof RegExp && y instanceof RegExp) ||
+			 (x instanceof String && y instanceof String) ||
+			 (x instanceof Number && y instanceof Number)) {
+				return x.toString() === y.toString();
+		}
+
+		// At last checking prototypes as good a we can
+		if (!(x instanceof Object && y instanceof Object)) {
+				return false;
+		}
+
+		if (x.isPrototypeOf(y) || y.isPrototypeOf(x)) {
+				return false;
+		}
+
+		if (x.constructor !== y.constructor) {
+				return false;
+		}
+
+		if (x.prototype !== y.prototype) {
+				return false;
+		}
+
+		// check for infinitive linking loops
+		if (leftChain.indexOf(x) > -1 || rightChain.indexOf(y) > -1) {
+				 return false;
+		}
+
+		// Quick checking of one object beeing a subset of another.
+		// todo: cache the structure of arguments[0] for performance
+		for (p in y) {
+				if (y.hasOwnProperty(p) !== x.hasOwnProperty(p)) {
+						return false;
+				}
+				else if (typeof y[p] !== typeof x[p]) {
+						return false;
+				}
+		}
+
+		for (p in x) {
+				if (y.hasOwnProperty(p) !== x.hasOwnProperty(p)) {
+						return false;
+				}
+				else if (typeof y[p] !== typeof x[p]) {
+						return false;
+				}
+
+				switch (typeof (x[p])) {
+						case 'object':
+						case 'function':
+
+								leftChain.push(x);
+								rightChain.push(y);
+
+								if (!compare2Objects (x[p], y[p])) {
+										return false;
+								}
+
+								leftChain.pop();
+								rightChain.pop();
+								break;
+
+						default:
+								if (x[p] !== y[p]) {
+										return false;
+								}
+								break;
+				}
+		}
+
+		return true;
+	}
+
+	if (arguments.length < 1) {
+		return true; //Die silently? Don't know how to handle such case, please help...
+		// throw "Need two or more arguments to compare";
+	}
+
+	for (var i = 1, l = arguments.length; i < l; i++) {
+
+			leftChain = []; //todo: this can be cached
+			rightChain = [];
+
+			if (!compare2Objects(arguments[0], arguments[i])) {
+					return false;
+			}
+	}
+
+	return true;
+}
+
 /**
  *
  * @properties={typeid:24,uuid:"befe06f8-7983-489d-94e5-000ecb067c1f"}
@@ -4941,19 +5061,19 @@ function CODE_text_initial_caps()
 
 /*
  *	TITLE    :	CODE_text_initial_caps
- *			  	
+ *
  *	MODULE   :	rsrc_CODE_sutra
- *			  	
+ *
  *	ABOUT    :	returns initial caps of what is passed
- *			  	
+ *
  *	INPUT    :	text to be operated on
- *			  	
+ *
  *	OUTPUT   :	reformatted text
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	REQUIRES :
+ *
  *	MODIFIED :	Jun 1, 2008 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 //MEMO: need to somehow put this section in a Function of it's own
@@ -4964,7 +5084,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	for (var i = 0; i < arguments.length; i++) {
 		Arguments.push(arguments[i])
 	}
-	
+
 	//reassign arguments without jsevents
 	arguments = Arguments.filter(CODE_jsevent_remove)
 }
@@ -5025,22 +5145,22 @@ function CODE_url_handler()
 
 /*
  *	TITLE    :	CODE_url_handler
- *			  	
+ *
  *	MODULE   :	rsrc_CODE_sutra
- *			  	
+ *
  *	ABOUT    :	opens the first argument passed
- *			  	
+ *
  *	INPUT    :	email address or website
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	OUTPUT   :
+ *
+ *	REQUIRES :
+ *
  *	USAGE    :	CODE_url_handler(weblocation) Opens web location using the default platform viewer
- *			  	
+ *
  *	MODIFIED :	Mar 2008 -- Troy Elliott, Data Mosaic
- *			  	
- */ 
+ *
+ */
 
 //url to navigate to
 var webloc = arguments[0]
@@ -5055,7 +5175,7 @@ if (!wcOpen) {
 
 if (webloc) {
 	var email = utils.stringPatternCount(webloc,'@') && !utils.stringPatternCount(webloc,'://')
-	
+
 	//email
 	if (email) {
 		application.showURL('mailto:'+webloc,'_self')
@@ -5063,7 +5183,7 @@ if (webloc) {
 	//http
 	else {
 		webloc = utils.stringPatternCount(webloc,'://') ? webloc : 'http://' + webloc
-			
+
 		//lightbox requested and minimum requirements met
 		if (lightbox && application.__parent__.solutionPrefs && solutionPrefs.config && solutionPrefs.config.webClient && globals.DATASUTRA_router_enable) {
 			plugins.WebClientUtils.executeClientSideJS('window.parent.urlLoad("' + webloc + '");')
@@ -5091,54 +5211,54 @@ function CODE_workspace_data()
 //	 *	INPUT    :	1- true to create a unique copy (non-reference) of everything; used when creating static object
 
 	var tano = (Math.floor(utils.stringToNumber(application.getVersion())) >= 5) ? true : false
-	
+
 	var nonRef = arguments[0]
-	
+
 	var vlForm = new Object()
 	var vlReln = new Object()
 	var formsByTable = new Object()
 	formsByTable['No datasource'] = new Object()
-	
+
 	var workspace = plugins.sutra.getWorkspace().substr(5)
 	var modules = plugins.file.getFolderContents(workspace, null, 2)
-	
-	
+
+
 	//loop over all modules and find the currently activated one
 	for (var i = 0; i < modules.length; i++) {
 		var module = modules[i]
 		if (module.getName() == application.getSolutionName()) {
 			var parentModule = module
-			
+
 			//get child modules to loop over
 			var settings = plugins.file.readTXTFile(parentModule.getAbsolutePath() + '/solution_settings.obj')
-			
+
 			settings = settings.split(',\n')
-			
+
 			for (var k = 0; k < settings.length; k++) {
 				if (utils.stringPosition(settings[k], 'modulesNames:"', 0, 1) == 1) {
 					var childModules = settings[k].substring(14,settings[k].length - 1)
 					childModules = childModules.split(',')
-					
+
 					//tack on parent module
 					childModules.unshift(parentModule.getName())
 					break
 				}
 			}
-			
+
 			break
 		}
 	}
-	
+
 	for (var i = 0; i < modules.length; i++) {
 		var module = modules[i]
-		
+
 		//check to make sure that we're only working with child modules
 //		if (childModules && childModules.indexOf(module.getName()) == -1) {
 //			continue
 //		}
-		
+
 		//var contents = plugins.file.getFolderContents(module)
-		
+
 		if (tano) {
 			var theForms = plugins.file.getFolderContents(module.getAbsolutePath() + '/forms', '.frm', 1)
 			var theRelations = plugins.file.getFolderContents(module.getAbsolutePath() + '/relations', '.rel', 1)
@@ -5147,34 +5267,34 @@ function CODE_workspace_data()
 			var theForms = plugins.file.getFolderContents(module.getAbsolutePath() + '/forms', '.obj', 1)
 			var theRelations = plugins.file.getFolderContents(module.getAbsolutePath() + '/relations', '.obj', 1)
 		}
-		
+
 		//if this 'module' has forms, proceed
 		if (theForms.length) {
 			//create container
 			vlForm[module.getName()] = new Object()
-			
+
 			//fill it
 			for (var j = 0; j < theForms.length; j++) {
 				var thisForm = theForms[j]
 				var nameForm = thisForm.getName().substr(0,thisForm.getName().length - 4)
-				
+
 				var aboutForm = plugins.file.readTXTFile(thisForm)
-				
+
 				//get rid of sub-items
 				if (tano) {
 					//this is the non-js regex... items:\[.*],
 					aboutForm = aboutForm.replace(/items:\[[\s\S]*],\n/,'')
 				}
-				
+
 				aboutForm = aboutForm.split(',\n')
-				
+
 				var formUUID = null
 				var nameServer = null
 				var nameTable = null
 				var sizeForm = null
 				var typeForm = null
 				var separateFS = null
-				
+
 				for (var k = 0; k < aboutForm.length; k++) {
 					if (utils.stringPosition(aboutForm[k], 'uuid:"', 0, 1) == 1) {
 						var formUUID = aboutForm[k].substring(6,aboutForm[k].length - 1)
@@ -5192,16 +5312,16 @@ function CODE_workspace_data()
 						var typeForm = aboutForm[k].substring(5,aboutForm[k].length)
 					}
 					else if (utils.stringPosition(aboutForm[k], 'useSeparateFoundSet:', 0, 1) == 1) {
-						var separateFS = (aboutForm[k].substring(20,aboutForm[k].length) == 'true') ? true : false 
+						var separateFS = (aboutForm[k].substring(20,aboutForm[k].length) == 'true') ? true : false
 					}
 					else if (utils.stringPosition(aboutForm[k], 'dataSource:', 0, 1) == 1) {
 						var sections = aboutForm[k].split('/')
-						
+
 						var nameServer = sections[1]
 						var nameTable = sections[2].substring(0,sections[2].length - 1)
 					}
 				}
-				
+
 				var formInfo = {
 					moduleName : module.getName(),
 					formName   : nameForm,
@@ -5212,13 +5332,13 @@ function CODE_workspace_data()
 					formType  : (typeForm) ? typeForm : 0,
 					formSize  : sizeForm
 				}
-				
+
 				//add form to its parent module
 				vlForm[module.getName()][nameForm] = formInfo
-				
+
 				//add to table view also
-				
-				
+
+
 				//this is a form without a table
 				if (!formInfo.serverName && !formInfo.tableName) {
 					//add form
@@ -5236,14 +5356,14 @@ function CODE_workspace_data()
 					if (!formsByTable[formInfo.serverName]) {
 						formsByTable[formInfo.serverName] = new Object()
 					}
-					
+
 					//add table if not encountered before
 					if (!formsByTable[formInfo.serverName][formInfo.tableName]) {
 						formsByTable[formInfo.serverName][formInfo.tableName] = new Object()
-						
+
 						//punch in pk info
 						var jsTable = databaseManager.getTable(formInfo.serverName,formInfo.tableName)
-						
+
 						//possible to have db server offline for solutions
 						if (jsTable) {
 							var pkCols = jsTable.getRowIdentifierColumnNames()
@@ -5251,7 +5371,7 @@ function CODE_workspace_data()
 							formsByTable[formInfo.serverName][formInfo.tableName].primaryKey = pkCols[0]
 						}
 					}
-					
+
 					//add form
 					if (nonRef) {
 						formsByTable[formInfo.serverName][formInfo.tableName][formInfo.formName] = CODE_copy_object(formInfo)
@@ -5262,24 +5382,24 @@ function CODE_workspace_data()
 					}
 				}
 			}
-			
+
 		}
-		
+
 		//if this 'module' has relations, proceed
 		if (theRelations.length) {
 //			//create container if not already existing
 //			if (!vlForm[module.getName()]) {
 //				vlForm[module.getName()] = new Object()
 //			}
-			
+
 			//fill it
 			for (var j = 0; j < theRelations.length; j++) {
 				var thisRelation = theRelations[j]
 				var nameRelation = thisRelation.getName().substr(0,thisRelation.getName().length - 4)
-				
+
 				var aboutRelation = plugins.file.readTXTFile(thisRelation)
 				aboutRelation = aboutRelation.split(',\n')
-				
+
 				var relnUUID = null
 				var priServer = null
 				var priTable = null
@@ -5292,7 +5412,7 @@ function CODE_workspace_data()
 //				var existsInDB = null
 //				var duplicateRelatedRecords = null
 				var sortOptions = null
-				
+
 				for (var k = 0; k < aboutRelation.length; k++) {
 					if (utils.stringPosition(aboutRelation[k], 'uuid:"', 0, 1) == 1) {
 						var relnUUID = aboutRelation[k].substring(6,aboutRelation[k].length - 1)
@@ -5310,13 +5430,13 @@ function CODE_workspace_data()
 						var foreignTable = aboutRelation[k].substring(18,aboutRelation[k].length - 1)
 					}
 					else if (utils.stringPosition(aboutRelation[k], 'allowCreationRelatedRecords:', 0, 1) == 1) {
-						var createRelatedRecords = (aboutRelation[k].substring(28,aboutRelation[k].length) == 'true') ? true : false 
+						var createRelatedRecords = (aboutRelation[k].substring(28,aboutRelation[k].length) == 'true') ? true : false
 					}
 					else if (utils.stringPosition(aboutRelation[k], 'deleteRelatedRecords:', 0, 1) == 1) {
-						var deleteRelatedRecords = (aboutRelation[k].substring(21,aboutRelation[k].length) == 'true') ? true : false 
+						var deleteRelatedRecords = (aboutRelation[k].substring(21,aboutRelation[k].length) == 'true') ? true : false
 					}
 					else if (utils.stringPosition(aboutRelation[k], 'allowParentDeleteWhenHavingRelatedRecords:', 0, 1) == 1) {
-						var allowParentDelete = (aboutRelation[k].substring(42,aboutRelation[k].length) == 'true') ? true : false 
+						var allowParentDelete = (aboutRelation[k].substring(42,aboutRelation[k].length) == 'true') ? true : false
 					}
 					else if (utils.stringPosition(aboutRelation[k], 'joinType:', 0, 1) == 1) {
 						var joinTypes = aboutRelation[k].substring(9,aboutRelation[k].length)
@@ -5326,34 +5446,34 @@ function CODE_workspace_data()
 					}
 					else if (utils.stringPosition(aboutRelation[k], 'foreignDataSource:', 0, 1) == 1) {
 						var sections = aboutRelation[k].split('/')
-						
+
 						var foreignServer = sections[1]
 						var foreignTable = sections[2].substring(0,sections[2].length - 1)
 					}
 					else if (utils.stringPosition(aboutRelation[k], 'primaryDataSource:', 0, 1) == 1) {
 						var sections = aboutRelation[k].split('/')
-						
+
 						var priServer = sections[1]
 						var priTable = sections[2].substring(0,sections[2].length - 1)
-					}					
+					}
 				}
-				
+
 				//check to be sure that relation has a name
 				if (nameRelation != null) {
-					
+
 					//add server if not encountered before
 					if (!vlReln[priServer]) {
 						vlReln[priServer] = new Object()
 					}
-					
+
 					//add table if not encountered before
 					if (!vlReln[priServer][priTable]) {
 						vlReln[priServer][priTable] = new Object()
 					}
-					
+
 					//add relation
-					var relationInfo = 
-					vlReln[priServer][priTable][nameRelation] = 
+					var relationInfo =
+					vlReln[priServer][priTable][nameRelation] =
 					{
 						moduleName : module.getName(),
 						relation   : nameRelation,
@@ -5378,27 +5498,27 @@ function CODE_workspace_data()
 //								duplicateRelated : (duplicateRelatedRecords) ? true : false
 							}
 					}
-				}	
+				}
 			}
 		}
 	}
-	
+
 	//save it
-		if (application.__parent__.solutionPrefs && solutionPrefs.repository && solutionPrefs.repository.workspace && 
+		if (application.__parent__.solutionPrefs && solutionPrefs.repository && solutionPrefs.repository.workspace &&
 			((/*nonRef &&*/ (solutionPrefs.clientInfo.typeServoy == 'developer' || solutionPrefs.clientInfo.typeServoy == 'web client developer')) ? true : false)
 			) {
 		solutionPrefs.repository.workspace = vlForm
 		solutionPrefs.repository.relations = vlReln
 		solutionPrefs.repository.allFormsByTable = formsByTable
 	}
-	
+
 //	//set module value list
 //	var modulesDistinct = new Array()
 //	for (var i in solutionPrefs.repository.workspace) {
 //		modulesDistinct.push(i)
 //	}
 //	modulesDistinct.sort()
-//	
+//
 //	application.setValueListItems('NAV_modules_included', modulesDistinct)
 }
 
@@ -5411,21 +5531,21 @@ function CODE_workspace_module()
 
 /*
  *	TITLE    :	CODE_workspace_module
- *			  	
+ *
  *	MODULE   :	rsrc_CODE_serclipse
- *			  	
+ *
  *	ABOUT    :	read in modules included
- *			  	
- *	INPUT    :	
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	INPUT    :
+ *
+ *	OUTPUT   :
+ *
+ *	REQUIRES :
+ *
  *	USAGE    :	CODE_workspace_module()
- *			  	
+ *
  *	MODIFIED :	November 18, 2009 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 //MEMO: need to somehow put this section in a Function of it's own
@@ -5436,7 +5556,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	for (var i = 0; i < arguments.length; i++) {
 		Arguments.push(arguments[i])
 	}
-	
+
 	//reassign arguments without jsevents
 	arguments = Arguments.filter(CODE_jsevent_remove)
 }
@@ -5465,39 +5585,39 @@ if (!soln.length) {
 //if multiple modules, loop and process each input
 outerloop:
 for (var i = 0 ; i < soln.length; i++) {
-	
+
 	//loop through currently added modules, break out of recursion if this module already added
 	for (var j = 0 ; j < repositoryPrefs.allModules.length; j++) {
 		if (soln[i] == repositoryPrefs.allModules[j]) {
 			continue outerloop
 		}
 	}
-	
+
 	//store parent module
 	repositoryPrefs.allModules.push(soln[i])
-	
+
 	//get list of included modules
 	var settingsObj = workspace + soln[i] + '/' + 'solution_settings.obj'
-	
+
 	//check if this 'solution' even has settings
 	var jsFile = plugins.file.convertToJSFile(settingsObj)
 	if (jsFile.exists()) {
 		var solnSettings = plugins.file.readTXTFile(settingsObj)
 		solnSettings = solnSettings.split('\n')
-		
+
 		var modules = null
-		
+
 		for (var k = 0; k < solnSettings.length; k++) {
 			if (utils.stringPosition(solnSettings[k], 'modulesNames:"', 0, 1) == 1) {
 				var modules = solnSettings[k].substring(14,solnSettings[k].length - 2)
 				break
 			}
 		}
-		
+
 		//there are included modules, split and pass back to array
 		if (modules) {
 			modules = modules.split(',')
-			
+
 			//pass back modules to processoranator
 			CODE_workspace_module(modules)
 		}
@@ -5513,7 +5633,7 @@ if (soln[0] != application.getSolutionName()) {
 if (repositoryPrefs.allModules.length) {
 	var modules = repositoryPrefs.allModules
 	modules.sort()
-	
+
 	repositoryPrefs.allModules = new Array()
 	for (var i = 0 ; i < modules.length ; i++) {
 		if (modules[i] != modules[i+1]) {
@@ -5616,25 +5736,25 @@ function TAB_change_set(event,arg1) {
 
 /**
  * Navigates to the specified sidebar if it is available for the logged in user.
- * 
+ *
  * @param	{String}	sidebarName Sidebar name to jump to (defined in sidebar config "tab name").
  * @param 	{Boolean} 	[showSidebar] Force sidebar open/closed.
- * 
+ *
  * @returns	{Boolean}	Sidebar able to be changed.
- * 
+ *
  * @properties={typeid:24,uuid:"8EC7C55E-6B55-43D5-9693-897E32EA0884"}
  */
 function TRIGGER_sidebar_set(sidebarName, showSidebar) {
 	//solutionPrefs defined and frameworks not in a locked status
 	if (application.__parent__.solutionPrefs && !solutionPrefs.config.lockStatus) {
-	
+
 		//only run when not in a preference
 		if (!solutionPrefs.config.prefs.preferenceMode) {
 			//offset will probably be different depending on help status
 			var oldToolbar = solutionPrefs.panel.sidebar[forms.DATASUTRA__sidebar.elements.tab_content.tabIndex - 2].tabName
-	
+
 			var allToolbars = solutionPrefs.panel.sidebar
-	
+
 			//check to make sure that newToolbar is a valid input
 			var found = false
 			for (var i = 0; i < allToolbars.length && !found; i++) {
@@ -5643,25 +5763,25 @@ function TRIGGER_sidebar_set(sidebarName, showSidebar) {
 					break
 				}
 			}
-	
+
 			//destination toolbar is valid and different than current toolbar, change
 			if (sidebarName != oldToolbar && found) {
 				//should this by i or i+1?
 				forms.DATASUTRA__sidebar__header.TAB_popdown(i + 1)
-				
+
 				//show sidebar if not currently expanded
 				if (showSidebar && !solutionPrefs.screenAttrib.sidebar.status) {
 					DS_sidebar_toggle(true)
 				}
-	
+
 				return true
 			}
 			else {
-	
+
 				if (showSidebar && !solutionPrefs.screenAttrib.sidebar.status) {
 					DS_sidebar_toggle(true)
 				}
-	
+
 				return false
 			}
 		}
@@ -5670,50 +5790,50 @@ function TRIGGER_sidebar_set(sidebarName, showSidebar) {
 
 /**
  * Hotkey shortcut to pop open the adBlocks console in a non-modal FiD.
- * 
+ *
  * @properties={typeid:24,uuid:"ea705c5e-0455-46df-a703-4f445937273c"}
  */
 function _1() {
 	forms.CODE_P__konsole.initialize()
-	
+
 	var	nHeight = cmdVarBin.windowSize.height
 	var	nWidth = cmdVarBin.windowSize.width
-	
+
 	CODE_form_in_dialog(forms.CODE_P__konsole, 20, 50, nWidth, nHeight + 20, 'Servoy Konsole',  true,  false, 'KONSOLE', false)
 }
 
 /**
  * Helper method to insert Data Mosaic license in all javascript files.
- * 
+ *
  * @properties={typeid:24,uuid:"43FDEA90-D609-436A-8401-3153AEA868CE"}
  */
 function CODE_license_insert() {
 	//prompt for a workspace directory, go through all .js files and insert a block of text with licensing info at the top
-	
+
 	//generic verbage
 	var thisYear = utils.dateFormat(new Date(),'yyyy')
-	
+
 	var licenseTop = "/**\n * @properties={typeid:35,uuid:\"DA7AE05A-1C00-"
 	var licenseStuffing = "\"}\n */\nvar _license_"
 	var licenseEnd = " = 'Data Sutra is everything you need to build a great app. \\\n\t\t\t\t\t\t\t\t\tCopyright (C) 2006 - " + thisYear + " Data Mosaic \\\n\t\t\t\t\t\t\t\t\t\\\n\t\t\t\t\t\t\t\t\tThis program is free software: you can redistribute it and/or modify \\\n\t\t\t\t\t\t\t\t\tit under the terms of the GNU Affero General Public License as \\\n\t\t\t\t\t\t\t\t\tpublished by the Free Software Foundation, either version 3 of the \\\n\t\t\t\t\t\t\t\t\tLicense, or (at your option) any later version. \\\n\t\t\t\t\t\t\t\t \t\\\n\t\t\t\t\t\t\t\t\tThis program is distributed in the hope that it will be useful, \\\n\t\t\t\t\t\t\t\t\tbut WITHOUT ANY WARRANTY; without even the implied warranty of \\\n\t\t\t\t\t\t\t\t\tMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the \\\n\t\t\t\t\t\t\t\t\tGNU Affero General Public License for more details. \\\n\t\t\t\t\t\t\t\t\t\\\n\t\t\t\t\t\t\t\t\tYou should have received a copy of the GNU Affero General Public License \\\n\t\t\t\t\t\t\t\t\talong with this program.  If not, see <http://www.gnu.org/licenses/>.';\n\n"
 	var licenseSixPlus = '/**\n *\tData Sutra is everything you need to build a great app.\n * \tCopyright (C) 2006 - ' + thisYear + ' Data Mosaic \n *\n *\tThis program is free software: you can redistribute it and/or modify\n *\tit under the terms of the GNU Affero General Public License as\n *\tpublished by the Free Software Foundation, either version 3 of the\n *\tLicense, or (at your option) any later version.\n *\n *\tThis program is distributed in the hope that it will be useful,\n *\tbut WITHOUT ANY WARRANTY; without even the implied warranty of\n *\tMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n *\tGNU Affero General Public License for more details.\n *\n *\tYou should have received a copy of the GNU Affero General Public License\n *\talong with this program.  If not, see <http://www.gnu.org/licenses/>.\n */\n\n'
-	
+
 	var cnt = 1
 	var contentJS
-	
+
 	var servoyVersion = utils.stringToNumber(application.getVersion())
-	
+
 	function padLast(sequence) {
 		var length = 12 - sequence.length
 		var pad = ''
-			
+
 		while (length--) {
 			pad += '0'
 		}
-		
+
 		return pad + sequence
 	}
-	
+
 	var L33T = {
 			__DATASUTRA__		: 'DA7A',
 			__datasutra__connector	: 'DAC0',
@@ -5730,20 +5850,20 @@ function CODE_license_insert() {
 			_dsa_sutra_TMPL_forms :	 '1E47',
 			_dsa_sutra_TOOL_toolbar_sidebar	: '1007'
 		}
-	
+
 	var workspace = plugins.file.showDirectorySelectDialog(plugins.sutra.getWorkspace().substr(5),'Choose a workspace')
-	
+
 	//workspace selected
 	if (workspace) {
 		var modules = plugins.file.getFolderContents(workspace, null, 2, 1)
-		
+
 		for (var i = 0; i < modules.length; i++) {
 			var module = modules[i]
 			var moduleName = module.getAbsolutePath().split('/').pop()
-			
+
 			var formsJS = plugins.file.getFolderContents(module.getAbsolutePath() + '/forms', '.js', 1)
 			var globalJS = plugins.file.readTXTFile(module.getAbsolutePath() + '/globals.js')
-			
+
 			//if this 'module' has globals
 			if (globalJS) {
 				//insert license as form variable
@@ -5751,7 +5871,7 @@ function CODE_license_insert() {
 					//C0DE-1111-00000000000001
 					var sequence = utils.numberFormat(cnt++,'#')
 					var twenty = L33T[moduleName] + '-' + '1111' + '-' + padLast(sequence)
-					
+
 					contentJS = licenseTop + twenty + licenseStuffing + moduleName + licenseEnd + globalJS
 				}
 				//insert license as comment, like it should be
@@ -5759,22 +5879,22 @@ function CODE_license_insert() {
 					contentJS = licenseSixPlus + globalJS
 					cnt++
 				}
-				
+
 				plugins.file.writeTXTFile(module.getAbsolutePath() + '/globals.js',contentJS)
 			}
-			
+
 			//if this 'module' has forms with javascript, proceed
 			if (formsJS.length) {
 				//loop
 				for (var j = 0; j < formsJS.length; j++) {
 					var formJS = formsJS[j]
-					
+
 					//insert license as form variable
 					if (servoyVersion < 6) {
 						//C0DE-1111-00000000000001
 						var sequence = utils.numberFormat(cnt++,'#')
 						var twenty = L33T[moduleName] + '-' + '1111' + '-' + padLast(sequence)
-						
+
 						contentJS = licenseTop + twenty + licenseStuffing + moduleName + licenseEnd + plugins.file.readTXTFile(formJS)
 					}
 					//insert license as comment, like it should be
@@ -5782,12 +5902,12 @@ function CODE_license_insert() {
 						contentJS = licenseSixPlus + plugins.file.readTXTFile(formJS)
 						cnt++
 					}
-					
+
 					plugins.file.writeTXTFile(formJS,contentJS)
 				}
 			}
 		}
-		
+
 		if (application.isInDeveloper() && application.getApplicationType() == APPLICATION_TYPES.SMART_CLIENT) {
 			plugins.dialogs.showInfoDialog('Completed','Licensing text has been inserted in all ' + cnt - 1 + '.js files.')
 		}
@@ -5798,11 +5918,11 @@ function CODE_license_insert() {
 
 /**
  * Navigates to the specified toolbar if it is available for the logged in user.
- * 
+ *
  * @param	{JSEvent|String}	input Event from click to pop-up options or formName to work on.
- * @param	{String}	[itemName] 
+ * @param	{String}	[itemName]
  * @param	{Number}	[tabSelected]
- * 
+ *
  * @properties={typeid:24,uuid:"F02F73B3-1A9B-4398-9D7C-909247F05EB3"}
  */
 function TRIGGER_ul_tab_list(input,itemName,tabSelected) {
@@ -5816,9 +5936,9 @@ function TRIGGER_ul_tab_list(input,itemName,tabSelected) {
 			valueList.push(actionItem.menuName)
 			formNames.push(actionItem.formToLoad)
 		}
-		
+
 		var listTabForm = (solutionPrefs.config.webClient) ? 'DATASUTRA_WEB_0F__list__universal' : 'DATASUTRA_0F_solution'
-		
+
 		//tack on the selected UL to the top of the pop-down
 		valueList.unshift(navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].universalList.displays[navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].universalList.displays.displayPosn].listTitle || navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].navigationItem.fwListTitle)
 		if (solutionPrefs.config.webClient) {
@@ -5827,15 +5947,15 @@ function TRIGGER_ul_tab_list(input,itemName,tabSelected) {
 		else {
 			formNames.unshift((navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.withButtons) ? 'NAV_T_universal_list' : 'NAV_T_universal_list__no_buttons')
 		}
-		
+
 		//called to depress menu
 		if (input instanceof JSEvent) {
 			var popForm = input.getFormName()
 			var popElem = input.getElementName()
-			
+
 			//only show pop-up if there are enabled values
 			if (valueList.length > 1) {
-				
+
 				//build menu, load tabs, and set menu method arguments
 				var menu = new Array()
 				for ( var i = 0 ; i < valueList.length ; i++ ) {
@@ -5847,7 +5967,7 @@ function TRIGGER_ul_tab_list(input,itemName,tabSelected) {
 					else {
 						menu[i] = plugins.popupmenu.createMenuItem(valueList[i] + "", TRIGGER_ul_tab_list)
 					}
-					
+
 					//pass form name as parameter if that form is currently included
 					if (forms[formNames[i]]) {
 						menu[i].setMethodArguments(formNames[i],valueList[i])
@@ -5855,36 +5975,36 @@ function TRIGGER_ul_tab_list(input,itemName,tabSelected) {
 					else {
 						menu[i].setEnabled(false)
 					}
-					
+
 					//disable dividers
 					if (valueList[i] == '-') {
 						menu[i].setEnabled(false)
 					}
 				}
-				
+
 				//are we using a second element to get pop up to align correctly
 				var btnInvisible = popElem + "_down"
-				
+
 				//push menu down to the header line
 				if (forms[popForm].elements[btnInvisible]) {
 					var elem = forms[popForm].elements[btnInvisible]
-					
+
 					if (!solutionPrefs.config.webClient) {
 						var currentLocationX = elem.getLocationX()
 						var currentLocationY = elem.getLocationY()
-						
+
 						elem.setLocation(currentLocationX, currentLocationY + 3)
 					}
 				}
 				else {
 					var elem = forms[popForm].elements[popElem]
 				}
-				
+
 				//popup menu
 				if (elem != null) {
 				    plugins.popupmenu.showPopupMenu(elem, menu)
 				}
-				
+
 				//set invisible btn back to original location
 				if (forms[popForm].elements[btnInvisible] && !solutionPrefs.config.webClient) {
 					elem.setLocation(currentLocationX, currentLocationY)
@@ -5897,25 +6017,25 @@ function TRIGGER_ul_tab_list(input,itemName,tabSelected) {
 			var itemName = arguments[1]
 			var tabSelected = arguments[2]
 			var prefName = 'Custom tab ' + solutionPrefs.config.currentFormID + ': ' + formName
-			
+
 			if (forms[formName]) {
 				//set global that end users use in their code
 				NAV_universal_selected_tab = formName
-				
+
 				//if not loaded, add tab
 				if (formName != 'DATASUTRA_0F_solution__blank_2' && !navigationPrefs.byNavSetName.configPanes.itemsByName[prefName]) {
-					
+
 					//assign to list tab panel
 					forms[listTabForm].elements.tab_content_B.addTab(forms[formName],'',null,null,null,null)
 					forms[listTabForm].elements.tab_content_B.tabIndex = forms[listTabForm].elements.tab_content_B.getMaxTabIndex()
-					
+
 					//save status info
 					navigationPrefs.byNavSetName.configPanes.itemsByName[prefName] = new Object()
 					navigationPrefs.byNavSetName.configPanes.itemsByName[prefName].listData = {
 												tabNumber : forms[listTabForm].elements.tab_content_B.tabIndex,
 												dateAdded : application.getServerTimeStamp()
 										}
-					
+
 				}
 				//blank form, set to blank tab
 				else if (formName == 'DATASUTRA_0F_solution__blank_2') {
@@ -5925,7 +6045,7 @@ function TRIGGER_ul_tab_list(input,itemName,tabSelected) {
 				else {
 					forms[listTabForm].elements.tab_content_B.tabIndex = navigationPrefs.byNavSetName.configPanes.itemsByName[prefName].listData.tabNumber
 				}
-				
+
 				//using a custom tab, note which one it is
 				if (tabSelected >= 0) {
 					navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].buttons.tabs.tabPosn = tabSelected
@@ -5934,7 +6054,7 @@ function TRIGGER_ul_tab_list(input,itemName,tabSelected) {
 				else if (navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].buttons.tabs) {
 					delete navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].buttons.tabs.tabPosn
 				}
-				
+
 				//LOG ul tab change
 				TRIGGER_log_create('UL Tabs',
 						itemName,
@@ -5947,9 +6067,9 @@ function TRIGGER_ul_tab_list(input,itemName,tabSelected) {
 
 /**
  * Calls the UL action event.
- * 
+ *
  * @param	{JSEvent}	event Event from click to pop-up options.
- * 
+ *
  * @properties={typeid:24,uuid:"DD0B38BF-70F8-40CF-BE62-A7C11A322A1A"}
  */
 function TRIGGER_ul_button_action(event) {
@@ -5962,9 +6082,9 @@ function TRIGGER_ul_button_action(event) {
 
 /**
  * Calls the UL add event.
- * 
+ *
  * @param	{JSEvent}	event Event from click to pop-up options.
- * 
+ *
  * @properties={typeid:24,uuid:"DB5DF8A9-9150-40FA-B0C4-B70A916CBBC3"}
  */
 function TRIGGER_ul_button_add(event) {
@@ -5977,9 +6097,9 @@ function TRIGGER_ul_button_add(event) {
 
 /**
  * Calls the UL report event.
- * 
+ *
  * @param	{JSEvent}	event Event from click to pop-up options.
- * 
+ *
  * @properties={typeid:24,uuid:"FBAD991A-A258-4D77-9C55-DBDC35A471F1"}
  */
 function TRIGGER_ul_button_report(event) {
@@ -5992,9 +6112,9 @@ function TRIGGER_ul_button_report(event) {
 
 /**
  * Calls the UL filter event.
- * 
+ *
  * @param	{JSEvent}	event Event from click to pop-up options.
- * 
+ *
  * @properties={typeid:24,uuid:"2A613595-9E4D-4D0C-AD7F-689E1FA8CF65"}
  */
 function TRIGGER_ul_button_filter(event) {
@@ -6047,11 +6167,11 @@ function CODE_cursor_busy(busyCursor) {
  */
 function CODE_multiselect(firstShow, event) {
 	var formName = event.getFormName()
-	
+
 	//turn multiselect on
 	if (firstShow && formName) {
 		forms[formName].foundset.multiSelect = true
-		
+
 		if (forms[formName].FORM_on_show) {
 			forms[formName].FORM_on_show(firstShow, event)
 		}
@@ -6060,35 +6180,35 @@ function CODE_multiselect(firstShow, event) {
 
 /**
  * Turns on accent highlight of selected row for specified time on form.
- * 
+ *
  * @param	{String}	formName The form on which to highlight the selected row.
  * @param	{Number}	[delay=500] Amount of time to highlight selected row.
- * 
+ *
  * @properties={typeid:24,uuid:"28376429-115F-4661-8311-AE6173815A64"}
  */
 function CODE_row_background__highlight(formName,delay) {
 	arguments.callee.form = function() {
 		return formName
 	}
-	
+
 	arguments.callee.status = function() {
 		return status || false
 	}
-	
+
 	//turn on accent highlight
 	var status = true
-	
+
 	//refresh screen so that accent seen
 	application.updateUI(delay || 500)
-	
+
 	//turn accent off and refresh screen again
 	status = false
 	application.updateUI()
 }
 
-/** 
+/**
  * Show and set the initial status of the small dialog window.
- * 
+ *
  * @param	{Boolean}	toggle Show/hide the dialog.
  * @param	{String}	[typeForm='touch'] What style dialog is this.
  * @param	{String}	[formName] Form to load in the tab panel (all others removed).
@@ -6102,22 +6222,22 @@ function CODE_row_background__highlight(formName,delay) {
  * @param	{Boolean}	[nonTransparent] Lock screen from other interactions until hidden.
  * @param	{Boolean}	[showArrow=false] Show arrow.
  * @param	{Number}	[positionArrow=center of inliner] Position of arrow.
- * 
+ *
  * @properties={typeid:24,uuid:"A3612F37-7D06-4047-A445-26B170694F6B"}
  */
 function TRIGGER_dialog_small(toggle,typeForm,formName,lockScreen,positionX,positionY,sizeX,sizeY,saveTooltip,cancelTooltip,nonTransparent,showArrow,positionArrow) {
 	//the tabpanel that gets moved around to do this effect
 	var dialog = forms.DATASUTRA_0F_solution.elements.tab_dialog
-	
+
 	var widthOffset = 0
 	var heightOffset = 0
-	
+
 	switch (typeForm || 'touch') {
 		case 'touch':
 			var windowing = forms.DATASUTRA__dialog_small__touch
 			widthOffset = 60
 			heightOffset = 100
-			
+
 			//select this look and feel
 			forms.DATASUTRA__dialog_small.elements.tab_type.tabIndex = 3
 			break
@@ -6125,25 +6245,25 @@ function TRIGGER_dialog_small(toggle,typeForm,formName,lockScreen,positionX,posi
 			var windowing = forms.DATASUTRA__dialog_small__floater
 			widthOffset = 40
 			heightOffset = 50
-			
+
 			//select this look and feel
 			forms.DATASUTRA__dialog_small.elements.tab_type.tabIndex = 1
 			break
 		case 'standard':
 			var windowing = forms.DATASUTRA__dialog_small__standard
-			
+
 			//select this look and feel
 			forms.DATASUTRA__dialog_small.elements.tab_type.tabIndex = 2
 			break
 	}
-	
+
 	//where the content gets stored
 	var content = windowing.elements.tab_content
-	
+
 	//show dialog
 	if (toggle) {
 		var smForm = solutionModel.getForm(formName)
-		
+
 		if (formName && smForm) {
 			//add tab
 			if (content.getTabFormNameAt(content.tabIndex) != formName) {
@@ -6156,36 +6276,36 @@ function TRIGGER_dialog_small(toggle,typeForm,formName,lockScreen,positionX,posi
 					forms[formName][smForm.onShow.getName()]()
 				}
 			}
-			
+
 			//set size of base form
-			
+
 			//get height
 			var totalHeight = 0
 			for (var i in smForm.getParts()) {
 				totalHeight += smForm.getParts()[i].height
 			}
-			
+
 			sizeX = sizeX || (solutionModel.getForm(formName).width + widthOffset)
 			sizeY = sizeY || (totalHeight + heightOffset)
 		}
-		
+
 		//show arrow
 		if (showArrow) {
 			//adjust position of inliner to be centered
 			positionX -= (sizeX / 2)
-			
+
 			windowing.elements.gfx_location.setLocation((positionArrow || (sizeX / 2)) - 8, 1)
 			windowing.elements.gfx_location.visible = true
 		}
 		else {
 			windowing.elements.gfx_location.visible = false
 		}
-		
+
 		//set position
 		if (positionX || positionY) {
 			dialog.setLocation(positionX || 0, positionY || 0)
 		}
-		
+
 		//set size
 		if (sizeX || sizeY) {
 			//check to see that will be entirely visible
@@ -6196,10 +6316,10 @@ function TRIGGER_dialog_small(toggle,typeForm,formName,lockScreen,positionX,posi
 			if (dialog.getLocationY() + sizeY + 40 > application.getWindowHeight(null)) {
 				sizeY = application.getWindowHeight(null) - dialog.getLocationY() - 80
 			}
-			
+
 			dialog.setSize(sizeX, sizeY)
 		}
-		
+
 		//set save tooltip
 		if (windowing.elements.btn_ok && windowing.elements.btn_ok.toolTipText) {
 			if (saveTooltip) {
@@ -6209,7 +6329,7 @@ function TRIGGER_dialog_small(toggle,typeForm,formName,lockScreen,positionX,posi
 				windowing.elements.btn_ok.toolTipText = 'Save'
 			}
 		}
-		
+
 		//set cancel tooltip
 		if (windowing.elements.btn_cancel && windowing.elements.btn_cancel.toolTipText) {
 			if (cancelTooltip) {
@@ -6219,7 +6339,7 @@ function TRIGGER_dialog_small(toggle,typeForm,formName,lockScreen,positionX,posi
 				windowing.elements.btn_cancel.toolTipText = 'Cancel'
 			}
 		}
-		
+
 		//set non-transparency
 		if (nonTransparent) {
 			content.transparent = false
@@ -6227,12 +6347,12 @@ function TRIGGER_dialog_small(toggle,typeForm,formName,lockScreen,positionX,posi
 		else {
 			content.transparent = true
 		}
-		
+
 		//disable all actions
 		if (lockScreen) {
 			TRIGGER_interface_lock(true,true)
 		}
-		
+
 		//turn on
 		dialog.visible = true
 	}
@@ -6252,10 +6372,10 @@ function CODE_servoy_object_exists(methodName, formName) {
 		//a form specified
 		if (formName) {
 			var smForm = solutionModel.getForm(formName)
-			
+
 			//check to see if form exists
 			if (smForm) {
-				
+
 				//check for method existence on given form
 				if (smForm.getFormMethod(methodName)) {
 					return true
@@ -6286,7 +6406,7 @@ function CODE_servoy_object_exists(methodName, formName) {
 
 /**
  * Wrapper to aide in converting deprecated showFormInDialog calls
- * 
+ *
  * @param {Form} form
  * @param {Number} [x]
  * @param {Number} [y]
@@ -6297,11 +6417,11 @@ function CODE_servoy_object_exists(methodName, formName) {
  * @param {Boolean} [showText=false]
  * @param {String} [name]
  * @param {Boolean} [modal=true]
- * 
+ *
  * @properties={typeid:24,uuid:"95177CA4-C36C-4F0D-A076-45F78F7836F4"}
  */
 function CODE_form_in_dialog(form, x, y, width, height, title, resizable, showText, name, modal) {
-	
+
 	//pre-6
 	if (utils.stringToNumber(application.getVersion()) < 6) {
 		application.showFormInDialog(
@@ -6319,14 +6439,14 @@ function CODE_form_in_dialog(form, x, y, width, height, title, resizable, showTe
 		//TODO: in webclient, use dialog plugin for FiDs so continuations baked in
 		if (false && solutionPrefs.config.webClient) {
 			DIALOGS.showFormInModalDialog(
-					form.controller.getName(), 
+					form.controller.getName(),
 					x,
 					y,
 					width,
-					height, 
-					title, 
-					resizable, 
-					showText, 
+					height,
+					title,
+					resizable,
+					showText,
 					name
 				)
 		}
@@ -6339,11 +6459,11 @@ function CODE_form_in_dialog(form, x, y, width, height, title, resizable, showTe
 					return defaultValue
 				}
 			}
-			
+
 			var smForm = solutionModel.getForm(form.controller.getName())
-			
+
 			var autoSave = databaseManager.getAutoSave()
-			
+
 			//didn't take window size into account unless resizable enabled; manually calculate window dimensions
 			if (utils.stringToNumber(utils.stringReplace(application.getVersion(),'.','')) < 605) {
 				var offset = 0
@@ -6351,10 +6471,10 @@ function CODE_form_in_dialog(form, x, y, width, height, title, resizable, showTe
 				//windows
 				if (utils.stringPatternCount(solutionPrefs.clientInfo.typeOS,'Windows')) {
 					var theme = plugins.sutra.getWindowsTheme()
-					
+
 					//todo: figure out specifically
 					titleBar = 30
-					
+
 					//aero
 					if (utils.stringToNumber(solutionPrefs.clientInfo.verOS) > 6 && theme != 'Classic') {
 						offset = 16
@@ -6372,12 +6492,12 @@ function CODE_form_in_dialog(form, x, y, width, height, title, resizable, showTe
 				else {
 					titleBar = 22
 				}
-				
+
 				var totalWidth = smForm.width
-				
+
 				//offset for platform windowing
 				totalWidth += offset
-				
+
 				var totalHeight = 0
 				for (var i in smForm.getParts()) {
 					totalHeight += smForm.getParts()[i].height
@@ -6390,29 +6510,29 @@ function CODE_form_in_dialog(form, x, y, width, height, title, resizable, showTe
 				totalWidth = -1
 				totalHeight = -1
 			}
-			
+
 			if (typeof resizable != 'boolean') {
 				resizable = true
 			}
-			
+
 			if (typeof showText != 'boolean') {
 				showText = false
 			}
-			
+
 			if (typeof modal != 'boolean') {
 				modal = true
 			}
-			
+
 			var modality = modal ? JSWindow.MODAL_DIALOG : JSWindow.DIALOG
-			
+
 			//check to see if this FiD already exists and remove it
 			if (application.getWindow(name)) {
-				
+
 				//run on hide method
 					//MEMO: must destroy window in onhide
 				if (smForm.onHide && smForm.onHide.getName() && form[smForm.onHide.getName()]) {
 					form[smForm.onHide.getName()]()
-					
+
 					//on hide changed the status of autosave, reset
 					if (autoSave != databaseManager.getAutoSave()) {
 						databaseManager.setAutoSave(autoSave)
@@ -6422,11 +6542,11 @@ function CODE_form_in_dialog(form, x, y, width, height, title, resizable, showTe
 				else {
 					//needed for case when FiD shown and then navigated to other part of solution before closing
 					CODE_hide_form = 1
-					
+
 					application.getWindow(name).destroy()
 				}
 			}
-			
+
 			//in webclient on an ipad, turn off indicator; fixed position is outside bounds of FiD and makes scroll bars show up
 			if (application.__parent__.solutionPrefs && solutionPrefs.config.webClient && scopes.DS.deviceFactor == 'iPad') {
 				//there is already an onshow
@@ -6435,10 +6555,10 @@ function CODE_form_in_dialog(form, x, y, width, height, title, resizable, showTe
 					if (!(utils.stringPatternCount(smForm.onShow.code,'CODE_form_in_dialog_setup_ipad()')  || utils.stringPatternCount(smForm.onShow.code,'indicatorOff()'))) {
 						//first trash the form
 						solutionModel.removeForm(smForm.name)
-						
+
 						//now update the code
 						smForm.onShow.code = smForm.onShow.code.substr(0,smForm.onShow.code.length - 2) + ";CODE_form_in_dialog_setup_ipad()" + smForm.onShow.code.substr(smForm.onShow.code.length - 2)
-						
+
 						//get the form again
 						form = forms[smForm.name]
 					}
@@ -6447,15 +6567,15 @@ function CODE_form_in_dialog(form, x, y, width, height, title, resizable, showTe
 				else {
 					//first trash the form
 					solutionModel.removeForm(smForm.name)
-					
+
 					//now create new on show method
 					smForm.onShow = smForm.newMethod("function FORM_on_show__DSWEBCLIENT(firstShow,event){CODE_form_in_dialog_setup_ipad()}")
-					
+
 					//get the form again
 					form = forms[smForm.name]
 				}
 			}
-			
+
 			var FiD = application.createWindow(name,modality)
 			FiD.setInitialBounds(
 							getSize(x,-1),
@@ -6473,9 +6593,9 @@ function CODE_form_in_dialog(form, x, y, width, height, title, resizable, showTe
 
 /**
  * Wrapper to aide in converting deprecated closeFormDialog calls
- * 
+ *
  * @param {String} [name]
- * 
+ *
  * @properties={typeid:24,uuid:"BAF7CB19-281E-49ED-B83D-E6AEF1A566F6"}
  */
 function CODE_form_in_dialog_close(name) {
@@ -6501,10 +6621,10 @@ function CODE_form_in_dialog_close(name) {
  */
 function CODE_row_background__list(event) {
 	var renderable = event.getRenderable()
-	
+
 	//set background color
 	renderable.bgcolor = '#D1D7E2'
-		
+
 	if (!solutionPrefs.config.webClient && renderable.getElementType() == 'CHECK') {
 		renderable.transparent = true
 	}
@@ -6518,7 +6638,7 @@ function CODE_row_background__list(event) {
  */
 function CODE_appserver_get(hostName) {
 //	var appURL = ''
-//		
+//
 //	if (application.getApplicationType() == APPLICATION_TYPES.WEB_CLIENT) {
 //		//get url using callback
 //		if (!hostName) {
@@ -6540,7 +6660,7 @@ function CODE_appserver_get(hostName) {
 //	else {
 //		appURL = application.getServerURL().substr(7)
 //	}
-//	
+//
 //	application.output(appURL)
 //	return appURL
 
@@ -6560,7 +6680,7 @@ function CODE_appserver_get(hostName) {
 
 /**
  * Turn off ajax indicator on iPad FiD so scrollbars do not show up
- * 
+ *
  * @properties={typeid:24,uuid:"C04AB740-78A8-4C00-B6BB-31B2AB0586C8"}
  */
 function CODE_form_in_dialog_setup_ipad() {
@@ -6571,9 +6691,9 @@ function CODE_form_in_dialog_setup_ipad() {
 
 /**
  * Spellcheck the element assigned to the event's labelfor property.
- * 
+ *
  * @param {JSEevent} event
- * 
+ *
  * @properties={typeid:24,uuid:"D946F5F2-235C-4171-BE1B-1DA8F13470C6"}
  */
 function CODE_spellcheck(event) {
@@ -6581,7 +6701,7 @@ function CODE_spellcheck(event) {
 		var formName = event.getFormName()
 		var btnName = event.getElementName()
 		var elemName = forms[formName].elements[btnName].getLabelForElementName()
-		
+
 		if (formName && elemName && forms[formName].elements[elemName]) {
 			plugins.spellcheck.checkTextComponent(forms[formName].elements[elemName])
 		}
@@ -6590,11 +6710,11 @@ function CODE_spellcheck(event) {
 
 /**
  * Get the mouse location within a workflow form.
- * 
+ *
  * @param {JSEvent} event
  * @param {Number[]} posn
  * @return {{x: Number, y: Number}} Coordinates
- * 
+ *
  * @properties={typeid:24,uuid:"9E4A25E9-1D33-40AD-B7A6-55FE133630F7"}
  */
 function TRIGGER_mouse_get(event,posn) {
@@ -6602,34 +6722,34 @@ function TRIGGER_mouse_get(event,posn) {
 			x: 0,
 			y: 0
 		}
-	
+
 	if (solutionPrefs.config.webClient) {
 		//header offset
 		position.y += 44
-		
+
 		//are we in workflow space (no offset)
 		if (solutionPrefs.config.activeSpace != 'workflow') {
 			//all horizontals kept in sync; doesn't matter which one i grab
 			position.x += solutionPrefs.screenAttrib.spaces.standard.currentHorizontal
 		}
-		
+
 		//at this point, position is in the top left corner of the workflow form
-		
+
 		var context = forms[event.getFormName()].controller.getFormContext()
-		
+
 		//working on workflow form
 		if (context.getValue(3,2) == 'DATASUTRA_WEB_0F__workflow') {
 			for (var i = 4; i <= context.getMaxRowIndex(); i++) {
 				var formContext = context.getRowAsArray(i)
 				var formName = formContext[1]
 				var elemName = formContext[2]
-				
+
 				//see about a title header
 				var smForm = solutionModel.getForm(formName)
 				if (smForm.getTitleHeaderPart() && smForm.getTitleHeaderPart().height) {
 					position.y += smForm.getTitleHeaderPart().height
 				}
-				
+
 				//check what element
 				if (formName && elemName) {
 					position.x += forms[formName].elements[elemName].getLocationX()
@@ -6638,16 +6758,16 @@ function TRIGGER_mouse_get(event,posn) {
 			}
 		}
 		//working on sidebar
-		
+
 		//something else
-		
-		
+
+
 	}
 	//mouse pointer plugin available
 	else if (false) {
-		
+
 	}
-	
+
 //	//grab last click location from Wicket
 //	if (solutionPrefs.config.webClient) {
 //		//current mouse location
@@ -6656,19 +6776,19 @@ function TRIGGER_mouse_get(event,posn) {
 //		}
 //		//have cursor, resume paused method
 //		else {
-//			
+//
 //		}
 //	}
-	
+
 	return position
 }
 
 /**
  * Programatically navigate to a different navigation item.
- * 
+ *
  * @param	{String}	[reportID] The navigation item to jump to.
  * @return {Boolean} Report found/ran successfully
- * 
+ *
  * @properties={typeid:24,uuid:"F21FE969-0EFB-42AC-A4F7-8C3F7DC47AAB"}
  * @AllowToRunInFind
  */
@@ -6676,7 +6796,7 @@ function TRIGGER_report_run(reportID) {
 	//solutionPrefs defined
 	if (application.__parent__.solutionPrefs) {
 		var reportID = arguments[0]
-		
+
 		if (reportID) {
 			/** @type {JSFoundSet<db:/sutra/sutra_report>} */
 			var fsReport = databaseManager.getFoundSet('db:/sutra/sutra_report')
@@ -6685,9 +6805,9 @@ function TRIGGER_report_run(reportID) {
 			var results = fsReport.search()
 			if (results == 1) {
 				var reportRec = fsReport.getSelectedRecord()
-				
+
 				scopes.DS_buttons.REPORTS_list_control(reportRec.report_form,reportRec.report_method,reportRec.flag_wrapper,reportRec.source,reportRec.report_description,reportRec.id_report)
-				return true				
+				return true
 			}
 			else {
 				return false
@@ -6698,7 +6818,7 @@ function TRIGGER_report_run(reportID) {
 
 /**
  * Display information about the calling method
- * 
+ *
  * @param {Function} callee
  * @param {Controller} [control] Controller called from
  * @param {Boolean} [separator=false] Show : after
@@ -6718,23 +6838,23 @@ function CODE_debug_context(callee,control,separator) {
 		else if (control && typeof control.getName == 'function') {
 			whereAt += 'forms.' + control.getName() + '.'
 		}
-		
+
 		whereAt += callee._methodname_
-		
+
 		if (separator) {
 			whereAt += ': '
 		}
 	}
-	
+
 	return whereAt
 }
 
 /**
  * Debug appropriately in smart/web clients
- * 
+ *
  * To turn on, "run globals.CODE_debug_log.enabled = true" in konsole
  * or the same command without run from developer's command console
- * 
+ *
  * @param {String}	msg Message to output
  * @param {Number}	[level=LOGGINGLEVEL.DEBUG] Optional logging level
  * @param {JSFile}	[file] File to append this log to
@@ -6746,7 +6866,7 @@ function CODE_debug_log(msg,level,file) {
 	if (!level) {
 		level = LOGGINGLEVEL.DEBUG
 	}
-	
+
 	function appendLog() {
 		var levelMap = {
 				0 : 'DEBUG',
@@ -6755,13 +6875,13 @@ function CODE_debug_log(msg,level,file) {
 				1 : 'INFO',
 				2 : 'WARNING'
 			}
-		
+
 		plugins.file.appendToTXTFile(
 				file,
 				globals.CODE_date_format(null,'specify','yyyy-MM-dd HH:mm:ss.SSS') + ' [' + levelMap[level] + '] ' + msg + '\n'
 			)
 	}
-	
+
 	//enabled or not
 	if (CODE_debug_log.enabled) {
 		//webclient
@@ -6783,40 +6903,40 @@ function CODE_debug_log(msg,level,file) {
 
 /**
  * Helper function to make pop ups go in the right place.
- * 
+ *
  * globals.CODE_popup.popupMenu holds menu to be displayed
  * globals.CODE_popup.url holds link of this page
- * 
+ *
  * @param {String}	[posn] The co-ordinates just fired.
  * @param {String}	[path] The place fired from.
  * @param {RuntimeComponent}	[elem] Bind to particular element.
- * 
+ *
  * @properties={typeid:24,uuid:"487DA917-3C82-490A-8F2C-2DAF78FCC5D2"}
  */
 function CODE_popup(posn,path,elem) {
 	//when element specified, allow smart client to use this method too
 	if (solutionPrefs.config.webClient || elem) {
 		var noCheck = false//solutionPrefs.config.webClient
-		
+
 		//store where called from
 		if (typeof path == 'string') {
 			CODE_popup.url = path
 		}
-		
+
 		//need to grab position
 		if (!elem && typeof posn != 'string') {
 			plugins.WebClientUtils.executeClientSideJS('var posn = Wicket.clickPosition;', CODE_popup, ['posn','window.parent.location.origin'])
 		}
 		else {
 			posn = posn && posn.length ? posn.split(',') : new Array()
-			
+
 			//deprecated popupmenu
 			if (CODE_popup.popupMenu instanceof Array) {
 				//special handling of selected items so that table view doeesn't expand over whole screen
 				if (noCheck) {
 					for (var i = 0; i < CODE_popup.popupMenu.length; i++) {
 						var item = CODE_popup.popupMenu[i]
-						
+
 						//item is a checkbox, redo without check
 						if (item && item.selected) {
 							CODE_popup.popupMenu[i] = plugins.popupmenu.createMenuItem('\u2713 ' + item.text,CODE_popup)
@@ -6825,7 +6945,7 @@ function CODE_popup(posn,path,elem) {
 						}
 					}
 				}
-				
+
 				//attach to element
 				if (elem) {
 					plugins.popupmenu.showPopupMenu(elem, CODE_popup.popupMenu)
@@ -6841,7 +6961,7 @@ function CODE_popup(posn,path,elem) {
 				if (noCheck) {
 					for (var i = 0; i < CODE_popup.popupMenu.getItemCount(); i++) {
 						var item = CODE_popup.popupMenu.getItem(i)
-						
+
 						//item is a checkbox, redo without check
 						if (item && item.selected) {
 							var newItem = CODE_popup.popupMenu.addMenuItem(i)
@@ -6849,13 +6969,13 @@ function CODE_popup(posn,path,elem) {
 							newItem.setMethod(CODE_popup)
 							newItem.methodArguments = item.methodArguments
 							newItem.enabled = false//item.enabled
-							
+
 							//remove checked item
 							CODE_popup.popupMenu.removeItem(i+1)
 						}
 					}
 				}
-				
+
 				//attach to element with offset
 				if (elem && posn.length == 2) {
 					CODE_popup.popupMenu.show(elem, posn[0], posn[1])
