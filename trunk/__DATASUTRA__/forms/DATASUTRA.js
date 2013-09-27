@@ -96,11 +96,19 @@ function FORM_on_load(event) {
 					}
 					
 					//comboboxes flagged to be mini
-					
 					if (smForm.onLoad && smForm.onLoad.code && smForm.onLoad.code.match(/globals.CODE_property_combobox\((.*)mini/) && smForm.onLoad.code.match(/globals.CODE_property_combobox\((.*)mini/).length) {
 						//adjust size
 						smField.width = smField.width - 2
 						smField.height = smField.height - 3
+						smField.y = smField.y + 1
+					}
+					
+					//comboboxes we want to appear not so large
+					if (smField.styleClass == 'normal') {
+						//adjust size
+						smField.width = smField.width - 3
+						smField.height = smField.height - 3
+						smField.x = smField.x + 2
 						smField.y = smField.y + 1
 					}
 				}

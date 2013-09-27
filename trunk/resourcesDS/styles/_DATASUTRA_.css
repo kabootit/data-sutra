@@ -50,6 +50,9 @@ combobox {
 	color: #000;
 }
 
+combobox.normal {	
+}
+
 field, field.date, field.web {
 	background-color: #FFF;
 	border: 2px ridge #FFF;
@@ -239,6 +242,11 @@ label.heading3 {
 
 label.list {
 	font-size: 10pt;
+}
+
+label.login_action {
+	font-size: 10pt;
+	color: #999999; 
 }
 
 label.recordnavigator, label.solutionlogstatus, label.solutionsubheader {
