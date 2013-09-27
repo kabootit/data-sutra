@@ -37,13 +37,13 @@ function setupForm(_aArguments, _sIconStyle, _initialValue, _nDialogWidth, _nDia
 	_oLabel.styleClass = _sIconStyle;
 	_oLabel.mediaOptions = SM_MEDIAOPTION.REDUCE | SM_MEDIAOPTION.KEEPASPECT;
 	
-	_oLabel = _oForm.newLabel("", 90, 15, _nDialogWidth - 100, 90);
+	_oLabel = _oForm.newLabel("", 90, 15, _nDialogWidth - 100, 53);
 	_oLabel.styleClass = 'dialogs_message';
 	_oLabel.verticalAlignment = SM_ALIGNMENT.TOP;
 	_oLabel.text = '<html>' + utils.stringReplace(utils.stringReplace(utils.stringReplace(_aArguments[0], "\r\n", "<br />"), "\n", "<br />"), "\r", "<br />") + '</html>';
 	controller.recreateUI();
-	elements.fldValue.setLocation(85, _nDialogHeight - 71);
-	elements.fldValue.setSize(_nDialogWidth - 120, 20);
+	elements.fldValue.setLocation(85, _nDialogHeight - 82);
+	elements.fldValue.setSize(_nDialogWidth - 120, 22);
 	retVal = _initialValue;
 	callbackMethod = handleButtonAction;
 }

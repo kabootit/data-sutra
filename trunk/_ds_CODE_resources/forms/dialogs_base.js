@@ -100,7 +100,7 @@ function setupButtons(buttonArray, redraw, dialogWidth, dialogHeight) {
 		_nBtnWidth, // = _nBtnMinWidth,
 		_nBtnHeight = 30,
 		_xOffset = dialogWidth - 12,
-		_yOffset = dialogHeight - _nBtnHeight - 20,
+		_yOffset = dialogHeight - _nBtnHeight - 15,
 		_aElement = elements.allnames,
 		_nDefaultCharWidth = 5,
 		_aGuesstimator = [[/[!il:;,\.]/, 3], [/\w/, 10]],

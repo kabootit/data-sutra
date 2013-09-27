@@ -627,7 +627,7 @@ function REC_new() {
 		
 		//add in new blank row when this is slickgrid
 		if (navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.slickGrid) {
-			forms[navigationPrefs.byNavItemID[navigationItemID].listData.tabFormInstance].SLICK_newRecord()
+			forms[navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.tabFormInstance].SLICK_newRecord()
 		}
 	
 		//LOG ul add

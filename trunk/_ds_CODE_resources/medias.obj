@@ -745,6 +745,12 @@ uuid:"a0240010-ac66-493e-b92b-fc9533ce111e"
 },
 {
 mimeType:"image/png",
+name:"btn_highlight.png",
+typeid:37,
+uuid:"A8B526B9-E2E8-45ED-86C9-6A2F13BD72C7"
+},
+{
+mimeType:"image/png",
 name:"btn_inline_add.png",
 typeid:37,
 uuid:"3cf0066c-4133-44b3-827a-f27396820ecc"
@@ -1810,6 +1816,12 @@ mimeType:"image/gif",
 name:"progressbar_mac.gif",
 typeid:37,
 uuid:"befe41ec-b4ac-4f04-ba3d-354c4ccb4cde"
+},
+{
+mimeType:"image/gif",
+name:"progressbar_web.gif",
+typeid:37,
+uuid:"654D813D-429D-44F5-9D26-0A62D6218A56"
 },
 {
 mimeType:"image/gif",

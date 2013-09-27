@@ -28,7 +28,7 @@ function setupForm(_aArguments, _sIconStyle, _nDialogWidth, _nDialogHeight) {
 	_oLabel.styleClass = _sIconStyle;
 	_oLabel.mediaOptions = SM_MEDIAOPTION.REDUCE | SM_MEDIAOPTION.KEEPASPECT;
 	
-	_oLabel = _oForm.newLabel("", 90, 15, _nDialogWidth - 100, 90);
+	_oLabel = _oForm.newLabel("", 90, 15, _nDialogWidth - 100, 55);
 	_oLabel.styleClass = 'dialogs_message';
 	_oLabel.verticalAlignment = SM_ALIGNMENT.TOP;
 	_oLabel.text = '<html>' + utils.stringReplace(utils.stringReplace(utils.stringReplace(_aArguments[1], "\r\n", "<br />"), "\n", "<br />"), "\r", "<br />") + '</html>';
