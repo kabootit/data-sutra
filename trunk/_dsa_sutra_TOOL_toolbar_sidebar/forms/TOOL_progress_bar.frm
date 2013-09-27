@@ -85,7 +85,7 @@ uuid:"7244bdf3-52b8-48ce-b6df-202cfc433dfc"
 anchors:11,
 formIndex:10600,
 horizontalAlignment:0,
-imageMediaID:"6bc43ac7-ad66-4a88-8073-0bd3a1f3e304",
+imageMediaID:"654D813D-429D-44F5-9D26-0A62D6218A56",
 location:"60,18",
 mediaOptions:1,
 name:"gfx_progress",
