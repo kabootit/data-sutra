@@ -61,17 +61,27 @@ var continuation = new function() {
 	/**
 	 * Continuation start (pause).
 	 * @param {Number} [slot]
-	 * @param {String} [formName] Get slot based of formname (so don't need to manage kontLocation externally)
+	 * @param {String} [formName] Get slot based off formname (so don't need to manage kontLocation externally)
 	 * @return {Boolean}
 	 */
 	this.start = function(slot,formName) {
-		if (typeof slot != 'number') {
-			slot = kontLocation[formName]
-		}
-			
-		if (typeof slot == 'number' && kont.length && kont[slot-1]) {
-			//application.output('Starting continuation ' + slot)
-			terminator()
+		if (application.getApplicationType() == APPLICATION_TYPES.WEB_CLIENT) {
+			//slot not given, derive from form name
+			if (typeof slot != 'number' && formName) {
+				//this form has already a continuation, get it's slot
+				if (kontLocation[formName]) {
+					slot = kontLocation[formName]
+				}
+				//begin a new continuation
+				else {
+					slot = continuation.setLocation(formName)
+				}
+			}
+				
+			if (typeof slot == 'number' && kont.length && kont[slot-1]) {
+				//application.output('Starting continuation ' + slot)
+				terminator()
+			}
 		}
 		return false
 	}
@@ -83,25 +93,27 @@ var continuation = new function() {
 	 * @return {Boolean}
 	 */
 	this.stop = function(slot,formName) {
-		if (typeof slot != 'number') {
-			slot = kontLocation[formName]
-			delete kontLocation[formName]
-		}
-		
-		if (typeof slot == 'number' && kont.length && kont[slot-1]) {
-			//application.output('Stopping continuation ' + slot)
+		if (application.getApplicationType() == APPLICATION_TYPES.WEB_CLIENT) {
+			if (typeof slot != 'number') {
+				slot = kontLocation[formName]
+				delete kontLocation[formName]
+			}
 			
-			//grab c into a variable so don't re-run this continuation holding place
-			var c = kont[slot-1]
-			kont[slot - 1] = null
-			
-//			//form in dialog hanging out there, close it down
-//			if (false) {
-//				globals.CODE_form_in_dialog_close(formName)
-//			}
-			
-			//execute continuation
-			c()
+			if (typeof slot == 'number' && kont.length && kont[slot-1]) {
+				//application.output('Stopping continuation ' + slot)
+				
+				//grab c into a variable so don't re-run this continuation holding place
+				var c = kont[slot-1]
+				kont[slot - 1] = null
+				
+	//			//form in dialog hanging out there, close it down
+	//			if (false) {
+	//				globals.CODE_form_in_dialog_close(formName)
+	//			}
+				
+				//execute continuation
+				c()
+			}
 		}
 		return false
 	}
