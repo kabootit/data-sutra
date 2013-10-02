@@ -28,7 +28,7 @@ var DATASUTRA_router_refresh = false;
 
 /**
  * @type {Object}
- * 
+ *
  * @properties={typeid:35,uuid:"55B654A5-8EF3-453C-89A7-36F547D07B43",variableType:-4}
  */
 var DATASUTRA_router_payload = new Object();
@@ -123,32 +123,32 @@ function DATASUTRA_close()
 
 /*
  *	TITLE    :	DATASUTRA_close
- *			  	
+ *
  *	MODULE   :	_DATASUTRA_
- *			  	
+ *
  *	ABOUT    :	set logout time for session
- *			  	
- *	INPUT    :	
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	INPUT    :
+ *
+ *	OUTPUT   :
+ *
+ *	REQUIRES :
+ *
  *	MODIFIED :	Feb 29, 2008 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 	//check to make sure this method isn't called twice
-		//MEMO: called explicitly from 
+		//MEMO: called explicitly from
 
 	//don't run in headless or web client (they use whatever solution is activated as context)
 	if (application.getApplicationType() == APPLICATION_TYPES.SMART_CLIENT || application.getApplicationType() == APPLICATION_TYPES.RUNTIME_CLIENT ||
 		(application.getApplicationType() == APPLICATION_TYPES.WEB_CLIENT && (application.__parent__.solutionPrefs && solutionPrefs.config.webClient))) {
-		
+
 		// still at login screen, just close
 		if (application.__parent__.solutionPrefs && solutionPrefs.clientInfo && !solutionPrefs.clientInfo.logID) {
 			//mark this client as non-validated
 			application.setUserProperty('sutraValid-' + application.getSolutionName() + '-' + application.getServerURL().substr(7),'false')
-		
+
 			//when closed from x icon in windowing, will close client
 			application.exit()
 		}
@@ -165,23 +165,23 @@ function DATASUTRA_close()
 								'No'
 							)
 			}
-			
+
 			if (logOut == 'Yes') {
-			
+
 				if (!DATASUTRA_close.inProcess) {
-					DATASUTRA_close.inProcess = true	
-				
+					DATASUTRA_close.inProcess = true
+
 					//working with a validated session
 					if (application.__parent__.solutionPrefs && solutionPrefs.clientInfo && solutionPrefs.clientInfo.logID) {
 						//punch down solutionPrefs
 						//MEMO: any methods (Functions) assigned as a property must be removed
-					
+
 						var baseForm = solutionPrefs.config.formNameBase
 						var outGroup
 						var outSolution
 						var shutSolution
 						var logoutOK
-					
+
 						//only run in client
 						if (!utils.stringPatternCount(solutionPrefs.clientInfo.typeServoy,'developer') && !utils.stringPatternCount(solutionPrefs.clientInfo.typeServoy,'web client')) {
 							//repository information
@@ -195,10 +195,10 @@ function DATASUTRA_close()
 							var fileName = '/Users/yort/.servoy/naviTest.txt' //application.getUserProperty('sutraNavigation-' + application.getSolutionName() + '-' + application.getServerURL().substr(7))
 							if (fileName) {
 								var navFile = plugins.file.createFile(fileName)
-							
+
 								//null out values that should not be saved down
 								navigationPrefs.foundsetPool = ''
-							
+
 								for (var i in navigationPrefs.byNavItemID) {
 									//data in records with universal lists
 									if (navigationPrefs.byNavItemID[i].listData && navigationPrefs.byNavItemID[i].listData.clientUUID) {
@@ -207,7 +207,7 @@ function DATASUTRA_close()
 										navigationPrefs.byNavItemID[i].listData.dateModified = ''
 										navigationPrefs.byNavItemID[i].listData.tabFormInstance = ''
 										navigationPrefs.byNavItemID[i].listData.tabNumber = ''
-									
+
 										navigationPrefs.byNavItemID[i].listData.foundsets = ''
 										navigationPrefs.byNavItemID[i].listData.visitedPKs = ''
 									}
@@ -216,32 +216,32 @@ function DATASUTRA_close()
 										navigationPrefs.byNavItemID[i].listData.tabNumber = ''
 									}
 								}
-							
+
 								plugins.file.writeTXTFile(navFile,plugins.serialize.toJSON(navigationPrefs))
 							}*/
 						}
-					
+
 						//run group logout method
 						if (solutionPrefs.access.accessControl && globals[solutionPrefs.access.logoutMethod]) {
 							outGroup = globals[solutionPrefs.access.logoutMethod]()
 						}
-					
+
 						//ok to continue?
 						if (typeof outGroup != 'boolean' || (typeof outGroup == 'boolean' && outGroup)) {
-					
+
 							//run solution logout method
 							if (forms[baseForm].method_logout && globals[forms[baseForm].method_logout]) {
 								outSolution = globals[forms[baseForm].method_logout]()
 							}
-						
+
 							//ok to continue?
 							if (typeof outSolution != 'boolean' || (typeof outSolution == 'boolean' && outSolution)) {
-					
+
 								//run shutdown method
 								if (forms[baseForm].method_shutdown && globals[forms[baseForm].method_shutdown]) {
 									shutSolution = globals[forms[baseForm].method_shutdown]()
 								}
-							
+
 								//ok to continue?
 								if (typeof shutSolution != 'boolean' || (typeof shutSolution == 'boolean' && shutSolution)) {
 									logoutOK = true
@@ -253,21 +253,21 @@ function DATASUTRA_close()
 				else {
 					logoutOK = true
 				}
-				
+
 				if (logoutOK) {
 					//do session logging
 					var accessLog = databaseManager.getFoundSet(forms[baseForm].controller.getServerName(),'sutra_access_log')
-				
+
 					//find record for current user
 					accessLog.find()
 					accessLog.id_log = solutionPrefs.clientInfo.logID
 					var results = accessLog.search()
-				
+
 					if (results == 1) {
 						accessLog.date_logout = application.getServerTimeStamp()
 						databaseManager.saveData()
 					}
-					
+
 					//if any reports run, delete them
 					if (solutionPrefs.config.webClient) {
 						var allProps = plugins.sutra.getJavaProperties()
@@ -278,10 +278,10 @@ function DATASUTRA_close()
 								break
 							}
 						}
-						
+
 						var reportPath = '/webapps/ROOT/ds/reports'
 						var userDir = '/' + security.getClientID().replace(/-/g,'') + '/'
-						
+
 						var reportDir = plugins.file.convertToJSFile(serverInstall + reportPath + userDir)
 						if (reportDir.exists()) {
 							var reports = plugins.file.getFolderContents(reportDir)
@@ -289,44 +289,44 @@ function DATASUTRA_close()
 							reportDir.deleteFile()
 						}
 					}
-					
+
 					//do access control logging, pref update
 					if (solutionPrefs.access.accessControl) {
 						//save down developer mode state
 						var fsUser = databaseManager.getFoundSet(forms[baseForm].controller.getServerName(),'sutra_access_user')
-					
+
 						//find record for current user
 						fsUser.find()
 						fsUser.id_user = solutionPrefs.access.userID
 						var results = fsUser.search()
-					
+
 						//there is a user and the developer mode setting has changed during the session
 						if (results == 1 && (fsUser.developer_mode != ((solutionPrefs.design.statusDesign) ? 1 : 0))) {
 							fsUser.developer_mode = (solutionPrefs.design.statusDesign) ? 1 : 0
 							databaseManager.saveData()
 						}
-					}						
-				
+					}
+
 					//mark this client as non-validated
 					if (application && application.getSolutionName && application.getServerURL) {
 						application.setUserProperty('sutraValid-' + application.getSolutionName() + '-' + application.getServerURL().substr(7),'false')
 					}
-					
+
 					//when closed from logout option in action wheel, will reopen
 					//when closed from x icon in windowing, will close client
 					application.closeSolution(application.getSolutionName())
 				}
-				
+
 				//something has gone wrong and we're in developer, allow to quit anyways
 				if (!logoutOK && application.isInDeveloper()) {
 					logoutOK = true
 				}
 			}
-		
+
 			if (!logoutOK) {
 				//if method gets this far, time to invalidate it
 				DATASUTRA_close.inProcess = null
-			
+
 				if (logOut == 'Yes') {
 					//show info that logout canceled
 					DIALOGS.showErrorDialog(
@@ -334,7 +334,7 @@ function DATASUTRA_close()
 							'Log out aborted'
 						)
 				}
-			
+
 				return false
 			}
 		}
@@ -350,29 +350,29 @@ function DATASUTRA_error()
 
 /*
  *	TITLE    :	DATASUTRA_error
- *			  	
+ *
  *	MODULE   :	_DATASUTRA_
- *			  	
+ *
  *	ABOUT    :	log any errors to the sutra_error table
- *			  	
- *	INPUT    :	
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	INPUT    :
+ *
+ *	OUTPUT   :
+ *
+ *	REQUIRES :
+ *
  *	USAGE    :	DATASUTRA_error()
- *			  	
+ *
  *	MODIFIED :	July 16, 2008 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 	var x = arguments[0]
 	var y = arguments[1]
 	var z = arguments[2]
-	
+
 	DIALOGS.showErrorDialog('Error','Arguments: '+x)
-	
+
 	/*
 	var error = arguments[0];
 	application.output('Exception Object: ' + error)
@@ -384,7 +384,7 @@ function DATASUTRA_error()
 	  if (error.getErrorCode() == ServoyException.SAVE_FAILED)
 	  {
 		  DIALOGS.showErrorDialog( 'Error',  'It seems you did not fill in a required field')
-		  
+
 		  //Get the failed records after a save
 		  var array = databaseManager.getFailedRecords()
 		  for( var i = 0 ; i < array.length ; i++ )
@@ -412,21 +412,21 @@ function DATASUTRA_init()
 
 /*
  *	TITLE    :	DATASUTRA_open
- *			  	
+ *
  *	MODULE   :	_DATASUTRA_
- *			  	
+ *
  *	ABOUT    :	Set soltuionPrefs code global
  *			  	Set window size/location and toolbars showing
  *			  	Get the names of all forms in this solution and all included modules
- *			  	
- *	INPUT    :	
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	INPUT    :
+ *
+ *	OUTPUT   :
+ *
+ *	REQUIRES :
+ *
  *	MODIFIED :	March 27, 2009 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 //headless client
@@ -436,7 +436,7 @@ if (application.getApplicationType() == APPLICATION_TYPES.HEADLESS_CLIENT) {
 //normal startup
 else {
 	var prefForm = 'DATASUTRA_0F_solution__blank_4'
-	
+
 	//smart client base form
 	var baseForm = 'DATASUTRA_0F_solution'
 	//override for webclient
@@ -444,39 +444,39 @@ else {
 		baseForm = 'DATASUTRA_WEB_0F'
 		var webClient = true
 	}
-	
+
 	var serverName = forms[prefForm].controller.getServerName()
-	
+
 	//bring in new data if necessary
 	DS_data_import()
-	
+
 	// //PART I: Create large code global to be used elsewhere
-	
+
 	if (! application.__parent__.solutionPrefs) {
-		
+
 		solutionPrefs = new Object()
-	
+
 	}
-	
+
 	//	//check for correct version of plugin
 	//if incorrect version, abort
 //	if (!DS_plugin_check()) {
 //		//fill enough of solutionPrefs that prompt to quit is not triggered
 //		solutionPrefs.clientInfo = new Object()
-//		
+//
 //		forms.DATASUTRA__error.controller.show()
 //	}
 //	//continue with method
 //	else {
-	
+
 	//mark this client as non-validated
 	application.setUserProperty('sutraValid' + application.getSolutionName() + '-' + application.getServerURL().substr(7),'false')
-	
+
 	//if no license or invalid license, show license key enter place
-	if (utils.hasRecords(forms[prefForm].foundset) && 
-		(forms[prefForm].license_type != 'Trial') && 
+	if (utils.hasRecords(forms[prefForm].foundset) &&
+		(forms[prefForm].license_type != 'Trial') &&
 		!forms.NSTL_0F_solution__license.ACTION_validate(true,true)) {
-		
+
 		forms.DATASUTRA__error.controller.show()
 		forms.NSTL_0L__options.GO_one()
 	}
@@ -487,12 +487,12 @@ else {
 	}
 	//continue with method
 	else {
-		
+
 		// //PART II: swap stylesheets (do before!!! touching any form)
 		var verOS = (plugins.sutra) ? plugins.sutra.getOSVersion() : ''
 		var styleNames = new Array('_DATASUTRA_','ds_WIN','ds_MAC','ds_MAC_leopard','ds_LINUX')
 		var baseStyle
-		
+
 		if (webClient) {
 			baseStyle = 'ds_WEB_desktop'
 			application.overrideStyle('_DATASUTRA_',baseStyle)
@@ -500,7 +500,7 @@ else {
 			application.overrideStyle('ds_MAC',baseStyle)
 			application.overrideStyle('ds_MAC_leopard',baseStyle)
 			application.overrideStyle('ds_LINUX',baseStyle)
-			
+
 			solutionModel.getForm('NAV_T_universal_list_1L').styleName = 'ds_WEB_universal_list'
 		}
 		else {
@@ -508,7 +508,7 @@ else {
 			if ((utils.stringToNumber(application.getVersion()) < 4) ||
 				(utils.stringToNumber(application.getVersion()) >= 4 && application.getApplicationType() == 3) ||
 				(utils.stringToNumber(application.getVersion()) >= 5 && !application.isInDeveloper())) {
-				
+
 				//get root_element_id/revision
 				var repositoryServer = 'repository_server'
 				var args = styleNames
@@ -524,11 +524,11 @@ else {
 								args,
 								-1
 							)
-				
+
 				//overwrite style array so that in same order
 				dataset.sort(1,true)
 				var styleNames = new Object()
-				
+
 				for (var i = 1; i <= dataset.getMaxRowIndex(); i++) {
 					//get style text
 					query = "SELECT property_value FROM servoy_element_properties " +
@@ -542,7 +542,7 @@ else {
 									args,
 									-1
 								)
-					
+
 					//we got the style's text, punch into object to check later
 					if (datasetTwo) {
 						styleNames[dataset.getValue(i,1)] = datasetTwo.getValue(1,1)
@@ -553,7 +553,7 @@ else {
 			else {
 				//not required so much because style bug fixed
 			}
-			
+
 			//swap stylesheets (expected behavior is that only _DATASUTRA_ has anything assigned to it, but to cover the old ID 10 T error....
 			if (application.getOSName() == 'Mac OS X') {
 				//special leopard stylesheet
@@ -572,7 +572,7 @@ else {
 			else {
 				baseStyle = 'ds_WIN'
 			}
-			
+
 			//if _DATASUTRA_ is the same as *, don't swap (always swap when in developer)
 			if (styleNames['_DATASUTRA_'] != styleNames[baseStyle] || application.isInDeveloper()) {
 				application.overrideStyle('_DATASUTRA_',baseStyle)
@@ -580,22 +580,22 @@ else {
 			application.overrideStyle('ds_WIN',baseStyle)
 			application.overrideStyle('ds_MAC',baseStyle)
 			application.overrideStyle('ds_MAC_leopard',baseStyle)
-			application.overrideStyle('ds_LINUX',baseStyle)			
+			application.overrideStyle('ds_LINUX',baseStyle)
 		}
-		
-		
+
+
 		if (!forms.NSTL_0F_solution__license.ACTION_validate(true,true)) {
 		/*	DIALOGS.showErrorDialog(
 					'Licensing error',
 					'The license entered has expired'
 				)
-			return	
-			
+			return
+
 			//running in client in trial mode, show license entry page
 			if (application.getApplicationType() == 2 && solutionPrefs.config.trialMode) {
 				forms.DATASUTRA__error.controller.show()
 				forms.DATASUTRA__error.elements.tab_main.tabIndex = 3
-				
+
 				return
 			}
 			//running in non-developer
@@ -605,7 +605,7 @@ else {
 						'Data Sutra is running in trial mode.\n\n' +
 						'Client will now close.'
 					)
-				
+
 				application.exit()
 			}
 			//set status text that in trial mode
@@ -616,7 +616,7 @@ else {
 						)
 			//}
 		}
-		
+
 		//set up jasper directory
 		if (forms[prefForm].jasper_directory) {
 			var jasperDir = utils.stringReplace(forms[prefForm].jasper_directory,"\\", "/")
@@ -624,7 +624,7 @@ else {
 				plugins.jasperPluginRMI.reportDirectory = jasperDir
 			}
 		}
-		
+
 		// //PART III: fill code global
 			solutionPrefs.config = {
 						//default language
@@ -636,7 +636,7 @@ else {
 						//timer object
 						timer : new Object(),
 						//object for frameworks engine, design bar, preload, etc. changes
-						prefs : { 
+						prefs : {
 								formPreload : ((forms[prefForm].preload_toplevel) ? true : false),
 								formPreloadGray : ((forms[prefForm].preload_blackout) ? false : true),
 								configNotify : ((forms[prefForm].config_notify) ? true : false)
@@ -650,74 +650,74 @@ else {
 						//solution name
 						solutionName : forms[prefForm].solution_name || ''
 					}
-		
+
 		//information about client
 			solutionPrefs.clientInfo = DS_client_info_load()
 			solutionPrefs.clientInfo.baseStyle = baseStyle
-			
+
 		//default screen attributes
 			solutionPrefs.screenAttrib = DS_screen_load()
-			
+
 		//default sleep value for list
 			solutionPrefs.listSetup = DS_list_load()
-			
+
 		//find settings
 			solutionPrefs.fastFind = {
 						currentSearch : new Object(),
 						findWildcard : (forms[prefForm].find_wildcard) ? forms[prefForm].find_wildcard : '#',
 						dateFormat : (forms[prefForm].find_dateformat) ? forms[prefForm].find_dateformat : i18n.getDefaultDateFormat()
 					}
-			
+
 		//browsing history
 			solutionPrefs.history = new Array()
-		
+
 		//get tooltips
 		//TODO: store on client
 			solutionPrefs.i18n = DS_tooltip_load()
-		
-		
+
+
 		// //PART V: Get the names of all modules and all forms in this solution
-		
+
 		var dsRepoFile = application.getUserProperty('sutraRepository-' + application.getSolutionName() + '-' + application.getServerURL().substr(7))
 		var dsRepoChecksum = application.getUserProperty('sutraRepositoryChecksum-' + application.getSolutionName() + '-' + application.getServerURL().substr(7))
-		
+
 		//set flag that this it first time solution run on this machine
 		if (!dsRepoFile) {
 			solutionPrefs.config.firstRun = true
 		}
-		
+
 		solutionPrefs.repository = new Object()
-		
+
 		//set true/false based on whether running in Servoy 4 developer
 		if (forms[prefForm].repository_api || (utils.stringToNumber(solutionPrefs.clientInfo.verServoy) >= 4 && solutionPrefs.clientInfo.typeServoy == 'developer')) {
 			solutionPrefs.repository.api = true
 		}
-		
+
 		//running in serclipse using a workspace
 		if ((solutionPrefs.clientInfo.typeServoy == 'developer' || solutionPrefs.clientInfo.typeServoy == 'web client developer') && utils.stringToNumber(solutionPrefs.clientInfo.verServoy) >= 4) {
 			solutionPrefs.repository.workspace = new Object()
-			
+
 			//get everything in the workspace directory (forms and relations)
 			CODE_workspace_data()
-			
+
 			//limit to included modules
 			CODE_workspace_module()
 			solutionPrefs.repository.allModules = repositoryPrefs.allModules
-		}		
+		}
 		//only get methods from repository in <= 3.5.x or >= 4.x client
 		else if (!solutionPrefs.repository.api) {
 			//when in developer, rebuild repositoryPrefs fresh each time
 			if (application.getApplicationType() == APPLICATION_TYPES.SMART_CLIENT && application.isInDeveloper() || application.getApplicationType() == APPLICATION_TYPES.WEB_CLIENT) {
 				NAV_meta_module_names()
 				solutionPrefs.repository.allModules = repositoryPrefs.allModules
-				
+
 				NAV_meta_form_names()
 				solutionPrefs.repository.allForms = repositoryPrefs.allForms
 				solutionPrefs.repository.allFormsByTable = repositoryPrefs.allFormsByTable
-				
+
 				NAV_meta_relation_names()
 				solutionPrefs.repository.relations = repositoryPrefs.relations
-				
+
 				//null out temporary global var
 				delete repositoryPrefs
 			}
@@ -725,39 +725,39 @@ else {
 			else if (dsRepoChecksum != forms[prefForm].repository_checksum && forms[prefForm].repository_node) {
 				//load server json into client memory
 				solutionPrefs.repository = plugins.serialize.fromJSON(forms[prefForm].repository_node)
-				
+
 				//save json into servoy properties file
-				
+
 				var fileName = plugins.file.getHomeDirectory()+'/.servoy/sutraRepository.properties'
 				var repoFile = plugins.file.createFile(fileName)
 				plugins.file.writeTXTFile(repoFile,plugins.serialize.toJSON(solutionPrefs.repository))
 				application.setUserProperty('sutraRepository-' + application.getSolutionName() + '-' + application.getServerURL().substr(7),fileName)
 				application.setUserProperty('sutraRepositoryChecksum-' + application.getSolutionName() + '-' + application.getServerURL().substr(7),forms[prefForm].repository_checksum)
-				
+
 				//set module value list
 				var modulesDistinct = new Array()
 				for (var i in solutionPrefs.repository.allModules) {
 					modulesDistinct[modulesDistinct.length] = solutionPrefs.repository.allModules[i].moduleName
 				}
 				modulesDistinct.sort()
-				
+
 				application.setValueListItems('NAV_modules_included', modulesDistinct)
 			}
 			//client json is the same as the server's, use it
 			else if (dsRepoFile && dsRepoFile.length) {
 				//read in file
 				var dsRepo = plugins.file.readTXTFile(dsRepoFile)
-				
+
 				//load client json into client memory
 				solutionPrefs.repository = plugins.serialize.fromJSON(dsRepo)
-				
+
 				//set module value list
 				var modulesDistinct = new Array()
 				for (var i in solutionPrefs.repository.allModules) {
 					modulesDistinct[modulesDistinct.length] = solutionPrefs.repository.allModules[i].moduleName
 				}
 				modulesDistinct.sort()
-				
+
 				application.setValueListItems('NAV_modules_included', modulesDistinct)
 			}
 			//something is amiss, disable repo hits
@@ -765,7 +765,7 @@ else {
 				solutionPrefs.repository.api = true
 			}
 		}
-		
+
 		/*
 		//turn off all toolbars if in 4 developer
 		if (utils.stringToNumber(solutionPrefs.clientInfo.verServoy) >= 4 && solutionPrefs.clientInfo.typeServoy == 'developer') {
@@ -779,7 +779,7 @@ else {
 		*/
 		//hide toolbars, disable data import/export unless in developer
 		if (solutionPrefs.clientInfo.typeServoy != 'developer') {
-			
+
 			//running servoy classic, turn off all other rif-raf
 			if (utils.stringToNumber(solutionPrefs.clientInfo.verServoy) < 4) {
 				application.setToolbarVisible('align',false)
@@ -787,26 +787,26 @@ else {
 				application.setToolbarVisible('distribute',false)
 				application.setToolbarVisible('draw',false)
 			}
-			
+
 			application.setToolbarVisible('edit',false)
 			application.setToolbarVisible('text',false)
-			
+
 			if (plugins.textxport && plugins.excelxport) {
 				//disable data export
 				plugins.textxport.exportEnabled = false
 				plugins.excelxport.exportEnabled = false
-				
+
 				//disable data import
 				plugins.textxport.importEnabled = false
 				plugins.excelxport.importEnabled = false
 			}
-			
+
 			//kiosk mode, now inside of window
 			if (plugins.window && plugins.window.setFullScreen) {
 				plugins.window.getMenuBar().setVisible(solutionPrefs.screenAttrib.kiosk.showMenu)
 				plugins.window.setToolBarVisible(solutionPrefs.screenAttrib.kiosk.showToolbar)
 				plugins.window.setStatusBarVisible(solutionPrefs.screenAttrib.kiosk.showStatusBar)
-				
+
 				if (solutionPrefs.screenAttrib.kiosk.fullScreen) {
 					plugins.window.setFullScreen(true)
 				}
@@ -816,13 +816,13 @@ else {
 				plugins.kioskmode.setMenuVisible(solutionPrefs.screenAttrib.kiosk.showMenu)
 				plugins.kioskmode.setToolBarVisible(solutionPrefs.screenAttrib.kiosk.showToolbar)
 				plugins.kioskmode.setStatusBarVisible(solutionPrefs.screenAttrib.kiosk.showStatusBar)
-				
+
 				if (solutionPrefs.screenAttrib.kiosk.fullScreen) {
 					plugins.kioskmode.setFullScreen(true)
 				}
 			}
 		}
-		
+
 		// //PART X: check for included framework components
 			solutionPrefs.design = {
 							modes 	: {
@@ -839,7 +839,7 @@ else {
 									}
 								}
 						}
-			
+
 			/*
 			var developModule = false
 			if (!solutionPrefs.repository.api) {
@@ -855,13 +855,13 @@ else {
 				solutionPrefs.design = new Object()
 			}
 			*/
-	
-			
+
+
 		//	//PART WHOKNOWS: run startup method
 		if (forms[prefForm].method_startup && globals[forms[prefForm].method_startup]) {
 			globals[forms[prefForm].method_startup]()
 		}
-		
+
 		//punch in id of configuration navigation set
 		var navigationSet = databaseManager.getFoundSet(serverName,'sutra_navigation')
 		navigationSet.clear()
@@ -927,33 +927,33 @@ function DS_data_import() {
 				},
 			'SaaS': {
 					url_path : 'saas'
-				}			
+				}
 		}
-	
+
 	/** @type {JSFoundSet<db:/sutra/sutra_navigation>} */
 	var navSet = databaseManager.getFoundSet('sutra', 'sutra_navigation')
-	
+
 	//find config navigation set
 	navSet.find()
 	navSet.flag_config = 1
 	var results = navSet.search()
-	
+
 	// navSet contains the configuration nav set
 	if (results) {
 		var configNav = navSet.getSelectedRecord()
 		var fsNavItem = configNav.nav_navigation_to_navigation_item__all
-		
+
 		//has this update already happened?
 		if (configNav.url_path != 'data-sutra') {
-		
+
 			//update the config nav set
 			configNav.url_path = 'data-sutra'
 			configNav.nav_name = 'DS Config'
-			
+
 			//update all navigation items
 			for (var i = 1; i <= fsNavItem.getSize(); i++) {
 				var navItem = fsNavItem.getRecord(i)
-				
+
 				//do we have updates for this record?
 				if (updates.hasOwnProperty(navItem.item_name)) {
 					for (var j in updates[navItem.item_name]) {
@@ -961,20 +961,20 @@ function DS_data_import() {
 					}
 				}
 			}
-			
+
 			databaseManager.saveData(fsNavItem)
 			databaseManager.saveData(configNav)
 		}
 	}
-	
+
 	//additional api data points
 	navSet.find()
 	navSet.id_navigation = 55
 	results = navSet.search()
-	
+
 	//this is the developer nav set, add on a few extra navigation items for reporting api
 	if (results == 1) {
-		
+
 	}
 }
 
@@ -993,7 +993,7 @@ var totalRecs = databaseManager.getFoundSetCount(fsUniversalList)
 for (var i = totalRecs; i < 100000; i++) {
 //for (var i = 1; i < 5000; i++) {
 	fsUniversalList.newRecord(false,false)
-	
+
 	//save data periodically to avoid lockup at the end
 	if (i % 100 == 0) {
 		databaseManager.saveData()
@@ -1003,43 +1003,43 @@ for (var i = totalRecs; i < 100000; i++) {
 
 /**
  * Show frameworks actions available for current user
- * 
+ *
  * @param {JSEvent|String}	input Event that called the method or the item chosen.
  * @param {String}			[itemFormName] Form for the item chosen.
  * @param {String}			[itemID] Navigation Item ID for the item chosen.
  * @param {String}			[itemType] Type of item chosen.
  * @param {Number}			[keyPressed] Modifier key pressed when chosen.
- * 
+ *
  * @properties={typeid:24,uuid:"48174bfa-d0a4-4e64-935e-b4b73feffa12"}
  */
 function DS_actions(input) {
 	//check license
 	forms.NSTL_0F_solution__license.ACTION_validate(true,true)
-	
+
 	//name for non-named item
 	var noName = '**No name**'
-	
+
 	if (application.__parent__.solutionPrefs) {
-		
+
 		//timed out, throw up error
 		if (solutionPrefs.config.prefs.thatsAllFolks) {
 			forms.NSTL_0F_solution__license.ACTION_status()
-			
+
 			DIALOGS.showErrorDialog(
 					'Trial expired',
 					'Trial time expired\n' +
 					'Please restart.'
 				)
 		}
-		
+
 		var baseForm = solutionPrefs.config.formNameBase
 		var btnInvisible = 'btn_fw_action_left'
 		var inPref = solutionPrefs.config.prefs.preferenceMode
 		var currentNavItem = solutionPrefs.config.currentFormID
-		
-		
+
+
 		//called to depress menu
-		if (input instanceof JSEvent) {	
+		if (input instanceof JSEvent) {
 			//using access and control, need allowed configuration modes
 			if (solutionPrefs.access && solutionPrefs.access.accessControl) {
 				var admin = CODE_copy_object(solutionPrefs.access.allowedAdminPrefs)
@@ -1048,28 +1048,28 @@ function DS_actions(input) {
 			//no access and control, use default configuration modes
 			else {
 				var navigationSets = new Array()
-				
+
 				//there is a fw config navigation set
 				if (solutionPrefs.config.navigationSetID) {
 					//get admin prefs
 					var admin = NAV_preference_mode_get('Admin',solutionPrefs.config.navigationSetID)
-					
+
 					//get user prefs
 					var user = NAV_preference_mode_get('User',solutionPrefs.config.navigationSetID)
 				}
 			}
-			
+
 			//help available?
 			if (navigationPrefs.byNavItemID[currentNavItem] && navigationPrefs.byNavItemID[currentNavItem].navigationItem) {
 			//	var helpAvailable = navigationPrefs.byNavItemID[currentNavItem].navigationItem.helpAvailable
-				
+
 				var helpForm = navigationPrefs.byNavItemID[currentNavItem].navigationItem.helpFormToLoad
 				var helpList = navigationPrefs.byNavItemID[currentNavItem].navigationItem.helpListToLoad
 				var helpDesc = navigationPrefs.byNavItemID[currentNavItem].navigationItem.helpDescription
-				
+
 				var helpAvailable = helpForm || helpList || helpDesc
 			}
-			
+
 			//loop over admin modes
 			for (var i = 0; i < admin.itemName.length ; i++) {
 				//check for design mode
@@ -1078,17 +1078,17 @@ function DS_actions(input) {
 							name	: admin.itemName[i],
 							tooltip	: admin.itemDescription[i]
 						}
-					
+
 					admin.itemName.splice(i,1)
 					admin.formName.splice(i,1)
 					admin.navItemID.splice(i,1)
 					admin.itemDescription.splice(i,1)
-					
+
 					//set counter back one
 					i--
 				}
 			}
-			
+
 			//loop over user modes
 			for (var i = 0; i < user.itemName.length ; i++) {
 				//remove if present
@@ -1096,11 +1096,11 @@ function DS_actions(input) {
 					//2- feedback when in a preference
 					//3- lock solution
 					//4- help
-				if (user.itemName[i] == 'Power Replace' || 
+				if (user.itemName[i] == 'Power Replace' ||
 					(inPref && user.itemName[i] == 'Feedback') ||
 					user.itemName[i] == 'Lock session' ||
 					user.itemName[i] == 'Help') {
-					
+
 					if (user.itemName[i] == 'Lock session') {
 						var lockSession = {
 								name	: user.itemName[i],
@@ -1113,17 +1113,17 @@ function DS_actions(input) {
 								tooltip	: user.itemDescription[i]
 							}
 					}
-					
+
 					user.itemName.splice(i,1)
 					user.formName.splice(i,1)
 					user.navItemID.splice(i,1)
 					user.itemDescription.splice(i,1)
-					
+
 					//set counter back one
 					i--
 				}
 			}
-			
+
 			//tack on help when not in a preference or devmode
 			if (flagHelp && !inPref && !solutionPrefs.design.statusDesign) {
 				var helpText = (solutionPrefs.config.helpMode) ? 'Leave help' : 'Help'
@@ -1132,7 +1132,7 @@ function DS_actions(input) {
 				user.navItemID.unshift(null)
 				user.itemDescription.unshift(flagHelp.tooltip)
 			}
-			
+
 			//add option to change password if access and control enabled and password changing isn't disabled
 			if (solutionPrefs.access && solutionPrefs.access.accessControl && !solutionPrefs.access.passNoChange) {
 				user.itemName.push('Change password')
@@ -1140,7 +1140,7 @@ function DS_actions(input) {
 				user.navItemID.push(null)
 				user.itemDescription.push('Periodically change your password to ensure security')
 			}
-			
+
 			//don't allow from web client
 			if (!solutionPrefs.config.webClient) {
 				//add option to set custom screen size if access and control
@@ -1151,14 +1151,14 @@ function DS_actions(input) {
 					user.itemDescription.push('Set the current window size, position, and spaces as your new default')
 				}
 			}
-			
+
 			//create arrays
 			var valueList = new Array()
 			var formList = new Array()
 			var navIDList = new Array()
 			var descList = new Array()
 			var typeList = new Array()
-				
+
 			//design mode toggle
 			if (!inPref) {
 				//design mode is an option, show it
@@ -1169,7 +1169,7 @@ function DS_actions(input) {
 					descList[descList.length] = designMode.tooltip
 					typeList.push(null)
 				}
-				
+
 				//divider required
 				if (designMode && ((admin.itemName && admin.itemName.length) || (user.itemName && user.itemName.length))) {
 					valueList[valueList.length] = '-'
@@ -1179,7 +1179,7 @@ function DS_actions(input) {
 					typeList.push(null)
 				}
 			}
-			
+
 			//admin screens
 			if (admin.itemName && admin.itemName.length) {
 				for (var i = 0; i < admin.itemName.length; i++) {
@@ -1190,7 +1190,7 @@ function DS_actions(input) {
 					typeList.push('Admin')
 				}
 			}
-			
+
 		/*	//sidebars
 			if (!inPref && solutionPrefs.panel.sidebar && solutionPrefs.panel.sidebar.length) {
 				//there are admin modes, show divider
@@ -1201,7 +1201,7 @@ function DS_actions(input) {
 					descList[descList.length] = ''
 					typeList.push(null)
 				}
-				
+
 				//punch down all active sidebars
 				for (var i = 0; i < solutionPrefs.panel.sidebar.length; i++) {
 					valueList[valueList.length] = (solutionPrefs.panel.sidebar[i].tabName) ? solutionPrefs.panel.sidebar[i].tabName : noName
@@ -1210,7 +1210,7 @@ function DS_actions(input) {
 					descList[descList.length] = solutionPrefs.panel.sidebar[i].description
 					typeList.push('Sidebar')
 				}
-				
+
 				//there are user modes, show divider
 				if (user.itemName && user.itemName.length) {
 					valueList[valueList.length] = '-'
@@ -1228,7 +1228,7 @@ function DS_actions(input) {
 				descList[descList.length] = ''
 				typeList.push(null)
 			}
-			
+
 			//user screens
 			if (user.itemName && user.itemName.length) {
 				for (var i = 0; i < user.itemName.length; i++) {
@@ -1239,7 +1239,7 @@ function DS_actions(input) {
 					typeList.push('User')
 				}
 			}
-			
+
 			//add on exit preference if in one
 			if (inPref) {
 				valueList.push('-',(solutionPrefs.config.webClient ? 'Exit configuration' : '<html><body><font color="#FF2823">Exit configuration</font></body></html>'))
@@ -1248,7 +1248,7 @@ function DS_actions(input) {
 				descList.push(null,'Return to workflow')
 				typeList.push(null)
 			}
-			
+
 			//there are already some values, show divider
 			if (valueList.length) {
 				valueList[valueList.length] = '-'
@@ -1257,7 +1257,7 @@ function DS_actions(input) {
 				descList[descList.length] = ''
 				typeList.push(null)
 			}
-			
+
 			//lock screen if a/c enabled, it is an option, and not in a preference
 			if (solutionPrefs.access.accessControl && lockSession && !inPref) {
 				valueList.push(lockSession.name)
@@ -1266,14 +1266,14 @@ function DS_actions(input) {
 				descList.push(lockSession.tooltip)
 				typeList.push(null)
 			}
-			
+
 			//logout
 			valueList.push((solutionPrefs.config.webClient ? 'Logout' : '<html><body><font color="#FF2823">Logout</font></body></html>'))
 			formList.push(null)
 			navIDList.push(null)
 			descList.push('Re-open solution as a different user')
 			typeList.push(null)
-			
+
 			//build menu and set arguments
 			var menu = new Array()
 			var maxLength = 0
@@ -1287,7 +1287,7 @@ function DS_actions(input) {
 						htmlTags = htmlTags2
 					}
 				}
-				
+
 				//determine left shift amount
 				if (htmlTags[0] != null) {
 					if (htmlTags[2].length > maxLength) {
@@ -1299,15 +1299,15 @@ function DS_actions(input) {
 						maxLength = valueList[j].length
 					}
 				}
-				
+
 				//when...  ...create checkbox menu item if selected
-					//1- in a preference, 
+					//1- in a preference,
 					//2- design mode active
 					//3- sidebar showing
-				if ((solutionPrefs.config.prefs.preferenceMode && solutionPrefs.config.prefs.paneSelected == navIDList[j]) || 
-					(solutionPrefs.design.statusDesign && designMode && designMode.tooltip == descList[j]) || 
+				if ((solutionPrefs.config.prefs.preferenceMode && solutionPrefs.config.prefs.paneSelected == navIDList[j]) ||
+					(solutionPrefs.design.statusDesign && designMode && designMode.tooltip == descList[j]) ||
 					(solutionPrefs.screenAttrib.sidebar.status && typeList[j] == 'Sidebar' && forms[baseForm].elements.tab_content_D.tabIndex == navIDList[j])) {
-					
+
 					menu[j] = plugins.popupmenu.createCheckboxMenuItem(valueList[j] + "", DS_actions)
 					menu[j].setSelected(true)
 				}
@@ -1315,48 +1315,48 @@ function DS_actions(input) {
 				else {
 					menu[j] = plugins.popupmenu.createMenuItem(valueList[j] + "", DS_actions)
 				}
-				
+
 				//pass arguments
 				menu[j].setMethodArguments(htmlTags[2],formList[j],navIDList[j],typeList[j],CODE_key_pressed())
-				
+
 				//set tooltip, if there is one
 		//		if (descList[j]) {
 		//			menu[j].setToolTipText(descList[j])
 		//		}
-				
+
 				//disable dividers
 				if (valueList[j] == '-') {
 					menu[j].setEnabled(false)
 				}
 			}
-			
+
 			//move "left" button to correct location
 			var currentLocationX = forms[baseForm + '__header'].elements[btnInvisible].getLocationX()
 			var currentLocationY = forms[baseForm + '__header'].elements[btnInvisible].getLocationY()
-			
+
 			forms[baseForm + '__header'].elements[btnInvisible].setLocation(currentLocationX - maxLength * 5.5, currentLocationY)
-			
+
 			//popup menu
 			globals.CODE_popup.popupMenu = menu
 			globals.CODE_popup(null,null,forms[baseForm + '__header'].elements[btnInvisible])
-			
+
 			//set invisible btn back to original location
 			forms[baseForm + '__header'].elements[btnInvisible].setLocation(currentLocationX, currentLocationY)
 		}
 		//menu shown and item chosen
 		else {
-			
+
 			var itemClicked = input
 			var itemFormName = arguments[1]
 			var itemID = arguments[2]
 			var itemType = arguments[3]
 			var keyPressed = arguments[4]
-			
+
 			//if a sidebar
 			//MEMO: not used; seet DATASUTRA__sidebar__header.TAB_popdown()
 			if (itemType == 'Sidebar') {
 				//MEMO: itemID overloaded with the tab number of the sidepanel
-				
+
 				//turn sidebar off
 				if (forms[baseForm].elements.tab_content_D.tabIndex == itemID && forms[baseForm].elements.tab_content_D.visible) {
 					DS_sidebar_toggle(false)
@@ -1364,7 +1364,7 @@ function DS_actions(input) {
 				//set tab in sidebar
 				else {
 					forms[baseForm].elements.tab_content_D.tabIndex = itemID
-					
+
 					//if not showing, show sidebar
 					DS_sidebar_toggle(true)
 				}
@@ -1402,20 +1402,20 @@ function DS_actions(input) {
 				forms[baseForm].elements.gfx_curtain.transparent = false
 				forms[baseForm].elements.gfx_curtain.setImageURL(null)
 				forms[baseForm].elements.gfx_curtain.setBorder('MatteBorder,0,0,100,0,#323A4B')
-				
+
 				//set location
 				forms[baseForm].elements.gfx_curtain.setLocation(0,0)
 				//set size
 				forms[baseForm].elements.gfx_curtain.setSize(application.getWindowWidth(),application.getWindowHeight())
-				
+
 				//set text
 				forms[baseForm].elements.gfx_curtain.text = forms[baseForm].solution_name + ' is locked'
 				forms[baseForm].elements.gfx_curtain.toolTipText = 'Click to unlock'
-				
+
 				//show curtain
 				forms[baseForm].elements.gfx_curtain.enabled = true
 				forms[baseForm].elements.gfx_curtain.visible = true
-				
+
 				//set flag
 				solutionPrefs.access.lockStatus = true
 			}
@@ -1428,18 +1428,18 @@ function DS_actions(input) {
 					var y = application.getWindowY()
 					var width = application.getWindowWidth()
 					var height =  application.getWindowHeight()
-					
+
 					//make pop-up get out of the way
 					forms[baseForm + '__header'].elements.fld_constant.requestFocus(false)
 					application.sleep(175)
-					
+
 					//get screenshot
 					var screenShot = (new java.awt.Robot()).createScreenCapture(new java.awt.Rectangle(x,y,width,height))
 					var rawData = new java.io.ByteArrayOutputStream()
 					Packages.javax.imageio.ImageIO.write(screenShot,'png',rawData)
 					DATASUTRA_feedback = rawData.toByteArray()
 				}
-				
+
 				//show popup dialog
 				CODE_form_in_dialog(forms.DEV_P_feedback,-1,-1,-1,-1,'Submit feedback',false,false,'feedback',true)
 			}
@@ -1449,7 +1449,7 @@ function DS_actions(input) {
 				if (solutionPrefs.config.helpMode) {
 					DS_help()
 				}
-				
+
 				solutionPrefs.design.statusDesign = !solutionPrefs.design.statusDesign
 				DEV_mode_toggle()
 			}
@@ -1464,7 +1464,7 @@ function DS_actions(input) {
 			//check for non-standard prefpane tooltip popup (when shift key pressed)
 			else if (itemClicked == 'Tooltip registry' && keyPressed == 1) {
 				CODE_form_in_dialog(forms.MGR_P_tooltip,-1,-1,-1,-1,' ',null,null,'tooltipFID',false)
-				
+
 				//restrict to this form's tooltips
 				if (forms[solutionPrefs.config.currentFormName].controller.getDataSource()) {
 					MGR_tooltip_filter_module = solutionPrefs.repository.allFormsByTable[forms[solutionPrefs.config.currentFormName].controller.getServerName()][forms[solutionPrefs.config.currentFormName].controller.getTableName()][solutionPrefs.config.currentFormName].moduleName
@@ -1483,7 +1483,7 @@ function DS_actions(input) {
 				if (solutionPrefs.design.statusDesign) {
 					//we were in design mode
 					var designMode = true
-					
+
 					//check for where exactly we are
 					var possibleModes = new Array(
 											'buttonaction',
@@ -1503,11 +1503,11 @@ function DS_actions(input) {
 							break
 						}
 					}
-					
+
 					solutionPrefs.design.statusDesign = false
 					DEV_mode_toggle(true)
 				}
-				
+
 				//check for non-standard prefpane help
 				if (itemClicked == 'Help' || itemClicked == 'Leave help') {
 					DS_help()
@@ -1519,16 +1519,16 @@ function DS_actions(input) {
 							//MEMO: can fire 1) firstShow, 2) recSelect, 3) triggerNavSet
 						scopes.DS.webURLSetStatus = false
 					}
-					
+
 					//turn on progress indicator
 					TRIGGER_progressbar_start(-273,'Loading new configuration data...','This process will soon only update changed information')
-					
+
 					//turn off urlrewriting so that only fires once
 							//MEMO: can fire 1) firstShow, 2) recSelect, 3) triggerNavSet
 					if (solutionPrefs.config.webClient) {
 						scopes.DS.webURLSetStatus = false
 					}
-					
+
 					//recreate navigationPrefs
 					//with a/c
 					if (solutionPrefs.access && solutionPrefs.access.accessControl) {
@@ -1538,17 +1538,17 @@ function DS_actions(input) {
 					else {
 						NAV_navigation_load(false)
 					}
-					
+
 					//save information about current config space setup
 					if (solutionPrefs.config.currentFormID && navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID]) {
 						navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].spaceStatus = new Array()
 						navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].spaceStatus.lastSpace = solutionPrefs.config.activeSpace
-						
+
 						for (var i = 1; i <= 14; i++) {
 							navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].spaceStatus.push(forms[baseForm + '__header'].elements['btn_space_' + i] ? forms[baseForm + '__header'].elements['btn_space_' + i].visible : false)
 						}
 					}
-					
+
 					//enable nav_chooser, find, and toolbar toggle buttons
 					forms[baseForm + '__header'].elements.btn_navset.enabled = true
 					if (!solutionPrefs.config.webClient) {
@@ -1557,12 +1557,12 @@ function DS_actions(input) {
 						forms[baseForm + '__header__fastfind'].elements.find_end.enabled = true
 						forms[baseForm + '__header__fastfind'].elements.fld_find.enabled = true
 					}
-					
+
 					//set current form back to workflow
 						//MEMO: may be changed by other stuff below
 					solutionPrefs.config.currentFormName = solutionPrefs.config.prefs.workflowFormName
 					solutionPrefs.config.currentFormID = solutionPrefs.config.prefs.workflowFormID
-					
+
 					//load navigation set list back in
 					if (solutionPrefs.config.webClient) {
 //						var tabPanel = forms.DATASUTRA_WEB_0F__list.elements.tab_list
@@ -1587,7 +1587,7 @@ function DS_actions(input) {
 						forms[baseForm].elements.tab_content_A.addTab(forms.NAV__navigation_tree)
 						forms[baseForm].elements.tab_content_A.tabIndex = forms[baseForm].elements.tab_content_A.getMaxTabIndex()
 					}
-					
+
 					//check that last viewed navigation set still ok
 					var foundSet = false
 					for (var i in navigationPrefs.byNavSetID ) {
@@ -1595,7 +1595,7 @@ function DS_actions(input) {
 							foundSet = true
 						}
 					}
-					
+
 					//check that last viewed navigation item still ok
 					var foundItem = false
 					if (navigationPrefs.byNavSetID[DATASUTRA_navigation_set]) {
@@ -1605,7 +1605,7 @@ function DS_actions(input) {
 							}
 						}
 					}
-					
+
 					//this hack disables our licensing checks until after the navigation item list has redrawn
 					//it is necessary to prevent our unofficial way of getting two threads going in servoy
 					//from backfiring and killing the whole solution
@@ -1613,11 +1613,11 @@ function DS_actions(input) {
 						var baDeeBaDee = true
 						solutionPrefs.config.prefs.thatsAllFolks = null
 					}
-					
+
 					//last navigation set still present, load at will
 					if (foundSet && foundItem) {
 						NAV_navigation_set_load(true)
-						
+
 						//refire load forms method to bring in previous display
 						NAV_workflow_load(null,solutionPrefs.config.currentHistoryPosition,null,null,solutionPrefs.config.prefs.workflowSpace)
 					}
@@ -1634,33 +1634,33 @@ function DS_actions(input) {
 							}
 							//there aren't any nav items in this set, load blanks
 							else {
-								
+
 							}
 						}
-						
+
 						//there are still items in this set, go to one of them
 						if (foundSet && lastItemID) {
 							NAV_navigation_set_load(true,true)
-							
+
 							//refire default load forms method
 							NAV_workflow_load(lastItemID,null,true)
 						}
 						//load blank screen
 						else {
 							DATASUTRA_navigation_set = 0
-							
+
 							NAV_navigation_set_load(true,null)
-							
+
 							//refire default load forms method
 							NAV_workflow_load(null,null)
 						}
 					}
-					
+
 					//reload toolbars and sidebars
 					solutionPrefs.panel = DS_panel_load(AC_current_group)
 					DS_toolbar_load()
 					DS_sidebar_load()
-					
+
 					//return sidebar window to most recent position and then clear out the stored value
 					if (solutionPrefs.config.prefs.sidebarTabSelected) {
 						//web client
@@ -1679,33 +1679,33 @@ function DS_actions(input) {
 						}
 						delete solutionPrefs.config.prefs.sidebarTabSelected
 					}
-					
+
 					//show sidebar
 					if (solutionPrefs.config.prefs.sidebar) {
 						DS_sidebar_toggle(true,null,true)
-						
+
 						delete solutionPrefs.config.prefs.sidebar
 					}
-					
+
 					//reload tooltips
 					solutionPrefs.i18n = DS_tooltip_load()
-					
+
 					//if we were in designMode, go back to it
 					if (solutionPrefs.config.prefs.designMode) {
 						solutionPrefs.design.statusDesign = true
-						
+
 						if (solutionPrefs.config.prefs.currentMode) {
 							solutionPrefs.design.modes[solutionPrefs.config.prefs.currentMode] = true
 						}
-						
+
 						DEV_mode_toggle()
 					}
-					
+
 					//show normal frameworks action graphic if not in design mode
 					if (!solutionPrefs.design.statusDesign) {
 						forms[baseForm + '__header'].elements.btn_fw_action.visible = true
 					}
-					
+
 					//remove preference related flags
 					//solutionPrefs.config.prefs.preferenceMode = false	//MEMO: moved to NAV_workflow_load
 					delete solutionPrefs.config.prefs.workflowSpace
@@ -1713,11 +1713,11 @@ function DS_actions(input) {
 					delete solutionPrefs.config.prefs.workflowFormID
 					delete solutionPrefs.config.prefs.preferenceMode
 					delete solutionPrefs.config.prefs.designMode
-					
+
 					//in servoy 4 or greater
 					if (utils.stringToNumber(solutionPrefs.clientInfo.verServoy) >= 4) {
 						var ulForm = (solutionPrefs.config.webClient) ? 'DATASUTRA_WEB_0F__list__universal' : baseForm
-						
+
 						//a custom tab was actually being shown
 						if (false) {
 							forms[ulForm].elements.tab_content_B.tabIndex = navigationPrefs.byNavSetName.configPanes.itemsByName['Custom tab ' + solutionPrefs.config.currentFormID + ': ' + solutionPrefs.config.currentFormName].listData.tabNumber
@@ -1729,7 +1729,7 @@ function DS_actions(input) {
 								var navForm = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__WEB__buttons' : 'NAV_T_universal_list'
 								var navList = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__WEB__list' : 'NAV_T_universal_list'
 								forms[navForm].DISPLAY_cycle(true)
-							
+
 								forms[navForm].FORM_on_show(true)
 								forms[ulForm].elements.tab_content_B.tabIndex = 2
 								forms[navList].elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.tabNumber
@@ -1739,7 +1739,7 @@ function DS_actions(input) {
 								var navForm = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__WEB__no_buttons' : 'NAV_T_universal_list__no_buttons'
 								var navList = (solutionPrefs.config.webClient) ? 'NAV_T_universal_list__WEB__list' : 'NAV_T_universal_list__no_buttons'
 								forms[navForm].DISPLAY_cycle(true)
-								
+
 								forms[navForm].FORM_on_show(true)
 								forms[ulForm].elements.tab_content_B.tabIndex = 3
 								forms[navList].elements.tab_ul.tabIndex = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].listData.tabNumber
@@ -1750,17 +1750,17 @@ function DS_actions(input) {
 							forms[ulForm].elements.tab_content_B.tabIndex = 1
 						}
 					}
-					
+
 					if (solutionPrefs.config.webClient) {
 						scopes.DS.webURLSetStatus = true
-						
+
 						//replace with specific record (recall downstream when UL enabled)
-						
+
 					}
-					
+
 					//re-set progress indicator toolbar => issue with restoring last selected toolbar
 					TRIGGER_progressbar_stop()
-					
+
 					//return toolbar window to most recent position and then clear out the stored value
 					if (solutionPrefs.config.prefs.toolbarTabSelected) {
 						//formerly selected tab no longer available
@@ -1772,7 +1772,7 @@ function DS_actions(input) {
 					else {
 						forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex = 1
 					}
-					
+
 					//turn licensing check back on
 					if (baDeeBaDee) {
 						solutionPrefs.config.prefs.thatsAllFolks = true
@@ -1781,7 +1781,7 @@ function DS_actions(input) {
 				//go to a specific preference
 				else if (itemClicked != '-' && itemClicked != 'Design mode') {
 					var currentToolbar = forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex
-					
+
 					//entering a preference for the first time
 					if (!solutionPrefs.config.prefs.preferenceMode) {
 						//web client
@@ -1792,19 +1792,19 @@ function DS_actions(input) {
 						else {
 							forms[baseForm].elements.sheetz.visible = false
 						}
-						
+
 						//add preference flag
 						solutionPrefs.config.prefs.preferenceMode = true
-						
+
 						//save current toolbar tab
 						solutionPrefs.config.prefs.toolbarTabSelected = currentToolbar
-						
+
 						//turn on progress indicator when enabled
 						if (solutionPrefs.config.prefs.configNotify) {
 							CODE_cursor_busy(true)
 							TRIGGER_progressbar_start(-273,'Loading ' + itemClicked + '. Please wait...')
 						}
-						
+
 						//web client
 						if (solutionPrefs.config.webClient) {
 							//save current sidebar tab
@@ -1815,37 +1815,37 @@ function DS_actions(input) {
 							//save current sidebar tab
 							solutionPrefs.config.prefs.sidebarTabSelected = forms[baseForm].elements.tab_content_D.tabIndex
 						}
-						
+
 						//if sidebar showing, save it and turn off
 						if (solutionPrefs.screenAttrib.sidebar.status) {
 							solutionPrefs.config.prefs.sidebar = true
-							
+
 							DS_sidebar_toggle(false,null,true)
 							application.updateUI()
 						}
-						
+
 						//if we were in design mode, save it
 						if (designMode) {
 							solutionPrefs.config.prefs.designMode = true
 						}
-						
+
 						//save down workflow name, id and selected space
 						solutionPrefs.config.prefs.workflowFormName = solutionPrefs.config.currentFormName
-						solutionPrefs.config.prefs.workflowFormID = 
-						navigationPrefs.byNavSetID[DATASUTRA_navigation_set].lastNavItem = 
+						solutionPrefs.config.prefs.workflowFormID =
+						navigationPrefs.byNavSetID[DATASUTRA_navigation_set].lastNavItem =
 							solutionPrefs.config.currentFormID
 						solutionPrefs.config.prefs.workflowSpace = solutionPrefs.config.activeSpace
-						
+
 						//save information about current workflow space setup
 						if (solutionPrefs.config.prefs.workflowFormID && navigationPrefs.byNavItemID[solutionPrefs.config.prefs.workflowFormID]) {
 							navigationPrefs.byNavItemID[solutionPrefs.config.prefs.workflowFormID].spaceStatus = new Array()
 							navigationPrefs.byNavItemID[solutionPrefs.config.prefs.workflowFormID].spaceStatus.lastSpace = solutionPrefs.config.prefs.workflowSpace
-							
+
 							for (var i = 1; i <= 14; i++) {
 								navigationPrefs.byNavItemID[solutionPrefs.config.prefs.workflowFormID].spaceStatus.push(forms[baseForm + '__header'].elements['btn_space_' + i] ? forms[baseForm + '__header'].elements['btn_space_' + i].visible : false)
 							}
 						}
-						
+
 						//make sure find graphics are the unselected variety
 						if (!solutionPrefs.config.webClient) {
 							forms[baseForm + '__header__fastfind'].elements.btn_find.setImageURL('media:///find_magnify.png')
@@ -1853,7 +1853,7 @@ function DS_actions(input) {
 							forms[baseForm + '__header__fastfind'].elements.find_end.setImageURL('media:///find_stop.png')
 						}
 						forms[baseForm + '__header'].elements.fld_constant.requestFocus(false)
-						
+
 						//disable nav_chooser, find, and toolbar cycle button
 						forms[baseForm + '__header'].elements.btn_navset.enabled = false
 						forms[baseForm + '__header__toolbar'].elements.toolbar_navigator.visible = false
@@ -1863,10 +1863,10 @@ function DS_actions(input) {
 							forms[baseForm + '__header__fastfind'].elements.find_end.enabled = false
 							forms[baseForm + '__header__fastfind'].elements.fld_find.enabled = false
 						}
-						
+
 						//hide frameworks action graphic, showing red outline underneath
 						forms[baseForm + '__header'].elements.btn_fw_action.visible = false
-						
+
 						//set background color to be white
 						forms[baseForm + '__header__toolbar'].elements.lbl_color.bgcolor = '#ffffff'
 					}
@@ -1878,19 +1878,19 @@ function DS_actions(input) {
 							TRIGGER_progressbar_start(-273,'Loading ' + itemClicked + '. Please wait...')
 						}
 					}
-					
+
 					//set flag for check of selected preference
 					solutionPrefs.config.prefs.paneSelected = itemID
-					
+
 					//load selected preference
 					NAV_preference_load(itemClicked,itemID)
-					
+
 					//turn off progress indicator when enabled
 					if (solutionPrefs.config.prefs.configNotify) {
 //						TRIGGER_progressbar_stop()
 						CODE_cursor_busy(false)
 					}
-					
+
 					//change header to display preference selected
 					forms.TOOL_config_pane.elements.lbl_title.text = itemClicked
 					forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex = 2
@@ -1909,19 +1909,19 @@ function DS_help()
 
 /*
  *	TITLE    :	DS_help
- *			  	
+ *
  *	MODULE   :	_DATASUTRA_
- *			  	
+ *
  *	ABOUT    :	activate help mode for the current screen
- *			  	
- *	INPUT    :	
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	INPUT    :
+ *
+ *	OUTPUT   :
+ *
+ *	REQUIRES :
+ *
  *	MODIFIED :	Mar 2008 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 if (application.__parent__.solutionPrefs) {
@@ -1934,7 +1934,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	for (var i = 0; i < arguments.length; i++) {
 		Arguments.push(arguments[i])
 	}
-	
+
 	//reassign arguments without jsevents
 	arguments = Arguments.filter(CODE_jsevent_remove)
 }
@@ -1949,31 +1949,31 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		var helpBkgndColor = navigationPrefs.byNavItemID[currentNavItem].navigationItem.helpColorBackground
 		var helpAvailable = helpForm || helpDesc //navigationPrefs.byNavItemID[currentNavItem].navigationItem.helpAvailable
 		var stayInHelp = arguments[0]
-		
+
 		if (helpAvailable || solutionPrefs.design.statusDesign) {
 			//activate
 			if (!solutionPrefs.config.helpMode || stayInHelp) {
 				//set flag that in helpmode
 				DEV_clear_modes()
 				solutionPrefs.config.helpMode = true
-				
+
 				//we're in design mode, mark that we are in the help config pane
 				if (solutionPrefs.design.statusDesign) {
 					solutionPrefs.design.modes.help = true
 					solutionPrefs.design.currentMode = 'help'
 				}
-				
+
 				//replace workflow area with help screen, if defined and available
 				if ((helpForm) ? forms[helpForm] : false) {
 					forms[baseForm].elements.tab_content_C.removeAllTabs()
 					forms[baseForm].elements.tab_content_C.addTab(forms[helpForm],'')
 					forms[baseForm].elements.tab_content_C.tabIndex = forms[baseForm].elements.tab_content_C.getMaxTabIndex()
 				}
-				
+
 				//set help text
 				DEV_help_description = helpDesc
 				forms[helpList].elements.lbl_record_heading.text = 'Help: ' + navigationPrefs.byNavItemID[currentNavItem].navigationItem.itemName
-				
+
 				//set colors
 				if (helpTextColor) {
 					forms[helpList].elements.fld_help_description.fgcolor = '#'+helpTextColor
@@ -1987,21 +1987,21 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 				else {
 					forms[helpList].elements.color_background.bgcolor = '#D1D7E2'
 				}
-				
+
 				//if not loaded, add tab
 				if (!navigationPrefs.byNavSetName.configPanes.itemsByName[prefName]) {
-					
+
 					//assign to list tab panel
 					forms[baseForm].elements.tab_content_B.addTab(forms[helpList],'View help',null,null,null,null)
 					forms[baseForm].elements.tab_content_B.tabIndex = forms[baseForm].elements.tab_content_B.getMaxTabIndex()
-					
+
 					//save status info
 					navigationPrefs.byNavSetName.configPanes.itemsByName[prefName] = new Object()
 					navigationPrefs.byNavSetName.configPanes.itemsByName[prefName].listData = {
 												tabNumber : forms[baseForm].elements.tab_content_B.tabIndex,
 												dateAdded : application.getServerTimeStamp()
 										}
-					
+
 				}
 				//form already exists, set tab index
 				else {
@@ -2012,7 +2012,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			else {
 				//set flag that not in helpmode
 				solutionPrefs.config.helpMode = false
-				
+
 				//fire load_forms
 				NAV_workflow_load(null,solutionPrefs.config.currentHistoryPosition)
 			}
@@ -2034,19 +2034,19 @@ function DS_help_sidebar()
 
 /*
  *	TITLE    :	DS_help
- *			  	
+ *
  *	MODULE   :	_DATASUTRA_
- *			  	
+ *
  *	ABOUT    :	activate help mode for the current screen
- *			  	
- *	INPUT    :	
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	INPUT    :
+ *
+ *	OUTPUT   :
+ *
+ *	REQUIRES :
+ *
  *	MODIFIED :	Mar 2008 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 if (application.__parent__.solutionPrefs) {
@@ -2060,31 +2060,31 @@ if (application.__parent__.solutionPrefs) {
 	var helpBkgndColor = navigationPrefs.byNavItemID[currentNavItem].navigationItem.helpColorBackground
 	var helpAvailable = helpForm || helpDesc //navigationPrefs.byNavItemID[currentNavItem].navigationItem.helpAvailable
 	var stayInHelp = arguments[0]
-	
+
 	if (helpAvailable || solutionPrefs.design.statusDesign) {
 		//activate
 		if (!solutionPrefs.config.helpMode || stayInHelp) {
 			//set flag that in helpmode
 			DEV_clear_modes()
 			solutionPrefs.config.helpMode = true
-			
+
 			//we're in design mode, mark that we are in the help config pane
 			if (solutionPrefs.design.statusDesign) {
 				solutionPrefs.design.modes.help = true
 				solutionPrefs.design.currentMode = 'help'
 			}
-			
+
 			//replace workflow area with help screen, if defined and available
 			if ((helpForm) ? forms[helpForm] : false) {
 				forms[baseForm].elements.tab_content_C.removeAllTabs()
 				forms[baseForm].elements.tab_content_C.addTab(forms[helpForm],'')
 				forms[baseForm].elements.tab_content_C.tabIndex = forms[baseForm].elements.tab_content_C.getMaxTabIndex()
 			}
-			
+
 			//set help text
 			DEV_help_description = helpDesc
 			forms[helpList].elements.lbl_record_heading.text = 'Help: ' + navigationPrefs.byNavItemID[currentNavItem].navigationItem.itemName
-			
+
 			//set colors
 			if (helpTextColor) {
 				forms[helpList].elements.fld_help_description.fgcolor = '#'+helpTextColor
@@ -2098,21 +2098,21 @@ if (application.__parent__.solutionPrefs) {
 			else {
 				forms[helpList].elements.color_background.bgcolor = '#D1D7E2'
 			}
-			
+
 			//if not loaded, add tab
 			if (!navigationPrefs.byNavSetName.configPanes.itemsByName[prefName]) {
-				
+
 				//assign to list tab panel
 				forms[baseForm].elements.tab_content_B.addTab(forms[helpList],'View help',null,null,null,null)
 				forms[baseForm].elements.tab_content_B.tabIndex = forms[baseForm].elements.tab_content_B.getMaxTabIndex()
-				
+
 				//save status info
 				navigationPrefs.byNavSetName.configPanes.itemsByName[prefName] = new Object()
 				navigationPrefs.byNavSetName.configPanes.itemsByName[prefName].listData = {
 											tabNumber : forms[baseForm].elements.tab_content_B.tabIndex,
 											dateAdded : application.getServerTimeStamp()
 									}
-				
+
 			}
 			//form already exists, set tab index
 			else {
@@ -2123,7 +2123,7 @@ if (application.__parent__.solutionPrefs) {
 		else {
 			//set flag that not in helpmode
 			solutionPrefs.config.helpMode = false
-			
+
 			//fire load_forms
 			NAV_workflow_load(null,solutionPrefs.config.currentHistoryPosition)
 		}
@@ -2143,39 +2143,39 @@ if (application.__parent__.solutionPrefs) {
 function DS_navigation_set(input) {
 	//validate license
 	forms.NSTL_0F_solution__license.ACTION_validate(true,true)
-	
+
 	//timed out, throw up error
 	if (solutionPrefs.config.prefs.thatsAllFolks) {
 		forms.NSTL_0F_solution__license.ACTION_status()
-		
+
 		DIALOGS.showErrorDialog(
 				'Trial expired',
 				'Trial time expired\n' +
 				'Please restart.'
 			)
 	}
-	
+
 	//get menu list from a value list
 	var vlItems = application.getValueListItems('NAV_navigation_set')
 	var vlDisplay = vlItems.getColumnAsArray(1)
 	var vlReal = vlItems.getColumnAsArray(2)
-	
+
 	//don't show error navigation set
 	var errorIndex = vlDisplay.indexOf('WC: Error')
 	if (errorIndex != -1) {
 		vlDisplay.splice(errorIndex,1)
 		vlReal.splice(errorIndex,1)
 	}
-	
+
 	//are there favorites?
 	if (application.__parent__.solutionPrefs && solutionPrefs.access && solutionPrefs.access.favorites && solutionPrefs.access.favorites.length) {
 		vlDisplay.push('-','Favorites')
 		vlReal.push(null,0)
 	}
-	
+
 	//called to depress menu
 	if (input instanceof JSEvent) {
-	
+
 		//build menu
 		var menu = new Array()
 		for ( var i = 0 ; i < vlDisplay.length ; i++ ) {
@@ -2188,34 +2188,34 @@ function DS_navigation_set(input) {
 			else {
 				menu[i] = plugins.popupmenu.createMenuItem(vlDisplay[i] + "", DS_navigation_set)
 			}
-			
+
 			//set arguments
 			menu[i].setMethodArguments(vlReal[i])
-			
+
 			//disable dividers
 			if (vlDisplay[i] == '-') {
 				menu[i].setEnabled(false)
 			}
 		}
-		
+
 		//popup menu
 		globals.CODE_popup.popupMenu = menu
 		globals.CODE_popup(null,null,forms[input.getFormName()].elements[input.getElementName()])
 	}
 	//menu shown and item chosen
 	else if (application.__parent__.solutionPrefs && application.__parent__.navigationPrefs) {
-	
+
 		var oldItem = DATASUTRA_navigation_set
-		
+
 		if (input >= 0) {
 			//save last selected item when changing navigation sets
 			if (oldItem != input) {
 				if (oldItem) {
 					navigationPrefs.byNavSetID[oldItem].lastNavItem = solutionPrefs.config.currentFormID
 				}
-				
+
 				DATASUTRA_navigation_set = input
-				
+
 				NAV_navigation_set_load()
 			}
 		}
@@ -2231,19 +2231,19 @@ function DS_plugin_check()
 
 /*
  *	TITLE    :	DS_plugin_check
- *			  	
+ *
  *	MODULE   :	_DATASUTRA_
- *			  	
+ *
  *	ABOUT    :	Check for version of Data Sutra plugin
- *			  	
- *	INPUT    :	
- *			  	
+ *
+ *	INPUT    :
+ *
  *	OUTPUT   :	version number if present, otherwise false
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	REQUIRES :
+ *
  *	MODIFIED :	Apr 15, 2008 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 //check if plugin
@@ -2289,40 +2289,40 @@ function DS_sidebar_load()
 
 /*
  *	TITLE    :	DS_sidebar_load
- *			  	
+ *
  *	MODULE   :	_DATASUTRA_
- *			  	
+ *
  *	ABOUT    :	loads enabled sidebars into sidebar area
- *			  	
- *	INPUT    :	
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	INPUT    :
+ *
+ *	OUTPUT   :
+ *
+ *	REQUIRES :
+ *
  *	USAGE    :	DS_sidebar_load()
- *			  	
+ *
  *	MODIFIED :	September 10, 2009 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 if (application.__parent__.solutionPrefs) {
 	var baseForm = solutionPrefs.config.formNameBase
 	var sideForm = 'DATASUTRA__sidebar'
 	var sidebars = solutionPrefs.panel.sidebar
-	
+
 	//remove all tabs from the sidebar
 	forms[sideForm].elements.tab_content.removeAllTabs()
-	
-	//add in help tab (always the first)	
+
+	//add in help tab (always the first)
 	forms[sideForm].elements.tab_content.addTab(forms['MGR_0S_documentation'],null,"Help...I'm melting")
-	
+
 	//add in tabs to popdown
 	if (sidebars.length) {
 		//loop through array and add tabs
 		for (var i = 0 ; i < sidebars.length ; i++) {
 			var statusTab = sidebars[i]
-			
+
 			//selected form exists in solution
 			if (forms[statusTab.formName]) {
 				forms[sideForm].elements.tab_content.addTab(forms[statusTab.formName],null,statusTab.tabName)
@@ -2332,16 +2332,16 @@ if (application.__parent__.solutionPrefs) {
 				sidebars.splice(i,1)
 			}
 		}
-		
+
 		//select first tab
 		forms[sideForm].elements.tab_content.tabIndex = 2
 		solutionPrefs.panel.sidebar.selectedTab = forms[sideForm].elements.tab_content.tabIndex
-		
+
 		//if first tab, set title
 		if (sidebars.length > 1 && sidebars[0].tabName) {
 //			forms[sideForm + '__header'].elements.lbl_heading.text = sidebars[0].tabName.toUpperCase()
 		}
-		
+
 		/*
 		//if first tab has pop-out, show it
 		if (sidebars.length && sidebars[0].popOut) {
@@ -2352,15 +2352,15 @@ if (application.__parent__.solutionPrefs) {
 		}
 		*/
 	}
-	
+
 	//show sidebar expand button
 	if (sidebars && sidebars.length) {
 		forms[baseForm + '__header'].elements.btn_sidebar_expand.visible = true
 	}
-	
+
 	//toggle action buttons
 	forms[sideForm + '__header'].BUTTONS_toggle()
-	
+
 	//if only one tab, remove tab changer button
 	if (sidebars.length > 1) {
 		forms[sideForm + '__header'].elements.btn_tab.visible = true
@@ -2375,11 +2375,11 @@ if (application.__parent__.solutionPrefs) {
 
 /**
  * Toggle the right-hand sidebar area.
- * 
+ *
  * @param	{Boolean}	[sideToggle] Force the sidebar to be shown or hidden.
  * @param	{Integer}	[sideWidth] Override the default sidebar width.
  * @param	{Boolean}	[sideExpand=false] Changes the behavior from resizing the window to resizing the window's contents when showing a sidebar.
- * 
+ *
  * @properties={typeid:24,uuid:"b2bbd2c2-2b6e-4918-accc-74b3ab9769d6"}
  */
 function DS_sidebar_toggle(sideToggle, sideWidth, sideExpand)
@@ -2387,49 +2387,49 @@ function DS_sidebar_toggle(sideToggle, sideWidth, sideExpand)
 	if (typeof sideExpand != 'boolean') {
 		sideExpand = !CODE_key_pressed('shift')
 	}
-	
+
 	//when in kiosk mode, keep inside window dimensions
 	if (solutionPrefs.screenAttrib.kiosk.fullScreen) {
 		sideExpand = false
 	}
-	
-	if (application.__parent__.solutionPrefs) {	
+
+	if (application.__parent__.solutionPrefs) {
 		//timed out, throw up error
 		if (solutionPrefs.config.prefs.thatsAllFolks) {
 			forms.NSTL_0F_solution__license.ACTION_status()
-			
+
 			DIALOGS.showErrorDialog(
 								'Trial expired',
 								'Trial time expired\n' +
 								'Please restart.'
 							)
 		}
-		
+
 		var baseForm = solutionPrefs.config.formNameBase
 		var webClient = solutionPrefs.config.webClient
-		
+
 		var sideToggle = (typeof arguments[0] == 'boolean') ? arguments[0] : !solutionPrefs.screenAttrib.sidebar.status
 		var sideWidth = arguments[1] || solutionPrefs.screenAttrib.sidebar.currentSize
 		var maxWidth = application.getWindowWidth(null)
-		
+
 //		var headerHeight = forms[baseForm].elements.bean_header.getHeight()
 //		var mainHeight = forms[baseForm].elements.bean_main.getHeight()
-		
+
 		//helper to make sure tables loaded in in sidebar
 		function rejiggle() {
 			var callback = plugins.WebClientUtils.generateCallbackScript(DS_router_bean_resize);
 			var jsCallback = 'function resetBeans(){' + callback + '}';
 			plugins.WebClientUtils.executeClientSideJS('resetBeanSizes(' + jsCallback + ');')
 		}
-		
+
 		//developer windows
 		if (false) {
-			
+
 		}
 		//windows
 		else if (utils.stringPatternCount(solutionPrefs.clientInfo.typeOS,'Windows')) {
 			var theme = plugins.sutra.getWindowsTheme()
-			
+
 			//aero
 			if (utils.stringToNumber(solutionPrefs.clientInfo.verOS) > 6 && theme != 'Classic') {
 				var offset = 16
@@ -2454,22 +2454,22 @@ function DS_sidebar_toggle(sideToggle, sideWidth, sideExpand)
 		else {
 			var offset = 0
 		}
-		
+
 		//show center indicator when opening/closing sidebar
 		if (webClient) {
 			scopes.DS.webBlockerCentered(true)
 		}
-		
+
 		//toggle on
 		if (sideToggle && sideWidth) {
 			//web client
 			if (webClient) {
 				forms[baseForm].elements.tab_wrapper.setRightForm(forms.DATASUTRA__sidebar)
-				
+
 				//sidebar fits inside window
 				var mainWidth = maxWidth - sideWidth - offset
 				forms[baseForm].elements.tab_wrapper.dividerLocation = mainWidth
-				
+
 				//re-jiggle to make sure things loaded in
 				rejiggle()
 			}
@@ -2478,15 +2478,15 @@ function DS_sidebar_toggle(sideToggle, sideWidth, sideExpand)
 				forms[baseForm].elements.bean_wrapper_1.leftComponent = forms[baseForm].elements.bean_wrapper_2
 				forms[baseForm].elements.bean_wrapper_1.rightComponent = forms[baseForm].elements.tab_content_D
 				forms[baseForm].elements.bean_wrapper_1.resizeWeight = 1
-				
+
 				//sidebar makes window grow
 				if (sideExpand) {
 					var mainWidth = maxWidth - offset
 					maxWidth += sideWidth
 					application.setWindowSize(maxWidth,application.getWindowHeight(null),null)
-					
+
 					forms[baseForm].elements.bean_wrapper_1.dividerLocation = mainWidth
-					
+
 					//TODO: reset dividerlocation if dividers showing
 					//see DATASUTRA_0F_solution__header.SIDEBAR_expand()
 				}
@@ -2496,12 +2496,12 @@ function DS_sidebar_toggle(sideToggle, sideWidth, sideExpand)
 					forms[baseForm].elements.bean_wrapper_1.dividerLocation = mainWidth
 				}
 			}
-			
+
 			solutionPrefs.screenAttrib.sidebar.status = true
-			
+
 			//hide toggle on graphic
 			forms[baseForm + '__header'].elements.btn_sidebar_expand.visible = false
-			
+
 			//if first tab showing (help), enter help mode
 			if (forms.DATASUTRA__sidebar.elements.tab_content.tabIndex == 1) {
 				DS_help(true)
@@ -2517,12 +2517,12 @@ function DS_sidebar_toggle(sideToggle, sideWidth, sideExpand)
 			if (webClient) {
 				forms[baseForm].elements.tab_wrapper.setRightForm(forms.DATASUTRA_WEB__blank_1)
 				forms[baseForm].elements.tab_wrapper.dividerLocation = application.getWindow().getWidth()
-				
+
 				//in list space, readjust list position
 				if (solutionPrefs.config.activeSpace == 'workflow flip') {
 					forms[baseForm + '__main'].elements.tab_main.dividerLocation = application.getWindow().getWidth()
 				}
-				
+
 				//re-jiggle to make sure things loaded in
 				rejiggle()
 			}
@@ -2537,24 +2537,24 @@ function DS_sidebar_toggle(sideToggle, sideWidth, sideExpand)
 				else {
 					var mainWidth = maxWidth - offset
 				}
-				
+
 				forms[baseForm].elements.bean_wrapper_1.leftComponent = forms[baseForm].elements.bean_wrapper_2
 				forms[baseForm].elements.bean_wrapper_1.rightComponent = null
 			}
-			
+
 			solutionPrefs.screenAttrib.sidebar.status = false
-			
+
 			//show toggle on graphic
 			forms[baseForm + '__header'].elements.btn_sidebar_expand.visible = true
 		//	forms[baseForm + '__header'].elements.lbl_drag.visible = false
-			
+
 			//in help, leave it
 			if (solutionPrefs.config.helpMode) {
 				//set flag that not in helpmode
 				solutionPrefs.config.helpMode = false
 			}
 		}
-		
+
 		//turn off center spinny
 		if (webClient) {
 			scopes.DS.webBlockerCentered(false,300)
@@ -2573,12 +2573,12 @@ function DS_toolbar_enable(state) {
 	if (typeof state == 'string') {
 		state = eval(state)
 	}
-	
+
 	//turning off
 	if (!state) {
 		//disabled flag
 		solutionPrefs.screenAttrib.toolbar.enable = false
-		
+
 		//web client
 		if (solutionPrefs.config.webClient) {
 			forms.DATASUTRA_WEB_0F__header.elements.split_tool_find.setLeftForm(forms.DATASUTRA_WEB__blank_3)
@@ -2595,7 +2595,7 @@ function DS_toolbar_enable(state) {
 	else {
 		//enabled flag
 		solutionPrefs.screenAttrib.toolbar.enable = true
-		
+
 		//web client
 		if (solutionPrefs.config.webClient) {
 			forms.DATASUTRA_WEB_0F__header.elements.split_tool_find.setLeftForm(forms.DATASUTRA_WEB_0F__header__toolbar)
@@ -2610,11 +2610,11 @@ function DS_toolbar_enable(state) {
 	}
 }
 
-/** 
+/**
  * Temporarily disable the sidebar
- * 
+ *
  * @param {Boolean} state (when true, enables; when false, disables
- * 
+ *
  * @properties={typeid:24,uuid:"1D18E67F-4EEA-4BF2-8187-90DC3EC65B8A"}
  */
 function DS_sidebar_enable(state) {
@@ -2622,26 +2622,26 @@ function DS_sidebar_enable(state) {
 	if (typeof state == 'string') {
 		state = eval(state)
 	}
-	
+
 	//there are sidebars
 	if (solutionPrefs.panel.sidebar.length) {
-		
+
 		//default type of expansion
 		var expandType = !solutionPrefs.config.webClient
-		
+
 		//turning off
 		if (!state) {
 			//a sidebar is showing
 			if (solutionPrefs.screenAttrib.sidebar.status) {
 				forms.DATASUTRA__sidebar__header.ACTION_collapse()
 //				DS_sidebar_toggle(false,null,expandType)
-				
+
 				solutionPrefs.screenAttrib.sidebar.wasOpen = true
 			}
-			
+
 			//disabled flag
 			solutionPrefs.screenAttrib.sidebar.enable = false
-			
+
 			//disable sidebar icon
 			//web client
 			if (solutionPrefs.config.webClient) {
@@ -2656,7 +2656,7 @@ function DS_sidebar_enable(state) {
 		else {
 			//enabled flag
 			solutionPrefs.screenAttrib.sidebar.enable = true
-			
+
 			//enable sidebar icon
 			//web client
 			if (solutionPrefs.config.webClient) {
@@ -2666,11 +2666,11 @@ function DS_sidebar_enable(state) {
 			else {
 				forms.DATASUTRA_0F_solution__header.elements.btn_sidebar_expand.enabled = true
 			}
-			
+
 			//sidebar was open previously
 			if (solutionPrefs.screenAttrib.sidebar.wasOpen && solutionPrefs.panel.sidebar.selectedTab) {
 				delete solutionPrefs.screenAttrib.sidebar.wasOpen
-				
+
 //				DS_sidebar_toggle(true,null,expandType)
 				//web client
 				if (solutionPrefs.config.webClient) {
@@ -2694,34 +2694,34 @@ function DS_sidebar_enable(state) {
  */
 function DS_space_change(event)
 {
-	
+
 /*
  *	TITLE    :	DS_space_change
- *			  	
+ *
  *	MODULE   :	_DATASUTRA_
- *			  	
+ *
  *	ABOUT    :	adjust spaces
- *			  	
+ *
  *	INPUT    :	(optional) the space to switch to
  *			  	(optional) skip the optional custom method
  *			  	(optional) if same space called, do not flip
  *			  	(optional) don't fire application update uis (used for exiting design mode prior to entering preferences
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	OUTPUT   :
+ *
+ *	REQUIRES :
+ *
  *	USAGE    :	DS_space_change(newSpace, skipCustomMethod, noFlip)
- *			  	
+ *
  *	MODIFIED :	June 25, 2008 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 //running webclient, push off to correct method
 if (solutionPrefs.config.webClient) {
 	forms.DATASUTRA_WEB_0F__header.ACTION_space_change(arguments[0],arguments[1],arguments[2],arguments[3],arguments[4],arguments[5])
 }
-else if (application.__parent__.solutionPrefs) {	
+else if (application.__parent__.solutionPrefs) {
 
 //MEMO: need to somehow put this section in a Function of it's own
 //running in Tano...strip out jsevents for now
@@ -2732,7 +2732,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	//TODO WARNING: do rewrite your code to not depend on 'arguments', append them to the parameter list.
 		Arguments.push(arguments[i])
 	}
-	
+
 	//reassign arguments without jsevents
 	arguments = Arguments.filter(CODE_jsevent_remove)
 }
@@ -2740,34 +2740,34 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	//timed out, throw up error
 	if (solutionPrefs.config.prefs.thatsAllFolks) {
 		forms.NSTL_0F_solution__license.ACTION_status()
-		
+
 		DIALOGS.showErrorDialog(
 				'Trial expired',
 				'Trial time expired\n' +
 				'Please restart.'
 			)
 	}
-	
+
 	var baseForm = solutionPrefs.config.formNameBase
 	var buttonName = (arguments[0]) ? arguments[0] : application.getMethodTriggerElementName()
 	var skipCustomMethod = arguments[1]
 	var noFlip = arguments[2]
 	var skipUI = arguments[3]
-	
+
 	var prefix = 'btn_space_'
 	var suffix = utils.stringToNumber(buttonName.substr(prefix.length))
 	var oldSpace = solutionPrefs.config.activeSpace
-	
+
 	var spaceRealNames = [	'standard','list','vertical','centered','classic','wide','workflow',
 							'standard flip','list flip','vertical flip','centered flip','classic flip','wide flip','workflow flip']
-	
+
 	if (application.__parent__.navigationPrefs && solutionPrefs.config.currentFormID && navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID]) {
 		var spacesOK = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].spaceSetup
 	}
 	else {
 		var spacesOK = [true,true,true,true,true,true,true,true,true,true,true,true,true,true]
 	}
-	
+
 	//find out what last button 'pressed' was
 	var found = false
 	for (var i = 0; i < spaceRealNames.length && !found; i++) {
@@ -2784,428 +2784,428 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		else {
 			var complement = suffix - 7
 		}
-		
+
 		//if complement is available, show it and continue method running as it; otherwise do nothing
 		if (spacesOK[complement - 1]) {
 			forms[baseForm + '__header'].elements['btn_space_'+complement].visible = true
 			forms[baseForm + '__header'].elements['btn_space_'+suffix].visible = false
-			
+
 			buttonName = prefix + complement
 		}
 	}
-	
-	
+
+
 	//activate correct button and set space to that value
 	for (var i = 1 ; i <= 14; i++) {
-	
+
 		//name of space button
 		var elem = prefix + i
-		
+
 		//get details about the space we're in
 		switch (elem) {
 			case 'btn_space_1':
 				var spaceName = 'standard'
-				
+
 				var imageURL = 'media:///space_standard.png'
 				var imageActiveURL = 'media:///space_standard_active.png'
-				
+
 				var mainLevel_A = 'bean_list'
 				var mainLevel_B = 'bean_workflow'
 				var mainLevelOrient = 1	//left-right orientation
 				var mainLevelDivLocation = solutionPrefs.screenAttrib.spaces.standard.currentHorizontal
-				
+
 				var listLevel_A = 'tab_content_A'
 				var listLevel_B = 'tab_content_B'
 				var listLevelOrient = 0	//top-bottom orientation
 				var listLevelDivLocation = solutionPrefs.screenAttrib.spaces.standard.currentVertical
-				
+
 				var workflowLevel_A = null
 				var workflowLevel_B = 'tab_content_C'
 				var workflowLevelOrient = 0	//top-bottom orientation
 				var workflowLevelDivLocation = 0
 				var workflowLevelResizeWeight = 0
-				
+
 				//needed for logging
 				var dimensionOne = solutionPrefs.screenAttrib.spaces.standard.currentHorizontal
 				var dimensionTwo = solutionPrefs.screenAttrib.spaces.standard.currentVertical
-				
+
 				break
-			
+
 			case 'btn_space_2':
 				var spaceName = 'list'
-				
+
 				var imageURL = 'media:///space_list.png'
 				var imageActiveURL = 'media:///space_list_active.png'
-				
+
 				var mainLevel_A = 'bean_list'
 				var mainLevel_B = 'bean_workflow'
 				var mainLevelOrient = 1	//left-right orientation
 				var mainLevelDivLocation = solutionPrefs.screenAttrib.spaces.list.currentHorizontal
-				
+
 				var listLevel_A = 'tab_content_B'
 				var listLevel_B = null
 				var listLevelOrient = 0	//top-bottom orientation
 				var listLevelDivLocation = 0
-				
+
 				var workflowLevel_A = null
 				var workflowLevel_B = 'tab_content_C'
 				var workflowLevelOrient = 0	//top-bottom orientation
 				var workflowLevelDivLocation = 0
 				var workflowLevelResizeWeight = 0
-				
+
 				//needed for logging
 				var dimensionOne = solutionPrefs.screenAttrib.spaces.list.currentHorizontal
-				
+
 				break
-			
+
 			case 'btn_space_3':
 				var spaceName = 'vertical'
-				
+
 				var imageURL = 'media:///space_vertical.png'
 				var imageActiveURL = 'media:///space_vertical_active.png'
-				
+
 				var mainLevel_A = 'bean_list'
 				var mainLevel_B = 'bean_workflow'
 				var mainLevelOrient = 1	//left-right orientation
 				var mainLevelDivLocation = solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalOne + solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalTwo
-				
+
 				var listLevel_A = 'tab_content_A'
 				var listLevel_B = 'tab_content_B'
 				var listLevelOrient = 1	//left-right orientation
 				var listLevelDivLocation = solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalOne
-				
+
 				var workflowLevel_A = null
 				var workflowLevel_B = 'tab_content_C'
 				var workflowLevelOrient = 0	//top-bottom orientation
 				var workflowLevelDivLocation = 0
 				var workflowLevelResizeWeight = 0
-				
+
 				//needed for logging
 				var dimensionOne = solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalOne
 				var dimensionTwo = solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalTwo
-				
+
 				break
-			
+
 			case 'btn_space_4':
 				var spaceName = 'centered'
-				
+
 				var imageURL = 'media:///space_centered.png'
 				var imageActiveURL = 'media:///space_centered_active.png'
-				
+
 				var mainLevel_A = 'bean_list'
 				var mainLevel_B = 'bean_workflow'
 				var mainLevelOrient = 1	//left-right orientation
 				var mainLevelDivLocation = solutionPrefs.screenAttrib.spaces.centered.currentHorizontalOne
-				
+
 				var listLevel_A = 'tab_content_A'
 				var listLevel_B = null
 				var listLevelOrient = 0	//top-bottom orientation
 				var listLevelDivLocation = 2000
-				
+
 				var workflowLevel_A = 'tab_content_C'
 				var workflowLevel_B = 'tab_content_B'
 				var workflowLevelOrient = 1	//left-right orientation
 				var workflowLevelDivLocation = forms[baseForm].elements.bean_main.getWidth() - solutionPrefs.screenAttrib.spaces.centered.currentHorizontalOne - solutionPrefs.screenAttrib.spaces.centered.currentHorizontalTwo
 				var workflowLevelResizeWeight = 1
-				
+
 				//needed for logging
 				var dimensionOne = solutionPrefs.screenAttrib.spaces.centered.currentHorizontalOne
 				var dimensionTwo = solutionPrefs.screenAttrib.spaces.centered.currentHorizontalTwo
-				
+
 				break
-			
+
 			case 'btn_space_5':
 				var spaceName = 'classic'
-				
+
 				var imageURL = 'media:///space_classic.png'
 				var imageActiveURL = 'media:///space_classic_active.png'
-				
+
 				var mainLevel_A = 'bean_list'
 				var mainLevel_B = 'bean_workflow'
 				var mainLevelOrient = 1	//left-right orientation
 				var mainLevelDivLocation = solutionPrefs.screenAttrib.spaces.classic.currentHorizontal
-				
+
 				var listLevel_A = 'tab_content_A'
 				var listLevel_B = null
 				var listLevelOrient = 0	//top-bottom orientation
 				var listLevelDivLocation = 2000
-				
+
 				var workflowLevel_A = 'tab_content_B'
 				var workflowLevel_B = 'tab_content_C'
 				var workflowLevelOrient =  0	//top-bottom orientation
 				var workflowLevelDivLocation = solutionPrefs.screenAttrib.spaces.classic.currentVertical
 				var workflowLevelResizeWeight = 1 / 4
-				
+
 				//needed for logging
 				var dimensionOne = solutionPrefs.screenAttrib.spaces.classic.currentHorizontal
 				var dimensionTwo = solutionPrefs.screenAttrib.spaces.classic.currentVertical
-				
+
 				break
-			
+
 			case 'btn_space_6':
 				var spaceName = 'wide'
-				
+
 				var imageURL = 'media:///space_wide.png'
 				var imageActiveURL = 'media:///space_wide_active.png'
-				
+
 				var mainLevel_A = 'bean_list'
 				var mainLevel_B = 'bean_workflow'
 				var mainLevelOrient = 0	//top-bottom orientation
 				var mainLevelDivLocation = solutionPrefs.screenAttrib.spaces.wide.currentVertical
-				
+
 				var listLevel_A = 'tab_content_A'
 				var listLevel_B = 'tab_content_B'
 				var listLevelOrient = 1	//left-right orientation
 				var listLevelDivLocation = solutionPrefs.screenAttrib.spaces.wide.currentHorizontal
-				
+
 				var workflowLevel_A = null
 				var workflowLevel_B = 'tab_content_C'
 				var workflowLevelOrient = 0	//top-bottom orientation
 				var workflowLevelDivLocation = 0
 				var workflowLevelResizeWeight = 0
-				
+
 				//needed for logging
 				var dimensionOne = solutionPrefs.screenAttrib.spaces.wide.currentHorizontal
 				var dimensionTwo = solutionPrefs.screenAttrib.spaces.wide.currentVertical
-				
+
 				break
-			
+
 			case 'btn_space_7':
 				var spaceName = 'workflow'
-				
+
 				var imageURL = 'media:///space_workflow.png'
 				var imageActiveURL = 'media:///space_workflow_active.png'
-				
+
 				var mainLevel_A = null
 				var mainLevel_B = 'bean_workflow'
 				var mainLevelOrient = 1	//left-right orientation
 				var mainLevelDivLocation = 0
-				
+
 				var listLevel_A = null
 				var listLevel_B = null
 				var listLevelOrient = 0	//top-bottom orientation
 				var listLevelDivLocation = 180
-				
+
 				var workflowLevel_A = null
 				var workflowLevel_B = 'tab_content_C'
 				var workflowLevelOrient = 0	//top-bottom orientation
 				var workflowLevelDivLocation = 0
 				var workflowLevelResizeWeight = 0
-				
+
 				//needed for logging
 				var dimensionOne = 0
-				
+
 				break
-		
+
 			case 'btn_space_8':
 				var spaceName = 'standard flip'
-				
+
 				var imageURL = 'media:///space_standard_flip.png'
 				var imageActiveURL = 'media:///space_standard_flip_active.png'
-				
+
 				var mainLevel_A = 'bean_list'
 				var mainLevel_B = 'bean_workflow'
 				var mainLevelOrient = 1	//left-right orientation
 				var mainLevelDivLocation = solutionPrefs.screenAttrib.spaces.standard.currentHorizontal
-				
+
 				var listLevel_A = 'tab_content_B'
 				var listLevel_B = 'tab_content_A'
 				var listLevelOrient = 0	//top-bottom orientation
 				var listLevelDivLocation = solutionPrefs.screenAttrib.spaces.standard.currentVertical
-				
+
 				var workflowLevel_A = null
 				var workflowLevel_B = 'tab_content_C'
 				var workflowLevelOrient = 0	//top-bottom orientation
 				var workflowLevelDivLocation = 0
 				var workflowLevelResizeWeight = 0
-				
+
 				//needed for logging
 				var dimensionOne = solutionPrefs.screenAttrib.spaces.standard.currentHorizontal
 				var dimensionTwo = solutionPrefs.screenAttrib.spaces.standard.currentVertical
-				
+
 				break
-			
+
 			case 'btn_space_9':
 				var spaceName = 'list flip'
-				
+
 				var imageURL = 'media:///space_list_flip.png'
 				var imageActiveURL = 'media:///space_list_flip_active.png'
-				
+
 				var mainLevel_A = 'bean_list'
 				var mainLevel_B = 'bean_workflow'
 				var mainLevelOrient = 1	//left-right orientation
 				var mainLevelDivLocation = solutionPrefs.screenAttrib.spaces.list.currentHorizontal
-				
+
 				var listLevel_A = 'tab_content_A'
 				var listLevel_B = null
 				var listLevelOrient = 0	//top-bottom orientation
 				var listLevelDivLocation = 0
-				
+
 				var workflowLevel_A = null
 				var workflowLevel_B = 'tab_content_C'
 				var workflowLevelOrient = 0	//top-bottom orientation
 				var workflowLevelDivLocation = 0
 				var workflowLevelResizeWeight = 0
-				
+
 				//needed for logging
 				var dimensionOne = solutionPrefs.screenAttrib.spaces.list.currentHorizontal
-				
+
 				break
-			
+
 			case 'btn_space_10':
 				var spaceName = 'vertical flip'
-				
+
 				var imageURL = 'media:///space_vertical_flip.png'
 				var imageActiveURL = 'media:///space_vertical_flip_active.png'
-				
+
 				var mainLevel_A = 'bean_list'
 				var mainLevel_B = 'bean_workflow'
 				var mainLevelOrient = 1	//left-right orientation
 				var mainLevelDivLocation = solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalOne + solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalTwo
-				
+
 				var listLevel_A = 'tab_content_B'
 				var listLevel_B = 'tab_content_A'
 				var listLevelOrient = 1	//left-right orientation
 				var listLevelDivLocation = solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalOne
-				
+
 				var workflowLevel_A = null
 				var workflowLevel_B = 'tab_content_C'
 				var workflowLevelOrient = 0	//top-bottom orientation
 				var workflowLevelDivLocation = 0
 				var workflowLevelResizeWeight = 0
-				
+
 				//needed for logging
 				var dimensionOne = solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalOne
 				var dimensionTwo = solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalTwo
-				
+
 				break
-			
+
 			case 'btn_space_11':
 				var spaceName = 'centered flip'
-				
+
 				var imageURL = 'media:///space_centered_flip.png'
 				var imageActiveURL = 'media:///space_centered_flip_active.png'
-				
+
 				var mainLevel_A = 'bean_list'
 				var mainLevel_B = 'bean_workflow'
 				var mainLevelOrient = 1	//left-right orientation
 				var mainLevelDivLocation = solutionPrefs.screenAttrib.spaces.centered.currentHorizontalOne
-				
+
 				var listLevel_A = 'tab_content_B'
 				var listLevel_B = null
 				var listLevelOrient = 0	//top-bottom orientation
 				var listLevelDivLocation = 2000
-				
+
 				var workflowLevel_A = 'tab_content_C'
 				var workflowLevel_B = 'tab_content_A'
 				var workflowLevelOrient = 1	//left-right orientation
 				var workflowLevelDivLocation = forms[baseForm].elements.bean_main.getWidth() - solutionPrefs.screenAttrib.spaces.centered.currentHorizontalOne - solutionPrefs.screenAttrib.spaces.centered.currentHorizontalTwo
 				var workflowLevelResizeWeight = 1
-				
+
 				//needed for logging
 				var dimensionOne = solutionPrefs.screenAttrib.spaces.centered.currentHorizontalOne
 				var dimensionTwo = solutionPrefs.screenAttrib.spaces.centered.currentHorizontalTwo
-				
+
 				break
-			
+
 			case 'btn_space_12':
 				var spaceName = 'classic flip'
-				
+
 				var imageURL = 'media:///space_classic_flip.png'
 				var imageActiveURL = 'media:///space_classic_flip_active.png'
-				
+
 				var mainLevel_A = 'bean_list'
 				var mainLevel_B = 'bean_workflow'
 				var mainLevelOrient = 1	//left-right orientation
 				var mainLevelDivLocation = solutionPrefs.screenAttrib.spaces.classic.currentHorizontal
-				
+
 				var listLevel_A = 'tab_content_B'
 				var listLevel_B = null
 				var listLevelOrient = 0	//top-bottom orientation
 				var listLevelDivLocation = 2000
-				
+
 				var workflowLevel_A = 'tab_content_A'
 				var workflowLevel_B = 'tab_content_C'
 				var workflowLevelOrient =  0	//top-bottom orientation
 				var workflowLevelDivLocation = solutionPrefs.screenAttrib.spaces.classic.currentVertical
 				var workflowLevelResizeWeight = 1 / 4
-				
+
 				//needed for logging
 				var dimensionOne = solutionPrefs.screenAttrib.spaces.classic.currentHorizontal
 				var dimensionTwo = solutionPrefs.screenAttrib.spaces.classic.currentVertical
-				
+
 				break
-			
+
 			case 'btn_space_13':
 				var spaceName = 'wide flip'
-				
+
 				var imageURL = 'media:///space_wide_flip.png'
 				var imageActiveURL = 'media:///space_wide_flip_active.png'
-				
+
 				var mainLevel_A = 'bean_list'
 				var mainLevel_B = 'bean_workflow'
 				var mainLevelOrient = 0	//top-bottom orientation
 				var mainLevelDivLocation = solutionPrefs.screenAttrib.spaces.wide.currentVertical
-				
+
 				var listLevel_A = 'tab_content_B'
 				var listLevel_B = 'tab_content_A'
 				var listLevelOrient = 1	//left-right orientation
 				var listLevelDivLocation = solutionPrefs.screenAttrib.spaces.wide.currentHorizontal
-				
+
 				var workflowLevel_A = null
 				var workflowLevel_B = 'tab_content_C'
 				var workflowLevelOrient = 0	//top-bottom orientation
 				var workflowLevelDivLocation = 0
 				var workflowLevelResizeWeight = 0
-				
+
 				//needed for logging
 				var dimensionOne = solutionPrefs.screenAttrib.spaces.wide.currentHorizontal
 				var dimensionTwo = solutionPrefs.screenAttrib.spaces.wide.currentVertical
-				
+
 				break
-			
+
 			case 'btn_space_14':
 				var spaceName = 'workflow flip'
-				
+
 				var imageURL = 'media:///space_workflow_flip.png'
 				var imageActiveURL = 'media:///space_workflow_flip_active.png'
-				
+
 				var mainLevel_A = null
 				var mainLevel_B = 'bean_workflow'
 				var mainLevelOrient = 1	//left-right orientation
 				var mainLevelDivLocation = 0
-				
+
 				var listLevel_A = null
 				var listLevel_B = null
 				var listLevelOrient = 0	//top-bottom orientation
 				var listLevelDivLocation = 180
-				
+
 				var workflowLevel_A = null
 				var workflowLevel_B = 'tab_content_B'
 				var workflowLevelOrient = 0	//top-bottom orientation
 				var workflowLevelDivLocation = 0
 				var workflowLevelResizeWeight = 0
-				
+
 				//needed for logging
 				var dimensionOne = 0
-				
+
 				break
 		}
-			
+
 		//activate this space; only if the space switching to is different (unless forced to fire)
 		if (buttonName == elem && (oldSpace != spaceName || noFlip)) {
 			CODE_cursor_busy(true)
-			
+
 			var bkgndLight = new Packages.java.awt.Color(13752290)
 			var bkgndDark = new Packages.java.awt.Color(10596559)
-			
+
 			//set background color to be light so we don't notice the massive redraws as much
 				forms[baseForm].elements.bean_wrapper_1.background = bkgndLight
 				forms[baseForm].elements.bean_wrapper_2.background = bkgndLight
 				forms[baseForm].elements.bean_main.background = bkgndLight
 				forms[baseForm].elements.bean_list.background = bkgndLight
 				forms[baseForm].elements.bean_workflow.background = bkgndLight
-			
+
 			//BEAN SETUP
 				//null everything out so we don't get any lockouts
 				forms[baseForm].elements.bean_main.leftComponent = null
@@ -3214,48 +3214,48 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 				forms[baseForm].elements.bean_list.bottomComponent = null
 				forms[baseForm].elements.bean_workflow.topComponent = null
 				forms[baseForm].elements.bean_workflow.bottomComponent = null
-				
+
 				//top-level bean
 				forms[baseForm].elements.bean_main.leftComponent = forms[baseForm].elements[mainLevel_A]
 				forms[baseForm].elements.bean_main.rightComponent = forms[baseForm].elements[mainLevel_B]
 				forms[baseForm].elements.bean_main.orientation = mainLevelOrient
 				forms[baseForm].elements.bean_main.dividerLocation = mainLevelDivLocation
-				
-				
+
+
 				//left-side (list) bean
 				forms[baseForm].elements.bean_list.topComponent = forms[baseForm].elements[listLevel_A]
 				forms[baseForm].elements.bean_list.bottomComponent = forms[baseForm].elements[listLevel_B]
 				forms[baseForm].elements.bean_list.orientation = listLevelOrient
 				forms[baseForm].elements.bean_list.dividerLocation = listLevelDivLocation
-				
-				
+
+
 				//right-side (workflow) bean
 				forms[baseForm].elements.bean_workflow.topComponent = forms[baseForm].elements[workflowLevel_A]
 				forms[baseForm].elements.bean_workflow.bottomComponent = forms[baseForm].elements[workflowLevel_B]
 				forms[baseForm].elements.bean_workflow.resizeWeight = workflowLevelResizeWeight
 				forms[baseForm].elements.bean_workflow.orientation = workflowLevelOrient
 				forms[baseForm].elements.bean_workflow.dividerLocation = workflowLevelDivLocation
-			
+
 			//re-wiggle beans if needed for the wide space
 			if (spaceName == 'wide' || oldSpace == 'wide' || spaceName == 'wide flip' || oldSpace == 'wide flip') {
 				application.updateUI()
-				
+
 				//main bean setup
 				forms[baseForm].elements.bean_main.orientation = mainLevelOrient
 				forms[baseForm].elements.bean_main.dividerLocation = mainLevelDivLocation
-				
+
 				//list bean setup
 				forms[baseForm].elements.bean_list.orientation = listLevelOrient
 				forms[baseForm].elements.bean_list.dividerLocation = listLevelDivLocation
-				
+
 				//workflow bean setup
 				forms[baseForm].elements.bean_workflow.orientation = workflowLevelOrient
 				forms[baseForm].elements.bean_workflow.dividerLocation = workflowLevelDivLocation
 			}
-			
+
 			//save down which space we are in
 			solutionPrefs.config.activeSpace = spaceName
-			
+
 			//TODO: only do if changed spaces have different dimensions
 			//running in 3.5?
 			if (utils.stringToNumber(solutionPrefs.clientInfo.verServoy) < 4) {
@@ -3267,7 +3267,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 					}
 				}
 			}
-			
+
 			//LOG windowing
 			TRIGGER_log_create('Flexible windowing',
 					oldSpace,
@@ -3279,41 +3279,41 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 					application.getWindowWidth(),
 					application.getWindowHeight()
 					)
-			
+
 			//set graphic to be depressed
 			forms[baseForm + '__header'].elements[elem].setImageURL(imageActiveURL)
-			
+
 			//DS_space_flexible method sets the correct border and turns off dividers if showing
 			DS_space_flexible(true,skipUI)
-			
+
 			//set background color to be dark again (so dividers show up)
 				forms[baseForm].elements.bean_wrapper_1.background = bkgndDark
 				forms[baseForm].elements.bean_wrapper_2.background = bkgndDark
 				forms[baseForm].elements.bean_main.background = bkgndDark
 				forms[baseForm].elements.bean_list.background = bkgndDark
 				forms[baseForm].elements.bean_workflow.background = bkgndDark
-				
+
 			//run post-space change method
 			if (!skipCustomMethod && navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID] && navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].navigationItem.spaceMethod) {
 				var spaceManMethod = navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].navigationItem.spaceMethod.split('.')
-				
+
 				//check to see if it is a global method
 				if (spaceManMethod[0] ==  'globals') {
 					spaceManMethod.shift()
 					var spaceManGlobal = true
 				}
-				
+
 				//if global method and it exists
 				if (spaceManMethod[0] && globals[spaceManMethod[0]]) {
 					globals[navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].navigationItem.spaceMethod](oldSpace,spaceName,mainLevelDivLocation,listLevelDivLocation,workflowLevelDivLocation)
 				}
-				
+
 				//if form (non-global) method and it exists
 				if (spaceManMethod[0] && forms[currentNavItem.navigationItem.formToLoad][spaceManMethod[0]]) {
 					forms[currentNavItem.navigationItem.formToLoad][spaceManMethod[0]](oldSpace,spaceName,mainLevelDivLocation,listLevelDivLocation,workflowLevelDivLocation)
 				}
 			}
-			
+
 			CODE_cursor_busy(false)
 		}
 		//leave graphic on depressed state if same button clicked
@@ -3323,9 +3323,9 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		//set graphic to normal state (non-depressed)
 		else {
 			forms[baseForm + '__header'].elements[elem].setImageURL(imageURL)
-		}		
+		}
 	}
-	
+
 	//refresh screen if required
 	if (solutionPrefs.config.activeSpace != oldSpace) {
 		application.updateUI()
@@ -3345,23 +3345,23 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
  */
 function DS_space_flexible(event)
 {
-	
+
 /*
  *	TITLE    :	DS_space_flexible
- *			  	
+ *
  *	MODULE   :	_DATASUTRA_
- *			  	
+ *
  *	ABOUT    :	toggle show/hide both horizontal and vertical dividers for resizing workflow/lists areas
- *			  	
+ *
  *	INPUT    :	1- true/false to force expanders
  *			  	2- don't do the application.updateUIs
- *			  	
- *	OUTPUT   :	
- *			  	
+ *
+ *	OUTPUT   :
+ *
  *	REQUIRES :	solutionPrefs
- *			  	
+ *
  *	MODIFIED :	February 22, 2009 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 //running webclient, push off to correct method
@@ -3379,7 +3379,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	//TODO WARNING: do rewrite your code to not depend on 'arguments', append them to the parameter list.
 		Arguments.push(arguments[i])
 	}
-	
+
 	//reassign arguments without jsevents
 	arguments = Arguments.filter(CODE_jsevent_remove)
 }
@@ -3388,416 +3388,416 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	var forceHide = arguments[0]
 	var skipUI = arguments[1]
 	var sidebarStatus = solutionPrefs.screenAttrib.sidebar.status
-	
+
 	var borderTop = 'MatteBorder,1,0,0,0,#333333'
 	var borderEmpty = 'EmptyBorder,0,0,0,0'
-	
+
 	//determine which ones to show and which to hide
 	switch (solutionPrefs.config.activeSpace) {
 			case 'standard':
 				var mainLevel = true
 				var listLevel = true
 				var workflowLevel = false
-				
+
 				var contentArea_A_Show = 'MatteBorder,0,1,1,0,#333333'
 				var contentArea_B_Show = 'MatteBorder,1,1,0,0,#333333'
 				var contentArea_C_Show = 'MatteBorder,0,0,0,1,#333333'
-				
+
 				//override defaults when sidebar visible
 				if (sidebarStatus) {
 					contentArea_C_Show = 'MatteBorder,0,1,0,1,#333333'
 				}
-				
+
 				var contentArea_A_Hide = borderEmpty
 				var contentArea_B_Hide = 'MatteBorder,1,0,0,0,#333333'
 				var contentArea_C_Hide = 'MatteBorder,0,0,0,1,#333333'
-				
+
 				var dimensionOneStart = (solutionPrefs.screenAttrib) ? solutionPrefs.screenAttrib.spaces.standard.currentHorizontal : 0
 				var dimensionTwoStart = (solutionPrefs.screenAttrib) ? solutionPrefs.screenAttrib.spaces.standard.currentVertical : 0
 				var dimensionOneEnd = forms[baseForm].elements.bean_main.dividerLocation
 				var dimensionTwoEnd = forms[baseForm].elements.bean_list.dividerLocation
-				
+
 				break
-				
+
 			case 'list':
 				var mainLevel = true
 				var listLevel = false
 				var workflowLevel = false
-				
+
 				var contentArea_A_Show = borderEmpty
 				var contentArea_B_Show = 'MatteBorder,0,1,0,0,#333333'
 				var contentArea_C_Show = 'MatteBorder,0,0,0,1,#333333'
-				
+
 				//override defaults when sidebar visible
 				if (sidebarStatus) {
 					contentArea_C_Show = 'MatteBorder,0,1,0,1,#333333'
 				}
-				
+
 				var contentArea_A_Hide = borderEmpty
 				var contentArea_B_Hide = borderEmpty
 				var contentArea_C_Hide = 'MatteBorder,0,0,0,1,#333333'
-				
+
 				var dimensionOneStart = (solutionPrefs.screenAttrib) ? solutionPrefs.screenAttrib.spaces.list.currentHorizontal : 0
 				var dimensionOneEnd = forms[baseForm].elements.bean_main.dividerLocation
-				
+
 				break
-				
+
 			case 'vertical':
 				var mainLevel = true
 				var listLevel = true
 				var workflowLevel = false
-				
+
 				var contentArea_A_Show = 'MatteBorder,0,1,0,0,#333333'
 				var contentArea_B_Show = 'MatteBorder,0,1,0,1,#333333'
 				var contentArea_C_Show = 'MatteBorder,0,0,0,1,#333333'
-				
+
 				//override defaults when sidebar visible
 				if (sidebarStatus) {
 					contentArea_C_Show = 'MatteBorder,0,1,0,1,#333333'
 				}
-				
+
 				var contentArea_A_Hide = borderEmpty
 				var contentArea_B_Hide = 'MatteBorder,0,0,0,1,#333333'
 				var contentArea_C_Hide = 'MatteBorder,0,0,0,1,#333333'
-				
+
 				var dimensionOneStart = (solutionPrefs.screenAttrib) ? solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalOne : 0
 				var dimensionTwoStart = (solutionPrefs.screenAttrib) ? solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalTwo : 0
 				var dimensionOneEnd = forms[baseForm].elements.bean_list.dividerLocation
 				var dimensionTwoEnd = forms[baseForm].elements.bean_main.dividerLocation - forms[baseForm].elements.bean_list.dividerLocation
-				
+
 				break
-				
+
 			case 'centered':
 				var mainLevel = true
 				var listLevel = false
 				var workflowLevel = true
-				
+
 				var contentArea_A_Show = 'MatteBorder,0,1,0,0,#333333'
 				var contentArea_B_Show = 'MatteBorder,0,0,0,1,#333333'
 				var contentArea_C_Show = 'MatteBorder,0,1,0,1,#333333'
-				
+
 				//override defaults when sidebar visible
 				if (sidebarStatus) {
 					contentArea_B_Show = 'MatteBorder,0,1,0,1,#333333'
 				}
-				
+
 				var contentArea_A_Hide = borderEmpty
 				var contentArea_B_Hide = 'MatteBorder,0,0,0,1,#333333'
 				var contentArea_C_Hide = 'MatteBorder,0,0,0,1,#333333'
-				
+
 				var dimensionOneStart = (solutionPrefs.screenAttrib) ? solutionPrefs.screenAttrib.spaces.centered.currentHorizontalOne : 0
 				var dimensionTwoStart = (solutionPrefs.screenAttrib) ? solutionPrefs.screenAttrib.spaces.centered.currentHorizontalOne : 0
 				var dimensionOneEnd = forms[baseForm].elements.bean_main.dividerLocation
 				var dimensionTwoEnd = forms[baseForm].elements.bean_main.getWidth() - forms[baseForm].elements.bean_main.dividerLocation - forms[baseForm].elements.bean_workflow.dividerLocation
-				
+
 				break
-				
+
 			case 'classic':
 				var mainLevel = true
 				var listLevel = false
 				var workflowLevel = true
-				
+
 				var contentArea_A_Show = 'MatteBorder,0,1,0,0,#333333'
 				var contentArea_B_Show = 'MatteBorder,0,0,1,1,#333333'
 				var contentArea_C_Show = 'MatteBorder,1,0,0,1,#333333'
-				
+
 				//override defaults when sidebar visible
 				if (sidebarStatus) {
 					contentArea_B_Show = 'MatteBorder,0,1,1,1,#333333'
 					contentArea_C_Show = 'MatteBorder,1,1,0,1,#333333'
 				}
-				
+
 				var contentArea_A_Hide = borderEmpty
 				var contentArea_B_Hide = 'MatteBorder,0,0,0,1,#333333'
 				var contentArea_C_Hide = 'MatteBorder,1,0,0,1,#333333'
-				
+
 				var dimensionOneStart = (solutionPrefs.screenAttrib) ? solutionPrefs.screenAttrib.spaces.classic.currentHorizontal : 0
 				var dimensionTwoStart = (solutionPrefs.screenAttrib) ? solutionPrefs.screenAttrib.spaces.classic.currentVertical : 0
 				var dimensionOneEnd = forms[baseForm].elements.bean_main.dividerLocation
 				var dimensionTwoEnd = forms[baseForm].elements.bean_workflow.dividerLocation
-				
+
 				break
-				
+
 			case 'wide':
 				var mainLevel = true
 				var listLevel = true
 				var workflowLevel = false
-				
+
 				var contentArea_A_Show = 'MatteBorder,0,1,1,0,#333333'
 				var contentArea_B_Show = 'MatteBorder,0,0,1,1,#333333'
 				var contentArea_C_Show = 'MatteBorder,1,0,0,0,#333333'
-				
+
 				//override defaults when sidebar visible
 				if (sidebarStatus) {
 					contentArea_B_Show = 'MatteBorder,0,1,1,1,#333333'
 					contentArea_C_Show = 'MatteBorder,1,1,0,0,#333333'
 				}
-				
+
 				var contentArea_A_Hide = borderEmpty
 				var contentArea_B_Hide = 'MatteBorder,0,0,0,1,#333333'
 				var contentArea_C_Hide = 'MatteBorder,1,0,0,0,#333333'
-				
+
 				var dimensionOneStart = (solutionPrefs.screenAttrib) ? solutionPrefs.screenAttrib.spaces.wide.currentVertical : 0
 				var dimensionTwoStart = (solutionPrefs.screenAttrib) ? solutionPrefs.screenAttrib.spaces.wide.currentHorizontal : 0
 				var dimensionOneEnd = forms[baseForm].elements.bean_main.dividerLocation
 				var dimensionTwoEnd = forms[baseForm].elements.bean_list.dividerLocation
-				
+
 				break
-				
+
 			case 'workflow':
 				var mainLevel = false
 				var listLevel = false
 				var workflowLevel = false
-				
+
 				var contentArea_A_Show = borderEmpty
 				var contentArea_B_Show = borderEmpty
 				var contentArea_C_Show = borderEmpty
-				
+
 				//override defaults when sidebar visible
 				if (sidebarStatus) {
 					contentArea_C_Show = 'MatteBorder,0,1,0,0,#333333'
 				}
-				
+
 				var contentArea_A_Hide = borderEmpty
 				var contentArea_B_Hide = borderEmpty
 				var contentArea_C_Hide = borderEmpty
-				
+
 				break
-			
+
 			case 'standard flip':
 				var mainLevel = true
 				var listLevel = true
 				var workflowLevel = false
-				
+
 				var contentArea_A_Show = 'MatteBorder,1,1,0,0,#333333'
 				var contentArea_B_Show = 'MatteBorder,0,1,1,0,#333333'
 				var contentArea_C_Show = 'MatteBorder,0,0,0,1,#333333'
-				
+
 				//override defaults when sidebar visible
 				if (sidebarStatus) {
 					contentArea_C_Show = 'MatteBorder,0,1,0,1,#333333'
 				}
-				
+
 				var contentArea_A_Hide = 'MatteBorder,1,0,0,0,#333333'
 				var contentArea_B_Hide = borderEmpty
 				var contentArea_C_Hide = 'MatteBorder,0,0,0,1,#333333'
-				
+
 				var dimensionOneStart = (solutionPrefs.screenAttrib) ? solutionPrefs.screenAttrib.spaces.standard.currentHorizontal : 0
 				var dimensionTwoStart = (solutionPrefs.screenAttrib) ? solutionPrefs.screenAttrib.spaces.standard.currentVertical : 0
 				var dimensionOneEnd = forms[baseForm].elements.bean_main.dividerLocation
 				var dimensionTwoEnd = forms[baseForm].elements.bean_list.dividerLocation
-				
+
 				break
-				
+
 			case 'list flip':
 				var mainLevel = true
 				var listLevel = false
 				var workflowLevel = false
-				
+
 				var contentArea_A_Show = 'MatteBorder,0,1,0,0,#333333'
 				var contentArea_B_Show = borderEmpty
 				var contentArea_C_Show = 'MatteBorder,0,0,0,1,#333333'
-				
+
 				//override defaults when sidebar visible
 				if (sidebarStatus) {
 					contentArea_C_Show = 'MatteBorder,0,1,0,1,#333333'
 				}
-				
+
 				var contentArea_A_Hide = borderEmpty
 				var contentArea_B_Hide = borderEmpty
 				var contentArea_C_Hide = 'MatteBorder,0,0,0,1,#333333'
-				
+
 				var dimensionOneStart = (solutionPrefs.screenAttrib) ? solutionPrefs.screenAttrib.spaces.list.currentHorizontal : 0
 				var dimensionOneEnd = forms[baseForm].elements.bean_main.dividerLocation
-				
+
 				break
-				
+
 			case 'vertical flip':
 				var mainLevel = true
 				var listLevel = true
 				var workflowLevel = false
-				
+
 				var contentArea_A_Show = 'MatteBorder,0,1,0,1,#333333'
 				var contentArea_B_Show = 'MatteBorder,0,1,0,0,#333333'
 				var contentArea_C_Show = 'MatteBorder,0,0,0,1,#333333'
-				
+
 				//override defaults when sidebar visible
 				if (sidebarStatus) {
 					contentArea_C_Show = 'MatteBorder,0,1,0,1,#333333'
 				}
-				
+
 				var contentArea_A_Hide = 'MatteBorder,0,0,0,1,#333333'
 				var contentArea_B_Hide = borderEmpty
 				var contentArea_C_Hide = 'MatteBorder,0,0,0,1,#333333'
-				
+
 				var dimensionOneStart = (solutionPrefs.screenAttrib) ? solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalOne : 0
 				var dimensionTwoStart = (solutionPrefs.screenAttrib) ? solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalTwo : 0
 				var dimensionOneEnd = forms[baseForm].elements.bean_list.dividerLocation
 				var dimensionTwoEnd = forms[baseForm].elements.bean_main.dividerLocation - forms[baseForm].elements.bean_list.dividerLocation
-				
+
 				break
-				
+
 			case 'centered flip':
 				var mainLevel = true
 				var listLevel = false
 				var workflowLevel = true
-				
+
 				var contentArea_A_Show = 'MatteBorder,0,0,0,1,#333333'
 				var contentArea_B_Show = 'MatteBorder,0,1,0,0,#333333'
 				var contentArea_C_Show = 'MatteBorder,0,1,0,1,#333333'
-				
+
 				//override defaults when sidebar visible
 				if (sidebarStatus) {
 					contentArea_A_Show = 'MatteBorder,0,1,0,1,#333333'
 				}
-				
+
 				var contentArea_A_Hide = 'MatteBorder,0,0,0,1,#333333'
 				var contentArea_B_Hide = borderEmpty
 				var contentArea_C_Hide = 'MatteBorder,0,0,0,1,#333333'
-				
+
 				var dimensionOneStart = (solutionPrefs.screenAttrib) ? solutionPrefs.screenAttrib.spaces.centered.currentHorizontalOne : 0
 				var dimensionTwoStart = (solutionPrefs.screenAttrib) ? solutionPrefs.screenAttrib.spaces.centered.currentHorizontalOne : 0
 				var dimensionOneEnd = forms[baseForm].elements.bean_main.dividerLocation
 				var dimensionTwoEnd = forms[baseForm].elements.bean_main.getWidth() - forms[baseForm].elements.bean_main.dividerLocation - forms[baseForm].elements.bean_workflow.dividerLocation
-				
+
 				break
-				
+
 			case 'classic flip':
 				var mainLevel = true
 				var listLevel = false
 				var workflowLevel = true
-				
+
 				var contentArea_A_Show = 'MatteBorder,0,0,1,1,#333333'
 				var contentArea_B_Show = 'MatteBorder,0,1,0,0,#333333'
 				var contentArea_C_Show = 'MatteBorder,1,0,0,1,#333333'
-				
+
 				//override defaults when sidebar visible
 				if (sidebarStatus) {
 					contentArea_A_Show = 'MatteBorder,0,1,1,1,#333333'
 					contentArea_C_Show = 'MatteBorder,1,1,0,1,#333333'
 				}
-				
+
 				var contentArea_A_Hide = 'MatteBorder,0,0,0,1,#333333'
 				var contentArea_B_Hide = borderEmpty
 				var contentArea_C_Hide = 'MatteBorder,1,0,0,1,#333333'
-				
+
 				var dimensionOneStart = (solutionPrefs.screenAttrib) ? solutionPrefs.screenAttrib.spaces.classic.currentHorizontal : 0
 				var dimensionTwoStart = (solutionPrefs.screenAttrib) ? solutionPrefs.screenAttrib.spaces.classic.currentVertical : 0
 				var dimensionOneEnd = forms[baseForm].elements.bean_main.dividerLocation
 				var dimensionTwoEnd = forms[baseForm].elements.bean_workflow.dividerLocation
-				
+
 				break
-				
+
 			case 'wide flip':
 				var mainLevel = true
 				var listLevel = true
 				var workflowLevel = false
-				
+
 				var contentArea_A_Show = 'MatteBorder,0,0,1,1,#333333'
 				var contentArea_B_Show = 'MatteBorder,0,1,1,0,#333333'
 				var contentArea_C_Show = 'MatteBorder,1,0,0,0,#333333'
-				
+
 				//override defaults when sidebar visible
 				if (sidebarStatus) {
 					contentArea_A_Show = 'MatteBorder,0,1,1,1,#333333'
 					contentArea_C_Show = 'MatteBorder,1,1,0,0,#333333'
 				}
-				
+
 				var contentArea_A_Hide = 'MatteBorder,0,0,0,1,#333333'
 				var contentArea_B_Hide = borderEmpty
 				var contentArea_C_Hide = 'MatteBorder,1,0,0,0,#333333'
-				
+
 				var dimensionOneStart = (solutionPrefs.screenAttrib) ? solutionPrefs.screenAttrib.spaces.wide.currentVertical : 0
 				var dimensionTwoStart = (solutionPrefs.screenAttrib) ? solutionPrefs.screenAttrib.spaces.wide.currentHorizontal : 0
 				var dimensionOneEnd = forms[baseForm].elements.bean_main.dividerLocation
 				var dimensionTwoEnd = forms[baseForm].elements.bean_list.dividerLocation
-				
+
 				break
-				
+
 			case 'workflow flip':
 				var mainLevel = false
 				var listLevel = false
 				var workflowLevel = false
-				
+
 				var contentArea_A_Show = borderEmpty
 				var contentArea_B_Show = borderEmpty
 				var contentArea_C_Show = borderEmpty
-				
+
 				//override defaults when sidebar visible
 				if (sidebarStatus) {
 					contentArea_B_Show = 'MatteBorder,0,1,0,0,#333333'
 				}
-				
+
 				var contentArea_A_Hide = borderEmpty
 				var contentArea_B_Hide = borderEmpty
 				var contentArea_C_Hide = borderEmpty
-				
+
 				break
 		}
-	
-	
+
+
 	//dividers showing, hide
 	if (forceHide || solutionPrefs.config.flexibleSpace) {
 		//Navigation item area
 		forms[baseForm].elements.tab_content_A.setBorder(contentArea_A_Hide)
-		
+
 		//UL record area
 		forms[baseForm].elements.tab_content_B.setBorder(contentArea_B_Hide)
-		
+
 		//bottom part of right-side tab panel
 		forms[baseForm].elements.tab_content_C.setBorder(contentArea_C_Hide)
-		
+
 		//pseudo-border in header
 		forms[baseForm].elements.tab_header.setBorder(borderEmpty)
 		forms.DATASUTRA__sidebar__header.elements.gfx_flexible.visible = false
 		forms[baseForm].elements.gfx_flexible.visible = false
-		
+
 		//status of flexible spaces
 		solutionPrefs.config.flexibleSpace = false
-		
+
 		//save status, log current view, and refresh UL if not forceHidden
 		if (!forceHide) {
 			switch (solutionPrefs.config.activeSpace) {
-				case 'standard' : 
-				case 'standard flip' : 
+				case 'standard' :
+				case 'standard flip' :
 						solutionPrefs.screenAttrib.spaces.standard.currentHorizontal = forms[baseForm].elements.bean_main.dividerLocation
 						solutionPrefs.screenAttrib.spaces.standard.currentVertical = forms[baseForm].elements.bean_list.dividerLocation
 						break
-							
-				case 'list' : 
-				case 'list flip' : 
+
+				case 'list' :
+				case 'list flip' :
 						solutionPrefs.screenAttrib.spaces.list.currentHorizontal = forms[baseForm].elements.bean_main.dividerLocation
 						break
-							
-				case 'vertical' : 
-				case 'vertical flip' : 
+
+				case 'vertical' :
+				case 'vertical flip' :
 						solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalOne = forms[baseForm].elements.bean_list.dividerLocation
 						solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalTwo = forms[baseForm].elements.bean_main.dividerLocation - forms[baseForm].elements.bean_list.dividerLocation
 						break
-							
+
 				case 'centered' :
-				case 'centered flip' : 
+				case 'centered flip' :
 						solutionPrefs.screenAttrib.spaces.centered.currentHorizontalOne = forms[baseForm].elements.bean_main.dividerLocation
 						solutionPrefs.screenAttrib.spaces.centered.currentHorizontalTwo = forms[baseForm].elements.bean_main.getWidth() - forms[baseForm].elements.bean_main.dividerLocation - forms[baseForm].elements.bean_workflow.dividerLocation
 						break
-							
-				case 'classic' : 
-				case 'classic flip' : 
+
+				case 'classic' :
+				case 'classic flip' :
 						solutionPrefs.screenAttrib.spaces.classic.currentHorizontal = forms[baseForm].elements.bean_main.dividerLocation
 						solutionPrefs.screenAttrib.spaces.classic.currentVertical = forms[baseForm].elements.bean_workflow.dividerLocation
 						break
-							
-				case 'wide' : 
-				case 'wide flip' : 
+
+				case 'wide' :
+				case 'wide flip' :
 						solutionPrefs.screenAttrib.spaces.wide.currentVertical = forms[baseForm].elements.bean_main.dividerLocation
 						solutionPrefs.screenAttrib.spaces.wide.currentHorizontal = forms[baseForm].elements.bean_list.dividerLocation
 						break
 			}
-			
+
 			if (sidebarStatus) {
 				solutionPrefs.screenAttrib.sidebar.currentSize = application.getWindowWidth(null) - forms[baseForm].elements.bean_wrapper_1.dividerLocation
 			}
-			
+
 			//LOG windowing
 			TRIGGER_log_create('Flexible windowing',
 					solutionPrefs.config.activeSpace,
@@ -3809,7 +3809,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 					application.getWindowWidth(),
 					application.getWindowHeight()
 				)
-			
+
 			//TODO: only do if changed spaces have different dimensions
 			//running in 3.5?
 			if (utils.stringToNumber(solutionPrefs.clientInfo.verServoy) < 4) {
@@ -3821,7 +3821,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 					}
 				}
 			}
-			
+
 			//TODO: only do if changed spaces have different dimensions
 			//favorites mode on, refresh so get full width available
 			if (DATASUTRA_navigation_set == 0) {
@@ -3830,29 +3830,29 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 				var allComponents = navForm.getComponents()
 				for (var i = 0; i < allComponents.length; i++) {
 					var thisComponent = allComponents[i]
-					
+
 					if (thisComponent.imageMedia && thisComponent.imageMedia.getName() == "row_selected.png") {
 						var selected = utils.stringToNumber(thisComponent.name.split('_').pop())
 						break
 					}
 				}
-				
+
 				forms.NAV__navigation_tree__rows.LIST_redraw(null,null,true,false,true,selected)
 			}
 		}
-		
+
 		//top-level bean
 		forms[baseForm].elements.bean_main.dividerSize = 0
-		
+
 		//left-side (list) bean
 		forms[baseForm].elements.bean_list.dividerSize = 0
-		
+
 		//right-side (workflow) bean
 		forms[baseForm].elements.bean_workflow.dividerSize = 0
-		
+
 		//sidebar bean
 		forms[baseForm].elements.bean_wrapper_1.dividerSize = 0
-		
+
 		//header tool/find bean
 		forms[baseForm + '__header'].elements.split_tool_find.dividerSize = 0
 	}
@@ -3860,44 +3860,44 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	else {
 		//Navigation item area
 		forms[baseForm].elements.tab_content_A.setBorder(contentArea_A_Show)
-		
+
 		//UL record area
 		forms[baseForm].elements.tab_content_B.setBorder(contentArea_B_Show)
-		
+
 		//bottom part of right-side tab panel
 		forms[baseForm].elements.tab_content_C.setBorder(contentArea_C_Show)
-		
+
 		//pseudo-border in header
 		if (sidebarStatus) {
 			forms[baseForm].elements.tab_header.setBorder('MatteBorder,0,1,0,0,#757575')
 			forms.DATASUTRA__sidebar__header.elements.gfx_flexible.visible = true
 		//	forms[baseForm].elements.gfx_flexible.visible = true
 		}
-		
+
 		//status of flexible spaces
 		solutionPrefs.config.flexibleSpace = true
-		
+
 		//top-level bean
 		forms[baseForm].elements.bean_main.dividerSize = (mainLevel) ? 8 : 0
-		
+
 		//left-side (list) bean
 		forms[baseForm].elements.bean_list.dividerSize = (listLevel) ? 8 : 0
-		
+
 		//right-side (workflow) bean
 		forms[baseForm].elements.bean_workflow.dividerSize = (workflowLevel) ? 8 : 0
-		
+
 		//sidebar bean
 		forms[baseForm].elements.bean_wrapper_1.dividerSize = (sidebarStatus) ? 8 : 0
-		
+
 		//header tool/find bean
 		forms[baseForm + '__header'].elements.split_tool_find.dividerSize = 8
 	}
-	
+
 	//don't fire when exiting design mode and going into preference
 	if (!skipUI) {
 		application.updateUI()
 	}
-	
+
 	//in design mode and locked, update lock
 	if (solutionPrefs.design.statusDesign && solutionPrefs.design.statusLockWorkflow) {
 		DEV_lock_workflow(true,solutionPrefs.design.statusLockList)
@@ -3914,17 +3914,17 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
  */
 function DS_toolbar_cycle(event) {
 	if (application.__parent__.solutionPrefs) {
-		
+
 		if (solutionPrefs.config.webClient) {
-			forms.DATASUTRA_WEB_0F__header__toolbar.DS_toolbar_cycle.apply(arguments)
+			forms.DATASUTRA_WEB_0F__header__toolbar.DS_toolbar_cycle.apply(this,arguments)
 			return
 		}
-		
+
 		if (event instanceof JSEvent) {
 			var rightClick = event.getType() == JSEvent.RIGHTCLICK
 			var elemName = event.getElementName()
 		}
-		
+
 		//strip out jsevents
 		if (utils.stringToNumber(application.getVersion()) >= 5) {
 			//cast Arguments to array
@@ -3932,48 +3932,48 @@ function DS_toolbar_cycle(event) {
 			for (var i = 0; i < arguments.length; i++) {
 				Arguments.push(arguments[i])
 			}
-			
+
 			//reassign arguments without jsevents
 			arguments = Arguments.filter(CODE_jsevent_remove)
 		}
-	
+
 		//timed out, throw up error
 		if (solutionPrefs.config.prefs.thatsAllFolks) {
 			forms.NSTL_0F_solution__license.ACTION_status()
-			
+
 			DIALOGS.showErrorDialog(
 					'Trial expired',
 					'Trial time expired\n' +
 					'Please restart.'
 				)
 		}
-		
+
 		var tabShow = arguments[0]
 		var baseForm = solutionPrefs.config.formNameBase
 		var popForm = 'DATASUTRA__toolbar__popdown'
-		
+
 		var currentTab = forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex
 		var maxTab = forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getMaxTabIndex()
 		var statusTabs = solutionPrefs.panel.toolbar
-		
+
 		//how many tabs are enabled
 		var totalTabs = statusTabs.filter(function(item) {return item.enabled}).length
-		
+
 		//right-click or shift-click will open menu
 		var showMenu = rightClick || CODE_key_pressed('shift')
-		
+
 		//hide popDown sheet when moving to a new item, but not when showing options to choose from
 		if (tabShow || !showMenu) {
 			forms[baseForm].elements.sheetz.visible = false
 		}
-		
+
 		//if passed tab name equal to current tab, set tabShow to be index of it
 		for (var i = 0; typeof tabShow != 'number' && i < statusTabs.length ; i++) {
 			if (tabShow == statusTabs[i].tabName) {
 				tabShow = i + 4
 			}
 		}
-		
+
 		//if requested index, go to it
 		if (tabShow > 0) {
 			forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex = tabShow
@@ -3987,30 +3987,30 @@ function DS_toolbar_cycle(event) {
 				for ( var i = 0 ; i < statusTabs.length ; i++ ) {
 					var thisTab = statusTabs[i]
 					//only show enabled toolbars
-					if (thisTab.enabled) {	
+					if (thisTab.enabled) {
 						menu[i] = plugins.popupmenu.createCheckboxMenuItem(thisTab.tabName, DS_toolbar_cycle)
-						
+
 						//set menu method arguments
 						menu[i].setMethodArguments(thisTab.tabName)
-						
+
 						//set check mark
 						if (i + 4 == forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex ||
 							(forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex == 1 && thisTab.formName == 'TOOL_title')) {
-							
+
 							menu[i].setSelected(true)
 						}
 						else {
 							menu[i].setSelected(false)
-						}	
+						}
 					}
 				}
-				
+
 				//pop up the popup menu
 				var elem = forms[baseForm + '__header__toolbar'].elements[application.getMethodTriggerElementName()]
 				if (elem != null) {
 					plugins.popupmenu.showPopupMenu(elem, menu)
 				}
-				
+
 				return
 			}
 			//cycle through views
@@ -4025,7 +4025,7 @@ function DS_toolbar_cycle(event) {
 						//last tab, loop
 						else {
 							currentTab = 4
-							
+
 							//check to make sure only loop through past the first entry once to avoid infinite loop if nothing enabled
 							if (looped) {
 								//show title toolbar
@@ -4034,13 +4034,13 @@ function DS_toolbar_cycle(event) {
 							}
 							var looped = true
 						}
-						
+
 						var thisTab = statusTabs[currentTab - 4]
 					}
-					
+
 					return currentTab
 				}
-				
+
 				function prevTab(currentTab) {
 					//check to find next enabled tab
 					while (!thisTab || !thisTab.enabled) {
@@ -4051,7 +4051,7 @@ function DS_toolbar_cycle(event) {
 						//last tab, loop
 						else {
 							currentTab = maxTab
-							
+
 							//check to make sure only loop through past the first entry once to avoid infinite loop if nothing enabled
 							if (looped) {
 								//show title toolbar
@@ -4060,19 +4060,19 @@ function DS_toolbar_cycle(event) {
 							}
 							var looped = true
 						}
-						
+
 						var thisTab = statusTabs[currentTab - 4]
 					}
-					
+
 					return currentTab
 				}
-				
+
 				switch (elemName) {
 					case 'btn_toolbar_prev':
 						//show previous enabled view
 						forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex = prevTab(currentTab)
 						break
-						
+
 					default:
 					case 'btn_toolbar_next':
 						//show next enabled view
@@ -4081,32 +4081,32 @@ function DS_toolbar_cycle(event) {
 				}
 			}
 		}
-		
+
 		//save which tab is currently selected if different
 		if (solutionPrefs.panel.toolbar.selectedTab != tabShow) {
 			solutionPrefs.panel.toolbar.selectedTab = forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex
 		}
-		
+
 		var statusTab = statusTabs[solutionPrefs.panel.toolbar.selectedTab - 4]
-		
+
 		if (statusTab) {
 			//set color appropriately (defaults to white if not explicitly set)
 			forms[baseForm + '__header__toolbar'].elements.lbl_color.bgcolor = statusTab.gradientColor
-			
+
 			//enable group
 			forms[baseForm + '__header__toolbar'].elements.toolbar_navigator.visible = (totalTabs > 1)
-			
+
 			//set up popDown, if activated
 			var thePopDown = statusTab.popDown
 			var tabParent = statusTab.formName
-			
+
 			if (thePopDown) {
 				//popdown available
 				forms[baseForm + '__header__toolbar'].elements.btn_toolbar_expand.visible = forms[tabParent].popDown != 'show'
 				forms[baseForm + '__header__toolbar'].elements.btn_toolbar_collapse.visible = forms[tabParent].popDown == 'show'
-				
+
 				forms[popForm].elements.tab_toolbar_popdown.tabIndex = thePopDown.tabIndex
-				
+
 				//show if showing
 				if (forms[statusTab.formName].popDown == 'show') {
 					DS_toolbar_popdown(true)
@@ -4119,14 +4119,14 @@ function DS_toolbar_cycle(event) {
 			else {
 				forms[baseForm + '__header__toolbar'].elements.btn_toolbar_expand.visible = false
 				forms[baseForm + '__header__toolbar'].elements.btn_toolbar_collapse.visible = false
-				
+
 				forms[baseForm].elements.tab_toolbar_popdown.visible = false
 			}
 		}
 		else {
 			//set color appropriately (defaults to white if not explicitly set)
 			forms[baseForm + '__header__toolbar'].elements.lbl_color.bgcolor = '#FFFFFF'
-			
+
 			//disable group
 			forms[baseForm + '__header__toolbar'].elements.toolbar_navigator.visible = false
 		}
@@ -4142,21 +4142,21 @@ function DS_toolbar_load()
 
 /*
  *	TITLE    :	DS_toolbar_load
- *			  	
+ *
  *	MODULE   :	_DATASUTRA_
- *			  	
+ *
  *	ABOUT    :	loads enabled toolbars into toolbar area
- *			  	
- *	INPUT    :	
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	INPUT    :
+ *
+ *	OUTPUT   :
+ *
+ *	REQUIRES :
+ *
  *	USAGE    :	DS_toolbar_load()
- *			  	
+ *
  *	MODIFIED :	August 20, 2008 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 if (application.__parent__.solutionPrefs) {
@@ -4165,26 +4165,26 @@ if (application.__parent__.solutionPrefs) {
 	var toolbars = solutionPrefs.panel.toolbar
 	var enabledToolbars = 0
 	var firstTab
-	
+
 	var cycleMethod = DS_toolbar_cycle
 	if (solutionPrefs.config.webClient) {
 		cycleMethod = forms.DATASUTRA_WEB_0F__header__toolbar.DS_toolbar_cycle
 	}
-	
+
 	forms[baseForm + '__header__toolbar'].elements.tab_toolbar.visible = false
-	
+
 	//remove all tabs from toolbar and popdown
 	while (forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getMaxTabIndex() > 3) {
 		forms[baseForm + '__header__toolbar'].elements.tab_toolbar.removeTabAt(4)
 	}
 	forms[popForm].elements.tab_toolbar_popdown.removeAllTabs()
-	
+
 	//add in tabs to toolbar and popdown
 	if (toolbars.length) {
 		//loop through array and add tabs
 		for (var i = 0 ; i < toolbars.length ; i++) {
 			var toolTab = toolbars[i]
-			
+
 			//selected form exists in solution
 			if (forms[toolTab.formName]) {
 				forms[baseForm + '__header__toolbar'].elements.tab_toolbar.addTab(forms[toolTab.formName],null,toolTab.tabName)
@@ -4195,10 +4195,10 @@ if (application.__parent__.solutionPrefs) {
 						forms[popForm].elements.tab_toolbar_popdown.addTab(forms[toolTab.popDown.formName],null,toolTab.tabName)
 					}
 				}
-				
+
 				if (toolTab.enabled) {
 					enabledToolbars ++
-					
+
 					if (!firstTab) {
 						firstTab = i + 4
 					}
@@ -4209,7 +4209,7 @@ if (application.__parent__.solutionPrefs) {
 				toolbars.splice(i,1)
 			}
 		}
-		
+
 		//select first enabled tab
 		cycleMethod(firstTab)
 	}
@@ -4217,10 +4217,10 @@ if (application.__parent__.solutionPrefs) {
 	else {
 		cycleMethod(1)
 	}
-	
+
 	//turn tab panel back on
 	forms[baseForm + '__header__toolbar'].elements.tab_toolbar.visible = true
-	
+
 	//if only one enabled tab, remove tab changer button
 	if (enabledToolbars == 1) {
 		forms[baseForm + '__header__toolbar'].elements.toolbar_navigator.visible = false
@@ -4239,22 +4239,22 @@ function DS_panel_load()
 
 /*
  *	TITLE    :	DS_panel_load
- *			  	
+ *
  *	MODULE   :	rsrc_TOOL_toolbar
- *			  	
- *	ABOUT    :	
- *			  	
+ *
+ *	ABOUT    :
+ *
  *	INPUT    :	1- group id to get toolbars for
  *			  	2- only use the title toolbar
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	OUTPUT   :
+ *
+ *	REQUIRES :
+ *
  *	USAGE    :	DS_panel_load(groupID, onlyTitle) Create panel object with all allowed toolbars & sidebars
- *			  	
+ *
  *	MODIFIED :	July 24, 2008 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 var groupID = arguments[0]
@@ -4269,7 +4269,7 @@ if (onlyTitle) {
 		popDown : 0,
 		gradientColor : '#F2FBCA'
 	}]
-	
+
 	//punch back out all our toolbar and sidebar panels
 	return {
 				toolbar	: theToolbars
@@ -4278,9 +4278,9 @@ if (onlyTitle) {
 //load everything
 else {
 	var theToolbars = DS_panel_load_fx(1,groupID)
-	
-	var theSidebars = DS_panel_load_fx(2,groupID)	
-	
+
+	var theSidebars = DS_panel_load_fx(2,groupID)
+
 	//punch back out all our toolbar and sidebar panels
 	return {
 				toolbar	: theToolbars,
@@ -4307,22 +4307,22 @@ function DS_panel_load_fx()
 
 /*
  *	TITLE    :	DS_panel_load
- *			  	
+ *
  *	MODULE   :	rsrc_TOOL_toolbar
- *			  	
- *	ABOUT    :	
- *			  	
+ *
+ *	ABOUT    :
+ *
  *	INPUT    :	1- group id to get toolbars for
  *			  	2- only use the title toolbar
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	OUTPUT   :
+ *
+ *	REQUIRES :
+ *
  *	USAGE    :	DS_panel_load(groupID, onlyTitle) Create toolbar object with all allowed toolbars
- *			  	
+ *
  *	MODIFIED :	July 24, 2008 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 var panelType = arguments[0]
@@ -4341,7 +4341,7 @@ if (typeof groupID == 'number') {
 	var query = 'SELECT id_toolbar FROM sutra_access_group_toolbar WHERE toolbar_type = ? AND id_group = ? AND flag_chosen = ? ORDER BY order_by ASC'
 	var args = [panelType,groupID,1]
 	var dataset = databaseManager.getDataSetByQuery(serverName, query, args, 100)
-	
+
 	//get foundset with allowed toolbars
 	fsToolbar.loadRecords(dataset)
 }
@@ -4351,7 +4351,7 @@ else {
 	fsToolbar.toolbar_type = panelType
 	fsToolbar.row_status_show = 1
 	fsToolbar.search()
-	
+
 	var allToolbars = true
 }
 
@@ -4365,7 +4365,7 @@ if (utils.hasRecords(fsToolbar)) {
 	else {
 		fsToolbar.sort('row_order asc')
 	}
-	
+
 	//get from the workspace
 	if (solutionPrefs.repository.workspace) {
 		var repoType = 'workspace'
@@ -4374,25 +4374,25 @@ if (utils.hasRecords(fsToolbar)) {
 	else if (!solutionPrefs.repository.api) {
 		var repoType = 'allForms'
 	}
-	
+
 	for (var i = 1; i <= fsToolbar.getSize() ; i++) {
 		var record = fsToolbar.getRecord(i)
-		
+
 		var moduleFilter = (record.module_filter_2) ? record.module_filter_2 : record.module_filter
 		//get size of pop-down form
-		if (record.pop_down_autosize && 
-			application.__parent__.solutionPrefs && 
-			solutionPrefs.repository && solutionPrefs.repository[repoType] && 
-			solutionPrefs.repository[repoType][moduleFilter] && 
+		if (record.pop_down_autosize &&
+			application.__parent__.solutionPrefs &&
+			solutionPrefs.repository && solutionPrefs.repository[repoType] &&
+			solutionPrefs.repository[repoType][moduleFilter] &&
 			solutionPrefs.repository[repoType][moduleFilter][record.pop_down_form] &&
 			solutionPrefs.repository[repoType][moduleFilter][record.pop_down_form].formSize) {
-			
+
 			//extra width/height added to compensate for border gradient
 			var sizeSplit = solutionPrefs.repository[repoType][moduleFilter][record.pop_down_form].formSize.split(',')
 			var sizeWidth = utils.stringToNumber(sizeSplit[0]) + 40
 			var sizeHeight = utils.stringToNumber(sizeSplit[1]) + 20
 		}
-		
+
 		//only add tabs that have a form assigned and that form exists in the solution
 		if (record.form_name && solutionModel.getForm(record.form_name)) {
 			panel.push({
@@ -4413,12 +4413,12 @@ if (utils.hasRecords(fsToolbar)) {
 								} :
 								record.pop_down_show
 				})
-			
+
 			//default background color for toolbar is pale yellow
 			if (panelType == 1) {
 				panel[panel.length - 1].gradientColor = (record.background_color) ? record.background_color : '#ffffff'
 			}
-				
+
 			//sidebars can have background color and gradient
 			if (panelType == 2) {
 				panel[panel.length - 1].gradient = (record.flag_gradient) ? true : false
@@ -4443,24 +4443,24 @@ return panel
  */
 function DS_toolbar_popdown(expanded)
 {
-	
+
 /*
  *	TITLE    :	DS_toolbar_popdown
- *			  	
+ *
  *	MODULE   :	rsrc_TOOL_toolbar
- *			  	
- *	ABOUT    :	
- *			  	
- *	INPUT    :	
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	ABOUT    :
+ *
+ *	INPUT    :
+ *
+ *	OUTPUT   :
+ *
+ *	REQUIRES :
+ *
  *	USAGE    :	DS_toolbar_popdown(expandStatus)
- *			  	
+ *
  *	MODIFIED :	March 8, 2009 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 if (application.__parent__.solutionPrefs) {
@@ -4473,29 +4473,29 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	for (var i = 0; i < arguments.length; i++) {
 		Arguments.push(arguments[i])
 	}
-	
+
 	//reassign arguments without jsevents
 	arguments = Arguments.filter(CODE_jsevent_remove)
 }
 
 	var expanded = arguments[0]
-	
+
 	var baseForm = solutionPrefs.config.formNameBase
 	var statusStartX = forms[baseForm + '__header'].elements.split_tool_find.getX()
 	var statusWidth = forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getWidth()
 	var indent = 40
 	var tabWidth = statusWidth-(indent*2)
 	var tabHeight = 390
-	
+
 	var currentTab = solutionPrefs.panel.toolbar.selectedTab
 	var statusTabs = solutionPrefs.panel.toolbar
-	
+
 	//using a pop down
 	if (statusTabs[currentTab - 4].popDown) {
 		var downPop = statusTabs[currentTab - 4].popDown
 		var tabName = downPop.formName
 		var tabParent = statusTabs[currentTab - 4].formName
-		
+
 		//location offset for design mode
 		if (solutionPrefs.design.statusDesign) {
 			var y = 42 + 44
@@ -4503,21 +4503,21 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		else {
 			var y = 0 + 44
 		}
-		
+
 		tabWidth = (downPop.width) ? downPop.width : tabWidth
 		tabHeight = (downPop.height) ? downPop.height + 40 : tabHeight
-		
+
 		//check if larger than current window
 		if (tabHeight >= (application.getWindowHeight() - (50 + y))) {
 			tabHeight = application.getWindowHeight() - 130
-		}	
+		}
 		indent = (statusWidth-tabWidth)/2
-		
+
 		//first time popDown called
 		if (! forms[tabParent].popDown) {
 			forms[tabParent].popDown = 'hide'
 		}
-		
+
 		//expand if called from toolbar_cycle method
 		if (expanded) {
 			//resize and show tabpanel
@@ -4529,7 +4529,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		else if (forms[tabParent].popDown == 'hide') {
 			//set to up/down status to current status
 			forms[tabParent].popDown = 'show'
-			
+
 			//resize and show tabpanel
 			forms[baseForm].elements.tab_toolbar_popdown.setLocation(statusStartX+indent,y)
 			forms[baseForm].elements.tab_toolbar_popdown.setSize(tabWidth,tabHeight)
@@ -4541,13 +4541,13 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 			forms[tabParent].popDown = 'hide'
 			forms[baseForm].elements.tab_toolbar_popdown.visible = false
 		}
-		
+
 		var statusTab = statusTabs[currentTab - 4]
 		//popdown showing
 		if (forms[tabParent].popDown == 'show') {
 			forms[baseForm + '__header__toolbar'].elements.btn_toolbar_expand.visible = false
 			forms[baseForm + '__header__toolbar'].elements.btn_toolbar_collapse.visible = true
-			
+
 			//fire hook
 			if (downPop.hook) {
 				//global method
@@ -4564,7 +4564,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		else {
 			forms[baseForm + '__header__toolbar'].elements.btn_toolbar_expand.visible = true
 			forms[baseForm + '__header__toolbar'].elements.btn_toolbar_collapse.visible = false
-			
+
 			forms[baseForm].elements.tab_toolbar_popdown.visible = false
 		}
 	}
@@ -4578,24 +4578,24 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
  */
 function DS_toolbar_popout()
 {
-	
+
 /*
  *	TITLE    :	TOOLBAR_popout
- *			  	
+ *
  *	MODULE   :	rsrc_TOOL_toolbar
- *			  	
+ *
  *	ABOUT    :	open a non-modal dialog from sidebar
- *			  	
- *	INPUT    :	
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	INPUT    :
+ *
+ *	OUTPUT   :
+ *
+ *	REQUIRES :
+ *
  *	USAGE    :	TOOLBAR_popout(expandStatus)
- *			  	
+ *
  *	MODIFIED :	September 10, 2009 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 if (application.__parent__.solutionPrefs) {
@@ -4608,23 +4608,23 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	for (var i = 0; i < arguments.length; i++) {
 		Arguments.push(arguments[i])
 	}
-	
+
 	//reassign arguments without jsevents
 	arguments = Arguments.filter(CODE_jsevent_remove)
 }
 
 	var expanded = (typeof arguments[0] == 'boolean') ? arguments[0] : null
-	
+
 	var sideForm = 'DATASUTRA__sidebar'
-	
+
 	var currentTab = solutionPrefs.panel.sidebar.selectedTab
 	var sidebarTabs = solutionPrefs.panel.sidebar
 	var thisTab = (currentTab - 2 >= 0) ? sidebarTabs[currentTab - 2] : new Object()
-	
+
 	//help, close sidebar and pop the help screen out into non-modal dialog
 	if (solutionPrefs.config.helpMode) {
 		DS_sidebar_toggle(false)
-		
+
 		CODE_form_in_dialog(
 				forms.MGR_P_documentation,
 				-1,-1,-1,-1,
@@ -4640,10 +4640,10 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		var downPop = thisTab.popDown
 		var tabName = downPop.formName
 		var tabParent = thisTab.formName
-		
+
 		var tabWidth = (downPop.width) ? downPop.width : -1
 		var tabHeight = (downPop.height) ? downPop.height : -1
-		
+
 		//show form in dialog
 		if (expanded) {
 			CODE_form_in_dialog(
@@ -4655,7 +4655,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 					'SIDE_' + currentTab + '_' + tabParent,
 					false
 				)
-		
+
 			//fire hook
 			if (downPop.hook) {
 				//global method
@@ -4673,7 +4673,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		else {
 			CODE_form_in_dialog_close('SIDE_' + currentTab + '_' + tabParent)
 		}
-		
+
 		forms[sideForm + '__header'].elements.btn_popin.visible = expanded
 		forms[sideForm + '__header'].elements.btn_popout.visible = !expanded
 	}
@@ -4691,32 +4691,32 @@ function DS_tooltip_load()
 
 /*
  *	TITLE    :	DS_tooltip_load
- *			  	
+ *
  *	MODULE   :	rsrc_TIP_tooltip
- *			  	
- *	ABOUT    :	
- *			  	
- *	INPUT    :	
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	ABOUT    :
+ *
+ *	INPUT    :
+ *
+ *	OUTPUT   :
+ *
+ *	REQUIRES :
+ *
  *	USAGE    :	DS_tooltip_load()
- *			  	
+ *
  *	MODIFIED :	July 9, 2008 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 //query for all languages set up and create nodes for them
 
 var dataset = databaseManager.getDataSetByQuery(
-						forms.MGR_0F_tooltip.controller.getServerName(), 
+						forms.MGR_0F_tooltip.controller.getServerName(),
 						'SELECT DISTINCT i18n_language FROM sutra_tooltip',
 						null,
 						1000)
-		
-		
+
+
 var languages = dataset.getColumnAsArray(1)
 
 var L10n = new Object()
@@ -4725,39 +4725,39 @@ var fsTooltip = databaseManager.getFoundSet(forms[formName].controller.getServer
 
 //loop through all languages
 for (var i = 0; i < languages.length; i++) {
-	
+
 	var language = languages[i]
-	
+
 	//language value present
 	if (language) {
-		
+
 		//create object to store locale strings
 		var locale = L10n[language] = new Object()
-		
+
 		//find tips for selected language
 		fsTooltip.find()
 		fsTooltip.i18n_language = language
 		var results = fsTooltip.search()
-		
+
 		//sort tips by form
 		fsTooltip.sort('form_name asc, element_name asc')
-		
+
 		var formFilter = null
-		
+
 		//loop through all tips, creating new form objects as needed
 		for (var j = 1; j <= fsTooltip.getSize(); j++) {
 			var record = fsTooltip.getRecord(j)
-			
+
 			//check that record is valid (has enough information)
 			if (record.form_name) {
-			
+
 				//create new form object if different than prior one
 				if (record.form_name != formFilter) {
 					formFilter = record.form_name
 					locale[formFilter] = new Object()
 					var formArray = 0
 				}
-				
+
 				//named element
 				if (record.element_name) {
 					//actual tip
@@ -4794,28 +4794,28 @@ function DS_client_info_load()
 
 /*
  *	TITLE    :	DS_client_info_load
- *			  	
+ *
  *	MODULE   :	__DATASUTRA__
- *			  	
+ *
  *	ABOUT    :	fills solutionPrefs.clientInfo with information about how servoy is running on this client
- *			  	
- *	INPUT    :	
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	INPUT    :
+ *
+ *	OUTPUT   :
+ *
+ *	REQUIRES :
+ *
  *	MODIFIED :	Mar 2008 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 	//get uuid of client (comes from clients_stats table in repository)
 	var uuidServoy = (plugins.UserManager && plugins.UserManager.Client()) ? plugins.UserManager.Client().clientId : plugins.sutra.getClientID()
-	
+
 	//process os and servoy version
 	var nameOS = application.getOSName()
 	var servoyType = application.getApplicationType()
-	
+
 	//tano and higher has special developer check
 	if (utils.stringToNumber(application.getVersion()) >= 5 && application.isInDeveloper()) {
 		if (application.isInDeveloper()) {
@@ -4823,11 +4823,11 @@ function DS_client_info_load()
 					case 2:
 						servoyType = 'developer'
 						break
-					
+
 					case 4:
 						servoyType = 'headless client'
 						break
-					
+
 					case 5:
 						servoyType = 'web client developer'
 						break
@@ -4840,29 +4840,29 @@ function DS_client_info_load()
 				case 1:
 					servoyType = 'server'
 					break
-				
+
 				case 2:
 					servoyType = 'client'
 					break
-				
+
 				case 3:
 					servoyType = 'developer'
 					break
-				
+
 				case 4:
 					servoyType = 'headless client'
 					break
-				
+
 				case 5:
 					servoyType = 'web client'
 					break
-				
+
 				case 6:
 					servoyType = 'runtime'
-					break	
+					break
 		}
 	}
-	
+
 	//webclient
 	if (servoyType == 'web client') {
 		var pingResult = true
@@ -4899,7 +4899,7 @@ function DS_client_info_load()
 		else {
 			var pingResult = false
 		}
-		
+
 		//get external ip address if connection available
 		if (pingResult) {
 			var ipExternal = plugins.http.getPageData('http://api.hostip.info/get_json.php')
@@ -4914,23 +4914,23 @@ function DS_client_info_load()
 			catch (e) {}
 		}
 	}
-	
+
 	//time difference between server and client (- means client ahead) (+ means server ahead)
 	var clientTime = application.getTimeStamp()
 	var serverTime = application.getServerTimeStamp()
 	var timeDiff = (serverTime - clientTime) / 1000 //gives offset in seconds
-	
+
 	//hack to pop up the popupmenu (instead of down)
 	//move "up" button to correct location based on platform and look and feel
 	//if not using kunstoff, windows, metal, or mac, menu will pop down
 	//
 	//if using xp or vista and the default (luna/glass) scheme is used, but servoy is set to use windows classic laf, popups will be incorrect
-	
+
 	var lookNFeel = application.getCurrentLookAndFeelName()
 	var lineHeight = 0
 	var topShift = 0
 	var osVer = (plugins.sutra) ? plugins.sutra.getOSVersion() : ''
-	
+
 	if (nameOS == 'Mac OS X' && lookNFeel != 'Metal') {
 		if (utils.stringPatternCount(osVer,'10.5') || utils.stringPatternCount(osVer,'10.6')) {
 			lineHeight = 18
@@ -4947,7 +4947,7 @@ function DS_client_info_load()
 	}
 	else if (lookNFeel == 'Windows') {
 		var theme = plugins.sutra.getWindowsTheme()
-		
+
 		//win2k
 		if (utils.stringPatternCount(osVer,'5.0')) {
 			lineHeight = 19
@@ -4977,7 +4977,7 @@ function DS_client_info_load()
 		lineHeight = 19
 		topShift = 25
 	}
-	
+
 	var clientInfo = {
 		servoyUUID		: uuidServoy,
 		typeOS			: nameOS,
@@ -4994,7 +4994,7 @@ function DS_client_info_load()
 		popupHack		: {lineHeight: lineHeight, topShift : topShift},
 		startTime		: serverTime
 	}
-	
+
 	return clientInfo
 }
 
@@ -5007,19 +5007,19 @@ function DS_list_load()
 
 /*
  *	TITLE    :	DS_list_load
- *			  	
+ *
  *	MODULE   :	__DATASUTRA__
- *			  	
+ *
  *	ABOUT    :	returns solutionPrefs.listSetup with default values (currently only smart list sleep)
- *			  	
- *	INPUT    :	
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	INPUT    :
+ *
+ *	OUTPUT   :
+ *
+ *	REQUIRES :
+ *
  *	MODIFIED :	June 18, 2008 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 var listSetup = new Object()
@@ -5035,7 +5035,7 @@ listSetup.lastStart = new Date()
 listSetup.listBackground = (forms[formName].list_color_background) ? forms[formName].list_color_background : '#D1D7E2'
 
 //fully functional, but not something for public consumption yet....although if you uncomment it and remove line 37....(and put a value in list_maxrecs...)
-/*		
+/*
 	//custom foundset sizes
 	listSetup.maxRecords = (forms[formName].list_maxrecs) ? forms[formName].list_maxrecs : 200
 	//make sure it is a multiple of 200
@@ -5055,26 +5055,26 @@ function DS_screen_load()
 
 /*
  *	TITLE    :	DS_screen_load
- *			  	
+ *
  *	MODULE   :	__DATASUTRA__
- *			  	
+ *
  *	ABOUT    :	fills solutionPrefs.screenAttrib with default screen x, y, height, width, bean splits, and centering preference
- *			  	
- *	INPUT    :	
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	INPUT    :
+ *
+ *	OUTPUT   :
+ *
+ *	REQUIRES :
+ *
  *	MODIFIED :	Sept 2007 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 var screenAttrib = new Object()
 var formName = 'DATASUTRA_0F_solution__blank_4'
 
 //window/screen
-screenAttrib.screenWidth = application.getScreenWidth() 
+screenAttrib.screenWidth = application.getScreenWidth()
 screenAttrib.screenHeight = application.getScreenHeight()
 screenAttrib.initialScreenWidth = (forms[formName].screen_width) ? forms[formName].screen_width : 1012
 screenAttrib.initialScreenHeight = (forms[formName].screen_height) ? forms[formName].screen_height : 750
@@ -5126,42 +5126,42 @@ screenAttrib.spaces = {
 								defaultVertical		: (forms[formName].space_standard_vertical) ? forms[formName].space_standard_vertical : 200,
 								currentVertical		: (forms[formName].space_standard_vertical) ? forms[formName].space_standard_vertical : 200
 							},
-							
+
 				list		: {
 								defaultHorizontal	: (forms[formName].space_list_horizontal) ? forms[formName].space_list_horizontal : 200,
 								currentHorizontal	: (forms[formName].space_list_horizontal) ? forms[formName].space_list_horizontal : 200,
 							},
-							
+
 				vertical	: {
 								defaultHorizontalOne	: (forms[formName].space_vertical_horizontal_1) ? forms[formName].space_vertical_horizontal_1 : 200,
 								currentHorizontalOne	: (forms[formName].space_vertical_horizontal_1) ? forms[formName].space_vertical_horizontal_1 : 200,
 								defaultHorizontalTwo	: (forms[formName].space_vertical_horizontal_2) ? forms[formName].space_vertical_horizontal_2 : 200,
 								currentHorizontalTwo	: (forms[formName].space_vertical_horizontal_2) ? forms[formName].space_vertical_horizontal_2 : 200
 							},
-							
+
 				centered	: {
 								defaultHorizontalOne	: (forms[formName].space_centered_horizontal_1) ? forms[formName].space_centered_horizontal_1 : 200,
 								currentHorizontalOne	: (forms[formName].space_centered_horizontal_1) ? forms[formName].space_centered_horizontal_1 : 200,
 								defaultHorizontalTwo	: (forms[formName].space_centered_horizontal_2) ? forms[formName].space_centered_horizontal_2 : 200,
 								currentHorizontalTwo	: (forms[formName].space_centered_horizontal_2) ? forms[formName].space_centered_horizontal_2 : 200
 							},
-							
+
 				classic		: {
 								defaultHorizontal	: (forms[formName].space_classic_horizontal) ? forms[formName].space_classic_horizontal : 200,
 								currentHorizontal	: (forms[formName].space_classic_horizontal) ? forms[formName].space_classic_horizontal : 200,
 								defaultVertical		: (forms[formName].space_classic_vertical) ? forms[formName].space_classic_vertical : 200,
 								currentVertical		: (forms[formName].space_classic_vertical) ? forms[formName].space_classic_vertical : 200
 							},
-							
+
 				wide		: {
 								defaultHorizontal	: (forms[formName].space_wide_horizontal) ? forms[formName].space_wide_horizontal : 200,
 								currentHorizontal	: (forms[formName].space_wide_horizontal) ? forms[formName].space_wide_horizontal : 200,
 								defaultVertical		: (forms[formName].space_wide_vertical) ? forms[formName].space_wide_vertical : 200,
 								currentVertical		: (forms[formName].space_wide_vertical) ? forms[formName].space_wide_vertical : 200
 							},
-							
+
 				workflow	: {
-								
+
 							}
 			}
 
@@ -5175,13 +5175,13 @@ return screenAttrib
 function DS_font_fix() {
 	//don't run in headless or web client (they use whatever solution is activated as context)
 	if (application.getApplicationType() == APPLICATION_TYPES.SMART_CLIENT || application.getApplicationType() == APPLICATION_TYPES.RUNTIME_CLIENT) {
-	
+
 		//TODO: test on windows...will definitely need some tweaks
 		var fontTahoma = new Packages.javax.swing.plaf.FontUIResource("Tahoma",0,11)
-		
+
 		var fontVerdana = new Packages.javax.swing.plaf.FontUIResource("Verdana",0,11)
 		var fontMSSansSerif = new Packages.javax.swing.plaf.FontUIResource("MS Sans Serif",0,12)
-		
+
 		//on a mac
 		if (application.getOSName() == 'Mac OS X') {
 			var fontDefault = fontVerdana
@@ -5192,9 +5192,9 @@ function DS_font_fix() {
 			var fontDefault = fontMSSansSerif
 			var fontWindow = fontTahoma
 		}
-		
+
 		var uiDefaults = Packages.javax.swing.UIManager.getDefaults()
-		
+
 		uiDefaults.put("MenuItem.font", fontWindow)
 		uiDefaults.put("Menu.font", fontWindow)
 	   	uiDefaults.put("CheckBoxMenuItem.font", fontWindow)
@@ -5217,7 +5217,7 @@ function DS_font_fix() {
 	//	uiDefaults.put("TextArea.font", fontDefault)
 	//	uiDefaults.put("PasswordField.font", fontDefault)
 	//	uiDefaults.put("TextField.font", fontDefault)
-	
+
 		var frames = Packages.java.awt.Frame.getFrames()
 		for (var i = 0; i < frames.length; i++) {
 			Packages.javax.swing.SwingUtilities.updateComponentTreeUI(frames[i])
@@ -5237,23 +5237,23 @@ function DATASUTRA_open(skipFontFix) {
 
 /**
  * URL driven navigation
- * 
+ *
  * @param {String}	[p1]		First argument passed in
  * @param {Object}	[params]	Object of all arguments
  * @param {Number}	[itemID]	Specified ID to go to
  * @param {Boolean}	[launch]	Launch app requested (break out of iframe)
  * @param {Boolean}	[logout]	Log out requested, redirect url
  * @param {String}	[pathName]	Current path shown in webclient
- * 
+ *
  * @properties={typeid:24,uuid:"AF8DE8BA-7503-462B-B4B0-45B9A2DE7921"}
- * 
+ *
  * @AllowToRunInFind
  */
 function DS_router(p1,params,itemID,launch,logout,pathName) {
 	//prefix in url path (also change at beginning of DS_router_url)
 	var prefix = '/'
 	var url = new Object()
-	
+
 	//prefill url from history
 	if (p1 == 'DSHistory') {
 		var hixItem = DATASUTRA_router[DATASUTRA_router.length - 1]
@@ -5274,24 +5274,24 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 		itemID = DATASUTRA_router_arguments[2]
 		launch = DATASUTRA_router_arguments[3]
 		logout = DATASUTRA_router_arguments[4]
-		
+
 		//reset to default value
 		DATASUTRA_router_arguments = eval(solutionModel.getGlobalVariable('globals','DATASUTRA_router_arguments').defaultValue)
 	}
-	
+
 	//number of ms to wait before replacing state
 	var delay = 0
-	
+
 	//what is this solution called
 	var appName = forms.DATASUTRA_0F_solution__blank_4.solution_name || 'Data Sutra'
-	
+
 	//check history for form
 	function historyCheck(formName) {
 		var location = history.getCurrentIndex()
-		
+
 		for (var i = 1; i <= history.size(); i++) {
 			var item = history.getFormName(i)
-			
+
 			//found this form in the history stack
 			if (formName == item) {
 				//not currently on the form
@@ -5304,25 +5304,25 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 			}
 		}
 	}
-	
+
 	function setError(code, message) {
 		if (forms.DATASUTRA_WEB__error) {
 			forms.DATASUTRA_WEB__error._errorCode = code || ''
 			forms.DATASUTRA_WEB__error._errorMessage = message || ''
 		}
 	}
-	
+
 	// url object logic
-	
+
 	//see DSHistory below...must be the same
 	for ( var item in params ) {
 		// 1st slot is navigation set
 		if ( item == "argument" ) {
-			url.set = params[item]  
+			url.set = params[item]
 		}
 		// 2nd slot is navigation item
 		else if ( item == "p1" ) {
-			url.item = params[item] 
+			url.item = params[item]
 		}
 		// 3rd slot is pretty name (only used for preferences)
 		else if ( item == "p2" ) {
@@ -5341,27 +5341,27 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 			//TODO: should probably put this into the NCRYPT library
 			var fromBase64 = new Packages.sun.misc.BASE64Decoder
 			url.referrer = scopes.NCRYPT.util.UTF8.bytesToString(fromBase64.decodeBuffer(params[item]))
-			
+
 			//store down referrer for this session
 			if (!DATASUTRA_router_referrer && !DATASUTRA_router.length) {
 				DATASUTRA_router_referrer = url.referrer
 			}
 		}
 	}
-	
+
 	// if logout, redirect url
 	if (logout) {
 		application.showURL(DS_router_url('login'),'_top')
 		return
 	}
-	
+
 	//this must be called from the router and therefore we must be running in the iframe router wrapper
 	DATASUTRA_router_enable = true
-	
+
 	//set up callback on form for navigating when in router wrapper
 		//MEMO: only needed when url manually typed in
 	scopes.DS.webCallbacks()
-	
+
 	// external login form requested and already logged in, show something to this effect
 	if (url.set == 'DSLoginSmall' && application.__parent__.solutionPrefs && solutionPrefs.access && solutionPrefs.access.userID) {
 		history.go(+1)
@@ -5371,7 +5371,7 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 	else if ((!application.__parent__.solutionPrefs || !application.__parent__.navigationPrefs)) {
 		//make sure the app name is shown
 		plugins.WebClientUtils.executeClientSideJS('window.parent.document.title = "' + appName + '";')
-		
+
 		// this method has been run once, go back to login form
 		if (DATASUTRA_router_firstRun) {
 			if (url.set == 'DSLogin') {
@@ -5425,13 +5425,13 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 						request : application.getUUID().toString(),
 						pk : null
 					}
-				
+
 				//only push history if we have something
 				if (pathName != prefix) {
 					DATASUTRA_router_index = DATASUTRA_router.length
 					DATASUTRA_router.push(dataNode)
 				}
-				
+
 				scopes.DS.webURLSet(
 						appName,
 						DS_router_url('login'),
@@ -5445,19 +5445,19 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 			return
 		}
 	}
-	
+
 	// get nav object mapping
 	var nav = (application.__parent__.navigationPrefs) ? navigationPrefs.siteMap : new Object()
-	
+
 	// check for special status codes
 	if (p1 == 'DSLoginSmall') {
 		DATASUTRA_router_login = true
-		
+
 		//url to redirect to on successful logout (only take from initial login location)
 		if (!DATASUTRA_router_referrer) {
 			DATASUTRA_router_referrer = url.referrer || 'http://www.data-mosaic.com/data-sutra'
 		}
-		
+
 		//we've run once
 		DATASUTRA_router_firstRun = true
 		return
@@ -5465,16 +5465,16 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 	else if (p1 == 'DSLogin') {
 		// when logged in already, return to previous form
 		if (application.__parent__.navigationPrefs) {
-			
+
 			//TODO: use DATASUTRA_router to navigate history stack
 //			if (DATASUTRA_router.length) {
 //				var itemID = DATASUTRA_router[DATASUTRA_router.length - 1].itemID
 //			}
 			itemID = solutionPrefs.config.currentFormID
-			
+
 			if (solutionPrefs.config.currentFormID) {
 //				plugins.WebClientUtils.executeClientSideJS('window.parent.routerDelay(null,"' + navigationPrefs.byNavItemID[itemID]._about_ + '","' + DS_router_url(navigationPrefs.byNavItemID[itemID].path) + '",' + delay + ');')
-				
+
 				scopes.DS.webURLSet(
 						navigationPrefs.byNavItemID[itemID]._about_,
 						DS_router_url(
@@ -5493,7 +5493,7 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 				forms.AC_R__login_WEB.FORM_on_show()
 			}
 		}
-		
+
 		//we've run once
 		DATASUTRA_router_firstRun = true
 		return
@@ -5515,16 +5515,16 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 		if (DATASUTRA_router.length) {
 			itemID = DATASUTRA_router[DATASUTRA_router.length - 1].navItemID
 		}
-		
+
 		//go to initial landing spot if not valid itemID
 		if (!itemID) {
 			itemID = navigationPrefs.byNavSetID[navigationPrefs.byNavSetID.defaultSet].itemsByOrder[0].navigationItem.idNavigationItem
 		}
-		
+
 		//redirect to correct url
 		if (navigationPrefs.byNavItemID[itemID].path) {
 //			plugins.WebClientUtils.executeClientSideJS('preRender(null,"' + navigationPrefs.byNavItemID[itemID]._about_ + '","' + DS_router_url(navigationPrefs.byNavItemID[itemID].path) + '",' + delay + ');')
-			
+
 			scopes.DS.webURLSet(
 					navigationPrefs.byNavItemID[itemID]._about_,
 					DS_router_url(
@@ -5533,7 +5533,7 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 					null,
 					delay
 				)
-			
+
 			return
 		}
 	}
@@ -5551,14 +5551,14 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 			if (!path[path.length - 1]) {
 				path.pop()
 			}
-			
+
 			url = {
 				set : path[0],
 				item : path[1]
 			}
 			pk = path[3]
 		}
-		
+
 		// particular item specified
 		if (url.set && url.item) {
 			// this item exists
@@ -5574,7 +5574,7 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 				break
 			}
 		}
-		
+
 		if (navigationPrefs.byNavItemID[itemID]) {
 			//this is a preference (this is mainly for case when logging in and going to specific preference...which is disabled now)
 			if (navigationPrefs.byNavItemID[itemID].navigationItem.configType == 'Admin') {
@@ -5616,7 +5616,7 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 			//normal call to rewrite history stack
 			else {
 //				plugins.WebClientUtils.executeClientSideJS('preRender(null,"' + navigationPrefs.byNavItemID[itemID]._about_ + '","' + DS_router_url(navigationPrefs.byNavItemID[itemID].path) + '",' + delay + ');')
-				
+
 				var fullURL = DS_router_url(
 						navigationPrefs.byNavItemID[itemID].path
 					)
@@ -5629,7 +5629,7 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 //							forms[navigationPrefs.byNavItemID[itemID].navigationItem.formToLoad].foundset.getSelectedRecord()
 //						)
 //				}
-				
+
 				scopes.DS.webURLSet(
 						navigationPrefs.byNavItemID[itemID]._about_,
 						//refigure url so gets pushed to history
@@ -5685,7 +5685,7 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 			return
 		}
 	}
-	
+
 	// everything good, go there
 	if ( itemID ) {
 		//this is a preference
@@ -5697,28 +5697,28 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 			// reset scroll of ul
 	//		plugins.WebClientUtils.executeClientSideJS('setTimeout(function(){DS_universalList.scrollReset()},2000);')
 	//		setTimeout(function(){DS_universalList.scrollHijack(newVal)},1500);
-			
+
 			//in a preference, exit
 			if (solutionPrefs.config.prefs.preferenceMode) {
 				DS_actions('Exit configuration')
 			}
-			
+
 			//something was specified to navigate to, load it up
 			var payload = DATASUTRA_router_payload || new Object()
-			
+
 			//payload trumps pk
 			if (pk && !payload.setFoundset) {
 				payload.setFoundset = true
 				payload.useFoundset = [pk]
 			}
-			
+
 			// load in correct state of requested resource
 			TRIGGER_navigation_set(payload.itemID,payload.setFoundset,payload.useFoundset,itemID)
-			
+
 			//reset payload (values only used immediately after set)
 			DATASUTRA_router_payload = eval(solutionModel.getGlobalVariable('globals','DATASUTRA_router_payload').defaultValue)
 		}
-		
+
 		// make sure on correct top level form
 		var goHere = historyCheck('DATASUTRA_WEB_0F')
 		//navigate to the form
@@ -5729,9 +5729,9 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 		else if (!goHere) {
 			forms.DATASUTRA_WEB_0F.controller.show()
 		}
-		
+
 		DS_router_recreateUI()
-		
+
 		//hoist divs up if still in a transaction
 		if (solutionPrefs.config.lockStatus) {
 			plugins.WebClientUtils.executeClientSideJS('triggerInterfaceLock(true);')
@@ -5744,14 +5744,14 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 				"Data Sutra: Error page",
 				DS_router_url('error')
 			)
-		return  
+		return
 	}
-	
+
 	function goPreference() {
 		var dsDetails = navigationPrefs.byNavItemID[itemID].navigationItem
 		//enter preference mode if we're not already there
 		DS_actions(dsDetails.itemName,dsDetails.formToLoad,itemID,dsDetails.configType)
-		
+
 		//exceptions to rule
 		if (dsDetails.itemName == 'Navigation engine' && slot3 && pk) {
 			forms.NAV_0L_navigation_1L.foundset.selectRecord(slot3)
@@ -5767,20 +5767,20 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 			if (slot3) {
 				//search for text in labels on loaded nav form
 				var navPaneForm = forms.DATASUTRA_WEB_0F__list__navigation.elements.tab_content_A.getTabNameAt(forms.DATASUTRA_WEB_0F__list__navigation.elements.tab_content_A.tabIndex)
-				
+
 				if (forms[navPaneForm].elements.highlighter) {
 					var allElems = forms[navPaneForm].elements.allnames
-					
+
 					//get name of selected item
 					for (var i = 0; i < allElems.length; i++) {
 						var elemName = allElems[i]
 						var elemPath = forms[navPaneForm].elements[elemName].text || ''
 						elemPath = elemPath.toLowerCase().replace(/([{}\(\)\^$&._%#!@=<>:;,~`\s\*\?\/\+\|\[\\\\]|\]|\-)/g,'-').replace(/\-{2,}/g,'-')
-						
+
 						//found my element
 						if (slot3 == elemPath) {
 							var methodName = 'GO_' + elemName.split('_')[1]
-							
+
 							//run method and pass in pk to be fondled with downstream
 							if (forms[navPaneForm][methodName]) {
 								forms[navPaneForm][methodName](null,pk)
@@ -5796,7 +5796,7 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 
 /**
  * @AllowToRunInFind
- * 
+ *
  * @param {String}	path Full path for the url, don't need to pass anything in
  * @param {Number}	[itemID] Navigation item ID (used to get information about navigation items)
  * @param {Number|UUID} [pk] PK of selected/requested record
@@ -5809,20 +5809,20 @@ function DS_router_url(path,itemID,pk,record,pushHix) {
 	var prefix = '/'
 	var urlString = prefix
 	var navItem = application.__parent__.navigationPrefs ? navigationPrefs.byNavItemID[itemID] : new Object()
-	
+
 	// page specified
 	if (typeof path == 'string') {
 		//content should already be sanitized, but check once more
 		//doesn't replace out / like the other ones do
 		path = path.toLowerCase().replace(/([{}\(\)\^$&._%#!@=<>:;,~`\s\*\?\+\|\[\\\\]|\]|\-)/g,'-').replace(/\-{2,}/g,'-')
-		
+
 		urlString += path
-		
+
 		//passed pk or record for selected navigation item and on the correct item; tack on record slot
 		if (itemID && path.indexOf(navItem.path) == 0 && (pk || record)) {
 			var serverName = ''
 			var tableName = ''
-			
+
 			//passed record, get server/table from there
 			if (record) {
 				serverName = databaseManager.getDataSourceServerName(record.getDataSource())
@@ -5834,46 +5834,46 @@ function DS_router_url(path,itemID,pk,record,pushHix) {
 				serverName = databaseManager.getDataSourceServerName(forms[formName].controller.getDataSource())
 				tableName = databaseManager.getDataSourceTableName(forms[formName].controller.getDataSource())
 			}
-			
+
 			//path doesn't match exactly; third slot comandeered for something else
 			if (navItem.path != path) {
 				var skipPretty = true
 			}
-			
+
 			//empty values so we don't mess up too much
 			var pkKey = ''
 			var pkPretty = navItem.navigationItem.urlColumn || ''
-			
+
 			//grab pkName
 			if (serverName && tableName && solutionPrefs.repository && solutionPrefs.repository.allFormsByTable && solutionPrefs.repository.allFormsByTable[serverName] && solutionPrefs.repository.allFormsByTable[serverName][tableName] && solutionPrefs.repository.allFormsByTable[serverName][tableName].primaryKey) {
 				pkKey = solutionPrefs.repository.allFormsByTable[serverName][tableName].primaryKey
 			}
 			//no display configured, grab first columm from default universal list
-			if (!pkPretty && navItem.universalList && navItem.universalList.displays && navItem.universalList.displays.length && 
+			if (!pkPretty && navItem.universalList && navItem.universalList.displays && navItem.universalList.displays.length &&
 				navItem.universalList.displays[0].rawDisplay && navItem.universalList.displays[0].rawDisplay.length && navItem.universalList.displays[0].rawDisplay[0].fieldName) {
-				
+
 				pkPretty = navItem.universalList.displays[0].rawDisplay[0].fieldName
 			}
-			
+
 			//hunt for the record
 			if (!record) {
 				var fs = databaseManager.getFoundSet(serverName,tableName)
 				fs.find()
 				fs[pkKey] = pk
 				var results = fs.search()
-				
+
 				if (results == 1) {
 					record = fs.getSelectedRecord()
 				}
 			}
-			
+
 			//we have ourselves a merry little record
 			if (record instanceof JSRecord) {
 				var recName = record[pkPretty]
-				
+
 				//sanitize the pk
 				var recID = pkKey ? utils.stringReplace(record[pkKey].toString(),'-','') : '-'
-				
+
 				//there is something to display for this record
 				if (recName) {
 					recName = recName.toString().toLowerCase().replace(/([{}\(\)\^$&._%#!@=<>:;,~`\s\*\?\/\+\|\[\\\\]|\]|\-)/g,'-').replace(/\-{2,}/g,'-')
@@ -5882,12 +5882,12 @@ function DS_router_url(path,itemID,pk,record,pushHix) {
 				else {
 					recName = '-'
 				}
-				
+
 				//pretty value is same as pk, don't display pretty
 				if (recName == recID) {
 					recName = '-'
 				}
-				
+
 				//when no pk available, don't tack anything on
 				if (recID != '-') {
 					//complex layouts where navigation pane replaced hijacks the 3rd slot for navigation purposes
@@ -5900,7 +5900,7 @@ function DS_router_url(path,itemID,pk,record,pushHix) {
 					}
 				}
 			}
-			
+
 			//push to history stack
 			if (pushHix) {
 				var dataNode = {
@@ -5918,65 +5918,65 @@ function DS_router_url(path,itemID,pk,record,pushHix) {
 	else {
 		urlString += 'error'
 	}
-	
+
 	return urlString
 }
 
 /**
  * Callback method to alert when tab hidden/shown
- * 
+ *
  * @param {String}	hidden	Tab is hidden (string true/false)
  * @param {Object}	params	Object of all arguments (for now, we're just using path)
- * 
+ *
  * @properties={typeid:24,uuid:"2185D40F-A2C8-459A-A960-86C7D916E27C"}
  */
 function DS_router_visibility(hidden,params) {
 	//when debugging in non-chrome, uncomment this line to turn off visibility snatching your baby out of the iframe
 		//turned off for now because this feature shelved until supported more widely
 	return
-	
+
 	// if not logged in, throw back to login page
 		// on page hide/show will let this situation arise where ping back to server and that client is dead
 //	if ((!application.__parent__.solutionPrefs || !application.__parent__.navigationPrefs)) {
 //		plugins.WebClientUtils.executeClientSideJS('window.parent.routerReplace(null,"Data Sutra: Login","/loginInline");')
 //		return
 //	}
-	
+
 	// cast first param to boolean
 	hidden = eval(hidden)
-	
+
 	// unescape referrer
 	if (params.path) {
 		// replace backspace character with /
 		var path = params.path.replace(/\t/g,'/')
-		
+
 		// debugging to make sure order is happening correctly
 //		application.output(path)
 	}
-	
+
 	//there is at least one other form hidden, need to start refreshing
 	//TODO: but not if this is the first time this form has been loaded
 	if (DATASUTRA_router_invisible && DATASUTRA_router_invisible != path) {
 		DATASUTRA_router_refresh = true
 	}
-	
+
 	//need to refresh a form that has been hidden before
 	if (DATASUTRA_router_refresh && !hidden) {
 		//set global that coming from small login screen to big one, need to rejiggle the beans
 		if (path != prefix + 'loginInline') {
 			DATASUTRA_router_login = true
 		}
-		
+
 		plugins.WebClientUtils.executeClientSideJS('refreshOnShow();')
 		application.output((hidden ? 'Hiding, ' : 'Showing, ') + 'Refreshing: ' + path)
 	}
 	//trash chatter iframe
 	else {
 		plugins.WebClientUtils.executeClientSideJS('window.parent.removeChatter();')
-		
+
 		application.output((hidden ? 'Hiding, ' : 'Showing, ') + 'Not refreshing: ' + path)
 	}
-	
+
 	//store the form that has been hidden
 	if (hidden) {
 		DATASUTRA_router_invisible = path
@@ -5990,7 +5990,7 @@ function DS_router_visibility(hidden,params) {
 
 /**
  * Until recreateUI gets fixed, things that need to happen everytime one of them happens
- * 
+ *
  * @properties={typeid:24,uuid:"BEF91922-AC33-4BB4-8CD6-8F77AB522B20"}
  */
 function DS_router_recreateUI() {
@@ -6005,13 +6005,13 @@ function DS_router_recreateUI() {
 			}
 		var elemID = plugins.WebClientUtils.getElementMarkupId(forms.DATASUTRA_WEB_0F__header.elements['btn_space_' + spaceConversion[solutionPrefs.config.activeSpace]])
 		plugins.WebClientUtils.executeClientSideJS('dimSpace("' + elemID +'");')
-		
+
 		//things that must be resized after small login
 		if (DATASUTRA_router_login) {
 			var callback = plugins.WebClientUtils.generateCallbackScript(DS_router_bean_resize);
 			var jsCallback = 'function resetBeans(){' + callback + '}';
 			plugins.WebClientUtils.executeClientSideJS('resetBeanSizes(' + jsCallback + ');')
-			
+
 			//make sure this only runs one time
 			DATASUTRA_router_login = false
 		}
@@ -6029,7 +6029,7 @@ function DS_router_bean_resize() {
 	else {
 		forms.DATASUTRA_WEB_0F.elements.tab_wrapper.dividerLocation = forms.DATASUTRA_WEB_0F.elements.tab_wrapper.getWidth()
 	}
-	
+
 	//reset split between toolbar and fastfind
 	if (solutionPrefs.config.webClient) {
 		forms.DATASUTRA_WEB_0F__header.FORM_on_show(true)
@@ -6046,10 +6046,10 @@ function DS_router_logout() {
 /**
  * Drive navigation from callback on form, not iframe url changes. OR
  * Get current pathname in webclient
- * 
+ *
  * @param {String} 		pathString	The current pathname.
  * @param {Function} 	[callback] Method to pass pathname to.
- * 
+ *
  * @properties={typeid:24,uuid:"75330960-68A3-4298-9BE2-074A78F5B819"}
  */
 function DS_router_callback(pathString,callback) {
@@ -6067,17 +6067,17 @@ function DS_router_callback(pathString,callback) {
 		if (!path[path.length - 1]) {
 			path.pop()
 		}
-		
+
 		var url = {
 			set : path[0],
 			item : path[1]
 		}
 		var pk = path[3]
-		
+
 		// get nav object mapping
 		var nav = (application.__parent__.navigationPrefs) ? navigationPrefs.siteMap : new Object()
 		var itemID
-		
+
 		// particular item specified
 		if (url.set && url.item) {
 			// this item exists
@@ -6093,18 +6093,18 @@ function DS_router_callback(pathString,callback) {
 				break
 			}
 		}
-		
+
 		//navigate to the correct form if not already there
 		if (itemID && itemID != solutionPrefs.config.currentFormID) {
 			//something was specified to navigate to, load it up
 			var payload = DATASUTRA_router_payload || new Object()
-			
+
 			//payload trumps pk
 			if (pk && !payload.setFoundset) {
 				payload.setFoundset = true
 				payload.useFoundset = [pk]
 			}
-			
+
 			var dataNode = {
 					pathString : pathString,
 					navItemID: itemID,
@@ -6113,11 +6113,11 @@ function DS_router_callback(pathString,callback) {
 				}
 			DATASUTRA_router_index = DATASUTRA_router.length
 			DATASUTRA_router.push(dataNode)
-			
+
 			TRIGGER_navigation_set(null,payload.setFoundset,payload.useFoundset,itemID)
-			
+
 			//TODO: here is where we want to replace out with current record when coming from a preference
-			
+
 			//reset payload (values only used immediately after set)
 			DATASUTRA_router_payload = eval(solutionModel.getGlobalVariable('globals','DATASUTRA_router_payload').defaultValue)
 		}
