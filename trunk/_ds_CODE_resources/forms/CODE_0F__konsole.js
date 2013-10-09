@@ -7,14 +7,14 @@ function console_about()
 /********************************************************************************
 	@method: console_license(oArg)
 
-	@arg oArg: 
-	@opt oArg.arg : [type] 
+	@arg oArg:
+	@opt oArg.arg : [type]
 
-	@return: 
+	@return:
 
 	@description: Displays the license text
 
-	@note: 
+	@note:
 
 	@history:	08/16/2006	JAG Created
 ********************************************************************************/
@@ -38,7 +38,7 @@ var sEmailString = "javascript:forms."+formName+".showUrl('mailto:mphelps@adbloc
 var sAbout = 	"<body><div class=Section1><p align=center style='text-align:center'>" +
 				"<span style='font-size:14.0pt;font-family:Verdana'>The <span class=SpellE>" +
 				'<a href="javascript:forms.'+formName+'.showUrl(\'http://forum.servoy.com/viewtopic.php?t=9467\')">' +
-				"<i style='mso-bidi-font-style:normal'>Servoy Console</i></a> from</span></p>" + 
+				"<i style='mso-bidi-font-style:normal'>Servoy Console</i></a> from</span></p>" +
 				'<table border=0 align="center" ><tr><td><img ' +
 				'src="media:///adBlocksLogo_tiny.jpg" ></td></tr></table>' +
 				"<p class=MsoNormal align=center style='text-align:center'>" +
@@ -68,15 +68,15 @@ function console_copy()
 /********************************************************************************
 	@method: console_copy(oArg)
 
-	@arg oArg: 
-	@node oArg. : [type] 
-	@opt oArg. : [type] 
+	@arg oArg:
+	@node oArg. : [type]
+	@opt oArg. : [type]
 
-	@return: 
+	@return:
 
-	@description: 
+	@description:
 
-	@note: 
+	@note:
 
 	@history:	11/17/2006	JAG Created
 ********************************************************************************/
@@ -99,7 +99,7 @@ var bReturn = true;
 try
 {
 	oCopy = eval(oArg.arg);
-	application.setClipboardContent(oCopy)
+	globals.CODE_clipboard_set(oCopy)
 	oArg.result = 'Copied ' + oArg.arg + ' to clipboard.';
 }
 catch (e)
@@ -121,15 +121,15 @@ function console_dupe()
 /********************************************************************************
 	@method: console_dupe(oArg)
 
-	@arg oArg: 
-	@node oArg.arg : [string] 
-	@opt oArg. : [type] 
+	@arg oArg:
+	@node oArg.arg : [string]
+	@opt oArg. : [type]
 
-	@return: 
+	@return:
 
-	@description: 
+	@description:
 
-	@note: 
+	@note:
 
 	@history:	03/13/2007	JAG Created
 ********************************************************************************/
@@ -262,14 +262,14 @@ function console_exit()
 /********************************************************************************
 	@method: commander_exit(oArg)
 
-	@arg oArg: 
+	@arg oArg:
 	@opt oArg.syntax : [boolean] Use to request syntax sample.
 
-	@return: 
+	@return:
 
-	@description: 
+	@description:
 
-	@note: 
+	@note:
 
 	@history:	11/2007	TSE Created
 ********************************************************************************/
@@ -301,14 +301,14 @@ function console_help()
 /********************************************************************************
 	@method: console_help(oArg)
 
-	@arg oArg: 
-	@opt oArg.arg : [type] 
+	@arg oArg:
+	@opt oArg.arg : [type]
 
-	@return: 
+	@return:
 
-	@description: 
+	@description:
 
-	@note: 
+	@note:
 
 	@history:	07/26/2006	JAG Created
 ********************************************************************************/
@@ -334,17 +334,17 @@ var oHTML = new Object();
 oHTML.table = 	"<table cellpadding=0 cellspacing=2 border=0>\n" +
 				"<<tableBody>>" +
 				"</table>";
-				
+
 oHTML.header = 	"	<tr>\n" +
 				"		<td width=\"100%\"><b><<cmd>></b></td><td><<description>></td>\n" +
 				"	</tr>\n";
-				
+
 oHTML.syntax = 	"	<tr>\n" +
 				"		<td>&nbsp;</td><td><b><<syntax>></b></td>\n" +
 				"	</tr>\n";
 
 oHTML.spacer = 	"	<tr> <td colspan=2 height=5></td> </tr>\n";
-				
+
 oHTML.tableBody = '';
 
 var oSyntax;
@@ -359,9 +359,9 @@ if (oArg.arg)
 	{
 		oSyntax = forms[formName][oWork.cmd](oSend);
 		oSyntax.cmd = utils.stringTrim(oArg.arg);
-		
+
 		oHTML.tableBody += replaceHolders(oHTML.header, oSyntax);
-		
+
 		for (var k = 0; k < oSyntax.syntax.length; k++)
 		{
 			oWork.syntax = oSyntax.syntax[k];
@@ -376,7 +376,7 @@ if (oArg.arg)
 }
 else
 {
-	oHTML.table = 
+	oHTML.table =
 		"<b>Useful keystrokes:</b><ul>\n" +
 		"	<li>&lt;shift&gt;+&lt;enter&gt; to scroll through commands backwards</li>\n" +
 		"	<li>&lt;ctrl&gt;+&lt;shift&gt;+&lt;enter&gt; to scroll forwards through commands</li>\n" +
@@ -384,34 +384,34 @@ else
 		"<b>Useful global settings:</b><ul>\n" +
 		"	<li>cmdVarBin.verbose: When <i>run</i> command is used, if result is enumerable, this setting determines whether result is passed through the <i>view</i> command. Default is true.</li>\n" +
 		"	<li>cmdVarBin.plaintext: When <i>run</i> command is used, if result is HTML, it is encoded as plaintext. Default is false.</li></ul>\n" +
-		"<br>\n" +		
+		"<br>\n" +
 		oHTML.table;
-		
+
 	for (var i = 0; i < oWork.cmdList.length; i++)
 	{
 		if (utils.stringLeft(oWork.cmdList[i], oWork.prefix.length) == oWork.prefix)
 		{
 			oWork.cmd = oWork.cmdList[i];
-			
+
 			oSyntax = forms[formName][oWork.cmd](oSend);
 			oSyntax.cmd = oWork.cmd.split('_')[1];
-			
+
 			//don't display this comand if there is no description (a way to hide deprecated methods)
 			if (!oSyntax.description) {
 				continue
 			}
-			
-			
+
+
 			oHTML.tableBody += replaceHolders(oHTML.header, oSyntax);
-			
+
 			for (var k = 0; k < oSyntax.syntax.length; k++)
 			{
 				oWork.syntax = oSyntax.syntax[k];
 				oHTML.tableBody += replaceHolders(oHTML.syntax, oWork);
-			} //for k		
-			
+			} //for k
+
 			oHTML.tableBody += oHTML.spacer;
-			
+
 		} //if (utils...
 	} //for i
 } //else
@@ -431,14 +431,14 @@ function console_hide()
 /********************************************************************************
 	@method: commander_hide(oArg)
 
-	@arg oArg: 
+	@arg oArg:
 	@opt oArg.syntax : [boolean] Use to request syntax sample.
 
-	@return: 
+	@return:
 
-	@description: 
+	@description:
 
-	@note: 
+	@note:
 
 	@history:	11/2007	TSE Created
 ********************************************************************************/
@@ -464,13 +464,13 @@ if (forms[tabParent].popDown == 'show') {
 	//set up/down status to hide
 	forms[tabParent].popDown = 'hide'
 	forms[formName].elements.tab_toolbar_popdown.visible = false
-	
+
 	//flag to keep from reopening
 	cmdVarBin.hidden = true
 }
 //popdown not showing
 else {
-	
+
 }
 
 //popdown available
@@ -490,14 +490,14 @@ function console_license()
 /********************************************************************************
 	@method: console_license(oArg)
 
-	@arg oArg: 
-	@opt oArg.arg : [type] 
+	@arg oArg:
+	@opt oArg.arg : [type]
 
-	@return: 
+	@return:
 
 	@description: Displays the license text
 
-	@note: 
+	@note:
 
 	@history:	08/16/2006	JAG Created
 ********************************************************************************/
@@ -515,7 +515,7 @@ if (oArg.syntax)
 
 
 
-var sLicense = 
+var sLicense =
 
 "* Copyright (c) 2005, 2006, 2007, adBlocks <br>\n" +
 "* All rights reserved.<br>\n" +
@@ -557,14 +557,14 @@ function console_modal()
 /********************************************************************************
 	@method: commander_modal(oArg)
 
-	@arg oArg: 
+	@arg oArg:
 	@opt oArg.syntax : [boolean] Use to request syntax sample.
 
-	@return: 
+	@return:
 
-	@description: 
+	@description:
 
-	@note: 
+	@note:
 
 	@history:	11/2007	TSE Created
 ********************************************************************************/
@@ -605,14 +605,14 @@ function console_mosaic()
 /********************************************************************************
 	@method: console_mosaic(oArg)
 
-	@arg oArg: 
-	@opt oArg.arg : [type] 
+	@arg oArg:
+	@opt oArg.arg : [type]
 
-	@return: 
+	@return:
 
 	@description: Deprecated method
 
-	@note: 
+	@note:
 
 	@history:	08/16/2006	JAG Created
 ********************************************************************************/
@@ -645,15 +645,15 @@ function console_print()
 /********************************************************************************
 	@method: console_print(oArg)
 
-	@arg oArg: 
-	@node oArg. : [type] 
-	@opt oArg. : [type] 
+	@arg oArg:
+	@node oArg. : [type]
+	@opt oArg. : [type]
 
-	@return: 
+	@return:
 
-	@description: 
+	@description:
 
-	@note: 
+	@note:
 
 	@history:	10/16/2006	JAG Created
 ********************************************************************************/
@@ -709,15 +709,15 @@ function console_query()
 /********************************************************************************
 	@method: console_query(oArg)
 
-	@arg oArg: 
-	@node oArg.arg : [string] 
-	@opt oArg. : [type] 
+	@arg oArg:
+	@node oArg.arg : [string]
+	@opt oArg. : [type]
 
-	@return: 
+	@return:
 
-	@description: 
+	@description:
 
-	@note: 
+	@note:
 
 	@history:	07/25/2006	JAG Created
 ********************************************************************************/
@@ -761,7 +761,7 @@ if (oSQL.query)
 	oSQL.query = utils.stringReplace(oSQL.query, '-sql', '');
 	oSQL.query = utils.stringReplace(oSQL.query, '"', '');
 	oSQL.query = utils.stringTrim(oSQL.query);
-	
+
 	oSQL.server = oArg.arg.match(oRegEx.server);
 	oSQL.maxRows = oArg.arg.match(oRegEx.rows);
 
@@ -773,20 +773,20 @@ if (oSQL.query)
 	{
 		oSQL.server = controller.getServerName();
 	}
-	
+
 	if (oSQL.maxRows)
 	{
 		oSQL.maxRows = oSQL.maxRows[0];
 		oSQL.maxRows = utils.stringReplace(oSQL.maxRows, '-rows', '');
 		oSQL.maxRows = utils.stringTrim(oSQL.maxRows);
 		oSQL.maxRows = parseInt(oSQL.maxRows, 10);
-		
+
 	}
 	else
 	{
 		oSQL.maxRows = cmdVarBin.queryRows;
 	}
-		
+
 }
 else
 {
@@ -818,7 +818,7 @@ if (oWork.delim)
 	oWork.delim = oWork.delim[0];
 	oWork.delim = oWork.delim.split('"')[1]
 	oWork.file = plugins.file.showFileSaveDialog(cmdVarBin.lastDirectory);
-	
+
 	if (!oWork.file)
 	{
 
@@ -830,8 +830,8 @@ if (oWork.delim)
 		plugins.bufferedWriter.write(oDS.getAsText(oWork.delim, "\r\n", '', true));
 		plugins.bufferedWriter.close();
 		oArg.result = "Wrote result to " + oWork.file.getAbsolutePath();
-	}	
-	
+	}
+
 }
 else
 {
@@ -851,15 +851,15 @@ function console_run()
 /********************************************************************************
 	@method: console_run(oArg)
 
-	@arg oArg: 
+	@arg oArg:
 	@node oArg.arg : [string]  Method to run
-	@opt oArg. : [type] 
+	@opt oArg. : [type]
 
-	@return: 
+	@return:
 
-	@description: 
+	@description:
 
-	@note: 
+	@note:
 
 	@history:	07/25/2006	JAG Created
 ********************************************************************************/
@@ -900,10 +900,10 @@ if (bReturn && isEnumerable(oArg.result) && cmdVarBin.verbose)
 		cmdVarBin.runResult = new Object();
 	}
 	cmdVarBin.runResult[oWork.searchID] = oArg.result;
-	
+
 	oSend = new Object()
 	oSend.arg = 'cmdVarBin.runResult.' + oWork.searchID
-	
+
 	bReturn = console_view(oSend);
 	oArg.result = oSend.result;
 }
@@ -927,15 +927,15 @@ function console_schema()
 /********************************************************************************
 	@method: console_schema(oArg)
 
-	@arg oArg: 
-	@opt oArg.arg : [string] 
+	@arg oArg:
+	@opt oArg.arg : [string]
 
 
-	@return: 
+	@return:
 
-	@description: 
+	@description:
 
-	@note: 
+	@note:
 
 	@history:	07/26/2006	JAG Created
 ********************************************************************************/
@@ -969,29 +969,29 @@ if (oArg.arg)
 	oWork.like  = oArg.arg.match(oRegEx.like);
 	oWork.col = oArg.arg.match(oRegEx.col);
 	oWork.server = oArg.arg.match(oRegEx.server);
-	
+
 	if (oWork.server)
 	{
 		oWork.server = stringReplace(oWork.server[0], '-server ', '');
 		schema_makeSchema(oWork.server);
 		cmdVarBin.server = oWork.server;
 	}
-	
-	
+
+
 	if (oWork.like)
 	{
 		oWork.like = oWork.like[0];
 		oWork.like = utils.stringTrim(oWork.like.split(' ')[1]);
-	
+
 		oWork.searchID = oWork.like + utils.dateFormat(new Date(), 'yyyyMMddHHmmssS');
-	
+
 		if (! cmdVarBin.schemaSearch )
 		{
 			cmdVarBin.schemaSearch = new Object();
 		}
-		
+
 		cmdVarBin.schemaSearch[oWork.searchID] = new Object();
-		
+
 		for (var sTable in cmdVarBin.schema)
 		{
 			if (utils.stringPatternCount(sTable, oWork.like) > 0)
@@ -999,24 +999,24 @@ if (oArg.arg)
 				cmdVarBin.schemaSearch[oWork.searchID][sTable] = cmdVarBin.schema[sTable];
 			}
 		}
-		
+
 		oSend.arg = 'cmdVarBin.schemaSearch.' + oWork.searchID;
-		
+
 	}
 	else if (oWork.col)
 	{
 		oWork.col = oWork.col[0];
 		oWork.col = utils.stringTrim(oWork.col.split(' ')[1]);
-	
+
 		oWork.searchID = oWork.col + utils.dateFormat(new Date(), 'yyyyMMddHHmmssS');
-	
+
 		if (! cmdVarBin.schemaSearch )
 		{
 			cmdVarBin.schemaSearch = new Object();
 		}
-		
+
 		cmdVarBin.schemaSearch[oWork.searchID] = new Object();
-		
+
 		for (var sTable in cmdVarBin.schema)
 		{
 			var oTable = databaseManager.getTable(cmdVarBin.server, sTable)
@@ -1025,11 +1025,11 @@ if (oArg.arg)
 				cmdVarBin.schemaSearch[oWork.searchID][sTable] = cmdVarBin.schema[sTable];
 			}
 		}
-		
+
 		oSend.arg = 'cmdVarBin.schemaSearch.' + oWork.searchID;
 	}
 	else
-	{	
+	{
 		if (cmdVarBin.schema[oArg.arg])
 		{
 			oSend.arg += '.' + oArg.arg;
@@ -1057,15 +1057,15 @@ function console_show()
 /********************************************************************************
 	@method: console_show(oArg)
 
-	@arg oArg: 
+	@arg oArg:
 	@node oArg.arg : [string] Name of form to show.
-	@opt oArg. : [type] 
+	@opt oArg. : [type]
 
-	@return: 
+	@return:
 
-	@description: 
+	@description:
 
-	@note: 
+	@note:
 
 	@history:	07/25/2006	JAG Created
 ********************************************************************************/
@@ -1107,15 +1107,15 @@ function console_sql()
 /********************************************************************************
 	@method: console_sql(oArg)
 
-	@arg oArg: 
-	@node oArg.arg : [string] 
-	@opt oArg. : [type] 
+	@arg oArg:
+	@node oArg.arg : [string]
+	@opt oArg. : [type]
 
-	@return: 
+	@return:
 
-	@description: 
+	@description:
 
-	@note: 
+	@note:
 
 	@history:	02/28/2007	JAG Created
 ********************************************************************************/
@@ -1155,7 +1155,7 @@ if (oWork.query)
 	oSQL.query = utils.stringReplace(oSQL.query, '-query', '');
 	oSQL.query = utils.stringReplace(oSQL.query, '"', '');
 	oSQL.query = utils.stringTrim(oSQL.query);
-	
+
 	oWork.server = oArg.arg.match(oRegEx.server);
 	oWork.table = oArg.arg.match(oRegEx.table);
 
@@ -1167,7 +1167,7 @@ if (oWork.query)
 	{
 		oSQL.server = controller.getServerName();
 	}
-	
+
 	if (oWork.table)
 	{
 		oSQL.table = oWork.table[0];
@@ -1179,7 +1179,7 @@ if (oWork.query)
 		oArg.result = 'Missing <i>-table</i> argument.';
 		return false;
 	}
-		
+
 }
 else
 {
@@ -1211,14 +1211,14 @@ function console_sutra()
 /********************************************************************************
 	@method: commander_exit(oArg)
 
-	@arg oArg: 
+	@arg oArg:
 	@opt oArg.syntax : [boolean] Use to request syntax sample.
 
-	@return: 
+	@return:
 
-	@description: 
+	@description:
 
-	@note: 
+	@note:
 
 	@history:	9/2008	TSE Created
 ********************************************************************************/
@@ -1290,15 +1290,15 @@ function console_toolbar()
 /********************************************************************************
 	@method: console_toolbar(oArg)
 
-	@arg oArg: 
-	@node oArg.arg : [type] 
-	@opt oArg. : [type] 
+	@arg oArg:
+	@node oArg.arg : [type]
+	@opt oArg. : [type]
 
-	@return: 
+	@return:
 
-	@description: 
+	@description:
 
-	@note: 
+	@note:
 
 	@history:	09/26/2007	JAG Created
 ********************************************************************************/
@@ -1355,15 +1355,15 @@ function console_view()
 /********************************************************************************
 	@method: console_view(oArg)
 
-	@arg oArg: 
-	@node oArg.arg : [type] 
-	@opt oArg. : [type] 
+	@arg oArg:
+	@node oArg.arg : [type]
+	@opt oArg. : [type]
 
-	@return: 
+	@return:
 
-	@description: 
+	@description:
 
-	@note: 
+	@note:
 
 	@history:	07/25/2006	JAG Created
 ********************************************************************************/
@@ -1374,7 +1374,7 @@ if (!cmdVarBin.viewTree)
 {
 	cmdVarBin.viewTree = new Object();
 	cmdVarBin.viewTreeIndex = new Object();
-}	
+}
 
 if (oArg.syntax)
 {
@@ -1423,13 +1423,13 @@ function console_watch()
 /********************************************************************************
 	@method: console_watch(oArg)
 
-	@arg oArg: 
+	@arg oArg:
 	@opt oArg.arg : [string] Variable list to add to watch list.
 
 
-	@return: 
+	@return:
 
-	@description: 
+	@description:
 
 	@note: Variable list should be in the format var1, var2, var3, var4
 
@@ -1458,7 +1458,7 @@ if (! cmdVarBin.watchlist )
 
 if (oArg.arg)
 {
-	
+
 	oWork.watch = oArg.arg.split(',');
 	for (var i = 0; i < oWork.watch.length; i++)
 	{
@@ -1472,7 +1472,7 @@ cmdVarBin.watchlist.sort();
 
 oArg.result = 	"<table cellpadding=3 cellspacing=0 border=1>\n" +
 				"	<tr><td><b><u>Name</u></b></td><td><b><u>Value</u></b></td></tr>\n";
-				
+
 for (var i = 0; i < cmdVarBin.watchlist.length; i++)
 {
 	try
@@ -1484,8 +1484,8 @@ for (var i = 0; i < cmdVarBin.watchlist.length; i++)
 		oArg.result = e.message;
 		return false;
 	}
-	
-	oArg.result += 	
+
+	oArg.result +=
 		"	<tr>\n" +
 		"		<td nowrap><b>" + cmdVarBin.watchlist[i] + "</b></td>\n" +
 		"		<td nowrap>" + oWork.value + "</td>\n" +
@@ -1507,11 +1507,11 @@ function drawOutput()
 /********************************************************************************
 	@method: drawOutput(bScrollToBottom)
 
-	@return: 
+	@return:
 
-	@description: 
+	@description:
 
-	@note: 
+	@note:
 
 	@history:	07/25/2006	JAG Created
 ********************************************************************************/
@@ -1533,7 +1533,7 @@ oHTML.page = 	"<html><body>\n" +
 				"		</tr>\n" +
 				"	</table>\n" +
 				"</body></html>";
-				
+
 oHTML.row = "	<tr>\n" +
 			"		<td valign=top align=left>\n" +
 			"			<<resultData>>\n" +
@@ -1580,13 +1580,13 @@ function getColumnType()
 	@method: getColumnType(sFullColumn, [sServer])
 
 	@arg sFullColumn: string
-	@opt sServer. : string 
+	@opt sServer. : string
 
-	@return: 
+	@return:
 
-	@description: 
+	@description:
 
-	@note: 
+	@note:
 
 	@history:	05/27/2006	James Created
 ********************************************************************************/
@@ -1627,25 +1627,25 @@ switch (nType)
 	case 4:
 		sRetval = 'integer';
 		break;
-	
+
 	case 8:
 		sRetval = 'number';
 		break;
-	
-	case -1:	
+
+	case -1:
 	case 12:
 	case 2005: //Very large text
 		sRetval = 'string';
 		break;
-		
+
 	case 93:
 		sRetval = 'date';
 		break;
-		
+
 	case 2004:
 		sRetval = 'media';
 		break;
-		
+
 	default:
 		sRetval = 'unknown';
 }
@@ -1666,11 +1666,11 @@ function getLastInput()
 
 	@arg nDir: Direction to cycle thru input (-1/1)
 
-	@return: 
+	@return:
 
-	@description: 
+	@description:
 
-	@note: 
+	@note:
 
 	@history:	07/25/2006	JAG Created
 ********************************************************************************/
@@ -1719,11 +1719,11 @@ function getTypeOf()
 /********************************************************************************
 	@method: getTypeOf(oObject)
 
-	@return: 
+	@return:
 
-	@description: 
+	@description:
 
-	@note: 
+	@note:
 
 	@history:	07/25/2006	JAG Created
 ********************************************************************************/
@@ -1742,11 +1742,11 @@ try
 	if (oObject.toString)
 	{
 		sTemp = (oObject.toString());
-		
+
 		if (sTemp)
 		{
 			sTemp = sTemp.split(':')[0];
-			
+
 			if (sTemp && sTemp == 'JSDataSet')
 			{
 				return 'JSDataSet';
@@ -1810,28 +1810,28 @@ if (! application.__parent__.cmdVarBin )
 	cmdVarBin.resultSet = new Array();
 	cmdVarBin.commandSet = new Array();
 	cmdVarBin.attemptSet = new Array();
-	
+
 	cmdVarBin.commandHash = new Object();
 	cmdVarBin.attemptHash = new Object();
-	
-	
+
+
 	var aEnum = new Array('object', 'array', 'creationalprototype', 'solutionscope', 'globalscope', 'formscope', 'elementscope', 'jsform', 'javaobject', 'foundset', 'func' + 'tion', 'javapackage');
-	
+
 	cmdVarBin.isEnumerable = new Object();
 
 	for (var i = 0; i < aEnum.length; i++)
 	{
 		cmdVarBin.isEnumerable[aEnum[i]] = true;
 	}
-	
+
 	cmdVarBin.verbose = true;
-	cmdVarBin.plaintext = false;	
+	cmdVarBin.plaintext = false;
 	cmdVarBin.queryRows = 100;
 	if (! application.__parent__.solutionPrefs ) {
 		cmdVarBin.server = forms.DATASUTRA_0F_solution.controller.getServerName();
 	}
 	schema_makeSchema();
-	
+
 }
 }
 
@@ -1844,15 +1844,15 @@ function isEnumerable()
 /********************************************************************************
 	@method: isEnumerable(oObject)
 
-	@arg oArg: 
+	@arg oArg:
 	@node oArg.arg : [string]  Method to run
-	@opt oArg. : [type] 
+	@opt oArg. : [type]
 
-	@return: 
+	@return:
 
-	@description: 
+	@description:
 
-	@note: 
+	@note:
 
 	@history:	07/25/2006	JAG Created
 ********************************************************************************/
@@ -1905,11 +1905,11 @@ function onShow(firstShow,event)
 /********************************************************************************
 	@method: onShow()
 
-	@return: 
+	@return:
 
-	@description: 
+	@description:
 
-	@note: 
+	@note:
 
 	@history:	07/26/2006	JAG Created
 ********************************************************************************/
@@ -1931,11 +1931,11 @@ function processInput()
 /********************************************************************************
 	@method: processInput()
 
-	@return: 
+	@return:
 
-	@description: 
+	@description:
 
-	@note: 
+	@note:
 
 	@history:	07/25/2006	JAG Created
 ********************************************************************************/
@@ -1970,8 +1970,8 @@ switch (nKey)
 			forms[formName].elements.fldInput.caretPosition = (sLastCommand.length) + 1;
 		}
 		break;
-	
-		
+
+
 	case 3:
 		var sLastCommand = getLastInput(1);
 		sInput = '';
@@ -2021,7 +2021,7 @@ cmdVarBin.resultSet.push('<b>kmd:></b> ' + sInput)
 if (forms[formName][oSend.command])
 {
 	bResult = forms[formName][oSend.command](oSend);
-	
+
 	if (bResult)
 	{
 		cmdVarBin.resultSet.push(oSend.result);
@@ -2054,7 +2054,7 @@ if (! forms[tabParent].popDown) {
 
 //if popdown not showing, show...unless hide command invoked - otherwise resize as needed
 if (cmdVarBin.hidden != true && sInput != 'hide') {
-		
+
 	var formName = solutionPrefs.config.formNameBase
 	var statusStartX = (solutionPrefs.config.webClient) ? forms[formName + '__header'].elements.split_tool_find.getLocationX() : forms[formName + '__header'].elements.split_tool_find.getX()
 	var statusWidth = forms[formName + '__header__toolbar'].elements.tab_toolbar.getWidth()
@@ -2062,7 +2062,7 @@ if (cmdVarBin.hidden != true && sInput != 'hide') {
 	var tabWidth = statusWidth-(indent*2)
 	var tabHeight = numLines * 15 + 25
 	var headerHeight = (solutionPrefs.config.webClient) ? 45 : 44
-	
+
 	//location offset for design mode
 	if (solutionPrefs.design.statusDesign) {
 		var y = 42 + headerHeight
@@ -2070,27 +2070,27 @@ if (cmdVarBin.hidden != true && sInput != 'hide') {
 	else {
 		var y = 0 + headerHeight
 	}
-	
+
 	//check if larger than current window
 	if (tabHeight >= (application.getWindowHeight() - 50 + y)) {
 		tabHeight = application.getWindowHeight() - 130
-		
+
 		//save down new values
 		cmdVarBin.miniWindowSize = new Object()
 		cmdVarBin.miniWindowSize.width = forms[formName + '__header__toolbar'].elements.tab_toolbar.getWidth()
 		cmdVarBin.miniWindowSize.height = tabHeight
 	}
-	
+
 	//roll down
 	if (forms[tabParent].popDown == 'hide') {
 		//set to up/down status to current status
 		forms[tabParent].popDown = 'show'
-		
+
 		//resize and show tabpanel
 		forms[formName].elements.tab_toolbar_popdown.setLocation(statusStartX+indent,y)
 		forms[formName].elements.tab_toolbar_popdown.setSize(tabWidth,tabHeight)
 		forms[formName].elements.tab_toolbar_popdown.visible = true
-		
+
 		//popdown available
 		forms[formName + '__header__toolbar'].elements.btn_toolbar_expand.visible = forms[tabParent].popDown != 'show'
 		forms[formName + '__header__toolbar'].elements.btn_toolbar_collapse.visible = forms[tabParent].popDown == 'show'
@@ -2099,17 +2099,17 @@ if (cmdVarBin.hidden != true && sInput != 'hide') {
 	else if (miniHeight != cmdVarBin.miniWindowSize.height) {
 		//negative number means that needs to go up, positive, go down
 		var difference = cmdVarBin.miniWindowSize.height - miniHeight
-		
+
 		//check if larger than current window
 		if (difference + miniHeight >= (application.getWindowHeight() - 50 + y)) {
 			difference = (application.getWindowHeight() - 130) - miniHeight
-			
+
 			//save down new values
 			cmdVarBin.miniWindowSize = new Object()
 			cmdVarBin.miniWindowSize.width = forms[formName + '__header__toolbar'].elements.tab_toolbar.getWidth()
 			cmdVarBin.miniWindowSize.height = application.getWindowHeight() - 130
 		}
-		
+
 		//resize and show tabpanel
 		forms[formName].elements.tab_toolbar_popdown.setLocation(statusStartX+indent,y)
 		forms[formName].elements.tab_toolbar_popdown.setSize(tabWidth,tabHeight)
@@ -2134,22 +2134,22 @@ function replaceHolders()
 
 	input: sString: A string containing 'holders' (see description for what a holder is)
 		   oHolder: An associative array containing values to replace holders with.
-	
+
 	output: sString with all holders replaced for which values were supplied.
-	
+
 	description: replaceHolders is a method similar to replaceTags. a 'holder' is a segment
 				of text formatted as follows <<holdername>>
 				the '<<' & '>>' are the delimiters for a holder, and holdername can be any
 				identifying string.
-				
+
 				For example
 				sString = "<img width=16 height=16 src='<<icon>>'>";
 				aHolder.icon = 'media:\\\RenewalPipeline.gif';
 				sString = replaceHolders(sString, aHolder);
 				**sString would now be: "<img width=16 height=16 src='media:\\\RenewalPipeline.gif'>"
-	
-	note: 
-	
+
+	note:
+
 	Change history:
 	11/28/05				James Garfield																		created method.
 
@@ -2173,7 +2173,7 @@ for (var sCol in oHolder)
 	{
 		sReplace = '';
 	}
-	
+
 	if (utils.stringPatternCount(sString, sSearch) > 0)
 	{
 		sString = stringReplace(sString, sSearch, sReplace);
@@ -2198,13 +2198,13 @@ function schema_makeSchema()
 /********************************************************************************
 	@method: schema_makeSchema(sServer)
 
-	@arg sServer: 
+	@arg sServer:
 
-	@return: 
+	@return:
 
-	@description: 
+	@description:
 
-	@note: 
+	@note:
 
 	@history:	07/26/2006	JAG Created
 ********************************************************************************/
@@ -2239,7 +2239,7 @@ var sRowTpl = ""+
 				"		<td border=1 style='border-style:solid;' width=150>Primary Key?:&nbsp;<i><<PrimaryKey>></i></td>\n" +
 				"		<td border=1 style='border-style:solid;' width=150>Allow Null?:&nbsp;<i><<NullAllowed>></i></td>\n" +
 				"	</tr>\n";
-				
+
 var sHTML;
 
 for (var i = 0; i < aTableName.length; i++)
@@ -2256,7 +2256,7 @@ for (var i = 0; i < aTableName.length; i++)
 		aColumn.PrimaryKey = oColumn.isRowIdentifier();
 		aColumn.Type = getColumnType(aTableName[i] + '.' + aColName[k], sServer);
 		aColumn.Length = utils.numberFormat(oColumn.getLength(), 0);
-		
+
 		if (aColumn.PrimaryKey)
 		{
 			aColumn.PrimaryKey = '<b>' + aColumn.PrimaryKey + '</b>';
@@ -2269,8 +2269,8 @@ for (var i = 0; i < aTableName.length; i++)
 		sHTML = replaceHolders(sHTML, aColumn);
 		sHTML += "</table>\n";
 		aTable['<b>' + aColName[k] + '</b>'] = sHTML;
-	}	
-	
+	}
+
 	oSchema[aTableName[i]] = aTable;
 }
 
@@ -2285,11 +2285,11 @@ function showUrl()
 /********************************************************************************
 	@method: showUrl(theURL)
 
-	@return: 
+	@return:
 
-	@description: 
+	@description:
 
-	@note: 
+	@note:
 
 	@history:	10/2/2007 Created
 ********************************************************************************/
@@ -2320,7 +2320,7 @@ function sqlHandler()
 /********************************************************************************
 	@method: sqlHandler(oArg)
 
-	@arg oArg: 
+	@arg oArg:
 	@node oArg.query : [string] SQL statement to execute
 	@opt oArg.table : [string] Required if statement is being passed to rawSQL
 	@opt oArg.server : [string] Defaults to currentcontroller.getServerName
@@ -2328,12 +2328,12 @@ function sqlHandler()
 	@opt oArg.qArg : [array] Query arguments (only statements passed to databaseManager)
 	@opt oArg.holder : [object] Contains values for holder replacement
 	@opt oArg.forcedType : [string] 'raw'/'query' Only required for complex queries that may break the simple RegEx filters.
-	
-	@return: 
 
-	@description: 
+	@return:
 
-	@note: 
+	@description:
+
+	@note:
 
 	@history:	03/13/2007	JAG Created;
 ********************************************************************************/
@@ -2381,11 +2381,11 @@ if (oArg.forcedType)
 		case 'raw':
 			oWork.rawSQL = true;
 			break;
-			
+
 		case 'query':
 			oWork.rawSQL = false;
 			break;
-			
+
 		default:
 			oArg.error = "Unrecognized forced type " + oArg.forcedType + ".";
 			return false;
@@ -2394,15 +2394,15 @@ if (oArg.forcedType)
 else
 {
 	oWork.rawSQL = true;
-	
+
 	oWork.test1 = utils.stringTrim(stringReplace(oWork.query, '\n', ' '));
 	oWork.test2 = oWork.test1;
 
 	var rQuery = /^SELECT(.+?)FROM/i;
 	var rException = /^SELECT(.+?)INTO/i;
-	
+
 	oWork.isSelect = false;
-	
+
 	if (rQuery.test(oWork.test1))
 	{
 
@@ -2438,7 +2438,7 @@ else
 	{
 		oWork.qArg = null;
 	}
-	
+
 	try
 	{
 		oReturn = databaseManager.getDataSetByQuery(oWork.server, oWork.query, oWork.qArg, oWork.maxRows);
@@ -2448,12 +2448,12 @@ else
 	{
 		oArg.error = e.message;
 	}
-			
+
 	if (oArg.error)
 	{
 		oReturn = false;
 	}
-	
+
 }
 
 return oReturn;
@@ -2472,11 +2472,11 @@ function stringReplace()
 	@arg sSearch: String to search for
 	@arg sReplace: String to replace with
 
-	@return: 
+	@return:
 
 	@description: utils.stringReplace does gross stuff when the Replace text is NULL. This method aims to fix that
 
-	@note: 
+	@note:
 
 	@history:	10/24/2006	JAG Created
 ********************************************************************************/
@@ -2522,11 +2522,11 @@ function view_displayTree()
 
 	@arg sTreeName: Tree to draw
 
-	@return: 
+	@return:
 
-	@description: 
+	@description:
 
-	@note: 
+	@note:
 
 	@history:	07/25/2006	JAG Created
 ********************************************************************************/
@@ -2536,7 +2536,7 @@ var sTreeName = arguments[0];
 var aTree = cmdVarBin.viewTree[sTreeName];
 
 var sHTML = view_drawBranch(aTree);
-			
+
 return sHTML;
 }
 
@@ -2551,11 +2551,11 @@ function view_drawBranch()
 
 	@arg aTree: Tree object
 
-	@return: 
+	@return:
 
-	@description: 
+	@description:
 
-	@note: 
+	@note:
 
 	@history:	07/25/2006	JAG Created
 ********************************************************************************/
@@ -2581,7 +2581,7 @@ for (var oIndex in aTree.data)
 	aNode = new Array();
 
 	aNode.index = oIndex;
-	
+
 	switch (aTree.state[oIndex])
 	{
 		case 'leaf':
@@ -2595,7 +2595,7 @@ for (var oIndex in aTree.data)
 			}
 
 			break;
-			
+
 		case 'collapsed':
 			aNode.html = sBranchTpl;
 			if (! aTree.branch[oIndex] )
@@ -2606,13 +2606,13 @@ for (var oIndex in aTree.data)
 				}
 				catch (e)
 				{
-				
+
 				}
 			}
 			aNode.path = "'" + aTree.branch[oIndex].path + "'";
 			aNode.state = '<tt>[+]</tt>';
 			break;
-			
+
 		case 'expanded':
 			aNode.html = sBranchTpl + sExpandTpl;
 			if (! aTree.branch[oIndex] )
@@ -2623,13 +2623,13 @@ for (var oIndex in aTree.data)
 			aNode.path = "'" + aTree.branch[oIndex].path + "'";
 			aNode.branch = view_drawBranch(aTree.branch[oIndex]);
 			break;
-			
+
 		default:
 			break;
 	}
-	
+
 	aNode.html = replaceHolders(aNode.html, aNode);
-	
+
 	aNodeTree.push(aNode);
 }
 
@@ -2661,11 +2661,11 @@ function view_drawTree()
 
 	@arg aTree: Tree object
 
-	@return: 
+	@return:
 
-	@description: 
+	@description:
 
-	@note: 
+	@note:
 
 	@history:	07/25/2006	JAG Created
 ********************************************************************************/
@@ -2686,7 +2686,7 @@ if (!aTree)
 for (var i = 0; i < aTree.length; i++)
 {
 	aNode = aTree[i];
-	
+
 	if (aNode.type == 'leaf')
 	{
 		sHTML += aNode.html;
@@ -2696,14 +2696,14 @@ for (var i = 0; i < aTree.length; i++)
 for (var i = 0; i < aTree.length; i++)
 {
 	aNode = aTree[i];
-	
+
 	if (aNode.type == 'branch')
 	{
 		sHTML += aNode.html;
 
 		if (aNode.expanded && aNode.value.length > 0)
 		{
-			sHTML += "<tr><td nowrap>&nbsp;</td><td></td><td>\n" + 
+			sHTML += "<tr><td nowrap>&nbsp;</td><td></td><td>\n" +
 					view_drawTree(aNode.value) +
 					"</td></tr>\n";
 		}
@@ -2724,15 +2724,15 @@ function view_newTree()
 /********************************************************************************
 	@method: view_newTree(oObject, sPath)
 
-	@arg oArg: 
-	@node oArg.arg : [type] 
-	@opt oArg. : [type] 
+	@arg oArg:
+	@node oArg.arg : [type]
+	@opt oArg. : [type]
 
-	@return: 
+	@return:
 
-	@description: 
+	@description:
 
-	@note: 
+	@note:
 
 	@history:	07/25/2006	JAG Created
 ********************************************************************************/
@@ -2769,8 +2769,8 @@ for (var oIndex in oObject)
 	{
 		oVal = oIndex;
 	}
-	
-	
+
+
 	if ( isEnumerable(oObject[oIndex]) )
 	{
 		aTree.state[oIndex] = 'collapsed';
@@ -2796,11 +2796,11 @@ function view_sortNodeTree()
 	@arg aNodeA: LHS Node
 	@arg aNodeB: RHS Node
 
-	@return: 
+	@return:
 
 	@description: Sort Function for sorting a node tree
 
-	@note: 
+	@note:
 
 	@history:	07/25/2006	JAG Created
 ********************************************************************************/
@@ -2838,11 +2838,11 @@ function view_toggleNode()
 
 	@arg sPath: Path to node to toggle
 
-	@return: 
+	@return:
 
-	@description: 
+	@description:
 
-	@note: 
+	@note:
 
 	@history:	07/25/2006	JAG Created
 ********************************************************************************/

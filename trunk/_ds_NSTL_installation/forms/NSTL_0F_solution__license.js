@@ -7,21 +7,21 @@ function ACTION_button()
 
 /*
  *	TITLE    :	ACTION_button
- *			  	
+ *
  *	MODULE   :	_ds_NSTL_installation
- *			  	
- *	ABOUT    :	
- *			  	
- *	INPUT    :	
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	ABOUT    :
+ *
+ *	INPUT    :
+ *
+ *	OUTPUT   :
+ *
+ *	REQUIRES :
+ *
  *	USAGE    :	ACTION_button()
- *			  	
+ *
  *	MODIFIED :	January 2, 2009 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 switch (elements.lbl_validate.text) {
@@ -45,21 +45,21 @@ function ACTION_edit()
 
 /*
  *	TITLE    :	ACTION_edit
- *			  	
+ *
  *	MODULE   :	_ds_NSTL_installation
- *			  	
+ *
  *	ABOUT    :	if fields are non-editable, turn them on
- *			  	
- *	INPUT    :	
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	INPUT    :
+ *
+ *	OUTPUT   :
+ *
+ *	REQUIRES :
+ *
  *	USAGE    :	ACTION_edit()
- *			  	
+ *
  *	MODIFIED :	October 31, 2008 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 elements.fld_license_type.enabled = true
@@ -80,33 +80,33 @@ function ACTION_generate()
 
 /*
  *	TITLE    :	ACTION_generate
- *			  	
+ *
  *	MODULE   :	_ds_NSTL_installation
- *			  	
- *	ABOUT    :	
- *			  	
- *	INPUT    :	
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	ABOUT    :
+ *
+ *	INPUT    :
+ *
+ *	OUTPUT   :
+ *
+ *	REQUIRES :
+ *
  *	USAGE    :	ACTION_generate()
- *			  	
+ *
  *	MODIFIED :	October 31, 2008 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 if (license_type == 'Purchased') {
 	var licenseKey = LICENSE_purchased()
-	
+
 	if (!licenseKey) {
 		licenseKey = ''
 	}
 }
 else if (license_type == 'Community') {
 	var licenseKey = LICENSE_community()
-	
+
 	if (!licenseKey) {
 		licenseKey = ''
 	}
@@ -127,7 +127,8 @@ else if (!license_type) {
 }
 
 //	/* for debugging
-application.setClipboardContent(licenseKey[0].toString())
+
+globals.CODE_clipboard_set(licenseKey[0].toString())
 globals.DIALOGS.showInfoDialog(
 	'License code',
 	license_name + ' keys: \n' + licenseKey.join('\n')
@@ -152,21 +153,21 @@ function ACTION_purchase()
 
 /*
  *	TITLE    :	ACTION_purchase
- *			  	
+ *
  *	MODULE   :	_ds_NSTL_installation
- *			  	
+ *
  *	ABOUT    :	go to our website
- *			  	
- *	INPUT    :	
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	INPUT    :
+ *
+ *	OUTPUT   :
+ *
+ *	REQUIRES :
+ *
  *	USAGE    :	ACTION_purchase()
- *			  	
+ *
  *	MODIFIED :	April 24, 2009 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 globals.CODE_url_handler('http://www.data-sutra.com/')
@@ -181,21 +182,21 @@ function ACTION_status()
 
 /*
  *	TITLE    :	ACTION_status
- *			  	
+ *
  *	MODULE   :	_ds_NSTL_installation
- *			  	
+ *
  *	ABOUT    :	set status text with minutes until timeout
- *			  	
- *	INPUT    :	
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	INPUT    :
+ *
+ *	OUTPUT   :
+ *
+ *	REQUIRES :
+ *
  *	USAGE    :	ACTION_status()
- *			  	
+ *
  *	MODIFIED :	December 19, 2008 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 //MEMO: need to somehow put this section in a Function of it's own
@@ -206,7 +207,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	for (var i = 0; i < arguments.length; i++) {
 		Arguments.push(arguments[i])
 	}
-	
+
 	//reassign arguments without jsevents
 	arguments = Arguments.filter(globals.CODE_jsevent_remove)
 }
@@ -229,12 +230,12 @@ if (!solutionPrefs.config.prefs) {
 //status text for trial operation when changed
 if (trialMode) {
 	var status = 'Data Sutra is running in Trial mode'
-	
+
 	application.setStatusText(
 					status,
 					toolTip
 				)
-	
+
 	if (elem) {
 		elem.toolTipText = toolTip
 		elem.visible = true
@@ -243,12 +244,12 @@ if (trialMode) {
 //set status text for normal trial operation
 else if (solutionPrefs.config.trialMode) {
 	var limit = 60
-	
+
 	var rightNow = application.getServerTimeStamp()
 	var started = plugins.sutra.getStartUp()
-	
+
 	var opened = Math.ceil((rightNow - started) / (60 * 1000))
-	
+
 	//less than an hour (limit minutes)
 	if (opened < limit) {
 		if (opened == limit - 1) {
@@ -261,7 +262,7 @@ else if (solutionPrefs.config.trialMode) {
 	//more than an hour
 	else {
 		var status = ''
-		
+
 		if (application.getApplicationType() != APPLICATION_TYPES.WEB_CLIENT) {
 			status += '<html><body><font color="red">'
 		}
@@ -269,20 +270,20 @@ else if (solutionPrefs.config.trialMode) {
 		if (application.getApplicationType() != APPLICATION_TYPES.WEB_CLIENT) {
 			status += '</font></body></html>'
 		}
-		
+
 		//turn on flag for really annoying popups
 		solutionPrefs.config.prefs.thatsAllFolks = true
-		
+
 		//turn on flag to not setStatusText anymore
 		solutionPrefs.config.trialModeExpired = true
 	}
-	
+
 	//set status text
 	application.setStatusText(
 				status,
 				toolTip
 			)
-	
+
 	if (elem) {
 		elem.toolTipText = status
 		elem.visible = true
@@ -298,8 +299,8 @@ else {
 				status,
 				null
 			)
-	
-	
+
+
 	if (elem) {
 		elem.toolTipText = null
 		elem.visible = false
@@ -319,22 +320,22 @@ function ACTION_validate()
 
 /*
  *	TITLE    :	ACTION_validate
- *			  	
+ *
  *	MODULE   :	_ds_NSTL_installation
- *			  	
- *	ABOUT    :	
- *			  	
+ *
+ *	ABOUT    :
+ *
  *	INPUT    :	1- return whether licensed
  *			  	2- suppress error message
- *			  	
+ *
  *	OUTPUT   :	true = purchased; false = trial
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	REQUIRES :
+ *
  *	USAGE    :	ACTION_validate()
- *			  	
+ *
  *	MODIFIED :	April 24, 2009 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 //MEMO: need to somehow put this section in a Function of it's own
@@ -345,7 +346,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	for (var i = 0; i < arguments.length; i++) {
 		Arguments.push(arguments[i])
 	}
-	
+
 	//reassign arguments without jsevents
 	arguments = Arguments.filter(globals.CODE_jsevent_remove)
 }
@@ -368,11 +369,11 @@ if (utils.hasRecords(foundset)) {
 		solutionPrefs.config = new Object()
 	}
 	solutionPrefs.config.trialMode = false
-	
+
 	//a purchased license
 	if (license_type == 'Purchased') {
 		var licenseKey = LICENSE_purchased()
-		
+
 		//there is a license key
 		if (license_key) {
 			var licenseDate = LICENSE_get_date(license_key)
@@ -381,7 +382,7 @@ if (utils.hasRecords(foundset)) {
 	//a community edition license
 	else if (license_type == 'Community') {
 		var licenseKey = LICENSE_community()
-		
+
 		//there is a license key
 		if (license_key) {
 			var licenseDate = LICENSE_get_date(license_key)
@@ -390,7 +391,7 @@ if (utils.hasRecords(foundset)) {
 	//trial license
 	else if (license_type == 'Trial') {
 		solutionPrefs.config.trialMode = true
-		
+
 		if (!skipError) {
 			var restart = globals.DIALOGS.showInfoDialog(
 							'Trial mode',
@@ -399,18 +400,18 @@ if (utils.hasRecords(foundset)) {
 					)
 		}
 	}
-	
+
 //check if...
 	//this client is within the max number of frameworks users
 	//same company name for frameworks and servoy licenses
 	//get count of clients with this solution open
 	var clients = application.getActiveClientCount(true)
-	
+
 	//already validated, no need to check against concurrent logged in
 	if (application.getUserProperty('sutraValid-' + application.getSolutionName() + '-' + application.getServerURL().substr(7)) == 'true') {
 		var clientOK = true
 	}
-	
+
 	//client has not been validated, check concurrent number against license amount
 	if (!clientOK) {
 		//a trial license
@@ -424,17 +425,17 @@ if (utils.hasRecords(foundset)) {
 		//a real license
 		else if (license_type == 'Purchased') {
 			var licenses = license_number
-		}	
-					
+		}
+
 		//check number of clients logged in against max number
 		if (clients <= licenses || !license_type || !licenses) {
 			var clientOK = true
 		}
 	}
-	
+
 	//company names servoy is registered to
 	var licenseNames = application.getLicenseNames()
-	
+
 	//non-trial
 	if (license_type == 'Purchased') {
 		//check if company name on servoy and frameworks licenses match
@@ -449,7 +450,7 @@ if (utils.hasRecords(foundset)) {
 	else {
 		var companyOK = true
 	}
-	
+
 	//error with companies
 	if (!companyOK) {
 		//errors are not ok...enter trial mode
@@ -465,15 +466,15 @@ if (utils.hasRecords(foundset)) {
 			TOGGLE_elements(false)
 		}
 	}
-	
+
 	//set flag that registration is good if not already set
 	if (clientOK && companyOK && application.getUserProperty('sutraValid-' + application.getSolutionName() + '-' + application.getServerURL().substr(7)) != 'true') {
 		application.setUserProperty('sutraValid-' + application.getSolutionName() + '-' + application.getServerURL().substr(7),'true')
 	}
-	
+
 	//update status bar with text (will clear it out)
 	ACTION_status()
-	
+
 	//this client has...
 		//not exceeded max allowed clients AND
 		//company name matches servoy licensee OR
@@ -486,7 +487,7 @@ if (utils.hasRecords(foundset)) {
 			}
 			else {
 				TOGGLE_elements(true,licenseDate)
-				
+
 				if (!skipError) {
 					if (license_type == 'Purchased') {
 						var restart = globals.DIALOGS.showInfoDialog(
@@ -511,11 +512,11 @@ if (utils.hasRecords(foundset)) {
 						'Invalid key',
 						'Please check that you have entered the correct registration information'
 					)
-					
+
 				//make sure in trial mode
 //				solutionPrefs.config.trialMode = true
 			}
-			
+
 
 			//show normal status message
 			if (skipError) {
@@ -532,18 +533,18 @@ if (utils.hasRecords(foundset)) {
 			else {
 				ACTION_status(false)
 			}
-			
-			
+
+
 			//make sure that running in developer if trial
 			if (license_type == 'Trial' && !application.isInDeveloper()) {
 				globals.DIALOGS.showErrorDialog(
 						'Restricted',
 						'Trial mode only runs from Servoy Developer.'
 					)
-				
+
 				application.exit()
 			}
-			
+
 			if (returnValid) {
 				return false
 			}
@@ -558,7 +559,7 @@ if (utils.hasRecords(foundset)) {
 				'User limit exceeded',
 				'Client will now close.'
 			)
-		
+
 		application.exit()
 	}
 }
@@ -568,7 +569,7 @@ if (restart == 'OK' && !solutionPrefs.history && forms.DATASUTRA_0F_solution) {
 	delete application.__parent__.solutionPrefs
 	forms.DATASUTRA_0F_solution.controller.show()
 	forms.DATASUTRA_0F_solution.FORM_on_load()
-	
+
 	forms.DATASUTRA_0F_solution.elements.bean_main.dividerLocation = 0
 }
 
@@ -596,17 +597,17 @@ if (! application.__parent__.solutionPrefs) {
 if (utils.hasRecords(foundset)) {
 	//reset trial mode so upcoming check will work correctly
 	solutionPrefs.config.trialMode = false
-	
+
 	//an eval license
 	if (license_type == 'Evaluation') {
 		var licenseKey = LICENSE_eval()
-		
+
 		//there is a license key
 		if (license_key) {
 			var licenseDate = LICENSE_get_date(license_key)
 			var licenseExpiry = new Date(licenseDate)
 			licenseExpiry.setDate(licenseExpiry.getDate() + 30)
-			
+
 			var licenseExpiry = licenseExpiry - application.getServerTimeStamp()
 			if (licenseExpiry > 0) {
 				licenseExpiry = new Date(licenseExpiry)
@@ -623,7 +624,7 @@ if (utils.hasRecords(foundset)) {
 	//a real license
 	else if (license_type == 'Purchased') {
 		var licenseKey = LICENSE_purchased()
-		
+
 		//there is a license key
 		if (license_key) {
 			var licenseDate = LICENSE_get_date(license_key)
@@ -633,24 +634,24 @@ if (utils.hasRecords(foundset)) {
 	else {
 		solutionPrefs.config.trialMode = true
 	}
-	
+
 	//check if...
 		//this client is within the max number of frameworks users
 		//same company name for frameworks and servoy licenses
 	if (true) {
 		//all clients connected to the server
 		var clients = plugins.servoyguy_robot.getClients()
-		
+
 		//robot working
 		if (clients && clients.length) {
 			//loop over all clients and get user info
 			for (var i = 0; i < clients.length; i++) {
-				
+
 				//find this client out of all of them
 				if (clients[i].getClientId() == plugins.sutra.getClientID()) {
 					//info on the currently logged in client
 					var info = clients[i].getClientInfos()
-					
+
 					//has this client already been validated
 					for (var j = 0; j < info.length; j++) {
 						//already validated, no need to check against concurrent logged in
@@ -661,7 +662,7 @@ if (utils.hasRecords(foundset)) {
 					}
 				}
 			}
-			
+
 			//client has not been validated, check concurrent number against license amount
 			if (!clientOK) {
 				//an eval license
@@ -671,29 +672,29 @@ if (utils.hasRecords(foundset)) {
 				//a real license
 				else if (license_type == 'Purchased') {
 					var licenses = license_number
-				}	
-							
+				}
+
 				//check number of clients logged in against max number
 				if (clients.length <= licenses) {
 					var clientOK = true
 				}
 			}
 		}
-		
+
 		//number of servoy licenses registered
 		var licenseNum = plugins.sutra.getServerProperty('licenseManager.numberOfLicenses')
-		
+
 		//check if company name on servoy and frameworks licenses match
 		for (var i = 0; i < licenseNum; i++) {
 			var licenseName = plugins.sutra.getServerProperty('license.' + i + '.company_name')
-			
+
 			if (licenseName == license_name) {
 				var companyOK = true
 				break
 			}
 		}
 	}
-	
+
 	//this client has...
 		//not exceeded max allowed clients AND
 		//company name matches servoy licensee OR
@@ -715,7 +716,7 @@ if (utils.hasRecords(foundset)) {
 						'Please check that you have entered the correct registration information'
 					)
 			}
-			
+
 			if (returnValid) {
 				ACTION_status()
 				return false
@@ -733,7 +734,7 @@ if (utils.hasRecords(foundset)) {
 				'does not match the company name for your Servoy licenses.\n\n' +
 				'This session will now close.'
 			)
-		
+
 		application.exit()
 	}
 	//max clients exceeded
@@ -744,7 +745,7 @@ if (utils.hasRecords(foundset)) {
 				'Data Sutra concurrently.\n\n' +
 				'This session will now close.'
 			)
-		
+
 		application.exit()
 	}
 }
@@ -763,21 +764,21 @@ function FLD_data_change__license_accept()
 
 /*
  *	TITLE    :	FLD_data_change__license_accept
- *			  	
+ *
  *	MODULE   :	_ds_NSTL_installation
- *			  	
- *	ABOUT    :	
- *			  	
- *	INPUT    :	
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	ABOUT    :
+ *
+ *	INPUT    :
+ *
+ *	OUTPUT   :
+ *
+ *	REQUIRES :
+ *
  *	USAGE    :	FLD_data_change__license_accept()
- *			  	
+ *
  *	MODIFIED :	October 31, 2008 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 databaseManager.saveData()
@@ -801,33 +802,33 @@ function FLD_data_change__license_key()
 
 /*
  *	TITLE    :	FLD_data_change__license_key
- *			  	
+ *
  *	MODULE   :	_ds_NSTL_installation
- *			  	
+ *
  *	ABOUT    :	format license to uppper case
- *			  	
- *	INPUT    :	
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	INPUT    :
+ *
+ *	OUTPUT   :
+ *
+ *	REQUIRES :
+ *
  *	USAGE    :	FLD_data_change__license_key()
- *			  	
+ *
  *	MODIFIED :	November 3, 2008 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 databaseManager.saveData()
 
 if (license_key) {
 	var licenseKey = license_key.toUpperCase()
-	
+
 	if (licenseKey.length <= 18 || !utils.stringPatternCount(licenseKey,'-')) {
 		licenseKey = utils.stringReplace(licenseKey, '-', '')
 		licenseKey = licenseKey.substr(0,6) + '-' + licenseKey.substr(6,6) + '-' + licenseKey.substr(12,6)
 	}
-	
+
 	license_key = licenseKey
 	databaseManager.saveData()
 }
@@ -842,21 +843,21 @@ function FLD_data_change__license_name()
 
 /*
  *	TITLE    :	FLD_data_change__license_name
- *			  	
+ *
  *	MODULE   :	_ds_NSTL_installation
- *			  	
+ *
  *	ABOUT    :	hide/show appropriate fields
- *			  	
- *	INPUT    :	
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	INPUT    :
+ *
+ *	OUTPUT   :
+ *
+ *	REQUIRES :
+ *
  *	USAGE    :	FLD_data_change__license_name()
- *			  	
+ *
  *	MODIFIED :	October 31, 2008 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 //company names servoy is registered to
@@ -876,7 +877,7 @@ if (!companyOK) {
 					'Company error',
 					'Company name must match the Servoy company name'
 			)
-	
+
 	if (licenseNames.length) {
 		license_name = licenseNames[0]
 	}
@@ -894,34 +895,34 @@ function FLD_data_change__license_type()
 
 /*
  *	TITLE    :	FLD_data_change__license_type
- *			  	
+ *
  *	MODULE   :	_ds_NSTL_installation
- *			  	
+ *
  *	ABOUT    :	hide/show appropriate fields
- *			  	
- *	INPUT    :	
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	INPUT    :
+ *
+ *	OUTPUT   :
+ *
+ *	REQUIRES :
+ *
  *	USAGE    :	FLD_data_change__license_type()
- *			  	
+ *
  *	MODIFIED :	October 31, 2008 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 //there is a license
 if (license_type) {
 	//remove 'select' as an option from licensing
 	application.setValueListItems('NSTL_license_type',new Array('Trial','Community','Purchased'))
-	
+
 	//purchased
 	if (license_type == 'Purchased') {
 		//move key to position below license number
 		elements.lbl_license_key.setLocation(elements.lbl_license_key.getLocationX(),elements.lbl_license_number.getLocationY() + 23)
 		elements.fld_license_key.setLocation(elements.fld_license_key.getLocationX(),elements.fld_license_number.getLocationY() + 23)
-		
+
 		//show the rest
 		elements.lbl_license_name.visible = true
 		elements.fld_license_name.visible = true
@@ -929,12 +930,12 @@ if (license_type) {
 		elements.fld_license_key.visible = true
 		elements.lbl_license_number.visible = true
 		elements.fld_license_number.visible = true
-		
+
 		elements.btn_upgrade.visible = true
 		elements.lbl_upgrade.visible = true
-		
+
 		elements.fld_license_type.setSize(130,23)
-		
+
 		//prefill
 		var licenseNames = application.getLicenseNames()
 		if (licenseNames.length) {
@@ -946,39 +947,39 @@ if (license_type) {
 		//move key to position where license number usually is
 		elements.lbl_license_key.setLocation(elements.lbl_license_key.getLocationX(),elements.lbl_license_number.getLocationY())
 		elements.fld_license_key.setLocation(elements.fld_license_key.getLocationX(),elements.fld_license_number.getLocationY())
-		
+
 		//show the rest
 		elements.lbl_license_name.visible = true
 		elements.fld_license_name.visible = true
 		elements.lbl_license_key.visible = true
 		elements.fld_license_key.visible = true
-		
+
 		//hide license number
 		elements.lbl_license_number.visible = false
 		elements.fld_license_number.visible = false
-		
+
 		elements.btn_upgrade.visible = true
 		elements.lbl_upgrade.visible = true
-		
+
 		elements.fld_license_type.setSize(130,23)
-		
+
 	}
 	//trial
 	else if (license_type == 'Trial') {
 		license_key = null
 		license_name = null
 		license_number = null
-		
+
 		elements.lbl_license_name.visible = false
 		elements.fld_license_name.visible = false
 		elements.lbl_license_number.visible = false
 		elements.fld_license_number.visible = false
 		elements.lbl_license_key.visible = false
 		elements.fld_license_key.visible = false
-		
+
 		elements.btn_upgrade.visible = false
 		elements.lbl_upgrade.visible = false
-		
+
 		elements.fld_license_type.setSize(230,23)
 	}
 }
@@ -990,7 +991,7 @@ else {
 	elements.fld_license_number.visible = false
 	elements.lbl_license_key.visible = false
 	elements.fld_license_key.visible = false
-	
+
 	elements.btn_upgrade.visible = false
 	elements.lbl_upgrade.visible = false
 }
@@ -1007,21 +1008,21 @@ function FORM_on_load()
 
 /*
  *	TITLE    :	FORM_on_load
- *			  	
+ *
  *	MODULE   :	_ds_NSTL_installation
- *			  	
- *	ABOUT    :	
- *			  	
- *	INPUT    :	
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
- *	USAGE    :	
- *			  	
+ *
+ *	ABOUT    :
+ *
+ *	INPUT    :
+ *
+ *	OUTPUT   :
+ *
+ *	REQUIRES :
+ *
+ *	USAGE    :
+ *
  *	MODIFIED :	November 3, 2008 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 //globals.TRIGGER_tooltip_set()
@@ -1038,21 +1039,21 @@ function FORM_on_show()
 
 /*
  *	TITLE    :	FORM_on_show
- *			  	
+ *
  *	MODULE   :	_ds_NSTL_installation
- *			  	
- *	ABOUT    :	
- *			  	
- *	INPUT    :	
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	ABOUT    :
+ *
+ *	INPUT    :
+ *
+ *	OUTPUT   :
+ *
+ *	REQUIRES :
+ *
  *	USAGE    :	FORM_on_show()
- *			  	
+ *
  *	MODIFIED :	October 31, 2008 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 //temporary hack to get tooltips until licensing removed
@@ -1063,15 +1064,15 @@ if (application.__parent__.solutionPrefs && solutionPrefs.config && solutionPref
 //no license entered, get valuelist and tack on 'Select' option
 if (!license_type) {
 	var dataset = application.getValueListItems('NSTL_license_type')
-	
+
 	var displayValue = dataset.getColumnAsArray(1)
 	var realValue = dataset.getColumnAsArray(2)
-	
+
 	//check to see select isn't already entered
 	if (realValue[0] != null) {
 		displayValue.unshift('- Select -')
 		realValue.unshift(null)
-		
+
 		application.setValueListItems('NSTL_license_type',displayValue,realValue)
 	}
 }
@@ -1095,7 +1096,7 @@ function LBL_data_change__license_accept()
 
 if (elements.fld_license_accept.enabled) {
 	license_accept = (license_accept) ? 0 : 1
-	
+
 	FLD_data_change__license_accept()
 }
 }
@@ -1109,9 +1110,9 @@ function LICENSE_format()
 
 /*
  *	TITLE    :	LICENSE_wrapper
- *			  	
+ *
  *	MODULE   :	_ds_NSTL_installation
- *			  	
+ *
  *	ABOUT    :	format 128-bit string to 24-bit servoy formatted license string (ex: 861833-119970-104599)
  *			  	the first two characters of every sextuplet contain the date (ex: DDxxxx-MMxxxx-YYxxxx)
  *			  		- 1 = J
@@ -1124,17 +1125,17 @@ function LICENSE_format()
  *			  		- 8 = C
  *			  		- 9 = B
  *			  		- 0 = A
- *			  	
+ *
  *	INPUT    :	md5 hash
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	OUTPUT   :
+ *
+ *	REQUIRES :
+ *
  *	USAGE    :	LICENSE_wrapper()
- *			  	
+ *
  *	MODIFIED :	October 31, 2008 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 //MEMO: need to somehow put this section in a Function of it's own
@@ -1145,7 +1146,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	for (var i = 0; i < arguments.length; i++) {
 		Arguments.push(arguments[i])
 	}
-	
+
 	//reassign arguments without jsevents
 	arguments = Arguments.filter(globals.CODE_jsevent_remove)
 }
@@ -1202,9 +1203,9 @@ function LICENSE_get_date()
 
 /*
  *	TITLE    :	LICENSE_get_date
- *			  	
+ *
  *	MODULE   :	_ds_NSTL_installation
- *			  	
+ *
  *	ABOUT    :	pull date out of a license
  *			  	the first two characters of every sextuplet contain the date (ex: DDxxxx-MMxxxx-YYxxxx)
  *			  		- 1 = J
@@ -1217,17 +1218,17 @@ function LICENSE_get_date()
  *			  		- 8 = C
  *			  		- 9 = B
  *			  		- 0 = A
- *			  	
+ *
  *	INPUT    :	servoy license
- *			  	
+ *
  *	OUTPUT   :	date object
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	REQUIRES :
+ *
  *	USAGE    :	LICENSE_get_date()
- *			  	
+ *
  *	MODIFIED :	October 31, 2008 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */	//TODO: licensing will only work until 2099
 
 //MEMO: need to somehow put this section in a Function of it's own
@@ -1238,7 +1239,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	for (var i = 0; i < arguments.length; i++) {
 		Arguments.push(arguments[i])
 	}
-	
+
 	//reassign arguments without jsevents
 	arguments = Arguments.filter(globals.CODE_jsevent_remove)
 }
@@ -1267,22 +1268,22 @@ function LICENSE_hash_compare()
 
 /*
  *	TITLE    :	LICENSE_hash_compare
- *			  	
+ *
  *	MODULE   :	_ds_NSTL_installation
- *			  	
+ *
  *	ABOUT    :	compares two values passed in
- *			  	
+ *
  *	INPUT    :	1- all possible license keys for given information
  *			  	2- input license key
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	OUTPUT   :
+ *
+ *	REQUIRES :
+ *
  *	USAGE    :	LICENSE_hash_compare()
- *			  	
+ *
  *	MODIFIED :	April 24, 2009 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 var inputOne = arguments[0]
@@ -1306,7 +1307,7 @@ if (inputOne && inputTwo) {
 		for (var i = 0; i < inputOne.length; i++) {
 
 			//checks
-			var checkOne = LICENSE_unformat(inputOne[i]) 
+			var checkOne = LICENSE_unformat(inputOne[i])
 			var checkTwo = LICENSE_unformat(inputTwo)
 
 			//match found, return true
@@ -1321,7 +1322,7 @@ if (inputOne && inputTwo) {
 	//one license to compare
 	else {
 		//checks
-		var checkOne = LICENSE_unformat(inputOne) 
+		var checkOne = LICENSE_unformat(inputOne)
 		var checkTwo = LICENSE_unformat(inputTwo)
 
 		if (checkOne == checkTwo) {
@@ -1348,21 +1349,21 @@ function LICENSE_md5_hash()
 
 /*
  *	TITLE    :	LICENSE_md5_hash
- *			  	
+ *
  *	MODULE   :	_ds_NSTL_installation
- *			  	
+ *
  *	ABOUT    :	return messageDigest5 hash
- *			  	
+ *
  *	INPUT    :	1- string to hash
- *			  	
+ *
  *	OUTPUT   :	hash
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	REQUIRES :
+ *
  *	USAGE    :	LICENSE_md5_hash()
- *			  	
+ *
  *	MODIFIED :	October 31, 2008 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 //MEMO: need to somehow put this section in a Function of it's own
@@ -1373,7 +1374,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	for (var i = 0; i < arguments.length; i++) {
 		Arguments.push(arguments[i])
 	}
-	
+
 	//reassign arguments without jsevents
 	arguments = Arguments.filter(globals.CODE_jsevent_remove)
 }
@@ -1386,7 +1387,7 @@ var inputChar
 
 for (var i = 0; i < stringToHash.length; i++) {
 	//one inputCharacter - force to string type by the plus ''
-	inputChar = stringToHash.slice(i,i+1) + '' 
+	inputChar = stringToHash.slice(i,i+1) + ''
 	inputArray[i] = inputChar.charCodeAt(0)
 }
 
@@ -1402,7 +1403,7 @@ var messageDigest = Packages.java.security.MessageDigest.getInstance("MD5")
 
 try {
 	var messageDigest5ByteArray = messageDigest.digest(inputArray)
-} 
+}
 catch (e) {
 	return null
 }
@@ -1413,20 +1414,20 @@ var messageDigest5Array = new Array(messageDigest5ByteArray.length)
 for (i = 0; i < messageDigest5ByteArray.length; i++ ) {
 	//get hex code for each
 	messageDigest5Array[i] = Packages.java.lang.Integer.toHexString(messageDigest5ByteArray[i])
-	
+
 	if (messageDigest5Array[i].length > 2) {
 		//take right-most 2 chars
 		messageDigest5Array[i] = messageDigest5Array[i].substr(messageDigest5Array[i].length - 2, 2)
 	}
-	
+
 	if ((messageDigest5ByteArray[i] >= 0 ) && (messageDigest5ByteArray[i] <= 15)) {
 		//prepend a '0' since the hex to string fails to do so
 		messageDigest5Array[i] = '0' + messageDigest5Array[i]
 	}
-	
+
 	//concatenate
 	messageDigest5Hash += messageDigest5Array[i]
-} 
+}
 
 return messageDigest5Hash
 
@@ -1443,23 +1444,23 @@ function LICENSE_purchased()
 
 /*
  *	TITLE    :	LICENSE_purchased
- *			  	
+ *
  *	MODULE   :	_ds_NSTL_installation
- *			  	
+ *
  *	ABOUT    :	generate a license for fw that is bought
- *			  	
+ *
  *	INPUT    :	1- company name
  *			  	2- number of licenses
- *			  	
+ *
  *	OUTPUT   :	when on licensing server, single code
  *			  	when in client, returns array of possible codes
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	REQUIRES :
+ *
  *	USAGE    :	LICENSE_purchased()
- *			  	
+ *
  *	MODIFIED :	January 24, 2011 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 	//MEMO: need to somehow put this section in a Function of it's own
@@ -1470,28 +1471,28 @@ function LICENSE_purchased()
 		for (var i = 0; i < arguments.length; i++) {
 			Arguments.push(arguments[i])
 		}
-		
+
 		//reassign arguments without jsevents
 		arguments = Arguments.filter(globals.CODE_jsevent_remove)
 	}
-	
+
 	var inputCompany = ((arguments[0]) ? arguments[0] : license_name) || ''
 	var numLicenses = (arguments[1]) ? arguments[1] : ((license_number) ? license_number : 1)
 	var dateStart = new Date()
-	
+
 	var licenseOpt = new Array()
-	
+
 	var padNumLicenses = ''
 	while (padNumLicenses.length < 10) {
 		padNumLicenses += numLicenses
 	}
-	
+
 	var offset = ['F','E','D','C','B','A','9','8','7','6','5','4','3','2','1',null]
-	
+
 	//keep generating new licenses until we get an original one
 	for (var i = 0; i < offset.length; i++) {
 		var nameCompany = inputCompany
-		
+
 		//there is something to intersperse
 		if (offset[i]) {
 			//intersperse the offset within the company name at every 4 characters
@@ -1504,18 +1505,18 @@ function LICENSE_purchased()
 				nameCompany += offset[i]
 			}
 		}
-		
+
 		//create hashes for company and licenses; merge those results to create a company/license hash
 		var hashCompany = LICENSE_md5_hash(nameCompany).toString()
 		var hashLicense = LICENSE_md5_hash(padNumLicenses).toString()
 		var hashPseudo = hashCompany.substr(0,16) + hashLicense.substr(16,16)
-		
+
 		var uid = hashCompany.toUpperCase() + hashLicense.toUpperCase() + hashPseudo.toUpperCase()
-		
+
 		//generate license from uid and save into array of possibile licenses
 		var license = LICENSE_format(uid,dateStart)
 		licenseOpt.push(license)
-		
+
 		//running on licensing server, check for uniqueness
 		if (false) {
 			//break out of for-loop, this value is unique
@@ -1523,14 +1524,14 @@ function LICENSE_purchased()
 			fsSomething.find()
 			fsSomething.license_key = license
 			var results = fsSomething.search()
-			
+
 			//does not exist on the licensing server
 			if (!results) {
 				return license
 			}
 		}
 	}
-	
+
 	return licenseOpt
 
 
@@ -1545,24 +1546,24 @@ function LICENSE_community() {
 
 /*
  *	TITLE    :	LICENSE_community
- *			  	
+ *
  *	MODULE   :	_ds_NSTL_installation
- *			  	
+ *
  *	ABOUT    :	generate a license for fw that is bought
- *			  	
+ *
  *	INPUT    :	1- company name
- *			  	
+ *
  *	OUTPUT   :	when on licensing server, single code
  *			  	when in client, returns array of possible codes
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	REQUIRES :
+ *
  *	USAGE    :	LICENSE_community()
- *			  	
+ *
  *	MODIFIED :	January 24, 2011 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
-	
+
 	//MEMO: need to somehow put this section in a Function of it's own
 	//running in Tano...strip out jsevents for now
 	if (utils.stringToNumber(application.getVersion()) >= 5) {
@@ -1571,23 +1572,23 @@ function LICENSE_community() {
 		for (var i = 0; i < arguments.length; i++) {
 			Arguments.push(arguments[i])
 		}
-		
+
 		//reassign arguments without jsevents
 		arguments = Arguments.filter(globals.CODE_jsevent_remove)
 	}
-	
+
 	var inputCompany = ((arguments[0]) ? arguments[0] : license_name) || ''
 	var numLicenses = '0123456789'	//hard coded at this unique value; really means 5 client licenses
 	var dateStart = new Date()
-	
+
 	var licenseOpt = new Array()
-	
+
 	var offset = ['F','E','D','C','B','A','9','8','7','6','5','4','3','2','1',null]
-	
+
 	//keep generating new licenses until we get an original one
 	for (var i = 0; i < offset.length; i++) {
 		var nameCompany = inputCompany
-		
+
 		//there is something to intersperse
 		if (offset[i]) {
 			//intersperse the offset within the company name at every 4 characters
@@ -1600,18 +1601,18 @@ function LICENSE_community() {
 				nameCompany += offset[i]
 			}
 		}
-		
+
 		//create hashes for company and licenses; merge those results to create a company/license hash
 		var hashCompany = LICENSE_md5_hash(nameCompany).toString()
 		var hashLicense = LICENSE_md5_hash(numLicenses).toString()
 		var hashPseudo = hashCompany.substr(0,16) + hashLicense.substr(16,16)
-		
+
 		var uid = hashCompany.toUpperCase() + hashLicense.toUpperCase() + hashPseudo.toUpperCase()
-		
+
 		//generate license from uid and save into array of possibile licenses
 		var license = LICENSE_format(uid,dateStart)
 		licenseOpt.push(license)
-		
+
 		//running on licensing server, check for uniqueness
 		if (false) {
 			//break out of for-loop, this value is unique
@@ -1619,14 +1620,14 @@ function LICENSE_community() {
 			fsSomething.find()
 			fsSomething.license_key = license
 			var results = fsSomething.search()
-			
+
 			//does not exist on the licensing server
 			if (!results) {
 				return license
 			}
 		}
 	}
-	
+
 	return licenseOpt
 }
 
@@ -1639,21 +1640,21 @@ function LICENSE_unformat()
 
 /*
  *	TITLE    :	LICENSE_unformat
- *			  	
+ *
  *	MODULE   :	_ds_NSTL_installation
- *			  	
+ *
  *	ABOUT    :	check company and license
- *			  	
+ *
  *	INPUT    :	license
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	OUTPUT   :
+ *
+ *	REQUIRES :
+ *
  *	USAGE    :	LICENSE_unformat()
- *			  	
+ *
  *	MODIFIED :	November 3, 2008 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 //MEMO: need to somehow put this section in a Function of it's own
@@ -1664,7 +1665,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	for (var i = 0; i < arguments.length; i++) {
 		Arguments.push(arguments[i])
 	}
-	
+
 	//reassign arguments without jsevents
 	arguments = Arguments.filter(globals.CODE_jsevent_remove)
 }
@@ -1700,21 +1701,21 @@ function TOGGLE_elements()
 
 /*
  *	TITLE    :	TOGGLE_elements
- *			  	
+ *
  *	MODULE   :	_ds_NSTL_installation
- *			  	
- *	ABOUT    :	
- *			  	
- *	INPUT    :	
- *			  	
- *	OUTPUT   :	
- *			  	
- *	REQUIRES :	
- *			  	
+ *
+ *	ABOUT    :
+ *
+ *	INPUT    :
+ *
+ *	OUTPUT   :
+ *
+ *	REQUIRES :
+ *
  *	USAGE    :	TOGGLE_elements()
- *			  	
+ *
  *	MODIFIED :	December 31, 2008 -- Troy Elliott, Data Mosaic
- *			  	
+ *
  */
 
 //MEMO: need to somehow put this section in a Function of it's own
@@ -1725,7 +1726,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	for (var i = 0; i < arguments.length; i++) {
 		Arguments.push(arguments[i])
 	}
-	
+
 	//reassign arguments without jsevents
 	arguments = Arguments.filter(globals.CODE_jsevent_remove)
 }
@@ -1740,11 +1741,11 @@ if (license_type) {
 			elements.lbl_status_1.text = 'Running in Trial mode'
 			elements.lbl_status_1.fgcolor = '#000000'
 			elements.lbl_status_2.text = 'Timeout after 60 minutes of use'
-			
+
 			elements.lbl_status_1.visible = true
 			elements.lbl_status_2.visible = true
 			break
-			
+
 		case 'Community':
 			//set status text for evaluation license
 			if (valid) {
@@ -1759,14 +1760,14 @@ if (license_type) {
 				elements.lbl_status_2.text = 'Please recheck the code entered'
 			}
 			break
-			
+
 		case 'Purchased':
 			//figure out when expires
 			if (datePurchased) {
 				var dateExpiry = new Date(datePurchased)
 				dateExpiry.setFullYear(dateExpiry.getFullYear() + 1)
 			}
-			
+
 			//set status text for valid license
 			if (valid) {
 				elements.lbl_status_1.text = 'Valid license'
@@ -1783,12 +1784,12 @@ if (license_type) {
 				elements.lbl_status_1.fgcolor = '#FF0000'
 				elements.lbl_status_2.text = 'Please recheck the code entered'
 			}
-			
+
 			elements.lbl_status_1.visible = true
 			elements.lbl_status_2.visible = true
-			
+
 			application.setStatusText(elements.lbl_status_1.text, elements.lbl_status_2.text)
-			
+
 			break
 	}
 }
@@ -1811,7 +1812,7 @@ if (license_accept && (valid || license_type == 'Trial')) {
 	elements.fld_license_number.enabled = false
 	elements.fld_license_key.enabled = false
 	elements.fld_license_accept.enabled = false
-	
+
 	elements.lbl_validate.text = 'Edit'
 }
 else {
