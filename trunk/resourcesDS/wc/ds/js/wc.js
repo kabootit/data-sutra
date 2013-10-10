@@ -1550,11 +1550,41 @@ DS.grid = new function() {
 			var dataView = grid.getData();
 			if (pk) {
 				dataView.deleteItem(pk);
+				
+				//update selection
+				grid.setSelectedRows([index]);
+				grid.scrollRowIntoView(index);
+			}
+		}
+	}
+	
+	this.updateRow = function(id,pk,data) {
+		var parentID = $("#" + id).parent().attr('id');
+		var selector = $("#" + parentID);
+		var isGrid = $("#" + id + '[class*="slickgrid_"]').length == 1;
+		
+		if (table && table[id] && isGrid) {
+			var grid = table[id]
+			
+			//try to keep same selected
+			// var index = grid.getSelectedRows().pop();
+			
+			//update row
+			var dataView = grid.getData();
+			if (pk && typeof data == 'object') {
+				var item = dataView.getItemById(pk);
+				
+				//loop and push new items in
+				for (var i in data) {
+					item[i] = data[i];
+				}
+				
+				dataView.updateItem(pk, item);
 			}
 			
 			//update selection
-			grid.setSelectedRows([index]);
-			grid.scrollRowIntoView(index);
+			// grid.setSelectedRows([index]);
+			// grid.scrollRowIntoView(index);
 		}
 	}
 }
