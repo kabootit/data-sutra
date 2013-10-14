@@ -4451,6 +4451,18 @@ if (record[relationName].url_path && record.url_path) {
 			if (navItemObj.transactions) {
 				navItemObj.transactions.sort(CODE_sort_dd_array)
 			}
+			
+			//override methods present
+			var methods = solutionModel.getForm(record.form_to_load).getMethods(true).map(function (item) {return item.getName()})
+			if (methods.indexOf('OV_ACTIONS_list')) {
+				navItemObj.buttons.actions = true
+			}
+			if (methods.indexOf('OV_FILTERS_list')) {
+				navItemObj.buttons.filters = true
+			}
+			if (methods.indexOf('OV_REPORTS_list')) {
+				navItemObj.buttons.reports = true
+			}
 		}
 	}
 

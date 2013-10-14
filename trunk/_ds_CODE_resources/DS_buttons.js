@@ -29,6 +29,13 @@ function ACTIONS_list(event,list) {
 	 *			  	
 	 */
 	
+	
+	//override with custom action
+	if (solutionPrefs.config.currentFormName && solutionModel.getForm(solutionPrefs.config.currentFormName).getMethods(true).map(function (item) {return item.getName()}).indexOf('OV_ACTIONS_list') != -1) {
+		forms[solutionPrefs.config.currentFormName].OV_ACTIONS_list()
+		return
+	}
+	
 	//grab the actions to this
 	var valueList = new Array()
 	var methodTypes = new Array()
@@ -225,6 +232,12 @@ function FILTERS_list(event,list) {
 	 *	MODIFIED :	July 16, 2008 -- Troy Elliott, Data Mosaic
 	 *			  	
 	 */
+	
+	//override with custom action
+	if (solutionPrefs.config.currentFormName && solutionModel.getForm(solutionPrefs.config.currentFormName).getMethods(true).map(function (item) {return item.getName()}).indexOf('OV_FILTERS_list') != -1) {
+		forms[solutionPrefs.config.currentFormName].OV_FILTERS_list()
+		return
+	}
 	
 	var navigationID = solutionPrefs.config.currentFormID
 	
@@ -684,6 +697,12 @@ function REPORTS_list(event,list) {
 	 *	MODIFIED :	Nov 20, 2007 -- Troy Elliott, Data Mosaic
 	 *			  	
 	 */
+	
+	//override with custom action
+	if (solutionPrefs.config.currentFormName && solutionModel.getForm(solutionPrefs.config.currentFormName).getMethods(true).map(function (item) {return item.getName()}).indexOf('OV_REPORTS_list') != -1) {
+		forms[solutionPrefs.config.currentFormName].OV_REPORTS_list()
+		return
+	}
 	
 	//grab the id_report for all reports
 	var valueList = new Array()
