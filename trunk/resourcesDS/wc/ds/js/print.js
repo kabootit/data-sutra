@@ -48,11 +48,21 @@ function urlLoad(input) {
 		url.parentNode.removeChild(url);
 	}
 	
+	//full-on iframe or partial page
+	if (input.indexOf('://') < 10) {
+		var fullIframe = true
+	}
+	
 	//iframe to hold web stuff
 	var iframeHeader = document.createElement('IFRAME');
 	iframeHeader.id = 'overlay_url';
 	iframeHeader.name = 'overlay_url';
-	iframeHeader.src = input;
+	if (fullIframe) {
+		iframeHeader.src = input;
+	}
+	else {
+		iframeHeader.srcdoc = input;
+	}
 	iframeHeader.width = '100%';
 	iframeHeader.height = '100%';
 	// iframeHeader.scrolling = 'no';
