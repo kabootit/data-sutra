@@ -5164,7 +5164,7 @@ var wcOpen = arguments[1]
 var lightbox = arguments[2]
 
 if (!wcOpen) {
-	wcOpen = (application.__parent__.solutionPrefs && solutionPrefs.config && solutionPrefs.config.webClient) ? '_top' : null
+	wcOpen = (application.__parent__.solutionPrefs && solutionPrefs.config && solutionPrefs.config.webClient) ? '_blank' : null
 }
 
 if (webloc) {
@@ -5176,10 +5176,14 @@ if (webloc) {
 	}
 	//http
 	else {
-		webloc = utils.stringPatternCount(webloc,'://') ? webloc : 'http://' + webloc
-
+		if (!lightbox) {
+			webloc = utils.stringPatternCount(webloc,'://') ? webloc : 'http://' + webloc
+		}
+		
 		//lightbox requested and minimum requirements met
 		if (lightbox && application.__parent__.solutionPrefs && solutionPrefs.config && solutionPrefs.config.webClient && globals.DATASUTRA_router_enable) {
+			//escape out " (quotation marks)
+			webloc = utils.stringReplace(webloc,'"','\\"')
 			plugins.WebClientUtils.executeClientSideJS('window.parent.urlLoad("' + webloc + '");')
 		}
 		else {
