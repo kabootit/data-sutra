@@ -1383,7 +1383,7 @@ DS.grid = new function() {
 					
 							//allowed to run, run
 							// if (throttleSlick(args,e)) {
-								if (cell && grid.getColumns()[cell]) {
+								if (typeof cell == 'number' && grid.getColumns()[cell]) {
 									var cellID = grid.getColumns()[cell].id;
 									for (var i in actions.onClick) {
 										if (cellID == i) {
@@ -1409,7 +1409,7 @@ DS.grid = new function() {
 					
 							//allowed to run, run
 							// if (throttleSlick(args,e)) {
-								if (cell && grid.getColumns()[cell]) {
+								if (typeof cell == 'number' && grid.getColumns()[cell]) {
 									var cellID = grid.getColumns()[cell].id;
 					
 									for (var i in actions.onContextMenu) {
