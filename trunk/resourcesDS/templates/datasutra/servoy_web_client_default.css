@@ -1221,6 +1221,11 @@ and (max-device-width : 1024px) {
 	margin-right: -11px;
 	margin-bottom: 4px;
 }
+@-moz-document url-prefix() {
+	.yuimenuitemlabel .img_checkbox {
+		background-position: -3px -2px;
+	}
+}
 
 ul:not(:last-of-type) li.yuimenuitem:last-of-type .img_checkbox {
 	margin-bottom: 3px;
