@@ -1754,7 +1754,19 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset, idNavigationIt
 			else if (scopes.SLICK && scopes.SLICK.CONST.enabled) {
 				scopes.SLICK.updateAll(true)
 			}
-
+			
+			//in webclient and called from router, check to see if there is an 'onShow' method needing to be fired
+			if (solutionPrefs.config.webClient && idNavigationItem) {
+				var smForm = solutionModel.getForm(navItem.formToLoad)
+				if (smForm) {
+					var onShow = smForm.getDesignTimeProperty('wcShow')
+					var allMethods = smForm.getMethods(true).map(function(item){return item.getName()})
+					if (allMethods.indexOf(onShow) != -1) {
+						forms[smForm.name][onShow]()
+					}
+				}
+			}
+			
 			//bring foundset over
 			if (setFoundset) {
 				var callingFoundset = (useFoundset) ? useFoundset : (application.getMethodTriggerFormName() ? forms[application.getMethodTriggerFormName()].foundset : null)
