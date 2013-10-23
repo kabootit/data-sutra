@@ -496,7 +496,7 @@ div.wicket-modal div.w_blue {
 	border-radius: 6px;
 	border: 0px solid white;
 	margin: -1px;
-	background-color: #666666;
+/*	background-color: #666666;*/
 	/*background-color: rgba(10, 10, 10, 0.8);*/
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#cc0a0a0a,endColorstr=#cc0a0a0a);
 	-moz-box-shadow: 0px 1px 8px rgba(10, 10, 10, 0.5);
@@ -1032,7 +1032,7 @@ and (max-device-width : 1024px) {
 	}
 
 	input.field {
-	    -webkit-appearance: none;
+	  -webkit-appearance: none;
 		border-radius: 0;
 	}
 
@@ -1136,6 +1136,28 @@ and (max-device-width : 1024px) {
 	background-image: url(/servoy-webclient/templates/datasutra/images/linen_highlight.jpg);
 }
 
+.gfxGrunge {
+	background-image: url(/servoy-webclient/templates/datasutra/images/grunge/1.png);
+	text-align: center;
+}
+
+.gfxGrunge iframe {
+	margin: 0 auto;
+	display: block;
+	
+	-moz-box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.4);
+	-webkit-box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.4);
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.4);
+}
+
+.gfxGrunge iframe.drunk {
+	margin-top: 20px;
+	-moz-transform:rotate(10deg);
+	-webkit-transform:rotate(10deg);
+	-o-transform:rotate(10deg);
+	-ms-transform:rotate(10deg)
+}
+
 /* split pane customizations */
 .yui-resize {
 	background-color: #DEDEDE !important;
@@ -1183,7 +1205,6 @@ and (max-device-width : 1024px) {
 
 .yuimenuitemlabel table {
 	border-spacing: 0px !important;
-	margin-left: -19px !important;
 }
 
 .yuimenuitemlabel td {
@@ -1193,8 +1214,20 @@ and (max-device-width : 1024px) {
 }
 
 .yuimenuitemlabel .img_checkbox {
-	background-position-x: 4px !important;
-	background-position-y: -1px !important;
+	display: inline-block;
+	background-position-x: -3px !important;
+	background-position-y: -2px !important;
+	margin-left: -8px;
+	margin-right: -11px;
+	margin-bottom: 4px;
+}
+
+ul:not(:last-of-type) li.yuimenuitem:last-of-type .img_checkbox {
+	margin-bottom: 3px;
+}
+
+.yuimenu ul:last-of-type li.yuimenuitem:last-of-type {
+	margin-bottom: -3px;
 }
 
 #basicmenu {
@@ -1203,6 +1236,8 @@ and (max-device-width : 1024px) {
 
 .yuimenu ul {
 	border-top: solid 1px #999999 !important;
+	margin-left: 4px;
+	padding: 3px 0px !important;
 }
 
 .yuimenu ul.first-of-type {
@@ -1214,4 +1249,47 @@ and (max-device-width : 1024px) {
 .yuimenuitemlabel-disabled a,
 .yuimenubaritemlabel-disabled a {
 	color: #666666 !important;
+}
+
+li.yuimenuitem > a.yuimenuitemlabel > table {
+	margin: -8px 0px -8px -4px !important;
+	padding: 6px 0px 3px;
+}
+
+.yuimenu .yuimenuitemlabel {
+/*	padding-top: 1px !important;*/
+/*	padding-bottom: 0px !important;*/
+}
+
+a.yuimenuitemlabel > table > tbody > tr > td.img_checkbox{
+/*	margin-left: -19px !important;*/
+}
+
+li.yuimenuitem > a.yuimenuitemlabel > table img {
+	margin-top: -3px;
+}
+
+li.yuimenuitem > a.yuimenuitemlabel > table td.img_checkbox ~ td {
+	display: inline-block;
+	margin-left: 4px;
+	height: 13px !important;
+}
+
+li.yuimenuitem > a.yuimenuitemlabel > table td.img_checkbox ~ td > img {
+	margin-left: -3px;
+	margin-right: -4px;
+}
+
+.basicmenu {
+	overflow-y: hidden;
+}
+
+.yui-menu-body-scrolled {
+	overflow-x: visible !important;
+	margin: -4px 0;
+}
+
+.yuimenu .topscrollbar,
+.yuimenu .bottomscrollbar {
+	height: 10px !important;
 }
