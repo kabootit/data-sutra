@@ -939,10 +939,11 @@ function TRIGGER_help_navigation_set(itemID, confirmJump, subLanding, showHelp) 
  * @param	{Boolean}	[spinner] Put facebook spinner in center of screen.
  * @param	{String}	[nonTransparentText] Text to display over top of non-transparent box.
  * @param	{Boolean}	[oldMode] Use old mode of changing element properties instead of image overlay.
+ * @param 	{Boolean} 	[workflow] Lock workflow only (no pressing any buttons when no records, for example)
  *
  * @properties={typeid:24,uuid:"8a2db575-a9de-4646-9936-14468a01d7f4"}
  */
-function TRIGGER_interface_lock(freeze,freezeAll,nonTransparent,spinner,nonTransparentText,oldMode) {
+function TRIGGER_interface_lock(freeze,freezeAll,nonTransparent,spinner,nonTransparentText,oldMode,workflow) {
 //TODO:
 		//trap the state of everything on the workflow form and set it back as it was before being enabled/disabled when running in oldMode
 
@@ -952,501 +953,511 @@ function TRIGGER_interface_lock(freeze,freezeAll,nonTransparent,spinner,nonTrans
 	var spinner = arguments[3]
 	var nonTransparentText = arguments[4]
 	var oldMode = arguments[5]
+	var workflow = arguments[6]
 
 	//check to see that solutionPrefs is defined and parameter passed
-	if (application.__parent__.solutionPrefs && typeof freeze == 'boolean') {
-		var baseForm = solutionPrefs.config.formNameBase
-		var workflowForm = solutionPrefs.config.currentFormName
-
-		var lockWorkflow = false
-		var lockList = true
-		var lockNavigation = true
-
-		//web client	only implements freeze for now
-		if (solutionPrefs.config.webClient) {
-			forms.DATASUTRA_WEB_0F__main.elements.gfx_curtain.visible = freeze
-			forms.DATASUTRA__sidebar.elements.gfx_curtain.visible = freeze
-
-			//adjust z-index
-				//MEMO: this doesn't fire the first time edit button pressed after page loaded; client-side triggered when button clicked to handle this condition
-			plugins.WebClientUtils.executeClientSideJS('triggerInterfaceLock(' + freeze + ');')
-		}
-		//smart client
-		else {
-			//MEMO: 44 is offset for normal header
-			var divider = 8
-
-			//all gfx
-			var gfxTop = forms[baseForm].elements.gfx_curtain_top
-			var gfxLeftOne = forms[baseForm].elements.gfx_curtain_left_1
-			var gfxLeftTwo = forms[baseForm].elements.gfx_curtain_left_2
-			var gfxLeftRight = forms[baseForm].elements.gfx_curtain_leftright
-			var gfxRightOne = forms[baseForm].elements.gfx_curtain_right_1
-			var gfxRightTwo = forms[baseForm].elements.gfx_curtain_right_2
-			var gfxCurtain = forms[baseForm].elements.gfx_curtain
-
-			//turn everything off
-			forms[baseForm].elements.gfx_curtain_header.visible = false
-			gfxTop.visible = false
-			gfxLeftOne.visible = false
-			gfxLeftTwo.visible = false
-			gfxLeftRight.visible = false
-			gfxRightOne.visible = false
-			gfxRightTwo.visible = false
-			gfxCurtain.visible = false
-
-			//return curtain to default state
-			gfxCurtain.text = null
-			gfxCurtain.transparent = true
-			gfxCurtain.setImageURL('media:///curtain_5E6166.png')
-			gfxCurtain.setBorder('EmptyBorder,0,0,0,0')
-			gfxCurtain.text = null
-			gfxCurtain.toolTipText = null
-
-			//graphic 1
-			var x = 0
-			var y = 44
-			var gfx1 = gfxCurtain
-
-			//graphic 2
-			var x2 = 0
-			var y2 = 44
-			var gfx2 = gfxLeftOne
-
-			//graphic 3
-			var x3 = 0
-			var y3 = 44
-			var gfx3 = gfxTop
-
-			//if in design mode....
-			if (solutionPrefs.design.statusDesign) {
-				//height of design mode bar
-				y += 42
-				y2 += 42
-				y3 += 42
+	if (application.__parent__.solutionPrefs) {
+		if (typeof freeze == 'boolean' || typeof workflow == 'boolean') {
+			var baseForm = solutionPrefs.config.formNameBase
+			var workflowForm = solutionPrefs.config.currentFormName
+	
+			var lockWorkflow = false
+			var lockList = true
+			var lockNavigation = true
+	
+			//web client
+			if (solutionPrefs.config.webClient) {
+				if (typeof workflow == 'boolean') {
+					forms.DATASUTRA_WEB_0F__workflow.elements.gfx_curtain.visible = workflow
+					solutionPrefs.design.statusLockWorkflow = workflow
+				}
+				//only implements freeze for now
+				else {
+					forms.DATASUTRA_WEB_0F__main.elements.gfx_curtain.visible = freeze
+					forms.DATASUTRA__sidebar.elements.gfx_curtain.visible = freeze
+				}
+				
+				//adjust z-index
+					//MEMO: this doesn't fire the first time edit button pressed after page loaded; client-side triggered when button clicked to handle this condition
+				plugins.WebClientUtils.executeClientSideJS('triggerInterfaceLock(' + freeze + ');')
 			}
-
-			//figure out location of curtain
-			switch (solutionPrefs.config.activeSpace) {
-				case 'standard':
-					x += solutionPrefs.screenAttrib.spaces.standard.currentHorizontal
-					y2 += solutionPrefs.screenAttrib.spaces.standard.currentVertical
-
-					if (solutionPrefs.config.flexibleSpace) {
-						x += divider
-						y2 += divider
-					}
-					break
-				case 'standard flip':
-					x += solutionPrefs.screenAttrib.spaces.standard.currentHorizontal
-					y3 += solutionPrefs.screenAttrib.spaces.standard.currentVertical
-
-					if (solutionPrefs.config.flexibleSpace) {
-						x += divider
-						y3 += divider
-					}
-
-					gfx2 = gfxTop
-					gfx3 = gfxLeftOne
-					break
-
-				case 'list':
-					x += solutionPrefs.screenAttrib.spaces.list.currentHorizontal
-
-					if (solutionPrefs.config.flexibleSpace) {
-						x += divider
-					}
-
-					var nonNavigation = true
-					break
-
-				case 'list flip':
-					x += solutionPrefs.screenAttrib.spaces.list.currentHorizontal
-
-					if (solutionPrefs.config.flexibleSpace) {
-						x += divider
-					}
-
-					var nonList = true
-
-					gfx3 = gfxLeftOne
-					break
-
-				case 'vertical':
-					x += solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalOne + solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalTwo
-					x2 += solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalOne
-
-					if (solutionPrefs.config.flexibleSpace) {
-						x += divider
-						x2 += divider
-					}
-
-					gfx3 = gfxLeftTwo
-					break
-				case 'vertical flip':
-					x += solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalOne + solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalTwo
-					x3 += solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalOne
-
-					if (solutionPrefs.config.flexibleSpace) {
-						x += divider
-						x3 += divider
-					}
-
-					gfx2 = gfxLeftTwo
-					gfx3 = gfxLeftOne
-					break
-
-				case 'centered':
-					x += solutionPrefs.screenAttrib.spaces.centered.currentHorizontalOne
-					x2 += application.getWindowWidth(null) - solutionPrefs.screenAttrib.spaces.centered.currentHorizontalTwo
-
-					if (solutionPrefs.screenAttrib.sidebar.status) {
-						x2 -= solutionPrefs.screenAttrib.sidebar.currentSize
-					}
-
-					if (solutionPrefs.config.flexibleSpace) {
-						x += divider
-						x2 += divider
-					}
-
-					gfx2 = gfxRightOne
-					gfx3 = gfxLeftOne
-					break
-				case 'centered flip':
-					x += solutionPrefs.screenAttrib.spaces.centered.currentHorizontalOne
-					x3 += application.getWindowWidth(null) - solutionPrefs.screenAttrib.spaces.centered.currentHorizontalTwo
-
-					if (solutionPrefs.screenAttrib.sidebar.status) {
-						x3 -= solutionPrefs.screenAttrib.sidebar.currentSize
-					}
-
-					if (solutionPrefs.config.flexibleSpace) {
-						x += divider
-						x3 += divider
-					}
-
-					gfx3 = gfxRightOne
-					break
-
-				case 'classic':
-					x += solutionPrefs.screenAttrib.spaces.classic.currentHorizontal
-					x2 += solutionPrefs.screenAttrib.spaces.classic.currentHorizontal
-					y += solutionPrefs.screenAttrib.spaces.classic.currentVertical
-
-					if (solutionPrefs.config.flexibleSpace) {
-						x += divider
-						x2 += divider
-						y += divider
-					}
-
-					gfx2 = gfxLeftRight
-					gfx3 = gfxLeftOne
-					break
-				case 'classic flip':
-					x += solutionPrefs.screenAttrib.spaces.classic.currentHorizontal
-					x3 += solutionPrefs.screenAttrib.spaces.classic.currentHorizontal
-					y += solutionPrefs.screenAttrib.spaces.classic.currentVertical
-
-					if (solutionPrefs.config.flexibleSpace) {
-						x += divider
-						x3 += divider
-						y += divider
-					}
-
-					gfx2 = gfxLeftOne
-					gfx3 = gfxLeftRight
-					break
-
-				case 'wide':
-					x2 += solutionPrefs.screenAttrib.spaces.wide.currentHorizontal
-					y += solutionPrefs.screenAttrib.spaces.wide.currentVertical
-
-					if (solutionPrefs.config.flexibleSpace) {
-						x2 += divider
-						y += divider
-					}
-
-					gfx2 = gfxLeftRight
-					gfx3 = gfxTop
-					break
-				case 'wide flip':
-					x3 += solutionPrefs.screenAttrib.spaces.wide.currentHorizontal
-					y += solutionPrefs.screenAttrib.spaces.wide.currentVertical
-
-					if (solutionPrefs.config.flexibleSpace) {
-						x3 += divider
-						y += divider
-					}
-
-					gfx2 = gfxTop
-					gfx3 = gfxLeftRight
-					break
-
-				case 'workflow':
-					if (solutionPrefs.config.activeSpace == 'workflow') {
-						var nonList = true
-						var nonNavigation = true
-					}
-					break
-
-				case 'workflow flip':
-					if (!lockList) {
-						var nonList = true
-					}
-					var nonNavigation = true
-					break
-			}
-
-			//set up spinner to show progress
-			if (spinner) {
-	//			forms[baseForm].elements.gfx_spinner.setSize(application.getWindowWidth(),32)
-	//			forms[baseForm].elements.gfx_spinner.setLocation((application.getWindowWidth() / 2) - 16, (application.getWindowHeight() / 2) - 200)
-				forms[baseForm].elements.gfx_spinner.visible = true
-			}
+			//smart client
 			else {
-				forms[baseForm].elements.gfx_spinner.visible = false
-			}
-
-			//resize curtain to cover everything and then show it
-			if (freezeAll) {
-				//height of normal header (44)
-				var y = 0
-
+				//MEMO: 44 is offset for normal header
+				var divider = 8
+	
+				//all gfx
+				var gfxTop = forms[baseForm].elements.gfx_curtain_top
+				var gfxLeftOne = forms[baseForm].elements.gfx_curtain_left_1
+				var gfxLeftTwo = forms[baseForm].elements.gfx_curtain_left_2
+				var gfxLeftRight = forms[baseForm].elements.gfx_curtain_leftright
+				var gfxRightOne = forms[baseForm].elements.gfx_curtain_right_1
+				var gfxRightTwo = forms[baseForm].elements.gfx_curtain_right_2
+				var gfxCurtain = forms[baseForm].elements.gfx_curtain
+	
+				//turn everything off
+				forms[baseForm].elements.gfx_curtain_header.visible = false
+				gfxTop.visible = false
+				gfxLeftOne.visible = false
+				gfxLeftTwo.visible = false
+				gfxLeftRight.visible = false
+				gfxRightOne.visible = false
+				gfxRightTwo.visible = false
+				gfxCurtain.visible = false
+	
+				//return curtain to default state
+				gfxCurtain.text = null
+				gfxCurtain.transparent = true
+				gfxCurtain.setImageURL('media:///curtain_5E6166.png')
+				gfxCurtain.setBorder('EmptyBorder,0,0,0,0')
+				gfxCurtain.text = null
+				gfxCurtain.toolTipText = null
+	
+				//graphic 1
+				var x = 0
+				var y = 44
+				var gfx1 = gfxCurtain
+	
+				//graphic 2
+				var x2 = 0
+				var y2 = 44
+				var gfx2 = gfxLeftOne
+	
+				//graphic 3
+				var x3 = 0
+				var y3 = 44
+				var gfx3 = gfxTop
+	
 				//if in design mode....
 				if (solutionPrefs.design.statusDesign) {
 					//height of design mode bar
 					y += 42
-
-					var designBar = 'DEV_0F_solution__designbar'
-
-					//design bar form exists, go exploring
-					if (forms[designBar]) {
-						//turn off everything
-						forms[designBar].controller.enabled = false
-
-						//active tab
-						var designTab = forms[designBar].elements.tab_action.getTabFormNameAt(forms[designBar].elements.tab_action.tabIndex)
-
-						//light background in main design bar
-						if (forms[designBar].elements.gfx_header) {
-							forms[designBar].elements.gfx_header.enabled = true
+					y2 += 42
+					y3 += 42
+				}
+	
+				//figure out location of curtain
+				switch (solutionPrefs.config.activeSpace) {
+					case 'standard':
+						x += solutionPrefs.screenAttrib.spaces.standard.currentHorizontal
+						y2 += solutionPrefs.screenAttrib.spaces.standard.currentVertical
+	
+						if (solutionPrefs.config.flexibleSpace) {
+							x += divider
+							y2 += divider
 						}
-
-						//highlighter in main design bar
-						if (forms[designBar].elements.highlighter) {
-							forms[designBar].elements.highlighter.enabled = true
+						break
+					case 'standard flip':
+						x += solutionPrefs.screenAttrib.spaces.standard.currentHorizontal
+						y3 += solutionPrefs.screenAttrib.spaces.standard.currentVertical
+	
+						if (solutionPrefs.config.flexibleSpace) {
+							x += divider
+							y3 += divider
 						}
-
-						//design bar action form exists, go exploring
-						if (forms[designTab]) {
+	
+						gfx2 = gfxTop
+						gfx3 = gfxLeftOne
+						break
+	
+					case 'list':
+						x += solutionPrefs.screenAttrib.spaces.list.currentHorizontal
+	
+						if (solutionPrefs.config.flexibleSpace) {
+							x += divider
+						}
+	
+						var nonNavigation = true
+						break
+	
+					case 'list flip':
+						x += solutionPrefs.screenAttrib.spaces.list.currentHorizontal
+	
+						if (solutionPrefs.config.flexibleSpace) {
+							x += divider
+						}
+	
+						var nonList = true
+	
+						gfx3 = gfxLeftOne
+						break
+	
+					case 'vertical':
+						x += solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalOne + solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalTwo
+						x2 += solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalOne
+	
+						if (solutionPrefs.config.flexibleSpace) {
+							x += divider
+							x2 += divider
+						}
+	
+						gfx3 = gfxLeftTwo
+						break
+					case 'vertical flip':
+						x += solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalOne + solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalTwo
+						x3 += solutionPrefs.screenAttrib.spaces.vertical.currentHorizontalOne
+	
+						if (solutionPrefs.config.flexibleSpace) {
+							x += divider
+							x3 += divider
+						}
+	
+						gfx2 = gfxLeftTwo
+						gfx3 = gfxLeftOne
+						break
+	
+					case 'centered':
+						x += solutionPrefs.screenAttrib.spaces.centered.currentHorizontalOne
+						x2 += application.getWindowWidth(null) - solutionPrefs.screenAttrib.spaces.centered.currentHorizontalTwo
+	
+						if (solutionPrefs.screenAttrib.sidebar.status) {
+							x2 -= solutionPrefs.screenAttrib.sidebar.currentSize
+						}
+	
+						if (solutionPrefs.config.flexibleSpace) {
+							x += divider
+							x2 += divider
+						}
+	
+						gfx2 = gfxRightOne
+						gfx3 = gfxLeftOne
+						break
+					case 'centered flip':
+						x += solutionPrefs.screenAttrib.spaces.centered.currentHorizontalOne
+						x3 += application.getWindowWidth(null) - solutionPrefs.screenAttrib.spaces.centered.currentHorizontalTwo
+	
+						if (solutionPrefs.screenAttrib.sidebar.status) {
+							x3 -= solutionPrefs.screenAttrib.sidebar.currentSize
+						}
+	
+						if (solutionPrefs.config.flexibleSpace) {
+							x += divider
+							x3 += divider
+						}
+	
+						gfx3 = gfxRightOne
+						break
+	
+					case 'classic':
+						x += solutionPrefs.screenAttrib.spaces.classic.currentHorizontal
+						x2 += solutionPrefs.screenAttrib.spaces.classic.currentHorizontal
+						y += solutionPrefs.screenAttrib.spaces.classic.currentVertical
+	
+						if (solutionPrefs.config.flexibleSpace) {
+							x += divider
+							x2 += divider
+							y += divider
+						}
+	
+						gfx2 = gfxLeftRight
+						gfx3 = gfxLeftOne
+						break
+					case 'classic flip':
+						x += solutionPrefs.screenAttrib.spaces.classic.currentHorizontal
+						x3 += solutionPrefs.screenAttrib.spaces.classic.currentHorizontal
+						y += solutionPrefs.screenAttrib.spaces.classic.currentVertical
+	
+						if (solutionPrefs.config.flexibleSpace) {
+							x += divider
+							x3 += divider
+							y += divider
+						}
+	
+						gfx2 = gfxLeftOne
+						gfx3 = gfxLeftRight
+						break
+	
+					case 'wide':
+						x2 += solutionPrefs.screenAttrib.spaces.wide.currentHorizontal
+						y += solutionPrefs.screenAttrib.spaces.wide.currentVertical
+	
+						if (solutionPrefs.config.flexibleSpace) {
+							x2 += divider
+							y += divider
+						}
+	
+						gfx2 = gfxLeftRight
+						gfx3 = gfxTop
+						break
+					case 'wide flip':
+						x3 += solutionPrefs.screenAttrib.spaces.wide.currentHorizontal
+						y += solutionPrefs.screenAttrib.spaces.wide.currentVertical
+	
+						if (solutionPrefs.config.flexibleSpace) {
+							x3 += divider
+							y += divider
+						}
+	
+						gfx2 = gfxTop
+						gfx3 = gfxLeftRight
+						break
+	
+					case 'workflow':
+						if (solutionPrefs.config.activeSpace == 'workflow') {
+							var nonList = true
+							var nonNavigation = true
+						}
+						break
+	
+					case 'workflow flip':
+						if (!lockList) {
+							var nonList = true
+						}
+						var nonNavigation = true
+						break
+				}
+	
+				//set up spinner to show progress
+				if (spinner) {
+		//			forms[baseForm].elements.gfx_spinner.setSize(application.getWindowWidth(),32)
+		//			forms[baseForm].elements.gfx_spinner.setLocation((application.getWindowWidth() / 2) - 16, (application.getWindowHeight() / 2) - 200)
+					forms[baseForm].elements.gfx_spinner.visible = true
+				}
+				else {
+					forms[baseForm].elements.gfx_spinner.visible = false
+				}
+	
+				//resize curtain to cover everything and then show it
+				if (freezeAll) {
+					//height of normal header (44)
+					var y = 0
+	
+					//if in design mode....
+					if (solutionPrefs.design.statusDesign) {
+						//height of design mode bar
+						y += 42
+	
+						var designBar = 'DEV_0F_solution__designbar'
+	
+						//design bar form exists, go exploring
+						if (forms[designBar]) {
+							//turn off everything
+							forms[designBar].controller.enabled = false
+	
+							//active tab
+							var designTab = forms[designBar].elements.tab_action.getTabFormNameAt(forms[designBar].elements.tab_action.tabIndex)
+	
 							//light background in main design bar
-							if (forms[designTab].elements.gfx_header) {
-								forms[designTab].elements.gfx_header.enabled = true
+							if (forms[designBar].elements.gfx_header) {
+								forms[designBar].elements.gfx_header.enabled = true
 							}
-
+	
 							//highlighter in main design bar
-							if (forms[designTab].elements.highlighter) {
-								forms[designTab].elements.highlighter.enabled = true
+							if (forms[designBar].elements.highlighter) {
+								forms[designBar].elements.highlighter.enabled = true
 							}
-						}
-					}
-
-					//just turn off the second curtain so don't get double effect
-					forms[baseForm].elements.gfx_curtain_2.visible = false
-				}
-
-				//set location
-				forms[baseForm].elements.gfx_curtain.setLocation(0,y)
-				//set size
-				forms[baseForm].elements.gfx_curtain.setSize(application.getWindowWidth(),application.getWindowHeight())
-
-				//non-transparent, set up
-				if (nonTransparent) {
-					forms[baseForm].elements.gfx_curtain.transparent = false
-					forms[baseForm].elements.gfx_curtain.setImageURL(null)
-					forms[baseForm].elements.gfx_curtain.setBorder('MatteBorder,0,0,200,0,#323A4B')
-
-					//set text
-					if (nonTransparentText) {
-						forms[baseForm].elements.gfx_curtain.text = nonTransparentText
-					}
-				}
-
-				forms[baseForm].elements.gfx_curtain.enabled = true
-				forms[baseForm].elements.gfx_curtain.visible = true
-			}
-			//lock everything
-			else if (freeze) {
-				//prefer to modify the status of elements
-				if (oldMode) {
-					//turn off everything
-					forms[baseForm].controller.enabled = false
-
-					//turn on grafx stuff
-						//header/footer
-						forms[baseForm + '__header'].elements.gfx_header.enabled = true
-						forms[baseForm + '__footer'].elements.gfx_footer.enabled = true
-
-						//check content panels for subheader element
-						var tabPanels = ['A','B','C','D']
-						for (var i = 0; i < tabPanels.length; i++) {
-							var tabPanel = 'tab_content_' + tabPanels[i]
-
-							//there is a form in this tab panel
-							if (forms[baseForm].elements[tabPanel].tabIndex) {
-								var formName = forms[baseForm].elements[tabPanel].getTabFormNameAt(forms[baseForm].elements[tabPanel].tabIndex)
-
-								//if a subheader present, turn it on
-								if (forms[formName] && forms[formName].elements.gfx_subheader) {
-									forms[formName].elements.gfx_subheader.enabled = true
+	
+							//design bar action form exists, go exploring
+							if (forms[designTab]) {
+								//light background in main design bar
+								if (forms[designTab].elements.gfx_header) {
+									forms[designTab].elements.gfx_header.enabled = true
+								}
+	
+								//highlighter in main design bar
+								if (forms[designTab].elements.highlighter) {
+									forms[designTab].elements.highlighter.enabled = true
 								}
 							}
 						}
-
-						//check active toolbar for background elements
-						if (forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex) {
-							var formName = forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getTabFormNameAt(forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex)
-
-							//if toolbar background graphics present, turn them on
-							if (forms[formName].elements.gfx_tool_left) {
-								forms[formName].elements.gfx_tool_left.enabled = true
-							}
-							if (forms[formName].elements.gfx_tool_center) {
-								forms[formName].elements.gfx_tool_center.enabled = true
-							}
-							if (forms[formName].elements.gfx_tool_right) {
-								forms[formName].elements.gfx_tool_right.enabled = true
-							}
+	
+						//just turn off the second curtain so don't get double effect
+						forms[baseForm].elements.gfx_curtain_2.visible = false
+					}
+	
+					//set location
+					forms[baseForm].elements.gfx_curtain.setLocation(0,y)
+					//set size
+					forms[baseForm].elements.gfx_curtain.setSize(application.getWindowWidth(),application.getWindowHeight())
+	
+					//non-transparent, set up
+					if (nonTransparent) {
+						forms[baseForm].elements.gfx_curtain.transparent = false
+						forms[baseForm].elements.gfx_curtain.setImageURL(null)
+						forms[baseForm].elements.gfx_curtain.setBorder('MatteBorder,0,0,200,0,#323A4B')
+	
+						//set text
+						if (nonTransparentText) {
+							forms[baseForm].elements.gfx_curtain.text = nonTransparentText
 						}
-
-					//set space borders to light color
-					var borderDisabled = 'MatteBorder,0,0,0,1,#797778'
-					for (var i = 1; i <= 14 && ((i== 1 || i == 8) ? i++ : i); i++) {
-						forms[baseForm + '__header'].elements['btn_space_' + i].setBorder(borderDisabled)
 					}
-
-					//turn on workflow form
-					forms[workflowForm].controller.enabled = true
+	
+					forms[baseForm].elements.gfx_curtain.enabled = true
+					forms[baseForm].elements.gfx_curtain.visible = true
 				}
-				//show graphics positioned appropriately
-				else {
-				//HEADER CURTAIN
-					if (true) {
-						forms[baseForm].elements.gfx_curtain_header.setLocation(0,0)
-						forms[baseForm].elements.gfx_curtain_header.setSize(application.getWindowWidth(null),44)
-						forms[baseForm].elements.gfx_curtain_header.visible = true
+				//lock everything
+				else if (freeze) {
+					//prefer to modify the status of elements
+					if (oldMode) {
+						//turn off everything
+						forms[baseForm].controller.enabled = false
+	
+						//turn on grafx stuff
+							//header/footer
+							forms[baseForm + '__header'].elements.gfx_header.enabled = true
+							forms[baseForm + '__footer'].elements.gfx_footer.enabled = true
+	
+							//check content panels for subheader element
+							var tabPanels = ['A','B','C','D']
+							for (var i = 0; i < tabPanels.length; i++) {
+								var tabPanel = 'tab_content_' + tabPanels[i]
+	
+								//there is a form in this tab panel
+								if (forms[baseForm].elements[tabPanel].tabIndex) {
+									var formName = forms[baseForm].elements[tabPanel].getTabFormNameAt(forms[baseForm].elements[tabPanel].tabIndex)
+	
+									//if a subheader present, turn it on
+									if (forms[formName] && forms[formName].elements.gfx_subheader) {
+										forms[formName].elements.gfx_subheader.enabled = true
+									}
+								}
+							}
+	
+							//check active toolbar for background elements
+							if (forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex) {
+								var formName = forms[baseForm + '__header__toolbar'].elements.tab_toolbar.getTabFormNameAt(forms[baseForm + '__header__toolbar'].elements.tab_toolbar.tabIndex)
+	
+								//if toolbar background graphics present, turn them on
+								if (forms[formName].elements.gfx_tool_left) {
+									forms[formName].elements.gfx_tool_left.enabled = true
+								}
+								if (forms[formName].elements.gfx_tool_center) {
+									forms[formName].elements.gfx_tool_center.enabled = true
+								}
+								if (forms[formName].elements.gfx_tool_right) {
+									forms[formName].elements.gfx_tool_right.enabled = true
+								}
+							}
+	
+						//set space borders to light color
+						var borderDisabled = 'MatteBorder,0,0,0,1,#797778'
+						for (var i = 1; i <= 14 && ((i== 1 || i == 8) ? i++ : i); i++) {
+							forms[baseForm + '__header'].elements['btn_space_' + i].setBorder(borderDisabled)
+						}
+	
+						//turn on workflow form
+						forms[workflowForm].controller.enabled = true
 					}
+					//show graphics positioned appropriately
 					else {
-						//turn off curtain
-						forms[baseForm].elements.gfx_curtain_header.visible = false
-					}
-
-				//CURTAIN ONE
-					if (lockWorkflow && solutionPrefs.config.activeSpace != 'workflow flip') {
-						//set location
-						gfx1.setLocation(x,y)
-						//set size
-						gfx1.setSize(
-									forms[baseForm].elements.tab_content_C.getWidth(),
-									forms[baseForm].elements.tab_content_C.getHeight()
-								)
-
-						//turn on curtain
-						gfx1.visible = true
-					}
-
-				//CURTAIN TWO
-					if (lockList && !nonList) {
-						//set location
-						gfx2.setLocation(x2,y2)
-						//set size
-						gfx2.setSize(
-									forms[baseForm].elements.tab_content_B.getWidth(),
-									forms[baseForm].elements.tab_content_B.getHeight()
-								)
-
-						//turn on curtain
-						gfx2.visible = true
-					}
-
-				//CURTAIN THREE
-					if (lockNavigation && !nonNavigation) {
-						//set location
-						gfx3.setLocation(x3,y3)
-						//set size
-						gfx3.setSize(
-									forms[baseForm].elements.tab_content_A.getWidth(),
-									forms[baseForm].elements.tab_content_A.getHeight()
-								)
-
-						//turn on curtain
-						gfx3.visible = true
-					}
-
-				//CURTAIN SIDEBAR
-					if (freeze && solutionPrefs.screenAttrib.sidebar.status) {
-						//set location
-						gfxRightTwo.setLocation(
-									forms[baseForm].elements.tab_content_D.getLocationX(),
-									forms[baseForm].elements.tab_content_D.getLocationY() + 44
-								)
-						//set size
-						gfxRightTwo.setSize(
-									forms[baseForm].elements.tab_content_D.getWidth(),
-									forms[baseForm].elements.tab_content_D.getHeight() - 44
-								)
-
-						//turn on curtain
-						gfxRightTwo.visible = true
+					//HEADER CURTAIN
+						if (true) {
+							forms[baseForm].elements.gfx_curtain_header.setLocation(0,0)
+							forms[baseForm].elements.gfx_curtain_header.setSize(application.getWindowWidth(null),44)
+							forms[baseForm].elements.gfx_curtain_header.visible = true
+						}
+						else {
+							//turn off curtain
+							forms[baseForm].elements.gfx_curtain_header.visible = false
+						}
+	
+					//CURTAIN ONE
+						if (lockWorkflow && solutionPrefs.config.activeSpace != 'workflow flip') {
+							//set location
+							gfx1.setLocation(x,y)
+							//set size
+							gfx1.setSize(
+										forms[baseForm].elements.tab_content_C.getWidth(),
+										forms[baseForm].elements.tab_content_C.getHeight()
+									)
+	
+							//turn on curtain
+							gfx1.visible = true
+						}
+	
+					//CURTAIN TWO
+						if (lockList && !nonList) {
+							//set location
+							gfx2.setLocation(x2,y2)
+							//set size
+							gfx2.setSize(
+										forms[baseForm].elements.tab_content_B.getWidth(),
+										forms[baseForm].elements.tab_content_B.getHeight()
+									)
+	
+							//turn on curtain
+							gfx2.visible = true
+						}
+	
+					//CURTAIN THREE
+						if (lockNavigation && !nonNavigation) {
+							//set location
+							gfx3.setLocation(x3,y3)
+							//set size
+							gfx3.setSize(
+										forms[baseForm].elements.tab_content_A.getWidth(),
+										forms[baseForm].elements.tab_content_A.getHeight()
+									)
+	
+							//turn on curtain
+							gfx3.visible = true
+						}
+	
+					//CURTAIN SIDEBAR
+						if (freeze && solutionPrefs.screenAttrib.sidebar.status) {
+							//set location
+							gfxRightTwo.setLocation(
+										forms[baseForm].elements.tab_content_D.getLocationX(),
+										forms[baseForm].elements.tab_content_D.getLocationY() + 44
+									)
+							//set size
+							gfxRightTwo.setSize(
+										forms[baseForm].elements.tab_content_D.getWidth(),
+										forms[baseForm].elements.tab_content_D.getHeight() - 44
+									)
+	
+							//turn on curtain
+							gfxRightTwo.visible = true
+						}
 					}
 				}
-			}
-			//unlock everything
-			else {
-				//prefer to modify the status of elements
-				if (oldMode) {
-					//turn on everything
-					forms[baseForm].controller.enabled = true
-
-					//turn off curtain
-					if (forms[baseForm].elements.gfx_curtain.visible) {
-						forms[baseForm].elements.gfx_curtain.visible = false
-					}
-	//				//return curtain to default state
-	//				forms[baseForm].elements.gfx_curtain.transparent = true
-	//				forms[baseForm].elements.gfx_curtain.setImageURL('media:///curtain_5E6166.png')
-	//				forms[baseForm].elements.gfx_curtain.setBorder('EmptyBorder,0,0,0,0')
-	//
-	//				forms[baseForm].elements.gfx_curtain.text = null
-	//				forms[baseForm].elements.gfx_curtain.toolTipText = null
-
-					//turn off curtain3
-					if (forms[baseForm].elements.gfx_spinner.visible) {
-						forms[baseForm].elements.gfx_spinner.visible = false
-					}
-
-					//developer was locked, return to that state
-					if (solutionPrefs.design.statusLockWorkflow || solutionPrefs.design.statusLockList) {
-						DEV_lock_workflow()
-					}
-
-					//only show active space options
-					var borderEnabled = 'MatteBorder,0,0,0,1,#333333'
-					var borderDisabled = 'MatteBorder,0,0,0,1,#797778'
-					var spacesOK = (navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID] && navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].spaceSetup) ? navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].spaceSetup : new Array(true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true)
-					for (var i = 1; i <= 14; i++) {
-						forms[baseForm + '__header'].elements['btn_space_' + i].enabled = spacesOK[i-1]
-
-						if (i != 1 && i != 8) {
-							forms[baseForm + '__header'].elements['btn_space_' + i].setBorder(spacesOK[i-1] ? borderEnabled : borderDisabled)
+				//unlock everything
+				else {
+					//prefer to modify the status of elements
+					if (oldMode) {
+						//turn on everything
+						forms[baseForm].controller.enabled = true
+	
+						//turn off curtain
+						if (forms[baseForm].elements.gfx_curtain.visible) {
+							forms[baseForm].elements.gfx_curtain.visible = false
+						}
+		//				//return curtain to default state
+		//				forms[baseForm].elements.gfx_curtain.transparent = true
+		//				forms[baseForm].elements.gfx_curtain.setImageURL('media:///curtain_5E6166.png')
+		//				forms[baseForm].elements.gfx_curtain.setBorder('EmptyBorder,0,0,0,0')
+		//
+		//				forms[baseForm].elements.gfx_curtain.text = null
+		//				forms[baseForm].elements.gfx_curtain.toolTipText = null
+	
+						//turn off curtain3
+						if (forms[baseForm].elements.gfx_spinner.visible) {
+							forms[baseForm].elements.gfx_spinner.visible = false
+						}
+	
+						//developer was locked, return to that state
+						if (solutionPrefs.design.statusLockWorkflow || solutionPrefs.design.statusLockList) {
+							DEV_lock_workflow()
+						}
+	
+						//only show active space options
+						var borderEnabled = 'MatteBorder,0,0,0,1,#333333'
+						var borderDisabled = 'MatteBorder,0,0,0,1,#797778'
+						var spacesOK = (navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID] && navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].spaceSetup) ? navigationPrefs.byNavItemID[solutionPrefs.config.currentFormID].spaceSetup : new Array(true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true)
+						for (var i = 1; i <= 14; i++) {
+							forms[baseForm + '__header'].elements['btn_space_' + i].enabled = spacesOK[i-1]
+	
+							if (i != 1 && i != 8) {
+								forms[baseForm + '__header'].elements['btn_space_' + i].setBorder(spacesOK[i-1] ? borderEnabled : borderDisabled)
+							}
 						}
 					}
 				}
 			}
+	
+			//save down current locked status
+			solutionPrefs.config.lockStatus = freeze
 		}
-
-		//save down current locked status
-		solutionPrefs.config.lockStatus = freeze
 	}
 }
 
