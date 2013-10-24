@@ -5713,7 +5713,7 @@ function DS_router(p1,params,itemID,launch,logout,pathName) {
 			}
 
 			// load in correct state of requested resource
-			TRIGGER_navigation_set(payload.itemID,payload.setFoundset,payload.useFoundset,itemID)
+			TRIGGER_navigation_set(payload.itemID,payload.setFoundset,payload.useFoundset,itemID,true)
 
 			//reset payload (values only used immediately after set)
 			DATASUTRA_router_payload = eval(solutionModel.getGlobalVariable('globals','DATASUTRA_router_payload').defaultValue)

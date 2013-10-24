@@ -1669,12 +1669,13 @@ function TRIGGER_navigation_filter_update(forceRefresh,itemID) {
  * @param	{Boolean}	[setFoundset] Modify the foundset on the new navigation item.
  * @param	{JSFoundSet|Number[]|UUID[]}	[useFoundset] Foundset or array of primary keys to restore on the destination form.
  * @param	{Number}	[idNavigationItem] The pk for the navigation item to jump to. (will override itemID)
+ * @param 	{Boolean} 	[hardRefresh] When SPA controller refreshed in browser, need to know
  *
  * @returns	{Boolean}	Success of loading the foundset requested.
  *
  * @properties={typeid:24,uuid:"e58b6503-e021-452d-b2b1-075c79e44ddd"}
  */
-function TRIGGER_navigation_set(itemID, setFoundset, useFoundset, idNavigationItem) {
+function TRIGGER_navigation_set(itemID, setFoundset, useFoundset, idNavigationItem, hardRefresh) {
 //TODO: when navitem filters on, record will not be preserved when new records loaded in
 
 	//solutionPrefs defined and frameworks not in a locked status
@@ -1767,7 +1768,7 @@ function TRIGGER_navigation_set(itemID, setFoundset, useFoundset, idNavigationIt
 			}
 			
 			//in webclient and called from router, check to see if there is an 'onShow' method needing to be fired
-			if (solutionPrefs.config.webClient && idNavigationItem) {
+			if (solutionPrefs.config.webClient && hardRefresh) {
 				var smForm = solutionModel.getForm(navItem.formToLoad)
 				if (smForm) {
 					var onShow = smForm.getDesignTimeProperty('wcShow')
