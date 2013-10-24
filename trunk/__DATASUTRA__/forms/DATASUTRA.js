@@ -69,6 +69,7 @@ function FORM_on_load(event) {
 						smLabel.showFocus = false
 						smLabel.styleClass = 'standard_table_check'
 						smLabel.transparent = true
+						smLabel.name = smField.name + '__outline'
 						
 						//adjust size
 						smField.width = smField.width - 6
@@ -87,6 +88,7 @@ function FORM_on_load(event) {
 						smLabel.showFocus = false
 						smLabel.styleClass = 'standard_table_check_bottom'
 						smLabel.transparent = true
+						smLabel.name = smField.name + '__outline'
 						
 						//adjust size
 						smField.width = smField.width - 6
