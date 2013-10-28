@@ -2526,7 +2526,7 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		forms.TOOL_history.REC_on_select()
 		
 		//fire restriction enzyme  //MEMO: will only run if the filters have changed
-		NAV_foundset_restrict()
+		var restrict = NAV_foundset_restrict()
 		
 		//web client
 		if (solutionPrefs.config.webClient) {
@@ -3270,9 +3270,6 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 	if (DS_web_login_running) {
 		DS_web_login_running = false
 		
-		//turn off pulsating
-//		plugins.WebClientUtils.executeClientSideJS('pulseOff();')
-		
 		var customName = ''
 		if (solutionPrefs.config.solutionName && solutionPrefs.config.solutionName != 'Data Sutra') {
 			customName = 'window.parent.addToHomeConfig.message = "Tap %icon and then <strong>Add to Home Screen</strong> to install ' + solutionPrefs.config.solutionName + ' on your %device.";'
@@ -3287,9 +3284,15 @@ if (utils.stringToNumber(application.getVersion()) >= 5) {
 		}
 	}
 	
-	//slickgrid, make sure center blocker turned off
+	//slickgrid extensions
 	if (scopes.SLICK && scopes.SLICK.CONST.enabled) {
+		//make sure center blocker turned off
 //		scopes.DS.webBlockerCentered(false)
+
+		//nav item has filter restricting it, hard refresh UL
+		if (restrict && !formNotLoaded) {
+			scopes.SLICK.update(navigationPrefs.byNavItemID[navigationItemID].listData.tabFormInstance)
+		}
 	}
 }
 }
