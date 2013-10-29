@@ -890,6 +890,11 @@ img[alt="Remove media"] {
 	border-bottom-right-radius: 5px;
 }
 
+/* hide */
+#xdomainCheck {
+	display: none;
+}
+
 /** Change the (contextual) menu-plugin style */
 .yuimenu {
 	background: #dcdedc;
@@ -1272,6 +1277,11 @@ a.yuimenuitemlabel > table > tbody > tr > td.img_checkbox{
 
 li.yuimenuitem > a.yuimenuitemlabel > table img {
 	margin-top: -3px;
+}
+
+/* CMS resize popdown menu extra padding */
+li.yuimenuitem > a.yuimenuitemlabel > table img[src*="ssstandard_move"] {
+	padding-bottom: 2px;
 }
 
 li.yuimenuitem > a.yuimenuitemlabel > table td.img_checkbox ~ td {
