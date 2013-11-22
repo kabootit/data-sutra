@@ -275,26 +275,28 @@ else {
 for ( var i = 1 ; i <= tabTotal ; i++ ) {	
 	var tabName = prefix + i
 	
-	if (tabName == buttonName) {
-		forms[formName].elements[tabName].fgcolor = foreSelect
-		forms[formName].elements[tabName].bgcolor = backSelect
-		forms[formName].elements[tabName].transparent = transparentSelect
-		forms[formName].elements[tabName].setFont(fontSelect)
-	}
-	else {
-		forms[formName].elements[tabName].fgcolor = foreUnselect
-		forms[formName].elements[tabName].bgcolor = backUnselect
-		forms[formName].elements[tabName].transparent = transparentUnselect
-		forms[formName].elements[tabName].setFont(fontUnselect)
-	}
-	
-	//set tooltip text if element can take a tooltip, tooltip is not already set, and tab has text
-	if (typeof forms[formName].elements[tabName].toolTipText != undefined && 
-		!forms[formName].elements[tabName].toolTipText && 
-		typeof forms[formName].elements[tabName].text != undefined && 
-		forms[formName].elements[tabName].text) {
+	if (forms[formName].elements[tabName]) {
+		if (tabName == buttonName) {
+			forms[formName].elements[tabName].fgcolor = foreSelect
+			forms[formName].elements[tabName].bgcolor = backSelect
+			forms[formName].elements[tabName].transparent = transparentSelect
+			forms[formName].elements[tabName].setFont(fontSelect)
+		}
+		else {
+			forms[formName].elements[tabName].fgcolor = foreUnselect
+			forms[formName].elements[tabName].bgcolor = backUnselect
+			forms[formName].elements[tabName].transparent = transparentUnselect
+			forms[formName].elements[tabName].setFont(fontUnselect)
+		}
 		
-		forms[formName].elements[tabName].toolTipText = forms[formName].elements[tabName].text
+		//set tooltip text if element can take a tooltip, tooltip is not already set, and tab has text
+		if (typeof forms[formName].elements[tabName].toolTipText != undefined && 
+			!forms[formName].elements[tabName].toolTipText && 
+			typeof forms[formName].elements[tabName].text != undefined && 
+			forms[formName].elements[tabName].text) {
+			
+			forms[formName].elements[tabName].toolTipText = forms[formName].elements[tabName].text
+		}
 	}
 }
 
