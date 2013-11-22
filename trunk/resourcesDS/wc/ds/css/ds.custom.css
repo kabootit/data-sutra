@@ -1,0 +1,21 @@
+@import url("http://cdn.oesmith.co.uk/morris-0.4.3.min.css");
+
+/* override popup menus to have highlighted rollover */
+.yuimenuitem-selected,
+.yuimenubaritem-selected {
+    background-color:#d1d1d1 !important;
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ebebeb', endColorstr='#a1a1a1') !important; /* for IE */
+	background: -webkit-gradient(linear, left top, left bottom, from(#ebebeb), to(#a1a1a1)) !important; /* for webkit browsers */
+	background: -moz-linear-gradient(top,  #ebebeb,  #a1a1a1) !important; /* for firefox 3.6+ */
+	border-top: solid 1px #6d6d6d !important;
+	border-bottom: solid 1px #6d6d6d !important;
+}
+
+.yuimenuitem a.selected,
+.yuimenubaritem a.selected {
+    background-color:#d1d1d1 !important;
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ebebeb', endColorstr='#a1a1a1') !important; /* for IE */
+	background: -webkit-gradient(linear, left top, left bottom, from(#ebebeb), to(#a1a1a1)) !important; /* for webkit browsers */
+	background: -moz-linear-gradient(top,  #ebebeb,  #a1a1a1) !important; /* for firefox 3.6+ */
+	border: solid 1px #6d6d6d !important;
+}
