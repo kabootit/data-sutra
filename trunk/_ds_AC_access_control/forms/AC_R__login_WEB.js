@@ -197,7 +197,9 @@ function LOGIN(event,webkit) {
 			
 			//go to nav item requested (prefernces hardcoded against because problem with entering preference before form setup fully)
 			var prefix = '/'
-			if (globals.DATASUTRA_router.length && globals.DATASUTRA_router[0].pathString != prefix + 'login' && globals.DATASUTRA_router[0].pathString.indexOf('/data-sutra/') != 0) {
+			if (globals.DATASUTRA_router.length && globals.DATASUTRA_router[0].pathString != prefix && 
+				globals.DATASUTRA_router[0].pathString != prefix + 'login' && globals.DATASUTRA_router[0].pathString.indexOf('/data-sutra/') != 0) {
+				
 				globals.DATASUTRA_router_initialHix = true
 				globals.DS_router('DSHistory')
 			}
@@ -290,9 +292,10 @@ function FORM_on_show(firstShow, event) {
 		scopes.DS.webStyleCSS(false,new JSEvent(),controller.getName())
 	}
 	
-	//turn off auto-capitalize on iOS and set to use email keyboard (<-- this breaks servoys tie-in)
+	//turn off auto-capitalize on iOS and set to use email keyboard
 	var id = plugins.WebClientUtils.getElementMarkupId(elements.var_userName)
 //	plugins.WebClientUtils.executeClientSideJS('$("#' + id +'").get(0).type = "email";')
+//	plugins.WebClientUtils.executeClientSideJS('$("#' + id +'")[0].type = "text";')	
 	plugins.WebClientUtils.executeClientSideJS('$("#' + id +'").attr("autocapitalize","off");')
 	
 	// attach style to form to center it
